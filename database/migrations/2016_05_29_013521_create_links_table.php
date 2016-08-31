@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Fixhub\Models\Link;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -32,6 +33,12 @@ class CreateLinksTable extends Migration
 
             $table->index('order');
         });
+
+        Link::create([
+            'title'       => 'Fixhub',
+            'url'         => 'http://fixhub.org/',
+            'description' => 'A free and open-source web deployment system.',
+        ]);
     }
 
     /**
