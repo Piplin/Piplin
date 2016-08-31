@@ -14,6 +14,9 @@ namespace Fixhub\Presenters;
 use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
+/**
+ * The view presenter for a template class.
+ */
 class TemplatePresenter extends CommandPresenter
 {
     //

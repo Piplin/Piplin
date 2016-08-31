@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Fixhub\Models\Project;
 
+/**
+ * The view presenter for a project class.
+ */
 class ProjectPresenter extends CommandPresenter
 {
     /**

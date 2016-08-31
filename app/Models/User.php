@@ -96,6 +96,11 @@ class User extends Model implements
         return $this->email_token;
     }
 
+    /**
+     * Returns the user avatar url.
+     *
+     * @return string
+     */
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar) {

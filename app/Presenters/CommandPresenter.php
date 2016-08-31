@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Fixhub\Models\Command;
 
+/**
+ * The view presenter for a command class.
+ */
 class CommandPresenter extends BasePresenter
 {
     /**

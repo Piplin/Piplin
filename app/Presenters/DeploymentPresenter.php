@@ -17,7 +17,7 @@ use Fixhub\Presenters\Traits\RuntimePresenter;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
- * The view presenter for a project class.
+ * The view presenter for a deployment class.
  */
 class DeploymentPresenter extends BasePresenter
 {
