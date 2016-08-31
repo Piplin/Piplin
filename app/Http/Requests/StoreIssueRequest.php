@@ -26,9 +26,9 @@ class StoreIssueRequest extends Request
     public function rules()
     {
         return [
-            'title'       => 'required|max:255',
-            'description' => 'required',
-            'project_id'  => 'required|integer|exists:projects,id',
+            'title'      => 'required|max:255',
+            'content'    => 'required',
+            'project_id' => 'required|integer|exists:projects,id',
         ];
     }
 }

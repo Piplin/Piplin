@@ -12,6 +12,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Fixhub\Models\Issue;
 
 class CreateIssuesTable extends Migration
 {
@@ -33,12 +34,12 @@ class CreateIssuesTable extends Migration
             $table->timestamps();
             $table->string('branch_name');
             $table->integer('comment_count')->default(0);
-            $table->string('state');
+            $table->tinyInteger('status')->default(Issue::NOT_APPROVED);
 
             $table->index('assignee_id');
             $table->index('author_id');
             $table->index('project_id');
-            $table->index('state');
+            $table->index('status');
         });
     }
 

@@ -30,7 +30,7 @@ class IssueController extends Controller
     {
         $fields = $request->only(
             'title',
-            'description',
+            'content',
             'project_id'
         );
 
@@ -51,7 +51,7 @@ class IssueController extends Controller
 
         $issue->update($request->only(
             'title',
-            'description',
+            'content',
             'project_id'
         ));
 

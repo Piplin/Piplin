@@ -22,6 +22,13 @@ class Issue extends Model
 {
     use SoftDeletes, BroadcastChanges;
 
+    const COMPLETED    = 0;
+    const APPROVED     = 1;
+    const PENDING      = 2;
+    const APPROVING    = 3;
+    const FAILED       = 4;
+    const NOT_APPROVED = 5;
+
     /**
      * The attributes excluded from the model's JSON form.
      *
