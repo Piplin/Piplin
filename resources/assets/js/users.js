@@ -22,6 +22,7 @@ var app = app || {};
         } else {
             $('#user_id').val('');
             $('#user_name').val('');
+            $('#user_level').val('');
             $('#user_nickname').val('');
             $('#user_email').val('');
             $('#user_password').val('');
@@ -83,6 +84,7 @@ var app = app || {};
 
         user.save({
             name:                  $('#user_name').val(),
+            level:                 $('#user_level').val(),
             nickname:              $('#user_nickname').val(),
             email:                 $('#user_email').val(),
             password:              $('#user_password').val(),
@@ -211,6 +213,7 @@ var app = app || {};
         editUser: function() {
             $('#user_id').val(this.model.id);
             $('#user_name').val(this.model.get('name'));
+            $('#user_level').val(this.model.get('level'));
             $('#user_nickname').val(this.model.get('nickname'));
             $('#user_email').val(this.model.get('email'));
         },

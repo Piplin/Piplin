@@ -19,6 +19,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="user_level">{{ trans('users.role') }}</label>
+                        <select id="user_level" name="level" class="form-control">
+                            @foreach($levels as $level => $role)
+                                <option value="{{ $level }}">{{ $role }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="user_nickname">{{ trans('users.nickname') }}</label>
                         <input type="text" class="form-control" name="nickname" id="user_nickname" placeholder="John Smith" />
                     </div>

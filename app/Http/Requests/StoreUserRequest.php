@@ -12,6 +12,7 @@
 namespace Fixhub\Http\Requests;
 
 use Fixhub\Http\Requests\Request;
+use Fixhub\Models\User;
 
 /**
  * Request for validating users.
@@ -27,6 +28,7 @@ class StoreUserRequest extends Request
     {
         $rules = [
             'name'     => 'required|max:255',
+            'level'    => 'required|integer|min:' . User::LEVEL_ADMIN . '|max:' . User::LEVEL_OPERATOR,
             'nickname' => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',

@@ -59,9 +59,9 @@ return [
     'with_sidebar'      => ':colour with light sidebar',
     'role'              => '角色',
     'level'             => [
-        'admin'    => '管理员',
+        'admin'    => '超级管理员',
         'operator' => '运维工程师',
-        'user'     => '工程师',
+        'user'     => '研发工程师',
     ],
 
 ];

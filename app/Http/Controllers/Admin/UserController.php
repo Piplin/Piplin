@@ -30,7 +30,12 @@ class UserController extends Controller
     {
         return view('admin.users.index', [
             'title' => trans('users.manage'),
-            'users' => User::all()->toJson(), // PresentableInterface toJson() is not working in view
+            'users' => User::all()->toJson(),
+            'levels' => [
+                User::LEVEL_ADMIN    => trans('users.level.admin'),
+                User::LEVEL_OPERATOR => trans('users.level.operator'),
+                User::LEVEL_USER     => trans('users.level.user'),
+            ],
         ]);
     }
 
@@ -44,6 +49,7 @@ class UserController extends Controller
     {
         $user = User::create($request->only(
             'name',
+            'level',
             'nickname',
             'email',
             'password'
@@ -67,6 +73,7 @@ class UserController extends Controller
 
         $user->update($request->only(
             'name',
+            'level',
             'nickname',
             'email',
             'password'
