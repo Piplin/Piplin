@@ -191,7 +191,7 @@ toastr.options.extendedTimeOut = 7000;
             }
 
             $('td:first a', project).text(data.model.name);
-            $('td:nth-child(3)', project).text(moment(data.model.last_run).format('YYYY-MM-DD HH:mm:ss'));
+            $('td:nth-child(3)', project).text(moment(data.model.last_run).format('MM-DD HH:mm'));
             status.attr('class', 'label label-' + label_class)
             $('i', status).attr('class', 'ion ion-' + icon_class);
             $('span', status).text(label);
