@@ -14,7 +14,5 @@
 
         @yield('content')
 
-        <script src="{{ cdn('js/vendor.js') }}"></script>
-        <script src="{{ cdn('js/app.js') }}"></script>
     </body>
 </html>

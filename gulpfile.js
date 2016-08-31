@@ -7,6 +7,7 @@ elixir.config.sourcemaps = false;
 
 var gulp   = require('gulp');
 var shell  = require('gulp-shell');
+var jsuglify = require('gulp-uglify');
 
 var Task = elixir.Task;
 elixir.extend('lang', function() {
@@ -14,6 +15,14 @@ elixir.extend('lang', function() {
         return gulp.src('').pipe(shell('php artisan js-localization:refresh'));
     });
 
+});
+
+elixir.extend('jsminify', function() {
+    new Task('jsminify', function () {
+    return gulp.src('public/js/*.js')
+        .pipe(jsuglify())
+        .pipe(gulp.dest('public/js/'));
+    });
 });
 
 var node_path = 'node_modules';
@@ -89,6 +98,7 @@ elixir(function(mix) {
         'issues.js',
         'profile.js'
     ], 'public/js/app.js', 'resources/assets/js')
+    .jsminify()
     .copy(paths.bootstrap_sass + '/assets/fonts/bootstrap/**', 'public/fonts')
     .copy(paths.ionicons       + '/fonts/**', 'public/fonts')
     .version([
