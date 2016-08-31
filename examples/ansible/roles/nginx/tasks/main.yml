@@ -1,0 +1,7 @@
+---
+- name: Install Nginx
+  apt: name=nginx-full={{nginx_version}}
+
+- name: Add site virtual host
+  template: src=vhost.conf.j2 dest=/etc/nginx/sites-available/default
+  notify: restart nginx

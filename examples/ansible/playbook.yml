@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo: yes
+  vars_files:
+  - vars/server.yml
+  roles:
+  - { role: server, tags: ['server'] }
+  - { role: mysql, tags: ['database'] }
+  - { role: nginx, tags: ['webserver', 'nginx'] }
+  - { role: php, tags: ['webserver'] }
+  - { role: fixhub, tags: ['webserver'] }

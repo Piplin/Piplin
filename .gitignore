@@ -1,0 +1,13 @@
+# Configuration
+.env
+
+# Dev files
+.php_cs.cache
+.vagrant
+
+# Composer files
+composer.phar
+
+# Dependencies
+node_modules
+vendor

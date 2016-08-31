@@ -1,0 +1,108 @@
+var elixir = require('laravel-elixir');
+             require('laravel-elixir-remove');
+             require('laravel-elixir-bower-io');
+
+elixir.config.production = true;
+elixir.config.sourcemaps = false;
+
+var gulp   = require('gulp');
+var shell  = require('gulp-shell');
+
+var Task = elixir.Task;
+elixir.extend('lang', function() {
+    new Task('lang', function(){
+        return gulp.src('').pipe(shell('php artisan js-localization:refresh'));
+    });
+
+});
+
+var node_path = 'node_modules';
+
+var paths = {
+    'backbone'         : node_path + '/backbone',
+    'underscore'       : node_path + '/underscore',
+    'moment'           : node_path + '/moment',
+    'jquery'           : node_path + '/jquery',
+    'jquery_sortable'  : node_path + '/jquery-sortable',
+    'jquery_sparkline' : node_path + '/jquery-sparkline',
+    'bootstrap_sass'   : node_path + '/bootstrap-sass',
+    'socketio_client'  : node_path + '/socket.io-client',
+    'ionicons'         : node_path + '/ionicons',
+    'cropper'          : node_path + '/cropper',
+    'toastr'           : node_path + '/toastr',
+    'select2'          : node_path + '/select2',
+    'ace'              : node_path + '/ace-min-noconflict',
+    'raphael'          : node_path + '/raphael',
+    'morris'           : node_path + '/morris.js',
+    'localization'     : 'vendor/andywer/js-localization'
+};
+
+elixir(function(mix) {
+    mix
+    .sass('app.scss', 'public/css/app.css')
+    .styles([
+        paths.select2      + '/dist/css/select2.min.css',
+        paths.morris       + '/morris.css',
+        paths.ionicons     + '/css/ionicons.min.css',
+        paths.toastr       + '/build/toastr.min.css',
+        paths.cropper      + '/dist/cropper.min.css',
+    ], 'public/css/vendor.css', './')
+    .copy(paths.localization    + '/resources/js/localization.js', node_path)
+    .scripts([
+        paths.jquery           + '/dist/jquery.min.js',
+        paths.jquery_sortable  + '/source/js/jquery-sortable-min.js',
+        paths.jquery_sparkline + '/jquery.sparkline.min.js',
+        paths.underscore       + '/underscore-min.js',
+        paths.moment           + '/min/moment.min.js',
+        paths.bootstrap_sass   + '/assets/javascripts/bootstrap.min.js',
+        paths.select2          + '/dist/js/select2.min.js',
+        paths.raphael          + '/raphael.min.js',
+        paths.morris           + '/morris.min.js',
+        paths.backbone         + '/backbone-min.js',
+        paths.socketio_client  + '/socket.io.js',
+        node_path              + '/localization.js',
+        paths.toastr           + '/build/toastr.min.js',
+        paths.cropper          + '/dist/cropper.min.js',
+        paths.ace             + '/ace.js',
+        paths.ace             + '/mode-sh.js',
+        paths.ace             + '/mode-php.js',
+        paths.ace             + '/mode-yaml.js',
+        paths.ace             + '/mode-ini.js'
+    ], 'public/js/vendor.js', node_path)
+    .scripts([
+        'app.js',
+        'projects.js',
+        'templates.js',
+        'servers.js',
+        'heartbeats.js',
+        'notifySlacks.js',
+        'notifyEmails.js',
+        'shareFiles.js',
+        'configFiles.js',
+        'checkUrls.js',
+        'variables.js',
+        'deployment.js',
+        'commands.js',
+        'users.js',
+        'groups.js',
+        'uploader.js',
+        'issues.js',
+        'profile.js'
+    ], 'public/js/app.js', 'resources/assets/js')
+    .copy(paths.bootstrap_sass + '/assets/fonts/bootstrap/**', 'public/fonts')
+    .copy(paths.ionicons       + '/fonts/**', 'public/fonts')
+    .version([
+        'public/css/app.css',
+        'public/css/vendor.css',
+        'public/js/app.js',
+        'public/js/vendor.js'
+    ])
+    .copy('public/fonts', 'public/build/fonts')
+    .remove([
+        'public/css',
+        'public/js',
+        'public/fonts',
+        node_path + '/localization.js'
+    ])
+    .lang();
+});

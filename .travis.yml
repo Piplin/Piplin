@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+
+sudo: false
+
+before_install:
+  - cp .env.example .env
+  - if [[ $TRAVIS_PHP_VERSION != 7.1 ]] ; then phpenv config-rm xdebug.ini; fi
+
+install: travis_retry composer install --no-interaction --no-scripts --prefer-source --no-suggest
+
+script: 
+  - php vendor/bin/phpunit --colors
+  - vendor/bin/phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
+  - vendor/bin/phpdoccheck --directory=app

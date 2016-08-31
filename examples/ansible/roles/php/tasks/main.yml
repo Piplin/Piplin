@@ -1,0 +1,40 @@
+---
+- name: Install PHP5
+  apt: name={{item}}
+  with_items:
+  - php5-fpm={{php_version}}
+  - php5={{php_version}}
+  - php5-dev={{php_version}}
+  - php-pear={{php_version}}
+  - php5-intl={{php_version}}
+  - php5-curl={{php_version}}
+  - php5-mysql={{php_version}}
+  - php5-sqlite={{php_version}}
+  - php-apc
+  - php5-gd
+  - php5-mcrypt
+
+- name: Configure PHP-FPM
+  copy: src=php-fpm.conf dest=/etc/php5/fpm/php-fpm.conf
+  notify: restart php5-fpm
+
+- name: Configure PHP
+  template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini
+  notify: restart php5-fpm
+
+- name: Configure PHP Client
+  template: src=php.ini.j2 dest=/etc/php5/cli/php.ini
+  notify: restart php5-fpm
+
+- name: Add site config to PHP-FPM
+  template: src=www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf
+  notify: restart php5-fpm
+
+- name: Install Composer
+  shell: "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version={{composer_version}}"
+  args:
+    creates: "/usr/bin/composer"
+
+- name: Activate MCrypt
+  command: php5enmod mcrypt
+  notify: restart php5-fpm

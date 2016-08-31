@@ -1,0 +1,8 @@
+---
+- name: Download NodeJS installer
+  shell: "curl --silent --location https://deb.nodesource.com/setup_4.x | bash -"
+  args:
+    creates: "/usr/bin/nodejs"
+
+- name: Install NodeJS
+  apt: name=nodejs state=latest

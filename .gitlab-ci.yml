@@ -1,0 +1,43 @@
+# Before Script
+before_script:
+  - docker-php-ext-enable zip
+  - docker-php-ext-enable mbstring
+  - docker-php-ext-enable gd
+#  - docker-php-ext-enable pdo_mysql
+#  - ping -c 3 mysql  
+# - composer self-update
+  - composer config repo.packagist composer https://packagist.phpcomposer.com
+  - composer install --no-progress --no-interaction
+#  - cp .env.example .env
+#  - sed -i 's/DB_HOST=127.0.0.1/DB_HOST=mysql/g' .env
+  - php -v
+
+# Services
+services:
+#  - mysql:latest
+
+# Variables
+variables:
+  WITH_XDEBUG: "1"
+  MYSQL_ROOT_PASSWORD: secret
+  MYSQL_DATABASE: homestead
+  MYSQL_USER: homestead
+  MYSQL_PASSWORD: secret
+  COMPOSER_HOME: /cache/composer
+
+#Stages
+stages:
+  - test
+
+#PHP 7.0
+php-7.0:
+  type: test
+  image: tetraweb/php:7.0
+  script:
+    - php -v
+    - echo "Running CS check on PHP 7.0"
+    - phpcs --version
+    - phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
+    - echo "Running PHPUnit Tests on PHP 7.0"
+    - php vendor/bin/phpunit --colors --coverage-text
+    - php vendor/bin/phpdoccheck --directory=app

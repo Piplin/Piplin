@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{{ trans('app.name') }}</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+        <!-- Style -->
+        <link href="{{ cdn('css/vendor.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ cdn('css/app.css') }}" rel="stylesheet" type="text/css" />
+
+    </head>
+    <body class="hold-transition login-page">
+
+        @yield('content')
+
+        <script src="{{ cdn('js/vendor.js') }}"></script>
+        <script src="{{ cdn('js/app.js') }}"></script>
+    </body>
+</html>
