@@ -22,7 +22,8 @@ return [
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
     'project_details'   => 'Project details',
-    'branch'            => 'Default Branch',
+    'branch'            => 'Last Mirrored',
+    'last_mirrored'     => '同步时间',
     'image'             => 'Build Image',
     'ci_image'          => 'If you use a CI server which generates an image to indicate the build status ' .
                            'can put the URL here to have it show on the project page',
@@ -36,6 +37,7 @@ return [
     'last_week'         => 'Last Week',
     'latest_duration'   => 'Latest Duration',
     'health'            => 'Health Check',
+    'deploy_status'     => 'Deploy Status',
     'build_status'      => 'Build Status',
     'app_status'        => 'Application Status',
     'heartbeats_status' => 'Heartbeat Status',

@@ -13,6 +13,8 @@
                         <li><a href="{{ $project->branch_url }}" target="_blank">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
                         @if(!empty($project->url))
                         <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
+                        @else
+                        <li><a href="#">{{ trans('projects.last_mirrored') }}<span class="pull-right text-blue">{{ $project->last_mirrored }}</span></a></li>
                         @endif
                     </ul>
                 </div>
@@ -43,6 +45,8 @@
                     <ul class="nav nav-pills nav-stacked">
                         @if(!empty($project->build_url))
                         <li><a href="#">{{ trans('projects.build_status') }} <span class="pull-right"><img src="{{ $project->build_url }}" /></span></a></li>
+                        @else
+                        <li><a href="#">{{ trans('projects.deploy_status') }}<span class="pull-right label label-{{ $project->css_class }}"><i class="ion ion-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span></a></li>
                         @endif
                         <li><a href="#">{{ trans('projects.app_status') }} <span class="pull-right label label-{{ $project->app_status_css }}">{{ $project->app_status }}</span></a></li>
                         <li><a href="#">{{ trans('projects.heartbeats_status') }} <span class="pull-right label label-{{ $project->heartbeat_status_css }}">{{ $project->heartbeat_status }}</span></a></li>
