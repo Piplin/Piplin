@@ -1,6 +1,6 @@
 # Fixhub
 
-Fixhub 是一套免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web应用上线管理平台。
+Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web自动部署系统。
 
 ![Screenshot](http://fixhub.org/upload/screenshot.png)
 
@@ -22,7 +22,7 @@ Fixhub 是一套免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 - [ ] 通过OAuth2.0实现与自托管的Gitlab账户打通
 - [ ] 权限控制
-- [ ] 工作流
+- [ ] 工单，工作流
 - [ ] 可视化的统计
 
 ## 使用到的技术
@@ -123,7 +123,7 @@ $ php artisan app:update
 
 ### 系统演示
 
-体验Fixhub,请请访问 [Fixhub](http://demo.fixhub.org):
+体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
 
 - **用户名:** `demo@fixhub.org`
 - **密码:** `demo`
