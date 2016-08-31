@@ -34,5 +34,6 @@ return [
     'interval_720'      => '半天',
     'interval_1440'     => '1天',
     'interval_10080'    => '1周',
+    'warning'             => '保存失败，请检查表单信息.',
 
 ];

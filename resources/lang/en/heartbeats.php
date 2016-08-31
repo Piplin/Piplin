@@ -34,5 +34,6 @@ return [
     'interval_720'      => '12 hours',
     'interval_1440'     => '1 day',
     'interval_10080'    => '1 week',
+    'warning'           => 'The heartbeat could not be saved, please check the form below.',
 
 ];
