@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\ProjectFile;
+use Fixhub\Models\ConfigFile;
 use Illuminate\Database\Seeder;
 
 class ConfigFileTableSeeder extends Seeder
