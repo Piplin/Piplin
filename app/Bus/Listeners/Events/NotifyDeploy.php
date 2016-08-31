@@ -18,7 +18,6 @@ use Fixhub\Bus\Jobs\SlackNotify;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\DB;
 
 /**
  * When a deploy finished, notify the followed user.

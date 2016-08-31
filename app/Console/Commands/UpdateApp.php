@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Fixhub\Bus\Events\RestartSocketServer;
 use Fixhub\Models\Deployment;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * A console command for updating the installation.

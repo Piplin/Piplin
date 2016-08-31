@@ -19,7 +19,6 @@ use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * The controller of projects.

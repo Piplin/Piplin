@@ -16,7 +16,6 @@ use Fixhub\Models\Deployment;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
 use Fixhub\Models\Template;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Response;
 
 /**

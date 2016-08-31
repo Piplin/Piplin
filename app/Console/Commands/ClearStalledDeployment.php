@@ -16,7 +16,6 @@ use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Clears any stalled deployments so that new deployments can be queued.

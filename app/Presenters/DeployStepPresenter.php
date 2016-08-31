@@ -12,7 +12,6 @@
 namespace Fixhub\Presenters;
 
 use Fixhub\Models\Command;
-use Illuminate\Support\Facades\Lang;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**

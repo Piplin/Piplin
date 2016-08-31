@@ -18,7 +18,6 @@ use Fixhub\Http\Requests\StoreSettingsRequest;
 use Fixhub\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Intervention\Image\Facades\Image;
 use PragmaRX\Google2FA\Contracts\Google2FA as Google2FA;
 

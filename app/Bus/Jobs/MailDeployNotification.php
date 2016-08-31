@@ -14,7 +14,6 @@ namespace Fixhub\Bus\Jobs;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
 use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 

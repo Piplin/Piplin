@@ -17,7 +17,6 @@ use Fixhub\Models\Command;
 use Fixhub\Models\Project;
 use Fixhub\Models\Template;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use DB;
 

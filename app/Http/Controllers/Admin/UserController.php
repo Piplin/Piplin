@@ -15,7 +15,6 @@ use Fixhub\Bus\Events\UserWasCreated;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreUserRequest;
 use Fixhub\Models\User;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * User management controller.

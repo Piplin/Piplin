@@ -14,7 +14,6 @@ namespace Fixhub\Http\Controllers\Admin;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreTemplateRequest;
 use Fixhub\Models\Template;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Controller for managing deployment template.

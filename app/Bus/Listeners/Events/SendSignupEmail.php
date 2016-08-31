@@ -15,7 +15,6 @@ use Fixhub\Bus\Events\UserWasCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Message;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
 /**

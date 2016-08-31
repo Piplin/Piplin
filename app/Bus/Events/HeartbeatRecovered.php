@@ -13,7 +13,6 @@ namespace Fixhub\Bus\Events;
 
 use Fixhub\Models\Heartbeat;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Event class which is thrown when the heartbeat recovers.

@@ -18,7 +18,6 @@ use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
 use Fixhub\Models\Template;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * The controller for managging projects.

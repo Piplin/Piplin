@@ -16,7 +16,6 @@ use Fixhub\Http\Requests\StoreProjectGroupRequest;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Template;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Project group management controller.

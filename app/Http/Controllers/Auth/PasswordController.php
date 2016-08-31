@@ -13,7 +13,6 @@ namespace Fixhub\Http\Controllers\Auth;
 
 use Fixhub\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Password reset controller.

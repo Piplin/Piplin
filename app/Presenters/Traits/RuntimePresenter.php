@@ -11,7 +11,6 @@
 
 namespace Fixhub\Presenters\Traits;
 
-use Illuminate\Support\Facades\Lang;
 use Fixhub\Presenters\RuntimeInterface;
 
 /**
