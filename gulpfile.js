@@ -71,13 +71,16 @@ elixir(function(mix) {
         paths.socketio_client  + '/socket.io.js',
         node_path              + '/localization.js',
         paths.toastr           + '/build/toastr.min.js',
-        paths.cropper          + '/dist/cropper.min.js',
+        paths.cropper          + '/dist/cropper.min.js'
+    ], 'public/js/vendor.js', node_path)
+    .scripts([
         paths.ace             + '/ace.js',
         paths.ace             + '/mode-sh.js',
         paths.ace             + '/mode-php.js',
         paths.ace             + '/mode-yaml.js',
         paths.ace             + '/mode-ini.js'
-    ], 'public/js/vendor.js', node_path)
+    ], 'public/js/ace.js', node_path)
+
     .scripts([
         'app.js',
         'projects.js',
@@ -105,6 +108,7 @@ elixir(function(mix) {
         'public/css/app.css',
         'public/css/vendor.css',
         'public/js/app.js',
+        'public/js/ace.js',
         'public/js/vendor.js'
     ])
     .copy('public/fonts', 'public/build/fonts')

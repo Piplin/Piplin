@@ -147,4 +147,5 @@
 
         app.project_id = {{ $project->id }};
     </script>
+    <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
