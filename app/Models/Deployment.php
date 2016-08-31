@@ -311,14 +311,14 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      *
      * @return array
      */
-    public function notificationPayload()
+    public function notifySlackPayload()
     {
-        $colour  = 'good';
-        $message = trans('notifications.success_message');
+        $color  = 'good';
+        $message = trans('notifySlacks.success_message');
 
         if ($this->status === self::FAILED) {
-            $colour  = 'danger';
-            $message = trans('notifications.failed_message');
+            $color  = 'danger';
+            $message = trans('notifySlacks.failed_message');
         }
 
         $payload = [
@@ -330,10 +330,10 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
                         route('deployments', ['id' => $this->id]),
                         $this->id
                     )),
-                    'color'    => $colour,
+                    'color'    => $color,
                     'fields'   => [
                         [
-                            'title' => trans('notifications.project'),
+                            'title' => trans('notifySlacks.project'),
                             'value' => sprintf(
                                 '<%s|%s>',
                                 route('projects', ['id' => $this->project_id]),
@@ -341,7 +341,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
                             ),
                             'short' => true,
                         ], [
-                            'title' => trans('notifications.commit'),
+                            'title' => trans('notifySlacks.commit'),
                             'value' => $this->commit_url ? sprintf(
                                 '<%s|%s>',
                                 $this->commit_url,
@@ -349,11 +349,11 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
                             ) : $this->short_commit,
                             'short' => true,
                         ], [
-                            'title' => trans('notifications.committer'),
+                            'title' => trans('notifySlacks.committer'),
                             'value' => $this->committer,
                             'short' => true,
                         ], [
-                            'title' => trans('notifications.branch'),
+                            'title' => trans('notifySlacks.branch'),
                             'value' => $this->project->branch,
                             'short' => true,
                         ],

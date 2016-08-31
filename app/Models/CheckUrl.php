@@ -16,7 +16,6 @@ use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * The application's  url store for health check.
@@ -98,7 +97,7 @@ class CheckUrl extends Model
      *
      * @return array
      */
-    public function notificationPayload()
+    public function notifySlackPayload()
     {
         $message = trans('checkUrls.message', ['link' => $this->title]);
 
@@ -110,7 +109,7 @@ class CheckUrl extends Model
                     'color'    => 'danger',
                     'fields'   => [
                         [
-                            'title' => trans('notifications.project'),
+                            'title' => trans('notifySlacks.project'),
                             'value' => sprintf(
                                 '<%s|%s>',
                                 route('projects', ['id' => $this->project_id]),

@@ -39,7 +39,7 @@ class HeartbeatMissed extends Event implements HasSlackPayloadInterface
      *
      * @return array
      */
-    public function notificationPayload()
+    public function notifySlackPayload()
     {
         $message = trans('heartbeats.missing_message', ['job' => $this->heartbeat->name]);
         $url     = route('projects', ['id' => $this->heartbeat->project_id]);
@@ -58,7 +58,7 @@ class HeartbeatMissed extends Event implements HasSlackPayloadInterface
                     'color'    => 'danger',
                     'fields'   => [
                         [
-                            'title' => trans('notifications.project'),
+                            'title' => trans('notifySlacks.project'),
                             'value' => sprintf('<%s|%s>', $url, $this->heartbeat->project->name),
                             'short' => true,
                         ], [

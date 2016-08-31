@@ -83,7 +83,7 @@ class NotifySlack extends Model
     public function testPayload()
     {
         return [
-            'text' => trans('notifications.test_message'),
+            'text' => trans('notifySlacks.test_message'),
         ];
     }
 }

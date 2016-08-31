@@ -13,5 +13,5 @@ namespace Fixhub\Bus\Events;
 
 interface HasSlackPayloadInterface
 {
-    public function notificationPayload();
+    public function notifySlackPayload();
 }

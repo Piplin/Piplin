@@ -40,8 +40,8 @@ class NotifyHeartbeat extends Event
      */
     public function handle(HasSlackPayloadInterface $event)
     {
-        foreach ($event->heartbeat->project->notifications as $notification) {
-            $this->dispatch(new SlackNotify($notification, $event->notificationPayload()));
+        foreach ($event->heartbeat->project->notifySlacks as $notifyslack) {
+            $this->dispatch(new SlackNotify($notifyslack, $event->notifySlackPayload()));
         }
     }
 }
