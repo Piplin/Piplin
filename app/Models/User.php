@@ -20,6 +20,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Support\Facades\Hash;
 use Creativeorange\Gravatar\Facades\Gravatar;
 
 /**
@@ -82,6 +83,20 @@ class User extends Model implements
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+    * Has any password being inserted by default.
+    *
+    * @param string $password
+    *
+    * @return \Fixhub\Models\User
+    */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+
+        return $this;
+    }
 
     /**
      * Generate a change email token.
