@@ -1,12 +1,16 @@
 # Fixhub
 
+[![StyleCI](https://styleci.io/repos/67016052/shield)](https://styleci.io/repos/67016052/)
+[![Build Status](https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square)](https://travis-ci.org/Fixhub/Fixhub)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web自动部署系统。
 
 ![Screenshot](http://fixhub.org/upload/screenshot.png)
 
 ## Fixhub能做什么？
 
-**注意** 本项目尚处于刚起步阶段，下面的特性有可能会有bug，欢迎随时向我们反馈。
+**注意** Fixhub仍处于并将长期处于初级阶段，下面的部分特性可能还没有100%完成，即使完成了也有可能会有bug。有任何问题请随时向我们反馈。
 
 * 通过SSH将程序部署到多台服务器上
 * 与Git仓储打通（最好与自托管的Gitlab服务器对接）
@@ -30,13 +34,26 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 - [x] Laravel 5.3
 - [x] Bootstrap
 - [x] ionicons
-- [x] Gulp
 - [x] Node.js
 - [x] Beanstalkd
 - [x] Redis
+- [x] Memcached
 - [x] JWT-Auth
 - [x] Socket.io
 - [x] Supervisor
+
+## 开发相关
+
+- [x] Gulp
+- [x] Sass
+- [x] PHPUnit
+- [x] PHP CodeSniffer
+- [x] PHP Docblock Checker
+- [x] PHP CS Fixer
+- [x] Travis-ci
+- [x] Style-CI
+- [x] Gitlab-Ci
+
 
 ## 安装环境要求
 
@@ -106,7 +123,7 @@ $ php artisan app:install
 
 ```shell
 $ git fetch --all
-$ git checkout 0.0.1
+$ git checkout 0.0.4
  ```
 
 二. 更新依赖
@@ -128,13 +145,14 @@ $ php artisan app:update
 - **用户名:** `demo@fixhub.org`
 - **密码:** `demo`
 
-注意：系统每半小时将会初始化演示数据.
+注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
 
 ### 鸣谢
 
 - [Laravel](http://laravel.com)
 - [Bootstrap](https://github.com/twbs/bootstrap)
 - [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
+- [Forge](https://forge.laravel.com/)
 - [Deployer](https://github.com/REBELinBLUE/deployer)
 - [socket.io](https://github.com/socketio/socket.io)
 - [ionicons](http://ionicons.com/)
@@ -142,4 +160,4 @@ $ php artisan app:update
 
 ## 软件授权协议
 
-Fixhub is licensed under [The MIT License (MIT)](LICENSE.md).
+Fixhub is licensed under [The MIT License (MIT)](LICENSE).
