@@ -163,8 +163,6 @@ return [
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        GrahamCampbell\Security\SecurityServiceProvider::class,
-        GrahamCampbell\Binput\BinputServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class,
         BackupManager\Laravel\Laravel5ServiceProvider::class,
