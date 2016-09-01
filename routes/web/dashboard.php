@@ -45,8 +45,9 @@ Route::group([
 
         // Webhook
         Route::get('webhook/{id}/refresh', [
-            'as'   => 'webhook.refresh',
-            'uses' => 'WebhookController@refresh',
+            'middleware' => 'admin',
+            'as'         => 'webhook.refresh',
+            'uses'       => 'WebhookController@refresh',
         ]);
 
         // Project
