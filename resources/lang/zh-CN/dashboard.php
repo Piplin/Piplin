@@ -17,6 +17,8 @@ return [
     'latest'            => '最近上线|最近上线',
     'pending'           => '当前共有 :count 个任务正在等待上线.|当前共有 :count 个任务正在等待上线.',
     'running'           => '当前共有 :count 个任务正在上线.|共有 :count 个任务正在上线.',
+    'author_issues'     => '我发起了 :count 个工单|我发起了 :count 个工单',
+    'assignee_issues'   => '当前共有 :count 个工单指派给我|当前共有 :count 个工单指派给我',
     'no_projects'       => '尚无项目',
     'no_deployments'    => '尚未执行过上线.',
     'status'            => '状态',

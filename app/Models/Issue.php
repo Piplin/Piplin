@@ -14,6 +14,7 @@ namespace Fixhub\Models;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 /**
  * Issue model.
@@ -42,7 +43,21 @@ class Issue extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'project_id'];
+    protected $fillable = ['title', 'content', 'author_id', 'assignee_id', 'project_id'];
+
+    /**
+     * Override the boot method to assign author_id by current user.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Issue $model) {
+            $model->author_id = Auth::user()->id;
+        });
+    }
 
     /**
      * Belongs to relationship.

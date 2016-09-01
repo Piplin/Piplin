@@ -4,7 +4,30 @@
         <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ trans('app.name') }}">{{ trans('app.name') }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
+                <li class="dropdown messages-menu" id="issues_menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="ion ion-ios-information-outline"></i>
+                        <span class="label label-success">{{ $author_issues_count + $assignee_issues_count }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header"><i class="ion ion-arrow-up-c"></i> {{ trans_choice('dashboard.author_issues', $author_issues_count, ['count' => $author_issues_count]) }}</li>
+                        <li>
+                            <ul class="menu">
+                                @foreach($author_issues as $issue)
+                                <li><a href="#">{{ $issue->title }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        <li class="header"><i class="ion ion-arrow-down-c"></i> {{ trans_choice('dashboard.assignee_issues', $assignee_issues_count, ['count' => $assignee_issues_count]) }}</li>
+                        <li>
+                            <ul class="menu">
+                                @foreach($assignee_issues as $issue)
+                                <li><a href="#">{{ $issue->title }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown messages-menu" id="pending_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="ion ion-clock"></i>

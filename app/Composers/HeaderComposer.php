@@ -11,7 +11,9 @@
 
 namespace Fixhub\Composers;
 
+use Auth;
 use Fixhub\Models\Deployment;
+use Fixhub\MOdels\Issue;
 use Illuminate\Contracts\View\View;
 
 /**
@@ -27,6 +29,16 @@ class HeaderComposer
      */
     public function compose(View $view)
     {
+        $author_issues = $this->getIssues('author');
+        $author_issues_count = $this->getIssuesCount('author');
+        $view->with('author_issues', $author_issues);
+        $view->with('author_issues_count', $author_issues_count);
+
+        $assignee_issues = $this->getIssues('assignee');
+        $assignee_issues_count = $this->getIssuesCount('assignee');
+        $view->with('assignee_issues', $assignee_issues);
+        $view->with('assignee_issues_count', $assignee_issues_count);
+
         $pending = $this->getPending();
 
         $view->with('pending', $pending);
@@ -73,5 +85,27 @@ class HeaderComposer
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')
                            ->get();
+    }
+
+    /**
+    * Gets issues with a supplied identity.
+    *
+    * @param  string $identity
+    * @return array
+    */
+    private function getIssues($identity)
+    {
+        return Issue::where($identity . '_id', Auth::user()->id)->get();
+    }
+
+    /**
+    * Gets issues count with a supplied identity.
+    *
+    * @param  string $identity
+    * @return array
+    */
+    private function getIssuesCount($identity)
+    {
+        return Issue::where($identity . '_id', Auth::user()->id)->count();
     }
 }

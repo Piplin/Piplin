@@ -17,6 +17,8 @@ return [
     'latest'            => 'Latest Deployment|Latest Deployments',
     'pending'           => ':count pending deployment|:count pending deployments',
     'running'           => ':count running deployment|:count running deployments',
+    'author_issues'     => 'You have sent :count issue|You have sent :count issues',
+    'assignee_issues'   => 'There are :count issue assigned to you|There are :count issues assigned to you',
     'no_projects'       => 'You have not yet setup any projects',
     'no_deployments'    => 'There have not been any deployments yet.',
     'status'            => 'Status',

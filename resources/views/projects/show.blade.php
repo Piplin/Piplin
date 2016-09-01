@@ -60,8 +60,7 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#issues" data-toggle="tab"><span class="ion ion-ios-information-outline"></span> {{ trans('issues.label') }}</a></li>
-                    <li><a href="#deployments" data-toggle="tab"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
+                    <li class="active"><a href="#deployments" data-toggle="tab"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
                     <li><a href="#servers" data-toggle="tab"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
                     <li><a href="#hooks" data-toggle="tab"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li><a href="#files" data-toggle="tab"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
@@ -69,10 +68,7 @@
                     <li><a href="#health" data-toggle="tab"><span class="ion ion-heart-broken"></span> {{ trans('heartbeats.tab_label') }}</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="issues">
-                        @include('projects._partials.issues')
-                    </div>
-                    <div class="tab-pane" id="deployments">
+                    <div class="tab-pane active" id="deployments">
                         @include('projects._partials.deployments')
                     </div>
                     <div class="tab-pane" id="servers">
