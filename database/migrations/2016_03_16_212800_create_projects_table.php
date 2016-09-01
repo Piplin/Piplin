@@ -34,7 +34,6 @@ class CreateProjectsTable extends Migration
             $table->unsignedInteger('builds_to_keep')->default(10);
             $table->string('url')->nullable();
             $table->string('build_url')->nullable();
-            $table->boolean('is_template')->default(false);
             $table->boolean('allow_other_branch')->default(true);
             $table->boolean('include_dev')->default(true);
             $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);

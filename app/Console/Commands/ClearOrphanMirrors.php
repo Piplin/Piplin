@@ -53,7 +53,7 @@ class ClearOrphanMirrors extends Command
     {
         $current_mirrors = [];
 
-        Project::where('is_template', false)->chunk(10, function ($projects) use (&$current_mirrors) {
+        Project::chunk(10, function ($projects) use (&$current_mirrors) {
             foreach ($projects as $project) {
                 $current_mirrors[] = $project->mirrorPath();
             }
