@@ -27,7 +27,8 @@ class Issue extends Model
     const PENDING      = 2;
     const APPROVING    = 3;
     const FAILED       = 4;
-    const NOT_APPROVED = 5;
+    const REJECTED     = 5;
+    const NOT_APPROVED = 6;
 
     /**
      * The attributes excluded from the model's JSON form.
