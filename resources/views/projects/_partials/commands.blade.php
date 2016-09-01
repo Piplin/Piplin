@@ -1,4 +1,4 @@
-@if (Route::currentRouteName() == 'projects')
+@if (Route::currentRouteName() == 'projects' && $current_user->is_admin)
 <div class="callout">
     <h4>{{ trans('commands.deploy_webhook') }} <i class="ion ion-help" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
     <code id="webhook">{{ $project->webhook_url }}</code><button class="btn btn-xs btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="ion ion-refresh"></i></button>
