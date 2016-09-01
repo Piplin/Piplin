@@ -15,7 +15,7 @@ use Fixhub\Models\Command;
 use Fixhub\Models\Project;
 use Fixhub\Models\ConfigFile;
 use Fixhub\Models\SharedFile;
-use Fixhub\Models\Template;
+use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\Variable;
 
 /**
@@ -30,10 +30,10 @@ class SetupProject extends Job
      * Create a new command instance.
      *
      * @param  Project      $project
-     * @param  int          $template_id
+     * @param  int          $template
      * @return SetupProject
      */
-    public function __construct(Project $project, $template)
+    public function __construct(Project $project, DeployTemplate $template)
     {
         $this->project  = $project;
         $this->template = $template;

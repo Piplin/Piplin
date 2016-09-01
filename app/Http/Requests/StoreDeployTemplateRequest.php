@@ -16,7 +16,7 @@ use Fixhub\Http\Requests\Request;
 /**
  * Request for validating groups.
  */
-class StoreTemplateRequest extends Request
+class StoreDeployTemplateRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

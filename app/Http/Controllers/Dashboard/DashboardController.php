@@ -15,7 +15,6 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
-use Fixhub\Models\Template;
 use Illuminate\Support\Facades\Response;
 
 /**

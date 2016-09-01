@@ -16,7 +16,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
-use Fixhub\Models\Template;
+use Fixhub\Models\DeployTemplate;
 use Illuminate\Http\Request;
 
 /**
@@ -38,7 +38,7 @@ class ProjectController extends Controller
         $groups = ProjectGroup::orderBy('order')
                     ->get();
 
-        $templates = Template::orderBy('name')
+        $templates = DeployTemplate::orderBy('name')
                     ->get();
 
         return view('admin.projects.index', [
@@ -83,7 +83,7 @@ class ProjectController extends Controller
 
         $project = Project::create($fields);
 
-        $template = Template::find($template_id);
+        $template = DeployTemplate::find($template_id);
 
         if ($template) {
             dispatch(new SetupProject(

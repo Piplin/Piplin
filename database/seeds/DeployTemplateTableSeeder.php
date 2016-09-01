@@ -10,27 +10,27 @@
  */
 
 use Fixhub\Models\Command;
-use Fixhub\Models\Template;
+use Fixhub\Models\DeployTemplate;
 use Illuminate\Database\Seeder;
 
-class TemplateTableSeeder extends Seeder
+class DeployTemplateTableSeeder extends Seeder
 {
     public function run()
     {
         DB::table('deploy_templates')->delete();
 
-        $laravel = Template::create([
+        $laravel = DeployTemplate::create([
             'name' => 'Laravel',
         ]);
 
-        Template::create([
+        DeployTemplate::create([
             'name' => 'Wordpress',
         ]);
 
         Command::create([
             'name'            => 'Down',
             'script'          => 'php artisan down',
-            'targetable_type' => 'Fixhub\\Models\\Template',
+            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => 'deploy',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -39,7 +39,7 @@ class TemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Run Migrations',
             'script'          => 'php artisan migrate --force',
-            'targetable_type' => 'Fixhub\\Models\\Template',
+            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => 'deploy',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -48,7 +48,7 @@ class TemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Up',
             'script'          => 'php artisan up',
-            'targetable_type' => 'Fixhub\\Models\\Template',
+            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => 'deploy',
             'step'            => Command::BEFORE_ACTIVATE,

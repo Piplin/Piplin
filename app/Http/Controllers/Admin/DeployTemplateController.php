@@ -12,13 +12,13 @@
 namespace Fixhub\Http\Controllers\Admin;
 
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreTemplateRequest;
-use Fixhub\Models\Template;
+use Fixhub\Http\Requests\StoreDeployTemplateRequest;
+use Fixhub\Models\DeployTemplate;
 
 /**
  * Controller for managing deployment template.
  */
-class TemplateController extends Controller
+class DeployTemplateController extends Controller
 {
     /**
      * Shows all templates.
@@ -27,7 +27,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        $templates = Template::orderBy('name')
+        $templates = DeployTemplate::orderBy('name')
                     ->get();
 
         return view('admin.templates.index', [
@@ -44,7 +44,7 @@ class TemplateController extends Controller
      */
     public function show($template_id)
     {
-        $template = Template::findOrFail($template_id);
+        $template = DeployTemplate::findOrFail($template_id);
 
         return view('admin.templates.show', [
             'breadcrumb' => [
@@ -54,7 +54,7 @@ class TemplateController extends Controller
             'sharedFiles'     => $template->sharedFiles,
             'configFiles'     => $template->configFiles,
             'variables'       => $template->variables,
-            'targetable_type' => 'Fixhub\\Models\\Template',
+            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $template->id,
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
@@ -64,12 +64,12 @@ class TemplateController extends Controller
     /**
      * Store a newly created template in storage.
      *
-     * @param  StoreTemplateRequest $request
+     * @param  StoreDeployTemplateRequest $request
      * @return Response
      */
-    public function store(StoreTemplateRequest $request)
+    public function store(StoreDeployTemplateRequest $request)
     {
-        return Template::create($request->only(
+        return DeployTemplate::create($request->only(
             'name'
         ));
     }
@@ -78,12 +78,12 @@ class TemplateController extends Controller
      * Update the specified template in storage.
      *
      * @param  int                  $template_id
-     * @param  StoreTemplateRequest $request
+     * @param  StoreDeployTemplateRequest $request
      * @return Response
      */
-    public function update($template_id, StoreTemplateRequest $request)
+    public function update($template_id, StoreDeployTemplateRequest $request)
     {
-        $template = Template::findOrFail($template_id);
+        $template = DeployTemplate::findOrFail($template_id);
 
         $template->update($request->only(
             'name'
@@ -100,7 +100,7 @@ class TemplateController extends Controller
      */
     public function destroy($template_id)
     {
-        $template = Template::findOrFail($template_id);
+        $template = DeployTemplate::findOrFail($template_id);
 
         $template->delete();
 

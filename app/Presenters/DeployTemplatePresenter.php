@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
- * The view presenter for a template class.
+ * The view presenter for a deploy template class.
  */
-class TemplatePresenter extends CommandPresenter
+class DeployTemplatePresenter extends CommandPresenter
 {
     //
 }

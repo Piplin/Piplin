@@ -12,16 +12,17 @@
 namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\SetupRelations;
-use Fixhub\Presenters\TemplatePresenter;
+use Fixhub\Presenters\DeployTemplatePresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 /**
- * Model for templates.
+ * Model for deploy templates.
  */
-class Template extends Model implements HasPresenter
+class DeployTemplate extends Model implements HasPresenter
 {
     use SetupRelations;
+
     /**
      * All templates belong in group 1.
      */
@@ -40,13 +41,6 @@ class Template extends Model implements HasPresenter
      * @var array
      */
     protected $fillable = ['name', 'group_id'];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'deploy_templates';
 
     /**
      * Additional attributes to include in the JSON representation.
@@ -75,7 +69,7 @@ class Template extends Model implements HasPresenter
         parent::boot();
 
         // Set the required fields to empty values
-        static::creating(function (Template $model) {
+        static::creating(function (DeployTemplate $model) {
             $model->group_id = static::GROUP_ID;
 
             return true;
@@ -133,6 +127,6 @@ class Template extends Model implements HasPresenter
      */
     public function getPresenterClass()
     {
-        return TemplatePresenter::class;
+        return DeployTemplatePresenter::class;
     }
 }

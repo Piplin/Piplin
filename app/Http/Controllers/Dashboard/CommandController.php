@@ -15,7 +15,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreCommandRequest;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
-use Fixhub\Models\Template;
+use Fixhub\Models\DeployTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use DB;
@@ -42,8 +42,8 @@ class CommandController extends Controller
         ];
 
         if (Str::contains(\Route::currentRouteName(), 'templates')) {
-            $target = Template::findOrFail($targetable_id);
-            $targetable_type = 'Fixhub\\Models\\Template';
+            $target = DeployTemplate::findOrFail($targetable_id);
+            $targetable_type = 'Fixhub\\Models\\DeployTemplate';
             $breadcrumb = [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
                 ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
@@ -204,7 +204,7 @@ class CommandController extends Controller
     /**
      * Get's the commands in a specific step.
      *
-     * @param  Project|Template $target
+     * @param  Project|DeployTemplate $target
      * @param  int              $step
      * @return Collection
      */

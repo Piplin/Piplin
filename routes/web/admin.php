@@ -14,7 +14,7 @@ Route::group([
     'namespace'  => 'Admin',
     'prefix'     => 'admin',
 ], function () {
-    Route::resource('templates', 'TemplateController', [
+    Route::resource('templates', 'DeployTemplateController', [
         'only'  => ['index', 'store', 'update', 'destroy', 'show'],
         'names' => [
             'index'   => 'admin.templates.index',
@@ -45,7 +45,7 @@ Route::group([
         ],
     ]);
 
-    Route::resource('groups', 'GroupController', [
+    Route::resource('groups', 'ProjectGroupController', [
         'only' => ['index', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.groups.index',
@@ -57,6 +57,6 @@ Route::group([
 
     Route::post('groups/reorder', [
         'as'    => 'admin.groups.reorder',
-        'uses'  => 'GroupController@reorder',
+        'uses'  => 'ProjectGroupController@reorder',
     ]);
 });

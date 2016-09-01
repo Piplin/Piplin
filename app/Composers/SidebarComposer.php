@@ -15,7 +15,6 @@ use Cache;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Link;
 use Fixhub\Models\Project;
-use Fixhub\Models\Template;
 use Fixhub\Models\Tip;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;

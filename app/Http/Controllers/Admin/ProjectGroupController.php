@@ -14,13 +14,12 @@ namespace Fixhub\Http\Controllers\Admin;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectGroupRequest;
 use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\Template;
 use Illuminate\Http\Request;
 
 /**
  * Project group management controller.
  */
-class GroupController extends Controller
+class ProjectGroupController extends Controller
 {
     /**
      * Display a listing of the groups.
