@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a92bb8d6bd2a2e4f30fafdf70c8e05d7",
-    "content-hash": "652a3a40eddb48965abb711277e1d0a0",
+    "hash": "bd017bad044b04e39cbb94666de2ccab",
+    "content-hash": "d718f2058b53d1846b309b20c2701a09",
     "packages": [
         {
             "name": "andywer/js-localization",
@@ -932,69 +932,6 @@
             "time": "2015-12-24 15:02:55"
         },
         {
-            "name": "graham-campbell/binput",
-            "version": "v3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GrahamCampbell/Laravel-Binput.git",
-                "reference": "814bcce1c012fbdf3a8275eef45e5d84ad01239d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Binput/zipball/814bcce1c012fbdf3a8275eef45e5d84ad01239d",
-                "reference": "814bcce1c012fbdf3a8275eef45e5d84ad01239d",
-                "shasum": ""
-            },
-            "require": {
-                "graham-campbell/security": "^3.5",
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*",
-                "illuminate/http": "5.1.*|5.2.*|5.3.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "graham-campbell/testbench": "^3.1",
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.8|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GrahamCampbell\\Binput\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                }
-            ],
-            "description": "Binput Is An Input Protector For Laravel 5",
-            "keywords": [
-                "Binput",
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Laravel Binput",
-                "Laravel-Binput",
-                "better",
-                "better input",
-                "framework",
-                "input",
-                "laravel",
-                "security"
-            ],
-            "time": "2016-04-26 14:18:44"
-        },
-        {
             "name": "graham-campbell/htmlmin",
             "version": "v4.4.0",
             "source": {
@@ -1058,63 +995,6 @@
                 "minifier"
             ],
             "time": "2016-08-28 09:57:28"
-        },
-        {
-            "name": "graham-campbell/security",
-            "version": "v3.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GrahamCampbell/Laravel-Security.git",
-                "reference": "07d4ec2658582032afe225928bde883474e2a543"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Security/zipball/07d4ec2658582032afe225928bde883474e2a543",
-                "reference": "07d4ec2658582032afe225928bde883474e2a543",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "graham-campbell/testbench": "^3.1",
-                "phpunit/phpunit": "^4.8|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GrahamCampbell\\Security\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                }
-            ],
-            "description": "Security Is A Port Of The Security Class From Codeigniter 3 For Laravel 5",
-            "keywords": [
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Laravel Security",
-                "Laravel-Security",
-                "codeigniter",
-                "framework",
-                "laravel",
-                "security"
-            ],
-            "time": "2016-04-26 14:29:04"
         },
         {
             "name": "guzzlehttp/psr7",
