@@ -11,6 +11,7 @@
 
 namespace Fixhub\Bus\Jobs;
 
+use Carbon\Carbon;
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Jobs\UpdateGitMirror;
 use Fixhub\Models\Command as Stage;
@@ -73,7 +74,7 @@ class DeployProject extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->deployment->started_at = date('Y-m-d H:i:s');
+        $this->deployment->started_at = Carbon::now();
         $this->deployment->status     = Deployment::DEPLOYING;
         $this->deployment->save();
 
@@ -123,7 +124,7 @@ class DeployProject extends Job implements ShouldQueue
         }
 
         if ($this->deployment->status !== Deployment::ABORTED) {
-            $this->deployment->finished_at = date('Y-m-d H:i:s');
+            $this->deployment->finished_at =  Carbon::now();
         }
 
         $this->deployment->save();
@@ -248,7 +249,7 @@ class DeployProject extends Job implements ShouldQueue
     {
         foreach ($step->servers as $log) {
             $log->status     = ServerLog::RUNNING;
-            $log->started_at = date('Y-m-d H:i:s');
+            $log->started_at =  Carbon::now();
             $log->save();
 
             try {
@@ -305,7 +306,7 @@ class DeployProject extends Job implements ShouldQueue
                 }
             }
 
-            $log->finished_at = date('Y-m-d H:i:s');
+            $log->finished_at =  Carbon::now();
             $log->save();
 
             // Throw an exception to prevent any more tasks running

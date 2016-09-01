@@ -11,6 +11,7 @@
 
 namespace Fixhub\Bus\Jobs;
 
+use Carbon\Carbon;
 use Fixhub\Bus\Jobs\UpdateGitReferences;
 use Fixhub\Models\Project;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
@@ -69,7 +70,7 @@ class UpdateGitMirror extends Job
             throw new \RuntimeException('Could not mirror repository - ' . $process->getErrorOutput());
         }
 
-        $this->project->last_mirrored = date('Y-m-d H:i:s');
+        $this->project->last_mirrored = Carbon::now();
         $this->project->save();
 
         $this->dispatch(new UpdateGitReferences($this->project));

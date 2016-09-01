@@ -11,6 +11,7 @@
 
 namespace Fixhub\Bus\Jobs;
 
+use Carbon\Carbon;
 use Fixhub\Bus\Jobs\DeployProject;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
@@ -126,7 +127,7 @@ class QueueDeployment extends Job
     private function setDeploymentStatus()
     {
         $this->deployment->status     = Deployment::PENDING;
-        $this->deployment->started_at = date('Y-m-d H:i:s');
+        $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;
 
         if (Auth::check()) {
