@@ -13,7 +13,7 @@ namespace Fixhub\Composers;
 
 use Auth;
 use Fixhub\Models\Deployment;
-use Fixhub\MOdels\Issue;
+use Fixhub\Models\Issue;
 use Illuminate\Contracts\View\View;
 
 /**
