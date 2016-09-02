@@ -14,6 +14,7 @@
         new app.CommandsTab();
         app.Commands.add({!! $commands !!});
     </script>
+    <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
 
 @push('templates')
