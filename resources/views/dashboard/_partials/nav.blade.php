@@ -4,6 +4,7 @@
         <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ trans('app.name') }}">{{ trans('app.name') }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <!--
                 <li class="dropdown messages-menu" id="issues_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="ion ion-ios-information-outline"></i>
@@ -28,6 +29,7 @@
                         </li>
                     </ul>
                 </li>
+                -->
                 <li class="dropdown messages-menu" id="pending_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="ion ion-clock"></i>

@@ -98,7 +98,7 @@ elixir(function(mix) {
         'users.js',
         'groups.js',
         'uploader.js',
-        'issues.js',
+        //'issues.js',
         'profile.js'
     ], 'public/js/app.js', 'resources/assets/js')
     .jsminify()
