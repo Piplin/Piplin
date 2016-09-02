@@ -32,7 +32,7 @@ class DeployTemplateController extends Controller
 
         return view('admin.templates.index', [
             'title'     => trans('templates.manage'),
-            'templates' => $templates->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'templates' => $templates->toJson(), // Because DeployTemplatePresenter toJson() is not working in the view
         ]);
     }
 

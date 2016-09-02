@@ -64,7 +64,7 @@ class CommandController extends Controller
             'targetable_type' => $targetable_type,
             'targetable_id'   => $target->id,
             'action'          => $types[$action],
-            'commands'        => $this->getForDeployStep($target, $types[$action]),
+            'commands'        => $this->getForDeployStep($target, $types[$action])->toJson(), // Because CommandPresenter toJson() is not working in the view
         ]);
     }
 

@@ -12,7 +12,7 @@
 @push('javascript')
     <script type="text/javascript">
         new app.CommandsTab();
-        app.Commands.add({!! $commands->toJson() !!});
+        app.Commands.add({!! $commands !!});
     </script>
 @endpush
 

@@ -46,7 +46,7 @@ class ProjectController extends Controller
             'title'     => trans('projects.manage'),
             'templates' => $templates,
             'groups'    => $groups,
-            'projects'  => $projects->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'projects'  => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
         ]);
     }
 
