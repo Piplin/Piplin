@@ -142,8 +142,8 @@ $ php artisan app:update
 
 体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
 
-- **用户名:** `demo@fixhub.org`
-- **密码:** `demo`
+- **用户名:** demo 或 `demo@fixhub.org`
+- **密码:** `fixhub`
 
 注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
 
