@@ -20,7 +20,7 @@ return [
     'warning'         => '保存失败，请检查表单信息。',
     'project'         => '项目',
     'address'         => 'noreply@domain.com',
-    'subject'         => 'Fixhub :status to deploy project :project.',
+    'subject'         => 'Fixhub 项目 :project 部署状态 :status .',
     'project_name'    => '项目名称',
     'deployed_branch' => '分支',
     'started_at'      => '开始于',

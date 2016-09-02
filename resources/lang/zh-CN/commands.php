@@ -12,17 +12,16 @@
 return [
 
     'label'                => '部署步骤',
-    'deploy_webhook'       => '当第三方应用调用以下webhook链接，Fixhub会自动触发该项目的上线',
+    'deploy_webhook'       => '当第三方服务调用以下webhook链接，Fixhub会自动触发部署工作。',
     'webhook_help'         => 'Webhook 帮助',
-    'webhook_example'      => '通过HTTP的POST请求，调用该URL，Fixhub会获取最近一次提交的代码，并自动触发上线。',
-    'webhook_fields'       => '可选的POST参数设置',
-    'webhook_reason'       => 'The reason the deployment is being run',
-    'webhook_source'       => 'A name to use to indicate who/what triggered the deployment, for instance "CI server"',
-    'webhook_branch'       => '部署分支，不填写将自动读取项目设置的默认分支',
-    'webhook_update'       => 'Whether a deployment should only run if the currently deployed branch matches to branch to be deployed' .
-                              ' , defaults to false',
-    'webhook_url'          => 'A URL to link the name to, for example the build details on your CI server',
-    'webhook_commands'     => 'A comma seperated list of optional command IDs to run',
+    'webhook_example'      => '以HTTP POST方式调用该URL, Fixhub会获取最近提交的代码，并自动触发部署工作。',
+    'webhook_fields'       => 'POST参数说明(可选项)',
+    'webhook_reason'       => '部署原因，尽可能简短地描述本次部署意图',
+    'webhook_source'       => '触发该部署工作的来源 如： "CI Server"',
+    'webhook_branch'       => '不填写将自动读取项目的默认分支',
+    'webhook_update'       => '布尔值，是否仅部署更新, 默认为false',
+    'webhook_url'          => 'webhook url, 将部署结果发送给其他服务',
+    'webhook_commands'     => '用逗号分隔的命令ID列表',
     'webhook_optional'     => '可选的命令ID',
     'webhook_curl'         => 'cURL 调用范例',
     'reason_example'       => '例如: 系统测试',
@@ -46,7 +45,7 @@ return [
     'install'              => '安装新版本',
     'activate'             => '切换新版本',
     'purge'                => '清理旧版本',
-    'title'                => ':step Commands',
+    'title'                => ':step 命令',
     'warning'              => '保存失败，请检查表单信息.',
     'create'               => '新增',
     'edit'                 => '编辑',
@@ -61,9 +60,9 @@ return [
     'example'              => '例如:',
     'optional_description' => '上线时该步骤是否需要被提示包含',
     'default_description'  => '包含该步骤，除非显式禁止 (例如: 复选框默认被选中)',
-    'services'             => 'Fixhub支持的服务提供商',
-    'services_description' => 'You can use the webhook with these services and the relevant details will be gathered from the data ' .
-                              'they send across. The &quot;<em>update_only</em>&quot; and &quot;<em>commands</em>&quot; parameters ' .
-                              'may be included in the query string, all other fields are ignored.',
+    'services'             => 'Fixhub支持的服务',
+    'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .
+                              '注意：在请求中包含 &quot;<em>update_only</em>&quot; 和 &quot;<em>commands</em>&quot; 参数 ' .
+                              ', 其他所有参数将被忽略.',
 
 ];

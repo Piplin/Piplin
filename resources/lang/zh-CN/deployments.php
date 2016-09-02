@@ -22,10 +22,8 @@ return [
     'webhook'               => 'Webhook',
     'rollback'              => '回滚到此版本',
     'rollback_title'        => '回滚到上一版本',
-    'expert'                => 'You should not rollback to previous deployments unless you a confident you can perform any additional ' .
-                               'cleanup which may be required.',
-    'rollback_warning'      => 'When rolling back to a previous deployment you may need to manually connect to your servers and run ' .
-                               'any database rollbacks or similar, this can not be done automatically.',
+    'expert'                => '回滚有风险，操作请谨慎！',
+    'rollback_warning'      => '如有必要请登录目标服务器进行一些清理工作。',
     'caution'               => '注意!',
     'cancel'                => '取消',
     'loading'               => '加载中',

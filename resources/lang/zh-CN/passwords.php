@@ -22,10 +22,10 @@ return [
     |
     */
 
-    'password' => 'Passwords must be at least six characters and match the confirmation.',
-    'user'     => 'We can\'t find a user with that e-mail address.',
-    'token'    => 'This password reset token is invalid.',
-    'sent'     => 'We have e-mailed your password reset link!',
-    'reset'    => 'Your password has been reset!',
+    'password' => '密码不少于6个字符，且与确认密码一致。',
+    'user'     => '账号不存在',
+    'token'    => '该密码重置的令牌已失效.',
+    'sent'     => '密码重置连接发送成功。',
+    'reset'    => '您的密码已被重置！',
 
 ];

@@ -25,8 +25,7 @@ return [
     'branch'            => '默认分支',
     'last_mirrored'     => '代码同步',
     'image'             => '构建状态',
-    'ci_image'          => 'If you use a CI server which generates an image to indicate the build status ' .
-                           'can put the URL here tox have it show on the project page',
+    'ci_image'          => '请填写项目构建状态的图标URL',
     'latest'            => '最近上线',
     'create'            => '新增项目',
     'edit'              => '编辑',
@@ -59,9 +58,7 @@ return [
     'not_deployed'      => '未上线',
     'options'           => '选项',
     'change_branch'     => '允许上线其他分支?',
-    'include_dev'       => '安装composer开发包?',
-    'insecure'          => 'Your Fixhub installation is not running over a secure connection, it is recommended ' .
-                           'that you let Fixhub generate an SSH key rather than supply one yourself so that the ' .
-                           'private key is not transmitted over an insecure connection.',
+    'include_dev'       => '安装composer?',
+    'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Fixhub自动生成。',
 
 ];

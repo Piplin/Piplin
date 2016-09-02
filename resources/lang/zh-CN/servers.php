@@ -24,7 +24,7 @@ return [
     'updated_at'         => '更新时间',
     'test'               => '测试该服务器是否连通',
     'path'               => '项目路径',
-    'example'            => 'The directory needs to exist on the server already & be both readable and writeable',
+    'example'            => '该目录必须真实存在，并确保部署用户具有读、写权限。',
     'warning'            => '服务器信息未被保存成功，请确认相关信息是否有误.',
     'successful'         => '成功',
     'testing'            => '测试中',
@@ -33,6 +33,6 @@ return [
     'options'            => '可选项',
     'deploy_code'        => '在该服务器上线代码？',
     'runs_code'          => '部署代码?',
-    'add_command'        => 'Add the new server to all existing commands',
+    'add_command'        => '在该服务器执行所有本项目的安装步骤',
 
 ];

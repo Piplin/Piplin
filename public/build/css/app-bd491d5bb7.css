@@ -10401,12 +10401,12 @@ div#reason div.radio label {
   border-radius: 50%; }
 
 dl.dl-horizontal#hook_fields dt {
-  width: 80px;
+  width: 100px;
   text-align: left;
   margin-bottom: 2px; }
 
 dl.dl-horizontal#hook_fields dd {
-  margin-left: 90px;
+  margin-left: 110px;
   margin-bottom: 2px; }
 
 dl.dl-horizontal#hook_command_ids dt {

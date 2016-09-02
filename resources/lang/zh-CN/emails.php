@@ -11,16 +11,16 @@
 
 return [
 
-    'creation_subject' => 'Account Creation',
-    'reset_subject'    => 'Your Password Reset Link',
-    'reset'            => 'Password Reset',
-    'created'          => 'Your account has been created!',
-    'reset_here'       => 'Click here to reset your password',
-    'login_at'         => 'You can log in using the following details at',
-    'username'         => 'Username',
-    'password'         => 'Password',
-    'confirm_email'    => 'Your Login Reset Link',
-    'login_reset'      => 'Login Reset',
-    'request_email'    => ':username, please use the following link to change the email address you use to login',
+    'creation_subject' => '账号创建',
+    'reset_subject'    => '密码重置连接',
+    'reset'            => '密码重置',
+    'created'          => '您的账号已成功创建!',
+    'reset_here'       => '点击这里重置密码',
+    'login_at'         => '请用以下信息进行登录',
+    'username'         => '用户名',
+    'password'         => '密码',
+    'confirm_email'    => '登录重置连接',
+    'login_reset'      => '登录重置',
+    'request_email'    => ':username, 请用以下链接更改登录邮箱',
 
 ];
