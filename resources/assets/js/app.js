@@ -23,6 +23,8 @@ toastr.options.extendedTimeOut = 7000;
 
     Lang.setLocale($('meta[name="locale"]').attr('content'));
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     var FINISHED     = 0;
     var PENDING      = 1;
     var DEPLOYING    = 2;
