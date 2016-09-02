@@ -27,8 +27,8 @@ return [
     'change_password'   => '修改密码',
     'settings'          => '界面设置',
     'verify_code'       => '验证码',
-    'verify_help'       => 'Scan the image to the right and enter the provided code.',
-    'invalid_code'      => 'The authentication code could not be verified.',
+    'verify_help'       => '请输入图片中所展示的验证码.',
+    'invalid_code'      => '认证码无效.',
     'has_2fa'           => '使用2FA',
     '2fa'               => '安全设置',
     'enable_2fa'        => '启用双因子认证',
@@ -56,7 +56,6 @@ return [
     'purple'            => '帝王紫',
     'blue'              => '天空蓝',
     'white'             => '珍珠白',
-    'with_sidebar'      => ':colour with light sidebar',
     'role'              => '角色',
     'level'             => [
         'admin'    => '超级管理员',

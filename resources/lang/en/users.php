@@ -57,7 +57,6 @@ return [
     'purple'            => 'Purple',
     'blue'              => 'Blue',
     'white'             => 'White',
-    'with_sidebar'      => ':colour with light sidebar',
     'role'              => 'Role',
     'level'             => [
         'admin'    => 'Administrator',
