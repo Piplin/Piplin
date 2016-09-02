@@ -39,8 +39,8 @@
                                 <li><code>@{{ short_sha }}</code> - {{ trans('commands.short_sha') }}, {{ trans('commands.example') }} <span class="label label-default">1def37e</span></li>
                                 <li><code>@{{ deployer_email }}</code> - {{ trans('commands.deployer_email') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->email }}</span></li>
                                 <li><code>@{{ deployer_name }}</code> - {{ trans('commands.deployer_name') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->name }}</span></li>
-                                <li><code>@{{ committer_email }}</code> - {{ trans('commands.committer_name') }}, {{ trans('commands.example') }} <span class="label label-default">joe.bloggs@example.com</span></li>
-                                <li><code>@{{ committer_name }}</code> - {{ trans('commands.committer_email') }}, {{ trans('commands.example') }} <span class="label label-default">Joe Bloggs</span></li>
+                                <li><code>@{{ committer_email }}</code> - {{ trans('commands.committer_email') }}, {{ trans('commands.example') }} <span class="label label-default">phecho@phecho.com</span></li>
+                                <li><code>@{{ committer_name }}</code> - {{ trans('commands.committer_name') }}, {{ trans('commands.example') }} <span class="label label-default">Phecho</span></li>
                             </ul>
                         </div>
                     </div>
