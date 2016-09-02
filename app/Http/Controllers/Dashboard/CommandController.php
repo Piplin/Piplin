@@ -64,7 +64,7 @@ class CommandController extends Controller
             'targetable_type' => $targetable_type,
             'targetable_id'   => $target->id,
             'action'          => $types[$action],
-            'commands'        => $this->getForDeployStep($target, $types[$action])->toJson(), // Because CommandPresenter toJson() is not working in the view
+            'commands'        => $this->getForDeployStep($target, $types[$action]),
         ]);
     }
 
@@ -214,6 +214,6 @@ class CommandController extends Controller
                 ->with('servers')
                 ->whereIn('step', [$step - 1, $step + 1])
                 ->orderBy('order', 'asc')
-                    ->get();
+                    ->get()->toJson(); // Because CommandPresenter toJson() is not working in the view
     }
 }
