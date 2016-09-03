@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Fixhub\Models\Setting;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,6 +27,16 @@ class CreateSettingsTable extends Migration
             $table->longText('value');
             $table->timestamps();
         });
+
+        Setting::create([
+            'name' => 'app_name',
+            'value' => 'Fixhub',
+        ]);
+
+        Setting::create([
+            'name' => 'app_about',
+            'value' => 'A web deployment system.',
+        ]);
     }
 
     /**

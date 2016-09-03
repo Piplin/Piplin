@@ -93,6 +93,7 @@ $ npm install --production
 
 ```shell
 $ chmod -R 777 bootstrap/cache
+$ chmod -R 777 bootstrap/fixhub
 $ chmod -R 777 storage
 $ chmod -R 777 public/upload
 ```
@@ -123,7 +124,7 @@ $ php artisan app:install
 
 ```shell
 $ git fetch --all
-$ git checkout 0.0.7
+$ git checkout 0.0.8
  ```
 
 二. 更新依赖
