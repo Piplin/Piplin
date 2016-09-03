@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
             'name'           => 'demo',
             'email'          => 'demo@fixhub.org',
             'nickname'       => 'Demo',
-            'password'       => bcrypt('demo'),
+            'password'       => 'demo',
             'remember_token' => str_random(10),
         ]);
 
@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
                 'name'           => $faker->userName,
                 'nickname'       => $faker->firstName . ' ' . $faker->lastName,
                 'email'          => $faker->safeEmail,
-                'password'       => bcrypt($faker->password),
+                'password'       => $faker->password,
                 'remember_token' => str_random(10),
             ]);
         }
