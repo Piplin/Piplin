@@ -28,6 +28,8 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 - [ ] 权限控制
 - [ ] 工单，工作流
 - [ ] 可视化的统计
+- [ ] 完善后台功能
+- [ ] API
 
 ## 使用到的技术
 
@@ -46,7 +48,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 - [x] Gulp
 - [x] Sass
-- [x] PHPUnit
+- [x] Codception
 - [x] PHP CodeSniffer
 - [x] PHP Docblock Checker
 - [x] PHP CS Fixer
