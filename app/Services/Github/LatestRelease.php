@@ -19,7 +19,7 @@ use Illuminate\Contracts\Cache\Repository as CacheRepository;
  */
 class LatestRelease implements LatestReleaseInterface
 {
-    const CACHE_TIME_IN_HOURS = 12;
+    const CACHE_TIME_IN_HOURS = 1;
 
     /**
      * @var string
