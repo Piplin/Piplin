@@ -1,19 +1,37 @@
 language: php
 
 php:
-  - 5.6
   - 7.0
-  - 7.1
 
-sudo: false
+services:
+  - postgresql
+  - redis-server
+
+addons:
+  postgresql: "9.3"
 
 before_install:
-  - cp .env.example .env
   - if [[ $TRAVIS_PHP_VERSION != 7.1 ]] ; then phpenv config-rm xdebug.ini; fi
 
-install: travis_retry composer install --no-interaction --no-scripts --prefer-source --no-suggest
+install:
+  - composer install --no-interaction --no-scripts --prefer-source --no-suggest
+
+before_script:
+    - cp .env.example .env
+    - sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=pgsql/g' .env
+    - sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=postgres/g' .env
+    - php artisan key:generate
+    - psql -c 'create database fixhub;' -U postgres
+    - php artisan migrate --seed --env="testing"
+    - php vendor/bin/codecept build
+    - make file-permission
+    - sleep 5
+    - php -S 127.0.0.1:8000 -t public/ 2>&1 >/dev/null &
 
 script: 
-  - php vendor/bin/phpunit --colors
   - vendor/bin/phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
   - vendor/bin/phpdoccheck --directory=app
+  - php vendor/bin/codecept run
+
+after_script:
+  - cat $TRAVIS_BUILD_DIR/storage/logs/*.log
