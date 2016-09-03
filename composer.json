@@ -42,7 +42,6 @@
         "fzaninotto/faker": "~1.5",
         "codeception/codeception": "*",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "block8/php-docblock-checker": "^1.0",
