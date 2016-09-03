@@ -11,6 +11,7 @@
 
 namespace Fixhub\Providers;
 
+use Fixhub\Composers\AppComposer;
 use Fixhub\Composers\CurrentUserComposer;
 use Fixhub\Composers\DashboardComposer;
 use Fixhub\Composers\DeploymentComposer;
@@ -27,6 +28,7 @@ use Illuminate\Support\ServiceProvider;
 class ComposerServiceProvider extends ServiceProvider
 {
     public $composers = [
+        AppComposer::class         => '*',
         CurrentUserComposer::class => '*',
         DashboardComposer::class   => ['dashboard.index'],
         DeploymentComposer::class  => ['projects.show'],

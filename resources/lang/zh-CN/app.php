@@ -11,8 +11,8 @@
 
 return [
 
-    'name'              => 'Fixhub',
-    'description'       => 'Fixhub - A web deployment system.',
+    'name'              => '站点名称',
+    'about'             => '站点介绍',
     'signout'           => '退出',
     'dashboard'         => '控制台',
     'admin'             => '系统设置',

@@ -16,7 +16,7 @@ use Fixhub\Http\Requests\Request;
 /**
  * Validate the user settings.
  */
-class StoreSettingsRequest extends Request
+class StoreUserSettingsRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

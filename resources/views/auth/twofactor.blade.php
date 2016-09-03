@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <b>{{ trans('app.name') }}</b>
+            <b>{{ $app_name }}</b>
         </div>
 
         <div class="login-box-body">

@@ -1,7 +1,7 @@
 @if($current_user->isAdmin)
 <div class="box box-info">
   <div class="box-header">
-    <h3 class="box-title">{{ trans('app.name') }}</h3>
+    <h3 class="box-title">{{ $app_name }}</h3>
   </div>
   <div class="box-body text-center">
     <p>
@@ -18,7 +18,7 @@
     </p>
   </div>
   <div class="box-footer text-center">
-    {{ trans('app.description') }}
+    {{ $app_about }}
   </div>
 <!-- /.box-footer -->
 </div>

@@ -11,7 +11,7 @@
 
 Route::get('cctray.xml', [
     'as'   => 'cctray',
-    'uses' => 'DashboardController@cctray',
+    'uses' => 'Dashboard\DashboardController@cctray',
 ]);
 
 Route::post('deploy/{hash}', [

@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo text-success">
-            <img src="/img/logo.svg"><strong>{{ trans('app.name') }}</strong>
+            <img src="/img/logo.svg"><strong>{{ $app_name }}</strong>
         </div>
 
         @if (session('error'))

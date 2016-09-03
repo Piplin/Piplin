@@ -14,7 +14,7 @@ namespace Fixhub\Http\Controllers\Profile;
 use Fixhub\Bus\Events\EmailChangeRequested;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProfileRequest;
-use Fixhub\Http\Requests\StoreSettingsRequest;
+use Fixhub\Http\Requests\StoreUserSettingsRequest;
 use Fixhub\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,10 +80,10 @@ class ProfileController extends Controller
     /**
      * Update user's settings.
      *
-     * @param  StoreSettingsRequest $request
+     * @param  StoreUserSettingsRequest $request
      * @return Response
      */
-    public function settings(StoreSettingsRequest $request)
+    public function settings(StoreUserSettingsRequest $request)
     {
         Auth::user()->update($request->only(
             'skin',

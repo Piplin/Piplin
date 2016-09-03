@@ -11,8 +11,8 @@
 
 return [
 
-    'name'              => 'Fixhub',
-    'description'       => 'Fixhub - A web deployment system.',
+    'name'              => 'App name',
+    'about'             => 'App about',
     'signout'           => 'Sign Out',
     'dashboard'         => 'Dashboard',
     'admin'             => 'Administration',

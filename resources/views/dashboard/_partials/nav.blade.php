@@ -1,7 +1,7 @@
 <header class="main-header">
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="container">
-        <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ trans('app.name') }}">{{ trans('app.name') }}</a>
+        <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ $app_name }}">{{ $app_name }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!--
@@ -73,6 +73,9 @@
                         </li>
                     </ul>
                 </li>
+                @if($current_user->is_admin)
+                <li><a href="/admin/settings"><i class="ion ion-wrench"></i> {{ trans('settings.label') }}</a></li>
+                @endif
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ $current_user->avatar_url }}" class="user-image" />

@@ -1,7 +1,7 @@
 @extends('emails.layout')
 
 @section('content')
-    <h1>{{ trans('app.name') }}</h1>
+    <h1>{{ $app_name }}</h1>
     <br />
     <h2>{{ trans('emails.reset') }}</h2>
 
