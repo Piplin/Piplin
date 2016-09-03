@@ -12,6 +12,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{{ trans('app.date') }}</th>
                     <th>{{ trans('deployments.started_by') }}</th>
                     <th>{{ trans('deployments.deployer') }}</th>
@@ -25,6 +26,7 @@
             <tbody>
                 @foreach ($deployments as $deployment)
                 <tr id="deployment_{{ $deployment->id }}">
+                    <td>{{ $deployment->id }}</td>
                     <td>{{ $deployment->started_at->format('Y-m-d H:i:s') }}</td>
                     <td>
                         {{ $deployment->is_webhook ? trans('deployments.webhook') : trans('deployments.manually') }}
