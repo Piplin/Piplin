@@ -22,7 +22,7 @@ before_script:
   - php -S 127.0.0.1:8000 -t public/ 2>&1 >/dev/null &
 
 after_script:
-  - cat $TRAVIS_BUILD_DIR/storage/logs/*.log
+  - cat storage/logs/*.log
 
 # Services
 services:
