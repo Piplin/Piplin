@@ -6,7 +6,7 @@
   <div class="box-body text-center">
     <p>
       <div class="btn-group">
-      <a href="/admin/projects" class="btn btn-info"><i class="ion ion-edit"></i>{{ trans('projects.manage') }}</a>
+      <a href="{{ route('admin.projects.create') }}" class="btn btn-info"><i class="ion ion-edit"></i>{{ trans('projects.create') }}</a>
       <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>

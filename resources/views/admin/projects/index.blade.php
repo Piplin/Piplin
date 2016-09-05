@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="box">
-
         <div class="box-body" id="no_projects">
             <p>{{ trans('projects.none') }}</p>
         </div>
@@ -41,6 +40,9 @@
     <script type="text/javascript">
         new app.ProjectsTab();
         app.Projects.add({!! $projects !!});
+        @if(isset($action) && $action == 'create')
+        $('button.btn.btn-success').trigger('click');
+        @endif
     </script>
 @endpush
 

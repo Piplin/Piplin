@@ -38,6 +38,10 @@
 
         new app.GroupsTab();
         app.Groups.add(groups);
+
+        @if(isset($action) && $action == 'create')
+        $('button.btn.btn-success').trigger('click');
+        @endif
     </script>
 @endpush
 

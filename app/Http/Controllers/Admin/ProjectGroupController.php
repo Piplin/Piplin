@@ -22,6 +22,16 @@ use Illuminate\Http\Request;
 class ProjectGroupController extends Controller
 {
     /**
+     * Shows the create project group view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create(Request $request)
+    {
+        return $this->index($request)->withAction('create');
+    }
+
+    /**
      * Display a listing of the groups.
      *
      * @return Response

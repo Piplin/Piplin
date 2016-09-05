@@ -26,8 +26,9 @@ Route::group([
     ]);
 
     Route::resource('projects', 'ProjectController', [
-        'only'  => ['index', 'store', 'update', 'destroy'],
+        'only'  => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
+            'create'   => 'admin.projects.create',
             'index'   => 'admin.projects.index',
             'store'   => 'admin.projects.store',
             'update'  => 'admin.projects.update',
@@ -46,8 +47,9 @@ Route::group([
     ]);
 
     Route::resource('groups', 'ProjectGroupController', [
-        'only' => ['index', 'store', 'update', 'destroy'],
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
+            'create'   => 'admin.groups.create',
             'index'   => 'admin.groups.index',
             'store'   => 'admin.groups.store',
             'update'  => 'admin.groups.update',

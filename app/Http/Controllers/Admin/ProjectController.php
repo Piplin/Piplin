@@ -25,6 +25,16 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     /**
+     * Shows the create project view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create(Request $request)
+    {
+        return $this->index($request)->withAction('create');
+    }
+
+    /**
      * Shows all projects.
      *
      * @param  Request  $request
