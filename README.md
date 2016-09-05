@@ -91,13 +91,10 @@ $ composer install -o --no-dev
 $ npm install --production
 ```
 
-四. 确保storage、bootstrap/cache和public/upload目录可写。
+四. 确保storage、bootstrap/cache、bootstrap/fixhub和public/upload目录可写。
 
 ```shell
-$ chmod -R 777 bootstrap/cache
-$ chmod -R 777 bootstrap/fixhub
-$ chmod -R 777 storage
-$ chmod -R 777 public/upload
+$ make file-permission
 ```
 
 五. 拷贝.env.example到.env
