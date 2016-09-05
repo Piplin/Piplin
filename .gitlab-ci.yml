@@ -3,18 +3,30 @@ before_script:
   - docker-php-ext-enable zip
   - docker-php-ext-enable mbstring
   - docker-php-ext-enable gd
-#  - docker-php-ext-enable pdo_mysql
-#  - ping -c 3 mysql  
-# - composer self-update
+  - docker-php-ext-enable pdo_mysql
+  - ping -c 3 mysql  
+ # - composer self-update
   - composer config repo.packagist composer https://packagist.phpcomposer.com
   - composer install --no-progress --no-interaction
-#  - cp .env.example .env
-#  - sed -i 's/DB_HOST=127.0.0.1/DB_HOST=mysql/g' .env
-  - php -v
+  - cp .env.example .env
+  - sed -i 's/DB_HOST=127.0.0.1/DB_HOST=mysql/g' .env
+  - sed -i 's/DB_DATABASE=fixhub/DB_DATABASE=homestead/g' .env
+  - sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=homestead/g' .env
+  - sed -i 's/DB_PASSWORD=/DB_PASSWORD=secret/g' .env
+  - sed -i 's/QUEUE_DRIVER=redis/QUEUE_DRIVER=database/g' .env
+  - php artisan key:generate
+  - php artisan migrate --seed --env="testing"
+  - php vendor/bin/codecept build
+  - make file-permission
+  - sleep 5
+  - php -S 127.0.0.1:8000 -t public/ 2>&1 >/dev/null &
+
+after_script:
+  - cat $TRAVIS_BUILD_DIR/storage/logs/*.log
 
 # Services
 services:
-#  - mysql:latest
+  - mysql:latest
 
 # Variables
 variables:
@@ -39,5 +51,5 @@ php-7.0:
     - phpcs --version
     - phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
     - echo "Running PHPUnit Tests on PHP 7.0"
-    - php vendor/bin/phpunit --colors --coverage-text
     - php vendor/bin/phpdoccheck --directory=app
+    - php vendor/bin/codecept run
