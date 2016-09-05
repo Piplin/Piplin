@@ -126,7 +126,7 @@ $ php artisan app:install
 
 ```shell
 $ git fetch --all
-$ git checkout 0.1.0
+$ git checkout 0.1.1
  ```
 
 二. 更新依赖
