@@ -25,7 +25,6 @@ class CreateDeployTemplatesTable extends Migration
         Schema::create('deploy_templates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('group_id');
             $table->timestamps();
         });
     }

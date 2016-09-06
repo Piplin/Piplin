@@ -24,11 +24,6 @@ class DeployTemplate extends Model implements HasPresenter
     use SetupRelations;
 
     /**
-     * All templates belong in group 1.
-     */
-    const GROUP_ID = 1;
-
-    /**
      * Fields to show in the JSON presentation.
      *
      * @var array
@@ -40,7 +35,7 @@ class DeployTemplate extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'group_id'];
+    protected $fillable = ['name'];
 
     /**
      * Additional attributes to include in the JSON representation.
@@ -56,25 +51,7 @@ class DeployTemplate extends Model implements HasPresenter
      */
     protected $casts = [
         'id'          => 'integer',
-        'group_id'    => 'integer',
     ];
-
-    /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // Set the required fields to empty values
-        static::creating(function (DeployTemplate $model) {
-            $model->group_id = static::GROUP_ID;
-
-            return true;
-        });
-    }
 
     /**
      * Define a accessor for the count of projects.

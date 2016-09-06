@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label for="file">{{ trans('sharedFiles.file') }}</label>
                         <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('sharedFiles.example') }}"></i>
-                        <input type="text" class="form-control" id="file" name="file" placeholder="/storage/" />
+                        <input type="text" class="form-control" id="file" name="file" placeholder="storage/" />
                     </div>
                 </div>
                 <div class="modal-footer">
