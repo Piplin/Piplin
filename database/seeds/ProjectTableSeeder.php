@@ -14,52 +14,55 @@ use Illuminate\Database\Seeder;
 
 class ProjectTableSeeder extends Seeder
 {
+    private $private_key = <<<EOT
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvfk0IThyGmEM07cJW/29eiblONRsOurT+Df6EGt1a4+BBg1M
+fsAAEtmOhSxQ2MpSnhI8N5/8CQgUumb6tQRok68HJvWlPy/Aw1kmHpVcUTG0n9UI
+Ak9I77auXE8SRXkXI/M5j9vXjvxDQ9fmIrxLaJQLjDRPH4Jr9g/z0u9fmoBAUcHQ
+gNzLA7YHz8kzQEDS6mH3YNYDHBs1RorY6mKyhFH9juHYEZh/MPOWeFvWNPe01AYr
+2hrhE0jgC29WmOUSX2z4JzZqK+7zZe61VSxde5c290Wyas3CFaVsHNkzW+Q5Ig3g
+H+4gTom9UaflZkoQLyqPxMAt4T6XmlWFPKL+pQIDAQABAoIBAA73UfcIBl0zphoL
+wm3/2GyGIerPOVOO6nIUntuqS47UuFpss8kMgTT69LJjIl9h2Q5g62OKdAWWIGPq
+9vdJyJ9R26NjGMiYj3wUSt9/7szquIsa8k2UR2+zGZtmE09r0bngUHmX3SyDjR0M
+JjI4WUx81UgPWuhlkvHIofHNL9/w9aG3rIAI+6K4iifYjtjDwkqMH/tXu+EIUDLp
+HczzrqeFwIHZel/jY+ROu4kDNM4orxS0st1YyxbgS8IQWtaqZi/I3+sS3V8hUKYb
+ycTTtdnlKUFJYNbceR6NZ5npJeYFrR9WNi1vNCNSPMC6i8dVR8/xw2+ilPUeFOGM
+amzD9+ECgYEA+HGkbQx7MLSqu5Y4P4K0wztpLDakjD/uldp6algR58VnkUMrf0MD
+C3uzZoRWQIeKM0FIDFtIu2SjNMvtBgnRjTMlgR05pF6UsjIyu0l43/6wwEb3pOaq
+J/5aS5lJsnclSR3OgpF4fKq3oU0N2c/vDuWZiutiB3kMECdPrWL/o/kCgYEAw8BR
+CzXVGWf52befMqVesIR1RZBAFJjUjQP4/kLoiYiAnDaXJdEfzRKV7NRmeuJb1645
+D9/SxSjNTen4xlGhYtoduviYJUA0IslOZzK/zYkMMHTF8Iwn91s/HsNJswOboHvg
+ScpJurhHt8+uZiIHjHUSgysUo0X7ly+GXXgJww0CgYA2s97+W8csHDuTfin4YfEn
+I4euwoFMmC8SM77Md4PJwn9hTqbfKIQdHSmNIwpSvwVA79jLT7Yd/LSqxVP1Bmhr
+bJ2PZj3w4RpgegkNj8nbmBqW24lfd6Jzl9+N0byWXQGKrdNwkFM1L+mqzGqGUPBU
+GV3LZrR47MApNl6m0Kt1EQKBgDzCVuV54hkustinLBzWQ5vaoWPkMF+0SFU05HZX
+YkI+Ql06fJPaY1qN6EdIbj66P/OkOkX5HTzhO0hx1SwJbmR2ez/rpZ36XbRmc5WI
+pQww+72WoVHWzxjyE5eC2j9cYVPg329IALaaOHiPV/yPl3Q7anGYT6GWOU9mCvi8
+J5uJAoGAZjV7H+8V/up8EgqnDelio45QseUtSnlhd+zxDD3ASblWMo2WJquJIEjl
+ZboccgN9lBMXJSl+q5fw0ngO7l68qu2i0VW/BOFLwbYz/QTlLDUlL63jDyNrZ/s6
+5GTqZDKQ6psXyFkJxV0KayKfkjbQp2N8+iUl/AJ7Tsw7CpW4IoA=
+-----END RSA PRIVATE KEY-----
+EOT;
+
+    private $public_key = <<<EOT
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9+TQhOHIaYQzTtwlb/b16JuU41Gw66tP4N/oQa3Vrj4EGDUx+wAAS2Y6FLFDYylKeEjw3n/wJCBS6Zvq1BGiTrwcm9aU/L8DDWSYelVxRMbSf1QgCT0jvtq5cTxJFeRcj8zmP29eO/END1+YivEtolAuMNE8fgmv2D/PS71+agEBRwdCA3MsDtgfPyTNAQNLqYfdg1gMcGzVGitjqYrKEUf2O4dgRmH8w85Z4W9Y097TUBivaGuETSOALb1aY5RJfbPgnNmor7vNl7rVVLF17lzb3RbJqzcIVpWwc2TNb5DkiDeAf7iBOib1Rp+VmShAvKo/EwC3hPpeaVYU8ov6l fixhub@fixhub.org
+EOT;
+
     public function run()
     {
         DB::table('projects')->delete();
 
         Project::create([
-            'name'              => 'Fixhub',
-            'hash'              => str_random(60),
-            'repository'        => 'https://github.com/fixhub/fixhub.git',
-            'url'               => 'http://fixhub.app',
-            'group_id'          => 2,
-            'private_key'       => '-----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEAmrMjtajVvmd99T8xwUNrIFbrzSmZ6VCM89hfm4Ut9atv29gG
-l2HFPJY7VtslXDJVL67w5EUMspy82tkAX7F03iaarSsbo6nC16UTfbfNTi44Snm0
-T/5RMavSOnOMRJ8BQcfzqge4oIQzVGXOs0YvNFdSt4paBp9dssKS+7yP/hDvgAVz
-+LE3IcIeO26aXATcuB4zq3vjaqSzWZGdNhOJZ4EmjgmOq9+k3SAmooHkF+p/14MJ
-tq0ZK9KjSGbHfyKMi2EuvwllFCY19eqsV7dcMDIsMKUW2diFC52dJSO+EF47nA/j
-sNDisFsIC7DeeVVBl1TpaV9RidqeZmdx+mF9AQIDAQABAoIBAH4qhYAdTx03eGGw
-hVqSKmc4nJ05RX4kJKCmoerLZh1LETJh75Y8tchg2cpPdhvILPNzoKD6s41kCR4P
-BqAEsUSQhWufka4bwH1w8wGACp+tUFllAqqOxhdVg2IKZKZ+a18DvPS50ViQGPDH
-CxnorozoftyTqDJofNlSmN9X/LN+RZ1zRJRaPkBvSkYOCT4gnJLmHLGN7eJsHQeR
-EJe83E4VPZ+2faBHEigXAHc4rh63iRxmmqqlcrItXzONZZUOjXwBNqZs4aVl+DZd
-1pPiB9nOT9zLiy9ZwHZfIRIF3LkWAVsIkzOPDw9wLNgzI60uiLlYY1ODua8maqDP
-m5eOT7ECgYEAzbVdEVngZd/jRlAo/LOLyy6NbZP4fli26hZjJBAJ8HhI93JEcxts
-l/1E3rUME2a+F8CQ5FlGP02k66sB5lhzCg81Ym4fxbIP1n09IPmaRzSdM55SpbFy
-7OV4VyrJKl7g2Y/utdb17DjYGovu+HX978j1iOH8qUruwAZyWshqdW0CgYEAwIVO
-AohxuytN1GlQW4byQvHO4y+AXtZJ4iuBiyOqGhYs8bcnbV3+B0UTHtJyM8Novzj6
-OcgiCEHP0Kj6Lj9RYu2sBvsgyfxEURdkHD7DPpYKlheCd7I1a9qk4/UyGx11YdnP
-bcqrxv6e2FPBXNZGTXGBmHtIItxHYBEehguRLWUCgYALpR61or7fRYNaMaOAWrGp
-OONstpm0nVUNf2LxYa8OW+DVkTRqx7yoBgBmEx2x43kTYyVQp/UgFEcnyDB9V7h7
-c0z0W4OU73WSENjrCvY+3a2ghG/tTVRSMNNVK+jjayeTaWB8DsUxMC6bohxPGG7d
-qiSsMQ7ajpFhcXv7w6izKQKBgQC+Pz0+vYz+NCXeQRAa0nj29LPIx7kofsRWTz3d
-vKmsy7swRhkdN6P/lR/29mnKg1EwnmKP1RjkZfyyKznHl+SaSVoVL/dQAw2TwPS6
-AL+6SlU9yw+vrxihc1g8uKICL5M+1hnoWj50EEvyZJoRXuHsR72UbEd1w454/ZHX
-TvjxDQKBgCtikMNAqTParY/tX0xNohD7+svTKZt92CxW7Q/17H26ehFKUQvw6Agd
-ulR2AVTGi6STEgzXf6UP5CAVhYRw9irCAQYpceL0GVzfZPQsXyLuMCnJ8UD6CBRn
-i5vkNY4OZdOuEV9boFOFYa58WRNK7vthHkZJj++Amu3dZ6RHBlLQ
------END RSA PRIVATE KEY-----',
-            'public_key'         => 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCasyO1qNW+Z331PzHBQ2sgVuvNKZnpUIzz2F+bhS31q2/b2Aa' .
-                                    'XYcU8ljtW2yVcMlUvrvDkRQyynLza2QBfsXTeJpqtKxujqcLXpRN9t81OLjhKebRP/lExq9I6c4xEnwFBx/OqB7' .
-                                    'ighDNUZc6zRi80V1K3iloGn12ywpL7vI/+EO+ABXP4sTchwh47bppcBNy4HjOre+NqpLNZkZ02E4lngSaOCY6r3' .
-                                    '6TdICaigeQX6n/Xgwm2rRkr0qNIZsd/IoyLYS6/CWUUJjX16qxXt1wwMiwwpRbZ2IULnZ0lI74QXjucD+Ow0OKw' .
-                                    'WwgLsN55VUGXVOlpX1GJ2p5mZ3H6YX0B deploy@fixhub',
-            'last_run'           => null,
-            'build_url'          => 'http://ci.rebelinblue.com/build-status/image/3?branch=master',
-            'allow_other_branch' => true,
-            'include_dev'        => false,
+            'name'        => 'Fixhub',
+            'hash'        => str_random(60),
+            'repository'  => 'https://github.com/fixhub/fixhub.git',
+            'url'         => 'http://fixhub.org',
+            'group_id'    => 1,
+            'private_key' => $this->private_key,
+            'public_key'  => $this->public_key,
+            'last_run'    => null,
+            'build_url'   => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
+            'include_dev' => false,
         ]);
     }
 }
