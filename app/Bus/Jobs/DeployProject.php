@@ -32,7 +32,6 @@ use Illuminate\Support\Facades\Cache;
 
 /**
  * Deploys an actual project.
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class DeployProject extends Job implements ShouldQueue
 {
