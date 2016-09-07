@@ -30,6 +30,7 @@ return [
     'project'             => 'Project',
     'commit'              => 'Commit',
     'committer'           => 'Committer',
+    'deploy_reason'       => 'Deploy reason',
     'failure_only'        => 'Failure Only',
     'notify_failure_only' => 'Notify only on Failure',
     'failure_description' => 'Only notify this channel on failure',

@@ -11,7 +11,7 @@
 
 namespace Fixhub\Bus\Listeners\Events;
 
-use Fixhub\Bus\Jobs\SlackNotify;
+use Fixhub\Bus\Jobs\NotifySlackJob;
 use Fixhub\Bus\Events\HasSlackPayloadInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -41,7 +41,7 @@ class NotifyHeartbeat extends Event
     public function handle(HasSlackPayloadInterface $event)
     {
         foreach ($event->heartbeat->project->notifySlacks as $notifyslack) {
-            $this->dispatch(new SlackNotify($notifyslack, $event->notifySlackPayload()));
+            $this->dispatch(new NotifySlackJob($notifyslack, $event->notifySlackPayload()));
         }
     }
 }

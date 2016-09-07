@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Services\Github;
+namespace Fixhub\Services\Update;
 
 use Httpful\Request;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;

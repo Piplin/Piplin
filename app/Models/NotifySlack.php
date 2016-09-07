@@ -11,7 +11,7 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Jobs\SlackNotify;
+use Fixhub\Bus\Jobs\NotifySlackJob;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -70,7 +70,7 @@ class NotifySlack extends Model
 
         // When the notification has been saved queue a test
         static::saved(function (NotifySlack $model) {
-            $model->dispatch(new SlackNotify($model, $model->testPayload()));
+            $model->dispatch(new NotifySlackJob($model, $model->testPayload()));
         });
     }
 

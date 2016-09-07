@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Services\Github;
+namespace Fixhub\Services\Update;
 
 interface LatestReleaseInterface
 {

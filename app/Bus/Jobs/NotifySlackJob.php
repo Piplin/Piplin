@@ -21,7 +21,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Sends notification to slack.
  */
-class SlackNotify extends Job implements ShouldQueue
+class NotifySlackJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

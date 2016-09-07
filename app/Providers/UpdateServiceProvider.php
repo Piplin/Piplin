@@ -11,8 +11,8 @@
 
 namespace Fixhub\Providers;
 
-use Fixhub\Services\Github\LatestRelease;
-use Fixhub\Services\Github\LatestReleaseInterface;
+use Fixhub\Services\Update\LatestRelease;
+use Fixhub\Services\Update\LatestReleaseInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**

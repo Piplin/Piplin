@@ -29,6 +29,7 @@ return [
     'project'             => '项目',
     'commit'              => '代码版本号',
     'committer'           => '代码提交者',
+    'deploy_reason'       => '上线原因',
     'failure_only'        => '推送消息',
     'notify_failure_only' => '仅失败时进行推送',
     'failure_description' => '仅失败时进行推送',

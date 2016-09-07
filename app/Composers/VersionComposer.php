@@ -11,7 +11,7 @@
 
 namespace Fixhub\Composers;
 
-use Fixhub\Services\Github\LatestReleaseInterface;
+use Fixhub\Services\Update\LatestReleaseInterface;
 use Illuminate\Contracts\View\View;
 
 /**

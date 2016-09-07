@@ -14,7 +14,7 @@ namespace Fixhub\Bus\Listeners\Events;
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Jobs\MailDeployNotification;
 use Fixhub\Bus\Jobs\RequestProjectCheckUrl;
-use Fixhub\Bus\Jobs\SlackNotify;
+use Fixhub\Bus\Jobs\NotifySlackJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
@@ -57,7 +57,7 @@ class NotifyDeploy extends Event implements ShouldQueue
                 continue;
             }
 
-            $this->dispatch(new SlackNotify($notifyslack, $deployment->notifySlackPayload()));
+            $this->dispatch(new NotifySlackJob($notifyslack, $deployment->notifySlackPayload()));
         }
 
         // Send email notification
