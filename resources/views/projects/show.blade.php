@@ -10,11 +10,11 @@
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
-                        <li><a href="{{ $project->branch_url }}" target="_blank">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
-                        @if(!empty($project->url))
-                        <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
+                        <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
+                        @if(!empty($project->last_mirrored))
+                        <li><a href="#" class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right text-blue">{{ $project->last_mirrored }}</span> <i class="ion ion-refresh"></i></a></li>
                         @else
-                        <li><a href="#">{{ trans('projects.last_mirrored') }}<span class="pull-right text-blue">{{ $project->last_mirrored }}</span></a></li>
+                        <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
                         @endif
                     </ul>
                 </div>

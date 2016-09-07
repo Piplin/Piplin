@@ -1,6 +1,10 @@
 var app = app || {};
 
 (function ($) {
+    $('.repo-refresh').on('click', function (event) {
+        console.log('hello,repo refresh.');
+    });
+
     $('select.deployment-source').select2({
         width: '100%',
         minimumResultsForSearch: 6
