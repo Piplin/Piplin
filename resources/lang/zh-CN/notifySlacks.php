@@ -22,7 +22,7 @@ return [
     'bot'                 => 'Fixhub',
     'icon_info'           => '可以是表情符, 如： :ghost: 或者一个图片的URL.',
     'webhook'             => 'Webhook URL',
-    'test_message'        => '[Fixhub]发条测试消息，证明我的存在。 :ok_hand:',
+    'test_message'        => '发条测试消息，证明我的存在。 :ok_hand:',
     'success_message'     => '上线任务 %s 部署成功! :smile:',
     'failed_message'      => '上线任务 %s 部署失败! :cry:',
     'branch'              => '分支',

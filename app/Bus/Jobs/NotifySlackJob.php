@@ -51,7 +51,8 @@ class NotifySlackJob extends Job implements ShouldQueue
     public function handle()
     {
         $payload = [
-            'channel' => $this->notify_slack->channel,
+            'channel'  => $this->notify_slack->channel,
+            'username' => 'Fixhub',
         ];
 
         if (!empty($this->notify_slack->icon)) {
