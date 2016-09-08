@@ -20,7 +20,7 @@
         "source": "https://github.com/fixhub/fixhub"
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
         "predis/predis": "~1.0",
         "graham-campbell/htmlmin": "~4.2",
