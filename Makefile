@@ -21,7 +21,6 @@ dependency-install:
 file-permission:
 	chmod -R 777 storage/
 	chmod -R 777 bootstrap/cache/
-	chmod -R 777 bootstrap/fixhub/
 	chmod -R 777 public/upload
 
 migration:
