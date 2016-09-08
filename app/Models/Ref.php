@@ -48,6 +48,6 @@ class Ref extends Model
      */
     public function project()
     {
-        return $this->belongsTo('Fixhub\Models\Project');
+        return $this->belongsTo(Project::class);
     }
 }

@@ -12,6 +12,7 @@
 namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
+use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Variable extends Model
 {
-    use SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, HasTargetable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,22 +45,4 @@ class Variable extends Model
     protected $casts = [
         'id'         => 'integer',
     ];
-
-     /**
-     * Get all of the owning assignable models.
-     */
-    public function targetable()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Project
-     */
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
 }

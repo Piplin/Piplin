@@ -32,13 +32,13 @@ trait SetupRelations
     }
 
     /**
-     * Has many relationship.
+     * Has many relationship to config file.
      *
-     * @return Variable
+     * @return ConfigFile
      */
-    public function variables()
+    public function configFiles()
     {
-        return $this->morphMany(Variable::class, 'targetable');
+        return $this->morphMany(ConfigFile::class, 'targetable');
     }
 
     /**
@@ -52,12 +52,12 @@ trait SetupRelations
     }
 
     /**
-     * Has many relationship to config file.
+     * Has many relationship.
      *
-     * @return ConfigFile
+     * @return Variable
      */
-    public function configFiles()
+    public function variables()
     {
-        return $this->morphMany(ConfigFile::class, 'targetable');
+        return $this->morphMany(Variable::class, 'targetable');
     }
 }
