@@ -12,6 +12,7 @@
 namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
+use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
@@ -22,7 +23,7 @@ use Fixhub\Presenters\CommandPresenter;
  */
 class Command extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, HasTargetable;
 
     const BEFORE_CLONE    = 1;
     const DO_CLONE        = 2;
@@ -42,7 +43,7 @@ class Command extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $hidden = ['project', 'created_at', 'deleted_at', 'updated_at'];
+    protected $hidden = ['created_at', 'deleted_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -63,24 +64,6 @@ class Command extends Model implements HasPresenter
         'default_on' => 'boolean',
         'order'      => 'integer',
     ];
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Project
-     */
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
-
-     /**
-     * Get all of the owning targetable models.
-     */
-    public function targetable()
-    {
-        return $this->morphTo();
-    }
 
     /**
      * Belongs to many relationship.
