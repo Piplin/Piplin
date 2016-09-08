@@ -13,7 +13,7 @@ var app = app || {};
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
-            title = trans('notifySlack.edit');
+            title = trans('notifySlacks.edit');
             $('.btn-danger', modal).show();
         } else {
             $('#notifyslack_id').val('');
