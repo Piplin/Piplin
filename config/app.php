@@ -174,7 +174,6 @@ return [
          */
         Fixhub\Providers\AppServiceProvider::class,
         Fixhub\Providers\AuthServiceProvider::class,
-        Fixhub\Providers\ConfigServiceProvider::class,
         Fixhub\Providers\ComposerServiceProvider::class,
         Fixhub\Providers\EventServiceProvider::class,
         Fixhub\Providers\RouteServiceProvider::class,

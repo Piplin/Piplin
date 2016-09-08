@@ -61,16 +61,4 @@ Route::group([
         'as'    => 'admin.groups.reorder',
         'uses'  => 'ProjectGroupController@reorder',
     ]);
-
-    Route::resource('settings', 'SettingController', [
-        'only'  => ['index'],
-        'names' => [
-            'index'  => 'admin.settings.index',
-        ],
-    ]);
-
-    Route::post('settings', [
-        'as'   => 'admin.settings.save',
-        'uses' => 'SettingController@postSettings'
-    ]);
 });

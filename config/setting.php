@@ -10,5 +10,8 @@
  */
 
 return [
-    //
+    'app_name'   => 'Fixhub',
+    'app_url'    => env('APP_URL', 'http://localhost'),
+    'app_about'  => 'A web deployment system.',
+    'app_locale' => env('APP_LOCALE', 'en'),
 ];

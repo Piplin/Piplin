@@ -46,9 +46,9 @@ class AppComposer
      */
     public function compose(View $view)
     {
-        $view->with('app_name', $this->config->get('setting.app_name'));
-        $view->with('app_url', $this->config->get('setting.app_url'));
-        $view->with('app_about', $this->config->get('setting.app_about'));
-        $view->with('app_locale', $this->config->get('setting.app_locale'));
+        $view->with('app_name', config('setting.app_name'));
+        $view->with('app_url', config('setting.app_url'));
+        $view->with('app_about', config('setting.app_about'));
+        $view->with('app_locale', config('setting.app_locale'));
     }
 }
