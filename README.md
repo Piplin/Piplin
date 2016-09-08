@@ -1,6 +1,6 @@
 # Fixhub
 
-[![StyleCI](https://styleci.io/repos/67016052/shield)](https://styleci.io/repos/67016052/)
+[![StyleCI](https://styleci.io/repos/67609292/shield)](https://styleci.io/repos/67609292/)
 [![Build Status](https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square)](https://travis-ci.org/Fixhub/Fixhub)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
@@ -123,7 +123,7 @@ $ php artisan app:install
 
 ```shell
 $ git fetch --all
-$ git checkout 0.1.1
+$ git checkout 0.1.3
  ```
 
 二. 更新依赖
