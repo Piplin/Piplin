@@ -1,7 +1,7 @@
 # Fixhub
 
 [![StyleCI](https://styleci.io/repos/67609292/shield)](https://styleci.io/repos/67609292/)
-[![Build Status](https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square)](https://travis-ci.org/Fixhub/Fixhub)
+[![Build Status](https://travis-ci.org/Fixhub/Fixhub.svg?branch=master)](https://travis-ci.org/Fixhub/Fixhub)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web自动部署系统。
