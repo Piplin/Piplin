@@ -91,7 +91,7 @@ $ composer install -o --no-dev
 $ npm install --production
 ```
 
-四. 确保storage、bootstrap/cache、bootstrap/fixhub和public/upload目录可写。
+四. 确保storage、bootstrap/cache和public/upload目录可写。
 
 ```shell
 $ make file-permission
