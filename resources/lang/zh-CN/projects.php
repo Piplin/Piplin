@@ -43,7 +43,7 @@ return [
     'view_ssh_key'      => '查看SSH秘钥内容',
     'private_ssh_key'   => 'SSH私钥',
     'public_ssh_key'    => 'SSH公钥',
-    'ssh_key'           => 'SSH私钥',
+    'ssh_key'           => 'SSH秘钥',
     'ssh_key_info'      => '想要用指定的私钥，请将其内容拷贝至此。(私钥本身不要设置密码)',
     'ssh_key_example'   => '假如留空，系统将自动创建。(推荐)',
     'deploy_project'    => '开始上线',
