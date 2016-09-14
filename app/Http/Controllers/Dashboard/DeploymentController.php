@@ -90,6 +90,11 @@ class DeploymentController extends Controller
             'project_id'      => $previous->project_id,
             'branch'          => $previous->branch,
             'project_id'      => $previous->project_id,
+            'reason'          => trans('deployments.rollback_reason', [
+                    'reason' => $request->get('reason'),
+                    'id'     => $previous_id,
+                    'commit' => $previous->short_commit
+            ]),
             'optional'        => $optional,
         ];
 

@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -26,6 +27,7 @@ return [
                                'cleanup which may be required.',
     'rollback_warning'      => 'When rolling back to a previous deployment you may need to manually connect to your servers and run ' .
                                'any database rollbacks or similar, this can not be done automatically.',
+    'rollback_reason'       => ':reason (rollback to :id -> :commit)',
     'caution'               => 'Caution!',
     'cancel'                => 'Cancel',
     'loading'               => 'Loading',
