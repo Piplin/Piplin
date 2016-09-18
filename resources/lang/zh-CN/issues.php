@@ -22,5 +22,7 @@ return [
     'updated_at'          => '最近更新',
     'confirm'             => '确认',
     'warning'             => '保存失败，请检查表单信息.',
+    'latest'              => 'Latest',
+    'author'              => '作者',
 
 ];

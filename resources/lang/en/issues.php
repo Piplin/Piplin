@@ -22,5 +22,7 @@ return [
     'updated_at'          => 'Updated',
     'confirm'             => 'Confirm',
     'warning'             => 'The issue could not be saved, please check the form below.',
+    'latest'              => 'Latest',
+    'author'              => 'Author',
 
 ];

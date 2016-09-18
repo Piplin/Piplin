@@ -62,6 +62,16 @@ class Issue extends Model
     /**
      * Belongs to relationship.
      *
+     * @return User
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    /**
+     * Belongs to relationship.
+     *
      * @return Project
      */
     public function project()

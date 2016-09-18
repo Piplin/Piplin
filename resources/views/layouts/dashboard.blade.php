@@ -22,7 +22,7 @@
                     <section class="content-header">
                         @yield('right-buttons')
 
-                        <h1>{{ $title }} @if(isset($subtitle)) <small>{{ $subtitle }}</small>@endif</h1>
+                        <h1>{{ $title or trans('dashboard.title') }} @if(isset($subtitle)) <small>{{ $subtitle }}</small>@endif</h1>
                         @if(Request::is('/'))
                             @include('dashboard._partials.update')
                         @endif

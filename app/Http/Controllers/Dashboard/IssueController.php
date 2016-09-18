@@ -20,6 +20,15 @@ use Fixhub\Models\Issue;
  */
 class IssueController extends Controller
 {
+    public function index()
+    {
+        $issues = Issue::paginate(15);
+        return view('issues.index', [
+                'title'  => trans('issues.label'),
+                'issues' => $issues,
+        ]);
+    }
+
     /**
      * Store a newly created issue in storage.
      *
