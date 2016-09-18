@@ -18,4 +18,4 @@ Route::group([
             'as'   => 'issues',
             'uses' => 'IssueController@index',
         ]);
-});
+    });
