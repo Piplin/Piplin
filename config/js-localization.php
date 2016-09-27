@@ -47,6 +47,7 @@ return [
         'checkUrls'     => ['create', 'edit', 'successful', 'failed', 'untested', 'length'],
         'commands'      => ['create', 'edit'],
         'groups'        => ['create', 'edit'],
+        'keys'          => ['create', 'edit'],
         'users'         => ['create', 'edit'],
         'templates'     => ['create', 'edit'],
         'sharedFiles'   => ['create', 'edit'],

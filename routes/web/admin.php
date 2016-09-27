@@ -46,6 +46,21 @@ Route::group([
         ],
     ]);
 
+    Route::resource('keys', 'KeyController', [
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'names' => [
+            'create'  => 'admin.keys.create',
+            'index'   => 'admin.keys.index',
+            'store'   => 'admin.keys.store',
+            'update'  => 'admin.keys.update',
+            'destroy' => 'admin.keys.destroy',
+        ],
+    ]);
+    Route::post('keys/reorder', [
+        'as'    => 'admin.keys.reorder',
+        'uses'  => 'KeyController@reorder',
+    ]);
+
     Route::resource('groups', 'ProjectGroupController', [
         'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [

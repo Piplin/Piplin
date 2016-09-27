@@ -10292,6 +10292,7 @@ table.text-center, table.text-center td, table.text-center th {
   background-color: #51a351 !important; }
 
 #key pre,
+#show_key pre,
 #help pre {
   white-space: pre-wrap; }
 

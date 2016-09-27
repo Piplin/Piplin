@@ -17,6 +17,7 @@ return [
     'name'              => 'Name',
     'name_placeholder'  => 'My awesome webapp',
     'group'             => 'Group',
+    'key'               => 'SSH Key',
     'repository'        => 'Repository',
     'repository_url'    => 'Repository URL',
     'builds'            => 'Builds to Keep',
@@ -41,20 +42,9 @@ return [
     'build_status'      => 'Build Status',
     'app_status'        => 'Application Status',
     'heartbeats_status' => 'Heartbeat Status',
-    'view_ssh_key'      => 'View the SSH Key',
-    'private_ssh_key'   => 'Private SSH Key',
-    'public_ssh_key'    => 'Public SSH Key',
-    'ssh_key'           => 'SSH key',
-    'ssh_key_info'      => 'If you have a specific private key you wish to use you can paste it here. The key must ' .
-                           'not have a passphrase.',
-    'ssh_key_example'   => 'An SSH key will be generated automatically if you do not enter one, this is recommended.',
     'deploy_project'    => 'Deploy the project',
     'deploy'            => 'Deploy',
     'redeploy'          => 'Redeploy',
-    'server_keys'       => 'This key must be added to the server\'s <code>~/.ssh/authorized_keys</code> ' .
-                           'for each user you wish to run commands as.',
-    'git_keys'          => 'The key will also need to be added to the <strong>Deploy Keys</strong> ' .
-                           'for you repository unless you are using a public/unautheticated URL.',
     'finished'          => 'Finished',
     'pending'           => 'Pending',
     'deploying'         => 'Deploying',

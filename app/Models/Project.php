@@ -40,7 +40,7 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $hidden = ['private_key', 'created_at', 'deleted_at', 'updated_at', 'hash',
+    protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
                          'servers', 'commands', 'notifyEmails','group', 'issues',
                          'heartbeats', 'checkUrls','notifySlacks', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
@@ -52,7 +52,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $fillable = ['name', 'repository', 'branch', 'group_id', 'include_dev',
-                           'builds_to_keep', 'url', 'build_url', 'allow_other_branch', 'private_key',
+                           'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
                            ];
 
     /**
@@ -107,14 +107,6 @@ class Project extends Model implements HasPresenter
         // When  creating the model generate an SSH Key pair and a webhook hash
         // Fix me by gsl
         static::creating(function (Project $model) {
-            if (!array_key_exists('private_key', $model->attributes) || $model->private_key === '') {
-                $model->generateSSHKey();
-            }
-
-            if (!array_key_exists('public_key', $model->attributes) || $model->public_key === '') {
-                $model->regeneratePublicKey();
-            }
-
             if (!array_key_exists('hash', $model->attributes)) {
                 $model->generateHash();
             }
@@ -294,57 +286,6 @@ class Project extends Model implements HasPresenter
     }
 
     /**
-     * Generates an SSH key and sets the private/public key properties.
-     *
-     * @return void
-     */
-    protected function generateSSHKey()
-    {
-        $key = tempnam(storage_path('app/'), 'sshkey');
-        unlink($key);
-
-        $process = new Process('tools.GenerateSSHKey', [
-            'key_file' => $key,
-        ]);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
-
-        $this->attributes['private_key'] = file_get_contents($key);
-        $this->attributes['public_key']  = file_get_contents($key . '.pub');
-
-        unlink($key);
-        unlink($key . '.pub');
-    }
-
-    /**
-     * Generates an SSH key and sets the private/public key properties.
-     *
-     * @return void
-     */
-    protected function regeneratePublicKey()
-    {
-        $key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($key, $this->private_key);
-
-        $process = new Process('tools.RegeneratePublicSSHKey', [
-            'key_file' => $key,
-        ]);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
-
-        $this->attributes['public_key']  = file_get_contents($key . '.pub');
-
-        unlink($key);
-        unlink($key . '.pub');
-    }
-
-    /**
      * Belongs to relationship.
      *
      * @return Group
@@ -352,6 +293,16 @@ class Project extends Model implements HasPresenter
     public function group()
     {
         return $this->belongsTo(ProjectGroup::class, 'group_id', 'id');
+    }
+
+    /**
+     * Belongs to relationship.
+     *
+     * @return Key
+     */
+    public function key()
+    {
+        return $this->belongsTo(Key::class, 'key_id', 'id');
     }
 
     /**

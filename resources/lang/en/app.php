@@ -19,6 +19,7 @@ return [
     'projects'          => 'Projects',
     'templates'         => 'Templates',
     'groups'            => 'Groups',
+    'keys'              => 'SSH Key',
     'users'             => 'Users',
     'tips'              => 'Tips',
     'links'             => 'Usefull links',
