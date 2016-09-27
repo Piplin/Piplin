@@ -81,7 +81,7 @@ class DeployProject extends Job implements ShouldQueue
         $this->deployment->project->save();
 
         $this->private_key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($this->private_key, $this->deployment->project->private_key);
+        file_put_contents($this->private_key, $this->deployment->project->key->private_key);
 
         $this->release_archive = $this->deployment->project_id . '_' . $this->deployment->release_id . '.tar.gz';
 

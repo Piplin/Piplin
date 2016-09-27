@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Admin;
 use Fixhub\Bus\Jobs\SetupProject;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
+use Fixhub\Models\Key;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
 use Fixhub\Models\DeployTemplate;
@@ -45,6 +46,9 @@ class ProjectController extends Controller
         $projects = Project::orderBy('name')
                     ->get();
 
+        $keys = Key::orderBy('name')
+                    ->get();
+
         $groups = ProjectGroup::orderBy('order')
                     ->get();
 
@@ -54,6 +58,7 @@ class ProjectController extends Controller
         return view('admin.projects.index', [
             'is_secure' => $request->secure(),
             'title'     => trans('projects.manage'),
+            'keys'      => $keys,
             'templates' => $templates,
             'groups'    => $groups,
             'projects'  => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view

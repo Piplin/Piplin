@@ -19,6 +19,7 @@ return [
     'projects'          => '项目',
     'templates'         => '部署模板',
     'groups'            => '项目分组',
+    'keys'              => 'SSH Key',
     'users'             => '用户管理',
     'tips'              => '小贴士',
     'links'             => '友情链接',

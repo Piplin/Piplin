@@ -72,6 +72,7 @@ var app = app || {};
             $('#project_repository').val('');
             $('#project_branch').val('master');
             $('#project_group_id').val($("#project_group_id option:first").val());
+            $('#project_key_id').val($("#project_key_id option:first").val());
             $('#project_builds_to_keep').val(10);
             $('#project_url').val('');
             $('#project_build_url').val('');
@@ -136,6 +137,7 @@ var app = app || {};
             repository:         $('#project_repository').val(),
             branch:             $('#project_branch').val(),
             group_id:           $('#project_group_id').val(),
+            key_id:             $('#project_key_id').val(),
             builds_to_keep:     $('#project_builds_to_keep').val(),
             url:                $('#project_url').val(),
             build_url:          $('#project_build_url').val(),
@@ -286,6 +288,7 @@ var app = app || {};
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
             $('#project_group_id').val(this.model.get('group_id'));
+            $('#project_key_id').val(this.model.get('key_id'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));
             $('#project_url').val(this.model.get('url'));
             $('#project_build_url').val(this.model.get('build_url'));
