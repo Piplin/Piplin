@@ -62,7 +62,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var key = app.Keys.get($('#key_id').val());
+        var key = app.Keys.get($('#model_id').val());
 
         key.destroy({
             wait: true,
@@ -240,24 +240,6 @@ var app = app || {};
         },
         render: function () {
             var data = this.model.toJSON();
-
-            data.status_css = 'primary';
-            data.icon_css   = 'help';
-            data.status     = Lang.get('keys.untested');
-
-            if (parseInt(this.model.get('status')) === SUCCESSFUL) {
-                data.status_css = 'success';
-                data.icon_css   = 'checkmark-round';
-                data.status     = Lang.get('keys.successful');
-            } else if (parseInt(this.model.get('status')) === TESTING) {
-                data.status_css = 'warning';
-                data.icon_css   = 'load-c fixhub-spin';
-                data.status     = Lang.get('keys.testing');
-            } else if (parseInt(this.model.get('status')) === FAILED) {
-                data.status_css = 'danger';
-                data.icon_css   = 'alert';
-                data.status     = Lang.get('keys.failed');
-            }
 
             this.$el.html(this.template(data));
 
