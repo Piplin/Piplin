@@ -12,7 +12,7 @@
 use Fixhub\Models\ProjectGroup;
 use Illuminate\Database\Seeder;
 
-class GroupTableSeeder extends Seeder
+class ProjectGroupTableSeeder extends Seeder
 {
     public function run()
     {

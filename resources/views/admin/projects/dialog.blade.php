@@ -18,7 +18,6 @@
                             <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.project_details') }}</a></li>
                             <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
                             <li><a href="#project_build" data-toggle="tab">{{ trans('projects.build_options') }}</a></li>
-                            <li><a href="#project_key" data-toggle="tab">{{ trans('projects.ssh_key') }}</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -32,6 +31,14 @@
                                     <select id="project_group_id" name="group_id" class="form-control">
                                         @foreach($groups as $group)
                                             <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project_key_id">{{ trans('projects.key') }}</label>
+                                    <select id="project_key_id" name="key_id" class="form-control">
+                                        @foreach($keys as $key)
+                                            <option value="{{ $key->id }}">{{ $key->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -94,20 +101,6 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="project_key">
-                                @if (!$is_secure)
-                                <div class="callout callout-warning">
-                                    <i class="icon ion ion-alert"></i> <strong>{{ trans('app.warning') }}</strong>
-                                    {{ trans('projects.insecure') }}
-                                </div>
-                                @endif
-
-                                <div class="form-group">
-                                    <label>{{ trans('projects.private_ssh_key') }}</label>
-                                    <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('projects.ssh_key_info') }}"></i>
-                                    <textarea name="private_key" rows="10" id="project_private_key" class="form-control" placeholder="{{ trans('projects.ssh_key_example') }}"></textarea>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
