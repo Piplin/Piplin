@@ -107,7 +107,6 @@ class Project extends Model implements HasPresenter
         // When  creating the model generate an SSH Key pair and a webhook hash
         // Fix me by gsl
         static::creating(function (Project $model) {
-
             if (!array_key_exists('hash', $model->attributes)) {
                 $model->generateHash();
             }
