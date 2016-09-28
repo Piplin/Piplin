@@ -45,8 +45,7 @@ class Key extends Model
         parent::boot();
 
         // When  creating the model generate an SSH Key pair and a webhook hash
-        // Fix me by gsl
-        static::creating(function (Key $model) {
+        static::saving(function (Key $model) {
             if (!array_key_exists('private_key', $model->attributes) || $model->private_key === '') {
                 $model->generateSSHKey();
             }
