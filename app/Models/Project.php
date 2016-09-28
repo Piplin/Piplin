@@ -41,7 +41,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'commands', 'notifyEmails','group', 'issues',
+                         'servers', 'commands', 'notifyEmails','group', 'key', 'issues',
                          'heartbeats', 'checkUrls','notifySlacks', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
@@ -51,7 +51,7 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'include_dev',
+    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'key_id', 'include_dev',
                            'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
                            ];
 

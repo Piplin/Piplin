@@ -78,22 +78,18 @@ class ProjectController extends Controller
             'repository',
             'branch',
             'group_id',
+            'key_id',
             'builds_to_keep',
             'url',
             'build_url',
             'template_id',
             'allow_other_branch',
-            'include_dev',
-            'private_key'
+            'include_dev'
         );
 
         $template_id = null;
         if (array_key_exists('template_id', $fields)) {
             $template_id = array_pull($fields, 'template_id');
-        }
-
-        if (array_key_exists('private_key', $fields) && empty($fields['private_key'])) {
-            unset($fields['private_key']);
         }
 
         $project = Project::create($fields);
@@ -126,12 +122,12 @@ class ProjectController extends Controller
             'repository',
             'branch',
             'group_id',
+            'key_id',
             'builds_to_keep',
             'url',
             'build_url',
             'allow_other_branch',
-            'include_dev',
-            'private_key'
+            'include_dev'
         ));
 
         return $project;
