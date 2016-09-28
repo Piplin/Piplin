@@ -25,8 +25,15 @@ class StoreKeyRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:255|unique:keys,name',
         ];
+
+        // On edit add the group ID to the rules
+        if ($this->get('id')) {
+            $rules['name'] .= ',' . $this->get('id');
+        }
+
+        return $rules;
     }
 }
