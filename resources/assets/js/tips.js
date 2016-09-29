@@ -6,35 +6,19 @@ var app = app || {};
     var FAILED     = 2;
     var TESTING    = 3;
 
-    $('#link_list table').sortable({
+    $('#tip_list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
         itemSelector: 'tr',
         placeholder: '<tr class="placeholder"/>',
-        delay: 500,
-        onDrop: function (item, container, _super) {
-            _super(item, container);
-
-            var ids = [];
-            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
-                ids.push($(element).data('link-id'));
-            });
-
-            $.ajax({
-                url: '/admin/links/reorder',
-                method: 'POST',
-                data: {
-                    links: ids
-                }
-            });
-        }
+        delay: 500
     });
 
     // FIXME: This seems very wrong
-    $('#link').on('show.bs.modal', function (event) {
+    $('#tip').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
-        var title = Lang.get('links.create');
+        var title = Lang.get('tips.create');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -42,19 +26,18 @@ var app = app || {};
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
-            title = Lang.get('links.edit');
+            title = Lang.get('tips.edit');
             $('.btn-danger', modal).show();
         } else {
-            $('#link_id').val('');
-            $('#link_title').val('');
-            $('#link_url').val('');
-            $('#link_description').val('');
+            $('#tip_id').val('');
+            $('#tip_body').val('');
+            $('#tip_status').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
     });
 
-    $('body').delegate('.link-trash button.btn-delete','click', function (event) {
+    $('body').delegate('.tip-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -63,9 +46,9 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link = app.Links.get($('#model_id').val());
+        var tip = app.Tips.get($('#model_id').val());
 
-        link.destroy({
+        tip.destroy({
             wait: true,
             success: function(model, response, options) {
                 dialog.modal('hide');
@@ -84,7 +67,7 @@ var app = app || {};
     });
 
     // FIXME: This seems very wrong
-    $('#link button.btn-save').on('click', function (event) {
+    $('#tip button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -93,18 +76,17 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link_id = $('#link_id').val();
+        var tip_id = $('#tip_id').val();
 
-        if (link_id) {
-            var link = app.Links.get(link_id);
+        if (tip_id) {
+            var tip = app.Tips.get(tip_id);
         } else {
-            var link = new app.Link();
+            var tip = new app.Tip();
         }
 
-        link.save({
-            title:       $('#link_title').val(),
-            url:         $('#link_url').val(),
-            description: $('#link_description').val()
+        tip.save({
+            body:   $('#tip_body').val(),
+            status: $('#tip_status').is(':checked')
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -115,8 +97,8 @@ var app = app || {};
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                if (!link_id) {
-                    app.Links.add(response);
+                if (!tip_id) {
+                    app.Tips.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -147,16 +129,16 @@ var app = app || {};
     });
 
 
-    app.Link = Backbone.Model.extend({
-        urlRoot: '/admin/links'
+    app.Tip = Backbone.Model.extend({
+        urlRoot: '/admin/tips'
     });
 
-    var Links = Backbone.Collection.extend({
-        model: app.Link,
-        comparator: function(linkA, linkB) {
-            if (linkA.get('title') > linkB.get('title')) {
+    var tips = Backbone.Collection.extend({
+        model: app.Tip,
+        comparator: function(tipA, tipB) {
+            if (tipA.get('id') > tipB.get('id')) {
                 return -1; // before
-            } else if (linkA.get('title') < linkB.get('title')) {
+            } else if (tipA.get('id') < tipB.get('id')) {
                 return 1; // after
             }
 
@@ -164,80 +146,81 @@ var app = app || {};
         }
     });
 
-    app.Links = new Links();
+    app.Tips = new tips();
 
-    app.LinksTab = Backbone.View.extend({
+    app.TipsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
         },
         initialize: function() {
-            this.$list = $('#link_list tbody');
+            this.$list = $('#tip_list tbody');
 
-            $('#no_links').show();
-            $('#link_list').hide();
+            $('#no_tips').show();
+            $('#tip_list').hide();
 
-            this.listenTo(app.Links, 'add', this.addOne);
-            this.listenTo(app.Links, 'reset', this.addAll);
-            this.listenTo(app.Links, 'remove', this.addAll);
-            this.listenTo(app.Links, 'all', this.render);
+            this.listenTo(app.Tips, 'add', this.addOne);
+            this.listenTo(app.Tips, 'reset', this.addAll);
+            this.listenTo(app.Tips, 'remove', this.addAll);
+            this.listenTo(app.Tips, 'all', this.render);
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+                var tip = app.Tips.get(parseInt(data.model.id));
 
-                if (link) {
-                    link.set(data.model);
+                if (tip) {
+                    tip.set(data.model);
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
                 if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Links.add(data.model);
+                    app.Tips.add(data.model);
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+                var tip = app.Tips.get(parseInt(data.model.id));
 
-                if (link) {
-                    app.Links.remove(link);
+                if (tip) {
+                    app.Tips.remove(tip);
                 }
             });
         },
         render: function () {
-            if (app.Links.length) {
-                $('#no_links').hide();
-                $('#link_list').show();
+            if (app.Tips.length) {
+                $('#no_tips').hide();
+                $('#tip_list').show();
             } else {
-                $('#no_links').show();
-                $('#link_list').hide();
+                $('#no_tips').show();
+                $('#tip_list').hide();
             }
         },
-        addOne: function (link) {
+        addOne: function (tip) {
 
-            var view = new app.LinkView({
-                model: link
+            var view = new app.TipView({
+                model: tip
             });
 
             this.$list.append(view.render().el);
         },
         addAll: function () {
             this.$list.html('');
-            app.Links.each(this.addOne, this);
+            app.Tips.each(this.addOne, this);
         }
     });
 
-    app.LinkView = Backbone.View.extend({
+    app.TipView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editLink',
-            'click .btn-delete': 'trashLink'
+            'click .btn-show': 'showTip',
+            'click .btn-edit': 'editTip',
+            'click .btn-delete': 'trashTip'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model, 'destroy', this.remove);
 
-            this.template = _.template($('#link-template').html());
+            this.template = _.template($('#tip-template').html());
         },
         render: function () {
             var data = this.model.toJSON();
@@ -246,17 +229,21 @@ var app = app || {};
 
             return this;
         },
-        editLink: function() {
-            $('#link_id').val(this.model.id);
-            $('#link_title').val(this.model.get('title'));
-            $('#link_url').val(this.model.get('url'));
-            $('#link_description').val(this.model.get('description'));
+        editTip: function() {
+            $('#tip_id').val(this.model.id);
+            $('#tip_body').val(this.model.get('body'));
+            $('#tip_status').prop('checked', (this.model.get('status') === true));
 
         },
-        trashLink: function() {
+        showTip: function() {
+            var data = this.model.toJSON();
+
+            $('#tip_preview').html(data.body);
+        },
+        trashTip: function() {
             var target = $('#model_id');
             target.val(this.model.id);
-            target.parents('.modal').removeClass().addClass('modal fade link-trash');
+            target.parents('.modal').removeClass().addClass('modal fade tip-trash');
         }
     });
 })(jQuery);

@@ -83,6 +83,17 @@ Route::group([
         'uses'  => 'LinkController@reorder',
     ]);
 
+    Route::resource('tips', 'TipController', [
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'names' => [
+            'create'  => 'admin.tips.create',
+            'index'   => 'admin.tips.index',
+            'store'   => 'admin.tips.store',
+            'update'  => 'admin.tips.update',
+            'destroy' => 'admin.tips.destroy',
+        ],
+    ]);
+
     Route::resource('groups', 'ProjectGroupController', [
         'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
