@@ -44,7 +44,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projects = Project::orderBy('name')
-                    ->get();
+                    ->paginate(config('fixhub.items_per_page', 10));
 
         $keys = Key::orderBy('name')
                     ->get();
@@ -56,12 +56,13 @@ class ProjectController extends Controller
                     ->get();
 
         return view('admin.projects.index', [
-            'is_secure' => $request->secure(),
-            'title'     => trans('projects.manage'),
-            'keys'      => $keys,
-            'templates' => $templates,
-            'groups'    => $groups,
-            'projects'  => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
+            'is_secure'    => $request->secure(),
+            'title'        => trans('projects.manage'),
+            'keys'         => $keys,
+            'templates'    => $templates,
+            'groups'       => $groups,
+            'projects_raw' => $projects,
+            'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
         ]);
     }
 

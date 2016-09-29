@@ -38,8 +38,9 @@ class ProjectGroupController extends Controller
      */
     public function index()
     {
+        //$groups = ProjectGroup::query();
         $groups = ProjectGroup::orderBy('order')
-                    ->get();
+                    ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.groups.index', [
             'title'  => trans('groups.manage'),
