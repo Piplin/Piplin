@@ -48,6 +48,7 @@ return [
         'commands'      => ['create', 'edit'],
         'groups'        => ['create', 'edit'],
         'keys'          => ['create', 'edit'],
+        'links'         => ['create', 'edit'],
         'users'         => ['create', 'edit'],
         'templates'     => ['create', 'edit'],
         'sharedFiles'   => ['create', 'edit'],

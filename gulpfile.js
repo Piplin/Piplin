@@ -98,6 +98,7 @@ elixir(function(mix) {
         'commands.js',
         'users.js',
         'groups.js',
+        'links.js',
         'uploader.js',
         //'issues.js',
         'profile.js'

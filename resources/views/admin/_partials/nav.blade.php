@@ -6,5 +6,6 @@
         <li {!! set_active('admin/templates') !!}><a href="/admin/templates">{{ trans('templates.manage') }}</a></li>
         <li {!! set_active('admin/users') !!}><a href="/admin/users">{{ trans('users.manage') }}</a></li>
         <li {!! set_active('admin/keys') !!}><a href="/admin/keys">{{ trans('keys.manage') }}</a></li>
+        <li {!! set_active('admin/links') !!}><a href="/admin/links">{{ trans('links.manage') }}</a></li>
     </ul>
 </div>

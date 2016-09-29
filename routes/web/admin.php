@@ -68,6 +68,21 @@ Route::group([
         'uses'  => 'KeyController@reorder',
     ]);
 
+    Route::resource('links', 'LinkController', [
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'names' => [
+            'create'  => 'admin.links.create',
+            'index'   => 'admin.links.index',
+            'store'   => 'admin.links.store',
+            'update'  => 'admin.links.update',
+            'destroy' => 'admin.links.destroy',
+        ],
+    ]);
+    Route::post('links/reorder', [
+        'as'    => 'admin.links.reorder',
+        'uses'  => 'LinkController@reorder',
+    ]);
+
     Route::resource('groups', 'ProjectGroupController', [
         'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
