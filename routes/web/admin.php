@@ -14,6 +14,13 @@ Route::group([
     'namespace'  => 'Admin',
     'prefix'     => 'admin',
 ], function () {
+    Route::resource('/', 'AdminController', [
+        'only'  => ['index'],
+        'names' => [
+            'index' => 'admin.index',
+        ],
+    ]);
+
     Route::resource('templates', 'DeployTemplateController', [
         'only'  => ['index', 'store', 'update', 'destroy', 'show'],
         'names' => [
@@ -28,7 +35,7 @@ Route::group([
     Route::resource('projects', 'ProjectController', [
         'only'  => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
-            'create'   => 'admin.projects.create',
+            'create'  => 'admin.projects.create',
             'index'   => 'admin.projects.index',
             'store'   => 'admin.projects.store',
             'update'  => 'admin.projects.update',

@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="box">
+        @include('admin._partials.nav')
         <div class="box-body" id="no_projects">
             <p>{{ trans('projects.none') }}</p>
         </div>
