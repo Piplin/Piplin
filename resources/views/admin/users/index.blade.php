@@ -20,6 +20,7 @@
 
                 </tbody>
             </table>
+            {!! $users_raw->render() !!}
         </div>
     </div>
 
@@ -37,7 +38,7 @@
         var users = {!! $users !!};
 
         new app.UsersTab();
-        app.Users.add(users);
+        app.Users.add(users.data);
     </script>
 @endpush
 

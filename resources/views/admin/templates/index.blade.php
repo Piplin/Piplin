@@ -24,6 +24,7 @@
 
                 </tbody>
             </table>
+            {!! $templates_raw->render() !!}
         </div>
     </div>
 
@@ -38,8 +39,9 @@
 
 @push('javascript')
     <script type="text/javascript">
+        var templates = {!! $templates !!};
         new app.TemplatesTab();
-        app.Templates.add({!! $templates !!});
+        app.Templates.add(templates.data);
     </script>
 @endpush
 

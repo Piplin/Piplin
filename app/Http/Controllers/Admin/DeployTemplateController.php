@@ -28,11 +28,12 @@ class DeployTemplateController extends Controller
     public function index()
     {
         $templates = DeployTemplate::orderBy('name')
-                    ->get();
+                    ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.templates.index', [
-            'title'     => trans('templates.manage'),
-            'templates' => $templates->toJson(), // Because DeployTemplatePresenter toJson() is not working in the view
+            'title'         => trans('templates.manage'),
+            'templates_raw' => $templates,
+            'templates'     => $templates->toJson(), // Because DeployTemplatePresenter toJson() is not working in the view
         ]);
     }
 

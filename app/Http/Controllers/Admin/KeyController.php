@@ -39,11 +39,12 @@ class KeyController extends Controller
     public function index(Request $request)
     {
         $keys = Key::orderBy('name')
-                    ->get();
+                    ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.keys.index', [
-            'title' => trans('keys.manage'),
-            'keys'  => $keys->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'title'    => trans('keys.manage'),
+            'keys_raw' =>$keys,
+            'keys'     => $keys->toJson(), // Because PresentableInterface toJson() is not working in the view
         ]);
     }
 

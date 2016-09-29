@@ -28,10 +28,13 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::orderBy('id', 'desc')
+                    ->paginate(config('fixhub.items_per_page', 10));
         return view('admin.users.index', [
-            'title' => trans('users.manage'),
-            'users' => User::all()->toJson(),
-            'levels' => [
+            'title'     => trans('users.manage'),
+            'users_raw' => $users,
+            'users'     => $users->toJson(),
+            'levels'    => [
                 User::LEVEL_ADMIN    => trans('users.level.admin'),
                 User::LEVEL_OPERATOR => trans('users.level.operator'),
                 User::LEVEL_USER     => trans('users.level.user'),

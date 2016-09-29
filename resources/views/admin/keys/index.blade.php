@@ -20,6 +20,7 @@
 
                 </tbody>
             </table>
+            {!! $keys_raw->render() !!}
         </div>
     </div>
 
@@ -34,8 +35,9 @@
 
 @push('javascript')
     <script type="text/javascript">
+        var keys = {!! $keys !!};
         new app.KeysTab();
-        app.Keys.add({!! $keys !!});
+        app.Keys.add(keys.data);
         @if(isset($action) && $action == 'create')
         $('button.btn.btn-success').trigger('click');
         @endif
