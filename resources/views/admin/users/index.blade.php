@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="box">
+        @include('admin._partials.nav')
         <div class="box-body table-responsive" id="user_list">
             <table class="table table-striped">
                 <thead>
