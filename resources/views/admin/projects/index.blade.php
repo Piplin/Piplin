@@ -24,6 +24,7 @@
 
                 </tbody>
             </table>
+            {!! $projects_raw->render() !!}
         </div>
     </div>
 
@@ -38,8 +39,10 @@
 
 @push('javascript')
     <script type="text/javascript">
+        var projects = {!! $projects !!}
+
         new app.ProjectsTab();
-        app.Projects.add({!! $projects !!});
+        app.Projects.add(projects.data);
         @if(isset($action) && $action == 'create')
         $('button.btn.btn-success').trigger('click');
         @endif

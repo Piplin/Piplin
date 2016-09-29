@@ -20,6 +20,7 @@
 
                 </tbody>
             </table>
+            {!! $groups->render() !!}
         </div>
     </div>
 
@@ -37,7 +38,7 @@
         var groups = {!! $groups->toJson() !!};
 
         new app.GroupsTab();
-        app.Groups.add(groups);
+        app.Groups.add(groups.data);
 
         @if(isset($action) && $action == 'create')
         $('button.btn.btn-success').trigger('click');
