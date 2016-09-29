@@ -12,5 +12,6 @@
 return [
 
     'label'   => 'Admin Area',
+    'manage'  => 'Admin',
 
 ];

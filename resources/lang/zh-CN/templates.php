@@ -18,7 +18,7 @@ return [
     'custom'  => '自定义',
     'example' => 'Laravel 5',
     'name'    => '模板名',
-    'create'  => '新增',
+    'create'  => '新增模板',
     'edit'    => '编辑',
     'warning' => '模板保存失败，请检查表单信息.',
 
