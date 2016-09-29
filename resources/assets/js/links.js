@@ -47,6 +47,7 @@ var app = app || {};
         } else {
             $('#link_id').val('');
             $('#link_title').val('');
+            $('#link_url').val('');
             $('#link_description').val('');
         }
 
@@ -101,8 +102,9 @@ var app = app || {};
         }
 
         link.save({
-            title:         $('#link_title').val(),
-            description:  $('#link_description').val()
+            title:       $('#link_title').val(),
+            url:         $('#link_url').val(),
+            description: $('#link_description').val()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -248,6 +250,7 @@ var app = app || {};
         editlink: function() {
             $('#link_id').val(this.model.id);
             $('#link_title').val(this.model.get('title'));
+            $('#link_url').val(this.model.get('url'));
             $('#link_description').val(this.model.get('description'));
 
         },

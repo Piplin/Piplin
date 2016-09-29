@@ -27,6 +27,7 @@ class StoreLinkRequest extends Request
     {
         $rules = [
             'title' => 'required|max:255|unique:links,title',
+            'url'   => 'required',
         ];
 
         // On edit add the group ID to the rules

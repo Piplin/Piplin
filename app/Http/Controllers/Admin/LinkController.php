@@ -58,6 +58,7 @@ class LinkController extends Controller
     {
         return Link::create($request->only(
             'title',
+            'url',
             'description'
         ));
     }
@@ -74,6 +75,7 @@ class LinkController extends Controller
 
         $link->update($request->only(
             'title',
+            'url',
             'description'
         ));
 

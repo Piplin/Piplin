@@ -18,6 +18,10 @@
                         <input type="text" class="form-control" name="title" id="link_title" placeholder="{{ trans('links.title') }}" />
                     </div>
                     <div class="form-group">
+                        <label for="link_url">{{ trans('links.url') }}</label>
+                        <input type="text" class="form-control" name="url" id="link_url" placeholder="{{ trans('links.url') }}" />
+                    </div>
+                    <div class="form-group">
                         <label>{{ trans('links.description') }}</label>
                         <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('links.description_info') }}"></i>
                         <textarea name="description" rows="10" id="link_description" class="form-control" placeholder="{{ trans('links.ssh_link_example') }}"></textarea>
