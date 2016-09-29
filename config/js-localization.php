@@ -49,6 +49,7 @@ return [
         'groups'        => ['create', 'edit'],
         'keys'          => ['create', 'edit'],
         'links'         => ['create', 'edit'],
+        'tips'          => ['create', 'edit'],
         'users'         => ['create', 'edit'],
         'templates'     => ['create', 'edit'],
         'sharedFiles'   => ['create', 'edit'],
