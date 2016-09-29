@@ -1,13 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
+    
     <div class="box">
-
+        @include('admin._partials.nav')
         <div class="box-body" id="no_groups">
             <p>{{ trans('groups.none') }}</p>
         </div>
 
         <div class="box-body table-responsive" id="group_list">
+
             <table class="table table-striped">
                 <thead>
                     <tr>
