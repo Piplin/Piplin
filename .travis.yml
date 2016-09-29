@@ -29,8 +29,7 @@ before_script:
     - php -S 127.0.0.1:8000 -t public/ 2>&1 >/dev/null &
 
 script: 
-  - vendor/bin/phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
-  - vendor/bin/phpdoccheck --directory=app
+  - make cs
   - php vendor/bin/codecept run
 
 after_script:
