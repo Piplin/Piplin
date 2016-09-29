@@ -11,13 +11,17 @@
 
 namespace Fixhub\Models;
 
+use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Link model.
  */
 class Link extends Model
 {
+    use BroadcastChanges;
+
     /**
      * The fillable properties.
      *

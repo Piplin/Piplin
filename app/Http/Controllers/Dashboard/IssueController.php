@@ -20,6 +20,10 @@ use Fixhub\Models\Issue;
  */
 class IssueController extends Controller
 {
+    public function index()
+    {
+        echo "hello,world";
+    }
     /**
      * Store a newly created issue in storage.
      *
