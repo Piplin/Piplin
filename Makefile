@@ -39,6 +39,10 @@ assets-production:
 assets_dev:
 	gulp
 
+cs:
+	vendor/bin/phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
+	vendor/bin/phpdoccheck --directory=app
+
 dump-autoload:
 	php artisan clear-compiled
 
