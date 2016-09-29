@@ -157,10 +157,6 @@ toastr.options.extendedTimeOut = 7000;
         }
     });
 
-    app.listener.on('group:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
-        // do something.
-    });
-
     app.listener.on('project:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
 
         var project = $('#project_' + data.model.id);
@@ -207,7 +203,6 @@ toastr.options.extendedTimeOut = 7000;
         }
     });
 
-    // FIXME: This is cheating
     function updateTimeline() {
         $.ajax({
             type: 'GET',
