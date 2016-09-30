@@ -195,7 +195,6 @@ class WebhookController extends Controller
         $deployment = Deployment::create($fields);
 
         dispatch(new QueueDeployment(
-            $deployment->project,
             $deployment,
             $optional
         ));

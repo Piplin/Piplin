@@ -35,13 +35,12 @@ class QueueDeployment extends Job
     /**
      * Create a new command instance.
      *
-     * @param  Project         $project
      * @param  Deployment      $deployment
      * @return QueueDeployment
      */
-    public function __construct(Project $project, Deployment $deployment, array $optional = [])
+    public function __construct(Deployment $deployment, array $optional = [])
     {
-        $this->project    = $project;
+        $this->project    = $deployment->project;
         $this->deployment = $deployment;
         $this->optional   = $optional;
     }
