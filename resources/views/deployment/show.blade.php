@@ -12,11 +12,11 @@
             </div>
         </div>
 
-        @foreach($deployment->steps as $step)
+        @foreach($deployment->steps as $index => $step)
         <div class="col-xs-12">
             <div class="box deploy-step">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="ion ion-code"></i> <span>{{ $step->name }}</span></h3>
+                    <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span></h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-hover">
@@ -56,7 +56,7 @@
     <script type="text/template" id="log-template">
         <td><%- server.name %></td>
         <td>
-             <span class="label label-<%- status_css %>"><i class="ion ion-<%- icon_css %>"></i> <span><%- status %></span></span>
+             <span class="label label-<%- status_css %>"><i class="status ion ion-<%- icon_css %>"></i> <span><%- status %></span></span>
         </td>
         <td>
             <% if (formatted_start_time) { %>
