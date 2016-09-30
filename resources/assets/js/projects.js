@@ -1,9 +1,6 @@
 var app = app || {};
 
 (function ($) {
-    $('.repo-refresh').on('click', function (event) {
-        console.log('hello,repo refresh.');
-    });
 
     $('select.deployment-source').select2({
         width: '100%',
@@ -301,6 +298,32 @@ var app = app || {};
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade project-trash');
         }
+    });
+
+    $('.repo-refresh').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var project_id = target.data('project-id');
+        var icon = $('i', target);
+
+        if ($('.fixhub-spin', target).length > 0) {
+            return;
+        }
+        $('span', target).html('loading');
+        target.attr('disabled', 'disabled');
+        icon.addClass('fixhub-spin');
+
+        $.ajax({
+            type: 'GET',
+            url: '/repository/' + project_id + '/refresh'
+        }).fail(function (response) {
+
+        }).done(function (data) {
+            $('span', target).html(data.last_mirrored).addClass('text-success');
+        }).always(function () {
+            icon.removeClass('fixhub-spin');
+            target.removeAttr('disabled');
+        });
+
     });
 
     $('#new_webhook').on('click', function(event) {

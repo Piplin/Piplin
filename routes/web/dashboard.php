@@ -82,6 +82,12 @@ Route::group([
             'uses' => 'DeploymentController@log',
         ]);
 
+        Route::get('repository/{id}/refresh', [
+            'as'     => 'repository.refresh',
+            'uses'   => 'RepositoryController@refresh',
+            'middle' => 'api',
+        ]);
+
         $actions = [
             'only' => ['store', 'update', 'destroy'],
         ];
