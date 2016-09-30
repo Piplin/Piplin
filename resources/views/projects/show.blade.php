@@ -12,7 +12,7 @@
                         <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
                         <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
                         @if(!empty($project->last_mirrored))
-                        <li><a href="#" class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right text-blue">{{ $project->last_mirrored }}</span> <i class="ion ion-refresh"></i></a></li>
+                        <li><a href="javascript:void(0);" data-project-id={{ $project->id }} class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right">{{ $project->last_mirrored }}</span> <i class="ion ion-refresh"></i></a></li>
                         @else
                         <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
                         @endif
