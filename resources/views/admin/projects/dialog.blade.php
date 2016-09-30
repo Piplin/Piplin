@@ -34,14 +34,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="project_key_id">{{ trans('projects.key') }}</label>
-                                    <select id="project_key_id" name="key_id" class="form-control">
-                                        @foreach($keys as $key)
-                                            <option value="{{ $key->id }}">{{ $key->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 @if (count($templates) > 0)
                                 <div class="form-group" id="template-list">
                                     <label for="project_template_id">{{ trans('templates.type') }}</label>
@@ -60,7 +52,14 @@
                             </div>
 
                             <div class="tab-pane" id="project_build">
-
+                                <div class="form-group">
+                                    <label for="project_key_id">{{ trans('projects.key') }}</label>
+                                    <select id="project_key_id" name="key_id" class="form-control">
+                                        @foreach($keys as $key)
+                                            <option value="{{ $key->id }}">{{ $key->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="project_builds_to_keep">{{ trans('projects.builds') }}</label>
                                     <input type="number" class="form-control" name="builds_to_keep" min="1" max="20" id="project_builds_to_keep" placeholder="10" />
