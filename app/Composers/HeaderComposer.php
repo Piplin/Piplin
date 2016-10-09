@@ -29,25 +29,19 @@ class HeaderComposer
      */
     public function compose(View $view)
     {
-        $author_issues = $this->getIssues('author');
-        $author_issues_count = $this->getIssuesCount('author');
-        $view->with('author_issues', $author_issues);
-        $view->with('author_issues_count', $author_issues_count);
-
-        $assignee_issues = $this->getIssues('assignee');
-        $assignee_issues_count = $this->getIssuesCount('assignee');
-        $view->with('assignee_issues', $assignee_issues);
-        $view->with('assignee_issues_count', $assignee_issues_count);
-
         $pending = $this->getPending();
+        $pending_count = count($pending);
 
         $view->with('pending', $pending);
-        $view->with('pending_count', count($pending));
+        $view->with('pending_count', $pending_count);
 
         $deploying = $this->getRunning();
+        $deploying_count = count($deploying);
 
         $view->with('deploying', $deploying);
-        $view->with('deploying_count', count($deploying));
+        $view->with('deploying_count', $deploying_count);
+
+        $view->with('todo_count', $pending_count + $deploying_count);
     }
 
     /**

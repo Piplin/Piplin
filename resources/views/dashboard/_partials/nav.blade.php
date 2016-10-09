@@ -4,63 +4,24 @@
         <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ $app_name }}">{{ $app_name }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <!--
-                <li class="dropdown messages-menu" id="issues_menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="ion ion-ios-information-outline"></i>
-                        <span class="label label-success">{{ $author_issues_count + $assignee_issues_count }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header"><i class="ion ion-arrow-up-c"></i> {{ trans_choice('dashboard.author_issues', $author_issues_count, ['count' => $author_issues_count]) }}</li>
-                        <li>
-                            <ul class="menu">
-                                @foreach($author_issues as $issue)
-                                <li><a href="#">{{ $issue->title }}</a></li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li class="header"><i class="ion ion-arrow-down-c"></i> {{ trans_choice('dashboard.assignee_issues', $assignee_issues_count, ['count' => $assignee_issues_count]) }}</li>
-                        <li>
-                            <ul class="menu">
-                                @foreach($assignee_issues as $issue)
-                                <li><a href="#">{{ $issue->title }}</a></li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                -->
-                <li class="dropdown messages-menu" id="pending_menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="ion ion-clock"></i>
-                        <span class="label label-info">{{ $pending_count }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</li>
-                        <li>
-                            <ul class="menu">
-                                @foreach ($pending as $deployment)
-                                    <li id="deployment_info_{{ $deployment->id }}">
-                                        <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
-                                            <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
-                                            <p>{{ trans('deployments.branch') }}: {{ $deployment->branch }}</p>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="dropdown messages-menu" id="deploying_menu">
+                @if($current_user->is_admin)
+                <li {!! set_active('admin*') !!}>
+                    <a href="/admin">
+                        <i class="ion ion-wrench"></i>
+                        <span class="hidden-xs">{{ trans('admin.label') }}</span>
+                    </a>
+                </li>
+                @endif
+                <li class="dropdown messages-menu" id="todo_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="ion ion-load-c @if($deploying_count) fixhub-spin @endif"></i>
-                        <span class="label label-warning">{{ $deploying_count }}</span>
+                        <i class="ion ion-android-notifications {{$todo_count ? 'text-danger' : null}}""></i>
+                        <span class="label {{$todo_count ? 'label-info' : null}}">{{ $todo_count ?:null }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</li>
+                        <li class="header deploying_header"><i class="ion ion-load-c"></i> <span>{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</span></li>
                         <li>
-                            <ul class="menu">
+                            <ul class="menu deploying_menu">
                                 @foreach ($deploying as $deployment)
                                     <li id="deployment_info_{{ $deployment->id }}">
                                         <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
@@ -71,16 +32,22 @@
                                 @endforeach
                             </ul>
                         </li>
+                        <li class="header pending_header"><i class="ion ion-clock"></i> <span>{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</span></li>
+                        <li>
+                            <ul class="menu pending_menu">
+                                @foreach ($pending as $deployment)
+                                    <li id="deployment_info_{{ $deployment->id }}">
+                                        <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
+                                            <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
+                                            <p>{{ trans('deployments.branch') }}: {{ $deployment->branch }}</p>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="javascript:void(0);">Close</a></li>
                     </ul>
                 </li>
-                @if($current_user->is_admin)
-                <li {!! set_active('admin*') !!}>
-                    <a href="/admin">
-                        <i class="ion ion-wrench"></i>
-                        <span class="hidden-xs">{{ trans('admin.label') }}</span>
-                    </a>
-                </li>
-                @endif
                 <li {!! set_active('profile', ['dropdown', 'user', 'user-menu']) !!}>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ $current_user->avatar_url }}" class="user-image" />

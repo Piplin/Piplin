@@ -70,8 +70,8 @@ toastr.options.extendedTimeOut = 7000;
     // TODO: Update the timeline
     app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
 
-        // Update nav bar
-        updateNavBar(data);
+        // Update todo bar
+        updateTodoBar(data);
 
         //var project = $('#project_' + data.model.project_id);
 
@@ -212,65 +212,64 @@ toastr.options.extendedTimeOut = 7000;
         });
     }
 
-    function updateNavBar(data) {
+    function updateTodoBar(data) {
+
         data.model.time = moment(data.model.started_at).format('HH:mm:ss');
         data.model.url = '/deployment/' + data.model.id;
 
         $('#deployment_info_' + data.model.id).remove();
-        $('#pending_menu, #deploying_menu').show();
 
         var template = _.template($('#deployment-list-template').html());
         var html = template(data.model);
 
         if (data.model.status === DEPLOYMENT_PENDING) {
-            $('#pending_menu ul.menu').append(html);
+            $('.pending_menu').append(html);
         }
         else if (data.model.status === DEPLOYMENT_DEPLOYING) {
-            $('#deploying_menu ul.menu').append(html);
+            $('.deploying_menu').append(html);
         }
 
-        var pending = $('#pending_menu ul.menu li').length;
-        var deploying = $('#deploying_menu ul.menu li').length;
+        var pending = $('.pending_menu li').length;
+        var deploying = $('.deploying_menu li').length;
+        var todo_count = pending + deploying;
+
+        if(todo_count > 0) {
+            $('#todo_menu span.label').html(todo_count);
+            $('#todo_menu .dropdown-toggle i.ion').addClass('text-danger');
+        } else {
+            $('#todo_menu span.label').html('');
+            $('#todo_menu .dropdown-toggle i.ion').removeClass('text-danger')
+        }
+
+        if(pending > 0) {
+            $('#todo_menu span.label').addClass('label-info');
+            $('.pending_header i').addClass('fixhub-spin');
+        } else {
+            $('#todo_menu span.label').removeClass('label-info');
+            $('.pending_header i').removeClass('fixhub-spin');
+        }
+
+        if(deploying > 0) {
+            $('#todo_menu span.label').addClass('label-success');
+            $('.deploying_header i').addClass('fixhub-spin');
+        } else {
+            $('#todo_menu span.label').removeClass('label-success');
+            $('.deploying_header i').removeClass('fixhub-spin');
+        }
+
+        if(deploying > 0 && pending > 0) {
+            $('#todo_menu span.label').removeClass('label-success').removeClass('label-info').addClass('label-warning');
+        }
 
         var pending_label = Lang.choice('dashboard.pending', pending, {
             'count': pending
         });
-
-        if (pending === 0) {
-            //$('#pending_menu').hide();
-        }
-
         var deploying_label = Lang.choice('dashboard.running', deploying, {
             'count': deploying
         });
 
-        if (deploying === 0) {
-            //$('#deploying_menu').hide();
-        }
-
-        $('#deploying_menu span.label-warning').html(deploying);
-        $('#deploying_menu .header').text(deploying_label);
-
-        $('#pending_menu span.label-info').html(pending);
-        $('#pending_menu .header').text(pending_label);
+        $('.deploying_header span').text(deploying_label);
+        $('.pending_header span').text(pending_label);
     }
-
-    $(document).ready(function () {
-        if ($('#pending_menu ul.menu li').length > 0) {
-            $('#pending_menu').show();
-        }
-
-        if ($('#deploying_menu ul.menu li').length > 0) {
-            $('#deploying_menu').show();
-        }
-
-        //INITIALIZE SPARKLINE CHARTS
-        $(".sparkline").each(function () {
-          var $this = $(this);
-          $this.sparkline('html', $this.data());
-        });
-
-    
-    });
 
 })(jQuery);
