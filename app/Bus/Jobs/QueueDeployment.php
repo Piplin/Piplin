@@ -84,7 +84,7 @@ class QueueDeployment extends Job
             $this->updateRepoInfo();
         }
 
-        if (!$this->project->need_approve) {
+        if (!$this->project->need_approve || $this->deployment->is_webhook) {
             $this->dispatch(new DeployProject($this->deployment));
         }
     }
@@ -173,7 +173,7 @@ class QueueDeployment extends Job
      */
     private function setDeploymentStatus()
     {
-        $this->deployment->status     = $this->project->need_approve ? Deployment::APPROVING : Deployment::PENDING;
+        $this->deployment->status     = ($this->project->need_approve && !$this->deployment->is_webhook) ? Deployment::APPROVING : Deployment::PENDING;
         //$this->deployment->status     = Deployment::PENDING;
         $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;
