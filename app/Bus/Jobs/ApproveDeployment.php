@@ -50,9 +50,12 @@ class ApproveDeployment extends Job
      */
     public function handle()
     {
+        $this->dispatch(new DeployProject($this->deployment));
+        /*
         $this->dispatch(new QueueDeployment(
             $this->deployment,
             $this->optional
         ));
+        */
     }
 }

@@ -138,10 +138,27 @@ class DeploymentController extends Controller
     {
         $deployment = Deployment::findOrFail($deployment_id);
 
-        if (!$deployment->isApproving()) {
-            $deployment->status = Deployment::APPROVING;
+        if (!$deployment->isApproved()) {
+            $deployment->status = Deployment::APPROVED;
             $deployment->save();
+        }
 
+        return redirect()->route('projects', [
+            'id' => $deployment->project_id,
+        ]);
+    }
+
+    /**
+     * Deploy a deployment.
+     *
+     * @param  int      $deployment_id
+     * @return Response
+     */
+    public function deploy($deployment_id)
+    {
+        $deployment = Deployment::findOrFail($deployment_id);
+
+        if ($deployment->isApproved()) {
             dispatch(new ApproveDeployment($deployment));
         }
 

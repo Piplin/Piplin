@@ -11,6 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Bus\Jobs\AbortDeployment;
 use Fixhub\Bus\Jobs\QueueDeployment;
@@ -117,16 +118,12 @@ class ProjectController extends Controller
             unset($fields['optional']);
         }
 
-        $fields['status'] = Deployment::APPROVING;
-
         $deployment = Deployment::create($fields);
 
-        /*
         dispatch(new QueueDeployment(
             $deployment,
             $optional
         ));
-        */
 
         return $deployment;
     }
