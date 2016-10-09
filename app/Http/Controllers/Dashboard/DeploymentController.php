@@ -13,6 +13,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Bus\Jobs\AbortDeployment;
+use Fixhub\Bus\Jobs\ApproveDeployment;
 use Fixhub\Bus\Jobs\QueueDeployment;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
@@ -120,6 +121,45 @@ class DeploymentController extends Controller
             $deployment->save();
 
             dispatch(new AbortDeployment($deployment));
+        }
+
+        return redirect()->route('deployments', [
+            'id' => $deployment_id,
+        ]);
+    }
+
+    /**
+     * Approve a deployment.
+     *
+     * @param  int      $deployment_id
+     * @return Response
+     */
+    public function approve($deployment_id)
+    {
+        $deployment = Deployment::findOrFail($deployment_id);
+
+        if (!$deployment->isApproved()) {
+            $deployment->status = Deployment::APPROVED;
+            $deployment->save();
+        }
+
+        return redirect()->route('projects', [
+            'id' => $deployment->project_id,
+        ]);
+    }
+
+    /**
+     * Deploy a deployment.
+     *
+     * @param  int      $deployment_id
+     * @return Response
+     */
+    public function deploy($deployment_id)
+    {
+        $deployment = Deployment::findOrFail($deployment_id);
+
+        if ($deployment->isApproved()) {
+            dispatch(new ApproveDeployment($deployment));
         }
 
         return redirect()->route('deployments', [

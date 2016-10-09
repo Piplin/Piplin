@@ -12,6 +12,8 @@
 namespace Fixhub\Bus\Jobs;
 
 use Carbon\Carbon;
+use Fixhub\Services\Scripts\Parser as ScriptParser;
+use Fixhub\Services\Scripts\Runner as Process;
 use Fixhub\Bus\Jobs\DeployProject;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
@@ -75,7 +77,53 @@ class QueueDeployment extends Job
             }
         }
 
-        $this->dispatch(new DeployProject($this->deployment));
+        $this->dispatch(new UpdateGitMirror($this->deployment->project));
+
+        // If the build has been manually triggered get the committer info from the repo
+        if ($this->deployment->commit === Deployment::LOADING) {
+            $this->updateRepoInfo();
+        }
+
+        if (!$this->project->need_approve || $this->deployment->is_webhook) {
+            $this->dispatch(new DeployProject($this->deployment));
+        }
+    }
+
+    /**
+     * Clones the repository locally to get the latest log entry and updates
+     * the deployment model.
+     *
+     * @return void
+     */
+    private function updateRepoInfo()
+    {
+        $process = new Process('tools.GetCommitDetails', [
+            'mirror_path'   => $this->deployment->project->mirrorPath(),
+            'git_reference' => $this->deployment->branch,
+        ]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('Could not get repository info - ' . $process->getErrorOutput());
+        }
+
+        $git_info = $process->getOutput();
+
+        list($commit, $committer, $email) = explode("\x09", $git_info);
+
+        $this->deployment->commit          = $commit;
+        $this->deployment->committer       = trim($committer);
+        $this->deployment->committer_email = trim($email);
+
+        if (!$this->deployment->user_id && !$this->deployment->source) {
+            $user = User::where('email', $this->deployment->committer_email)->first();
+
+            if ($user) {
+                $this->deployment->user_id = $user->id;
+            }
+        }
+
+        $this->deployment->save();
     }
 
     /**
@@ -125,7 +173,8 @@ class QueueDeployment extends Job
      */
     private function setDeploymentStatus()
     {
-        $this->deployment->status     = Deployment::PENDING;
+        $this->deployment->status     = ($this->project->need_approve && !$this->deployment->is_webhook) ? Deployment::APPROVING : Deployment::PENDING;
+        //$this->deployment->status     = Deployment::PENDING;
         $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;
 

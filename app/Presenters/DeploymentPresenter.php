@@ -59,6 +59,10 @@ class DeploymentPresenter extends BasePresenter
             return trans('deployments.failed');
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return trans('deployments.deploying');
+        } elseif ($this->wrappedObject->status === Deployment::APPROVING) {
+            return trans('deployments.approving');
+        } elseif ($this->wrappedObject->status === Deployment::APPROVED) {
+            return trans('deployments.approved');
         }
 
         return trans('deployments.pending');
@@ -106,9 +110,9 @@ class DeploymentPresenter extends BasePresenter
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED || $this->wrappedObject->status === Deployment::COMPLETED_WITH_ERRORS) {
             return 'success';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::ABORTING, Deployment::ABORTED], true)) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::ABORTING, Deployment::ABORTED, Deployment::APPROVED], true)) {
             return 'danger';
-        } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
+        } elseif ($this->wrappedObject->status === Deployment::DEPLOYING || $this->wrappedObject->status == Deployment::APPROVING) {
             return 'warning';
         }
 

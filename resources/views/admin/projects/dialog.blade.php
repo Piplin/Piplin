@@ -49,6 +49,15 @@
                                     <label for="project_url">{{ trans('projects.url') }}</label>
                                     <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
                                 </div>
+                                <div class="form-group">
+                                    <label>{{ trans('projects.options') }}</label>
+                                    <div class="checkbox">
+                                        <label for="project_need_approve">
+                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
+                                            {{ trans('projects.need_approve') }}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="project_build">

@@ -53,6 +53,7 @@ return [
     'options'           => 'Options',
     'change_branch'     => 'Allow other branches to be deployed?',
     'include_dev'       => 'Install composer development packages?',
+    'need_approve'      => 'Need approvement to deploy?',
     'insecure'          => 'Your Fixhub installation is not running over a secure connection, it is recommended ' .
                            'that you let Fixhub generate an SSH key rather than supply one yourself so that the ' .
                            'private key is not transmitted over an insecure connection.',
