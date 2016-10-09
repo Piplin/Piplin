@@ -86,7 +86,6 @@ class DeployProject extends Job implements ShouldQueue
         $this->release_archive = $this->deployment->project_id . '_' . $this->deployment->release_id . '.tar.gz';
 
         try {
-
             $this->createReleaseArchive();
 
             foreach ($this->deployment->steps as $step) {
