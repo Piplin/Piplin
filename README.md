@@ -123,7 +123,7 @@ $ php artisan app:install
 
 ```shell
 $ git fetch --all
-$ git checkout 0.1.7
+$ git checkout {latest_tag} // please change me
  ```
 
 二. 更新依赖
