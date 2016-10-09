@@ -84,7 +84,7 @@ class QueueDeployment extends Job
             $this->updateRepoInfo();
         }
 
-        if(!$this->project->need_approve) {
+        if (!$this->project->need_approve) {
             $this->dispatch(new DeployProject($this->deployment));
         }
     }
