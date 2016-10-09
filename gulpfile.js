@@ -33,7 +33,6 @@ var paths = {
     'moment'           : node_path + '/moment',
     'jquery'           : node_path + '/jquery',
     'jquery_sortable'  : node_path + '/jquery-sortable',
-    'jquery_sparkline' : node_path + '/jquery-sparkline',
     'bootstrap_sass'   : node_path + '/bootstrap-sass',
     'socketio_client'  : node_path + '/socket.io-client',
     'ionicons'         : node_path + '/ionicons',
@@ -60,7 +59,6 @@ elixir(function(mix) {
     .scripts([
         paths.jquery           + '/dist/jquery.min.js',
         paths.jquery_sortable  + '/source/js/jquery-sortable-min.js',
-        paths.jquery_sparkline + '/jquery.sparkline.min.js',
         paths.underscore       + '/underscore-min.js',
         paths.moment           + '/min/moment.min.js',
         paths.bootstrap_sass   + '/assets/javascripts/bootstrap.min.js',
