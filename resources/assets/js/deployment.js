@@ -179,7 +179,7 @@ var app = app || {};
                 data.status = trans('deployments.running');
             } else if (parseInt(this.model.get('status')) === FAILED || parseInt(this.model.get('status')) === CANCELLED) {
                 data.status_css = 'danger';
-                data.icon_css = 'alert';
+                data.icon_css = 'close-round';
 
                 data.status = trans('deployments.failed');
                 if (parseInt(this.model.get('status')) === CANCELLED) {

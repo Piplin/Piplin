@@ -111,12 +111,12 @@ toastr.options.extendedTimeOut = 7000;
                 label_class = 'warning';
                 label = trans('deployments.running');
             } else if (data.model.status === DEPLOYMENT_FAILED) {
-                icon_class = 'alert';
+                icon_class = 'close-round';
                 label_class = 'danger';
                 label = trans('deployments.failed');
                 done = true;
             } else if (data.model.status === DEPLOYMENT_ERRORS) {
-                icon_class = 'alert';
+                icon_class = 'close';
                 label_class = 'success';
                 label = trans('deployments.completed_with_errors');
                 done = true;
@@ -179,7 +179,7 @@ toastr.options.extendedTimeOut = 7000;
                 label_class = 'warning';
                 label = trans('projects.deploying');
             } else if (data.model.status === FAILED) {
-                icon_class = 'alert';
+                icon_class = 'close-round';
                 label_class = 'danger';
                 label = trans('projects.failed');
             } else if (data.model.status === PENDING) {
