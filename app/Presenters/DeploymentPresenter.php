@@ -89,7 +89,7 @@ class DeploymentPresenter extends BasePresenter
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
             return 'checkmark-round';
         } elseif (in_array($this->wrappedObject->status, $finished_statuses, true)) {
-            return 'alert';
+            return 'close-round';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load-c fixhub-spin';
         }

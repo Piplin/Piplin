@@ -268,7 +268,7 @@ var app = app || {};
                 data.status     = trans('servers.testing');
             } else if (parseInt(this.model.get('status')) === FAILED) {
                 data.status_css = 'danger';
-                data.icon_css   = 'alert';
+                data.icon_css   = 'close-round';
                 data.status     = trans('servers.failed');
             }
 
