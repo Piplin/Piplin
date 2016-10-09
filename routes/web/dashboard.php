@@ -72,6 +72,11 @@ Route::group([
             'uses' => 'DeploymentController@abort',
         ]);
 
+        Route::get('deployment/{id}/approve', [
+            'as'    => 'deployment.approve',
+            'uses'  => 'DeploymentController@approve',
+        ]);
+
         Route::get('deployment/{id}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',

@@ -117,12 +117,16 @@ class ProjectController extends Controller
             unset($fields['optional']);
         }
 
+        $fields['status'] = Deployment::APPROVING;
+
         $deployment = Deployment::create($fields);
 
+        /*
         dispatch(new QueueDeployment(
             $deployment,
             $optional
         ));
+        */
 
         return $deployment;
     }
