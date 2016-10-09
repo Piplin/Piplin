@@ -39,7 +39,7 @@ return [
 
     'messages' => [
         'app'           => ['yes', 'no'],
-        'dashboard'     => ['pending', 'running', 'deployment_number'],
+        'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'deployment_number'],
         'deployments'   => ['completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', ],
         'variables'     => ['create', 'edit'],

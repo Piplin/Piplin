@@ -22,27 +22,39 @@
                         <li class="header deploying_header"><i class="ion ion-load-c"></i> <span>{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</span></li>
                         <li>
                             <ul class="menu deploying_menu">
-                                @foreach ($deploying as $deployment)
-                                    <li id="deployment_info_{{ $deployment->id }}">
+                                @forelse ($deploying as $deployment)
+                                    <li class="todo_item" id="deployment_info_{{ $deployment->id }}">
                                         <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
                                             <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
                                             <p>{{ trans('deployments.branch') }}: {{ $deployment->branch }}</p>
                                         </a>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li class="item_empty">
+                                        <a href="javascript:void(0);">
+                                        <small>{{ trans('dashboard.running_empty') }}</small>
+                                        </a>
+                                    </li>
+                                @endforelse
                             </ul>
                         </li>
                         <li class="header pending_header"><i class="ion ion-clock"></i> <span>{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</span></li>
                         <li>
                             <ul class="menu pending_menu">
-                                @foreach ($pending as $deployment)
-                                    <li id="deployment_info_{{ $deployment->id }}">
+                                @forelse ($pending as $deployment)
+                                    <li class="todo_item" id="deployment_info_{{ $deployment->id }}">
                                         <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
                                             <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
                                             <p>{{ trans('deployments.branch') }}: {{ $deployment->branch }}</p>
                                         </a>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li class="item_empty">
+                                        <a href="javascript:void(0);">
+                                        <small>{{ trans('dashboard.pending_empty') }}</small>
+                                        </a>
+                                    </li>
+                                @endforelse
                             </ul>
                         </li>
                         <li class="footer"><a href="javascript:void(0);">Close</a></li>
@@ -77,10 +89,17 @@
 
 @push('templates')
     <script type="text/template" id="deployment-list-template">
-        <li id="deployment_info_<%- id %>">
+        <li class="todo_item" id="deployment_info_<%- id %>">
             <a href="<%- url %>">
                 <h4><%- project_name %> <small class="pull-right">{{ trans('dashboard.started') }}: <%- time %></small></h4>
                 <p>{{ trans('deployments.branch') }}: <%- branch %></p>
+            </a>
+        </li>
+    </script>
+    <script type="text/template" id="todo-item-empty-template">
+        <li class="item_empty">
+            <a href="javascript:void(0);">
+                <small><%- empty_text %></small>
             </a>
         </li>
     </script>

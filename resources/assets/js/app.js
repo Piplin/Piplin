@@ -229,10 +229,11 @@ toastr.options.extendedTimeOut = 7000;
             $('.deploying_menu').append(html);
         }
 
-        var pending = $('.pending_menu li').length;
-        var deploying = $('.deploying_menu li').length;
+        var pending = $('.pending_menu li.todo_item').length;
+        var deploying = $('.deploying_menu li.todo_item').length;
         var todo_count = pending + deploying;
 
+    
         if(todo_count > 0) {
             $('#todo_menu span.label').html(todo_count);
             $('#todo_menu .dropdown-toggle i.ion').addClass('text-danger');
@@ -241,20 +242,27 @@ toastr.options.extendedTimeOut = 7000;
             $('#todo_menu .dropdown-toggle i.ion').removeClass('text-danger')
         }
 
+        var empty_template = _.template($('#todo-item-empty-template').html());
         if(pending > 0) {
             $('#todo_menu span.label').addClass('label-info');
             $('.pending_header i').addClass('fixhub-spin');
+            $('.pending_menu li.item_empty').remove();
         } else {
             $('#todo_menu span.label').removeClass('label-info');
             $('.pending_header i').removeClass('fixhub-spin');
+            $('.pending_menu li.item_empty').remove();
+            $('.pending_menu').append(empty_template({empty_text:trans('dashboard.pending_empty')}));
         }
 
         if(deploying > 0) {
             $('#todo_menu span.label').addClass('label-success');
             $('.deploying_header i').addClass('fixhub-spin');
+            $('.deploying_menu li.item_empty').remove();
         } else {
             $('#todo_menu span.label').removeClass('label-success');
             $('.deploying_header i').removeClass('fixhub-spin');
+            $('.deploying_menu li.item_empty').remove();
+            $('.deploying_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
         }
 
         if(deploying > 0 && pending > 0) {
