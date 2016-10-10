@@ -143,8 +143,8 @@ class DeploymentController extends Controller
             $deployment->save();
         }
 
-        return redirect()->route('projects', [
-            'id' => $deployment->project_id,
+        return redirect()->route('deployments', [
+            'id' => $deployment->id,
         ]);
     }
 

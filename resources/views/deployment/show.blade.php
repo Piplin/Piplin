@@ -1,9 +1,21 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    @if (!empty($deployment->reason))
-        <p><strong>{{ trans('deployments.reason') }}</strong>: {{ $deployment->reason }}</p>
-    @endif
+        <p>
+        @if (!empty($deployment->reason))
+        <strong>{{ trans('deployments.reason') }}</strong>: {{ $deployment->reason }}
+        @endif
+        <span>
+        <span class="label label-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}" title="{{ $deployment->readable_status }}"></i>{{ $deployment->readable_status }}</span>
+        @if($current_user->isAdmin || $current_user->isOperator)
+            @if($deployment->isApproving())
+                <a href="{{ route('deployments.approve', ['id' => $deployment->id]) }}" class="btn btn-info"> {{ trans('deployments.approve') }}</a>
+            @elseif($deployment->isApproved())
+            <a href="{{ route('deployments.deploy', ['id' => $deployment->id]) }}" class="btn btn-success"> {{ trans('deployments.deploy') }}</a>
+            @endif
+        @endif
+        </span>
+        </p>
     <div class="row">
         <div class="col-xs-12" id="{{ $deployment->repo_failure ? '' : 'repository_error' }}">
             <div class="callout callout-danger">

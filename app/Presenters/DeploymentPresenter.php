@@ -96,6 +96,10 @@ class DeploymentPresenter extends BasePresenter
             return 'close-round';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load-c fixhub-spin';
+        } elseif ($this->wrappedObject->status === Deployment::APPROVING) {
+            return 'play';
+        } elseif ($this->wrappedObject->status === Deployment::APPROVED) {
+            return 'android-checkbox-outline';
         }
 
         return 'clock';
@@ -130,7 +134,7 @@ class DeploymentPresenter extends BasePresenter
             return 'green';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::ABORTING, Deployment::ABORTED], true)) {
             return 'red';
-        } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
             return 'yellow';
         }
 
