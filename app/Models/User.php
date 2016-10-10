@@ -126,6 +126,16 @@ class User extends Model implements
     }
 
     /**
+     * Returns whether a user is at user level.
+     *
+     * @return bool
+     */
+    public function getIsUserAttribute()
+    {
+        return $this->level == self::LEVEL_USER;
+    }
+
+    /**
      * Returns whether a user is at admin level.
      *
      * @return bool

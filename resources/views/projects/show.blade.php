@@ -106,7 +106,6 @@
     @include('projects.dialogs.key')
     @include('projects.dialogs.reason')
     @include('projects.dialogs.redeploy')
-    @include('projects.dialogs.issue')
 @stop
 
 @section('right-buttons')
@@ -128,7 +127,6 @@
         new app.HeartbeatsTab();
         new app.VariablesTab();
         new app.CheckUrlsTab();
-        //new app.IssuesTab();
 
         app.Servers.add({!! $servers->toJson() !!});
         app.SharedFiles.add({!! $sharedFiles->toJson() !!});
@@ -138,9 +136,11 @@
         app.Heartbeats.add({!! $heartbeats->toJson() !!});
         app.CheckUrls.add({!! $checkUrls->toJson() !!});
         app.Variables.add({!! $variables->toJson() !!});
-        //app.Issues.add({!! $issues->toJson() !!});
 
         app.project_id = {{ $project->id }};
+        @if(isset($action) && $action == 'apply')
+            $('button#deploy_project').trigger('click');
+        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
