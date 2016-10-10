@@ -65,7 +65,6 @@ class WebhookController extends Controller
 
             // Todo: Need improvement.
             if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
-
                 $this->abortQueued($project->id);
                 $this->createDeployment($payload);
 
