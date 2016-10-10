@@ -11,8 +11,8 @@
         <li>
             <i class="ion ion-{{ $deployment->icon }} text-{{ $deployment->timeline_css_class }}" title="{{ $deployment->readable_status }}"></i>
             <div class="timeline-item">
-                <span class="time"><i class="ion ion-clock"></i> {{ $deployment->started_at->format('H:i:s') }}</span>
-                <h4 class="timeline-header"><i class="ion ion-paper-airplane"></i> <a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ trans('dashboard.deployment_number', ['id' => $deployment->id]) }}</a>  <a class="btn btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="ion ion-social-codepen-outline"></i> {{ $deployment->project->name }} </a></h4>
+                <span class="time"><i class="ion ion-code-working"></i> {{ $deployment->short_commit }}  <i class="ion ion-pricetag"></i> {{ $deployment->branch }}  <i class="ion ion-clock"></i> {{ $deployment->started_at->format('H:i:s') }}</span>
+                <h4 class="timeline-header"><i class="ion ion-paper-airplane"></i> <a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ trans('dashboard.deployment_number', ['id' => $deployment->id]) }}</a>  <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="ion ion-social-codepen-outline"></i> {{ $deployment->project->name }} </a> </h4>
 
                 @if (!empty($deployment->reason))
                 <div class="timeline-body">

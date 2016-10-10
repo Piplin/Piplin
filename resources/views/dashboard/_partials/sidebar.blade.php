@@ -6,8 +6,8 @@
   <div class="box-body text-center">
     <p>
       <div class="btn-group">
-      <button class="btn btn-success"><i class="ion ion-ios-cloud-upload"></i>{{ trans('projects.apply_choose') }}</button>
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+      <button class="btn btn-info"><i class="ion ion-ios-cloud-upload"></i>{{ trans('projects.apply_choose') }}</button>
+      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
       </button>
