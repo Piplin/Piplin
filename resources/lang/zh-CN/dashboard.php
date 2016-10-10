@@ -19,6 +19,8 @@ return [
     'pending_empty'     => '没有等待上线的任务',
     'running'           => '正在上线: :count 个|正在上线: :count 个',
     'running_empty'     => '没有正在上线的任务',
+    'approving'         => '正在审核: :count 个|正在审核: :count 个',
+    'approving_empty'   => '没有正在审核的任务',
     'author_issues'     => '我发起了 :count 个工单|我发起了 :count 个工单',
     'assignee_issues'   => '当前共有 :count 个工单指派给我|当前共有 :count 个工单指派给我',
     'no_projects'       => '尚无项目',

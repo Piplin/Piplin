@@ -19,6 +19,8 @@ return [
     'pending_empty'     => 'No pending deployments to show',
     'running'           => ':count running deployment|:count running deployments',
     'running_empty'     => 'No running deployments to show',
+    'approving'         => ':count approving deployment|:count approving deployments',
+    'approving_empty'   => 'No approving deployments to show',
     'author_issues'     => 'You have sent :count issue|You have sent :count issues',
     'assignee_issues'   => 'There are :count issue assigned to you|There are :count issues assigned to you',
     'no_projects'       => 'You have not yet setup any projects',

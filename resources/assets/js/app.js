@@ -37,6 +37,9 @@ toastr.options.extendedTimeOut = 7000;
     var DEPLOYMENT_FAILED    = 3;
     var DEPLOYMENT_ERRORS    = 4;
     var DEPLOYMENT_CANCELLED = 5;
+    var DEPLOYMENT_ABORTED   = 6;
+    var DEPLOYMENT_APPROVING = 7;
+    var DEPLOYMENT_APPROVED  = 8;
 
     app.project_id = app.project_id || null;
 
@@ -224,14 +227,17 @@ toastr.options.extendedTimeOut = 7000;
 
         if (data.model.status === DEPLOYMENT_PENDING) {
             $('.pending_menu').append(html);
-        }
-        else if (data.model.status === DEPLOYMENT_DEPLOYING) {
+        } else if (data.model.status === DEPLOYMENT_DEPLOYING) {
             $('.deploying_menu').append(html);
+        } else if (data.model.status === DEPLOYMENT_APPROVING || data.model.status === DEPLOYMENT_APPROVED) {
+            $('.approving_menu').append(html);
         }
 
         var pending = $('.pending_menu li.todo_item').length;
         var deploying = $('.deploying_menu li.todo_item').length;
-        var todo_count = pending + deploying;
+        var approving = $('.approving_menu li.todo_item').length;
+
+        var todo_count = pending + deploying + approving;
 
     
         if(todo_count > 0) {
@@ -265,6 +271,17 @@ toastr.options.extendedTimeOut = 7000;
             $('.deploying_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
         }
 
+        if(approving > 0) {
+            $('#todo_menu span.label').addClass('label-success');
+            $('.approving_header i').addClass('fixhub-spin');
+            $('.approving_menu li.item_empty').remove();
+        } else {
+            $('#todo_menu span.label').removeClass('label-success');
+            $('.approving_header i').removeClass('fixhub-spin');
+            $('.approving_menu li.item_empty').remove();
+            $('.approving_menu').append(empty_template({empty_text:trans('dashboard.approving_empty')}));
+        }
+
         if(deploying > 0 && pending > 0) {
             $('#todo_menu span.label').removeClass('label-success').removeClass('label-info').addClass('label-warning');
         }
@@ -275,9 +292,13 @@ toastr.options.extendedTimeOut = 7000;
         var deploying_label = Lang.choice('dashboard.running', deploying, {
             'count': deploying
         });
+        var approving_label = Lang.choice('dashboard.approving', approving, {
+            'count': approving
+        });
 
         $('.deploying_header span').text(deploying_label);
         $('.pending_header span').text(pending_label);
+        $('.approving_header span').text(approving_label);
     }
 
 })(jQuery);

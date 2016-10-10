@@ -74,22 +74,19 @@ class HeaderComposer
      */
     private function getApproving()
     {
-        return $this->getStatus(Deployment::APPROVING);
+        return $this->getStatus([Deployment::APPROVING, Deployment::APPROVED]);
     }
 
     /**
      * Gets deployments with a supplied status.
      *
-     * @param  int   $status
+     * @param  array|int $status
      * @return array
      */
     private function getStatus($status)
     {
-        $raw_sql = 'project_id IN (SELECT id FROM projects WHERE deleted_at IS NULL)';
-
-        return Deployment::whereRaw($raw_sql)
-                           ->where('status', $status)
-                           ->whereNotNull('started_at')
+        return Deployment::whereNotNull('started_at')
+                           ->whereIn('status', is_array($status) ? $status : [$status])
                            ->orderBy('started_at', 'DESC')
                            ->get();
     }
