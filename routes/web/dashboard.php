@@ -56,6 +56,11 @@ Route::group([
             'uses' => 'ProjectController@show',
         ]);
 
+        Route::get('projects/{id}/apply', [
+            'as'   => 'projects.apply',
+            'uses' => 'ProjectController@apply',
+        ]);
+
         Route::post('projects/{id}/deploy', [
             'as'   => 'projects.deploy',
             'uses' => 'ProjectController@deploy',

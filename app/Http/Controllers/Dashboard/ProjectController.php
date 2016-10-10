@@ -62,6 +62,17 @@ class ProjectController extends Controller
     }
 
     /**
+     * The details of an individual project with a apply dialog.
+     *
+     * @param  int  $project_id
+     * @return View
+     */
+    public function apply($project_id)
+    {
+        return $this->show($project_id)->withAction('apply');
+    }
+
+    /**
      * Adds a deployment for the specified project to the queue.
      *
      * @param  Request  $request
