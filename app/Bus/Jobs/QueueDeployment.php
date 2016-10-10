@@ -80,9 +80,7 @@ class QueueDeployment extends Job
         $this->dispatch(new UpdateGitMirror($this->project));
 
         // If the build has been manually triggered get the committer info from the repo
-        if ($this->deployment->commit === Deployment::LOADING) {
-            $this->updateRepoInfo();
-        }
+        $this->updateRepoInfo();
 
         if (!$this->project->need_approve || $this->deployment->is_webhook) {
             $this->dispatch(new DeployProject($this->deployment));
@@ -97,9 +95,12 @@ class QueueDeployment extends Job
      */
     private function updateRepoInfo()
     {
+        $commit = ($this->deployment->commit === Deployment::LOADING ? null : $this->deployment->commit);
+
         $process = new Process('tools.GetCommitDetails', [
-            'mirror_path'   => $this->deployment->project->mirrorPath(),
-            'git_reference' => $this->deployment->branch,
+            'deployment'    => $this->deployment->id,
+            'mirror_path'   => $this->project->mirrorPath(),
+            'git_reference' => $commit ?: $this->deployment->branch,
         ]);
         $process->run();
 

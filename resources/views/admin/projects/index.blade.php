@@ -13,7 +13,6 @@
                     <tr>
                         <th>ID</th>
                         <th>{{ trans('projects.name') }}</th>
-                        <th>{{ trans('projects.group') }}</th>
                         <th>{{ trans('projects.repository') }}</th>
                         <th>{{ trans('projects.branch') }}</th>
                         <th>{{ trans('projects.builds') }}</th>
@@ -53,8 +52,7 @@
 @push('templates')
     <script type="text/template" id="project-template">
         <td><%- id %></td>
-        <td><a href="/projects/<%- id %>"><%- name %></a></td>
-        <td><%- group_name %></td>
+        <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
         <td><%- repository %></td>
         <td><span class="label label-default"><%- branch %></span></td>
         <td><%- builds_to_keep %></td>
