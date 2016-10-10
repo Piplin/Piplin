@@ -6,7 +6,7 @@ return [
     'label'   => '小贴士',
     'none'    => '尚未配置小贴士',
     'body'    => '内容',
-    'status'  => '小提示状态',
+    'status'  => '是否显示?',
     'enabled' => '是否显示?',
     'create'  => '新增小贴士',
     'edit'    => '编辑小贴士',
