@@ -6,7 +6,7 @@
 
 Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web自动部署系统。
 
-![Screenshot](http://fixhub.org/upload/screenshot.png)
+![Screenshot](http://fixhub.org/fixhub.png)
 
 ## Fixhub能做什么？
 
