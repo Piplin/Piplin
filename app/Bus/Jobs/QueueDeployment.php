@@ -77,7 +77,7 @@ class QueueDeployment extends Job
             }
         }
 
-        $this->dispatch(new UpdateGitMirror($this->deployment->project));
+        $this->dispatch(new UpdateGitMirror($this->project));
 
         // If the build has been manually triggered get the committer info from the repo
         if ($this->deployment->commit === Deployment::LOADING) {

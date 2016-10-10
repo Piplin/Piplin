@@ -54,11 +54,7 @@ class DashboardController extends Controller
      */
     private function buildTimelineData()
     {
-        $raw_sql = 'project_id IN (SELECT id FROM projects WHERE deleted_at IS NULL)';
-
-        $deployments = Deployment::whereRaw($raw_sql)
-                           ->whereNotNull('started_at')
-                           ->with('project')
+        $deployments = Deployment::whereNotNull('started_at')
                            ->take(10)
                            ->orderBy('started_at', 'DESC')
                            ->get();

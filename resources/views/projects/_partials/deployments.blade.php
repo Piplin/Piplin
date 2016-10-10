@@ -49,7 +49,7 @@
                         {{ $deployment->short_commit_hash }}
                         @endif
                     </td>
-                    <td><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-default">{{ $deployment->branch }}</span></a></td>
+                    <td><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-info">{{ $deployment->branch }}</span></a></td>
                     <td>
                         <span class="label label-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                     </td>
