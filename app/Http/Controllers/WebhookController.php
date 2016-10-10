@@ -70,7 +70,6 @@ class WebhookController extends Controller
                     $this->createDeployment($payload);
 
                     $success = true;
-                }
             }
         }
 
