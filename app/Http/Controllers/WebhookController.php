@@ -63,11 +63,14 @@ class WebhookController extends Controller
         if ($project->servers->where('deploy_code', true)->count() > 0) {
             $payload = $this->parseWebhookRequest($request, $project);
 
-            if (is_array($payload)) {
-                $this->abortQueued($project->id);
-                $this->createDeployment($payload);
+            // Todo: Need improvement.
+            if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
 
-                $success = true;
+                    $this->abortQueued($project->id);
+                    $this->createDeployment($payload);
+
+                    $success = true;
+                }
             }
         }
 
