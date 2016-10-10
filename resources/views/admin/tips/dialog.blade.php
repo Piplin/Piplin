@@ -21,8 +21,8 @@
                     <div class="form-group">
                         <label>{{ trans('tips.status') }}</label>
                         <div class="checkbox">
-                            <label for="project_status">
-                                <input type="checkbox" value="1" name="status" id="project_status" />
+                            <label for="tip_status">
+                                <input type="checkbox" value="1" name="status" id="tip_status" />
                                 {{ trans('tips.enabled') }}
                             </label>
                         </div>
