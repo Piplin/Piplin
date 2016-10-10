@@ -47,7 +47,7 @@ class SidebarComposer
                 $projects_by_group[$project->group->id]['projects'] = [];
             }
 
-            if($project->need_approve) {
+            if ($project->need_approve) {
                 $projects_need_approve[] = $project;
             }
             $projects_by_group[$project->group->id]['projects'][] = $project;
