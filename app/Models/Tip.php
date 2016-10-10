@@ -36,6 +36,17 @@ class Tip extends Model
     protected $appends = ['excerpt'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'     => 'integer',
+        'status' => 'boolean',
+    ];
+
+
+    /**
      * Define an accessor for the excerpt.
      *
      * @return string

@@ -79,7 +79,7 @@ class SidebarComposer
     protected function getRandomTip()
     {
         $tips = Cache::remember('random_tip', self::CACHE_MINUTES, function () {
-            return Tip::orderBy('id', 'desc')->take(20)->get();
+            return Tip::where('status', true)->orderBy('id', 'desc')->take(20)->get();
         });
 
         return ($tips && $tips->count() > 0) ? $tips->random() : null;
