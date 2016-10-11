@@ -76,7 +76,7 @@
                                 @endforelse
                             </ul>
                         </li>
-                        <li class="footer"><a href="javascript:void(0);">Close</a></li>
+                        <li class="footer"><a href="javascript:void(0);">{{ trans('app.close') }}</a></li>
                     </ul>
                 </li>
                 <li {!! set_active('profile', ['dropdown', 'user', 'user-menu']) !!}>
