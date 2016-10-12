@@ -13,7 +13,7 @@
       </button>
       <ul class="dropdown-menu" role="menu">
         @foreach ($projects_need_approve as $project)
-        <li><a href="{{ route('projects.apply', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
+        <li><a href="{{ route('projects.apply', ['id' => $project->id]) }}">{{$project->group_name}}/{{ $project->name }}</a></li>
         @endforeach
       </ul>
       </div>
