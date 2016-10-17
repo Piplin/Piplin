@@ -65,7 +65,7 @@ class TestServerConnection extends Job implements ShouldQueue
                 $this->server->output = $process->getErrorOutput();
             } else {
                 $this->server->status = Server::SUCCESSFUL;
-                $this->server->output = $process->getOutput();
+                $this->server->output = null;
             }
         } catch (\Exception $error) {
             $this->server->status = Server::FAILED;
