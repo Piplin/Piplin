@@ -364,8 +364,8 @@ class DeployProject extends Job implements ShouldQueue
             case Stage::DO_CLONE:
                 return new Process('deploy.steps.CreateNewRelease', $tokens);
             case Stage::DO_INSTALL:
-                // Write configuration file to release dir, symlink shared files and run composer
-                $process = new Process('deploy.steps.InstallComposerDependencies', $tokens);
+                // Write configuration file to release dir and symlink shared files.
+                $process = new Process('deploy.steps.InstallNewRelease', $tokens);
                 $process->prependScript($this->configurationFileCommands($tokens['release_path']))
                         ->appendScript($this->shareFileCommands($tokens['release_path'], $tokens['shared_path']));
 
