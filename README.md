@@ -12,6 +12,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 **注意** Fixhub仍处于并将长期处于初级阶段，下面的部分特性可能还没有100%完成，即使完成了也有可能会有bug。有任何问题请随时向我们反馈。
 
+* 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
 * 与Git仓储打通（最好与自托管的Gitlab服务器对接）
 * 安装composer依赖
