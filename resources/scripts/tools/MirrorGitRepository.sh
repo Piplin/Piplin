@@ -1,4 +1,4 @@
-### Mirror git repository
+# Mirror git repository
 
 chmod +x {{ wrapper_file }}
 export GIT_SSH={{ wrapper_file }}
