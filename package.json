@@ -4,6 +4,7 @@
         "dotenv": "^2.0.0",
         "ioredis": "^1.15.1",
         "socket.io": "^1.4.5",
+        "parseuri": "^0.0.4",
         "jsonwebtoken": "^7.0.0"
     },
     "devDependencies": {

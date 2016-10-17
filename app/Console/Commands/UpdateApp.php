@@ -160,7 +160,7 @@ class UpdateApp extends InstallApp
     {
         $this->info('Restarting the queue');
         $this->line('');
-        $this->call('queue:flush');
+        //$this->call('queue:flush');
         $this->call('queue:restart');
         $this->line('');
     }
