@@ -27,7 +27,6 @@ class ProjectTableSeeder extends Seeder
             'key_id'      => 1,
             'last_run'    => null,
             'build_url'   => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
-            'include_dev' => false,
         ]);
     }
 }
