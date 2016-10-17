@@ -78,15 +78,6 @@
                                     <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('projects.ci_image') }}"></i>
                                     <input type="text" class="form-control" name="build_url" id="project_build_url" placeholder="http://ci.example.com/status.png?project=1" />
                                 </div>
-                                <div class="form-group">
-                                    <label>{{ trans('projects.options') }}</label>
-                                    <div class="checkbox">
-                                        <label for="project_include_dev">
-                                            <input type="checkbox" value="1" name="include_dev" id="project_include_dev" />
-                                            {{ trans('projects.include_dev') }}
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="tab-pane" id="project_repo">

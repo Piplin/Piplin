@@ -553,7 +553,6 @@ class DeployProject extends Job implements ShouldQueue
         if (!$step->isCustom()) {
             $tokens = array_merge($tokens, [
                 'remote_archive' => $remote_archive,
-                'include_dev'    => $this->deployment->project->include_dev,
                 'builds_to_keep' => $this->deployment->project->builds_to_keep + 1,
                 'shared_path'    => $release_shared_dir,
                 'releases_path'  => $releases_dir,

@@ -36,7 +36,6 @@ class StoreProjectRequest extends Request
             'url'                => 'url',
             'build_url'          => 'url',
             'allow_other_branch' => 'boolean',
-            'include_dev'        => 'boolean',
             'need_approve'       => 'boolean',
         ];
     }

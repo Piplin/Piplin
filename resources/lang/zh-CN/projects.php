@@ -54,7 +54,6 @@ return [
     'not_deployed'      => '未上线',
     'options'           => '选项',
     'change_branch'     => '可上线其他分支?',
-    'include_dev'       => '是否安装项目所需的composer开发环境依赖包?',
     'need_approve'      => '是否需要审核才能上线?',
     'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Fixhub自动生成。',
 

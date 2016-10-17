@@ -85,7 +85,6 @@ class ProjectController extends Controller
             'build_url',
             'template_id',
             'allow_other_branch',
-            'include_dev',
             'need_approve'
         );
 
@@ -129,7 +128,6 @@ class ProjectController extends Controller
             'url',
             'build_url',
             'allow_other_branch',
-            'include_dev',
             'need_approve'
         ));
 

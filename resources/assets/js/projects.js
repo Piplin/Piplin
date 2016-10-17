@@ -74,7 +74,6 @@ var app = app || {};
             $('#project_url').val('');
             $('#project_build_url').val('');
             $('#project_allow_other_branch').prop('checked', true);
-            $('#project_include_dev').prop('checked', false);
             $('#project_need_approve').prop('checked', false);
         }
 
@@ -140,7 +139,6 @@ var app = app || {};
             build_url:          $('#project_build_url').val(),
             template_id:        $('#project_template_id') ? $('#project_template_id').val() : null,
             allow_other_branch: $('#project_allow_other_branch').is(':checked'),
-            include_dev:        $('#project_include_dev').is(':checked'),
             need_approve:       $('#project_need_approve').is(':checked')
         }, {
             wait: true,
@@ -290,7 +288,6 @@ var app = app || {};
             $('#project_url').val(this.model.get('url'));
             $('#project_build_url').val(this.model.get('build_url'));
             $('#project_allow_other_branch').prop('checked', (this.model.get('allow_other_branch') === true));
-            $('#project_include_dev').prop('checked', (this.model.get('include_dev') === true));
             $('#project_need_approve').prop('checked', (this.model.get('need_approve') === true));
         },
         trashProject: function() {
