@@ -62,9 +62,6 @@ class Kernel extends HttpKernel
             \Fixhub\Http\Middleware\VerifyCsrfToken::class,
             \Fixhub\Http\Middleware\Localize::class,
         ],
-        'api' => [
-            'throttle:60,1',
-        ],
     ];
 
     /**

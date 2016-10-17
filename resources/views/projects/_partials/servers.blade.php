@@ -1,3 +1,19 @@
+<div class="modal fade" id="show_log">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><i class="ion ion-code"></i> {{ trans('servers.output') }}</h4>
+            </div>
+            <div class="modal-body">
+                <div id="log"><pre>loading</pre></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
@@ -50,6 +66,9 @@
         <td><%- updated_at %></td>
         <td>
             <div class="btn-group pull-right">
+                <% if (output !== null) { %>
+                    <button type="button" class="btn btn-default btn-show" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="ion ion-ios-copy-outline"></i></button>
+                <% } %>
                 <% if (status === 'Testing') { %>
                     <button type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}" disabled><i class="ion ion-refresh fixhub-spin"></i></button>
                     <button type="button" class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server" disabled><i class="ion ion-compose"></i></button>
@@ -57,7 +76,7 @@
                 <% } else { %>
                     <button type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}"><i class="ion ion-arrow-swap"></i></button>
                     <button type="button" class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><i class="ion ion-compose"></i></button>
-                    <button type="button" class="btn btn-danger btn-delete" title="{{ trans('servers.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                    <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
                 <% } %>
             </div>
         </td>

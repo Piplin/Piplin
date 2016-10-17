@@ -22,7 +22,7 @@ Route::group([
         ]);
 
     Route::post('login', [
-            'middleware' => ['guest', 'throttle:10,10'],
+            'middleware' => ['guest', 'throttle:100,10'],
             'as'         => 'login-verify',
             'uses'       => 'AuthController@postLogin',
         ]);

@@ -242,6 +242,7 @@ var app = app || {};
         tagName:  'tr',
         events: {
             'click .btn-test': 'testConnection',
+            'click .btn-show': 'showLog',
             'click .btn-edit': 'editServer',
             'click .btn-delete': 'trashServer'
         },
@@ -286,6 +287,11 @@ var app = app || {};
             $('#server_path').val(this.model.get('path'));
 
             $('#server_deploy_code').prop('checked', (this.model.get('deploy_code') === true));
+        },
+        showLog: function() {
+            var data = this.model.toJSON();
+
+            $('#log pre').html(data.output);
         },
         trashServer: function() {
             var target = $('#model_id');

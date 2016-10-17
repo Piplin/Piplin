@@ -21,6 +21,7 @@ return [
     'ip_address'  => 'IP地址',
     'port'        => '端口',
     'status'      => '连通状态',
+    'output'      => '控制台输出',
     'updated_at'  => '更新时间',
     'test'        => '测试该服务器是否连通',
     'path'        => '项目路径',
