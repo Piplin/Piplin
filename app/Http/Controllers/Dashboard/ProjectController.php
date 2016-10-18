@@ -113,34 +113,20 @@ class ProjectController extends Controller
             }, $request->get('optional')));
         }
 
-        $deployment = $this->createDeployment($data);
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
-    }
-
-    /**
-     * Creates a new instance of the server.
-     *
-     * @param  array $fields
-     * @return Model
-     */
-    private function createDeployment(array $fields)
-    {
         $optional = [];
-        if (array_key_exists('optional', $fields)) {
-            $optional = $fields['optional'];
-            unset($fields['optional']);
+        if (array_key_exists('optional', $data)) {
+            $optional = array_pull($data, 'optional');
         }
 
-        $deployment = Deployment::create($fields);
+        $deployment = Deployment::create($data);
 
         dispatch(new QueueDeployment(
             $deployment,
             $optional
         ));
 
-        return $deployment;
+        return redirect()->route('deployments', [
+            'id' => $deployment->id,
+        ]);
     }
 }
