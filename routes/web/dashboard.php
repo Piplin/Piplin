@@ -93,8 +93,8 @@ Route::group([
         ]);
 
         Route::get('log/{log}', [
-            'as'   => 'deployments.log',
-            'uses' => 'DeploymentController@log',
+            'as'   => 'server_log.show',
+            'uses' => 'ServerLogController@show',
         ]);
 
         Route::get('repository/{id}/refresh', [

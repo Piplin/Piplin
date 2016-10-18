@@ -18,7 +18,6 @@ use Fixhub\Bus\Jobs\QueueDeployment;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
-use Fixhub\Models\ServerLog;
 use Illuminate\Http\Request;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
@@ -165,20 +164,6 @@ class DeploymentController extends Controller
         return redirect()->route('deployments', [
             'id' => $deployment_id,
         ]);
-    }
-
-    /**
-     * Gets the log output of a particular deployment step.
-     *
-     * @param  int $log_id
-     * @return ServerLog
-     */
-    public function log($log_id)
-    {
-        $log = ServerLog::findOrFail($log_id);
-        $log->runtime = ($log->runtime() === false ? null : AutoPresenter::decorate($log)->readable_runtime);
-
-        return $log;
     }
 
     /**
