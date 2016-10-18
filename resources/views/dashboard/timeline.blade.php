@@ -23,9 +23,6 @@
         </li>
         @endforeach
     @endforeach
-    <li>
-        <i class="ion ion-clock bg-gray"></i>
-    </li>
 </ul>
 {!! $deployments_raw->render() !!}
 @endif
