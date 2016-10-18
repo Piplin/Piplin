@@ -15,6 +15,8 @@ var app = app || {};
             $('#deployment_branch').parent('div').show();
         } else if (target.val() === 'tag') {
             $('#deployment_tag').parent('div').show();
+        } else if (target.val() === 'commit') {
+            $('#deployment_commit').parent('div').show();
         }
     });
 
@@ -31,7 +33,7 @@ var app = app || {};
 
         $('.has-error', source).removeClass('has-error');
 
-        if (source === 'branch' || source === 'tag') {
+        if (source === 'branch' || source === 'tag' || source === 'commit') {
             if ($('#deployment_' + source).val() === '') {
                 $('#deployment_' + source).parentsUntil('div').addClass('has-error');
 

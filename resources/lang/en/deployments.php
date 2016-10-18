@@ -60,6 +60,7 @@ return [
     'tag'                   => 'A tag',
     'branch'                => 'Branch',
     'warning'               => 'The deployment could not be started, please make sure you have entered all required values.',
+    'describe_commit'       => 'Such as: 0c6b0d8',
     'describe_reason'       => 'Please describe briefly the reason for this deployment',
     'optional'              => 'Select the optional deploy steps to run',
     'week'                  => ':time week|:time weeks',

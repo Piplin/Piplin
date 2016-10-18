@@ -98,6 +98,11 @@ class ProjectController extends Controller
         if ($project->allow_other_branch) {
             if ($request->has('source') && $request->has('source_' . $request->get('source'))) {
                 $data['branch'] = $request->get('source_' . $request->get('source'));
+
+                if($request->get('source') == 'commit') {
+                    $data['commit'] = $data['branch'];
+                    $data['branch'] = $project->branch;
+                }
             }
         }
 

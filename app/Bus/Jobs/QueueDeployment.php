@@ -116,6 +116,8 @@ class QueueDeployment extends Job
         $this->deployment->committer       = trim($committer);
         $this->deployment->committer_email = trim($email);
 
+        //$process = new Process('git symbolic-ref --short -q HEAD');
+
         if (!$this->deployment->user_id && !$this->deployment->source) {
             $user = User::where('email', $this->deployment->committer_email)->first();
 

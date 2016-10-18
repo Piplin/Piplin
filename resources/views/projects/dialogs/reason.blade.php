@@ -61,6 +61,17 @@
                                 </div>
                             </li>
                             @endif
+                            <li>
+                                <div class="radio">
+                                    <label for="deployment_source_commit">
+                                        <input type="radio" class="deployment-source" name="source" id="deployment_source_commit" value="commit" /> {{ trans('deployments.commit') }}
+
+                                        <div class="deployment-source-container">
+                                            <input class="form-control deployment-source" name="source_commit" id="deployment_commit" placeholder="{{ trans('deployments.describe_commit') }}">
+                                        </div>
+                                    </label>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <hr />
