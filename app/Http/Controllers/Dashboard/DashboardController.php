@@ -29,9 +29,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $data = $this->buildTimelineData();
         return view('dashboard.index', [
-            'title'     => trans('dashboard.title'),
-            'latest'    => $this->buildTimelineData(),
+            'title'           => trans('dashboard.title'),
+            'latest'          => $data[0],
+            'deployments_raw' => $data[1],
         ]);
     }
 
@@ -42,8 +44,10 @@ class DashboardController extends Controller
      */
     public function timeline()
     {
+        $data = $this->buildTimelineData();
         return view('dashboard.timeline', [
-            'latest' => $this->buildTimelineData(),
+            'latest'          => $data[0],
+            'deployments_raw' => $data[1],
         ]);
     }
 
@@ -55,9 +59,8 @@ class DashboardController extends Controller
     private function buildTimelineData()
     {
         $deployments = Deployment::whereNotNull('started_at')
-                           ->take(10)
                            ->orderBy('started_at', 'DESC')
-                           ->get();
+                           ->paginate(10);
 
         $deploys_by_date = [];
         foreach ($deployments as $deployment) {
@@ -70,7 +73,7 @@ class DashboardController extends Controller
             $deploys_by_date[$date][] = $deployment;
         }
 
-        return $deploys_by_date;
+        return [$deploys_by_date, $deployments];
     }
 
     /**
