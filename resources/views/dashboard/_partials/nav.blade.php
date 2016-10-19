@@ -16,7 +16,7 @@
                 <li class="dropdown messages-menu" id="todo_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="ion ion-android-notifications {{$todo_count ? 'text-danger' : null}}""></i>
-                        <span class="label {{$todo_count ? 'label-info' : null}}">{{ $todo_count ?:null }}</span>
+                        <span class="label {{$todo_count ? 'label-success' : null}}">{{ $todo_count ?:null }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header deploying_header"><i class="ion ion-load-c"></i> <span>{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</span></li>
