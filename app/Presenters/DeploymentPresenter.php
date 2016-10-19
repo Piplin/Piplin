@@ -87,13 +87,14 @@ class DeploymentPresenter extends BasePresenter
      */
     public function icon()
     {
-        $finished_statuses = [Deployment::FAILED, Deployment::COMPLETED_WITH_ERRORS,
-                              Deployment::ABORTING, Deployment::ABORTED, ];
+        $finished_statuses = [Deployment::FAILED, Deployment::COMPLETED_WITH_ERRORS];
 
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
             return 'checkmark-round';
         } elseif (in_array($this->wrappedObject->status, $finished_statuses, true)) {
             return 'close-round';
+        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
+            return 'alert';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load-c fixhub-spin';
         } elseif ($this->wrappedObject->status === Deployment::APPROVING) {
@@ -114,10 +115,12 @@ class DeploymentPresenter extends BasePresenter
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED || $this->wrappedObject->status === Deployment::COMPLETED_WITH_ERRORS) {
             return 'success';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::ABORTING, Deployment::ABORTED, Deployment::APPROVED], true)) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::APPROVED], true)) {
             return 'danger';
-        } elseif ($this->wrappedObject->status === Deployment::DEPLOYING || $this->wrappedObject->status == Deployment::APPROVING) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
             return 'warning';
+        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
+            return 'success';
         }
 
         return 'info';
@@ -132,10 +135,12 @@ class DeploymentPresenter extends BasePresenter
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED || $this->wrappedObject->status === Deployment::COMPLETED_WITH_ERRORS) {
             return 'green';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::ABORTING, Deployment::ABORTED], true)) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED], true)) {
             return 'red';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
             return 'yellow';
+        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
+            return 'green';
         }
 
         return 'aqua';
