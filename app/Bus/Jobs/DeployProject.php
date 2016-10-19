@@ -38,6 +38,7 @@ class DeployProject extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     private $deployment;
+    private $project;
     private $private_key;
     private $cache_key;
     private $release_archive;
@@ -51,6 +52,7 @@ class DeployProject extends Job implements ShouldQueue
     public function __construct(Deployment $deployment)
     {
         $this->deployment = $deployment;
+        $this->project = $deployment->project;
         $this->cache_key  = AbortDeployment::CACHE_KEY_PREFIX . $deployment->id;
     }
 
@@ -73,6 +75,11 @@ class DeployProject extends Job implements ShouldQueue
      */
     public function handle()
     {
+        $this->dispatch(new UpdateGitMirror($this->project));
+
+        // If the build has been manually triggered get the committer info from the repo
+        $this->updateRepoInfo();
+
         $this->deployment->started_at = Carbon::now();
         $this->deployment->status     = Deployment::DEPLOYING;
         $this->deployment->save();
@@ -132,6 +139,48 @@ class DeployProject extends Job implements ShouldQueue
         if (file_exists(storage_path('app/' . $this->release_archive))) {
             unlink(storage_path('app/' . $this->release_archive));
         }
+    }
+
+    /**
+     * Clones the repository locally to get the latest log entry and updates
+     * the deployment model.
+     *
+     * @return void
+     */
+    private function updateRepoInfo()
+    {
+        $commit = ($this->deployment->commit === Deployment::LOADING ? null : $this->deployment->commit);
+
+        $process = new Process('tools.GetCommitDetails', [
+            'deployment'    => $this->deployment->id,
+            'mirror_path'   => $this->project->mirrorPath(),
+            'git_reference' => $commit ?: $this->deployment->branch,
+        ]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('Could not get repository info - ' . $process->getErrorOutput());
+        }
+
+        $git_info = $process->getOutput();
+
+        list($commit, $committer, $email) = explode("\x09", $git_info);
+
+        $this->deployment->commit          = $commit;
+        $this->deployment->committer       = trim($committer);
+        $this->deployment->committer_email = trim($email);
+
+        //$process = new Process('git symbolic-ref --short -q HEAD');
+
+        if (!$this->deployment->user_id && !$this->deployment->source) {
+            $user = User::where('email', $this->deployment->committer_email)->first();
+
+            if ($user) {
+                $this->deployment->user_id = $user->id;
+            }
+        }
+
+        $this->deployment->save();
     }
 
     /**
