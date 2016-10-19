@@ -241,49 +241,39 @@ toastr.options.extendedTimeOut = 7000;
 
     
         if(todo_count > 0) {
-            $('#todo_menu span.label').html(todo_count);
+            $('#todo_menu span.label').html(todo_count).addClass('label-success');
             $('#todo_menu .dropdown-toggle i.ion').addClass('text-danger');
         } else {
-            $('#todo_menu span.label').html('');
+            $('#todo_menu span.label').html('').removeClass('label-success');
             $('#todo_menu .dropdown-toggle i.ion').removeClass('text-danger')
         }
 
         var empty_template = _.template($('#todo-item-empty-template').html());
         if(pending > 0) {
-            $('#todo_menu span.label').addClass('label-info');
             $('.pending_header i').addClass('fixhub-spin');
             $('.pending_menu li.item_empty').remove();
         } else {
-            $('#todo_menu span.label').removeClass('label-info');
             $('.pending_header i').removeClass('fixhub-spin');
             $('.pending_menu li.item_empty').remove();
             $('.pending_menu').append(empty_template({empty_text:trans('dashboard.pending_empty')}));
         }
 
         if(deploying > 0) {
-            $('#todo_menu span.label').addClass('label-success');
             $('.deploying_header i').addClass('fixhub-spin');
             $('.deploying_menu li.item_empty').remove();
         } else {
-            $('#todo_menu span.label').removeClass('label-success');
             $('.deploying_header i').removeClass('fixhub-spin');
             $('.deploying_menu li.item_empty').remove();
             $('.deploying_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
         }
 
         if(approving > 0) {
-            $('#todo_menu span.label').addClass('label-success');
             $('.approving_header i').addClass('fixhub-spin');
             $('.approving_menu li.item_empty').remove();
         } else {
-            $('#todo_menu span.label').removeClass('label-success');
             $('.approving_header i').removeClass('fixhub-spin');
             $('.approving_menu li.item_empty').remove();
             $('.approving_menu').append(empty_template({empty_text:trans('dashboard.approving_empty')}));
-        }
-
-        if(deploying > 0 && pending > 0) {
-            $('#todo_menu span.label').removeClass('label-success').removeClass('label-info').addClass('label-warning');
         }
 
         var pending_label = Lang.choice('dashboard.pending', pending, {
