@@ -14,13 +14,13 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
-* 与Git仓储打通（最好与自托管的Gitlab服务器对接）
-* 安装composer依赖
+* 直接从Git仓库克隆项目代码并进行打包、安装
 * 执行远程服务器bash命令
-* 非常友好的上线过程信息提示
-* 在服务器保留追溯版本，以便回滚时使用
-* 任务计划的健康检测
-* 通过webhook触发部署
+* 通过Websocket实现项目部署状态的实时跟踪
+* 在服务器保留追溯版本记录，以便快速回滚
+* 通过任务计划进行项目健康检测
+* 可通过webhook触发部署
+* 上线单申请、审核流程
 * Slack和邮件通知
 
 ## 下一阶段需要实现的功能
@@ -69,12 +69,12 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 ### 可选项
 
-- 为了保持队列监听器以及websoket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
+- 为了确保队列监听、websoket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
 - 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.3/cache).
 
 ## 安装手册
 
-一. Clone the repository
+一. 克隆代码
 
 ```shell
 $ git clone https://github.com/fixhub/fixhub.git
