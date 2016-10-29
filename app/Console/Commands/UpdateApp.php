@@ -56,7 +56,7 @@ class UpdateApp extends InstallApp
             $this->hasRunningDeployments() ||
             $this->composerOutdated() ||
             !$this->checkRequirements()) {
-            return;
+            return -1;
         }
 
         $bring_back_up = false;

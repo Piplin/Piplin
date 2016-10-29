@@ -1,7 +1,9 @@
 # Create shared directories
 
 if [ -d {{ target_file }} ]; then
-    cp -pRn {{ target_file }} {{ source_file }}
+    if [ ! -d {{ source_file }} ]; then
+        cp -pRn {{ target_file }} {{ source_file }}
+    fi
     rm -rf {{ target_file }}
 fi
 
