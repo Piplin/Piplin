@@ -113,9 +113,9 @@ class DeploymentPresenter extends BasePresenter
      */
     public function css_class()
     {
-        if ($this->wrappedObject->status === Deployment::COMPLETED || $this->wrappedObject->status === Deployment::COMPLETED_WITH_ERRORS) {
+        if ($this->wrappedObject->status === Deployment::COMPLETED) {
             return 'success';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::APPROVED], true)) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::APPROVED, Deployment::COMPLETED_WITH_ERRORS], true)) {
             return 'danger';
         } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
             return 'warning';
@@ -133,11 +133,11 @@ class DeploymentPresenter extends BasePresenter
      */
     public function timeline_css_class()
     {
-        if ($this->wrappedObject->status === Deployment::COMPLETED || $this->wrappedObject->status === Deployment::COMPLETED_WITH_ERRORS) {
+        if ($this->wrappedObject->status === Deployment::COMPLETED) {
             return 'green';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED], true)) {
             return 'red';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
             return 'yellow';
         } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
             return 'green';
