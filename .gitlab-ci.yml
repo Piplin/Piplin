@@ -47,9 +47,5 @@ php-7.0:
   image: tetraweb/php:7.0
   script:
     - php -v
-    - echo "Running CS check on PHP 7.0"
-    - phpcs --version
-    - phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
-    - echo "Running PHPUnit Tests on PHP 7.0"
-    - php vendor/bin/phpdoccheck --directory=app
+    - make cs
     - php vendor/bin/codecept run
