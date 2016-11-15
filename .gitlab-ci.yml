@@ -3,16 +3,14 @@ before_script:
   - docker-php-ext-enable zip
   - docker-php-ext-enable mbstring
   - docker-php-ext-enable gd
-  - docker-php-ext-enable pdo_mysql
-  - ping -c 3 mysql  
+#  - docker-php-ext-enable pdo_mysql
+#  - ping -c 3 mysql  
  # - composer self-update
   - composer config repo.packagist composer https://packagist.phpcomposer.com
   - composer install --no-progress --no-interaction
+  - touch storage/database.sqlite
   - cp .env.example .env
-  - sed -i 's/DB_HOST=127.0.0.1/DB_HOST=mysql/g' .env
-  - sed -i 's/DB_DATABASE=fixhub/DB_DATABASE=homestead/g' .env
-  - sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=homestead/g' .env
-  - sed -i 's/DB_PASSWORD=/DB_PASSWORD=secret/g' .env
+  - sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
   - sed -i 's/QUEUE_DRIVER=redis/QUEUE_DRIVER=database/g' .env
   - php artisan key:generate
   - php artisan migrate --seed --env="testing"
@@ -26,7 +24,7 @@ after_script:
 
 # Services
 services:
-  - mysql:latest
+#  - mysql:latest
 
 # Variables
 variables:
