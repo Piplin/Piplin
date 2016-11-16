@@ -111,7 +111,7 @@
 @section('right-buttons')
     <div class="pull-right">
         <button type="button" class="btn btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#key"><span class="ion ion-key"></span> {{ trans('keys.ssh_key') }}</button>
-        @if($current_user->isAdmin || $current_user->isOperator)
+        @if(($current_user->isAdmin || $current_user->isOperator) || $project->need_approve)
         <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#reason" type="button" class="btn btn-{{ ($project->isDeploying() OR !count($project->servers)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->servers)) ? 'disabled' : '' }}><span class="ion ion-ios-cloud-upload"></span> {{ trans('projects.deploy') }}</button>
         @endif
     </div>
