@@ -114,20 +114,19 @@ class AuthController extends Controller
      */
     public function callback(Request $request, $slug)
     {
-        if($request->get('code')) {
-
+        if ($request->get('code')) {
             $provider = Provider::where('slug', '=', $slug)->firstOrFail();
 
             try {
                 $extern_user = \Socialite::with($slug)->user();
-            } catch(InvalidStateException $e) {
+            } catch (InvalidStateException $e) {
                 return Redirect::to('/auth/login');
             }
 
             //Check
             $identity = Identity::where('provider_id', $provider->id)->where('extern_uid', $extern_user->id)->first();
-            if(is_null($identity)) {
-               // User::create();
+            if (is_null($identity)) {
+                // User::create();
                 $user = User::create([
                     'name' => $extern_user->name,
                     'nickname' => $extern_user->nickname,
@@ -147,7 +146,7 @@ class AuthController extends Controller
             } else {
                 $user = User::find($identity->user_id);
             }
-            if(!Auth::check()) {
+            if (!Auth::check()) {
                 Auth::login($user, true);
             }
             return Redirect::to('/');
