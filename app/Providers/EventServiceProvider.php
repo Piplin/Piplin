@@ -27,6 +27,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 /**
  * The event service provider.
@@ -47,6 +48,9 @@ class EventServiceProvider extends ServiceProvider
         JsonWebTokenExpired::class  => [CreateJwt::class],
         Login::class                => [CreateJwt::class],
         Logout::class               => [ClearJwt::class],
+        SocialiteWasCalled::class => [
+            'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
+        ],
     ];
 
     /**

@@ -12,6 +12,8 @@
 namespace Fixhub\Http\Controllers\Auth;
 
 use Fixhub\Http\Controllers\Controller;
+use Fixhub\Models\Identity;
+use Fixhub\Models\Provider;
 use Fixhub\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -92,6 +94,63 @@ class AuthController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Shows the provider redirect.
+     *
+     * @return Response
+     */
+    public function provider($slug)
+    {
+        return \Socialite::with($slug)->redirect();
+    }
+
+    /**
+     * Handle an incomming callback
+     *
+     * @return Response
+     */
+    public function callback(Request $request, $slug)
+    {
+        if($request->get('code')) {
+
+            $provider = Provider::where('slug', '=', $slug)->firstOrFail();
+
+            try {
+                $extern_user = \Socialite::with($slug)->user();
+            } catch(InvalidStateException $e) {
+                return Redirect::to('/auth/login');
+            }
+
+            //Check
+            $identity = Identity::where('provider_id', $provider->id)->where('extern_uid', $extern_user->id)->first();
+            if(is_null($identity)) {
+               // User::create();
+                $user = User::create([
+                    'name' => $extern_user->name,
+                    'nickname' => $extern_user->nickname,
+                    'email' => $extern_user->email,
+                    'password' => time(),
+                ]);
+
+                $identity = Identity::create([
+                    'extern_uid' => $extern_user->id,
+                    'name' => $extern_user->name,
+                    'nickname' => $extern_user->nickname,
+                    'email' => $extern_user->email,
+                    'avatar' => $extern_user->avatar,
+                    'user_id' => $user->id,
+                    'provider_id' => $provider->id,
+                ]);
+            } else {
+                $user = User::find($identity->user_id);
+            }
+            if(!Auth::check()) {
+                Auth::login($user, true);
+            }
+            return Redirect::to('/');
+        }
     }
 
     /**

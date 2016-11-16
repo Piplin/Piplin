@@ -52,13 +52,10 @@
                     <!-- /.col -->
               </div>
             </form>
-            <!--
             <div class="social-auth-links text-center">
               <p>- OR -</p>
-              <a href="#" class="btn btn-block btn-social btn-bitbucket"><i class="ion ion-network"></i> Sign in using Gitlab</a>
-              <a href="#" class="btn btn-block btn-social btn-github"><i class="ion ion-social-github"></i> Sign in using Github</a>
+              <a href="/auth/gitlab" class="btn btn-block btn-social btn-bitbucket"><i class="ion ion-android-open"></i> Sign in using Gitlab</a>
             </div>
-            -->
         </div>
         <!--
         <div class="pull-right" id="forgotten-password">

@@ -21,7 +21,7 @@
     },
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
+        "laravel/framework": "5.3.21",
         "predis/predis": "~1.0",
         "graham-campbell/htmlmin": "~4.2",
         "pda/pheanstalk": "~3.1",
@@ -36,6 +36,7 @@
         "andywer/js-localization": "dev-laravel-5",
         "backup-manager/laravel": "^1.1",
         "fideloper/proxy": "^3.1",
+        "socialiteproviders/gitlab": "2.0.0",
         "version/version": "^2.2"
     },
     "require-dev": {

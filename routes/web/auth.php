@@ -58,4 +58,7 @@ Route::group([
             'as'         => 'logout',
             'uses'       => 'AuthController@logout',
         ]);
+
+    Route::get('{provider}', 'AuthController@provider');
+    Route::get('{provider}/callback', 'AuthController@callback');
 });
