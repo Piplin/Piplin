@@ -52,10 +52,12 @@
                     <!-- /.col -->
               </div>
             </form>
+            @if($provider_count > 0)
             <div class="social-auth-links text-center">
               <p>- OR -</p>
               <a href="/auth/gitlab" class="btn btn-block btn-social btn-bitbucket"><i class="ion ion-android-open"></i> Sign in using Gitlab</a>
             </div>
+            @endif
         </div>
         <!--
         <div class="pull-right" id="forgotten-password">
