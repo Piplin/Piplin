@@ -10,7 +10,7 @@
     "devDependencies": {
         "gulp": "^3.9.1",
         "gulp-shell": "^0.5.2",
-        "gulp-uglify": "^2.0.0",
+        "gulp-uglify": "^3.0.0",
         "elixir-uglify": "^1.0.2",
         "laravel-elixir": "^6.0.0-1",
         "laravel-elixir-bower-io": "^0.1.1",
