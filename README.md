@@ -110,9 +110,15 @@ $ cp .env.example .env
 $ php artisan app:install
 ```
 
-七. 将你的服务器根目录指向 `public/`, 请查看 `examples/`下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+七. 清除配置缓存
 
-八. 启动web socket，配置相关计划任务.
+```shell
+$ php artisan config:clear
+```
+
+八. 将你的服务器根目录指向 `public/`, 请查看 `examples/`下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+
+九. 启动web socket，配置相关计划任务.
 
     1、 通过`supervisor`管理Fixhub后台服务，请看`examples/supervisor.conf`
 
