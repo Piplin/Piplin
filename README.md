@@ -154,6 +154,20 @@ $ php artisan app:update
 
 注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
 
+### 开发相关
+
+Fixhub代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
+
+工具集：
+
+- Node.js
+- Gulp
+
+```shell
+npm install
+gulp
+```
+
 ### 鸣谢
 
 - [Laravel](http://laravel.com)
