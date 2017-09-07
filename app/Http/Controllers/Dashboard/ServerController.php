@@ -42,7 +42,7 @@ class ServerController extends Controller
             'add_commands'
         );
 
-                // Get the current highest server order
+        // Get the current highest server order
         $max = Server::where('project_id', $fields['project_id'])
                            ->orderBy('order', 'DESC')
                            ->first();
