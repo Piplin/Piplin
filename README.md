@@ -45,7 +45,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 - [x] Socket.io
 - [x] Supervisor
 
-## 开发相关
+## 开发使用到的技术
 
 - [x] Gulp
 - [x] Sass
@@ -145,7 +145,7 @@ $ composer install -o --no-dev
 $ php artisan app:update
 ```
 
-### 系统演示
+## 系统演示
 
 体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
 
@@ -154,7 +154,7 @@ $ php artisan app:update
 
 注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
 
-### 开发相关
+## 开发相关
 
 Fixhub代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
 
@@ -168,7 +168,7 @@ npm install
 gulp
 ```
 
-### 鸣谢
+## 鸣谢
 
 - [Laravel](http://laravel.com)
 - [Bootstrap](https://github.com/twbs/bootstrap)
