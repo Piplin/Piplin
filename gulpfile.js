@@ -42,7 +42,7 @@ var paths = {
     'ace'              : node_path + '/ace-min-noconflict',
     'raphael'          : node_path + '/raphael',
     'morris'           : node_path + '/morris.js',
-    'localization'     : 'vendor/andywer/js-localization'
+    'localization'     : '/../vendor/andywer/js-localization'
 };
 
 elixir(function(mix) {
@@ -55,7 +55,6 @@ elixir(function(mix) {
         paths.toastr       + '/build/toastr.min.css',
         paths.cropper      + '/dist/cropper.min.css',
     ], 'public/css/vendor.css', './')
-    .copy(paths.localization    + '/resources/js/localization.js', node_path)
     .scripts([
         paths.jquery           + '/dist/jquery.min.js',
         paths.jquery_sortable  + '/source/js/jquery-sortable-min.js',
@@ -67,7 +66,7 @@ elixir(function(mix) {
         paths.morris           + '/morris.min.js',
         paths.backbone         + '/backbone-min.js',
         paths.socketio_client  + '/socket.io.js',
-        node_path              + '/localization.js',
+        paths.localization     + '/resources/js/localization.js',
         paths.toastr           + '/build/toastr.min.js',
         paths.cropper          + '/dist/cropper.min.js'
     ], 'public/js/vendor.js', node_path)
@@ -116,8 +115,7 @@ elixir(function(mix) {
     .remove([
         'public/css',
         'public/js',
-        'public/fonts',
-        node_path + '/localization.js'
+        'public/fonts'
     ])
     .lang();
 });
