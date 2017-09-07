@@ -69,7 +69,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 ### 可选项
 
-- 为了确保队列监听、websoket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
+- 为了确保队列监听、websocket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
 - 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.3/cache).
 
 ## 安装手册
