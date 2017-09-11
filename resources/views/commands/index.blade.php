@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="row">
-        @include('commands._partials.list', [ 'step' => 'Before', 'action' => $action - 1 ])
-        @include('commands._partials.list', [ 'step' => 'After', 'action' => $action + 1 ])
+        @include('commands._partials.list', [ 'step' => 'before', 'action' => $action - 1 ])
+        @include('commands._partials.list', [ 'step' => 'after', 'action' => $action + 1 ])
     </div>
 
     @include('commands.dialog')

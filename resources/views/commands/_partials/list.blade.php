@@ -1,7 +1,7 @@
 <div class="col-md-6" id="commands-{{ strtolower($step) }}">
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title"><i class="ion ion-code"></i> {{ trans('commands.title', ['step' => $step]) }}</h3>
+            <h3 class="box-title"><i class="ion ion-code"></i> {{ trans('commands.'.$step) }}</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-success" title="{{ trans('commands.create') }}" data-step="{{ $action }}" data-toggle="modal" data-target="#command"><i class="ion ion-plus"></i> {{ trans('commands.create') }}</button>
             </div>

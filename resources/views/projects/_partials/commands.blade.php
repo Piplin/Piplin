@@ -15,14 +15,16 @@
                 <tr>
                     <th>{{ trans('commands.step') }}</th>
                     <th>{{ trans('commands.before') }}</th>
+                    <th>{{ trans('commands.current') }}</th>
                     <th>{{ trans('commands.after') }}</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ trans('commands.clone') }}</td>
+                    <td>1</td>
                     <td>{{ $project->before_clone }}</td>
+                    <td>{{ trans('commands.clone') }}</td>
                     <td>{{ $project->after_clone }}</td>
                     <td>
                         <div class="btn-group pull-right">
@@ -31,8 +33,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ trans('commands.install') }}</td>
+                    <td>2</td>
                     <td>{{ $project->before_install }}</td>
+                    <td>{{ trans('commands.install') }}</td>
                     <td>{{ $project->after_install }}</td>
                     <td>
                         <div class="btn-group pull-right">
@@ -41,8 +44,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ trans('commands.activate') }}</td>
+                    <td>3</td>
                     <td>{{ $project->before_activate }}</td>
+                    <td>{{ trans('commands.activate') }}</td>
                     <td>{{ $project->after_activate }}</td>
                     <td>
                         <div class="btn-group pull-right">
@@ -51,8 +55,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ trans('commands.purge') }}</td>
+                    <td>4</td>
                     <td>{{ $project->before_purge }}</td>
+                    <td>{{ trans('commands.purge') }}</td>
                     <td>{{ $project->after_purge }}</td>
                     <td>
                         <div class="btn-group pull-right">

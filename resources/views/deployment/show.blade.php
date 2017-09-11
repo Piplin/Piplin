@@ -26,7 +26,7 @@
 
         @foreach($deployment->steps as $index => $step)
         <div class="col-xs-12">
-            <div class="box deploy-step {{ $step->command_id ? '' : 'box-primary' }}">
+            <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
                 <div class="box-header">
                     <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span></h3>
                 </div>
