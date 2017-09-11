@@ -1,4 +1,4 @@
-@if(!$current_user->isOperator && count($projects_need_approve) > 0)
+@if(!$current_user->isOperator && isset($projects_need_approve) && count($projects_need_approve) > 0)
 <div class="box box-success">
   <div class="box-header">
     <h3 class="box-title">{{ trans('projects.apply') }}</h3>

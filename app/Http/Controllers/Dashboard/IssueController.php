@@ -42,7 +42,9 @@ class IssueController extends Controller
     /**
      * Update the specified issue in storage.
      *
+     * @param int $issue_id
      * @param  StoreIssueRequest $request
+     *
      * @return Response
      */
     public function update($issue_id, StoreIssueRequest $request)
@@ -61,7 +63,8 @@ class IssueController extends Controller
     /**
      * Remove the specified issue from storage.
      *
-     * @param  int      $issue_id
+     * @param int $issue_id
+     *
      * @return Response
      */
     public function destroy($issue_id)

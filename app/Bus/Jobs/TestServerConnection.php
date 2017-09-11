@@ -29,7 +29,8 @@ class TestServerConnection extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @param  Server               $server
+     * @param Server $server
+     *
      * @return TestServerConnection
      */
     public function __construct(Server $server)

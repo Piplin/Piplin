@@ -17,7 +17,7 @@ Route::get('cctray.xml', [
 Route::post('deploy/{hash}', [
     'as'         => 'webhook.deploy',
     'middleware' => 'api',
-    'uses'       => 'WebhookController@webhook',
+    'uses'       => 'Api\WebhookController@webhook',
 ]);
 
 Route::get('heartbeat/{hash}', [

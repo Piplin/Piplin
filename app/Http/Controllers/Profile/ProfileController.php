@@ -31,7 +31,8 @@ class ProfileController extends Controller
     /**
      * Class constructor.
      *
-     * @param  Google2FA $google2fa
+     * @param Google2FA $google2fa
+     *
      * @return void
      */
     public function __construct(Google2FA $google2fa)
@@ -41,6 +42,7 @@ class ProfileController extends Controller
 
     /**
      * View user profile.
+     *
      * @return Response
      */
     public function index()
@@ -64,7 +66,8 @@ class ProfileController extends Controller
     /**
      * Update user's basic profile.
      *
-     * @param  StoreProfileRequest $request
+     * @param StoreProfileRequest $request
+     *
      * @return Response
      */
     public function update(StoreProfileRequest $request)
@@ -81,6 +84,7 @@ class ProfileController extends Controller
      * Update user's settings.
      *
      * @param  StoreUserSettingsRequest $request
+     *
      * @return Response
      */
     public function settings(StoreUserSettingsRequest $request)
@@ -95,6 +99,7 @@ class ProfileController extends Controller
 
     /**
      * Send email to change a new email.
+     *
      * @return Response
      */
     public function requestEmail()
@@ -106,6 +111,10 @@ class ProfileController extends Controller
 
     /**
      * Show the page to input the new email.
+     *
+     * @param string $token
+     *
+     * @return View
      */
     public function email($token)
     {
@@ -116,6 +125,9 @@ class ProfileController extends Controller
 
     /**
      * Change the user's email.
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function changeEmail(Request $request)
@@ -134,6 +146,9 @@ class ProfileController extends Controller
 
     /**
      * Upload file.
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function upload(Request $request)
@@ -162,6 +177,7 @@ class ProfileController extends Controller
 
     /**
      * Reset the user's avatar to gravatar.
+     *
      * @return Response
      */
     public function gravatar()
@@ -178,6 +194,9 @@ class ProfileController extends Controller
 
     /**
      * Set and crop the avatar.
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function avatar(Request $request)
@@ -212,7 +231,9 @@ class ProfileController extends Controller
 
     /**
      * Activates two factor authentication.
-     * @param  Request  $request
+     *
+     * @param Request $request
+     *
      * @return Response
      */
     public function twoFactor(Request $request)

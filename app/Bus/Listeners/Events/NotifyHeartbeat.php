@@ -35,7 +35,8 @@ class NotifyHeartbeat extends Event
     /**
      * Handle the event.
      *
-     * @param  Event $event
+     * @param HasSlackPayloadInterface $event
+     *
      * @return void
      */
     public function handle(HasSlackPayloadInterface $event)

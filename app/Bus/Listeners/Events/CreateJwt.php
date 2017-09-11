@@ -30,6 +30,8 @@ class CreateJwt extends Event
      * Create a new middleware instance.
      *
      * @param JWTAuth $auth
+     *
+     * @return void
      */
     public function __construct(JWTAuth $auth)
     {
@@ -39,7 +41,8 @@ class CreateJwt extends Event
     /**
      * Handle the event.
      *
-     * @param  Login|JsonWebTokenExpired $event
+     * @param Login $event
+     *
      * @return void
      */
     public function handle(Login $event)

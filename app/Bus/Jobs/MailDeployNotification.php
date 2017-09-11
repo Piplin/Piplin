@@ -28,7 +28,8 @@ class MailDeployNotification extends Job
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param Project $project
+     * @param Deployment $deployment
      */
     public function __construct(Project $project, Deployment $deployment)
     {
@@ -38,8 +39,6 @@ class MailDeployNotification extends Job
 
     /**
      * Execute the command.
-     *
-     * @return void
      */
     public function handle()
     {

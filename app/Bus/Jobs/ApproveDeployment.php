@@ -34,8 +34,8 @@ class ApproveDeployment extends Job
     /**
      * Create a new command instance.
      *
-     * @param  Deployment      $deployment
-     * @return QueueDeployment
+     * @param Deployment      $deployment
+     * @param array $optional
      */
     public function __construct(Deployment $deployment, array $optional = [])
     {
@@ -45,8 +45,6 @@ class ApproveDeployment extends Job
 
     /**
      * Execute the command.
-     *
-     * @return void
      */
     public function handle()
     {

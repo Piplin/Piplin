@@ -26,7 +26,8 @@ class ServerController extends Controller
     /**
      * Store a newly created server in storage.
      *
-     * @param  StoreServerRequest $request
+     * @param StoreServerRequest $request
+     *
      * @return Response
      */
     public function store(StoreServerRequest $request)
@@ -42,7 +43,7 @@ class ServerController extends Controller
             'add_commands'
         );
 
-                // Get the current highest server order
+        // Get the current highest server order
         $max = Server::where('project_id', $fields['project_id'])
                            ->orderBy('order', 'DESC')
                            ->first();
@@ -75,7 +76,9 @@ class ServerController extends Controller
     /**
      * Update the specified server in storage.
      *
-     * @param  StoreServerRequest $request
+     * @param int $server_id
+     * @param StoreServerRequest $request
+     *
      * @return Response
      */
     public function update($server_id, StoreServerRequest $request)
@@ -98,7 +101,8 @@ class ServerController extends Controller
     /**
      * Queues a connection test for the specified server.
      *
-     * @param  int      $server_id
+     * @param int $server_id
+     *
      * @return Response
      */
     public function test($server_id)
@@ -120,7 +124,8 @@ class ServerController extends Controller
     /**
      * Re-generates the order for the supplied servers.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function reorder(Request $request)
@@ -144,7 +149,8 @@ class ServerController extends Controller
     /**
      * Remove the specified server from storage.
      *
-     * @param  int      $server_id
+     * @param int $server_id
+     *
      * @return Response
      */
     public function destroy($server_id)

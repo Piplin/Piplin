@@ -24,6 +24,8 @@ class ProjectGroupController extends Controller
     /**
      * Shows the create project group view.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function create(Request $request)
@@ -52,6 +54,7 @@ class ProjectGroupController extends Controller
      * Store a newly created group in storage.
      *
      * @param  StoreProjectGroupRequest $request
+     *
      * @return Response
      */
     public function store(StoreProjectGroupRequest $request)
@@ -64,8 +67,9 @@ class ProjectGroupController extends Controller
     /**
      * Update the specified group in storage.
      *
-     * @param  int               $group_id
-     * @param  StoreProjectGroupRequest $request
+     * @param int                      $group_id
+     * @param StoreProjectGroupRequest $request
+     *
      * @return Response
      */
     public function update($group_id, StoreProjectGroupRequest $request)
@@ -82,7 +86,8 @@ class ProjectGroupController extends Controller
     /**
      * Re-generates the order for the supplied groups.
      *
-     * @param  Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Response
      */
     public function reorder(Request $request)
@@ -106,7 +111,8 @@ class ProjectGroupController extends Controller
     /**
      * Remove the specified group from storage.
      *
-     * @param  int      $group_id
+     * @param int $group_id
+     *
      * @return Response
      */
     public function destroy($group_id)

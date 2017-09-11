@@ -29,8 +29,10 @@ class RepositoryController extends Controller
     /**
      * Handles incoming requests to refresh repository.
      *
-     * @param  Request  $request
-     * @param  string   $hash
+     * @param Request $request
+     * @param string  $hash
+     * @param int $project_id
+     *
      * @return Response
      */
     public function refresh(Request $request, $project_id)

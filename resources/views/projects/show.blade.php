@@ -62,7 +62,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#deployments" data-toggle="tab"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
                     <li><a href="#servers" data-toggle="tab"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
-                    <li><a href="#hooks" data-toggle="tab"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
+                    <li><a href="#commands" data-toggle="tab"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li><a href="#files" data-toggle="tab"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li><a href="#notifications" data-toggle="tab"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
                     <li><a href="#health" data-toggle="tab"><span class="ion ion-heart-broken"></span> {{ trans('heartbeats.tab_label') }}</a></li>
@@ -74,7 +74,7 @@
                     <div class="tab-pane" id="servers">
                         @include('projects._partials.servers')
                     </div>
-                    <div class="tab-pane" id="hooks">
+                    <div class="tab-pane" id="commands">
                         @include('projects._partials.commands')
                         @include('projects._partials.variables')
                     </div>

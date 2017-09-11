@@ -13,12 +13,15 @@ namespace Fixhub\Exceptions;
 
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Foundation\Validation\ValidationException;
-use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Whoops\Run as Whoops;
 
 /**
  * Exception handler.
@@ -26,35 +29,48 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that should not be reported.
+     * A list of the exception types that are not reported.
      *
      * @var array
      */
     protected $dontReport = [
+        AuthenticationException::class,
         AuthorizationException::class,
         HttpException::class,
+        ModelNotFoundException::class,
+        TokenMismatchException::class,
+        ValidationException::class,
+    ];
+
+    /**
+     * Exceptions which should not be handled by whoops.
+     *
+     * @var array
+     */
+    protected $skipWhoops = [
+        AuthenticationException::class,
+        AuthorizationException::class,
+        HttpResponseException::class,
         ModelNotFoundException::class,
         ValidationException::class,
     ];
 
     /**
-     * Report or log an exception.
+     * A list of the inputs that are never flashed for validation exceptions.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception $exception
-     * @return void
+     * @var array
      */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
-    }
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception                $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $exception
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
@@ -62,59 +78,80 @@ class Handler extends ExceptionHandler
         if ($this->isHttpException($exception)) {
             return $this->renderHttpException($exception);
         }
-
-        // Only show whoops pages if debugging is enabled and it is installed, i.e. on dev
-        // and for exceptions which should actually show an exception page
-        if (config('app.debug') && class_exists('\Whoops\Run', true) && $this->isSafeToWhoops($exception)) {
-            return $this->renderExceptionWithWhoops($request, $exception);
+        // Use whoops if it is bound to the container and the exception is safe to pass to whoops
+        if ($this->container->bound(Whoops::class) && $this->isSafeToWhoops($exception)) {
+            return $this->renderExceptionWithWhoops($exception);
         }
-
         return parent::render($request, $exception);
     }
 
     /**
      * Render an exception using Whoops.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Exception                $exception
      * @return \Illuminate\Http\Response
      */
-    protected function renderExceptionWithWhoops($request, Exception $exception)
+    protected function renderExceptionWithWhoops(Exception $exception)
     {
-        $whoops = new \Whoops\Run;
-        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
-
-        if ($request->ajax()) {
-            $whoops->pushHandler(new \Whoops\Handler\JsonResponseHandler());
+        /** @var Whoops $whoops */
+        $whoops = $this->container->make(Whoops::class);
+        $statusCode = 500;
+        if (method_exists($exception, 'getStatusCode')) {
+            $statusCode = $exception->getStatusCode();
         }
-
+        $headers = [];
+        if (method_exists($exception, 'getHeaders')) {
+            $headers = $exception->getHeaders();
+        }
         return new Response(
             $whoops->handleException($exception),
-            $exception->getStatusCode(),
-            $exception->getHeaders()
+            $statusCode,
+            $headers
         );
     }
 
     /**
-     * Don't allow the exceptions which laravel handles specially to be converted to Whoops
-     * This is horrible though, see if we can find a better way to do it.
-     * GrahamCampbell/Laravel-Exceptions unfortunately doesn't return JSON for whoops pages which are from AJAX.
+     * Don't allow the exceptions which laravel handles specially to be converted to Whoops.
      *
-     * @param  \Exception $exception
+     * @param \Exception $exception
+     *
      * @return bool
      */
     protected function isSafeToWhoops(Exception $exception)
     {
-        if ($exception instanceof HttpResponseException) {
-            return false;
-        } elseif ($exception instanceof ModelNotFoundException) {
-            return false;
-        } elseif ($exception instanceof AuthorizationException) {
-            return false;
-        } elseif ($exception instanceof ValidationException && $exception->getResponse()) {
-            return false;
-        }
+        return is_null(collect($this->skipWhoops)->first(function ($type) use ($exception) {
+            return $exception instanceof $type;
+        }));
+    }
 
-        return true;
+    /**
+     * Convert an authentication exception into an unauthenticated response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException  $exception
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+        return redirect()->guest(route('auth.login'));
+    }
+
+    /**
+     * Convert a validation exception into a JSON response.
+     *
+     * @todo Remove this
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Validation\ValidationException  $exception
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json($exception->errors(), $exception->status);
     }
 }

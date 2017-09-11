@@ -35,8 +35,10 @@ class QueueDeployment extends Job
     /**
      * Create a new command instance.
      *
-     * @param  Deployment      $deployment
-     * @return QueueDeployment
+     * @param Deployment $deployment
+     * @param array      $optional
+     *
+     * @return void
      */
     public function __construct(Deployment $deployment, array $optional = [])
     {
@@ -154,7 +156,8 @@ class QueueDeployment extends Job
      * Create an instance of DeployStep and a ServerLog entry for each server assigned to the command.
      *
      * @param  int     $stage
-     * @param  Command $command
+     * @param  Stage $command
+     *
      * @return void
      */
     private function createCommandStep($stage, Stage $command)
@@ -177,6 +180,7 @@ class QueueDeployment extends Job
      * Create an instance of DeployStep and a ServerLog entry for each server which can have code deployed.
      *
      * @param  int  $stage
+     *
      * @return void
      */
     private function createDeployStep($stage)

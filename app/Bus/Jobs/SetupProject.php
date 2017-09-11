@@ -29,8 +29,9 @@ class SetupProject extends Job
     /**
      * Create a new command instance.
      *
-     * @param  Project      $project
-     * @param  int          $template
+     * @param Project        $project
+     * @param DeployTemplate $template
+     *
      * @return SetupProject
      */
     public function __construct(Project $project, DeployTemplate $template)

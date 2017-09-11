@@ -27,7 +27,7 @@ class ProjectStatusChanged extends Event implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Project $project
      */
     public function __construct(Project $project)
     {

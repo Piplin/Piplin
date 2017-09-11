@@ -28,6 +28,8 @@ class ProjectController extends Controller
     /**
      * Shows the create project view.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function create(Request $request)
@@ -38,7 +40,8 @@ class ProjectController extends Controller
     /**
      * Shows all projects.
      *
-     * @param  Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Response
      */
     public function index(Request $request)
@@ -70,6 +73,7 @@ class ProjectController extends Controller
      * Store a newly created project in storage.
      *
      * @param  StoreProjectRequest $request
+     *
      * @return Response
      */
     public function store(StoreProjectRequest $request)
@@ -110,8 +114,9 @@ class ProjectController extends Controller
     /**
      * Update the specified project in storage.
      *
-     * @param  int                 $project_id
-     * @param  StoreProjectRequest $request
+     * @param int                 $project_id
+     * @param StoreProjectRequest $request
+     *
      * @return Response
      */
     public function update($project_id, StoreProjectRequest $request)
@@ -137,7 +142,8 @@ class ProjectController extends Controller
     /**
      * Remove the specified model from storage.
      *
-     * @param  int      $project_id
+     * @param int $project_id
+     *
      * @return Response
      */
     public function destroy($project_id)

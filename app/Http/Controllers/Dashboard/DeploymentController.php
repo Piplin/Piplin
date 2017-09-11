@@ -29,7 +29,8 @@ class DeploymentController extends Controller
     /**
      * Show the deployment details.
      *
-     * @param  int      $deployment
+     * @param int $deployment_id
+     *
      * @return Response
      */
     public function show($deployment_id)
@@ -66,8 +67,9 @@ class DeploymentController extends Controller
     /**
      * Loads a previous deployment and then creates a new deployment based on it.
      *
-     * @param  Request  $request
-     * @param  int      $previous_id
+     * @param Request $request
+     * @param int     $previous_id
+     *
      * @return Response
      */
     public function rollback(Request $request, $previous_id)
@@ -108,7 +110,8 @@ class DeploymentController extends Controller
     /**
      * Abort a deployment.
      *
-     * @param  int      $deployment_id
+     * @param int $deployment_id
+     *
      * @return Response
      */
     public function abort($deployment_id)
@@ -130,7 +133,8 @@ class DeploymentController extends Controller
     /**
      * Approve a deployment.
      *
-     * @param  int      $deployment_id
+     * @param int $deployment_id
+     *
      * @return Response
      */
     public function approve($deployment_id)
@@ -150,7 +154,8 @@ class DeploymentController extends Controller
     /**
      * Deploy a deployment.
      *
-     * @param  int      $deployment_id
+     * @param int $deployment_id
+     *
      * @return Response
      */
     public function deploy($deployment_id)
@@ -169,7 +174,8 @@ class DeploymentController extends Controller
     /**
      * Creates a new instance of the server.
      *
-     * @param  array $fields
+     * @param array $fields
+     *
      * @return Model
      */
     private function createDeployment(array $fields)

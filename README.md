@@ -4,13 +4,13 @@
 [![Build Status](https://travis-ci.org/Fixhub/Fixhub.svg?branch=master)](https://travis-ci.org/Fixhub/Fixhub)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架开发的web自动部署系统。
+Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源Web自动化部署系统。
 
 ![Screenshot](http://fixhub.org/fixhub.png)
 
 ## Fixhub能做什么？
 
-**注意** Fixhub仍处于并将长期处于初级阶段，下面的部分特性可能还没有100%完成，即使完成了也有可能会有bug。有任何问题请随时向我们反馈。
+**注意** Fixhub仍处于并将长期处于初级阶段，下面的部分特性可能还没有100%完成。有任何问题请随时向我们反馈。
 
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
@@ -34,7 +34,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 ## 使用到的技术
 
-- [x] Laravel 5.3
+- [x] Laravel
 - [x] Bootstrap
 - [x] ionicons
 - [x] Node.js
@@ -45,7 +45,7 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 - [x] Socket.io
 - [x] Supervisor
 
-## 开发相关
+## 开发使用到的技术
 
 - [x] Gulp
 - [x] Sass
@@ -60,17 +60,17 @@ Fixhub 是一款免费、开源，基于[Laravel 5.3](http://laravel.com)框架�
 
 ## 安装环境要求
 
-- [PHP](http://www.php.net) 5.6.4+或更高(推荐使用PHP7)
+- [PHP](http://www.php.net) 7.0.0+或更高(不再支持PHP7以下版本)
 - 数据库, 推荐使用[MySQL](https://www.mysql.com) 或 [PostgreSQL](http://www.postgresql.org)。 当然[SQLite](https://www.sqlite.org)也可以运行。
 - [Composer](https://getcomposer.org)
 - [Redis](http://redis.io)
 - [Node.js](https://nodejs.org/)
-- [队列系统](http://laravel.com/docs/5.3/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
+- [队列系统](http://laravel.com/docs/5.5/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
 
 ### 可选项
 
-- 为了确保队列监听、websoket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
-- 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.3/cache).
+- 为了确保队列监听、websocket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
+- 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.5/cache).
 
 ## 安装手册
 
@@ -116,13 +116,13 @@ $ php artisan app:install
 $ php artisan config:clear
 ```
 
-八. 将你的服务器根目录指向 `public/`, 请查看 `examples/`下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+八. 将你的服务器根目录指向 `public/`, 请查看 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
 九. 启动web socket，配置相关计划任务.
 
-    1、 通过`supervisor`管理Fixhub后台服务，请看`examples/supervisor.conf`
+1、 通过`supervisor`管理Fixhub后台服务，请看 [examples/supervisor.conf](examples/supervisor.conf)
 
-    2、 不通过`supervisor`管理Fixhub后台服务，你需要手动启动websocket服务。在Fixhub根目录执行`node socket.js` (目录监听6001端口)。手动设置计划任务请看`examples/crontab`.
+2、 不通过`supervisor`管理Fixhub后台服务，你需要手动启动websocket服务。在Fixhub根目录执行`node socket.js` (目录监听6001端口)。手动设置计划任务请看 [examples/crontab](examples/crontab).
 
 ### 升级
 
@@ -145,7 +145,7 @@ $ composer install -o --no-dev
 $ php artisan app:update
 ```
 
-### 系统演示
+## 系统演示
 
 体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
 
@@ -154,7 +154,21 @@ $ php artisan app:update
 
 注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
 
-### 鸣谢
+## 开发相关
+
+Fixhub代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
+
+工具集：
+
+- Node.js
+- Gulp
+
+```shell
+npm install
+gulp
+```
+
+## 鸣谢
 
 - [Laravel](http://laravel.com)
 - [Bootstrap](https://github.com/twbs/bootstrap)
@@ -163,7 +177,6 @@ $ php artisan app:update
 - [Deployer](https://github.com/REBELinBLUE/deployer)
 - [socket.io](https://github.com/socketio/socket.io)
 - [ionicons](http://ionicons.com/)
-
 
 ## 软件授权协议
 

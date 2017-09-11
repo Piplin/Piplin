@@ -12,6 +12,8 @@
 return [
 
     'label'   => '管理后台',
-    'manage'  => '后台首页',
+    'dashboard'  => '后台首页',
+    'environment' => '环境变量',
+    'dependencies' => '依赖包',
 
 ];

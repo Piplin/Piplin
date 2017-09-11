@@ -29,7 +29,8 @@ class ProjectController extends Controller
     /**
      * The details of an individual project.
      *
-     * @param  int  $project_id
+     * @param int $project_id
+     *
      * @return View
      */
     public function show($project_id)
@@ -64,7 +65,8 @@ class ProjectController extends Controller
     /**
      * The details of an individual project with a apply dialog.
      *
-     * @param  int  $project_id
+     * @param int $project_id
+     *
      * @return View
      */
     public function apply($project_id)
@@ -75,8 +77,9 @@ class ProjectController extends Controller
     /**
      * Adds a deployment for the specified project to the queue.
      *
-     * @param  Request  $request
-     * @param  int      $project
+     * @param Request $request
+     * @param int $project_id
+     *
      * @return Response
      */
     public function deploy(Request $request, $project_id)

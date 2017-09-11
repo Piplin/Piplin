@@ -32,9 +32,9 @@ class NotifySlackJob extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @param  NotifySlack $notify_slack
-     * @param  array       $payload
-     * @return Notify
+     * @param NotifySlack $notify_slack
+     * @param array       $payload
+     * @param int         $timeout
      */
     public function __construct(NotifySlack $notify_slack, array $payload, $timeout = 60)
     {
@@ -45,8 +45,6 @@ class NotifySlackJob extends Job implements ShouldQueue
 
     /**
      * Execute the command.
-     *
-     * @return void
      */
     public function handle()
     {

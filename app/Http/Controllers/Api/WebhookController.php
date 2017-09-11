@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers;
+namespace Fixhub\Http\Controllers\Api;
 
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Bus\Jobs\AbortDeployment;
 use Fixhub\Bus\Jobs\QueueDeployment;
 use Fixhub\Services\Webhooks\Beanstalkapp;

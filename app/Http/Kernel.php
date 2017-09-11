@@ -11,8 +11,6 @@
 
 namespace Fixhub\Http;
 
-use Fixhub\Bootstrap\ConfigureLogging;
-use Fixhub\Bootstrap\ConfigureLogging as HttpLogging;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 /**
@@ -20,22 +18,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
  */
 class Kernel extends HttpKernel
 {
-    /**
-     * The custom bootstrappers like Logging or Environment detector.
-     * @var array
-     */
-    protected $customBooters = [
-        \Illuminate\Foundation\Bootstrap\ConfigureLogging::class => HttpLogging::class,
-    ];
-
-    /**
-     * Disable bootstrapper list.
-     * @var array
-     */
-    protected $disabledBooters = [
-
-    ];
-
     /**
      * The application's global HTTP middleware stack.
      *
@@ -83,29 +65,4 @@ class Kernel extends HttpKernel
         'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'localize'   => \Fixhub\Http\Middleware\Localize::class,
     ];
-
-    /**
-     * Get the bootstrap classes for the application.
-     *
-     * @return array
-     */
-    protected function bootstrappers()
-    {
-        foreach ($this->bootstrappers as &$bootstrapper) {
-            foreach ($this->customBooters as $sourceBooter => $newBooter) {
-                if ($bootstrapper === $sourceBooter) {
-                    $bootstrapper = $newBooter;
-                    unset($this->customBooters[$sourceBooter]);
-                }
-            }
-        }
-
-        return array_merge(
-            array_diff(
-                $this->bootstrappers,
-                $this->disabledBooters
-            ),
-            $this->customBooters
-        );
-    }
 }

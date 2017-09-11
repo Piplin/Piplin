@@ -28,7 +28,7 @@ class DeployFinished extends Event
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Deployment $deployment
      */
     public function __construct(Deployment $deployment)
     {

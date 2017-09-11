@@ -37,7 +37,6 @@ abstract class Job
      *
      * @param  Queue $queue
      * @param  Job   $command
-     * @return void
      */
     public function queue(Queue $queue, $command)
     {

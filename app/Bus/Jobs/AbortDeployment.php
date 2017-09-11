@@ -26,7 +26,7 @@ class AbortDeployment extends Job
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Deployment $deployment
      */
     public function __construct(Deployment $deployment)
     {
@@ -35,8 +35,6 @@ class AbortDeployment extends Job
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {

@@ -30,9 +30,9 @@ class RequestProjectCheckUrl extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param array $links
      */
-    public function __construct($links)
+    public function __construct(array $links)
     {
         $this->links = $links;
     }

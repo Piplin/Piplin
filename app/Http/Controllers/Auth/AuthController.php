@@ -42,7 +42,8 @@ class AuthController extends Controller
     /**
      * Class constructor.
      *
-     * @param  Google2FA $google2fa
+     * @param Google2FA $google2fa
+     *
      * @return void
      */
     public function __construct(Google2FA $google2fa)
@@ -58,13 +59,14 @@ class AuthController extends Controller
     public function getLogin()
     {
         return view('auth.login')
-            ->withProviderCount(Provider::count());
+            ->with('provider_count', Provider::count());
     }
 
     /**
      * Handle a login request to the application.
      *
-     * @param  Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Response
      */
     public function postLogin(Request $request)
@@ -100,6 +102,8 @@ class AuthController extends Controller
     /**
      * Shows the provider redirect.
      *
+     * @param string $slug
+     *
      * @return Response
      */
     public function provider($slug)
@@ -109,6 +113,9 @@ class AuthController extends Controller
 
     /**
      * Handle an incomming callback
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $slug
      *
      * @return Response
      */
@@ -166,7 +173,8 @@ class AuthController extends Controller
     /**
      * Validates the 2FA code.
      *
-     * @param  Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Response
      */
     public function postTwoFactorAuthentication(Request $request)

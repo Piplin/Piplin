@@ -6,8 +6,17 @@
 
         @include('admin._partials.nav')
         <div class="box-body">
-        Welcome to admin control panel.
-    </div>
+        <!-- start -->
+        <div class="row">
+            <div class="col-md-6">
+                @include('admin.dashboard.environment')
+            </div>
+            <div class="col-md-6">
+                @include('admin.dashboard.dependencies')
+            </div>
+        </div>
+        <!-- end -->
+        </div>
 </div>
 <!-- /.box -->
 @stop

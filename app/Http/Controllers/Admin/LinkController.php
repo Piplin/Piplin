@@ -24,6 +24,8 @@ class LinkController extends Controller
     /**
      * Shows the create link view.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function create(Request $request)
@@ -33,6 +35,8 @@ class LinkController extends Controller
 
     /**
      * link listing.
+     *
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
      */
@@ -52,6 +56,7 @@ class LinkController extends Controller
      * Store a newly created link in storage.
      *
      * @param  StoreLinkRequest $request
+     *
      * @return Response
      */
     public function store(StoreLinkRequest $request)
@@ -66,7 +71,9 @@ class LinkController extends Controller
     /**
      * Store a newly created link in storage.
      *
-     * @param  StoreLinkRequest $request
+     * @param int              $link_id
+     * @param StoreLinkRequest $request
+     *
      * @return Response
      */
     public function update($link_id, StoreLinkRequest $request)
@@ -86,6 +93,7 @@ class LinkController extends Controller
      * Re-generates the order for the supplied links.
      *
      * @param  Request  $request
+     *
      * @return Response
      */
     public function reorder(Request $request)
@@ -109,7 +117,8 @@ class LinkController extends Controller
     /**
      * Remove the specified link from storage.
      *
-     * @param  int      $link_id
+     * @param int $link_id
+     *
      * @return Response
      */
     public function destroy($link_id)

@@ -24,6 +24,8 @@ class TipController extends Controller
     /**
      * Shows the create tip view.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function create(Request $request)
@@ -33,6 +35,8 @@ class TipController extends Controller
 
     /**
      * tip listing.
+     *
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
      */
@@ -51,6 +55,7 @@ class TipController extends Controller
      * Store a newly created tip in storage.
      *
      * @param  StoretipRequest $request
+     *
      * @return Response
      */
     public function store(StoretipRequest $request)
@@ -64,7 +69,9 @@ class TipController extends Controller
     /**
      * Store a newly created tip in storage.
      *
-     * @param  StoretipRequest $request
+     * @param int $tip_id
+     * @param StoretipRequest $request
+     *
      * @return Response
      */
     public function update($tip_id, StoretipRequest $request)
@@ -82,7 +89,8 @@ class TipController extends Controller
     /**
      * Remove the specified tip from storage.
      *
-     * @param  int      $tip_id
+     * @param int $tip_id
+     *
      * @return Response
      */
     public function destroy($tip_id)

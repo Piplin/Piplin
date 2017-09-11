@@ -30,7 +30,8 @@ class UpdateGitReferences extends Job implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  Project $project The project to update
+     * @param  Project $project
+     *
      * @return void
      */
     public function __construct(Project $project)

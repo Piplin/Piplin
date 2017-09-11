@@ -47,7 +47,6 @@ class DeployProject extends Job implements ShouldQueue
      * Create a new command instance.
      *
      * @param  Deployment    $deployment
-     * @return DeployProject
      */
     public function __construct(Deployment $deployment)
     {
@@ -61,7 +60,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  Queue         $queue
      * @param  DeployProject $command
-     * @return void
      */
     public function queue(Queue $queue, $command)
     {
@@ -70,8 +68,6 @@ class DeployProject extends Job implements ShouldQueue
 
     /**
      * Execute the command.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -144,8 +140,6 @@ class DeployProject extends Job implements ShouldQueue
     /**
      * Clones the repository locally to get the latest log entry and updates
      * the deployment model.
-     *
-     * @return void
      */
     private function updateRepoInfo()
     {
@@ -185,8 +179,6 @@ class DeployProject extends Job implements ShouldQueue
 
     /**
      * Creates the archive for the commit to deploy.
-     *
-     * @return void
      */
     private function createReleaseArchive()
     {
@@ -204,8 +196,6 @@ class DeployProject extends Job implements ShouldQueue
 
     /**
      * Remove left over artifacts from a failed deploy on each server.
-     *
-     * @return void
      */
     private function cleanupDeployment()
     {
@@ -227,8 +217,6 @@ class DeployProject extends Job implements ShouldQueue
 
     /**
      * Finds all pending steps and marks them as cancelled.
-     *
-     * @return void
      */
     private function cancelPendingSteps()
     {
@@ -247,7 +235,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  DeployStep        $step
      * @throws \RuntimeException
-     * @return void
      */
     private function runStep(DeployStep $step)
     {
@@ -330,7 +317,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  DeployStep $step
      * @param  ServerLog  $log
-     * @return void
      */
     private function sendFilesForStep(DeployStep $step, ServerLog $log)
     {
@@ -352,7 +338,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  DeployStep $step
      * @param  Server     $server
-     * @return string
      */
     private function buildScript(DeployStep $step, Server $server)
     {
@@ -382,7 +367,6 @@ class DeployProject extends Job implements ShouldQueue
      * Generates an error string to log to the DB.
      *
      * @param  string $message
-     * @return string
      */
     private function logError($message)
     {
@@ -392,8 +376,7 @@ class DeployProject extends Job implements ShouldQueue
     /**
      * Generates an general output string to log to the DB.
      *
-     * @param  string $message
-     * @return string
+     * @param string $message
      */
     private function logSuccess($message)
     {
@@ -403,9 +386,8 @@ class DeployProject extends Job implements ShouldQueue
     /**
      * Gets the script which is used for the supplied step.
      *
-     * @param  DeployStep $step
-     * @param  array      $tokens
-     * @return string
+     * @param DeployStep $step
+     * @param array $tokens
      */
     private function getScriptForStep(DeployStep $step, array $tokens = [])
     {
@@ -436,7 +418,6 @@ class DeployProject extends Job implements ShouldQueue
      * @param  string           $remote_file
      * @param  ServerLog        $log
      * @throws RuntimeException
-     * @return void
      */
     private function sendFile($local_file, $remote_file, ServerLog $log)
     {
@@ -477,7 +458,6 @@ class DeployProject extends Job implements ShouldQueue
      * @param  string    $remote_path
      * @param  string    $content
      * @param  ServerLog $log
-     * @return void
      */
     private function sendFileFromString($remote_path, $content, ServerLog $log)
     {
@@ -494,7 +474,6 @@ class DeployProject extends Job implements ShouldQueue
      * create the command for sending uploaded files.
      *
      * @param  string $release_dir
-     * @return string
      */
     private function configurationFileCommands($release_dir)
     {
@@ -520,7 +499,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  string $release_dir
      * @param  string $shared_dir
-     * @return string
      */
     private function shareFileCommands($release_dir, $shared_dir)
     {
@@ -567,7 +545,6 @@ class DeployProject extends Job implements ShouldQueue
      *
      * @param  DeployStep $step
      * @param  Server     $server
-     * @return array
      */
     private function getTokenList(DeployStep $step, Server $server)
     {

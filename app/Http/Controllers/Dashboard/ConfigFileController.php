@@ -23,6 +23,8 @@ class ConfigFileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param StoreConfigFileRequest $request
+     *
      * @return Response
      */
     public function store(StoreConfigFileRequest $request)
@@ -46,7 +48,9 @@ class ConfigFileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int      $file_id
+     * @param int $file_id
+     * @param StoreConfigFileRequest $request
+     *
      * @return Response
      */
     public function update($file_id, StoreConfigFileRequest $request)
@@ -65,7 +69,8 @@ class ConfigFileController extends Controller
     /**
      * Remove the specified file from storage.
      *
-     * @param  int      $file_id
+     * @param int $file_id
+     *
      * @return Response
      */
     public function destroy($file_id)

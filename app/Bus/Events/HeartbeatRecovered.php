@@ -26,7 +26,7 @@ class HeartbeatRecovered extends Event implements HasSlackPayloadInterface
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Heartbeat $heartbeat
      */
     public function __construct(Heartbeat $heartbeat)
     {

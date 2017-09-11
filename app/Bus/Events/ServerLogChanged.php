@@ -33,7 +33,7 @@ class ServerLogChanged extends Event implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param ServerLog $log
      */
     public function __construct(ServerLog $log)
     {
