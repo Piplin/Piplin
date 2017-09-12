@@ -149,10 +149,10 @@ $ php artisan app:update
 
 体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
 
-- **用户名:** demo 或 `demo@fixhub.org`
+- **用户名:** fixhub 或 `fixhub@fixhub.org`
 - **密码:** `fixhub`
 
-注意：demo账号的角色为*开发工程师*，没有权限访问管理功能.
+> 注意：系统会每5分钟自动重置一次密码，该账号没有权限访问管理功能.
 
 ## 开发相关
 
