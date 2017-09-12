@@ -116,7 +116,7 @@ Route::group([
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
                 Route::resource('notify-email', 'NotifyEmailController', $actions);
-        });
+            });
 
         Route::get('admin/templates/{id}/commands/{step}', [
             'as'   => 'admin.templates.commands.step',
