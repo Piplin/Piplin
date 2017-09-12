@@ -41,8 +41,6 @@ return [
     'health'            => '项目状态',
     'deploy_status'     => '部署状态',
     'build_status'      => '构建状态',
-    'app_status'        => '应用状态',
-    'heartbeats_status' => '心跳状态',
     'deploy_project'    => '开始上线',
     'deploy'            => '开始上线',
     'redeploy'          => '重新上线',

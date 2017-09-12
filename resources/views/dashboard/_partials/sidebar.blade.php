@@ -56,7 +56,7 @@
                     @foreach ($group_projects['projects'] as $group_project)
                     <tr id="project_{{ $group_project->id }}">
                         <td>{{ $group_project->id }}</td>
-                        <td><a href="{{ route('projects', ['id' => $group_project->id]) }}" title="{{ trans('projects.project_details') }}">{{ $group_project->name }}</a></td>
+                        <td><a href="{{ route('projects', ['id' => $group_project->id]) }}" title="{{ trans('projects.details') }}">{{ $group_project->name }}</a></td>
                         <td class="small">{{ $group_project->last_run ? $group_project->last_run->format('m-d H:i') : trans('app.never') }}</td>
                         <td><span class="label label-{{ $group_project->css_class }}"><i class="ion ion-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
                         <td>

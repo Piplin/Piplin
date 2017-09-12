@@ -25,8 +25,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Fixhub\Console\Commands\CheckHeartbeats::class,
-        \Fixhub\Console\Commands\CheckUrl::class,
         \Fixhub\Console\Commands\CreateUser::class,
         \Fixhub\Console\Commands\ClearOrphanAvatars::class,
         \Fixhub\Console\Commands\ClearOrphanMirrors::class,
@@ -46,15 +44,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('fixhub:heartbeats')
-                 ->everyFiveMinutes()
-                 ->withoutOverlapping();
-
         $schedule->command('fixhub:update-mirrors')
-                 ->everyFiveMinutes()
-                 ->withoutOverlapping();
-
-        $schedule->command('fixhub:checkurls')
                  ->everyFiveMinutes()
                  ->withoutOverlapping();
 

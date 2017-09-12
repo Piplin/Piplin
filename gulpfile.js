@@ -42,7 +42,7 @@ var paths = {
     'ace'              : node_path + '/ace-min-noconflict',
     'raphael'          : node_path + '/raphael',
     'morris'           : node_path + '/morris.js',
-    'localization'     : '/../vendor/andywer/js-localization'
+    'localization'     : '/../vendor/fixhub/js-localization'
 };
 
 elixir(function(mix) {
@@ -84,12 +84,10 @@ elixir(function(mix) {
         'templates.js',
         'keys.js',
         'servers.js',
-        'heartbeats.js',
         'notifySlacks.js',
         'notifyEmails.js',
         'shareFiles.js',
         'configFiles.js',
-        'checkUrls.js',
         'variables.js',
         'deployment.js',
         'commands.js',
@@ -98,7 +96,6 @@ elixir(function(mix) {
         'links.js',
         'tips.js',
         'uploader.js',
-        //'issues.js',
         'profile.js'
     ], 'public/js/app.js', 'resources/assets/js')
     .jsminify()

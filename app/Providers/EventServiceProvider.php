@@ -13,15 +13,12 @@ namespace Fixhub\Providers;
 
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Events\HeartbeatMissed;
-use Fixhub\Bus\Events\HeartbeatRecovered;
 use Fixhub\Bus\Events\JsonWebTokenExpired;
 use Fixhub\Bus\Events\UserWasCreated;
 use Fixhub\Bus\Listeners\Events\ClearJwt;
 use Fixhub\Bus\Listeners\Events\CreateJwt;
 use Fixhub\Bus\Listeners\Events\EmailChangeConfirmation;
 use Fixhub\Bus\Listeners\Events\NotifyDeploy;
-use Fixhub\Bus\Listeners\Events\NotifyHeartbeat;
 use Fixhub\Bus\Listeners\Events\SendSignupEmail;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -42,8 +39,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserWasCreated::class       => [SendSignupEmail::class],
         DeployFinished::class       => [NotifyDeploy::class],
-        HeartbeatMissed::class      => [NotifyHeartbeat::class],
-        HeartbeatRecovered::class   => [NotifyHeartbeat::class],
         EmailChangeRequested::class => [EmailChangeConfirmation::class],
         JsonWebTokenExpired::class  => [CreateJwt::class],
         Login::class                => [CreateJwt::class],

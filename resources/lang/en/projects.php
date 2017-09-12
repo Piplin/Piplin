@@ -42,8 +42,6 @@ return [
     'health'            => 'Health Check',
     'deploy_status'     => 'Deploy Status',
     'build_status'      => 'Build Status',
-    'app_status'        => 'Application Status',
-    'heartbeats_status' => 'Heartbeat Status',
     'deploy_project'    => 'Deploy the project',
     'deploy'            => 'Deploy',
     'redeploy'          => 'Redeploy',

@@ -15,7 +15,7 @@
 
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.project_details') }}</a></li>
+                            <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.details') }}</a></li>
                             <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
                             <li><a href="#project_build" data-toggle="tab">{{ trans('projects.build_options') }}</a></li>
                         </ul>

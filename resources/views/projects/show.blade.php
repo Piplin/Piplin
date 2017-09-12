@@ -39,17 +39,17 @@
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.health') }}</h3>
+                    <h3 class="box-title">{{ trans('projects.details') }}</h3>
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#" target="_blank">{{ trans('projects.group') }} <span class="pull-right">{{ $project->group->name }}</span></a></li>
+                        <li><a href="{{ $project->url }}">{{ trans('projects.url') }} <span class="pull-right"><i class="ion ion-earth"></i></span></a></li>
                         @if(!empty($project->build_url))
                         <li><a href="#">{{ trans('projects.build_status') }} <span class="pull-right"><img src="{{ $project->build_url }}" /></span></a></li>
                         @else
                         <li><a href="#">{{ trans('projects.deploy_status') }}<span class="pull-right label label-{{ $project->css_class }}"><i class="ion ion-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span></a></li>
                         @endif
-                        <li><a href="#">{{ trans('projects.app_status') }} <span class="pull-right label label-{{ $project->app_status_css }}">{{ $project->app_status }}</span></a></li>
-                        <li><a href="#">{{ trans('projects.heartbeats_status') }} <span class="pull-right label label-{{ $project->heartbeat_status_css }}">{{ $project->heartbeat_status }}</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +65,6 @@
                     <li><a href="#commands" data-toggle="tab"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li><a href="#files" data-toggle="tab"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li><a href="#notifications" data-toggle="tab"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
-                    <li><a href="#health" data-toggle="tab"><span class="ion ion-heart-broken"></span> {{ trans('heartbeats.tab_label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="deployments">
@@ -85,10 +84,6 @@
                     <div class="tab-pane" id="notifications">
                         @include('projects._partials.notifications')
                     </div>
-                    <div class="tab-pane" id="health">
-                        @include('projects._partials.heartbeats')
-                        @include('projects._partials.check_urls')
-                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +96,6 @@
     @include('projects.dialogs.variable')
     @include('projects.dialogs.notify_slack')
     @include('projects.dialogs.notify_email')
-    @include('projects.dialogs.heartbeat')
-    @include('projects.dialogs.check_urls')
     @include('projects.dialogs.key')
     @include('projects.dialogs.reason')
     @include('projects.dialogs.redeploy')
@@ -124,17 +117,13 @@
         new app.ConfigFilesTab();
         new app.NotifySlacksTab();
         new app.NotifyEmailsTab();
-        new app.HeartbeatsTab();
         new app.VariablesTab();
-        new app.CheckUrlsTab();
 
         app.Servers.add({!! $servers->toJson() !!});
         app.SharedFiles.add({!! $sharedFiles->toJson() !!});
         app.ConfigFiles.add({!! $configFiles->toJson() !!});
         app.NotifySlacks.add({!! $notifySlacks->toJson() !!});
         app.NotifyEmails.add({!! $notifyEmails->toJson() !!});
-        app.Heartbeats.add({!! $heartbeats->toJson() !!});
-        app.CheckUrls.add({!! $checkUrls->toJson() !!});
         app.Variables.add({!! $variables->toJson() !!});
 
         app.project_id = {{ $project->id }};

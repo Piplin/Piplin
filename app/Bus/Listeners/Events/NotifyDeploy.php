@@ -13,7 +13,6 @@ namespace Fixhub\Bus\Listeners\Events;
 
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Jobs\MailDeployNotification;
-use Fixhub\Bus\Jobs\RequestProjectCheckUrl;
 use Fixhub\Bus\Jobs\NotifySlackJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -62,8 +61,5 @@ class NotifyDeploy extends Event implements ShouldQueue
 
         // Send email notification
         $this->dispatch(new MailDeployNotification($project, $deployment));
-
-        // Trigger to check the project urls
-        $this->dispatch(new RequestProjectCheckUrl($project->checkUrls));
     }
 }

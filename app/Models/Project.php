@@ -42,7 +42,7 @@ class Project extends Model implements HasPresenter
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
                          'servers', 'commands', 'notifyEmails','group', 'key',
-                         'heartbeats', 'checkUrls','notifySlacks', 'deployments', 'shareFiles',
+                         'notifySlacks', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
 
@@ -82,18 +82,6 @@ class Project extends Model implements HasPresenter
         'allow_other_branch' => 'boolean',
         'need_approve'       => 'boolean',
     ];
-
-    /**
-     * The heart beats status count.
-     * @var array
-     */
-    protected $heartbeatStatus = [];
-
-    /**
-     * The check url's status count.
-     * @var array
-     */
-    protected $checkurlStatus = [];
 
     /**
      * Override the boot method to bind model event listeners.
@@ -220,52 +208,6 @@ class Project extends Model implements HasPresenter
     }
 
     /**
-     * Count the missed heartbeat.
-     *
-     * @return array
-     */
-    public function heartbeatsStatus()
-    {
-        if (empty($this->heartbeatStatus)) {
-            $length = count($this->heartbeats);
-            $missed = 0;
-
-            foreach ($this->heartbeats as $beat) {
-                if (!$beat->isHealthy()) {
-                    $missed++;
-                }
-            }
-
-            $this->heartbeatStatus = ['missed' => $missed, 'length' => $length];
-        }
-
-        return $this->heartbeatStatus;
-    }
-
-    /**
-     * Count the application url check status.
-     *
-     * @return array
-     */
-    public function applicationCheckUrlStatus()
-    {
-        if (empty($this->checkurlStatus)) {
-            $length = count($this->checkUrls);
-            $missed = 0;
-
-            foreach ($this->checkUrls as $link) {
-                if ($link->last_status) {
-                    $missed++;
-                }
-            }
-
-            $this->checkurlStatus = ['missed' => $missed, 'length' => $length];
-        }
-
-        return $this->checkurlStatus;
-    }
-
-    /**
      * Define a accessor for the group name.
      *
      * @return int
@@ -319,17 +261,6 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship.
      *
-     * @return Heartbeat
-     */
-    public function heartbeats()
-    {
-        return $this->hasMany(Heartbeat::class)
-                    ->orderBy('name');
-    }
-
-    /**
-     * Has many relationship.
-     *
      * @return Deployment
      */
     public function deployments()
@@ -356,16 +287,6 @@ class Project extends Model implements HasPresenter
     public function notifyEmails()
     {
         return $this->hasMany(NotifyEmail::class);
-    }
-
-    /**
-     * Has many urls to check.
-     *
-     * @return CheckUrl
-     */
-    public function checkUrls()
-    {
-        return $this->hasMany(CheckUrl::class);
     }
 
     /**

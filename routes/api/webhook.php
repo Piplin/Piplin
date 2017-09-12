@@ -19,8 +19,3 @@ Route::post('deploy/{hash}', [
     'middleware' => 'api',
     'uses'       => 'Api\WebhookController@webhook',
 ]);
-
-Route::get('heartbeat/{hash}', [
-    'as'   => 'heartbeats',
-    'uses' => 'Dashboard\HeartbeatController@ping',
-]);
