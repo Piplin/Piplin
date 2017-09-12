@@ -21,50 +21,19 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach(['clone', 'install', 'activate', 'purge'] as $index => $stage)
                 <tr>
-                    <td>1</td>
-                    <td>{{ $project->before_clone }}</td>
-                    <td>{{ trans('commands.clone') }}</td>
-                    <td>{{ $project->after_clone }}</td>
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ $project->{'before_'.$stage} }}</td>
+                    <td>{{ trans('commands.'.$stage) }}</td>
+                    <td>{{ $project->{'after_'.$stage} }}</td>
                     <td>
                         <div class="btn-group pull-right">
-                            <a href="{{ route($route, ['id' => $project->id, 'command' => 'clone']) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
+                            <a href="{{ route($route, ['id' => $project->id, 'command' => $stage]) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>{{ $project->before_install }}</td>
-                    <td>{{ trans('commands.install') }}</td>
-                    <td>{{ $project->after_install }}</td>
-                    <td>
-                        <div class="btn-group pull-right">
-                            <a href="{{ route($route, ['id' => $project->id, 'command' => 'install']) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>{{ $project->before_activate }}</td>
-                    <td>{{ trans('commands.activate') }}</td>
-                    <td>{{ $project->after_activate }}</td>
-                    <td>
-                        <div class="btn-group pull-right">
-                            <a href="{{ route($route, ['id' => $project->id, 'command' => 'activate']) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>{{ $project->before_purge }}</td>
-                    <td>{{ trans('commands.purge') }}</td>
-                    <td>{{ $project->after_purge }}</td>
-                    <td>
-                        <div class="btn-group pull-right">
-                            <a href="{{ route($route, ['id' => $project->id, 'command' => 'purge']) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
-                        </div>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
