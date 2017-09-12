@@ -107,13 +107,16 @@ Route::group([
             'only' => ['store', 'update', 'destroy'],
         ];
 
-        Route::resource('servers', 'ServerController', $actions);
-        Route::resource('variables', 'VariableController', $actions);
-        Route::resource('commands', 'CommandController', $actions);
-        Route::resource('notify-slack', 'NotifySlackController', $actions);
-        Route::resource('shared-files', 'SharedFilesController', $actions);
-        Route::resource('config-file', 'ConfigFileController', $actions);
-        Route::resource('notify-email', 'NotifyEmailController', $actions);
+        Route::group(['middleware' => 'admin',
+            ], function () use ($actions) {
+                Route::resource('servers', 'ServerController', $actions);
+                Route::resource('variables', 'VariableController', $actions);
+                Route::resource('commands', 'CommandController', $actions);
+                Route::resource('notify-slack', 'NotifySlackController', $actions);
+                Route::resource('shared-files', 'SharedFilesController', $actions);
+                Route::resource('config-file', 'ConfigFileController', $actions);
+                Route::resource('notify-email', 'NotifyEmailController', $actions);
+        });
 
         Route::get('admin/templates/{id}/commands/{step}', [
             'as'   => 'admin.templates.commands.step',

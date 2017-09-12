@@ -17,7 +17,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" class="btn btn-success" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
+            <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-success" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('servers.label') }}</h3>
     </div>
@@ -67,16 +67,16 @@
         <td>
             <div class="btn-group pull-right">
                 <% if (output !== null) { %>
-                    <button type="button" class="btn btn-default btn-show" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="ion ion-ios-copy-outline"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-show" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="ion ion-ios-copy-outline"></i></button>
                 <% } %>
                 <% if (status === 'Testing') { %>
-                    <button type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}" disabled><i class="ion ion-refresh fixhub-spin"></i></button>
-                    <button type="button" class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server" disabled><i class="ion ion-compose"></i></button>
-                    <button type="button" class="btn btn-danger btn-delete" title="{{ trans('servers.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#server-trash" disabled><i class="ion ion-trash-a"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-test" title="{{ trans('servers.test') }}" disabled><i class="ion ion-refresh fixhub-spin"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server" disabled><i class="ion ion-compose"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('servers.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#server-trash" disabled><i class="ion ion-trash-a"></i></button>
                 <% } else { %>
-                    <button type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}"><i class="ion ion-arrow-swap"></i></button>
-                    <button type="button" class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><i class="ion ion-compose"></i></button>
-                    <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-test" title="{{ trans('servers.test') }}"><i class="ion ion-arrow-swap"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><i class="ion ion-compose"></i></button>
+                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
                 <% } %>
             </div>
         </td>

@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" class="btn btn-success" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><span class="ion ion-plus"></span> {{ trans('configFiles.create') }}</button>
+            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-success" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><span class="ion ion-plus"></span> {{ trans('configFiles.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('configFiles.label') }}</h3>
     </div>
@@ -34,8 +34,8 @@
         <td>
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-view" title="{{ trans('configFiles.view') }}" data-toggle="modal" data-backdrop="static" data-target="#view-configfile"><i class="ion ion-eye"></i></button>
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="ion ion-compose"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="ion ion-compose"></i></button>
+                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
             </div>
         </td>
     </script>

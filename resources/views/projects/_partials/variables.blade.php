@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" class="btn btn-success" title="{{ trans('variables.create') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><span class="ion ion-plus"></span> {{ trans('variables.create') }}</button>
+            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-success" title="{{ trans('variables.create') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><span class="ion ion-plus"></span> {{ trans('variables.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('variables.label') }}</h3>
     </div>
