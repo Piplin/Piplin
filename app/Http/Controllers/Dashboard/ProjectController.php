@@ -43,6 +43,7 @@ class ProjectController extends Controller
 
         return view('projects.show', [
             'title'           => $project->name,
+            'subtitle'        => $project->group->name,
             'project'         => $project,
             'servers'         => $project->servers,
             'notifySlacks'    => $project->notifySlacks,
@@ -57,7 +58,6 @@ class ProjectController extends Controller
             'optional'        => $optional,
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
-            'issues'          => $project->issues,
             'route'           => 'commands.step',
         ]);
     }

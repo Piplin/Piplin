@@ -5,11 +5,11 @@
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.details') }}</h3>
+                    <h3 class="box-title">{{ trans('projects.repository') }}</h3>
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
+                        <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository_path') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
                         <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
                         @if(!empty($project->last_mirrored))
                         <li><a href="javascript:void(0);" data-project-id={{ $project->id }} class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right">{{ $project->last_mirrored }}</span> <i class="ion ion-refresh"></i></a></li>
