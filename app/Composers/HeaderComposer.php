@@ -13,7 +13,6 @@ namespace Fixhub\Composers;
 
 use Auth;
 use Fixhub\Models\Deployment;
-use Fixhub\Models\Issue;
 use Illuminate\Contracts\View\View;
 
 /**
@@ -89,27 +88,5 @@ class HeaderComposer
                            ->whereIn('status', is_array($status) ? $status : [$status])
                            ->orderBy('started_at', 'DESC')
                            ->get();
-    }
-
-    /**
-    * Gets issues with a supplied identity.
-    *
-    * @param  string $identity
-    * @return array
-    */
-    private function getIssues($identity)
-    {
-        return Issue::where($identity . '_id', Auth::user()->id)->get();
-    }
-
-    /**
-    * Gets issues count with a supplied identity.
-    *
-    * @param  string $identity
-    * @return array
-    */
-    private function getIssuesCount($identity)
-    {
-        return Issue::where($identity . '_id', Auth::user()->id)->count();
     }
 }

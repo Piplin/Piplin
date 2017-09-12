@@ -41,7 +41,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'commands', 'notifyEmails','group', 'key', 'issues',
+                         'servers', 'commands', 'notifyEmails','group', 'key',
                          'heartbeats', 'checkUrls','notifySlacks', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
@@ -314,16 +314,6 @@ class Project extends Model implements HasPresenter
     {
         return $this->hasMany(Server::class)
                     ->orderBy('order', 'ASC');
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return Issue
-     */
-    public function issues()
-    {
-        return $this->hasMany(Issue::class);
     }
 
     /**

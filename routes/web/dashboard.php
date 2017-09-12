@@ -116,7 +116,6 @@ Route::group([
         Route::resource('config-file', 'ConfigFileController', $actions);
         Route::resource('notify-email', 'NotifyEmailController', $actions);
         Route::resource('check-url', 'CheckUrlController', $actions);
-        Route::resource('issues', 'IssueController');
 
         Route::get('admin/templates/{id}/commands/{step}', [
             'as'   => 'admin.templates.commands.step',
