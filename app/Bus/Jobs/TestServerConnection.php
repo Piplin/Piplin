@@ -46,6 +46,7 @@ class TestServerConnection extends Job implements ShouldQueue
     public function handle()
     {
         $this->server->status = Server::TESTING;
+        $this->server->output = null;
         $this->server->save();
 
         $key = tempnam(storage_path('app/'), 'sshkey');
