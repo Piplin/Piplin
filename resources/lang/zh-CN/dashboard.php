@@ -13,7 +13,6 @@ return [
 
     'title'             => '控制台',
     'stats'             => '上线统计',
-    'projects'          => '项目管理',
     'latest'            => '最近上线|最近上线',
     'pending'           => '等待上线: :count 个|等待上线: :count 个',
     'pending_empty'     => '没有等待上线的任务',

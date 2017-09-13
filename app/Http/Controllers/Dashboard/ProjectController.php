@@ -42,8 +42,7 @@ class ProjectController extends Controller
         });
 
         return view('projects.show', [
-            'title'           => $project->name,
-            'subtitle'        => $project->group->name,
+            'title'           => $project->group->name.'/'.$project->name,
             'project'         => $project,
             'servers'         => $project->servers,
             'notifySlacks'    => $project->notifySlacks,

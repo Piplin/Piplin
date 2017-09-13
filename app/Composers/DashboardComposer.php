@@ -11,7 +11,7 @@
 
 namespace Fixhub\Composers;
 
-use Fixhub\Models\ProjectGroup;
+use Fixhub\Models\Key;
 use Fixhub\Models\Project;
 use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\User;
@@ -30,9 +30,9 @@ class DashboardComposer
      */
     public function compose(View $view)
     {
-        $view->with('group_count', ProjectGroup::count());
         $view->with('project_count', Project::count());
         $view->with('template_count', DeployTemplate::count());
+        $view->with('key_count', Key::count());
         $view->with('user_count', User::count());
     }
 }

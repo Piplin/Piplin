@@ -23,6 +23,6 @@
 
 @section('right-buttons')
     <div class="pull-right">
-        <a href="/" class="btn btn-default" title="Back to dashboard"><span class="ion ion-ios-undo-outline"></span> Back to dashboard</a>
+        <a href="/" class="btn btn-default" title="Back to dashboard"><span class="ion ion-ios-undo-outline"></span> {{ trans('dashboard.title') }}</a>
     </div>
 @stop

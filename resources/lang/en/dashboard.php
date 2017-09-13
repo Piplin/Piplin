@@ -13,7 +13,6 @@ return [
 
     'title'             => 'Dashboard',
     'stats'             => 'Statistics',
-    'projects'          => 'Projects',
     'latest'            => 'Latest Deployment|Latest Deployments',
     'pending'           => ':count pending deployment|:count pending deployments',
     'pending_empty'     => 'No pending deployments to show',

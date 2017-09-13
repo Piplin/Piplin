@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{ $index+1 }}</td>
                     <td>{{ $project->{'before_'.$stage} }}</td>
-                    <td>{{ trans('commands.'.$stage) }}</td>
+                    <td><a href="{{ route($route, ['id' => $project->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a></td>
                     <td>{{ $project->{'after_'.$stage} }}</td>
                     <td>
                         <div class="btn-group pull-right">

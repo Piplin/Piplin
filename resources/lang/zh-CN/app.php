@@ -19,7 +19,7 @@ return [
     'projects'          => '项目',
     'templates'         => '部署模板',
     'groups'            => '项目分组',
-    'keys'              => 'SSH Key',
+    'keys'              => '部署秘钥',
     'users'             => '用户管理',
     'tips'              => '小贴士',
     'links'             => '友情链接',
