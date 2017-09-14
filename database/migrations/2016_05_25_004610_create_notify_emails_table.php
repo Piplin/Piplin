@@ -31,6 +31,8 @@ class CreateNotifyEmailsTable extends Migration
             $table->unsignedInteger('project_id');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

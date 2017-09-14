@@ -35,6 +35,8 @@ class CreateServersTable extends Migration
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

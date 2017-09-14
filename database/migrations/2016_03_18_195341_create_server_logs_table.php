@@ -31,6 +31,9 @@ class CreateServerLogsTable extends Migration
             $table->dateTime('started_at')->nullable();
             $table->dateTime('finished_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('deploy_step_id')->references('id')->on('deploy_steps');
         });
     }
 

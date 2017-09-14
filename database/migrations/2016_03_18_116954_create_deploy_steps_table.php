@@ -27,6 +27,9 @@ class CreateDeployStepsTable extends Migration
             $table->unsignedInteger('stage');
             $table->unsignedInteger('command_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('deployment_id')->references('id')->on('deployments');
+            $table->foreign('command_id')->references('id')->on('commands');
         });
     }
 

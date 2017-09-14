@@ -39,6 +39,9 @@ class CreateDeploymentsTable extends Migration
             $table->string('build_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

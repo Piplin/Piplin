@@ -27,6 +27,8 @@ class CreateRefsTable extends Migration
             $table->boolean('is_tag')->default(false);
             $table->unsignedInteger('project_id');
             $table->timestamps();
+
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

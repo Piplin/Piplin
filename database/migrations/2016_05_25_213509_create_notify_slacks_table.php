@@ -31,6 +31,8 @@ class CreateNotifySlacksTable extends Migration
             $table->boolean('failure_only')->default(false);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

@@ -25,6 +25,9 @@ class CreateCommandsServersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('command_id');
             $table->unsignedInteger('server_id');
+
+            $table->foreign('command_id')->references('id')->on('commands');
+            $table->foreign('server_id')->references('id')->on('servers');
         });
     }
 

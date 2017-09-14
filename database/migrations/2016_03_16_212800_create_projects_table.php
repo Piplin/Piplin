@@ -41,6 +41,8 @@ class CreateProjectsTable extends Migration
             $table->dateTime('last_mirrored')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
+
+             $table->foreign('group_id')->references('id')->on('project_groups');
         });
     }
 
