@@ -42,7 +42,7 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-             $table->foreign('group_id')->references('id')->on('project_groups');
+            $table->foreign('group_id')->references('id')->on('project_groups');
         });
     }
 
