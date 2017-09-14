@@ -29,28 +29,28 @@ class DeployTemplateTableSeeder extends Seeder
 
         Command::create([
             'name'            => 'Down',
-            'script'          => 'php artisan down',
+            'script'          => 'php {{ release_path }}/artisan down',
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
-            'user'            => 'deploy',
+            'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
         ]);
 
         Command::create([
             'name'            => 'Run Migrations',
-            'script'          => 'php artisan migrate --force',
+            'script'          => 'php {{ release_path }}/artisan migrate --force',
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
-            'user'            => 'deploy',
+            'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
         ]);
 
         Command::create([
             'name'            => 'Up',
-            'script'          => 'php artisan up',
+            'script'          => 'php {{ release_path }}/artisan up',
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
-            'user'            => 'deploy',
+            'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
         ]);
     }
