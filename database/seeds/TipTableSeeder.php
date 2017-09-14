@@ -20,7 +20,7 @@ class TipTableSeeder extends Seeder
 
         Tip::create([
             'body'   => '心若没有栖息的地方，到哪里都是在流浪!',
-            'status' => 0,
+            'status' => 1,
         ]);
 
         Tip::create([
@@ -30,7 +30,7 @@ class TipTableSeeder extends Seeder
 
         Tip::create([
             'body'   => '每个人至少拥有一个梦想，有一个理由去坚强。',
-            'status' => 0,
+            'status' => 1,
         ]);
     }
 }
