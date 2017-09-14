@@ -7,9 +7,9 @@
   //Navbar
   .main-header {
     .navbar {
-      @include navbar-variant($black, #fff);
+      @include navbar-variant($black, $white);
       .sidebar-toggle {
-        color: #fff;
+        color: $white;
         &:hover {
           background-color: darken($black, 5%);
         }
@@ -21,7 +21,7 @@
               background-color: rgba(255, 255, 255, 0.1);
             }
             a {
-              color: #fff;
+              color: $white;
               &:hover {
                 background: darken($black, 5%);
               }
