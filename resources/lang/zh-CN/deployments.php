@@ -59,7 +59,7 @@ return [
     'warning'               => '上线工作尚未启动，请确保完成填写所有必填项.',
     'describe_commit'       => '例如：0c6b0d8',
     'describe_reason'       => '请简单描述本次上线的原因',
-    'optional'              => '执行步骤(可选)',
+    'optional'              => '可选步骤',
     'week'                  => ':time 星期|:time 星期',
     'day'                   => ':time 天|:time 天',
     'hour'                  => ':time 小时|:time 小时',
