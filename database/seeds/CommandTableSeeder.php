@@ -59,7 +59,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::BEFORE_INSTALL,
         ])->servers()->attach([1, 2]);
 
@@ -68,7 +68,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::AFTER_INSTALL,
         ])->servers()->attach([1, 2]);
 
@@ -77,7 +77,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::BEFORE_ACTIVATE,
         ])->servers()->attach([1, 2]);
 
@@ -86,7 +86,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::AFTER_ACTIVATE,
         ])->servers()->attach([1, 2]);
 
@@ -95,7 +95,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::BEFORE_PURGE,
         ])->servers()->attach([1, 2]);
 
@@ -104,7 +104,7 @@ EOD;
             'script'     => $this->getScript(),
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-            'user'       => 'deploy',
+            'user'       => '',
             'step'       => Command::AFTER_PURGE,
             'optional'   => true,
         ])->servers()->attach([1, 2]);
