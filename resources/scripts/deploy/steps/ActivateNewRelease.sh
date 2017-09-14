@@ -1,5 +1,7 @@
 # Activate new release
 
+echo -e "Activate new release"
+
 cd {{ project_path }}
 
 # Remove the symlink if it already exists

@@ -31,8 +31,10 @@
       }
     }
     //Logo
-    .logo {
-      @include logo-variant(darken($yellow, 5%));
+    .navbar-brand {
+      background: url('/img/logo_white.png') no-repeat 10px 5px;
+      padding-left: 65px;
+      color: #fff;
     }
 
     @media (min-width: $screen-header-collapse) {

@@ -1,7 +1,7 @@
 <header class="main-header">
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="container">
-        <a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="{{ $app_name }}">{{ $app_name }}</a>
+        <a href="/" class="navbar-brand">{{ $app_name }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 

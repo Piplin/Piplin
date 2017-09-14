@@ -1,5 +1,7 @@
 # Create new release
 
+echo -e " Create new release"
+
 cd {{ project_path }}
 
 # Create the releases directory if it doesn't exist

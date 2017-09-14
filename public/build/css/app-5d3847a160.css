@@ -9543,12 +9543,10 @@ table.text-center, table.text-center td, table.text-center th {
       .skin-blue .main-header .navbar .dropdown-menu li a:hover {
         background: #367fa9; } }
 
-.skin-blue .main-header .logo {
-  background-color: #3c8dbc;
-  color: #fff;
-  border-bottom: 0 solid transparent; }
-  .skin-blue .main-header .logo:hover {
-    background-color: #3b8ab8; }
+.skin-blue .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #fff; }
 
 @media (min-width: 767px) {
   .skin-blue .main-header .navbar > .container .navbar-brand, .skin-blue .main-header .navbar > .container-fluid .navbar-brand {
@@ -9695,21 +9693,10 @@ table.text-center, table.text-center td, table.text-center th {
     .skin-white .main-header > .navbar .navbar-right > li > a {
       border-left: 1px solid #eee;
       border-right-width: 0; }
-  .skin-white .main-header > .logo {
-    background-color: #fff;
-    color: #333;
-    border-bottom: 0 solid transparent;
-    border-right: 1px solid #eee; }
-    .skin-white .main-header > .logo:hover {
-      background-color: #fcfcfc; }
-    @media (max-width: 767px) {
-      .skin-white .main-header > .logo {
-        background-color: #222;
-        color: #fff;
-        border-bottom: 0 solid transparent;
-        border-right: none; }
-        .skin-white .main-header > .logo:hover {
-          background-color: #1f1f1f; } }
+  .skin-white .main-header .navbar-brand {
+    background: url("/img/logo_black.png") no-repeat 10px 5px;
+    padding-left: 65px;
+    color: #111; }
   @media (min-width: 767px) {
     .skin-white .main-header .navbar > .container .navbar-brand, .skin-white .main-header .navbar > .container-fluid .navbar-brand {
       margin-left: 0; } }
@@ -9791,6 +9778,123 @@ table.text-center, table.text-center td, table.text-center th {
     border-bottom-left-radius: 0; }
 
 /*
+ * Skin: Black
+ * -----------
+ */
+.skin-black .main-header .navbar {
+  background-color: #111;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11); }
+  .skin-black .main-header .navbar .nav > li > a {
+    color: #fff; }
+  .skin-black .main-header .navbar .nav > li > a:hover,
+  .skin-black .main-header .navbar .nav > li > a:active,
+  .skin-black .main-header .navbar .nav > li > a:focus,
+  .skin-black .main-header .navbar .nav .open > a,
+  .skin-black .main-header .navbar .nav .open > a:hover,
+  .skin-black .main-header .navbar .nav .open > a:focus,
+  .skin-black .main-header .navbar .nav > .active > a {
+    background: rgba(0, 0, 0, 0.1);
+    color: #f6f6f6; }
+  .skin-black .main-header .navbar .sidebar-toggle {
+    color: #fff; }
+    .skin-black .main-header .navbar .sidebar-toggle:hover {
+      color: #f6f6f6;
+      background: rgba(0, 0, 0, 0.1); }
+  .skin-black .main-header .navbar .sidebar-toggle {
+    color: #fff; }
+    .skin-black .main-header .navbar .sidebar-toggle:hover {
+      background-color: #040404; }
+  @media (max-width: 767px) {
+    .skin-black .main-header .navbar .dropdown-menu li.divider {
+      background-color: rgba(255, 255, 255, 0.1); }
+    .skin-black .main-header .navbar .dropdown-menu li a {
+      color: #fff; }
+      .skin-black .main-header .navbar .dropdown-menu li a:hover {
+        background: #040404; } }
+
+.skin-black .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #c5c8c6; }
+
+@media (min-width: 767px) {
+  .skin-black .main-header .navbar > .container .navbar-brand, .skin-black .main-header .navbar > .container-fluid .navbar-brand {
+    margin-left: 0; } }
+
+.skin-black .main-header li.user-header {
+  background-color: #111; }
+
+.skin-black .content-header {
+  background: transparent; }
+
+.skin-black .wrapper,
+.skin-black .main-sidebar,
+.skin-black .left-side {
+  background-color: #ecf0f5; }
+
+.skin-black .user-panel > .info, .skin-black .user-panel > .info > a {
+  color: #fff; }
+
+.skin-black .sidebar-menu > li.header {
+  color: white;
+  background: #dfe5ee; }
+
+.skin-black .sidebar-menu > li > a {
+  border-left: 3px solid transparent; }
+
+.skin-black .sidebar-menu > li:hover > a, .skin-black .sidebar-menu > li.active > a {
+  color: #fff;
+  background: #e5ebf1;
+  border-left-color: #111; }
+
+.skin-black .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  background: #fdfdfe; }
+
+.skin-black .sidebar a {
+  color: white; }
+  .skin-black .sidebar a:hover {
+    text-decoration: none; }
+
+.skin-black .treeview-menu > li > a {
+  color: white; }
+
+.skin-black .treeview-menu > li.active > a, .skin-black .treeview-menu > li > a:hover {
+  color: #fff; }
+
+.skin-black .sidebar-form {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid white;
+  margin: 10px 10px; }
+  .skin-black .sidebar-form input[type="text"], .skin-black .sidebar-form .btn {
+    box-shadow: none;
+    background-color: white;
+    border: 1px solid transparent;
+    height: 35px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; }
+  .skin-black .sidebar-form input[type="text"] {
+    color: #666;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px; }
+    .skin-black .sidebar-form input[type="text"]:focus, .skin-black .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+      background-color: #fff;
+      color: #666; }
+    .skin-black .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+      border-left-color: #fff; }
+  .skin-black .sidebar-form .btn {
+    color: #999;
+    border-top-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 0; }
+
+/*
  * Skin: Green
  * -----------
  */
@@ -9825,12 +9929,10 @@ table.text-center, table.text-center td, table.text-center th {
       .skin-green .main-header .navbar .dropdown-menu li a:hover {
         background: #008d4c; } }
 
-.skin-green .main-header .logo {
-  background-color: #008d4c;
-  color: #fff;
-  border-bottom: 0 solid transparent; }
-  .skin-green .main-header .logo:hover {
-    background-color: #008749; }
+.skin-green .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #fff; }
 
 @media (min-width: 767px) {
   .skin-green .main-header .navbar > .container .navbar-brand, .skin-green .main-header .navbar > .container-fluid .navbar-brand {
@@ -9944,12 +10046,10 @@ table.text-center, table.text-center td, table.text-center th {
       .skin-red .main-header .navbar .dropdown-menu li a:hover {
         background: #d73925; } }
 
-.skin-red .main-header .logo {
-  background-color: #d73925;
-  color: #fff;
-  border-bottom: 0 solid transparent; }
-  .skin-red .main-header .logo:hover {
-    background-color: #d33724; }
+.skin-red .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #fff; }
 
 @media (min-width: 767px) {
   .skin-red .main-header .navbar > .container .navbar-brand, .skin-red .main-header .navbar > .container-fluid .navbar-brand {
@@ -10063,12 +10163,10 @@ table.text-center, table.text-center td, table.text-center th {
       .skin-yellow .main-header .navbar .dropdown-menu li a:hover {
         background: #e08e0b; } }
 
-.skin-yellow .main-header .logo {
-  background-color: #e08e0b;
-  color: #fff;
-  border-bottom: 0 solid transparent; }
-  .skin-yellow .main-header .logo:hover {
-    background-color: #db8b0b; }
+.skin-yellow .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #fff; }
 
 @media (min-width: 767px) {
   .skin-yellow .main-header .navbar > .container .navbar-brand, .skin-yellow .main-header .navbar > .container-fluid .navbar-brand {
@@ -10182,12 +10280,10 @@ table.text-center, table.text-center td, table.text-center th {
       .skin-purple .main-header .navbar .dropdown-menu li a:hover {
         background: #555299; } }
 
-.skin-purple .main-header .logo {
-  background-color: #555299;
-  color: #fff;
-  border-bottom: 0 solid transparent; }
-  .skin-purple .main-header .logo:hover {
-    background-color: #545096; }
+.skin-purple .main-header .navbar-brand {
+  background: url("/img/logo_white.png") no-repeat 10px 5px;
+  padding-left: 65px;
+  color: #fff; }
 
 @media (min-width: 767px) {
   .skin-purple .main-header .navbar > .container .navbar-brand, .skin-purple .main-header .navbar > .container-fluid .navbar-brand {

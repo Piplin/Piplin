@@ -56,6 +56,7 @@ return [
     'purple'            => '帝王紫',
     'blue'              => '天空蓝',
     'white'             => '珍珠白',
+    'black'             => '端砚黑',
     'role'              => '角色',
     'level'             => [
         'admin'    => '超级管理员',

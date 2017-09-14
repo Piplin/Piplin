@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label for="skin">{{ trans('users.theme') }}</label>
                         <select name="skin" id="skin" class="form-control">
-                            @foreach (['white', 'yellow', 'red', 'green', 'purple', 'blue'] as $colour)
+                            @foreach (['white', 'black', 'yellow', 'red', 'green', 'purple', 'blue'] as $colour)
                                 <option value="{{ $colour }}" @if ($colour === $theme) selected @endif>{{ trans('users.' . $colour )}}</option>
                             @endforeach
                         </select>

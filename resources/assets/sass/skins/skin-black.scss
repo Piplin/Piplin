@@ -1,17 +1,17 @@
 /*
- * Skin: Red
- * ---------
+ * Skin: Black
+ * -----------
  */
 
-.skin-red {
+.skin-black {
   //Navbar
   .main-header {
     .navbar {
-      @include navbar-variant($red, #fff);
+      @include navbar-variant($black, #fff);
       .sidebar-toggle {
         color: #fff;
         &:hover {
-          background-color: darken($red, 5%);
+          background-color: darken($black, 5%);
         }
       }
       @media (max-width: $screen-header-collapse) {
@@ -23,7 +23,7 @@
             a {
               color: #fff;
               &:hover {
-                background: darken($red, 5%);
+                background: darken($black, 5%);
               }
             }
           }
@@ -31,10 +31,11 @@
       }
     }
     //Logo
+
     .navbar-brand {
       background: url('/img/logo_white.png') no-repeat 10px 5px;
       padding-left: 65px;
-      color: #fff;
+      color: $white;
     }
 
     @media (min-width: $screen-header-collapse) {
@@ -44,7 +45,7 @@
     }
 
     li.user-header {
-      background-color: $red;
+      background-color: $black;
     }
   }
 
@@ -54,5 +55,6 @@
   }
 
   //Create the sidebar skin
-  @include skin-dark-sidebar($red);
+  @include skin-dark-sidebar($black);
+
 }

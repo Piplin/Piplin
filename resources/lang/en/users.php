@@ -57,6 +57,7 @@ return [
     'purple'            => 'Purple',
     'blue'              => 'Blue',
     'white'             => 'White',
+    'black'             => 'Black',
     'role'              => 'Role',
     'level'             => [
         'admin'    => 'Administrator',
