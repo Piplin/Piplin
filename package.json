@@ -5,7 +5,7 @@
         "ioredis": "^2.4.3",
         "socket.io": "^1.7.1",
         "parseuri": "^0.0.5",
-        "jsonwebtoken": "^7.0.0"
+        "jsonwebtoken": "^8.0.1"
     },
     "devDependencies": {
         "gulp": "^3.9.1",
