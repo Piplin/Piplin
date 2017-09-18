@@ -7,7 +7,7 @@
                 <ul class="nav nav-tabs">
                     <li  {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id]) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
-                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'shared-files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.label') }}</a></li>
+                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'shared-files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {!! $tab != '' ?: 'active' !!}" id="commands">
