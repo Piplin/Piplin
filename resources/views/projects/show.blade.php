@@ -60,28 +60,28 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#deployments" data-toggle="tab"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
-                    <li><a href="#servers" data-toggle="tab"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
-                    <li><a href="#commands" data-toggle="tab"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
-                    <li><a href="#files" data-toggle="tab"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
-                    <li><a href="#notifications" data-toggle="tab"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
+                    <li {!! $tab != 'servers' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'servers']) }}"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
+                    <li {!! $tab != 'files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
+                    <li {!! $tab != 'notifications' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'notifications']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="deployments">
+                    <div class="tab-pane {!! $tab != '' ?: 'active' !!}" id="deployments">
                         @include('projects._partials.deployments')
                     </div>
-                    <div class="tab-pane" id="servers">
+                    <div class="tab-pane {!! $tab != 'servers' ?: 'active' !!}" id="servers">
                         @include('projects._partials.servers')
                     </div>
-                    <div class="tab-pane" id="commands">
+                    <div class="tab-pane {!! $tab != 'commands' ?: 'active' !!}" id="commands">
                         @include('projects._partials.commands')
                         @include('projects._partials.variables')
                     </div>
-                    <div class="tab-pane" id="files">
+                    <div class="tab-pane {!! $tab != 'files' ?: 'active' !!}" id="files">
                         @include('projects._partials.shared_files')
                         @include('projects._partials.config_files')
                     </div>
-                    <div class="tab-pane" id="notifications">
+                    <div class="tab-pane {!! $tab != 'notifications' ?: 'active' !!}" id="notifications">
                         @include('projects._partials.notifications')
                     </div>
                 </div>

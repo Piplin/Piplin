@@ -30,10 +30,11 @@ class ProjectController extends Controller
      * The details of an individual project.
      *
      * @param int $project_id
+     * @param string $tab
      *
      * @return View
      */
-    public function show($project_id)
+    public function show($project_id, $tab = '')
     {
         $project = Project::findOrFail($project_id);
 
@@ -56,6 +57,7 @@ class ProjectController extends Controller
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'route'           => 'commands.step',
+            'tab'             => $tab,
         ]);
     }
 

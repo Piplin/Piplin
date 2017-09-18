@@ -51,7 +51,7 @@ Route::group([
         ]);
 
         // Project
-        Route::get('projects/{id}', [
+        Route::get('projects/{id}/{tab?}', [
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
         ]);

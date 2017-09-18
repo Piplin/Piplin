@@ -52,7 +52,7 @@ class CommandController extends Controller
             $target = Project::findOrFail($targetable_id);
             $targetable_type = 'Fixhub\\Models\\Project';
             $breadcrumb = [
-                ['url' => route('projects', ['id' => $target->id]), 'label' => $target->name],
+                ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
             ];
         }
 

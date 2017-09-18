@@ -22,14 +22,18 @@ Route::group([
     ]);
 
     Route::resource('templates', 'DeployTemplateController', [
-        'only'  => ['index', 'store', 'update', 'destroy', 'show'],
+        'only'  => ['index', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.templates.index',
             'store'   => 'admin.templates.store',
             'update'  => 'admin.templates.update',
             'destroy' => 'admin.templates.destroy',
-            'show'    => 'admin.templates.show',
         ],
+    ]);
+
+    Route::get('templates/{id}/{tab?}', [
+        'as'   => 'admin.templates.show',
+        'uses' => 'DeployTemplateController@show',
     ]);
 
     Route::resource('projects', 'ProjectController', [

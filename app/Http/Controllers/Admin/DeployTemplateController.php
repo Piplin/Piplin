@@ -40,10 +40,11 @@ class DeployTemplateController extends Controller
     /**
      * Show the template configuration.
      *
-     * @param  int      $template_id
+     * @param int $template_id
+     * @param string $tab
      * @return Response
      */
-    public function show($template_id)
+    public function show($template_id, $tab = '')
     {
         $template = DeployTemplate::findOrFail($template_id);
 
@@ -59,6 +60,7 @@ class DeployTemplateController extends Controller
             'targetable_id'   => $template->id,
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
+            'tab'             => $tab,
         ]);
     }
 
