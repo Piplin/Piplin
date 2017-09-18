@@ -43,6 +43,7 @@ return [
         'deployments'   => ['completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', ],
         'variables'     => ['create', 'edit'],
+        'environments'  => ['create', 'edit'],
         'projects'      => ['create', 'edit', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
         'checkUrls'     => ['create', 'edit', 'successful', 'failed', 'untested', 'length'],
         'commands'      => ['create', 'edit'],
@@ -57,9 +58,6 @@ return [
         'notifySlacks'  => ['create', 'edit'],
         'notifyEmails'  => ['create', 'edit'],
         'servers'       => ['create', 'edit', 'successful', 'testing', 'failed', 'untested'],
-        'issues'        => ['create', 'edit'],
-        'heartbeats'    => ['create', 'edit', 'ok', 'untested', 'missing', 'interval_10', 'interval_30',
-                            'interval_60', 'interval_120', 'interval_720', 'interval_1440', 'interval_10080', ],
     ],
 
     /*

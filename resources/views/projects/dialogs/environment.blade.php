@@ -17,7 +17,7 @@
 
                     <div class="form-group">
                         <label for="environment_name">{{ trans('environments.name') }}</label>
-                        <input type="text" class="form-control" id="environment_name" name="name" placeholder="COMPOSER_PROCESS_TIMEOUT" />
+                        <input type="text" class="form-control" id="environment_name" name="name" placeholder="Environment name" />
                     </div>
                     <div class="form-group">
                         <label for="environment_description">{{ trans('environments.description') }}</label>
