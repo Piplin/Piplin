@@ -1,6 +1,6 @@
 # Activate new release
 
-echo -e "Activate new release"
+echo -e "Activate new release {{ release_path }}"
 
 cd {{ project_path }}
 

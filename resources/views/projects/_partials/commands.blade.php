@@ -17,7 +17,6 @@
                     <th>{{ trans('commands.before') }}</th>
                     <th>{{ trans('commands.current') }}</th>
                     <th>{{ trans('commands.after') }}</th>
-                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,11 +26,6 @@
                     <td>{{ $project->{'before_'.$stage} }}</td>
                     <td><a href="{{ route($route, ['id' => $project->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a></td>
                     <td>{{ $project->{'after_'.$stage} }}</td>
-                    <td>
-                        <div class="btn-group pull-right">
-                            <a href="{{ route($route, ['id' => $project->id, 'command' => $stage]) }}" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
-                        </div>
-                    </td>
                 </tr>
                 @endforeach
             </tbody>

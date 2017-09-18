@@ -1,6 +1,6 @@
 # Create new release
 
-echo -e " Create new release"
+echo -e "Create new release {{ release_path }}"
 
 cd {{ project_path }}
 

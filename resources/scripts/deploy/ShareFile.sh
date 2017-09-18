@@ -1,5 +1,7 @@
 # Create shared files
 
+echo -e "Create shared file from {{ source_file }} to {{ target_file }}"
+
 if [ -f {{ target_file }} ]; then
     if [ ! -f {{ source_file }} ]; then
         cp -pRn {{ target_file }} {{ source_file }}

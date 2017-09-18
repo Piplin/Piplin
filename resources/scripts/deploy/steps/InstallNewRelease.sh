@@ -1,7 +1,5 @@
 # Install new release
 
-echo -e "Install new release"
-
-echo -e "Write configuration file to release dir and symlink shared files...\n"
+echo -e "Install new release {{ release_path }}"
 
 cd {{ release_path }}

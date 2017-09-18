@@ -1,5 +1,7 @@
 # Cleanup failed releases
 
+echo -e "Cleanup failed releases"
+
 cd {{ project_path }}
 
 # Remove the archive
