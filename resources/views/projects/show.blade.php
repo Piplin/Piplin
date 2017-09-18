@@ -63,6 +63,7 @@
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
                     <li {!! $tab != 'servers' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'servers']) }}"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
+                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
                     <li {!! $tab != 'files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li {!! $tab != 'notifications' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'notifications']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
                 </ul>
@@ -77,9 +78,11 @@
                         @include('projects._partials.commands')
                         @include('projects._partials.variables')
                     </div>
+                    <div class="tab-pane {!! $tab != 'config-files' ?: 'active' !!}" id="config-files">
+                        @include('projects._partials.config_files')
+                    </div>
                     <div class="tab-pane {!! $tab != 'files' ?: 'active' !!}" id="files">
                         @include('projects._partials.shared_files')
-                        @include('projects._partials.config_files')
                     </div>
                     <div class="tab-pane {!! $tab != 'notifications' ?: 'active' !!}" id="notifications">
                         @include('projects._partials.notifications')
