@@ -54,7 +54,7 @@ class ServerController extends Controller
         }
 
         $fields['order'] = $order;
-        $fields['output'] = NULL;
+        $fields['output'] = null;
 
         $add_commands = false;
         if (isset($fields['add_commands'])) {
