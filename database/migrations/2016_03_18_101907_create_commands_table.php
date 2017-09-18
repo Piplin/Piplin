@@ -35,6 +35,8 @@ class CreateCommandsTable extends Migration
             $table->boolean('default_on')->default(false);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['targetable_id', 'targetable_type']);
         });
     }
 

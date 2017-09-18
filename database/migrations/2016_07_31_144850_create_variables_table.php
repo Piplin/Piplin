@@ -29,6 +29,8 @@ class CreateVariablesTable extends Migration
             $table->string('targetable_type');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['targetable_id', 'targetable_type']);
         });
     }
 

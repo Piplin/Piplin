@@ -28,7 +28,7 @@ class DeployTemplate extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $visible = ['id', 'name', 'command_count', 'file_count', 'config_count', 'variable_count'];
+    protected $visible = ['id', 'name', 'command_count', 'file_count', 'config_count', 'variable_count', 'environment_count'];
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +42,7 @@ class DeployTemplate extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $appends = ['command_count', 'file_count', 'config_count', 'variable_count'];
+    protected $appends = ['command_count', 'file_count', 'config_count', 'variable_count', 'environment_count'];
 
     /**
      * The attributes that should be casted to native types.
@@ -94,6 +94,17 @@ class DeployTemplate extends Model implements HasPresenter
     public function getVariableCountAttribute()
     {
         return $this->variables()
+                    ->count();
+    }
+
+    /**
+     * Define a accessor for the count of env environments.
+     *
+     * @return int
+     */
+    public function getEnvironmentCountAttribute()
+    {
+        return $this->environments()
                     ->count();
     }
 

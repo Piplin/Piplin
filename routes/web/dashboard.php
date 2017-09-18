@@ -111,6 +111,7 @@ Route::group([
             ], function () use ($actions) {
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
+                Route::resource('environments', 'EnvironmentController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('notify-slack', 'NotifySlackController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);

@@ -51,6 +51,7 @@ class ProjectController extends Controller
             'sharedFiles'     => $project->sharedFiles,
             'configFiles'     => $project->configFiles,
             'variables'       => $project->variables,
+            'environments'    => $project->environments,
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => $project->id,
             'optional'        => $optional,

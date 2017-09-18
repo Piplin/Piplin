@@ -12,6 +12,7 @@
 namespace Fixhub\Models\Traits;
 
 use Fixhub\Models\Command;
+use Fixhub\Models\Environment;
 use Fixhub\Models\Variable;
 use Fixhub\Models\SharedFile;
 use Fixhub\Models\ConfigFile;
@@ -59,5 +60,15 @@ trait SetupRelations
     public function variables()
     {
         return $this->morphMany(Variable::class, 'targetable');
+    }
+
+    /**
+     * Has many relationship.
+     *
+     * @return Environment
+     */
+    public function environments()
+    {
+        return $this->morphMany(Environment::class, 'targetable');
     }
 }
