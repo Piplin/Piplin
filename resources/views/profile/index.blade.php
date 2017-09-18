@@ -12,13 +12,16 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="name" value="{{$current_user->name}}" />
                     <div class="form-group">
+                        <label for="uid">ID</label>
+                        <p class="form-control bg-gray">{{ $current_user->id }}</p>
+                    </div>
+                    <div class="form-group">
                         <label for="name">{{ trans('users.name') }}</label>
                         <p class="form-control bg-gray">{{ $current_user->name }}</p>
                     </div>
-
-                        <div class="form-group">
-                        <label for="email">{{ trans('users.email') }}</label>
-                        <p class="form-control bg-gray">{{ $current_user->email }}</p>
+                    <div class="form-group">
+                        <label for="role">{{ trans('users.role') }}</label>
+                        <p class="form-control bg-gray">{{ $current_user->role_name }}</p>
                     </div>
 
                     <div class="form-group">
@@ -168,6 +171,10 @@
                 <h3 class="box-title">{{ trans('users.change_email') }}</h3>
             </div>
             <div class="box-body">
+                <div class="form-group">
+                    <label for="email">{{ trans('users.email') }}</label>
+                    <p class="form-control bg-gray">{{ $current_user->email }}</p>
+                </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-danger btn-flat" id="request-change-email">{{ trans('users.request_confirm') }}</button>
                     <span class="help-block hide">{{ trans('users.email_sent') }}</span>
