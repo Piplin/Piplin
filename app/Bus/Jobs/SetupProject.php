@@ -23,7 +23,14 @@ use Fixhub\Models\Variable;
  */
 class SetupProject extends Job
 {
+    /**
+    * @var Project
+    */
     private $project;
+
+    /**
+    * @var Template
+    */
     private $template;
 
     /**

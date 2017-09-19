@@ -25,6 +25,14 @@ class UpdateGitReferences extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /**
+    * @var int
+    */
+    public $timeout = 0;
+
+    /**
+    * @var Project
+    */
     private $project;
 
     /**

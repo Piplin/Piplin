@@ -24,7 +24,15 @@ class TestServerConnection extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    public $server;
+    /**
+    * @var Deployment
+    */
+    public $timeout = 0;
+
+    /**
+    * @var Server
+    */
+    private $server;
 
     /**
      * Create a new command instance.
