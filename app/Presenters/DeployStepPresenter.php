@@ -56,7 +56,7 @@ class DeployStepPresenter extends BasePresenter
         foreach ($colors as $step => $color) {
             if ($this->wrappedObject->stage == $step) {
                 return $color;
-            } else if (abs($this->wrappedObject->stage - $step) == 1) {
+            } elseif (abs($this->wrappedObject->stage - $step) == 1) {
                 return color_darken($color, 0.5);
             }
         }
