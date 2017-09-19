@@ -11,8 +11,8 @@
 
 namespace Fixhub\Composers;
 
-use Fixhub\Models\Key;
 use Fixhub\Models\Project;
+use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\User;
 use Illuminate\Contracts\View\View;
@@ -32,7 +32,7 @@ class DashboardComposer
     {
         $view->with('project_count', Project::count());
         $view->with('template_count', DeployTemplate::count());
-        $view->with('key_count', Key::count());
+        $view->with('group_count', ProjectGroup::count());
         $view->with('user_count', User::count());
     }
 }

@@ -34,8 +34,8 @@
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-browsers-outline"></i></div>
                                     <select id="project_group_id" name="group_id" class="form-control">
-                                        @foreach($groups as $group)
-                                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        @foreach($groups as $item)
+                                            <option value="{{ $item->id }}" {!! isset($group) && $group->id == $item->id ? 'selected="selected"' : NULL !!}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>
