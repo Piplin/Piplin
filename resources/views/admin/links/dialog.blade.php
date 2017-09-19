@@ -15,11 +15,17 @@
 
                     <div class="form-group">
                         <label for="link_title">{{ trans('links.title') }}</label>
-                        <input type="text" class="form-control" name="title" id="link_title" placeholder="{{ trans('links.title') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="title" id="link_title" placeholder="{{ trans('links.title') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="link_url">{{ trans('links.url') }}</label>
-                        <input type="text" class="form-control" name="url" id="link_url" placeholder="{{ trans('links.url') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-android-open"></i></div>
+                            <input type="text" class="form-control" name="url" id="link_url" placeholder="{{ trans('links.url') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>{{ trans('links.description') }}</label>

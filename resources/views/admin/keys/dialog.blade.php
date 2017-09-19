@@ -15,7 +15,10 @@
 
                     <div class="form-group">
                         <label for="key_name">{{ trans('keys.name') }}</label>
-                        <input type="text" class="form-control" name="name" id="key_name" placeholder="{{ trans('keys.name') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="name" id="key_name" placeholder="{{ trans('keys.name') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>{{ trans('keys.private_ssh_key') }}</label>
