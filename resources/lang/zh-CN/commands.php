@@ -58,7 +58,7 @@ return [
     'none'                 => '还没有配置安装命令',
     'optional'             => '可选',
     'example'              => '例如:',
-    'optional_description' => '上线时该步骤是否需要被提示包含',
+    'optional_description' => '是否为可选步骤',
     'default_description'  => '包含该步骤，除非显式禁止 (例如: 复选框默认被选中)',
     'services'             => 'Fixhub支持的服务',
     'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .

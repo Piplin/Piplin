@@ -54,7 +54,9 @@
                     <div class="form-group">
                         <label for="command_servers">{{ trans('commands.servers') }}</label>
                         <ul class="list-unstyled">
-                            @foreach ($project->servers as $server)
+                            @foreach ($project->environments as $environment)
+                            {{ $environment->name }}
+                            @foreach($environment->servers as $server)
                             <li>
                                 <div class="checkbox">
                                     <label for="command_server_{{ $server->id }}">
@@ -62,6 +64,7 @@
                                     </label>
                                 </div>
                             </li>
+                            @endforeach
                             @endforeach
                         </ul>
                     </div>
