@@ -43,8 +43,9 @@ class ProjectGroupController extends Controller
     /**
      * Show the group details.
      *
-     * @param int $template_id
+     * @param int $group_id
      * @param string $tab
+     *
      * @return Response
      */
     public function show($group_id, $tab = '')
