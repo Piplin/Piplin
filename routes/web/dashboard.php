@@ -33,6 +33,12 @@ Route::group([
             'uses' => 'CommandController@index',
         ]);
 
+        Route::get('projects/{id}/environments/{environment_id}', [
+            'as'   => 'environments.index',
+            'uses' => 'EnvironmentController@index',
+        ]);
+
+
         Route::post('servers/reorder', [
             'as'    => 'servers.reorder',
             'uses'  => 'ServerController@reorder',

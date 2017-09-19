@@ -15,6 +15,7 @@ return [
     'create'      => 'Add a new environment',
     'edit'        => 'Edit the environment',
     'name'        => 'Environment',
+    'servers'     => 'Servers',
     'description' => 'Description',
     'warning'     => 'The variable could not be saved, please check the form below.',
     'example'     => 'e.g. Staging, QA, or Production',

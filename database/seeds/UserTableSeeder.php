@@ -21,10 +21,11 @@ class UserTableSeeder extends Seeder
         $faker = Faker\Factory::create('en_GB');
 
         User::create([
-            'name'           => 'demo',
-            'email'          => 'demo@fixhub.org',
-            'nickname'       => 'Demo',
-            'password'       => 'demo',
+            'name'           => 'fixhub',
+            'email'          => 'fixhub@fixhub.org',
+            'nickname'       => 'Fixhub',
+            'password'       => 'fixhub',
+            'level'          => 1,
             'remember_token' => str_random(10),
         ]);
 

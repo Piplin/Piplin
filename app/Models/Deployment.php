@@ -44,7 +44,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['reason', 'branch', 'project_id', 'source', 'build_url',
+    protected $fillable = ['reason', 'branch', 'project_id', 'environment_id', 'source', 'build_url',
                            'commit', 'committer_email', 'committer', ];
 
     /**
@@ -75,11 +75,12 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
-        'project_id' => 'integer',
-        'user_id'    => 'integer',
-        'status'     => 'integer',
-        'is_webhook' => 'boolean',
+        'id'             => 'integer',
+        'project_id'     => 'integer',
+        'environment_id' => 'integer',
+        'user_id'        => 'integer',
+        'status'         => 'integer',
+        'is_webhook'     => 'boolean',
     ];
 
     /**
@@ -105,6 +106,17 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     {
         return $this->belongsTo(Project::class);
     }
+
+    /**
+     * Belongs to relationship.
+     *
+     * @return Project
+     */
+    public function environment()
+    {
+        return $this->belongsTo(Environment::class);
+    }
+
 
     /**
      * Belongs to relationship.

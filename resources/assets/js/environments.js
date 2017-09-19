@@ -74,7 +74,7 @@ var app = app || {};
 
         environment.save({
             name:            $('#environment_name').val(),
-            description:           $('#environment_description').val(),
+            description:     $('#environment_description').val(),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val()
         }, {

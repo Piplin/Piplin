@@ -91,10 +91,11 @@ class ProjectController extends Controller
         }
 
         $data = [
-            'reason'     => $request->get('reason'),
-            'project_id' => $project->id,
-            'branch'     => $project->branch,
-            'optional'   => [],
+            'reason'         => $request->get('reason'),
+            'project_id'     => $project->id,
+            'environment_id' => $request->get('environment_id'),
+            'branch'         => $project->branch,
+            'optional'       => [],
         ];
 
         // If allow other branches is set, check for post data

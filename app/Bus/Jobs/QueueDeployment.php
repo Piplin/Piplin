@@ -29,6 +29,7 @@ class QueueDeployment extends Job
     use DispatchesJobs;
 
     private $project;
+    private $environment;
     private $deployment;
     private $optional;
 
@@ -42,9 +43,10 @@ class QueueDeployment extends Job
      */
     public function __construct(Deployment $deployment, array $optional = [])
     {
-        $this->project    = $deployment->project;
-        $this->deployment = $deployment;
-        $this->optional   = $optional;
+        $this->project     = $deployment->project;
+        $this->environment = $deployment->environment;
+        $this->deployment  = $deployment;
+        $this->optional    = $optional;
     }
 
     /**
@@ -190,7 +192,7 @@ class QueueDeployment extends Job
             'deployment_id' => $this->deployment->id,
         ]);
 
-        foreach ($this->project->servers as $server) {
+        foreach ($this->environment->servers as $server) {
             // If command is null it is preparing one of the 4 default steps so
             // skip servers which shouldn't have the code deployed
             if (!$server->deploy_code) {

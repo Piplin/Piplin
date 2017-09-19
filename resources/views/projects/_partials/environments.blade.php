@@ -5,16 +5,13 @@
         </div>
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>
-    <div class="box-body">
-        <p>{!! trans('environments.description') !!}</p>
-        <p>{!! trans('environments.example') !!}</p>
-    </div>
 
     <div class="box-body table-responsive" id="environment_list">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>{{ trans('environments.name') }}</th>
+                    <th>{{ trans('environments.servers') }}</th>
                     <th>{{ trans('environments.description') }}</th>
                     <th>&nbsp;</th>
                 </tr>
@@ -28,7 +25,14 @@
 
 @push('templates')
     <script type="text/template" id="environment-template">
-        <td data-environment-id="<%- id %>"><%- name %></td>
+        <td data-environment-id="<%- id %>">
+        @if (Route::currentRouteName() == 'projects')
+        <a href="/projects/{{ $project->id }}/environments/<%- id %>"><%- name %></a>
+        @else
+        <%- name %>
+        @endif
+        </td>
+        <td><%- server_count %></td>
         <td><%- description %></td>
         <td>
             <div class="btn-group pull-right">

@@ -13,7 +13,17 @@
                     <div class="callout callout-danger">
                         <i class="icon ion ion-alert"></i> {{ trans('servers.warning') }}
                     </div>
-
+                    <div class="form-group">
+                        <label for="server_environment_id">{{ trans('servers.environment') }}</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-cube"></i></div>
+                            <select id="server_environment_id" name="environment_id" class="form-control">
+                                @foreach($environments as $each)
+                                    <option value="{{ $each->id }}" {{ isset($environment) && $environment->id == $each->id ? 'selected="true"' : NULL }}>{{ $each->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="server_name">{{ trans('servers.name') }}</label>
                         <input type="text" class="form-control" id="server_name" name="name" placeholder="{{ trans('servers.web') }}" />

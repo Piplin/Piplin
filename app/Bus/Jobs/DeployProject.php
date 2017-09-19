@@ -39,6 +39,7 @@ class DeployProject extends Job implements ShouldQueue
 
     private $deployment;
     private $project;
+    private $environment;
     private $private_key;
     private $cache_key;
     private $release_archive;
@@ -52,6 +53,7 @@ class DeployProject extends Job implements ShouldQueue
     {
         $this->deployment = $deployment;
         $this->project = $deployment->project;
+        $this->environment = $deployment->environment;
         $this->cache_key  = AbortDeployment::CACHE_KEY_PREFIX . $deployment->id;
     }
 
@@ -199,7 +201,7 @@ class DeployProject extends Job implements ShouldQueue
      */
     private function cleanupDeployment()
     {
-        foreach ($this->deployment->project->servers as $server) {
+        foreach ($this->deployment->environment->servers as $server) {
             if (!$server->deploy_code) {
                 continue;
             }

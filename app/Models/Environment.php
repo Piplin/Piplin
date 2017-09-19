@@ -45,4 +45,31 @@ class Environment extends Model
     protected $casts = [
         'id'         => 'integer',
     ];
+
+    /**
+     * Additional attributes to include in the JSON representation.
+     *
+     * @var array
+     */
+    protected $appends = ['server_count'];
+
+    /**
+     * Has many relationship.
+     *
+     * @return Project
+     */
+    public function servers()
+    {
+        return $this->hasMany(Server::class, 'environment_id', 'id');
+    }
+
+    /**
+     * Define a accessor for the count of projects.
+     *
+     * @return int
+     */
+    public function getServerCountAttribute()
+    {
+        return $this->servers->count();
+    }
 }

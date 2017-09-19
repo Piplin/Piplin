@@ -180,6 +180,8 @@ class DeploymentController extends Controller
      */
     private function createDeployment(array $fields)
     {
+        //Default environment -- fix me
+
         $optional = [];
         if (array_key_exists('optional', $fields)) {
             $optional = $fields['optional'];

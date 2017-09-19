@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-social-usd"></i> <span>{{ trans('environments.create') }}</span></h4>
+                <h4 class="modal-title"><i class="ion ion-plus"></i> <span>{{ trans('environments.create') }}</span></h4>
             </div>
             <form role="form">
                 <input type="hidden" id="environment_id" name="id" />
