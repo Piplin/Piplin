@@ -70,7 +70,7 @@ var app = app || {};
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_group_id').val($("#project_group_id option:first").val());
+            $('#project_group_id').val($("#project_group_id option:selected").val());
             $('#project_key_id').val($("#project_key_id option:first").val());
             $('#project_builds_to_keep').val(10);
             $('#project_url').val('');

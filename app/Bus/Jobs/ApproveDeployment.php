@@ -28,7 +28,14 @@ class ApproveDeployment extends Job
 {
     use DispatchesJobs;
 
+    /**
+    * @var Deployment
+    */
     private $deployment;
+
+    /**
+    * @var array
+    */
     private $optional;
 
     /**

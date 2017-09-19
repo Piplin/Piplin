@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Cache;
  */
 class AbortDeployment extends Job
 {
+    /**
+    * @var Deployment
+    */
     private $deployment;
 
     const CACHE_KEY_PREFIX = 'fixhub:cancel-deploy:';

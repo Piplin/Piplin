@@ -26,18 +26,6 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     /**
-     * Shows the create project view.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create(Request $request)
-    {
-        return $this->index($request)->withAction('create');
-    }
-
-    /**
      * Shows all projects.
      *
      * @param \Illuminate\Http\Request $request
@@ -67,6 +55,18 @@ class ProjectController extends Controller
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
         ]);
+    }
+
+    /**
+     * Shows the create project view.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create(Request $request)
+    {
+        return $this->index($request)->withAction('create');
     }
 
     /**

@@ -18,11 +18,17 @@
 
                     <div class="form-group">
                         <label for="command_name">{{ trans('commands.name') }}</label>
-                        <input type="text" class="form-control" name="name" id="command_name" placeholder="{{ trans('commands.migrations') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="name" id="command_name" placeholder="{{ trans('commands.migrations') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="command_user">{{ trans('commands.run_as') }}</label>
-                        <input type="text" class="form-control" name="user" id="command_user" placeholder="{{ trans('commands.default') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-person"></i></div>
+                            <input type="text" class="form-control" name="user" id="command_user" placeholder="{{ trans('commands.default') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="command_script">{{ trans('commands.bash') }}</label>

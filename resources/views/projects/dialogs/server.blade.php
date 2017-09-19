@@ -26,24 +26,39 @@
                     </div>
                     <div class="form-group">
                         <label for="server_name">{{ trans('servers.name') }}</label>
-                        <input type="text" class="form-control" id="server_name" name="name" placeholder="{{ trans('servers.web') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" id="server_name" name="name" placeholder="{{ trans('servers.web') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="server_user">{{ trans('servers.connect_as') }}</label>
-                        <input type="text" class="form-control" id="server_user" name="user" placeholder="deploy" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-person"></i></div>
+                            <input type="text" class="form-control" id="server_user" name="user" placeholder="deploy" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="server_address">{{ trans('servers.ip_address') }}</label>
-                        <input type="text" class="form-control" id="server_address" name="ip_address" placeholder="192.168.0.1" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-monitor"></i></div>
+                            <input type="text" class="form-control" id="server_address" name="ip_address" placeholder="192.168.0.1" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="server_port">{{ trans('servers.port') }}</label>
-                        <input type="number" class="form-control" id="server_port" name="port" placeholder="22" value="22" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-shuffle"></i></div>
+                            <input type="number" class="form-control" id="server_port" name="port" placeholder="22" value="22" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="server_path">{{ trans('servers.path') }}</label>
                         <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.example') }}"></i>
-                        <input type="text" class="form-control" id="server_path" name="path" placeholder="/var/www/project" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-folder"></i></div>
+                            <input type="text" class="form-control" id="server_path" name="path" placeholder="/var/www/project" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>{{ trans('servers.options') }}</label>

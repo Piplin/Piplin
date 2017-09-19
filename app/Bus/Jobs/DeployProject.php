@@ -37,11 +37,40 @@ class DeployProject extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
+    /**
+    * @var int
+    */
+    public $timeout = 0;
+
+    /**
+    * @var Deployment
+    */
     private $deployment;
+
+    /**
+    * @var Project
+    */
     private $project;
+
+    /**
+    * @var Environment
+    */
     private $environment;
+
+    /**
+    * @var string
+    */
+
     private $private_key;
+
+    /**
+    * @var string
+    */
     private $cache_key;
+
+    /**
+    * @var string
+    */
     private $release_archive;
 
     /**

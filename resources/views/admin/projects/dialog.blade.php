@@ -34,8 +34,8 @@
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-browsers-outline"></i></div>
                                     <select id="project_group_id" name="group_id" class="form-control">
-                                        @foreach($groups as $group)
-                                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        @foreach($groups as $item)
+                                            <option value="{{ $item->id }}" {!! isset($group) && $group->id == $item->id ? 'selected="selected"' : NULL !!}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>
@@ -74,7 +74,7 @@
 
                             <div class="tab-pane" id="project_repo">
                                 <div class="form-group">
-                                    <label for="project_repository">{{ trans('projects.repository_url') }}</label>
+                                    <label for="project_repository">{{ trans('projects.repository_path') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-soup-can-outline"></i></div>
                                     <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />

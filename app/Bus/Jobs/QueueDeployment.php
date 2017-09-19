@@ -28,9 +28,24 @@ class QueueDeployment extends Job
 {
     use DispatchesJobs;
 
+    /**
+    * @var Project
+    */
     private $project;
+
+    /**
+    * @var Environment
+    */
     private $environment;
+
+    /**
+    * @var Deployment
+    */
     private $deployment;
+
+    /**
+    * @var array
+    */
     private $optional;
 
     /**

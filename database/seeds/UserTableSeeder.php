@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder
             'email'          => 'fixhub@fixhub.org',
             'nickname'       => 'Fixhub',
             'password'       => 'fixhub',
-            'level'          => 1,
+            'level'          => User::LEVEL_ADMIN,
             'remember_token' => str_random(10),
         ]);
 
