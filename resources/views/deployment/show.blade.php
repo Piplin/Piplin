@@ -26,9 +26,9 @@
 
         @foreach($deployment->steps as $index => $step)
         <div class="col-xs-12">
-            <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
+            <div class="box deploy-step" style="border-top-color: {{  $step->header_color  }}">
                 <div class="box-header">
-                    <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span></h3>
+                    <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> {{ $step->icon }}</i></h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-hover">

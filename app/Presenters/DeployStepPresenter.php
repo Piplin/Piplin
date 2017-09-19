@@ -38,4 +38,29 @@ class DeployStepPresenter extends BasePresenter
 
         return trans('commands.clone');
     }
+
+    /**
+     * Gets the deployment stage color.
+     *
+     * @return string
+     */
+    public function header_color()
+    {
+        $colors = [
+            Command::DO_CLONE    => '#2979ac',
+            Command::DO_INSTALL  => '#c5a113',
+            Command::DO_ACTIVATE => '#64a81a',
+            Command::DO_PURGE    => '#394BA0',
+        ];
+
+        foreach ($colors as $step => $color) {
+            if ($this->wrappedObject->stage == $step) {
+                return $color;
+            } else if (abs($this->wrappedObject->stage - $step) == 1) {
+                return color_darken($color, 0.5);
+            }
+        }
+
+        return '';
+    }
 }
