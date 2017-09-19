@@ -17,12 +17,18 @@
 
                     <div class="form-group">
                         <label for="name">{{ trans('sharedFiles.name') }}</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('sharedFiles.cache') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('sharedFiles.cache') }}" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="file">{{ trans('sharedFiles.file') }}</label>
                         <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('sharedFiles.example') }}"></i>
-                        <input type="text" class="form-control" id="file" name="file" placeholder="storage/" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-folder"></i></div>
+                            <input type="text" class="form-control" id="file" name="file" placeholder="storage/" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

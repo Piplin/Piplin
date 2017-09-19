@@ -15,7 +15,10 @@
 
                     <div class="form-group">
                         <label for="group_name">{{ trans('groups.name') }}</label>
-                        <input type="text" class="form-control" name="name" id="group_name" placeholder="{{ trans('groups.projects') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="name" id="group_name" placeholder="{{ trans('groups.name') }}" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

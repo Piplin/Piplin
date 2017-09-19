@@ -15,7 +15,10 @@
 
                     <div class="form-group">
                         <label for="template_name">{{ trans('templates.name') }}</label>
-                        <input type="text" class="form-control" name="name" id="template_name" placeholder="{{ trans('templates.example') }}" />
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="name" id="template_name" placeholder="{{ trans('templates.example') }}" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

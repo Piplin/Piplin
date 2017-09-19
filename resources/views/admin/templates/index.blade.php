@@ -55,7 +55,6 @@
         <td><%- config_count %></td>
         <td>
             <div class="btn-group pull-right">
-                <a href="/admin/templates/<%- id %>" class="btn btn-default" title="{{ trans('commands.configure') }}"><i class="ion ion-ios-gear"></i></a>
                 <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#template"><i class="ion ion-compose"></i></button>
                 <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
             </div>

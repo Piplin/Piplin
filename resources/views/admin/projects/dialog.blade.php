@@ -74,7 +74,7 @@
 
                             <div class="tab-pane" id="project_repo">
                                 <div class="form-group">
-                                    <label for="project_repository">{{ trans('projects.repository_url') }}</label>
+                                    <label for="project_repository">{{ trans('projects.repository_path') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-soup-can-outline"></i></div>
                                     <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />
