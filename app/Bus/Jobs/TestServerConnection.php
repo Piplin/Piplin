@@ -32,7 +32,7 @@ class TestServerConnection extends Job implements ShouldQueue
     /**
     * @var Server
     */
-    private $server;
+    public $server;
 
     /**
      * Create a new command instance.
