@@ -88,7 +88,7 @@ return [
     */
 
     'failed' => [
-        'database' => env('DB_TYPE', 'sqlite'),
+        'database' => env('DB_CONNECTION', 'mysql'),
         'table'    => 'failed_jobs',
      ],
 ];

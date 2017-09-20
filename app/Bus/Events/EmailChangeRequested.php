@@ -21,6 +21,9 @@ class EmailChangeRequested extends Event
 {
     use SerializesModels;
 
+    /**
+    * @var User
+    */
     public $user;
 
     /**

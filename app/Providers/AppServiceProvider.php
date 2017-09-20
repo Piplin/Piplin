@@ -27,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
         ],
         'local' => [
             'Clockwork\Support\Laravel\ClockworkServiceProvider',
-            'Themsaid\Langman\LangmanServiceProvider',
         ],
     ];
 
@@ -61,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $env = 'production';
-        if ($this->app->environment('local')) {
+        if ($this->app->environment('local', 'testing')) {
             $env = 'local';
         }
 

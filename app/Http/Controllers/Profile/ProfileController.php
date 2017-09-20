@@ -16,6 +16,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProfileRequest;
 use Fixhub\Http\Requests\StoreUserSettingsRequest;
 use Fixhub\Models\User;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -26,6 +27,9 @@ use PragmaRX\Google2FA\Contracts\Google2FA as Google2FA;
  */
 class ProfileController extends Controller
 {
+    /**
+     * @var Google2fa
+     */
     private $google2fa;
 
     /**
@@ -100,11 +104,13 @@ class ProfileController extends Controller
     /**
      * Send email to change a new email.
      *
-     * @return Response
+     * @param Dispatcher $dispatcher
+     *
+     * @return string
      */
-    public function requestEmail()
+    public function requestEmail(Dispatcher $dispatcher)
     {
-        event(new EmailChangeRequested(Auth::user()));
+        $dispatcher->dispatch(new EmailChangeRequested(Auth::user()));
 
         return 'success';
     }
@@ -118,8 +124,11 @@ class ProfileController extends Controller
      */
     public function email($token)
     {
+        $user = User::where('email_token', $token)->first();
+
         return view('profile.change-email', [
             'token' => $token,
+            'user'  => $user,
         ]);
     }
 

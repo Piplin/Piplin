@@ -22,6 +22,9 @@ class JsonWebTokenExpired extends Login
 {
     use SerializesModels;
 
+    /**
+     * @var User
+     */
     public $user;
 
     /**

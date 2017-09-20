@@ -22,7 +22,6 @@ use Fixhub\Bus\Listeners\Events\NotifyDeploy;
 use Fixhub\Bus\Listeners\Events\SendSignupEmail;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 

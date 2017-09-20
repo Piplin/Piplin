@@ -11,26 +11,26 @@
 
 namespace Fixhub\Bus\Listeners\Events;
 
+use Illuminate\Contracts\Translation\Translator;
 use Fixhub\Bus\Events\EmailChangeRequested;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Message;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
+use Fixhub\Notifications\User\ChangeEmail;
 
 /**
  * Request email change handler.
  */
-class EmailChangeConfirmation extends Event implements ShouldQueue
+class EmailChangeConfirmation
 {
-    use InteractsWithQueue;
     /**
-     * Create the event listener.
-     *
-     * @return void
+     * @var Translator
      */
-    public function __construct()
+    private $translator;
+
+    /**
+     * @param Translator $translator
+     */
+    public function __construct(Translator $translator)
     {
-        //
+        $this->translator = $translator;
     }
 
     /**
@@ -41,22 +41,7 @@ class EmailChangeConfirmation extends Event implements ShouldQueue
      */
     public function handle(EmailChangeRequested $event)
     {
-        $user = $event->user;
-
-        $data = [
-            'email' => $user->email,
-            'name'  => $user->name,
-            'token' => $user->requestEmailToken(),
-        ];
-
-        Mail::queueOn(
-            'fixhub-low',
-            'emails.change_email',
-            $data,
-            function (Message $message) use ($user) {
-                $message->to($user->email, $user->name)
-                        ->subject(trans('emails.confirm_email'));
-            }
-        );
+        $token = $event->user->requestEmailToken();
+        $event->user->notify(new ChangeEmail($token, $this->translator));
     }
 }
