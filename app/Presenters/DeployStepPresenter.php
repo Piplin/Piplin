@@ -40,27 +40,27 @@ class DeployStepPresenter extends BasePresenter
     }
 
     /**
-     * Gets the deployment stage color.
+     * Gets the deployment stage icon.
      *
      * @return string
      */
-    public function header_color()
+    public function icon()
     {
-        $colors = [
-            Command::DO_CLONE    => '#2979ac',
-            Command::DO_INSTALL  => '#c5a113',
-            Command::DO_ACTIVATE => '#64a81a',
-            Command::DO_PURGE    => '#394BA0',
+        $steps = [
+            Command::DO_CLONE,
+            Command::DO_INSTALL,
+            Command::DO_ACTIVATE,
+            Command::DO_PURGE,
         ];
 
-        foreach ($colors as $step => $color) {
-            if ($this->wrappedObject->stage == $step) {
-                return $color;
-            } elseif (abs($this->wrappedObject->stage - $step) == 1) {
-                return color_darken($color, 0.5);
+        foreach ($steps as $step) {
+            if ($this->wrappedObject->stage - $step == 1) {
+                return 'ion-arrow-up-c text-yellow'; // post
+            } else if($this->wrappedObject->stage - $step == -1) {
+                return 'ion-arrow-down-c text-muted'; // pre
             }
         }
 
-        return '';
+        return 'ion-arrow-right-c text-aqua';
     }
 }
