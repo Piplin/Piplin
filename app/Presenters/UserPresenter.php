@@ -13,6 +13,7 @@ namespace Fixhub\Presenters;
 
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Creativeorange\Gravatar\Gravatar;
+
 /**
  * The view presenter for a user class.
  */
