@@ -56,7 +56,7 @@ class DeployStepPresenter extends BasePresenter
         foreach ($steps as $step) {
             if ($this->wrappedObject->stage - $step == 1) {
                 return 'ion-arrow-up-c text-yellow'; // post
-            } else if($this->wrappedObject->stage - $step == -1) {
+            } elseif ($this->wrappedObject->stage - $step == -1) {
                 return 'ion-arrow-down-c text-muted'; // pre
             }
         }
