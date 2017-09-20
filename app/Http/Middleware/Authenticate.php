@@ -60,7 +60,7 @@ class Authenticate
             if ($request->ajax()) {
                 return $this->response->make('Unauthorized.', Response::HTTP_UNAUTHORIZED);
             }
-            return $this->redirector->guest('login');
+            return $this->redirector->guest('auth/login');
         }
         return $next($request);
     }
