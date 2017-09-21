@@ -40,6 +40,7 @@ class UserPresenter extends BasePresenter
         if ($this->getWrappedObject()->avatar) {
             return url($this->getWrappedObject()->avatar);
         }
-        return $this->gravatar->get($this->getWrappedObject()->email);
+
+        return config('fixhub.gravatar') ? $this->gravatar->get($this->getWrappedObject()->email) : '/img/avatar.png';
     }
 }
