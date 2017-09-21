@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners\Events;
+namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Jobs\MailDeployNotification;
@@ -21,7 +21,7 @@ use Illuminate\Queue\InteractsWithQueue;
 /**
  * When a deploy finished, notify the followed user.
  */
-class NotifyDeploy extends Event implements ShouldQueue
+class NotifyDeploy implements ShouldQueue
 {
     use InteractsWithQueue, DispatchesJobs;
 

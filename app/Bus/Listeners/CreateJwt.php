@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners\Events;
+namespace Fixhub\Bus\Listeners;
 
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Login;
@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Session;
 use Tymon\JWTAuth\JWTAuth;
 
 /**
- * Event listener class to create JWT on login.
+ * Listener class to create JWT on login.
  */
-class CreateJwt extends Event
+class CreateJwt
 {
     /**
      * @var JWTAuth

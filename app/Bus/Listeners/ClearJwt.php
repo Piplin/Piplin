@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners\Events;
+namespace Fixhub\Bus\Listeners;
 
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Session;
 
 /**
- * Event listener class to remove the JWT on logout.
+ * Listener class to remove the JWT on logout.
  */
-class ClearJwt extends Event
+class ClearJwt
 {
     /**
      * Create the event listener.

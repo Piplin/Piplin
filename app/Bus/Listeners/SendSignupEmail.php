@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners\Events;
+namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\UserWasCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Mail;
 /**
  * Sends an email when the user has been created.
  */
-class SendSignupEmail extends Event implements ShouldQueue
+class SendSignupEmail implements ShouldQueue
 {
     use InteractsWithQueue;
 

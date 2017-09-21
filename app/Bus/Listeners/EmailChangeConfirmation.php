@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners\Events;
+namespace Fixhub\Bus\Listeners;
 
 use Illuminate\Contracts\Translation\Translator;
 use Fixhub\Bus\Events\EmailChangeRequested;
