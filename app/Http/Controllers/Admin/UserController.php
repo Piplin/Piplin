@@ -30,6 +30,7 @@ class UserController extends Controller
     {
         $users = User::orderBy('id', 'desc')
                     ->paginate(config('fixhub.items_per_page', 10));
+
         return view('admin.users.index', [
             'title'     => trans('users.manage'),
             'users_raw' => $users,

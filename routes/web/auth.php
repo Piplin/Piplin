@@ -16,10 +16,6 @@ Route::group([
     'prefix'     => 'auth',
 ], function () {
 
-    // OAuth 2.0 provider
-    Route::get('{provider}', 'AuthController@provider');
-    Route::get('{provider}/callback', 'AuthController@callback');
-
     Route::get('login', [
             'middleware' => 'guest',
             'as'         => 'login',
@@ -63,4 +59,8 @@ Route::group([
             'as'         => 'logout',
             'uses'       => 'AuthController@logout',
         ]);
+
+    // OAuth 2.0 provider
+    Route::get('provider/{provider}', 'AuthController@provider');
+    Route::get('provider/{provider}/callback', 'AuthController@callback');
 });

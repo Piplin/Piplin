@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners;
+namespace Fixhub\Bus\Observers;
 
 use Illuminate\Contracts\Translation\Translator;
-use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Notifications\User\ChangeEmail;
+use Fixhub\Models\NotifySlack;
+use Fixhub\Bus\Notifications\System\SystemTestNotification;
 
 /**
- * Request email change handler.
+ * Event observer for NotifySlack model.
  */
-class EmailChangeConfirmation
+class NotifySlackObserver
 {
     /**
      * @var Translator
@@ -34,14 +34,12 @@ class EmailChangeConfirmation
     }
 
     /**
-     * Handle the event.
+     * Called when the model is saved.
      *
-     * @param  EmailChangeRequested $event
-     * @return void
+     * @param NotifySlack $notify_slack
      */
-    public function handle(EmailChangeRequested $event)
+    public function saved(NotifySlack $notify_slack)
     {
-        $token = $event->user->requestEmailToken();
-        $event->user->notify(new ChangeEmail($token, $this->translator));
+        $notify_slack->notify(new SystemTestNotification($this->translator));
     }
 }

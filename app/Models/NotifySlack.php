@@ -11,18 +11,17 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Jobs\NotifySlackJob;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Slack notification model.
  */
 class NotifySlack extends Model
 {
-    use SoftDeletes, DispatchesJobs, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,32 +56,5 @@ class NotifySlack extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
-    }
-
-    /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // When the notification has been saved queue a test
-        static::saved(function (NotifySlack $model) {
-            $model->dispatch(new NotifySlackJob($model, $model->testPayload()));
-        });
-    }
-
-    /**
-     * Generates a test payload for Slack.
-     *
-     * @return array
-     */
-    public function testPayload()
-    {
-        return [
-            'text' => trans('notifySlacks.test_message'),
-        ];
     }
 }
