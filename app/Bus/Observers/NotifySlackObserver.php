@@ -12,14 +12,18 @@
 namespace Fixhub\Bus\Observers;
 
 use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Fixhub\Models\NotifySlack;
-use Fixhub\Bus\Notifications\System\SystemTestNotification;
+use Fixhub\Bus\Jobs\NotifySlackJob;
+use Fixhub\Bus\Notifications\SystemTestNotification;
 
 /**
  * Event observer for NotifySlack model.
  */
 class NotifySlackObserver
 {
+    use DispatchesJobs;
+
     /**
      * @var Translator
      */
@@ -36,10 +40,14 @@ class NotifySlackObserver
     /**
      * Called when the model is saved.
      *
-     * @param NotifySlack $notify_slack
+     * @param NotifySlack $notification
      */
-    public function saved(NotifySlack $notify_slack)
+    public function saved(NotifySlack $notification)
     {
-        $notify_slack->notify(new SystemTestNotification($this->translator));
+        // please fix me
+        //$notification->notify(new SystemTestNotification($this->translator));
+        $this->dispatch(new NotifySlackJob($notification, [
+            'text' => trans('notifySlacks.test_message'),
+        ]));
     }
 }

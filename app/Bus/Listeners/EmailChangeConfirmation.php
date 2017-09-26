@@ -13,7 +13,7 @@ namespace Fixhub\Bus\Listeners;
 
 use Illuminate\Contracts\Translation\Translator;
 use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Notifications\User\ChangeEmail;
+use Fixhub\Bus\Notifications\ChangeEmail;
 
 /**
  * Request email change handler.

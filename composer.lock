@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8e9b30cc4f5ce6f2688a84a0ff95b357",
-    "content-hash": "31775db02ed620547be08f512c0ebc7a",
+    "hash": "af8381b808c61045e928d1ced6581398",
+    "content-hash": "d6bbd4849b0150daca8a02a8f4f5c093",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1043,81 +1043,6 @@
             "time": "2017-03-20 17:10:46"
         },
         {
-            "name": "htmlmin/htmlmin",
-            "version": "v5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HTMLMin/Laravel-HTMLMin.git",
-                "reference": "0974daa18f3f917cf7479cf8ec756c170eb67e6a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/HTMLMin/Laravel-HTMLMin/0974daa18f3f917cf7479cf8ec756c170eb67e6a.zip",
-                "reference": "0974daa18f3f917cf7479cf8ec756c170eb67e6a",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "illuminate/filesystem": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "illuminate/http": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "illuminate/routing": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "illuminate/view": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "mrclay/minify": "^2.2",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "graham-campbell/testbench": "^3.1|^4.0",
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.8|^5.0|^6.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "HTMLMin\\HTMLMin\\HTMLMinServiceProvider"
-                    ],
-                    "aliases": {
-                        "HTMLMin": "HTMLMin\\HTMLMin\\Facades\\HTMLMin"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "HTMLMin\\HTMLMin\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                },
-                {
-                    "name": "Raza Mehdi",
-                    "email": "srmk@outlook.com"
-                }
-            ],
-            "description": "HTMLMin Is A Simple HTML Minifier For Laravel 5",
-            "keywords": [
-                "Laravel HTMLMin",
-                "Laravel-HTMLMin",
-                "framework",
-                "html",
-                "html minifier",
-                "htmlmin",
-                "laravel",
-                "minifier"
-            ],
-            "time": "2017-08-25 10:56:24"
-        },
-        {
             "name": "intervention/image",
             "version": "2.4.1",
             "source": {
@@ -1186,61 +1111,6 @@
                 "watermark"
             ],
             "time": "2017-09-21 16:29:17"
-        },
-        {
-            "name": "itsgoingd/clockwork",
-            "version": "v1.14.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/itsgoingd/clockwork.git",
-                "reference": "55ec557cc8cc60944de0eefbe27f905d538a8f70"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/itsgoingd/clockwork/55ec557cc8cc60944de0eefbe27f905d538a8f70.zip",
-                "reference": "55ec557cc8cc60944de0eefbe27f905d538a8f70",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9",
-                "psr/log": "1.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Clockwork\\Support\\Laravel\\ClockworkServiceProvider"
-                    ],
-                    "aliases": {
-                        "Clockwork": "Clockwork\\Support\\Laravel\\Facade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Clockwork\\": "Clockwork/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "itsgoingd",
-                    "email": "itsgoingd@luzer.sk",
-                    "homepage": "http://twitter.com/itsgoingd"
-                }
-            ],
-            "description": "Server-side component of Clockwork, a Chrome extension for PHP development",
-            "homepage": "http://github.com/itsgoingd/clockwork",
-            "keywords": [
-                "debugging",
-                "laravel",
-                "logging",
-                "profiling"
-            ],
-            "time": "2017-09-15 14:50:14"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1877,51 +1747,6 @@
                 "psr-3"
             ],
             "time": "2017-06-19 01:22:40"
-        },
-        {
-            "name": "mrclay/minify",
-            "version": "2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mrclay/minify.git",
-                "reference": "2c83b82bfa894180335f19141794a4de1ccd06e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/mrclay/minify/2c83b82bfa894180335f19141794a4de1ccd06e6.zip",
-                "reference": "2c83b82bfa894180335f19141794a4de1ccd06e6",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.2.1"
-            },
-            "require-dev": {
-                "tubalmartin/cssmin": "~2.4.8"
-            },
-            "suggest": {
-                "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "min/lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Stephen Clay",
-                    "email": "steve@mrclay.org",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
-            "homepage": "http://code.google.com/p/minify/",
-            "time": "2017-06-08 17:49:34"
         },
         {
             "name": "mtdowling/cron-expression",

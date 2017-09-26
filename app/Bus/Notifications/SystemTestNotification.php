@@ -9,22 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Notifications\System;
+namespace Fixhub\Bus\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Translation\Translator;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Fixhub\Models\NotifySlack;
 
 /**
  * This is the system test notification class.
  */
-class SystemTestNotification extends Notification implements ShouldQueue
+class SystemTestNotification extends Notification
 {
-    use Queueable;
-
     /**
      * @var Translator
      */
@@ -39,20 +34,9 @@ class SystemTestNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Get the notification's delivery channels.
-     *
-     * @param  NotifySlack $notification
-     * @return array
-     */
-    public function via(NotifySlack $notification)
-    {
-        return ['slack'];
-    }
-
-    /**
      * Get the slack version of the notification.
      *
-     * @param Channel $notification
+     * @param NotifySlack $notification
      *
      * @return SlackMessage
      */
