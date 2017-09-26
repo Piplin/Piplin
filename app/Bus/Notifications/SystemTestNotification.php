@@ -10,8 +10,7 @@
  */
 
 namespace Fixhub\Bus\Notifications;
-
-use Illuminate\Contracts\Translation\Translator;
+    
 use Illuminate\Notifications\Messages\SlackMessage;
 use Fixhub\Models\NotifySlack;
 
@@ -20,19 +19,6 @@ use Fixhub\Models\NotifySlack;
  */
 class SystemTestNotification extends Notification
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
-    {
-        $this->translator = $translator;
-    }
-
     /**
      * Get the slack version of the notification.
      *
@@ -44,6 +30,6 @@ class SystemTestNotification extends Notification
     {
         return (new SlackMessage())
             ->to($notification->channel)
-            ->content($this->translator->trans('notifySlacks.test_message'));
+            ->content(trans('notifySlacks.test_message'));
     }
 }

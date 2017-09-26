@@ -11,7 +11,6 @@
 
 namespace Fixhub\Bus\Notifications;
 
-use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Notifications\Messages\MailMessage;
 use Fixhub\Models\User;
 
@@ -26,20 +25,13 @@ class ChangeEmail extends Notification
     private $token;
 
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
      * Create a new notification instance.
      *
      * @param string     $token
-     * @param Translator $translator
      */
-    public function __construct($token, Translator $translator)
+    public function __construct($token)
     {
-        $this->token      = $token;
-        $this->translator = $translator;
+        $this->token = $token;
     }
 
     /**
@@ -57,10 +49,10 @@ class ChangeEmail extends Notification
             ->view(['notifications.email', 'notifications.email-plain'], [
                 'name' => $user->name,
             ])
-            ->subject($this->translator->trans('emails.confirm_email'))
-            ->line($this->translator->trans('emails.change_header'))
-            ->line($this->translator->trans('emails.change_below'))
-            ->action($this->translator->trans('emails.login_change'), $action)
-            ->line($this->translator->trans('emails.change_footer'));
+            ->subject(trans('emails.confirm_email'))
+            ->line(trans('emails.change_header'))
+            ->line(trans('emails.change_below'))
+            ->action(trans('emails.login_change'), $action)
+            ->line(trans('emails.change_footer'));
     }
 }

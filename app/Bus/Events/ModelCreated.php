@@ -22,6 +22,7 @@ class ModelCreated extends Event implements ShouldBroadcast
     use SerializesModels;
 
     public $model;
+
     protected $channel;
 
     /**

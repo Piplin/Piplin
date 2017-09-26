@@ -35,9 +35,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $env = 'production';
-        if ($this->app->environment('local', 'testing')) {
-            $env = 'local';
-        }
+        //
     }
 }

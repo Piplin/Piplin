@@ -11,7 +11,6 @@
 
 namespace Fixhub\Bus\Listeners;
 
-use Illuminate\Contracts\Translation\Translator;
 use Fixhub\Bus\Events\EmailChangeRequested;
 use Fixhub\Bus\Notifications\ChangeEmail;
 
@@ -21,19 +20,6 @@ use Fixhub\Bus\Notifications\ChangeEmail;
 class EmailChangeConfirmation
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
      * Handle the event.
      *
      * @param  EmailChangeRequested $event
@@ -42,6 +28,6 @@ class EmailChangeConfirmation
     public function handle(EmailChangeRequested $event)
     {
         $token = $event->user->requestEmailToken();
-        $event->user->notify(new ChangeEmail($token, $this->translator));
+        $event->user->notify(new ChangeEmail($token));
     }
 }
