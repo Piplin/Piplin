@@ -10,7 +10,7 @@
  */
 
 namespace Fixhub\Bus\Notifications;
-    
+
 use Illuminate\Notifications\Messages\SlackMessage;
 use Fixhub\Models\NotifySlack;
 
