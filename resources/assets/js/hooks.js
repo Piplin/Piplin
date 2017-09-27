@@ -20,6 +20,7 @@ var app = app || {};
             $('#hook_type').val('');
             $('#hook :input[id^=hook_config]').val('');
             $('#hook .hook-config input[type=checkbox]').prop('checked', true);
+            $('#hook .hook-enabled input[type=checkbox]').prop('checked', true);
             $('#hook .modal-footer').hide();
             $('.hook-config').hide();
             $('.hook-enabled').hide();
