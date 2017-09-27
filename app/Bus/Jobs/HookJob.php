@@ -18,6 +18,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Fixhub\Bus\Notifications\Hook\TestNotification;
+
 /**
  * Sends notification to slack.
  */
