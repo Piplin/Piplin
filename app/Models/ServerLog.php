@@ -55,20 +55,6 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
     ];
 
     /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::updated(function (ServerLog $model) {
-            event(new ServerLogChanged($model));
-        });
-    }
-
-    /**
      * Belongs to assocation.
      *
      * @return Server

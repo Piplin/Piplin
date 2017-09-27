@@ -20,8 +20,6 @@ use Fixhub\Bus\Notifications\Hook\TestNotification;
  */
 class HookObserver
 {
-    use DispatchesJobs;
-
     /**
      * Called when the model is saved.
      *
