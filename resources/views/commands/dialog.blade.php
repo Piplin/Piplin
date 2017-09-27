@@ -50,13 +50,27 @@
                             </ul>
                         </div>
                     </div>
+                    @if (count($project->environments))
+                    <div class="form-group">
+                        <label for="command_environments">{{ trans('commands.environments') }}</label>
+                        <ul class="list-unstyled">
+                            @foreach ($project->environments as $environment)
+                            <li>
+                                <div class="checkbox">
+                                    <label for="command_environment_{{ $environment->id }}">
+                                        <input type="checkbox" class="command-environment" name="environments[]" id="command_environment_{{ $environment->id }}" value="{{ $environment->id }}" /> {{ $environment->name }}
+                                    </label>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     @if (count($project->servers))
                     <div class="form-group">
                         <label for="command_servers">{{ trans('commands.servers') }}</label>
                         <ul class="list-unstyled">
-                            @foreach ($project->environments as $environment)
-                            {{ $environment->name }}
-                            @foreach($environment->servers as $server)
+                            @foreach($project->servers as $server)
                             <li>
                                 <div class="checkbox">
                                     <label for="command_server_{{ $server->id }}">
@@ -64,7 +78,6 @@
                                     </label>
                                 </div>
                             </li>
-                            @endforeach
                             @endforeach
                         </ul>
                     </div>

@@ -20,13 +20,13 @@
                     <dd>{{ trans('commands.webhook_source') }}</dd>
                     <dt><em>url</em></dt>
                     <dd>{{ trans('commands.webhook_url') }}</dd>
-                    @if(count($optional))
+                    @if(isset($optional) && count($optional))
                         <dt><em>commands</em></dt>
                         <dd>{{ trans('commands.webhook_commands') }}</dd>
                     @endif
                 </dl>
 
-                @if (count($optional))
+                @if (isset($optional) && count($optional))
                     <h5><strong>{{ trans('commands.webhook_optional') }}</strong></h5>
                     <dl class="dl-horizontal" id="hook_command_ids">
                         @foreach($optional as $command)

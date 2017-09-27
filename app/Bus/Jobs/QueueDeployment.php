@@ -185,11 +185,14 @@ class QueueDeployment extends Job
             'command_id'    => $command->id,
         ]);
 
-        foreach ($command->servers as $server) {
-            ServerLog::create([
-                'server_id'      => $server->id,
-                'deploy_step_id' => $step->id,
-            ]);
+        // environments
+        foreach ($command->environments as $environment) {
+            foreach ($environment->servers as $server) {
+                ServerLog::create([
+                    'server_id'      => $server->id,
+                    'deploy_step_id' => $step->id,
+                ]);
+            }
         }
     }
 

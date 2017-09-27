@@ -85,7 +85,8 @@ class CommandController extends Controller
             'step',
             'optional',
             'default_on',
-            'servers'
+            'servers',
+            'environments'
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
@@ -111,6 +112,12 @@ class CommandController extends Controller
             unset($fields['servers']);
         }
 
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
+        }
+
         $command = $target->commands()->create($fields);
         //$command = Command::create($fields);
 
@@ -119,6 +126,12 @@ class CommandController extends Controller
         }
 
         $command->servers; // Triggers the loading
+
+        if ($environments) {
+            $command->environments()->sync($environments);
+        }
+
+        $command->environments; // Triggers the loading
 
         return $command;
     }
@@ -211,7 +224,7 @@ class CommandController extends Controller
     protected function getForDeployStep($target, $step)
     {
         return $target->commands()
-                ->with('servers')
+                ->with(['servers', 'environments'])
                 ->whereIn('step', [$step - 1, $step + 1])
                 ->orderBy('order', 'asc')
                     ->get()->toJson(); // Because CommandPresenter toJson() is not working in the view
