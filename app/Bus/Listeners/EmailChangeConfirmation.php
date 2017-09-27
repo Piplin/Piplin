@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Notifications\ChangeEmail;
+use Fixhub\Bus\Notifications\User\ChangeEmail;
 
 /**
  * Request email change handler.

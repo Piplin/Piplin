@@ -41,8 +41,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'commands', 'notifyEmails','group', 'key',
-                         'notifySlacks', 'deployments', 'shareFiles',
+                         'servers', 'hooks', 'commands','group', 'key', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
 
@@ -272,21 +271,12 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship.
      *
-     * @return SharedFile
+     * @return Hook
      */
-    public function notifySlacks()
+    public function hooks()
     {
-        return $this->hasMany(NotifySlack::class);
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return SharedFile
-     */
-    public function notifyEmails()
-    {
-        return $this->hasMany(NotifyEmail::class);
+        return $this->hasMany(Hook::class)
+                    ->orderBy('name');
     }
 
     /**

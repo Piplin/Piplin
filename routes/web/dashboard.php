@@ -111,11 +111,10 @@ Route::group([
             ], function () use ($actions) {
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
+                Route::resource('hooks', 'HookController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
-                Route::resource('notify-slack', 'NotifySlackController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
-                Route::resource('notify-email', 'NotifyEmailController', $actions);
             });
 
         Route::get('admin/templates/{id}/commands/{step}', [

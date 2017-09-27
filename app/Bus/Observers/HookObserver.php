@@ -12,28 +12,26 @@
 namespace Fixhub\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Fixhub\Models\NotifySlack;
-use Fixhub\Bus\Jobs\NotifySlackJob;
-use Fixhub\Bus\Notifications\SystemTestNotification;
+use Fixhub\Models\Hook;
+use Fixhub\Bus\Jobs\HookJob;
+use Fixhub\Bus\Notifications\Hook\TestNotification;
 
 /**
- * Event observer for NotifySlack model.
+ * Event observer for Hook model.
  */
-class NotifySlackObserver
+class HookObserver
 {
     use DispatchesJobs;
 
     /**
      * Called when the model is saved.
      *
-     * @param NotifySlack $notification
+     * @param Hook $notification
      */
-    public function saved(NotifySlack $notification)
+    public function saved(Hook $notification)
     {
         // please fix me
         //$notification->notify(new SystemTestNotification());
-        $this->dispatch(new NotifySlackJob($notification, [
-            'text' => trans('notifySlacks.test_message'),
-        ]));
+        $this->dispatch(new HookJob($notification));
     }
 }

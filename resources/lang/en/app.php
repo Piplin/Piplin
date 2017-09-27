@@ -23,7 +23,6 @@ return [
     'users'             => 'Users',
     'tips'              => 'Tips',
     'links'             => 'Usefull links',
-    'notifications'     => 'Notifications',
     'created'           => 'Created',
     'edit'              => 'Edit',
     'confirm'           => 'Confirm',

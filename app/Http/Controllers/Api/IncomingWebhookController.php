@@ -24,9 +24,9 @@ use Fixhub\Models\Project;
 use Illuminate\Http\Request;
 
 /**
- * The deployment webhook controller.
+ * The deployment incoming-webhook controller.
  */
-class WebhookController extends Controller
+class IncomingWebhookController extends Controller
 {
     /**
      * List of supported service classes.

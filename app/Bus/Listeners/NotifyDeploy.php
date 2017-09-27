@@ -14,6 +14,8 @@ namespace Fixhub\Bus\Listeners;
 use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Jobs\MailDeployNotification;
 use Fixhub\Bus\Jobs\NotifySlackJob;
+use Fixhub\Bus\Notifications\Deployment\DeploymentFailed;
+use Fixhub\Bus\Notifications\Deployment\DeploymentSucceeded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
@@ -24,16 +26,6 @@ use Illuminate\Queue\InteractsWithQueue;
 class NotifyDeploy implements ShouldQueue
 {
     use InteractsWithQueue, DispatchesJobs;
-
-    /**
-     * Create the event handler.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
@@ -50,16 +42,15 @@ class NotifyDeploy implements ShouldQueue
             return;
         }
 
-        // Send slack notifications
-        foreach ($project->notifySlacks as $notifyslack) {
-            if ($notifyslack->failure_only === true && $deployment->isSuccessful()) {
-                continue;
-            }
-
-            $this->dispatch(new NotifySlackJob($notifyslack, $deployment->notifySlackPayload()));
+        $notification = DeploymentFailed::class;
+        $event = 'deployment_failure';
+        if ($deployment->isSuccessful()) {
+            $notification = DeploymentSucceeded::class;
+            $event = 'deployment_success';
         }
 
-        // Send email notification
-        $this->dispatch(new MailDeployNotification($project, $deployment));
+        foreach ($project->hooks->where('enabled', true)->where('on_'. $event, true) as $channel) {
+            $channel->notify(new $notification($project, $deployment));
+        }
     }
 }

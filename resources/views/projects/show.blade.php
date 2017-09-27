@@ -65,7 +65,7 @@
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
                     <li {!! $tab != 'files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
-                    <li {!! $tab != 'notifications' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'notifications']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('app.notifications') }}</a></li>
+                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('projects.integrations') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {!! $tab != '' ?: 'active' !!}" id="deployments">
@@ -84,8 +84,8 @@
                     <div class="tab-pane {!! $tab != 'files' ?: 'active' !!}" id="files">
                         @include('projects._partials.shared_files')
                     </div>
-                    <div class="tab-pane {!! $tab != 'notifications' ?: 'active' !!}" id="notifications">
-                        @include('projects._partials.notifications')
+                    <div class="tab-pane {!! $tab != 'hooks' ?: 'active' !!}" id="hooks">
+                        @include('projects._partials.hooks')
                     </div>
                 </div>
             </div>
@@ -95,10 +95,8 @@
     @include('projects.dialogs.server')
     @include('projects.dialogs.shared_files')
     @include('projects.dialogs.config_files')
-    @include('projects.dialogs.webhook')
     @include('projects.dialogs.variable')
-    @include('projects.dialogs.notify_slack')
-    @include('projects.dialogs.notify_email')
+    @include('projects.dialogs.hook')
     @include('projects.dialogs.key')
     @include('projects.dialogs.reason')
     @include('projects.dialogs.redeploy')
@@ -118,15 +116,13 @@
         new app.ServersTab();
         new app.SharedFilesTab();
         new app.ConfigFilesTab();
-        new app.NotifySlacksTab();
-        new app.NotifyEmailsTab();
+        new app.HooksTab();
         new app.VariablesTab();
 
         app.Servers.add({!! $servers->toJson() !!});
         app.SharedFiles.add({!! $sharedFiles->toJson() !!});
         app.ConfigFiles.add({!! $configFiles->toJson() !!});
-        app.NotifySlacks.add({!! $notifySlacks->toJson() !!});
-        app.NotifyEmails.add({!! $notifyEmails->toJson() !!});
+        app.Hooks.add({!! $hooks->toJson() !!});
         app.Variables.add({!! $variables->toJson() !!});
 
         app.project_id = {{ $project->id }};

@@ -12,8 +12,8 @@
 return [
 
     'label'                => 'Commands',
-    'deploy_webhook'       => 'Deployments may be triggered by using the following webhook URL',
-    'webhook_help'         => 'Webhook Help',
+    'deploy_webhook'       => 'Incoming Webhooks are a simple way to trigger deployments from external sources. ',
+    'webhook_help'         => 'Incoming Webhook Help',
     'webhook_example'      => 'By making an HTTP POST request to this URL you will trigger a new deployment of the latest commit.',
     'webhook_fields'       => 'Optional POST fields',
     'webhook_reason'       => 'The reason the deployment is being run',

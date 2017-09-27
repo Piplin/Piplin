@@ -12,7 +12,7 @@
 return [
 
     'label'                => '部署步骤',
-    'deploy_webhook'       => '当第三方服务调用以下webhook链接，Fixhub会自动触发部署工作。',
+    'deploy_webhook'       => '第三方服务调用以下链接，触发Fixhub进行自动化部署工作。',
     'webhook_help'         => 'Webhook 帮助',
     'webhook_example'      => '以HTTP POST方式调用该URL, Fixhub会获取最近提交的代码，并自动触发部署工作。',
     'webhook_fields'       => 'POST参数说明(可选项)',

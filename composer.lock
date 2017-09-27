@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af8381b808c61045e928d1ced6581398",
-    "content-hash": "d6bbd4849b0150daca8a02a8f4f5c093",
+    "hash": "d6de2e638dc537e39aa8eb7f9c88a0af",
+    "content-hash": "efceb4694778e72b5be0a6f6f8749c24",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1198,6 +1198,53 @@
                 }
             ],
             "time": "2015-04-20 18:58:01"
+        },
+        {
+            "name": "laravel-notification-channels/webhook",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/webhook.git",
+                "reference": "307736c776c1be29fe3809d2f258892e59c74ecb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/laravel-notification-channels/webhook/307736c776c1be29fe3809d2f258892e59c74ecb.zip",
+                "reference": "307736c776c1be29fe3809d2f258892e59c74ecb",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/notifications": "5.3.*|5.4.*|5.5.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "orchestra/database": "3.3.x-dev|^3.5.0",
+                "orchestra/testbench": "3.3.x-dev|^3.5.0",
+                "phpunit/phpunit": "4.*|~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Webhook\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com",
+                    "homepage": "http://www.marcelpociot.com"
+                }
+            ],
+            "description": "Webhook Notifications driver",
+            "homepage": "https://github.com/laravel-notification-channels/webhook",
+            "time": "2017-09-25 19:30:05"
         },
         {
             "name": "laravel/framework",

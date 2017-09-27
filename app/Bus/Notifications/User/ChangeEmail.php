@@ -9,16 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Notifications;
+namespace Fixhub\Bus\Notifications\User;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Fixhub\Models\User;
 
 /**
  * Notification sent when changing email.
  */
-class ChangeEmail extends Notification
+class ChangeEmail extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /**
      * @var string
      */
@@ -32,6 +37,16 @@ class ChangeEmail extends Notification
     public function __construct($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @return array
+     */
+    public function via()
+    {
+        return ['mail'];
     }
 
     /**
