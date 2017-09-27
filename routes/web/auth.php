@@ -59,6 +59,7 @@ Route::group([
             'uses'       => 'AuthController@logout',
         ]);
 
-    Route::get('{provider}', 'AuthController@provider');
-    Route::get('{provider}/callback', 'AuthController@callback');
+    // OAuth 2.0 provider
+    Route::get('provider/{provider}', 'AuthController@provider');
+    Route::get('provider/{provider}/callback', 'AuthController@callback');
 });

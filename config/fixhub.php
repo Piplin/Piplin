@@ -17,4 +17,5 @@ return [
     'github_oauth_token' => env('GITHUB_OAUTH_TOKEN', false),
     'cdn'                => env('CDN_URL', null),
     'items_per_page'     => 10,
+    'gravatar'           => false,
 ];

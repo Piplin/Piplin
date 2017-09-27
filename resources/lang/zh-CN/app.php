@@ -23,7 +23,6 @@ return [
     'users'             => '用户管理',
     'tips'              => '小贴士',
     'links'             => '友情链接',
-    'notifications'     => '消息推送',
     'created'           => '创建于',
     'edit'              => '编辑',
     'confirm'           => '确认',

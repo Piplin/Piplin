@@ -45,17 +45,17 @@ return [
         ],
 
         'database' => [
-            'driver' => 'database',
-            'table'  => 'jobs',
-            'queue'  => 'fixhub-default',
-            'expire' => 60,
+            'driver'      => 'database',
+            'table'       => 'jobs',
+            'queue'       => 'fixhub-default',
+            'retry_after' => 60,
         ],
 
         'beanstalkd' => [
-            'driver' => 'beanstalkd',
-            'host'   => env('QUEUE_HOST', 'localhost'),
-            'queue'  => 'fixhub-default',
-            'ttr'    => 60,
+            'driver'      => 'beanstalkd',
+            'host'        => env('QUEUE_HOST', 'localhost'),
+            'queue'       => 'fixhub-default',
+            'retry_after' => 60,
         ],
 
         'sqs' => [
@@ -68,10 +68,10 @@ return [
         ],
 
         'redis' => [
-            'driver'     => 'redis',
-            'connection' => 'default',
-            'queue'      => 'fixhub-default',
-            'expire'     => 60,
+            'driver'      => 'redis',
+            'connection'  => 'default',
+            'queue'       => 'fixhub-default',
+            'retry_after' => 60,
         ],
 
     ],
@@ -88,7 +88,7 @@ return [
     */
 
     'failed' => [
-        'database' => env('DB_TYPE', 'sqlite'),
+        'database' => env('DB_CONNECTION', 'mysql'),
         'table'    => 'failed_jobs',
      ],
 ];

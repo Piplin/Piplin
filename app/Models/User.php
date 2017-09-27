@@ -12,26 +12,20 @@
 namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Model;
+use Fixhub\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use McCool\LaravelAutoPresenter\HasPresenter;
 use Illuminate\Support\Facades\Hash;
 use Creativeorange\Gravatar\Facades\Gravatar;
 
 /**
  * User model.
  */
-class User extends Model implements
-    AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+class User extends Authenticatable implements HasPresenter
 {
-    use Authenticatable, CanResetPassword, Authorizable, SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, Notifiable;
 
     /**
      * The admin level of user.
@@ -112,20 +106,6 @@ class User extends Model implements
     }
 
     /**
-     * Returns the user avatar url.
-     *
-     * @return string
-     */
-    public function getAvatarUrlAttribute()
-    {
-        if ($this->avatar) {
-            return url($this->avatar);
-        }
-
-        return Gravatar::get($this->email);
-    }
-
-    /**
      * Returns whether a user is at user level.
      *
      * @return bool
@@ -182,5 +162,15 @@ class User extends Model implements
         }
 
         return 'Unknown';
+    }
+
+    /**
+     * Get the presenter class.
+     *
+     * @return string
+     */
+    public function getPresenterClass()
+    {
+        return UserPresenter::class;
     }
 }

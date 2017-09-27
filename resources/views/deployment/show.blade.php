@@ -28,7 +28,8 @@
         <div class="col-xs-12">
             <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
                 <div class="box-header">
-                    <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span></h3>
+                    <i class="{{ $step->icon }}"></i>
+                    <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> </h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-hover">

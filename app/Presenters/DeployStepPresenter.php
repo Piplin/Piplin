@@ -38,4 +38,29 @@ class DeployStepPresenter extends BasePresenter
 
         return trans('commands.clone');
     }
+
+    /**
+     * Gets the deployment stage icon.
+     *
+     * @return string
+     */
+    public function icon()
+    {
+        $steps = [
+            Command::DO_CLONE,
+            Command::DO_INSTALL,
+            Command::DO_ACTIVATE,
+            Command::DO_PURGE,
+        ];
+
+        foreach ($steps as $step) {
+            if ($this->wrappedObject->stage - $step == 1) {
+                return 'ion-arrow-up-c text-yellow'; // post
+            } elseif ($this->wrappedObject->stage - $step == -1) {
+                return 'ion-arrow-down-c text-muted'; // pre
+            }
+        }
+
+        return 'ion-arrow-right-c text-aqua';
+    }
 }

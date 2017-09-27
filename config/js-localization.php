@@ -55,6 +55,7 @@ return [
         'templates'     => ['create', 'edit'],
         'sharedFiles'   => ['create', 'edit'],
         'configFiles'   => ['create', 'edit'],
+        'hooks'      => ['create', 'edit', 'custom', 'slack', 'mail', 'create_slack', 'create_mail', 'create_custom', 'edit_slack', 'edit_mail', 'edit_custom',],
         'notifySlacks'  => ['create', 'edit'],
         'notifyEmails'  => ['create', 'edit'],
         'servers'       => ['create', 'edit', 'successful', 'testing', 'failed', 'untested'],

@@ -15,14 +15,15 @@ use Fixhub\Bus\Events\DeployFinished;
 use Fixhub\Bus\Events\EmailChangeRequested;
 use Fixhub\Bus\Events\JsonWebTokenExpired;
 use Fixhub\Bus\Events\UserWasCreated;
-use Fixhub\Bus\Listeners\Events\ClearJwt;
-use Fixhub\Bus\Listeners\Events\CreateJwt;
-use Fixhub\Bus\Listeners\Events\EmailChangeConfirmation;
-use Fixhub\Bus\Listeners\Events\NotifyDeploy;
-use Fixhub\Bus\Listeners\Events\SendSignupEmail;
+use Fixhub\Bus\Listeners\ClearJwt;
+use Fixhub\Bus\Listeners\CreateJwt;
+use Fixhub\Bus\Listeners\EmailChangeConfirmation;
+use Fixhub\Bus\Listeners\NotifyDeploy;
+use Fixhub\Bus\Listeners\SendSignupEmail;
+use Fixhub\Models\Hook;
+use Fixhub\Bus\Observers\HookObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
@@ -37,9 +38,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        UserWasCreated::class       => [SendSignupEmail::class],
         DeployFinished::class       => [NotifyDeploy::class],
         EmailChangeRequested::class => [EmailChangeConfirmation::class],
+        UserWasCreated::class       => [SendSignupEmail::class],
         JsonWebTokenExpired::class  => [CreateJwt::class],
         Login::class                => [CreateJwt::class],
         Logout::class               => [ClearJwt::class],
@@ -49,12 +50,12 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any other events for your application.
-     *
-     * @return void
+     * Bootstrap any application services.
      */
     public function boot()
     {
         parent::boot();
+
+        Hook::observe(HookObserver::class);
     }
 }

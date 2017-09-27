@@ -6,7 +6,7 @@
             <b>{{ $app_name }}</b>
         </div>
         <div class="login-box-body">
-            <p class="login-box-msg">{{ trans('users.enter_email') }}</p>
+            <p class="login-box-msg">{{ trans('emails.welcome', ['name' => $user->name]) }} {{ trans('users.enter_email') }}</p>
             <form action="{{ route('profile.change-email') }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <input type="hidden" name="token" value="{{ $token }}">
@@ -15,7 +15,7 @@
                     <span class="ion ion-email form-control-feedback"></span>
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-xs-12">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('users.save') }}</button>
                     </div>
                 </div>

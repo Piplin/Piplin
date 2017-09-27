@@ -44,7 +44,7 @@ return [
     'current_name'      => '当前用户名',
     'request_confirm'   => '我要修改邮箱地址',
     'avatar'            => '头像',
-    'enter_email'       => '请输入邮箱地址',
+    'enter_email'       => '请输入新的邮箱地址',
     'upload'            => '上传新头像',
     'reset_gravatar'    => '使用Gravatar',
     'email_sent'        => '请检查您的邮箱, 系统已发送一封邮箱更换请求的连接。',
