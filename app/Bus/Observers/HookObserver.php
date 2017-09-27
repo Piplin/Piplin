@@ -13,7 +13,6 @@ namespace Fixhub\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Fixhub\Models\Hook;
-use Fixhub\Bus\Jobs\HookJob;
 use Fixhub\Bus\Notifications\Hook\TestNotification;
 
 /**
@@ -30,8 +29,6 @@ class HookObserver
      */
     public function saved(Hook $notification)
     {
-        // please fix me
-        //$notification->notify(new SystemTestNotification());
-        $this->dispatch(new HookJob($notification));
+        $notification->notify(new TestNotification());
     }
 }
