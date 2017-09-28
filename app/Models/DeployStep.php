@@ -45,7 +45,7 @@ class DeployStep extends Model implements HasPresenter
      *
      * @return ServerLog
      */
-    public function servers()
+    public function logs()
     {
         return $this->hasMany(ServerLog::class);
     }

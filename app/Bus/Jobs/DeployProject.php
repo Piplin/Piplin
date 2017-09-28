@@ -245,7 +245,7 @@ class DeployProject extends Job implements ShouldQueue
     private function cancelPendingSteps()
     {
         foreach ($this->deployment->steps as $step) {
-            foreach ($step->servers as $log) {
+            foreach ($step->logs as $log) {
                 if ($log->status === ServerLog::PENDING) {
                     $log->status = ServerLog::CANCELLED;
                     $log->save();
@@ -262,7 +262,7 @@ class DeployProject extends Job implements ShouldQueue
      */
     private function runStep(DeployStep $step)
     {
-        foreach ($step->servers as $log) {
+        foreach ($step->logs as $log) {
             $log->status     = ServerLog::RUNNING;
             $log->started_at =  Carbon::now();
             $log->save();

@@ -39,14 +39,14 @@ class DeploymentController extends Controller
 
         $output = [];
         foreach ($deployment->steps as $step) {
-            foreach ($step->servers as $server) {
-                $server->server;
+            foreach ($step->logs as $log) {
+                $log->server;
 
-                $server->runtime = ($server->runtime() === false ?
-                        null : AutoPresenter::decorate($server)->readable_runtime);
-                $server->output  = ((is_null($server->output) || !strlen($server->output)) ? null : '');
+                $log->runtime = ($log->runtime() === false ?
+                        null : AutoPresenter::decorate($log)->readable_runtime);
+                $log->output  = ((is_null($log->output) || !strlen($log->output)) ? null : '');
 
-                $output[] = $server;
+                $output[] = $log;
             }
         }
 
