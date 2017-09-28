@@ -76,10 +76,20 @@ class ProfileController extends Controller
      */
     public function update(StoreProfileRequest $request)
     {
-        Auth::user()->update($request->only(
+        $fields = $request->only(
             'nickname',
             'password'
-        ));
+        );
+
+        if (array_key_exists('password', $fields)) {
+            if (empty($fields['password'])) {
+                unset($fields['password']);
+            } else {
+                $fields['password'] = bcrypt($fields['password']);
+            }
+        }
+
+        Auth::user()->update($fields);
 
         return redirect()->to('/');
     }

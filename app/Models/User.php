@@ -79,20 +79,6 @@ class User extends Authenticatable implements HasPresenter
     ];
 
     /**
-    * Has any password being inserted by default.
-    *
-    * @param string $password
-    *
-    * @return \Fixhub\Models\User
-    */
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = Hash::make($password);
-
-        return $this;
-    }
-
-    /**
      * Generate a change email token.
      *
      * @return string

@@ -59,10 +59,10 @@
             </div>
             @endif
         </div>
-        <!--
+
         <div class="pull-right" id="forgotten-password">
-            <p><a href="{{ route('auth.reset-password-confirm') }}">{{ trans('auth.forgotten') }}</a></p>
+            <p><a href="{{ route('auth.reset-password') }}">{{ trans('auth.forgotten') }}</a></p>
         </div>
-        -->
+
     </div>
 @stop

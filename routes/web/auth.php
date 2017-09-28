@@ -12,12 +12,10 @@
 Route::group([
     'middleware' => ['web'],
     'namespace'  => 'Auth',
-    'as'         => 'auth.',
-    'prefix'     => 'auth',
 ], function () {
     Route::get('login', [
             'middleware' => 'guest',
-            'as'         => 'login',
+            'as'         => 'auth.login',
             'uses'       => 'AuthController@getLogin',
         ]);
 
@@ -38,24 +36,29 @@ Route::group([
             'uses'       => 'AuthController@postTwoFactorAuthentication',
         ]);
 
-    Route::get('password/reset/{token?}', [
-            'as'   => 'reset-password-confirm',
-            'uses' => 'PasswordController@showResetForm',
-        ]);
-
-    Route::post('password/email', [
-            'as'   => 'request-password-reset',
-            'uses' => 'PasswordController@sendResetLinkEmail',
+    Route::get('password/reset', [
+            'as'   => 'auth.reset-password',
+            'uses' => 'ForgotPasswordController@showLinkRequestForm',
         ]);
 
     Route::post('password/reset', [
-            'as'   => 'reset-password',
-            'uses' => 'PasswordController@reset',
+            'as' => 'password.reset',
+            'uses' => 'ResetPasswordController@reset',
+        ]);
+
+    Route::post('password/email', [
+            'as'   => 'auth.reset-email',
+            'uses' => 'ForgotPasswordController@sendResetLinkEmail',
+        ]);
+
+    Route::get('password/reset/{token?}', [
+            'as'   => 'password.reset',
+            'uses' => 'ResetPasswordController@showResetForm',
         ]);
 
     Route::get('logout', [
             'middleware' => 'auth',
-            'as'         => 'logout',
+            'as'         => 'auth.logout',
             'uses'       => 'AuthController@logout',
         ]);
 
