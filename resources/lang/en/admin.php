@@ -11,7 +11,9 @@
 
 return [
 
-    'label'   => 'Admin Area',
-    'manage'  => 'Admin',
+    'label'        => 'Admin Area',
+    'home'         => 'Admin home',
+    'environments' => 'Environments',
+    'dependencies' => 'Dependencies',
 
 ];

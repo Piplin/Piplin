@@ -1,6 +1,6 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li {!! set_active('admin') !!}><a href="/admin">{{ trans('admin.dashboard') }}</a></li>
+        <li {!! set_active('admin') !!}><a href="/admin">{{ trans('admin.home') }}</a></li>
         <li {!! set_active('admin/projects') !!}><a href="/admin/projects">{{ trans('projects.manage') }}</a></li>
         <li {!! set_active('admin/groups') !!}><a href="/admin/groups">{{ trans('groups.manage') }}</a></li>
         <li {!! set_active('admin/templates') !!}><a href="/admin/templates">{{ trans('templates.manage') }}</a></li>

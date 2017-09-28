@@ -25,7 +25,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $title = trans('admin.dashboard');
+        $title = trans('admin.home');
         $envs = [
             ['name' => 'Fixhub version',    'value' => APP_VERSION],
             ['name' => 'PHP version',       'value' => PHP_VERSION],
@@ -42,13 +42,11 @@ class AdminController extends Controller
             ['name' => 'Locale',            'value' => config('app.locale')],
             ['name' => 'Env',               'value' => config('app.env')],
             ['name' => 'URL',               'value' => config('app.url')],
-            ['name' => 'Log',               'value' => config('app.log')],
-
             ['name' => 'Socket URL',        'value' => config('fixhub.socket_url').':'.env('SOCKET_PORT', 6001)],
-
             ['name' => 'Mail driver',       'value' => env('MAIL_DRIVER', 'log')],
-
             ['name' => 'Debug',             'value' => config('app.debug') ? 'true' : 'false'],
+            ['name' => 'Log',               'value' => config('app.log')],
+            ['name' => 'Log level',         'value' => config('app.log_level')],
         ];
 
         $json = file_get_contents(base_path('composer.json'));
