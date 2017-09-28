@@ -11,7 +11,6 @@
 
 namespace Fixhub\Bus\Observers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Fixhub\Models\Hook;
 use Fixhub\Bus\Notifications\Hook\TestNotification;
 
