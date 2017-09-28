@@ -33,7 +33,8 @@ return [
     'slack'                            => 'Slack',
     'mail'                             => '邮件',
     'which'                            => '请选择通知类型',
-    'test_message'                     => '发条测试消息，证明我的存在。 :ok_hand:',
+    'test_subject'                     => '测试通知',
+    'test_message'                     => '经Fixhub权威验证，该通知配置已生效',
     'enabled'                          => '是否启用?',
 
     // Slack
