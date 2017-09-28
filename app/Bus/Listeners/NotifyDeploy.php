@@ -12,8 +12,6 @@
 namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\DeployFinished;
-use Fixhub\Bus\Jobs\MailDeployNotification;
-use Fixhub\Bus\Jobs\NotifySlackJob;
 use Fixhub\Bus\Notifications\Deployment\DeploymentFailed;
 use Fixhub\Bus\Notifications\Deployment\DeploymentSucceeded;
 use Illuminate\Contracts\Queue\ShouldQueue;
