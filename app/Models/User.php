@@ -19,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Illuminate\Support\Facades\Hash;
 use Creativeorange\Gravatar\Facades\Gravatar;
+use Fixhub\Bus\Notifications\User\ResetPasswordNotification;
 
 /**
  * User model.
@@ -130,6 +131,17 @@ class User extends Authenticatable implements HasPresenter
     public function getHasTwoFactorAuthenticationAttribute()
     {
         return !empty($this->google2fa_secret);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     /**
