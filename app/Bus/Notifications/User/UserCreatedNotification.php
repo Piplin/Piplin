@@ -32,7 +32,7 @@ class UserCreatedNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param User $user
+     * @param string $password
      */
     public function __construct($password)
     {

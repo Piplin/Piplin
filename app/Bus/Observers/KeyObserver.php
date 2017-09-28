@@ -25,7 +25,7 @@ class KeyObserver
     /**
      * Called when the model is updated.
      *
-     * @param Key $log
+     * @param Key $key
      */
     public function saving(Key $key)
     {
