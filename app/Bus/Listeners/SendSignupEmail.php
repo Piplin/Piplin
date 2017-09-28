@@ -12,28 +12,13 @@
 namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\UserWasCreated;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Message;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
+use Fixhub\Bus\Notifications\User\UserCreatedNotification;
 
 /**
  * Sends an email when the user has been created.
  */
-class SendSignupEmail implements ShouldQueue
+class SendSignupEmail
 {
-    use InteractsWithQueue;
-
-    /**
-     * Create the event handler.
-     *
-     * @return SendSignupEmail
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
@@ -42,21 +27,6 @@ class SendSignupEmail implements ShouldQueue
      */
     public function handle(UserWasCreated $event)
     {
-        $user = $event->user;
-
-        $data = [
-            'password' => $event->password,
-            'email'    => $user->email,
-        ];
-
-        Mail::queueOn(
-            'fixhub-low',
-            'emails.account',
-            $data,
-            function (Message $message) use ($user) {
-                $message->to($user->email, $user->name)
-                        ->subject(trans('emails.creation_subject'));
-            }
-        );
+        $event->user->notify(new UserCreatedNotification($event->password));
     }
 }

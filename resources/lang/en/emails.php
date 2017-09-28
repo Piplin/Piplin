@@ -15,7 +15,7 @@ return [
     'creation_subject'   => 'Account Creation',
     'created'            => 'Your account has been created!',
     'login_now'          => 'Login Now',
-    'username'           => 'Your username is :username',
+    'username'           => 'Your username is :username or :email',
     'password'           => 'Your password is :password',
 
     // Password reset email

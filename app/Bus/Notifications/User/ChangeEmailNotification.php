@@ -20,7 +20,7 @@ use Fixhub\Models\User;
 /**
  * Notification sent when changing email.
  */
-class ChangeEmail extends Notification implements ShouldQueue
+class ChangeEmailNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
