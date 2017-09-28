@@ -32,6 +32,7 @@ return [
     'untested'    => 'Untested',
     'options'     => 'Options',
     'deploy_code' => 'Code should be deployed to this server',
+    'enabled'     => 'Server enabled?',
     'runs_code'   => 'Deploy Code',
     'add_command' => 'Add the new server to all existing commands',
 

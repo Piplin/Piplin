@@ -39,7 +39,7 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'ip_address', 'project_id', 'path',
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address', 'project_id', 'path',
                            'status', 'output', 'deploy_code', 'port', 'order', ];
 
     /**
@@ -50,6 +50,7 @@ class Server extends Model
     protected $casts = [
         'id'          => 'integer',
         'project_id'  => 'integer',
+        'enabled'     => 'boolean',
         'status'      => 'integer',
         'deploy_code' => 'boolean',
         'port'        => 'integer',

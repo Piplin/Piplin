@@ -34,6 +34,7 @@ class ServerController extends Controller
     {
         $fields = $request->only(
             'name',
+            'enabled',
             'user',
             'ip_address',
             'port',
@@ -88,6 +89,7 @@ class ServerController extends Controller
 
         $server->update($request->only(
             'name',
+            'enabled',
             'user',
             'ip_address',
             'port',

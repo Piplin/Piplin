@@ -30,7 +30,9 @@ class StoreServerRequest extends Request
             'user'         => 'required|max:255',
             'ip_address'   => 'required|host',
             'path'         => 'required',
-            'add_commands' => 'boolean',
+            'enabled'      => 'boolean',
+            'deploy_code'  => 'boolean',
+            'add_commands' => 'boolean', // not in db
             'project_id'   => 'required|integer|exists:projects,id',
         ];
     }

@@ -179,7 +179,7 @@ class QueueDeployment extends Job
             'command_id'    => $command->id,
         ]);
 
-        foreach ($command->servers as $server) {
+        foreach ($command->servers->where('enabled', true) as $server) {
             ServerLog::create([
                 'server_id'      => $server->id,
                 'deploy_step_id' => $step->id,
@@ -201,7 +201,7 @@ class QueueDeployment extends Job
             'deployment_id' => $this->deployment->id,
         ]);
 
-        foreach ($this->project->servers as $server) {
+        foreach ($this->project->servers->where('enabled', true) as $server) {
             // If command is null it is preparing one of the 4 default steps so
             // skip servers which shouldn't have the code deployed
             if (!$server->deploy_code) {
