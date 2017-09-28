@@ -12,7 +12,7 @@
 return [
 
     'label'        => '管理后台',
-    'home'         => '后台首页'
+    'home'         => '后台首页',
     'environments' => '环境变量',
     'dependencies' => '依赖包',
 
