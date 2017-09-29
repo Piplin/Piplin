@@ -188,10 +188,10 @@ class DeploymentPresenter extends BasePresenter
      */
     public function environment_names()
     {
-         $environments = [];
-         foreach ($this->wrappedObject->environments as $environment) {
+        $environments = [];
+        foreach ($this->wrappedObject->environments as $environment) {
             $environments[] = $environment->name;
-         }
+        }
 
         if (count($environments)) {
             return implode(', ', $environments);
