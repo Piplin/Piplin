@@ -34,8 +34,8 @@ Route::group([
         ]);
 
         Route::get('projects/{id}/environments/{environment_id}', [
-            'as'   => 'environments.index',
-            'uses' => 'EnvironmentController@index',
+            'as'   => 'environments.show',
+            'uses' => 'EnvironmentController@show',
         ]);
 
 

@@ -29,7 +29,7 @@ class EnvironmentController extends Controller
      * @param int $environment_id     Either clone, install, activate or purge
      * @return Response
      */
-    public function index($targetable_id, $environment_id)
+    public function show($targetable_id, $environment_id)
     {
         $project = Project::findOrFail($targetable_id);
         $targetable_type = 'Fixhub\\Models\\Project';
@@ -39,7 +39,7 @@ class EnvironmentController extends Controller
         $breadcrumb = [
             ['url' => route('projects', ['id' => $project->id, 'tab' => 'environments']), 'label' => $project->name],
         ];
-        return view('environments.index', [
+        return view('environments.show', [
                 'title'           => trans('environments.label'),
                 'breadcrumb'      => $breadcrumb,
                 'project'         => $project,
