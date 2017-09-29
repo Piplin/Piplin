@@ -22,6 +22,6 @@ return [
     'default_on'          => '是否默认选中？',
     'default_description' => '部署时默认选中该环境',
     'webhook_environment' => '可选的环境ID',
-    'webhook_args'        => '用逗号分隔的命令ID列表',
+    'webhook_args'        => '用逗号分隔的环境ID列表',
 
 ];
