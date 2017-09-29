@@ -189,10 +189,10 @@ class DeploymentController extends Controller
         }
 
         $environments = null;
-         if (array_key_exists('environments', $fields)) {
+        if (array_key_exists('environments', $fields)) {
             $environments = $fields['environments'];
             unset($fields['environments']);
-         }
+        }
 
         $deployment = Deployment::create($fields);
 

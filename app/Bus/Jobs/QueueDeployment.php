@@ -180,7 +180,7 @@ class QueueDeployment extends Job
         ]);
 
         foreach ($command->environments as $environment) {
-            if( $this->deployment->environments()->find($environment->id) === null ) {
+            if ($this->deployment->environments()->find($environment->id) === null) {
                 continue;
             }
             foreach ($environment->servers->where('enabled', true) as $server) {
@@ -190,7 +190,6 @@ class QueueDeployment extends Job
                 ]);
             }
         }
-
     }
 
     /**
