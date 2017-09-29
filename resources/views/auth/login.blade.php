@@ -55,7 +55,9 @@
             @if(isset($provider_count) && $provider_count > 0)
             <div class="social-auth-links text-center">
               <p>- OR -</p>
-              <a href="/auth/gitlab" class="btn btn-block btn-social btn-bitbucket"><i class="ion ion-android-open"></i> Sign in using Gitlab</a>
+              @foreach($providers as $provider)
+              <a href="{{ route('oauth.provider', ['provider' => $provider->slug]) }}" class="btn btn-block btn-social btn-{{$provider->slug}}"><i class="ion {{ $provider->icon ?: 'ion-android-open'}}"></i> {{ trans('auth.oauth_login', ['provider' => $provider->name]) }}</a>
+              @endforeach
             </div>
             @endif
         </div>

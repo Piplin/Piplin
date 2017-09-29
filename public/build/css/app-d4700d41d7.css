@@ -11801,6 +11801,59 @@ fieldset[disabled] .btn-github.focus {
   background-color: #fff;
 }
 
+.btn-gitlab {
+  background-color: #f4731c;
+  color: #fff;
+  background-color: #f4731c;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab:focus, .btn-gitlab.focus {
+  color: #fff;
+  background-color: #d35b0a;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab:hover {
+  color: #fff;
+  background-color: #d35b0a;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab:active, .btn-gitlab.active,
+.open > .btn-gitlab.dropdown-toggle {
+  color: #fff;
+  background-color: #d35b0a;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab:active:hover, .btn-gitlab:active:focus, .btn-gitlab:active.focus, .btn-gitlab.active:hover, .btn-gitlab.active:focus, .btn-gitlab.active.focus,
+.open > .btn-gitlab.dropdown-toggle:hover,
+.open > .btn-gitlab.dropdown-toggle:focus,
+.open > .btn-gitlab.dropdown-toggle.focus {
+  color: #fff;
+  background-color: #b14c09;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab:active, .btn-gitlab.active,
+.open > .btn-gitlab.dropdown-toggle {
+  background-image: none;
+}
+
+.btn-gitlab.disabled:hover, .btn-gitlab.disabled:focus, .btn-gitlab.disabled.focus, .btn-gitlab[disabled]:hover, .btn-gitlab[disabled]:focus, .btn-gitlab[disabled].focus,
+fieldset[disabled] .btn-gitlab:hover,
+fieldset[disabled] .btn-gitlab:focus,
+fieldset[disabled] .btn-gitlab.focus {
+  background-color: #f4731c;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-gitlab .badge {
+  color: #f4731c;
+  background-color: #fff;
+}
+
 .btn-google {
   background-color: #dd4b39;
   color: #fff;

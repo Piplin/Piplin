@@ -30,5 +30,6 @@ return [
     'failed'                => '登录失败.',
     'invalid_code'          => '认证码输入有误.',
     'remember'              => '下次自动登录',
+    'oauth_login'           => '使用 :provider 账号登录',
 
 ];

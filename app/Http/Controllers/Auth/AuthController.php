@@ -13,7 +13,6 @@ namespace Fixhub\Http\Controllers\Auth;
 
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Identity;
-use Fixhub\Models\Provider;
 use Fixhub\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -58,8 +57,7 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-        return view('auth.login')
-            ->with('provider_count', Provider::count());
+        return view('auth.login');
     }
 
     /**
