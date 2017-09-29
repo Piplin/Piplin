@@ -18,7 +18,7 @@ var app = app || {};
     $('#tip').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
-        var title = Lang.get('tips.create');
+        var title = trans('tips.create');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -26,7 +26,7 @@ var app = app || {};
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
-            title = Lang.get('tips.edit');
+            title = trans('tips.edit');
             $('.btn-danger', modal).show();
         } else {
             $('#tip_id').val('');

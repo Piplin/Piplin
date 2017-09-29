@@ -6,7 +6,7 @@ var app = app || {};
     var FAILED     = 2;
     var TESTING    = 3;
 
-    $('#link_list table').sortable({
+    $('#provider_list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
         itemSelector: 'tr',
@@ -17,24 +17,24 @@ var app = app || {};
 
             var ids = [];
             $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
-                ids.push($(element).data('link-id'));
+                ids.push($(element).data('provider-id'));
             });
 
             $.ajax({
-                url: '/admin/links/reorder',
+                url: '/admin/providers/reorder',
                 method: 'POST',
                 data: {
-                    links: ids
+                    providers: ids
                 }
             });
         }
     });
 
     // FIXME: This seems very wrong
-    $('#link').on('show.bs.modal', function (event) {
+    $('#provider').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
-        var title = trans('links.create');
+        var title = trans('providers.create');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -42,19 +42,20 @@ var app = app || {};
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
-            title = trans('links.edit');
+            title = trans('providers.edit');
             $('.btn-danger', modal).show();
         } else {
-            $('#link_id').val('');
-            $('#link_title').val('');
-            $('#link_url').val('');
-            $('#link_description').val('');
+            $('#provider_id').val('');
+            $('#provider_name').val('');
+            $('#provider_slug').val('');
+            $('#provider_icon').val('');
+            $('#provider_description').val('');
         }
 
         modal.find('.modal-title span').text(title);
     });
 
-    $('body').delegate('.link-trash button.btn-delete','click', function (event) {
+    $('body').delegate('.provider-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -63,9 +64,9 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link = app.Links.get($('#model_id').val());
+        var provider = app.Providers.get($('#model_id').val());
 
-        link.destroy({
+        provider.destroy({
             wait: true,
             success: function(model, response, options) {
                 dialog.modal('hide');
@@ -83,8 +84,7 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
-    $('#link button.btn-save').on('click', function (event) {
+    $('#provider button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -93,18 +93,19 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link_id = $('#link_id').val();
+        var provider_id = $('#provider_id').val();
 
-        if (link_id) {
-            var link = app.Links.get(link_id);
+        if (provider_id) {
+            var provider = app.Providers.get(provider_id);
         } else {
-            var link = new app.Link();
+            var provider = new app.Provider();
         }
 
-        link.save({
-            title:       $('#link_title').val(),
-            url:         $('#link_url').val(),
-            description: $('#link_description').val()
+        provider.save({
+            name:        $('#provider_name').val(),
+            slug:        $('#provider_slug').val(),
+            icon:        $('#provider_icon').val(),
+            description: $('#provider_description').val()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -115,8 +116,8 @@ var app = app || {};
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                if (!link_id) {
-                    app.Links.add(response);
+                if (!provider_id) {
+                    app.Providers.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -147,16 +148,16 @@ var app = app || {};
     });
 
 
-    app.Link = Backbone.Model.extend({
-        urlRoot: '/admin/links'
+    app.Provider = Backbone.Model.extend({
+        urlRoot: '/admin/providers'
     });
 
-    var Links = Backbone.Collection.extend({
-        model: app.Link,
-        comparator: function(linkA, linkB) {
-            if (linkA.get('title') > linkB.get('title')) {
+    var Providers = Backbone.Collection.extend({
+        model: app.Provider,
+        comparator: function(providerA, providerB) {
+            if (providerA.get('name') > providerB.get('name')) {
                 return -1; // before
-            } else if (linkA.get('title') < linkB.get('title')) {
+            } else if (providerA.get('name') < providerB.get('name')) {
                 return 1; // after
             }
 
@@ -164,80 +165,78 @@ var app = app || {};
         }
     });
 
-    app.Links = new Links();
+    app.Providers = new Providers();
 
-    app.LinksTab = Backbone.View.extend({
+    app.ProvidersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
         },
         initialize: function() {
-            this.$list = $('#link_list tbody');
+            this.$list = $('#provider_list tbody');
 
-            $('#no_links').show();
-            $('#link_list').hide();
+            $('#no_providers').show();
+            $('#provider_list').hide();
 
-            this.listenTo(app.Links, 'add', this.addOne);
-            this.listenTo(app.Links, 'reset', this.addAll);
-            this.listenTo(app.Links, 'remove', this.addAll);
-            this.listenTo(app.Links, 'all', this.render);
+            this.listenTo(app.Providers, 'add', this.addOne);
+            this.listenTo(app.Providers, 'reset', this.addAll);
+            this.listenTo(app.Providers, 'remove', this.addAll);
+            this.listenTo(app.Providers, 'all', this.render);
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+                var provider = app.providers.get(parseInt(data.model.id));
 
-                if (link) {
-                    link.set(data.model);
+                if (provider) {
+                    provider.set(data.model);
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Links.add(data.model);
-                }
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+                    app.Providers.add(data.model);
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+                var provider = app.Providers.get(parseInt(data.model.id));
 
-                if (link) {
-                    app.Links.remove(link);
+                if (provider) {
+                    app.Providers.remove(provider);
                 }
             });
         },
         render: function () {
-            if (app.Links.length) {
-                $('#no_links').hide();
-                $('#link_list').show();
+            if (app.Providers.length) {
+                $('#no_providers').hide();
+                $('#provider_list').show();
             } else {
-                $('#no_links').show();
-                $('#link_list').hide();
+                $('#no_providers').show();
+                $('#provider_list').hide();
             }
         },
-        addOne: function (link) {
+        addOne: function (provider) {
 
-            var view = new app.LinkView({
-                model: link
+            var view = new app.ProviderView({
+                model: provider
             });
 
             this.$list.append(view.render().el);
         },
         addAll: function () {
             this.$list.html('');
-            app.Links.each(this.addOne, this);
+            app.Providers.each(this.addOne, this);
         }
     });
 
-    app.LinkView = Backbone.View.extend({
+    app.ProviderView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editLink',
-            'click .btn-delete': 'trashLink'
+            'click .btn-edit': 'editProvider',
+            'click .btn-delete': 'trashProvider'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model, 'destroy', this.remove);
 
-            this.template = _.template($('#link-template').html());
+            this.template = _.template($('#provider-template').html());
         },
         render: function () {
             var data = this.model.toJSON();
@@ -246,17 +245,18 @@ var app = app || {};
 
             return this;
         },
-        editLink: function() {
-            $('#link_id').val(this.model.id);
-            $('#link_title').val(this.model.get('title'));
-            $('#link_url').val(this.model.get('url'));
-            $('#link_description').val(this.model.get('description'));
+        editProvider: function() {
+            $('#provider_id').val(this.model.id);
+            $('#provider_name').val(this.model.get('name'));
+            $('#provider_slug').val(this.model.get('slug'));
+            $('#provider_icon').val(this.model.get('icon'));
+            $('#provider_description').val(this.model.get('description'));
 
         },
-        trashLink: function() {
+        trashProvider: function() {
             var target = $('#model_id');
             target.val(this.model.id);
-            target.parents('.modal').removeClass().addClass('modal fade link-trash');
+            target.parents('.modal').removeClass().addClass('modal fade provider-trash');
         }
     });
 })(jQuery);

@@ -14,9 +14,9 @@ namespace Fixhub\Http\Requests;
 use Fixhub\Http\Requests\Request;
 
 /**
- * Request for validating link.
+ * Request for validating provider.
  */
-class StoreLinkRequest extends Request
+class StoreProviderRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -26,13 +26,14 @@ class StoreLinkRequest extends Request
     public function rules()
     {
         $rules = [
-            'title' => 'required|max:255|unique:links,title',
-            'url'   => 'required',
+            'name' => 'required|max:255|unique:providers,name',
+            'slug' => 'required',
+            'icon' => 'string|nullable|regex:/^ion\-(.*)/',
         ];
 
-        // On edit add the link ID to the rules
+        // On edit add the provider ID to the rules
         if ($this->get('id')) {
-            $rules['title'] .= ',' . $this->get('id');
+            $rules['name'] .= ',' . $this->get('id');
         }
 
         return $rules;

@@ -26,7 +26,7 @@ class StoreTipRequest extends Request
     public function rules()
     {
         $rules = [
-            'body'   => 'required',
+            'body' => 'required',
         ];
 
         return $rules;
