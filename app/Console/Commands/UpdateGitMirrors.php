@@ -12,7 +12,7 @@
 namespace Fixhub\Console\Commands;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\UpdateGitMirror;
+use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
 use Fixhub\Models\Project;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -63,7 +63,7 @@ class UpdateGitMirrors extends Command
 
         Project::where('last_mirrored', '<', $last_mirrored_since)->chunk($todo, function ($projects) {
             foreach ($projects as $project) {
-                $this->dispatch(new UpdateGitMirror($project));
+                $this->dispatch(new UpdateGitMirrorJob($project));
             }
         });
     }

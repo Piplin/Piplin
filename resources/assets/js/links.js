@@ -182,7 +182,7 @@ var app = app || {};
             this.listenTo(app.Links, 'remove', this.addAll);
             this.listenTo(app.Links, 'all', this.render);
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var link = app.Links.get(parseInt(data.model.id));
 
                 if (link) {
@@ -190,13 +190,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Links.add(data.model);
-                }
+            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                app.Links.add(data.model);
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var link = app.Links.get(parseInt(data.model.id));
 
                 if (link) {

@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Observers;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Fixhub\Bus\Events\ServerLogChanged;
+use Fixhub\Bus\Events\ServerLogChangedEvent;
 use Fixhub\Models\ServerLog;
 
 /**
@@ -40,6 +40,6 @@ class ServerLogObserver
      */
     public function updated(ServerLog $log)
     {
-        $this->dispatcher->dispatch(new ServerLogChanged($log));
+        $this->dispatcher->dispatch(new ServerLogChangedEvent($log));
     }
 }

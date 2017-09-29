@@ -11,15 +11,15 @@
 
 namespace Fixhub\Providers;
 
-use Fixhub\Bus\Events\DeployFinished;
-use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Events\JsonWebTokenExpired;
-use Fixhub\Bus\Events\UserWasCreated;
-use Fixhub\Bus\Listeners\ClearJwt;
-use Fixhub\Bus\Listeners\CreateJwt;
-use Fixhub\Bus\Listeners\EmailChangeConfirmation;
-use Fixhub\Bus\Listeners\NotifyDeploy;
-use Fixhub\Bus\Listeners\SendSignupEmail;
+use Fixhub\Bus\Events\DeployFinishedEvent;
+use Fixhub\Bus\Events\EmailChangeRequestedEvent;
+use Fixhub\Bus\Events\JsonWebTokenExpiredEvent;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
+use Fixhub\Bus\Listeners\ClearJwtListener;
+use Fixhub\Bus\Listeners\CreateJwtListener;
+use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
+use Fixhub\Bus\Listeners\NotifyDeployListener;
+use Fixhub\Bus\Listeners\SendSignupEmailListener;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
 use Fixhub\Models\ServerLog;
@@ -42,13 +42,13 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        DeployFinished::class       => [NotifyDeploy::class],
-        EmailChangeRequested::class => [EmailChangeConfirmation::class],
-        UserWasCreated::class       => [SendSignupEmail::class],
-        JsonWebTokenExpired::class  => [CreateJwt::class],
-        Login::class                => [CreateJwt::class],
-        Logout::class               => [ClearJwt::class],
-        SocialiteWasCalled::class => [
+        DeployFinishedEvent::class       => [NotifyDeployListener::class],
+        EmailChangeRequestedEvent::class => [EmailChangeConfirmationListener::class],
+        UserWasCreatedEvent::class       => [SendSignupEmailListener::class],
+        JsonWebTokenExpiredEvent::class  => [CreateJwtListener::class],
+        Login::class                     => [CreateJwtListener::class],
+        Logout::class                    => [ClearJwtListener::class],
+        SocialiteWasCalled::class        => [
             'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
         ],
     ];

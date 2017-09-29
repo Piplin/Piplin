@@ -11,7 +11,7 @@
 
 namespace Fixhub\Console\Commands;
 
-use Fixhub\Bus\Events\UserWasCreated;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
 use Fixhub\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +83,7 @@ class CreateUser extends Command
         if ($send_email) {
             $message = 'The user has been created and their account details have been emailed to ' . $user->email;
 
-            event(new UserWasCreated($user, $arguments['password']));
+            event(new UserWasCreatedEvent($user, $arguments['password']));
         } elseif ($password_generated) {
             $message .= ', however you elected to not email the account details to them. ';
             $message .= 'Their password is ' . $arguments['password'];

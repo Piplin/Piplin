@@ -14,6 +14,7 @@ namespace Fixhub\Bus\Events;
 /**
  * Event which fires when the server status has changed.
  */
-class ModelChanged extends ModelCreated
+class ModelChangedEvent extends ModelCreatedEvent
 {
+    //
 }

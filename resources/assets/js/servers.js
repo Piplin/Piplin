@@ -197,21 +197,25 @@ var app = app || {};
             this.listenTo(app.Servers, 'remove', this.addAll);
             this.listenTo(app.Servers, 'all', this.render);
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('server:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var server = app.Servers.get(parseInt(data.model.id));
 
                 if (server) {
-                    server.set(data.model);
+                    if(app.environment_id == data.model.environment_id) {
+                        server.set(data.model);
+                    } else {
+                        app.Servers.remove(server);
+                    }
                 }
             });
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
                     app.Servers.add(data.model);
                 }
             });
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var server = app.Servers.get(parseInt(data.model.id));
 
                 if (server) {

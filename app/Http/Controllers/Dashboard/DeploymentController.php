@@ -12,9 +12,10 @@
 namespace Fixhub\Http\Controllers\Dashboard;
 
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\AbortDeployment;
-use Fixhub\Bus\Jobs\ApproveDeployment;
-use Fixhub\Bus\Jobs\QueueDeployment;
+use Fixhub\Http\Requests\StoreDeploymentRequest;
+use Fixhub\Bus\Jobs\AbortDeploymentJob;
+use Fixhub\Bus\Jobs\ApproveDeploymentJob;
+use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
@@ -61,6 +62,57 @@ class DeploymentController extends Controller
             'project'    => $project,
             'deployment' => $deployment,
             'output'     => json_encode($output), // PresentableInterface does not correctly json encode the models
+        ]);
+    }
+
+    /**
+     * Adds a deployment for the specified project to the queue.
+     *
+     * @param StoreDeploymentRequest $request
+     * @param int $project_id
+     *
+     * @return Response
+     */
+    public function create(StoreDeploymentRequest $request, $project_id)
+    {
+        // Fix me! see also in DeploymentController and IncomingWebhookController
+        $project = Project::findOrFail($project_id);
+
+        if ($project->servers->where('deploy_code', true)->count() === 0) {
+            return redirect()->route('projects', ['id' => $project->id]);
+        }
+
+        $fileds = [
+            'reason'         => $request->get('reason'),
+            'project_id'     => $project->id,
+            'environments'   => $request->get('environments'),
+            'branch'         => $project->branch,
+            'optional'       => [],
+        ];
+
+        // If allow other branches is set, check for post data
+        if ($project->allow_other_branch) {
+            if ($request->has('source') && $request->has('source_' . $request->get('source'))) {
+                $fileds['branch'] = $request->get('source_' . $request->get('source'));
+
+                if ($request->get('source') == 'commit') {
+                    $fileds['commit'] = $fileds['branch'];
+                    $fileds['branch'] = $project->branch;
+                }
+            }
+        }
+
+        // Get the optional commands and typecast to integers
+        if ($request->has('optional') && is_array($request->get('optional'))) {
+            $fileds['optional'] = array_filter(array_map(function ($value) {
+                return filter_var($value, FILTER_VALIDATE_INT);
+            }, $request->get('optional')));
+        }
+
+        $deployment = $this->createDeployment($fileds);
+
+        return redirect()->route('deployments', [
+            'id' => $deployment->id,
         ]);
     }
 
@@ -122,7 +174,7 @@ class DeploymentController extends Controller
             $deployment->status = Deployment::ABORTING;
             $deployment->save();
 
-            dispatch(new AbortDeployment($deployment));
+            dispatch(new AbortDeploymentJob($deployment));
         }
 
         return redirect()->route('deployments', [
@@ -163,7 +215,7 @@ class DeploymentController extends Controller
         $deployment = Deployment::findOrFail($deployment_id);
 
         if ($deployment->isApproved()) {
-            dispatch(new ApproveDeployment($deployment));
+            dispatch(new ApproveDeploymentJob($deployment));
         }
 
         return redirect()->route('deployments', [
@@ -180,30 +232,14 @@ class DeploymentController extends Controller
      */
     private function createDeployment(array $fields)
     {
-        //Default environment -- fix me
-
-        $optional = [];
-        if (array_key_exists('optional', $fields)) {
-            $optional = $fields['optional'];
-            unset($fields['optional']);
-        }
-
-        $environments = null;
-        if (array_key_exists('environments', $fields)) {
-            $environments = $fields['environments'];
-            unset($fields['environments']);
-        }
+        $environments = array_pull($fields, 'environments');
+        $optional = array_pull($fields, 'optional');
 
         $deployment = Deployment::create($fields);
 
-        if ($environments) {
-            $deployment->environments()->sync($environments);
-        }
-
-        $deployment->environments; // Triggers the loading
-
-        dispatch(new QueueDeployment(
+        dispatch(new SetupDeploymentJob(
             $deployment,
+            $environments,
             $optional
         ));
 

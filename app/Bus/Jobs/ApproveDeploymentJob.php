@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Jobs;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\DeployProject;
+use Fixhub\Bus\Jobs\DeployProjectJob;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\DeployStep;
@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Generates the required database entries to approve a deployment.
  */
-class ApproveDeployment extends Job
+class ApproveDeploymentJob extends Job
 {
     use DispatchesJobs;
 
@@ -55,12 +55,6 @@ class ApproveDeployment extends Job
      */
     public function handle()
     {
-        $this->dispatch(new DeployProject($this->deployment));
-        /*
-        $this->dispatch(new QueueDeployment(
-            $this->deployment,
-            $this->optional
-        ));
-        */
+        $this->dispatch(new DeployProjectJob($this->deployment));
     }
 }

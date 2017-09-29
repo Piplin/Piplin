@@ -14169,13 +14169,13 @@ dl.dl-horizontal#hook_fields dd {
   margin-bottom: 2px;
 }
 
-dl.dl-horizontal#hook_command_ids dt {
+dl.dl-horizontal.hook_ids dt {
   width: 30px;
   text-align: right;
   margin-bottom: 2px;
 }
 
-dl.dl-horizontal#hook_command_ids dd {
+dl.dl-horizontal.hook_ids dd {
   margin-left: 40px;
   margin-bottom: 2px;
 }

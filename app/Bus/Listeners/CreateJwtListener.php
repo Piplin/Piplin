@@ -19,7 +19,7 @@ use Tymon\JWTAuth\JWTAuth;
 /**
  * Listener class to create JWT on login.
  */
-class CreateJwt
+class CreateJwtListener
 {
     /**
      * @var JWTAuth

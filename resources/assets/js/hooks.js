@@ -203,7 +203,7 @@ var app = app || {};
             this.listenTo(app.Hooks, 'all', this.render);
 
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var hook = app.Hooks.get(parseInt(data.model.id));
 
                 if (server) {
@@ -211,13 +211,13 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
                     app.Hooks.add(data.model);
                 }
             });
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var hook = app.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {

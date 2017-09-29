@@ -21,7 +21,7 @@ use Fixhub\Models\Variable;
 /**
  * A class to handle cloning the command templates for the project.
  */
-class SetupProject extends Job
+class SetupProjectJob extends Job
 {
     /**
     * @var Project
@@ -39,7 +39,7 @@ class SetupProject extends Job
      * @param Project        $project
      * @param DeployTemplate $template
      *
-     * @return SetupProject
+     * @return SetupProjectJob
      */
     public function __construct(Project $project, DeployTemplate $template)
     {

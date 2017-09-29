@@ -232,7 +232,7 @@ var app = app || {};
 
             // FIXME: Need to regenerate the order!
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var command = app.Commands.get(parseInt(data.model.id));
 
                 if (command) {
@@ -240,7 +240,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -253,7 +253,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var command = app.Commands.get(parseInt(data.model.id));
 
                 if (command) {

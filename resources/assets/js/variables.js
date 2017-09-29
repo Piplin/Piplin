@@ -146,7 +146,7 @@ var app = app || {};
             this.listenTo(app.Variables, 'remove', this.addAll);
             this.listenTo(app.Variables, 'all', this.render);
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#variable_' + data.model.id).html(data.model.name);
 
                 var variable = app.Variables.get(parseInt(data.model.id));
@@ -156,7 +156,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -164,7 +164,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var variable = app.Variables.get(parseInt(data.model.id));
 
                 if (variable) {

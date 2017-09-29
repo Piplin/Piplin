@@ -67,9 +67,14 @@ Route::group([
             'uses' => 'ProjectController@apply',
         ]);
 
-        Route::post('projects/{id}/deploy', [
-            'as'   => 'projects.deploy',
-            'uses' => 'ProjectController@deploy',
+        Route::get('deployment/{id}', [
+            'as'   => 'deployments',
+            'uses' => 'DeploymentController@show',
+        ]);
+
+        Route::post('deployment/{id}', [
+            'as'   => 'deployments.create',
+            'uses' => 'DeploymentController@create',
         ]);
 
         // Deployment
@@ -91,11 +96,6 @@ Route::group([
         Route::get('deployment/{id}/deploy', [
             'as'    => 'deployments.deploy',
             'uses'  => 'DeploymentController@deploy',
-        ]);
-
-        Route::get('deployment/{id}', [
-            'as'   => 'deployments',
-            'uses' => 'DeploymentController@show',
         ]);
 
         Route::get('log/{log}', [

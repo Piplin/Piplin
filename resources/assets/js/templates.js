@@ -142,7 +142,7 @@ var app = app || {};
             this.listenTo(app.Templates, 'remove', this.addAll);
             this.listenTo(app.Templates, 'all', this.render);
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var template = app.Templates.get(parseInt(data.model.id));
 
                 if (template) {
@@ -150,11 +150,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 app.Templates.add(data.model);
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var template = app.Templates.get(parseInt(data.model.id));
 
                 if (template) {

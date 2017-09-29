@@ -11,21 +11,21 @@
 
 namespace Fixhub\Bus\Listeners;
 
-use Fixhub\Bus\Events\UserWasCreated;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
 use Fixhub\Bus\Notifications\User\UserCreatedNotification;
 
 /**
  * Sends an email when the user has been created.
  */
-class SendSignupEmail
+class SendSignupEmailListener
 {
     /**
      * Handle the event.
      *
-     * @param  UserWasCreated $event
+     * @param  UserWasCreatedEvent $event
      * @return void
      */
-    public function handle(UserWasCreated $event)
+    public function handle(UserWasCreatedEvent $event)
     {
         $event->user->notify(new UserCreatedNotification($event->password));
     }

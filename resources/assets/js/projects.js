@@ -210,7 +210,7 @@ var app = app || {};
             this.listenTo(app.Projects, 'remove', this.addAll);
             this.listenTo(app.Projects, 'all', this.render);
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var project = app.Projects.get(parseInt(data.model.id));
 
                 if (project) {
@@ -218,11 +218,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 app.Projects.add(data.model);
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var project = app.Projects.get(parseInt(data.model.id));
 
                 if (project) {

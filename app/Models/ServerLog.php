@@ -11,7 +11,6 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Events\ServerLogChanged;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\ServerLogPresenter;
 use Illuminate\Database\Eloquent\Model;

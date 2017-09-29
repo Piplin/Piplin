@@ -168,7 +168,7 @@ var app = app || {};
             this.listenTo(app.Groups, 'remove', this.addAll);
             this.listenTo(app.Groups, 'all', this.render);
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#group_' + data.model.id).html(data.model.name);
 
                 var group = app.Groups.get(parseInt(data.model.id));
@@ -178,11 +178,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 app.Groups.add(data.model);
             });
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var group = app.Groups.get(parseInt(data.model.id));
 
                 if (group) {

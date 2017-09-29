@@ -12,19 +12,18 @@
 namespace Fixhub\Bus\Events;
 
 use Fixhub\Models\User;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Event which is fired when the JSON web token expires.
+ * Event for user request to change the login email.
  */
-class JsonWebTokenExpired extends Login
+class EmailChangeRequestedEvent extends Event
 {
     use SerializesModels;
 
     /**
-     * @var User
-     */
+    * @var User
+    */
     public $user;
 
     /**
@@ -34,6 +33,6 @@ class JsonWebTokenExpired extends Login
      */
     public function __construct(User $user)
     {
-        $this->user  = $user;
+        $this->user = $user;
     }
 }

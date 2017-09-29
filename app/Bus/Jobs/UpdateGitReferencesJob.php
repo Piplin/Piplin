@@ -21,7 +21,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Updates the list of tags and branches in a project.
  */
-class UpdateGitReferences extends Job implements ShouldQueue
+class UpdateGitReferencesJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

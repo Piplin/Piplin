@@ -23,6 +23,7 @@ return [
     'status'      => '连通状态',
     'output'      => '控制台输出',
     'updated_at'  => '更新时间',
+    'environment' => '部署环境',
     'test'        => '测试该服务器是否连通',
     'path'        => '项目路径',
     'example'     => '该目录必须真实存在，并确保部署用户具有读、写权限。',

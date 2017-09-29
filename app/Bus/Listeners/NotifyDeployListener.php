@@ -11,9 +11,9 @@
 
 namespace Fixhub\Bus\Listeners;
 
-use Fixhub\Bus\Events\DeployFinished;
-use Fixhub\Bus\Notifications\Deployment\DeploymentFailed;
-use Fixhub\Bus\Notifications\Deployment\DeploymentSucceeded;
+use Fixhub\Bus\Events\DeployFinishedEvent;
+use Fixhub\Bus\Notifications\Deployment\DeploymentFailedNotification;
+use Fixhub\Bus\Notifications\Deployment\DeploymentSucceededNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
@@ -21,17 +21,17 @@ use Illuminate\Queue\InteractsWithQueue;
 /**
  * When a deploy finished, notify the followed user.
  */
-class NotifyDeploy implements ShouldQueue
+class NotifyDeployListener implements ShouldQueue
 {
     use InteractsWithQueue, DispatchesJobs;
 
     /**
      * Handle the event.
      *
-     * @param  DeployFinished $event
+     * @param  DeployFinishedEvent $event
      * @return void
      */
-    public function handle(DeployFinished $event)
+    public function handle(DeployFinishedEvent $event)
     {
         $project    = $event->deployment->project;
         $deployment = $event->deployment;
@@ -40,10 +40,10 @@ class NotifyDeploy implements ShouldQueue
             return;
         }
 
-        $notification = DeploymentFailed::class;
+        $notification = DeploymentFailedNotification::class;
         $event = 'deployment_failure';
         if ($deployment->isSuccessful()) {
-            $notification = DeploymentSucceeded::class;
+            $notification = DeploymentSucceededNotification::class;
             $event = 'deployment_success';
         }
 

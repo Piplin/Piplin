@@ -12,8 +12,8 @@
 namespace Fixhub\Http\Controllers\Api;
 
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\AbortDeployment;
-use Fixhub\Bus\Jobs\QueueDeployment;
+use Fixhub\Bus\Jobs\AbortDeploymentJob;
+use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Services\Webhooks\Beanstalkapp;
 use Fixhub\Services\Webhooks\Bitbucket;
 use Fixhub\Services\Webhooks\Custom;
@@ -140,6 +140,16 @@ class IncomingWebhookController extends Controller
                                                       ->toArray();
         }
 
+        $payload['environments'] = [];
+        if ($request->has('environments')) {
+            $valid     = $project->environments->pluck('id');
+            $requested = explode(',', $request->get('environments'));
+
+            $payload['environments'] = collect($requested)->unique()
+                                                      ->intersect($valid)
+                                                      ->toArray();
+        }
+
         // Check if the request has an update_only query string and if so check the branch matches
         if ($request->has('update_only') && $request->get('update_only') !== false) {
             $deployment = Deployment::where('project_id', $project->id)
@@ -173,7 +183,7 @@ class IncomingWebhookController extends Controller
             $deployment->status = Deployment::ABORTING;
             $deployment->save();
 
-            dispatch(new AbortDeployment($deployment));
+            dispatch(new AbortDeploymentJob($deployment));
 
             if ($deployment->is_webhook) {
                 $deployment->delete();
@@ -189,24 +199,14 @@ class IncomingWebhookController extends Controller
      */
     private function createDeployment(array $fields)
     {
-        // Fix me! see also in DeploymentController and ProjectController
-        $optional = [];
-        if (array_key_exists('optional', $fields)) {
-            $optional = $fields['optional'];
-            unset($fields['optional']);
-        }
+        $optional = array_pull($fields, 'optional');
+        $environments = array_pull($fields, 'environments');
 
         $deployment = Deployment::create($fields);
 
-        $environments = $project->environments->where('default_on', true)->pluck('id');
-        if ($environments) {
-            $deployment->environments()->sync($environments);
-        }
-
-        $deployment->environments; // Triggers the loading
-
-        dispatch(new QueueDeployment(
+        dispatch(new SetupDeploymentJob(
             $deployment,
+            $environments,
             $optional
         ));
 

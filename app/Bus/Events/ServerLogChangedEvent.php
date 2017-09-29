@@ -19,7 +19,7 @@ use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 /**
  * Event which fires when the server log status has changed.
  */
-class ServerLogChanged extends Event implements ShouldBroadcast
+class ServerLogChangedEvent extends Event implements ShouldBroadcast
 {
     use SerializesModels;
 

@@ -17,7 +17,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Event which is fired when a user is created.
  */
-class UserWasCreated extends Event
+class UserWasCreatedEvent extends Event
 {
     use SerializesModels;
 

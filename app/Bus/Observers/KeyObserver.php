@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Fixhub\Bus\Jobs\GenerateKey;
+use Fixhub\Bus\Jobs\GenerateKeyJob;
 use Fixhub\Models\Key;
 
 /**
@@ -30,7 +30,7 @@ class KeyObserver
     public function saving(Key $key)
     {
         if (empty($key->private_key) || empty($key->public_key)) {
-            $this->dispatch(new GenerateKey($key));
+            $this->dispatch(new GenerateKeyJob($key));
         }
     }
 }

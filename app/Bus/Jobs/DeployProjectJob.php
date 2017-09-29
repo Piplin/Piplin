@@ -12,8 +12,8 @@
 namespace Fixhub\Bus\Jobs;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Events\DeployFinished;
-use Fixhub\Bus\Jobs\UpdateGitMirror;
+use Fixhub\Bus\Events\DeployFinishedEvent;
+use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\DeployStep;
@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * Deploys an actual project.
  */
-class DeployProject extends Job implements ShouldQueue
+class DeployProjectJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
@@ -83,14 +83,14 @@ class DeployProject extends Job implements ShouldQueue
         $this->deployment = $deployment;
         $this->project = $deployment->project;
         $this->environment = $deployment->environment;
-        $this->cache_key  = AbortDeployment::CACHE_KEY_PREFIX . $deployment->id;
+        $this->cache_key  = AbortDeploymentJob::CACHE_KEY_PREFIX . $deployment->id;
     }
 
     /**
      * Overwrite the queue method to push to a different queue.
      *
      * @param  Queue         $queue
-     * @param  DeployProject $command
+     * @param  DeployProjectJob $command
      */
     public function queue(Queue $queue, $command)
     {
@@ -102,7 +102,7 @@ class DeployProject extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->dispatch(new UpdateGitMirror($this->project));
+        $this->dispatch(new UpdateGitMirrorJob($this->project));
 
         // If the build has been manually triggered get the committer info from the repo
         $this->updateRepoInfo();
@@ -159,7 +159,7 @@ class DeployProject extends Job implements ShouldQueue
         $this->deployment->project->save();
 
         // Notify user or others the deployment has been finished
-        event(new DeployFinished($this->deployment));
+        event(new DeployFinishedEvent($this->deployment));
 
         unlink($this->private_key);
 

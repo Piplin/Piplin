@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Session;
 /**
  * Listener class to remove the JWT on logout.
  */
-class ClearJwt
+class ClearJwtListener
 {
     /**
      * Create the event listener.

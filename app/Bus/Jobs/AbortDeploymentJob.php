@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * A class to handle caching the abort request.
  */
-class AbortDeployment extends Job
+class AbortDeploymentJob extends Job
 {
     /**
     * @var Deployment

@@ -79,7 +79,7 @@ $('form').submit(function () {
     // FIXME: Convert these menus to backbone
     // FIXME: Convert the project and deployments to backbone
     // TODO: Update the timeline
-    app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+    app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
 
         // Update todo bar
         updateTodoBar(data);
@@ -168,7 +168,7 @@ $('form').submit(function () {
         }
     });
 
-    app.listener.on('project:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+    app.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
 
         var project = $('#project_' + data.model.id);
 
@@ -207,7 +207,7 @@ $('form').submit(function () {
         }
     });
 
-    app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+    app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
 
         if (parseInt(data.model.id) === parseInt(app.project_id)) {
             window.location.href = '/';

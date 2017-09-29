@@ -10,7 +10,7 @@ use Fixhub\Models\Hook;
 /**
  * Notification sent when a deployment succeeds.
  */
-class DeploymentSucceeded extends DeploymentFinished
+class DeploymentSucceededNotification extends DeploymentFinishedNotification
 {
     /**
      * Get the mail representation of the notification.

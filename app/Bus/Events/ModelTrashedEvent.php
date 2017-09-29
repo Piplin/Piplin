@@ -17,7 +17,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Event which fires when the server status has changed.
  */
-class ModelTrashed extends Event implements ShouldBroadcast
+class ModelTrashedEvent extends Event implements ShouldBroadcast
 {
     use SerializesModels;
 

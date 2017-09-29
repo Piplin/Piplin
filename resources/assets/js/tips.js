@@ -164,7 +164,7 @@ var app = app || {};
             this.listenTo(app.Tips, 'remove', this.addAll);
             this.listenTo(app.Tips, 'all', this.render);
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var tip = app.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
@@ -172,13 +172,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Tips.add(data.model);
-                }
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                app.Tips.add(data.model);
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var tip = app.Tips.get(parseInt(data.model.id));
 
                 if (tip) {

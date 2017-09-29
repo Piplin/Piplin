@@ -24,14 +24,28 @@
                         <dt><em>commands</em></dt>
                         <dd>{{ trans('commands.webhook_commands') }}</dd>
                     @endif
+                    @if(isset($environments) && count($environments))
+                        <dt><em>environments</em></dt>
+                        <dd>{{ trans('environments.webhook_args') }}</dd>
+                    @endif
                 </dl>
 
                 @if (isset($optional) && count($optional))
                     <h5><strong>{{ trans('commands.webhook_optional') }}</strong></h5>
-                    <dl class="dl-horizontal" id="hook_command_ids">
+                    <dl class="dl-horizontal hook_ids" id="hook_command_ids">
                         @foreach($optional as $command)
                         <dt><em>{{ $command->id }}</em></dt>
                         <dd>{{ $command->name }}</dd>
+                        @endforeach
+                    </dl>
+                @endif
+
+                 @if (isset($environments) && count($environments))
+                    <h5><strong>{{ trans('environments.webhook_environment') }}</strong></h5>
+                    <dl class="dl-horizontal hook_ids" id="hook_environment_ids">
+                        @foreach($environments as $environment)
+                        <dt><em>{{ $environment->id }}</em></dt>
+                        <dd>{{ $environment->name }}</dd>
                         @endforeach
                     </dl>
                 @endif

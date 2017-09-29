@@ -180,7 +180,7 @@ var app = app || {};
             this.listenTo(app.Keys, 'remove', this.addAll);
             this.listenTo(app.Keys, 'all', this.render);
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var key = app.Keys.get(parseInt(data.model.id));
 
                 if (key) {
@@ -188,13 +188,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Keys.add(data.model);
-                }
+            app.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                app.Keys.add(data.model);
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var key = app.Keys.get(parseInt(data.model.id));
 
                 if (key) {

@@ -20,7 +20,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Tests if a server can successfully be SSHed into.
  */
-class TestServerConnection extends Job implements ShouldQueue
+class TestServerConnectionJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -39,7 +39,7 @@ class TestServerConnection extends Job implements ShouldQueue
      *
      * @param Server $server
      *
-     * @return TestServerConnection
+     * @return TestServerConnectionJob
      */
     public function __construct(Server $server)
     {

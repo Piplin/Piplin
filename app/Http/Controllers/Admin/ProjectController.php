@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Bus\Jobs\SetupProject;
+use Fixhub\Bus\Jobs\SetupProjectJob;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Models\Key;
@@ -102,7 +102,7 @@ class ProjectController extends Controller
         $template = DeployTemplate::find($template_id);
 
         if ($template) {
-            dispatch(new SetupProject(
+            dispatch(new SetupProjectJob(
                 $project,
                 $template
             ));

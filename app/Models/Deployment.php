@@ -11,7 +11,7 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Events\ModelChanged;
+use Fixhub\Bus\Events\ModelChangedEvent;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\DeploymentPresenter;
 use Illuminate\Database\Eloquent\Model;
@@ -92,7 +92,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
         parent::boot();
 
         static::saved(function (Deployment $model) {
-            event(new ModelChanged($model, 'deployment'));
+            event(new ModelChangedEvent($model, 'deployment'));
         });
     }
 

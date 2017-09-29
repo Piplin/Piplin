@@ -157,7 +157,7 @@ var app = app || {};
             this.listenTo(app.Users, 'remove', this.addAll);
             this.listenTo(app.Users, 'all', this.render);
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var user = app.Users.get(parseInt(data.model.id));
 
                 if (user) {
@@ -165,11 +165,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 app.Users.add(data.model);
             });
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var user = app.Users.get(parseInt(data.model.id));
 
                 if (user) {

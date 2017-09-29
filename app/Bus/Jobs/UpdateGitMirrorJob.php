@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Jobs;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\UpdateGitReferences;
+use Fixhub\Bus\Jobs\UpdateGitReferencesJob;
 use Fixhub\Models\Project;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
 use Fixhub\Services\Scripts\Runner as Process;
@@ -23,7 +23,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Updates the git mirror for a project.
  */
-class UpdateGitMirror extends Job
+class UpdateGitMirrorJob extends Job
 {
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
@@ -83,6 +83,6 @@ class UpdateGitMirror extends Job
         $this->project->last_mirrored = Carbon::now();
         $this->project->save();
 
-        $this->dispatch(new UpdateGitReferences($this->project));
+        $this->dispatch(new UpdateGitReferencesJob($this->project));
     }
 }

@@ -11,28 +11,27 @@
 
 namespace Fixhub\Bus\Events;
 
-use Fixhub\Models\User;
+use Fixhub\Bus\Events\Event;
+use Fixhub\Models\Deployment;
+use Fixhub\Models\Project;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Event for user request to change the login email.
+ * Deploy finished event.
  */
-class EmailChangeRequested extends Event
+class DeployFinishedEvent extends Event
 {
     use SerializesModels;
 
-    /**
-    * @var User
-    */
-    public $user;
+    public $deployment;
 
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param Deployment $deployment
      */
-    public function __construct(User $user)
+    public function __construct(Deployment $deployment)
     {
-        $this->user = $user;
+        $this->deployment = $deployment;
     }
 }

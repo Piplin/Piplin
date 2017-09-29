@@ -183,7 +183,7 @@ var app = app || {};
             this.listenTo(app.Providers, 'remove', this.addAll);
             this.listenTo(app.Providers, 'all', this.render);
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var provider = app.providers.get(parseInt(data.model.id));
 
                 if (provider) {
@@ -191,11 +191,11 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                     app.Providers.add(data.model);
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var provider = app.Providers.get(parseInt(data.model.id));
 
                 if (provider) {

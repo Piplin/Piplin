@@ -14,7 +14,7 @@ use Fixhub\Models\Project;
 /**
  * Base class for Deployment notifications.
  */
-abstract class DeploymentFinished extends Notification
+abstract class DeploymentFinishedNotification extends Notification
 {
     /**
      * @var Project

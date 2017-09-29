@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Jobs;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\DeployProject;
+use Fixhub\Bus\Jobs\DeployProjectJob;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\DeployStep;
@@ -24,38 +24,45 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Generates the required database entries to queue a deployment.
  */
-class QueueDeployment extends Job
+class SetupDeploymentJob extends Job
 {
     use DispatchesJobs;
 
     /**
-    * @var Project
-    */
+     * @var Project
+     */
     private $project;
 
     /**
-    * @var Deployment
-    */
+     * @var Deployment
+     */
     private $deployment;
 
     /**
-    * @var array
-    */
+     * @var array
+     */
     private $optional;
+
+    /**
+     * @var array
+     */
+    private $environments;
 
     /**
      * Create a new command instance.
      *
      * @param Deployment $deployment
-     * @param array      $optional
+     * @param array $environments
+     * @param array $optional
      *
      * @return void
      */
-    public function __construct(Deployment $deployment, array $optional = [])
+    public function __construct(Deployment $deployment, array $environments = [], array $optional = [])
     {
-        $this->project     = $deployment->project;
-        $this->deployment  = $deployment;
-        $this->optional    = $optional;
+        $this->deployment   = $deployment;
+        $this->environments = $environments;
+        $this->optional     = $optional;
+        $this->project      = $deployment->project;
     }
 
     /**
@@ -65,6 +72,8 @@ class QueueDeployment extends Job
      */
     public function handle()
     {
+        $this->setDeploymentEnvironments();
+
         $this->setDeploymentStatus();
 
         $hooks = $this->buildCommandList();
@@ -89,8 +98,20 @@ class QueueDeployment extends Job
         }
 
         if (!$this->project->need_approve || $this->deployment->is_webhook) {
-            $this->dispatch(new DeployProject($this->deployment));
+            $this->dispatch(new DeployProjectJob($this->deployment));
         }
+    }
+
+    private function setDeploymentEnvironments()
+    {
+        if (!$this->environments) {
+            $this->environments = $this->project->environments
+                    ->where('default_on', true)
+                    ->pluck('id');
+        }
+
+        $this->deployment->environments()->sync($this->environments);
+        $this->deployment->environments; // Triggers the loading
     }
 
     /**

@@ -20,7 +20,7 @@ use RuntimeException;
 /**
  * Job to generate SSH key.
  */
-class GenerateKey extends Job
+class GenerateKeyJob extends Job
 {
     use Dispatchable, SerializesModels;
 

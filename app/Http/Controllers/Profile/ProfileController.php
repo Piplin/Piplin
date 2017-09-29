@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Profile;
 
-use Fixhub\Bus\Events\EmailChangeRequested;
+use Fixhub\Bus\Events\EmailChangeRequestedEvent;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProfileRequest;
 use Fixhub\Http\Requests\StoreUserSettingsRequest;
@@ -120,7 +120,7 @@ class ProfileController extends Controller
      */
     public function requestEmail(Dispatcher $dispatcher)
     {
-        $dispatcher->dispatch(new EmailChangeRequested(Auth::user()));
+        $dispatcher->dispatch(new EmailChangeRequestedEvent(Auth::user()));
 
         return 'success';
     }

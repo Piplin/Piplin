@@ -11,27 +11,29 @@
 
 namespace Fixhub\Bus\Events;
 
-use Fixhub\Bus\Events\Event;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Project;
+use Fixhub\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Deploy finished event.
+ * Event which is fired when the JSON web token expires.
  */
-class DeployFinished extends Event
+class JsonWebTokenExpiredEvent extends Login
 {
     use SerializesModels;
 
-    public $deployment;
+    /**
+     * @var User
+     */
+    public $user;
 
     /**
      * Create a new event instance.
      *
-     * @param Deployment $deployment
+     * @param User $user
      */
-    public function __construct(Deployment $deployment)
+    public function __construct(User $user)
     {
-        $this->deployment = $deployment;
+        $this->user  = $user;
     }
 }

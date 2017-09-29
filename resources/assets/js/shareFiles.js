@@ -144,7 +144,7 @@ var app = app || {};
             this.listenTo(app.SharedFiles, 'remove', this.addAll);
             this.listenTo(app.SharedFiles, 'all', this.render);
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChanged', function (data) {
+            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var share = app.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
@@ -152,7 +152,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreated', function (data) {
+            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -160,7 +160,7 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashed', function (data) {
+            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
                 var share = app.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {

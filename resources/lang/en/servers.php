@@ -22,6 +22,8 @@ return [
     'port'        => 'Port',
     'status'      => 'Connection Status',
     'output'      => 'Output',
+    'updated_at'  => 'Updated at',
+    'environment' => 'Environment',
     'test'        => 'Test the server connection',
     'path'        => 'Project Path',
     'example'     => 'The directory needs to exist on the server already & be both readable and writeable',

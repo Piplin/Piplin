@@ -14,6 +14,7 @@
         app.Servers.add({!! $servers->toJson() !!});
 
         app.project_id = {{ $project->id }};
+        app.environment_id = {{ $environment->id }};
         @if(isset($action) && $action == 'apply')
             $('button#deploy_project').trigger('click');
         @endif

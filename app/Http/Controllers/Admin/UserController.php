@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Bus\Events\UserWasCreated;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreUserRequest;
 use Fixhub\Models\User;
@@ -63,7 +63,7 @@ class UserController extends Controller
 
         $user = User::create($fields);
 
-        event(new UserWasCreated($user, $request->get('password')));
+        event(new UserWasCreatedEvent($user, $request->get('password')));
 
         return $user;
     }

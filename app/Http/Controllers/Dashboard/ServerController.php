@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
-use Fixhub\Bus\Jobs\TestServerConnection;
+use Fixhub\Bus\Jobs\TestServerConnectionJob;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreServerRequest;
@@ -118,7 +118,7 @@ class ServerController extends Controller
             $server->status = Server::TESTING;
             $server->save();
 
-            dispatch(new TestServerConnection($server));
+            dispatch(new TestServerConnectionJob($server));
         }
 
         return [
