@@ -77,6 +77,20 @@
                     <hr />
                     @endif
                     <div class="form-group">
+                        <label for="command_servers">{{ trans('deployments.environment') }}</label>
+                        <ul class="list-unstyled">
+                            @foreach ($environments as $each)
+                            <li>
+                                <div class="checkbox">
+                                    <label for="deployment_command_{{ $each->id }}">
+                                        <input type="checkbox" class="deployment-environment" name="environments[]" id="deployment_environment_{{ $each->id }}" value="{{ $each->id }}" @if ($each->default_on === true) checked @endif/> {{ $each->name }}
+                                    </label>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="form-group">
                         <label for="deployment_reason">{{ trans('deployments.reason') }}</label>
                         <textarea rows="5" id="deployment_reason" class="form-control" name="reason" placeholder="{{ trans('deployments.describe_reason') }}"></textarea>
                     </div>

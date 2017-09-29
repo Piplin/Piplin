@@ -40,6 +40,7 @@ class ServerController extends Controller
             'port',
             'path',
             'project_id',
+            'environment_id',
             'deploy_code',
             'add_commands'
         );
@@ -95,6 +96,7 @@ class ServerController extends Controller
             'port',
             'path',
             'project_id',
+            'environment_id',
             'deploy_code'
         ));
 

@@ -50,15 +50,15 @@
                             </ul>
                         </div>
                     </div>
-                    @if (count($project->servers))
+                    @if (count($project->environments))
                     <div class="form-group">
-                        <label for="command_servers">{{ trans('commands.servers') }}</label>
+                        <label for="command_environments">{{ trans('commands.environments') }}</label>
                         <ul class="list-unstyled">
-                            @foreach ($project->servers as $server)
+                            @foreach ($project->environments as $environment)
                             <li>
                                 <div class="checkbox">
-                                    <label for="command_server_{{ $server->id }}">
-                                        <input type="checkbox" class="command-server" name="servers[]" id="command_server_{{ $server->id }}" value="{{ $server->id }}" /> {{ $server->name }} ({{ $server->user }}&commat;{{ $server->ip_address }})
+                                    <label for="command_environment_{{ $environment->id }}">
+                                        <input type="checkbox" class="command-environment" name="environments[]" id="command_environment_{{ $environment->id }}" value="{{ $environment->id }}" /> {{ $environment->name }}
                                     </label>
                                 </div>
                             </li>

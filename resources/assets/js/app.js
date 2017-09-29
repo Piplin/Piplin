@@ -94,12 +94,12 @@ $('form').submit(function () {
 
         if (deployment.length > 0) {
 
-            $('td:nth-child(5)', deployment).text(data.model.committer);
+            $('td:nth-child(6)', deployment).text(data.model.committer);
 
             if (data.model.commit_url) {
-                $('td:nth-child(6)', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
+                $('td:nth-child(7)', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
             } else {
-                $('td:nth-child(6)', deployment).text(data.model.short_commit);
+                $('td:nth-child(8)', deployment).text(data.model.short_commit);
             }
 
             var icon_class = 'clock-o';
@@ -109,7 +109,7 @@ $('form').submit(function () {
             var success = false;
 
             data.model.status = parseInt(data.model.status);
-            var status = $('td:nth-child(8) span.label', deployment);
+            var status = $('td:nth-child(9) span.label', deployment);
 
             if (data.model.status === DEPLOYMENT_COMPLETED) {
                 icon_class = 'checkmark-round';
@@ -141,7 +141,7 @@ $('form').submit(function () {
 
             if (done) {
                 $('button#deploy_project:disabled').removeAttr('disabled');
-                $('td:nth-child(9) a.btn-cancel', deployment).remove();
+                $('td:nth-child(10) a.btn-cancel', deployment).remove();
 
                 if (success) {
                     $('button.btn-rollback').removeClass('hide');

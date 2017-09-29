@@ -189,6 +189,7 @@ class IncomingWebhookController extends Controller
      */
     private function createDeployment(array $fields)
     {
+        // Fix me! see also in DeploymentController and ProjectController
         $optional = [];
         if (array_key_exists('optional', $fields)) {
             $optional = $fields['optional'];
@@ -196,6 +197,13 @@ class IncomingWebhookController extends Controller
         }
 
         $deployment = Deployment::create($fields);
+
+        $environments = $project->environments->where('default_on', true)->pluck('id');
+        if ($environments) {
+            $deployment->environments()->sync($environments);
+        }
+
+        $deployment->environments; // Triggers the loading
 
         dispatch(new QueueDeployment(
             $deployment,

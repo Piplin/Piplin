@@ -32,15 +32,15 @@ class Server extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'project'];
+    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'project', 'environment'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'enabled', 'ip_address', 'project_id', 'path',
-                           'status', 'output', 'deploy_code', 'port', 'order', ];
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address','project_id','environment_id',
+                           'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
 
     /**
      * The attributes that should be casted to native types.
@@ -48,12 +48,13 @@ class Server extends Model
      * @var array
      */
     protected $casts = [
-        'id'          => 'integer',
-        'project_id'  => 'integer',
+        'id'             => 'integer',
+        'project_id'     => 'integer',
         'enabled'     => 'boolean',
-        'status'      => 'integer',
-        'deploy_code' => 'boolean',
-        'port'        => 'integer',
+        'environment_id' => 'integer',
+        'status'         => 'integer',
+        'deploy_code'    => 'boolean',
+        'port'           => 'integer',
     ];
 
     /**
@@ -64,6 +65,16 @@ class Server extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * Belongs to relationship.
+     *
+     * @return Environment
+     */
+    public function environment()
+    {
+        return $this->belongsTo(Environment::class);
     }
 
     /**

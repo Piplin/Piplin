@@ -19,30 +19,33 @@ class ServerTableSeeder extends Seeder
         DB::table('servers')->delete();
 
         Server::create([
-            'name'        => 'Web服务器',
-            'ip_address'  => '192.168.75.19',
-            'user'        => 'fixhub',
-            'path'        => '/var/www',
-            'project_id'  => 1,
-            'deploy_code' => true,
+            'name'           => 'Web服务器',
+            'ip_address'     => '192.168.75.19',
+            'user'           => 'fixhub',
+            'path'           => '/var/www',
+            'project_id'     => 1,
+            'environment_id' => 1,
+            'deploy_code'    => true,
         ]);
 
         Server::create([
-            'name'        => 'API服务器',
-            'ip_address'  => '192.168.75.20',
-            'user'        => 'fixhub',
-            'path'        => '/var/www',
-            'project_id'  => 1,
-            'deploy_code' => true,
+            'name'           => 'API服务器',
+            'ip_address'     => '192.168.75.20',
+            'user'           => 'fixhub',
+            'path'           => '/var/www',
+            'project_id'     => 1,
+            'environment_id' => 1,
+            'deploy_code'    => true,
         ]);
 
         Server::create([
-            'name'        => '数据库服务器',
-            'ip_address'  => '192.168.75.21',
-            'user'        => 'fixhub',
-            'path'        => '/home/fixhub',
-            'project_id'  => 1,
-            'deploy_code' => false,
+            'name'           => '数据库服务器',
+            'ip_address'     => '192.168.75.21',
+            'user'           => 'fixhub',
+            'path'           => '/home/fixhub',
+            'project_id'     => 1,
+            'environment_id' => 1,
+            'deploy_code'    => false,
         ]);
     }
 }

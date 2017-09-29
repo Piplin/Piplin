@@ -53,9 +53,9 @@ class QueueDeployment extends Job
      */
     public function __construct(Deployment $deployment, array $optional = [])
     {
-        $this->project    = $deployment->project;
-        $this->deployment = $deployment;
-        $this->optional   = $optional;
+        $this->project     = $deployment->project;
+        $this->deployment  = $deployment;
+        $this->optional    = $optional;
     }
 
     /**
@@ -179,11 +179,16 @@ class QueueDeployment extends Job
             'command_id'    => $command->id,
         ]);
 
-        foreach ($command->servers->where('enabled', true) as $server) {
-            ServerLog::create([
-                'server_id'      => $server->id,
-                'deploy_step_id' => $step->id,
-            ]);
+        foreach ($command->environments as $environment) {
+            if ($this->deployment->environments()->find($environment->id) === null) {
+                continue;
+            }
+            foreach ($environment->servers->where('enabled', true) as $server) {
+                ServerLog::create([
+                    'server_id'      => $server->id,
+                    'deploy_step_id' => $step->id,
+                ]);
+            }
         }
     }
 
@@ -201,17 +206,19 @@ class QueueDeployment extends Job
             'deployment_id' => $this->deployment->id,
         ]);
 
-        foreach ($this->project->servers->where('enabled', true) as $server) {
-            // If command is null it is preparing one of the 4 default steps so
-            // skip servers which shouldn't have the code deployed
-            if (!$server->deploy_code) {
-                continue;
-            }
+        foreach ($this->deployment->environments as $environment) {
+            foreach ($environment->servers->where('enabled', true) as $server) {
+                // If command is null it is preparing one of the 4 default steps so
+                // skip servers which shouldn't have the code deployed
+                if (!$server->deploy_code) {
+                    continue;
+                }
 
-            ServerLog::create([
-                'server_id'      => $server->id,
-                'deploy_step_id' => $step->id,
-            ]);
+                ServerLog::create([
+                    'server_id'      => $server->id,
+                    'deploy_step_id' => $step->id,
+                ]);
+            }
         }
     }
 }

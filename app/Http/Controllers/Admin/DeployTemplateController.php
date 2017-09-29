@@ -56,6 +56,7 @@ class DeployTemplateController extends Controller
             'sharedFiles'     => $template->sharedFiles,
             'configFiles'     => $template->configFiles,
             'variables'       => $template->variables,
+            'environments'    => $template->environments,
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => $template->id,
             'project'         => $template,

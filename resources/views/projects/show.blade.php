@@ -61,7 +61,8 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="ion ion-clock"></span> {{ trans('projects.latest') }}</a></li>
-                    <li {!! $tab != 'servers' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'servers']) }}"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>
+                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'environments']) }}"><span class="ion ion-cube"></span> {{ trans('environments.label') }}</a></li>
+                    <!--<li {!! $tab != 'servers' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'servers']) }}"><span class="ion ion-social-buffer-outline"></span> {{ trans('servers.label') }}</a></li>-->
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
                     <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
                     <li {!! $tab != 'files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
@@ -71,9 +72,14 @@
                     <div class="tab-pane {!! $tab != '' ?: 'active' !!}" id="deployments">
                         @include('projects._partials.deployments')
                     </div>
+                    <div class="tab-pane {!! $tab != 'environments' ?: 'active' !!}" id="environments">
+                        @include('projects._partials.environments')
+                    </div>
+                    <!--
                     <div class="tab-pane {!! $tab != 'servers' ?: 'active' !!}" id="servers">
                         @include('projects._partials.servers')
                     </div>
+                    -->
                     <div class="tab-pane {!! $tab != 'commands' ?: 'active' !!}" id="commands">
                         @include('projects._partials.commands')
                         @include('projects._partials.variables')
@@ -96,6 +102,7 @@
     @include('projects.dialogs.shared_files')
     @include('projects.dialogs.config_files')
     @include('projects.dialogs.variable')
+    @include('projects.dialogs.environment')
     @include('projects.dialogs.hook')
     @include('projects.dialogs.key')
     @include('projects.dialogs.reason')
@@ -118,12 +125,14 @@
         new app.ConfigFilesTab();
         new app.HooksTab();
         new app.VariablesTab();
+        new app.EnvironmentsTab();
 
         app.Servers.add({!! $servers->toJson() !!});
         app.SharedFiles.add({!! $sharedFiles->toJson() !!});
         app.ConfigFiles.add({!! $configFiles->toJson() !!});
         app.Hooks.add({!! $hooks->toJson() !!});
         app.Variables.add({!! $variables->toJson() !!});
+        app.Environments.add({!! $environments->toJson() !!});
 
         app.project_id = {{ $project->id }};
         @if(isset($action) && $action == 'apply')

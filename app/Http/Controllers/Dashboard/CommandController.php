@@ -85,7 +85,7 @@ class CommandController extends Controller
             'step',
             'optional',
             'default_on',
-            'servers'
+            'environments'
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
@@ -105,20 +105,20 @@ class CommandController extends Controller
 
         $fields['order'] = $order;
 
-        $servers = null;
-        if (isset($fields['servers'])) {
-            $servers = $fields['servers'];
-            unset($fields['servers']);
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
         }
 
         $command = $target->commands()->create($fields);
         //$command = Command::create($fields);
 
-        if ($servers) {
-            $command->servers()->sync($servers);
+        if ($environments) {
+            $command->environments()->sync($environments);
         }
 
-        $command->servers; // Triggers the loading
+        $command->environments; // Triggers the loading
 
         return $command;
     }
@@ -138,24 +138,24 @@ class CommandController extends Controller
             'script',
             'optional',
             'default_on',
-            'servers'
+            'environments'
         );
 
         $command = Command::findOrFail($command_id);
 
-        $servers = null;
-        if (isset($fields['servers'])) {
-            $servers = $fields['servers'];
-            unset($fields['servers']);
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
         }
 
         $command->update($fields);
 
-        if ($servers) {
-            $command->servers()->sync($servers);
+        if ($environments) {
+            $command->environments()->sync($environments);
         }
 
-        $command->servers; // Triggers the loading
+        $command->environments; // Triggers the loading
 
         return $command;
     }
@@ -211,7 +211,7 @@ class CommandController extends Controller
     protected function getForDeployStep($target, $step)
     {
         return $target->commands()
-                ->with('servers')
+                ->with(['environments'])
                 ->whereIn('step', [$step - 1, $step + 1])
                 ->orderBy('order', 'asc')
                     ->get()->toJson(); // Because CommandPresenter toJson() is not working in the view

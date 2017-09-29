@@ -75,11 +75,11 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
-        'project_id' => 'integer',
-        'user_id'    => 'integer',
-        'status'     => 'integer',
-        'is_webhook' => 'boolean',
+        'id'             => 'integer',
+        'project_id'     => 'integer',
+        'user_id'        => 'integer',
+        'status'         => 'integer',
+        'is_webhook'     => 'boolean',
     ];
 
     /**
@@ -105,6 +105,19 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     {
         return $this->belongsTo(Project::class);
     }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function environments()
+    {
+        return $this->belongsToMany(Environment::class)
+                    ->orderBy('id', 'ASC');
+    }
+
 
     /**
      * Belongs to relationship.

@@ -64,6 +64,12 @@ class SetupProject extends Job
             $this->project->commands()->create($data);
         }
 
+        foreach ($this->template->environments as $environment) {
+            $data = $environment->toArray();
+
+            $this->project->environments()->create($data);
+        }
+
         foreach ($this->template->variables as $variable) {
             $data = $variable->toArray();
 

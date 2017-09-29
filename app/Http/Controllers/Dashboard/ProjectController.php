@@ -13,6 +13,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeployment;
 use Fixhub\Bus\Jobs\QueueDeployment;
 use Fixhub\Models\Command;
@@ -50,6 +51,7 @@ class ProjectController extends Controller
             'sharedFiles'     => $project->sharedFiles,
             'configFiles'     => $project->configFiles,
             'variables'       => $project->variables,
+            'environments'    => $project->environments,
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => $project->id,
             'optional'        => $optional,
@@ -75,13 +77,14 @@ class ProjectController extends Controller
     /**
      * Adds a deployment for the specified project to the queue.
      *
-     * @param Request $request
+     * @param StoreDeploymentRequest $request
      * @param int $project_id
      *
      * @return Response
      */
-    public function deploy(Request $request, $project_id)
+    public function deploy(StoreDeploymentRequest $request, $project_id)
     {
+        // Fix me! see also in DeploymentController and IncomingWebhookController
         $project = Project::findOrFail($project_id);
 
         if ($project->servers->where('deploy_code', true)->count() === 0) {
@@ -89,10 +92,11 @@ class ProjectController extends Controller
         }
 
         $data = [
-            'reason'     => $request->get('reason'),
-            'project_id' => $project->id,
-            'branch'     => $project->branch,
-            'optional'   => [],
+            'reason'         => $request->get('reason'),
+            'project_id'     => $project->id,
+            'environments'   => $request->get('environments'),
+            'branch'         => $project->branch,
+            'optional'       => [],
         ];
 
         // If allow other branches is set, check for post data
@@ -119,7 +123,20 @@ class ProjectController extends Controller
             $optional = array_pull($data, 'optional');
         }
 
+        $environments = null;
+        if (isset($data['environments'])) {
+            $environments = $data['environments'];
+            unset($data['environments']);
+        }
+
         $deployment = Deployment::create($data);
+
+        if ($environments) {
+            $deployment->environments()->sync($environments);
+        }
+
+        $deployment->environments; // Triggers the loading
+
 
         dispatch(new QueueDeployment(
             $deployment,

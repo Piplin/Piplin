@@ -33,6 +33,12 @@ Route::group([
             'uses' => 'CommandController@index',
         ]);
 
+        Route::get('projects/{id}/environments/{environment_id}', [
+            'as'   => 'environments.show',
+            'uses' => 'EnvironmentController@show',
+        ]);
+
+
         Route::post('servers/reorder', [
             'as'    => 'servers.reorder',
             'uses'  => 'ServerController@reorder',
@@ -111,6 +117,7 @@ Route::group([
             ], function () use ($actions) {
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
+                Route::resource('environments', 'EnvironmentController', $actions);
                 Route::resource('hooks', 'HookController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);

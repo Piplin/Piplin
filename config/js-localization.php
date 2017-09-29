@@ -43,6 +43,7 @@ return [
         'deployments'   => ['completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', ],
         'variables'     => ['create', 'edit'],
+        'environments'  => ['create', 'edit'],
         'projects'      => ['create', 'edit', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
         'commands'      => ['create', 'edit'],
         'groups'        => ['create', 'edit'],

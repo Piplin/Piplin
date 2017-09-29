@@ -1,21 +1,10 @@
 <?php
 
-/*
- * This file is part of Fixhub.
- *
- * Copyright (C) 2016 Fixhub.org
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-/**
- * Create table config_files.
- */
-class CreateConfigFilesTable extends Migration
+class CreateEnvironmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -24,13 +13,13 @@ class CreateConfigFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('config_files', function (Blueprint $table) {
+        Schema::create('environments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('path');
-            $table->text('content');
+            $table->text('description');
             $table->integer('targetable_id');
             $table->string('targetable_type');
+            $table->boolean('default_on')->default(true);
             $table->timestamps();
             $table->softDeletes();
 
@@ -45,6 +34,6 @@ class CreateConfigFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('config_files');
+        Schema::dropIfExists('environments');
     }
 }

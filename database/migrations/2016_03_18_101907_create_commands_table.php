@@ -25,7 +25,7 @@ class CreateCommandsTable extends Migration
         Schema::create('commands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('user');
+            $table->text('user')->nullable()->default(null);
             $table->text('script');
             $table->integer('targetable_id');
             $table->string('targetable_type');
@@ -35,6 +35,8 @@ class CreateCommandsTable extends Migration
             $table->boolean('default_on')->default(false);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['targetable_id', 'targetable_type']);
         });
     }
 

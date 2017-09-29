@@ -14,9 +14,9 @@ namespace Fixhub\Http\Requests;
 use Fixhub\Http\Requests\Request;
 
 /**
- * Request for validating deploytemplates.
+ * Request for validating deployments.
  */
-class StoreDeployTemplateRequest extends Request
+class StoreDeploymentRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -26,7 +26,7 @@ class StoreDeployTemplateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'environments' => 'required',
         ];
     }
 }

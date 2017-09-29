@@ -33,6 +33,7 @@ return [
     'run_as'               => '运行用户',
     'migrations'           => '数据迁移',
     'bash'                 => 'Bash脚本',
+    'environments'         => '部署环境',
     'servers'              => '服务器',
     'default'              => '默认',
     'options'              => 'Bash脚本中可使用的变量 (点击查看)',

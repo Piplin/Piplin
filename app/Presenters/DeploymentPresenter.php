@@ -181,4 +181,22 @@ class DeploymentPresenter extends BasePresenter
 
         return $this->wrappedObject->short_commit;
     }
+    /**
+     * Gets the readable list of environments.
+     *
+     * @return string
+     */
+    public function environment_names()
+    {
+         $environments = [];
+         foreach ($this->wrappedObject->environments as $environment) {
+            $environments[] = $environment->name;
+         }
+
+        if (count($environments)) {
+            return implode(', ', $environments);
+        }
+
+        return trans('app.none');
+    }
 }

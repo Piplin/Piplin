@@ -60,6 +60,7 @@ var app = app || {};
             $('#command_default_on_row').addClass('hide');
 
             $('.command-server').prop('checked', true);
+            $('.command-environment').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
@@ -126,6 +127,12 @@ var app = app || {};
             server_ids.push($(this).val());
         });
 
+        var environment_ids = [];
+
+        $('.command-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
         command.save({
             name:            $('#command_name').val(),
             script:          editor.getValue(),
@@ -133,7 +140,7 @@ var app = app || {};
             step:            $('#command_step').val(),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val(),
-            servers:         server_ids,
+            environments:    environment_ids,
             optional:        $('#command_optional').is(':checked'),
             default_on:      $('#command_default_on').is(':checked')
         }, {
@@ -331,9 +338,9 @@ var app = app || {};
                 $('#command_default_on_row').removeClass('hide');
             }
 
-            $('.command-server').prop('checked', false);
-            $(this.model.get('servers')).each(function (index, server) {
-                $('#command_server_' + server.id).prop('checked', true);
+            $('.command-environment').prop('checked', false);
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#command_environment_' + environment.id).prop('checked', true);
             });
         },
         trashCommand: function() {

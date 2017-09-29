@@ -53,6 +53,7 @@ var app = app || {};
             $('#server_port').val('22');
             $('#server_user').val('');
             $('#server_path').val('');
+            $('#server_environment_id').val($("#server_environment_id option:selected").val());
             $('#server_deploy_code').prop('checked', true);
             $('#add-server-command', modal).show();
         }
@@ -109,15 +110,16 @@ var app = app || {};
         }
 
         server.save({
-            name:         $('#server_name').val(),
+            name:           $('#server_name').val(),
+            ip_address:     $('#server_address').val(),
             enabled:      $('#server_enabled').is(':checked'),
-            ip_address:   $('#server_address').val(),
-            port:         $('#server_port').val(),
-            user:         $('#server_user').val(),
-            path:         $('#server_path').val(),
-            deploy_code:  $('#server_deploy_code').is(':checked'),
-            project_id:   $('input[name="project_id"]').val(),
-            add_commands: $('#server_commands').is(':checked')
+            port:           $('#server_port').val(),
+            user:           $('#server_user').val(),
+            path:           $('#server_path').val(),
+            deploy_code:    $('#server_deploy_code').is(':checked'),
+            project_id:     $('input[name="project_id"]').val(),
+            environment_id: $('#server_environment_id').val(),
+            add_commands:   $('#server_commands').is(':checked')
         }, {
             wait: true,
             success: function(model, response, options) {
