@@ -28,7 +28,8 @@ class DeployTemplate extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $visible = ['id', 'name', 'command_count', 'file_count', 'config_count', 'variable_count', 'environment_count'];
+    protected $visible = ['id', 'name', 'command_count', 'file_count',
+                          'config_count', 'variable_count', 'environment_count'];
 
     /**
      * The attributes that are mass assignable.

@@ -39,7 +39,8 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'enabled', 'ip_address', 'project_id', 'environment_id', 'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address','project_id','environment_id',
+                           'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
 
     /**
      * The attributes that should be casted to native types.
