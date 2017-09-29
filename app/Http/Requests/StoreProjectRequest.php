@@ -25,7 +25,7 @@ class StoreProjectRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'               => 'required|max:255',
             'repository'         => 'required',
             'branch'             => 'required|max:255',
@@ -38,5 +38,12 @@ class StoreProjectRequest extends Request
             'allow_other_branch' => 'boolean',
             'need_approve'       => 'boolean',
         ];
+
+        // On editing remove the template_id rule
+        if ($this->get('id')) {
+            unset($rules['template_id']);
+        }
+
+        return $rules;
     }
 }

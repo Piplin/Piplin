@@ -53,6 +53,7 @@
 
         new app.ProjectsTab();
         app.Projects.add(projects.data);
+        app.group_id = {{ $group->id }};
         @if(isset($action) && $action == 'create')
         $('button.btn.btn-success').trigger('click');
         @endif

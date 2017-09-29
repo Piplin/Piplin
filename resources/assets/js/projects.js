@@ -214,7 +214,11 @@ var app = app || {};
                 var project = app.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    project.set(data.model);
+                    if(app.group_id == undefined || app.group_id == data.model.group_id) {
+                        project.set(data.model);
+                    } else {
+                        app.Projects.remove(project);
+                    }
                 }
             });
 
