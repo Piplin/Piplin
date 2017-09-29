@@ -25,7 +25,8 @@ class CreateCommandsTable extends Migration
         Schema::create('commands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('user')->nullable()->default(null);;
+            $table->text('user')->nullable()->default(null);
+            ;
             $table->text('script');
             $table->integer('targetable_id');
             $table->string('targetable_type');

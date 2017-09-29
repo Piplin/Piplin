@@ -16,6 +16,7 @@ use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Project;
+
 /**
  * Environment management controller.
  */
