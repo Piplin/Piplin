@@ -102,6 +102,11 @@ class SetupDeploymentJob extends Job
         }
     }
 
+    /**
+     * Set the deployment environments.
+     *
+     * @return void
+     */
     private function setDeploymentEnvironments()
     {
         if (!$this->environments) {
