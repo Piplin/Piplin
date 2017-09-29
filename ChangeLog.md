@@ -3,11 +3,23 @@ Version 0.2.1 (unreleased)
 
 新功能:
 
+* 实现多环境部署功能
+* 集成OAuth2.0平台接入商，可通过后台进行管理
+* 实现找回密码、新用户账号开通邮件通知功能
 
 改进:
 
+* 重构Notification机制
+* 优化部署详情页，明显区分内置步骤和自定义步骤
+* Gravatar功能可进行关闭
+* 新增 端砚黑 主题
+* 清理issues、nofitySlacks和notifyEmails相关文件
+
 
 Bug修复:
+
+* 修复JS内语言不一致的bug
+* 修复部署模板页面的ace报错
 
 
 Version 0.2.0 (2017-09-12)
