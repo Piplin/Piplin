@@ -19,6 +19,7 @@ class CreateEnvironmentsTable extends Migration
             $table->text('description');
             $table->integer('targetable_id');
             $table->string('targetable_type');
+            $table->boolean('default_on')->default(true);
             $table->timestamps();
             $table->softDeletes();
 

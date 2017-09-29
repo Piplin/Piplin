@@ -15,9 +15,9 @@ use Fixhub\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 /**
- * Password reset controller.
+ * Controller for handling password resets.
  */
-class PasswordController extends Controller
+class ResetPasswordController extends Controller
 {
     use ResetsPasswords;
 
@@ -35,8 +35,6 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->subject = trans('emails.reset_subject');
-
         $this->middleware('guest');
     }
 }

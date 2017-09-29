@@ -42,7 +42,7 @@ class TestNotification extends Notification
     /**
      * Get the slack version of the notification.
      *
-     * @param NotifySlack $notification
+     * @param Hook $notification
      *
      * @return SlackMessage
      */

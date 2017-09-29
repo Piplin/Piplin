@@ -34,7 +34,7 @@ var app = app || {};
     $('#link').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
-        var title = Lang.get('links.create');
+        var title = trans('links.create');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -42,7 +42,7 @@ var app = app || {};
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
-            title = Lang.get('links.edit');
+            title = trans('links.edit');
             $('.btn-danger', modal).show();
         } else {
             $('#link_id').val('');

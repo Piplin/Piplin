@@ -60,6 +60,7 @@ class EnvironmentController extends Controller
         $fields = $request->only(
             'name',
             'description',
+            'default_on',
             'targetable_type',
             'targetable_id'
         );
@@ -85,7 +86,8 @@ class EnvironmentController extends Controller
 
         $environment->update($request->only(
             'name',
-            'description'
+            'description',
+            'default_on'
         ));
 
         return $environment;

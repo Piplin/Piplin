@@ -12,17 +12,15 @@
 Route::group([
     'middleware' => ['web'],
     'namespace'  => 'Auth',
-    'as'         => 'auth.',
-    'prefix'     => 'auth',
 ], function () {
     Route::get('login', [
             'middleware' => 'guest',
-            'as'         => 'login',
+            'as'         => 'auth.login',
             'uses'       => 'AuthController@getLogin',
         ]);
 
     Route::post('login', [
-            'middleware' => ['guest', 'throttle:10,10'],
+            'middleware' => ['guest', 'throttle:1000,10'],
             'as'         => 'login-verify',
             'uses'       => 'AuthController@postLogin',
         ]);
@@ -38,28 +36,36 @@ Route::group([
             'uses'       => 'AuthController@postTwoFactorAuthentication',
         ]);
 
-    Route::get('password/reset/{token?}', [
-            'as'   => 'reset-password-confirm',
-            'uses' => 'PasswordController@showResetForm',
-        ]);
-
-    Route::post('password/email', [
-            'as'   => 'request-password-reset',
-            'uses' => 'PasswordController@sendResetLinkEmail',
+    Route::get('password/reset', [
+            'as'   => 'auth.reset-password',
+            'uses' => 'ForgotPasswordController@showLinkRequestForm',
         ]);
 
     Route::post('password/reset', [
-            'as'   => 'reset-password',
-            'uses' => 'PasswordController@reset',
+            'as' => 'password.reset',
+            'uses' => 'ResetPasswordController@reset',
+        ]);
+
+    Route::post('password/email', [
+            'as'   => 'auth.reset-email',
+            'uses' => 'ForgotPasswordController@sendResetLinkEmail',
+        ]);
+
+    Route::get('password/reset/{token?}', [
+            'as'   => 'password.reset',
+            'uses' => 'ResetPasswordController@showResetForm',
         ]);
 
     Route::get('logout', [
             'middleware' => 'auth',
-            'as'         => 'logout',
+            'as'         => 'auth.logout',
             'uses'       => 'AuthController@logout',
         ]);
 
     // OAuth 2.0 provider
-    Route::get('provider/{provider}', 'AuthController@provider');
-    Route::get('provider/{provider}/callback', 'AuthController@callback');
+    Route::get('oauth/{provider}', [
+        'as'   => 'oauth.provider',
+        'uses' => 'AuthController@provider',
+    ]);
+    Route::get('oauth/{provider}/callback', 'AuthController@callback');
 });

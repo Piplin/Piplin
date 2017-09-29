@@ -19,5 +19,7 @@ return [
     'description' => 'Description',
     'warning'     => 'The variable could not be saved, please check the form below.',
     'example'     => 'e.g. Staging, QA, or Production',
+    'default_on'  => 'Default on?',
+    'default_description'  => 'Include this environment unless explicitly disabled (e.g. checkbox on by default)',
 
 ];

@@ -58,8 +58,7 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-        return view('auth.login')
-            ->with('provider_count', Provider::count());
+        return view('auth.login');
     }
 
     /**

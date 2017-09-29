@@ -34,7 +34,6 @@
                     <th>{{ trans('servers.connect_as') }}</th>
                     <th>{{ trans('servers.ip_address') }}</th>
                     <th>{{ trans('servers.port') }}</th>
-                    <th>{{ trans('servers.runs_code') }}</th>
                     <th>{{ trans('servers.status') }}</th>
                     <th>{{ trans('servers.updated_at') }}</th>
                     <th>&nbsp;</th>
@@ -49,17 +48,10 @@
 
 @push('templates')
     <script type="text/template" id="server-template">
-        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-ios-drag"></i></span><%- name %></td>
+        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-ios-drag"></i></span><%- name %><% if (!enabled) { %> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } %></td>
         <td><%- user %></td>
         <td><%- ip_address %></td>
         <td><%- port %></td>
-        <td>
-            <% if (deploy_code) { %>
-                {{ trans('app.yes') }}
-            <% } else { %>
-                {{ trans('app.no') }}
-            <% } %>
-        </td>
         <td>
              <span class="label label-<%- status_css %>"><i class="ion ion-<%-icon_css %>"></i> <%- status %></span>
         </td>

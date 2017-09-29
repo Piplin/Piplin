@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-save"><i class="fa fa-save"></i> {{ trans('app.save') }}</button>
+                    <button type="button" class="btn btn-primary pull-left btn-save"><i class="fa fa-save"></i> {{ trans('app.save') }}</button>
                 </div>
             </form>
         </div>

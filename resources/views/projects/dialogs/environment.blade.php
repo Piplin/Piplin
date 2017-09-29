@@ -23,6 +23,15 @@
                         <label for="environment_description">{{ trans('environments.description') }}</label>
                         <input type="text" class="form-control" id="environment_description" name="description" placeholder="Description" />
                     </div>
+                    <div class="form-group">
+                        <label>{{ trans('environments.default_on') }}</label>
+                        <div class="checkbox">
+                            <label for="environment_default_on">
+                                <input type="checkbox" value="1" name="default_on" id="environment_default_on" />
+                                {{ trans('environments.default_description') }}
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary pull-left btn-save">{{ trans('app.save') }}</button>

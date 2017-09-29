@@ -21,7 +21,11 @@ use Fixhub\Bus\Listeners\EmailChangeConfirmation;
 use Fixhub\Bus\Listeners\NotifyDeploy;
 use Fixhub\Bus\Listeners\SendSignupEmail;
 use Fixhub\Models\Hook;
+use Fixhub\Models\Key;
+use Fixhub\Models\ServerLog;
 use Fixhub\Bus\Observers\HookObserver;
+use Fixhub\Bus\Observers\KeyObserver;
+use Fixhub\Bus\Observers\ServerLogObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -56,6 +60,8 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        Key::observe(KeyObserver::class);
         Hook::observe(HookObserver::class);
+        ServerLog::observe(ServerLogObserver::class);
     }
 }

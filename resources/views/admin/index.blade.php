@@ -9,7 +9,7 @@
         <!-- start -->
         <div class="row">
             <div class="col-md-6">
-                @include('admin.dashboard.environment')
+                @include('admin.dashboard.environments')
             </div>
             <div class="col-md-6">
                 @include('admin.dashboard.dependencies')

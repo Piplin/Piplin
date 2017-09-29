@@ -87,6 +87,21 @@ Route::group([
         'uses'  => 'LinkController@reorder',
     ]);
 
+    Route::resource('providers', 'ProviderController', [
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'names' => [
+            'create'  => 'admin.providers.create',
+            'index'   => 'admin.providers.index',
+            'store'   => 'admin.providers.store',
+            'update'  => 'admin.providers.update',
+            'destroy' => 'admin.providers.destroy',
+        ],
+    ]);
+    Route::post('providers/reorder', [
+        'as'    => 'admin.providers.reorder',
+        'uses'  => 'LinkController@reorder',
+    ]);
+
     Route::resource('tips', 'TipController', [
         'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [

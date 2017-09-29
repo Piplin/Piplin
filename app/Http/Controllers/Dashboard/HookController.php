@@ -76,7 +76,7 @@ class HookController extends Controller
     /**
      * Remove the specified hook from storage.
      *
-     * @param int $server_id
+     * @param int $hook_id
      *
      * @return Response
      */

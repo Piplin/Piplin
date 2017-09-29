@@ -18,25 +18,25 @@ use Illuminate\Notifications\Notification;
 use Fixhub\Models\User;
 
 /**
- * Notification sent when changing email.
+ * Notification sent when user was created.
  */
-class ChangeEmail extends Notification implements ShouldQueue
+class UserCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * @var string
      */
-    private $token;
+    private $password;
 
     /**
      * Create a new notification instance.
      *
-     * @param string     $token
+     * @param string $password
      */
-    public function __construct($token)
+    public function __construct($password)
     {
-        $this->token = $token;
+        $this->password = $password;
     }
 
     /**
@@ -58,16 +58,14 @@ class ChangeEmail extends Notification implements ShouldQueue
      */
     public function toMail(User $user)
     {
-        $action = route('profile.confirm-change-email', ['token' => $this->token]);
-
         return (new MailMessage())
             ->view(['notifications.email', 'notifications.email-plain'], [
                 'name' => $user->name,
             ])
-            ->subject(trans('emails.confirm_email'))
-            ->line(trans('emails.change_header'))
-            ->line(trans('emails.change_below'))
-            ->action(trans('emails.login_change'), $action)
-            ->line(trans('emails.change_footer'));
+            ->subject(trans('emails.creation_subject'))
+            ->line(trans('emails.created'))
+            ->line(trans('emails.username', ['username' => $user->name, 'email' => $user->email]))
+            ->line(trans('emails.password', ['password' => $this->password]))
+            ->action(trans('emails.login_now'), route('dashboard'));
     }
 }

@@ -28,7 +28,7 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'default_on'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -44,6 +44,7 @@ class Environment extends Model
      */
     protected $casts = [
         'id'         => 'integer',
+        'default_on' => 'boolean',
     ];
 
     /**

@@ -1,7 +1,3 @@
-$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-    jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
-});
-
 var app = app || {};
 
 toastr.options.closeButton = true;
@@ -14,6 +10,16 @@ toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.timeOut = 5000;
 toastr.options.extendedTimeOut = 7000;
 
+$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+    jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
+});
+
+// Prevent double form submission
+$('form').submit(function () {
+    var $form = $(this);
+    $form.find(':submit').prop('disabled', true);
+});
+
 (function ($) {
 
     // Don't need to try and connect to the web socket when not logged in
@@ -24,6 +30,8 @@ toastr.options.extendedTimeOut = 7000;
     Lang.setLocale($('meta[name="locale"]').attr('content'));
 
     $('[data-toggle="tooltip"]').tooltip();
+
+
 
     var FINISHED     = 0;
     var PENDING      = 1;

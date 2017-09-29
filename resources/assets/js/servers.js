@@ -48,6 +48,7 @@ var app = app || {};
         } else {
             $('#server_id').val('');
             $('#server_name').val('');
+            $('#server_enabled').prop('checked', true);
             $('#server_address').val('');
             $('#server_port').val('22');
             $('#server_user').val('');
@@ -111,6 +112,7 @@ var app = app || {};
         server.save({
             name:           $('#server_name').val(),
             ip_address:     $('#server_address').val(),
+            enabled:      $('#server_enabled').is(':checked'),
             port:           $('#server_port').val(),
             user:           $('#server_user').val(),
             path:           $('#server_path').val(),
@@ -283,6 +285,7 @@ var app = app || {};
             // FIXME: Sure this is wrong?
             $('#server_id').val(this.model.id);
             $('#server_name').val(this.model.get('name'));
+            $('#server_enabled').prop('checked', (this.model.get('enabled') === true));
             $('#server_address').val(this.model.get('ip_address'));
             $('#server_port').val(this.model.get('port'));
             $('#server_user').val(this.model.get('user'));

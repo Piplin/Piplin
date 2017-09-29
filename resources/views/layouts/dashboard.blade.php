@@ -12,7 +12,7 @@
         <meta name="token" content="{{ Session::token() }}" />
         <meta name="socket_url" content="{{ config('fixhub.socket_url') }}" />
         <meta name="jwt" content="{{ Session::get('jwt') }}" />
-        <meta name="locale" content="{{ App::getLocale() }}" />
+        <meta name="locale" content="{{ $language }}" />
     </head>
     <body class="hold-transition skin-{{ $theme }}">
         <div class="wrapper">

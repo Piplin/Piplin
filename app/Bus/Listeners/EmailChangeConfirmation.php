@@ -12,7 +12,7 @@
 namespace Fixhub\Bus\Listeners;
 
 use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Notifications\User\ChangeEmail;
+use Fixhub\Bus\Notifications\User\ChangeEmailNotification;
 
 /**
  * Request email change handler.
@@ -28,6 +28,6 @@ class EmailChangeConfirmation
     public function handle(EmailChangeRequested $event)
     {
         $token = $event->user->requestEmailToken();
-        $event->user->notify(new ChangeEmail($token));
+        $event->user->notify(new ChangeEmailNotification($token));
     }
 }

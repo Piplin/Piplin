@@ -33,7 +33,8 @@ return [
     'slack'                            => 'Slack',
     'mail'                             => 'E-mail',
     'which'                            => 'Which type of notification do you wish to add?',
-    'test_message'                     => 'This is a test to ensure the notification is setup correctly :ok_hand:',
+    'test_subject'                     => 'Test Notification',
+    'test_message'                     => 'This is a test to ensure the notification is setup correctly.',
     'enabled'                          => 'Hook enabled?',
 
     // Slack

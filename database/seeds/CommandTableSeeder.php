@@ -43,7 +43,7 @@ EOD;
             'user'       => '',
             'step'       => Command::BEFORE_CLONE,
             'optional'   => true,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'After Create New Release',
@@ -52,7 +52,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::AFTER_CLONE,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'Before Install',
@@ -61,7 +61,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::BEFORE_INSTALL,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'After Install',
@@ -70,7 +70,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::AFTER_INSTALL,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'Before Activate',
@@ -79,7 +79,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::BEFORE_ACTIVATE,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'After Activate',
@@ -88,7 +88,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::AFTER_ACTIVATE,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'Before Purge',
@@ -97,7 +97,7 @@ EOD;
             'targetable_id' => 1,
             'user'       => '',
             'step'       => Command::BEFORE_PURGE,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
 
         Command::create([
             'name'       => 'After Purge',
@@ -107,6 +107,6 @@ EOD;
             'user'       => '',
             'step'       => Command::AFTER_PURGE,
             'optional'   => true,
-        ])->servers()->attach([1, 2]);
+        ])->environments()->attach([1, 2]);
     }
 }

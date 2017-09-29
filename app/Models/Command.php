@@ -70,18 +70,6 @@ class Command extends Model implements HasPresenter
      *
      * @return Server
      */
-    
-    public function servers()
-    {
-        return $this->belongsToMany(Server::class)
-                    ->orderBy('order', 'ASC');
-    }
-
-    /**
-     * Belongs to many relationship.
-     *
-     * @return Server
-     */
     public function environments()
     {
         return $this->belongsToMany(Environment::class)

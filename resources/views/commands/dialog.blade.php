@@ -66,22 +66,6 @@
                         </ul>
                     </div>
                     @endif
-                    @if (count($project->servers))
-                    <div class="form-group">
-                        <label for="command_servers">{{ trans('commands.servers') }}</label>
-                        <ul class="list-unstyled">
-                            @foreach($project->servers as $server)
-                            <li>
-                                <div class="checkbox">
-                                    <label for="command_server_{{ $server->id }}">
-                                        <input type="checkbox" class="command-server" name="servers[]" id="command_server_{{ $server->id }}" value="{{ $server->id }}" /> {{ $server->name }} ({{ $server->user }}&commat;{{ $server->ip_address }})
-                                    </label>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <div class="form-group">
                         <label>{{ trans('commands.optional') }}</label>
                         <div class="checkbox">

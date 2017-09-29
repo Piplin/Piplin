@@ -11,6 +11,7 @@
             <thead>
                 <tr>
                     <th>{{ trans('environments.name') }}</th>
+                    <th>{{ trans('environments.default_on') }}</th>
                     <th>{{ trans('environments.servers') }}</th>
                     <th>{{ trans('environments.description') }}</th>
                     <th>&nbsp;</th>
@@ -32,6 +33,7 @@
         <%- name %>
         @endif
         </td>
+        <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td><%- server_count %></td>
         <td><%- description %></td>
         <td>

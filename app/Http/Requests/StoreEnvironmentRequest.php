@@ -28,6 +28,7 @@ class StoreEnvironmentRequest extends Request
         return [
             'name'        => 'required|max:255',
             'description' => 'max:255',
+            'default_on'  => 'boolean',
         ];
     }
 }

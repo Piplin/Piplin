@@ -329,6 +329,7 @@ var app = app || {};
         var target = $(event.currentTarget);
         var project_id = target.data('project-id');
         var icon = $('i', target);
+        var interval = 3000;
 
         if ($('.fixhub-spin', target).length > 0) {
             return;
@@ -337,6 +338,7 @@ var app = app || {};
         target.attr('disabled', 'disabled');
 
         icon.addClass('fixhub-spin');
+        $('#webhook').fadeOut(interval);
 
         $.ajax({
             type: 'GET',
@@ -344,7 +346,7 @@ var app = app || {};
         }).fail(function (response) {
 
         }).done(function (data) {
-            $('#webhook').html(data.url);
+            $('#webhook').fadeIn(interval).html(data.url);
         }).always(function () {
             icon.removeClass('fixhub-spin');
             target.removeAttr('disabled');

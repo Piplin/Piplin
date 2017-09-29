@@ -83,6 +83,7 @@ elixir(function(mix) {
         'projects.js',
         'templates.js',
         'keys.js',
+        'providers.js',
         'servers.js',
         'hooks.js',
         'shareFiles.js',

@@ -29,6 +29,7 @@ class EnvironmentTableSeeder extends Seeder
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => 1,
             'name'            => 'QA',
+            'default_on'      => false,
             'description'     => 'QA',
         ]);
 
@@ -43,6 +44,7 @@ class EnvironmentTableSeeder extends Seeder
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
             'targetable_id'   => 1,
             'name'            => 'QA',
+            'default_on'      => false,
             'description'     => 'QA',
         ]);
 

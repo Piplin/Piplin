@@ -11,7 +11,6 @@
 
 namespace Fixhub\Bus\Observers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Fixhub\Models\Hook;
 use Fixhub\Bus\Notifications\Hook\TestNotification;
 
@@ -20,8 +19,6 @@ use Fixhub\Bus\Notifications\Hook\TestNotification;
  */
 class HookObserver
 {
-    use DispatchesJobs;
-
     /**
      * Called when the model is saved.
      *

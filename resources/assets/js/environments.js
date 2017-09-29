@@ -19,6 +19,7 @@ var app = app || {};
             $('#environment_id').val('');
             $('#environment_name').val('');
             $('#environment_description').val('');
+            $('#environment_default_on').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
@@ -75,6 +76,7 @@ var app = app || {};
         environment.save({
             name:            $('#environment_name').val(),
             description:     $('#environment_description').val(),
+            default_on:      $('#environment_default_on').is(':checked'),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val()
         }, {
@@ -216,6 +218,7 @@ var app = app || {};
             $('#environment_id').val(this.model.id);
             $('#environment_name').val(this.model.get('name'));
             $('#environment_description').val(this.model.get('description'));
+            $('#environment_default_on').prop('checked', (this.model.get('default_on') === true));
         },
         trashEnvironment: function() {
             var target = $('#model_id');

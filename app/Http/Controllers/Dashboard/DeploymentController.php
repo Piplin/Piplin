@@ -39,14 +39,14 @@ class DeploymentController extends Controller
 
         $output = [];
         foreach ($deployment->steps as $step) {
-            foreach ($step->servers as $server) {
-                $server->server;
+            foreach ($step->logs as $log) {
+                $log->server;
 
-                $server->runtime = ($server->runtime() === false ?
-                        null : AutoPresenter::decorate($server)->readable_runtime);
-                $server->output  = ((is_null($server->output) || !strlen($server->output)) ? null : '');
+                $log->runtime = ($log->runtime() === false ?
+                        null : AutoPresenter::decorate($log)->readable_runtime);
+                $log->output  = ((is_null($log->output) || !strlen($log->output)) ? null : '');
 
-                $output[] = $server;
+                $output[] = $log;
             }
         }
 
@@ -91,12 +91,12 @@ class DeploymentController extends Controller
             'commit'          => $previous->commit,
             'project_id'      => $previous->project_id,
             'branch'          => $previous->branch,
-            'project_id'      => $previous->project_id,
             'reason'          => trans('deployments.rollback_reason', [
-                    'reason' => $request->get('reason'),
-                    'id'     => $previous_id,
-                    'commit' => $previous->short_commit
+                    'reason'  => $request->get('reason'),
+                    'id'      => $previous_id,
+                    'commit'  => $previous->short_commit
             ]),
+            'environments'    => $previous->environments->pluck('id'),
             'optional'        => $optional,
         ];
 
@@ -188,7 +188,19 @@ class DeploymentController extends Controller
             unset($fields['optional']);
         }
 
+        $environments = null;
+         if (array_key_exists('environments', $fields)) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
+         }
+
         $deployment = Deployment::create($fields);
+
+        if ($environments) {
+            $deployment->environments()->sync($environments);
+        }
+
+        $deployment->environments; // Triggers the loading
 
         dispatch(new QueueDeployment(
             $deployment,

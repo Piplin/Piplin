@@ -77,15 +77,18 @@
                     <hr />
                     @endif
                     <div class="form-group">
-                        <label for="deployment_environment_id">{{ trans('deployments.environment') }}</label>
-                        <div class="input-group">
-                        <div class="input-group-addon"><i class="ion ion-cube"></i></div>
-                        <select id="deployment_environment_id" name="environment_id" class="form-control">
-                            @foreach($environments as $each)
-                                <option value="{{ $each->id }}">{{ $each->name }}</option>
+                        <label for="command_servers">{{ trans('deployments.environment') }}</label>
+                        <ul class="list-unstyled">
+                            @foreach ($environments as $each)
+                            <li>
+                                <div class="checkbox">
+                                    <label for="deployment_command_{{ $each->id }}">
+                                        <input type="checkbox" class="deployment-environment" name="environments[]" id="deployment_environment_{{ $each->id }}" value="{{ $each->id }}" @if ($each->default_on === true) checked @endif/> {{ $each->name }}
+                                    </label>
+                                </div>
+                            </li>
                             @endforeach
-                        </select>
-                        </div>
+                        </ul>
                     </div>
                     <div class="form-group">
                         <label for="deployment_reason">{{ trans('deployments.reason') }}</label>

@@ -30,5 +30,6 @@ return [
     'failed'                => 'These credentials do not match our records.',
     'invalid_code'          => 'The authentication code was incorrect.',
     'remember'              => 'Remember Me',
+    'oauth_login'           => 'Sign in using :provider',
 
 ];

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterDeploymentsTableAddEnvironmentId extends Migration
+class CreateDeploymentsEnvironments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AlterDeploymentsTableAddEnvironmentId extends Migration
      */
     public function up()
     {
-        Schema::table('deployments', function (Blueprint $table) {
-            $table->unsignedInteger('environment_id')->after('project_id');
+        Schema::create('deployment_environment', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('deployment_id');
+            $table->unsignedInteger('environment_id');
 
+            $table->foreign('deployment_id')->references('id')->on('deployments');
             $table->foreign('environment_id')->references('id')->on('environments');
         });
     }
@@ -27,8 +30,6 @@ class AlterDeploymentsTableAddEnvironmentId extends Migration
      */
     public function down()
     {
-        Schema::table('deployments', function (Blueprint $table) {
-            $table->dropColumn('environment_id');
-        });
+        Schema::dropIfExists('deployment_environment');
     }
 }

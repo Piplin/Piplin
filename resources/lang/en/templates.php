@@ -11,7 +11,7 @@
 
 return [
 
-    'manage'  => 'Manage deployment templates',
+    'manage'  => 'Manage templates',
     'label'   => 'Deployment Templates',
     'none'    => 'There are currently no deployment templates setup',
     'type'    => 'Deployment type',
