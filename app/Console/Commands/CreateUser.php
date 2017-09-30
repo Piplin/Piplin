@@ -76,6 +76,10 @@ class CreateUser extends Command
             throw new RuntimeException($validator->errors()->first());
         }
 
+        $originalPassword = $arguments['password'];
+
+        $arguments['password'] = bcrypt($arguments['password']);
+
         $user = User::create($arguments);
 
         $message = 'The user has been created';
@@ -83,10 +87,10 @@ class CreateUser extends Command
         if ($send_email) {
             $message = 'The user has been created and their account details have been emailed to ' . $user->email;
 
-            event(new UserWasCreatedEvent($user, $arguments['password']));
+            event(new UserWasCreatedEvent($user, $originalPassword));
         } elseif ($password_generated) {
             $message .= ', however you elected to not email the account details to them. ';
-            $message .= 'Their password is ' . $arguments['password'];
+            $message .= 'Their password is ' . $originalPassword;
         }
 
         $this->info($message);
