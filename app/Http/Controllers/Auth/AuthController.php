@@ -134,8 +134,8 @@ class AuthController extends Controller
             if (is_null($identity)) {
                 // User::create();
                 $user = User::create([
-                    'name' => $extern_user->name,
-                    'nickname' => $extern_user->nickname,
+                    'name' => $extern_user->nickname,
+                    'nickname' => $extern_user->name,
                     'email' => $extern_user->email,
                     'password' => time(),
                 ]);
