@@ -20,9 +20,11 @@ use Fixhub\Bus\Listeners\CreateJwtListener;
 use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
 use Fixhub\Bus\Listeners\NotifyDeployListener;
 use Fixhub\Bus\Listeners\SendSignupEmailListener;
+use Fixhub\Models\Deployment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
 use Fixhub\Models\ServerLog;
+use Fixhub\Bus\Observers\DeploymentObserver;
 use Fixhub\Bus\Observers\HookObserver;
 use Fixhub\Bus\Observers\KeyObserver;
 use Fixhub\Bus\Observers\ServerLogObserver;
@@ -60,6 +62,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        Deployment::observe(DeploymentObserver::class);
         Key::observe(KeyObserver::class);
         Hook::observe(HookObserver::class);
         ServerLog::observe(ServerLogObserver::class);

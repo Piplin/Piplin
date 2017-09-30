@@ -15,7 +15,6 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
 use Fixhub\Bus\Jobs\ApproveDeploymentJob;
-use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
@@ -82,7 +81,7 @@ class DeploymentController extends Controller
             return redirect()->route('projects', ['id' => $project->id]);
         }
 
-        $fileds = [
+        $fields = [
             'reason'         => $request->get('reason'),
             'project_id'     => $project->id,
             'environments'   => $request->get('environments'),
@@ -93,23 +92,23 @@ class DeploymentController extends Controller
         // If allow other branches is set, check for post data
         if ($project->allow_other_branch) {
             if ($request->has('source') && $request->has('source_' . $request->get('source'))) {
-                $fileds['branch'] = $request->get('source_' . $request->get('source'));
+                $fields['branch'] = $request->get('source_' . $request->get('source'));
 
                 if ($request->get('source') == 'commit') {
-                    $fileds['commit'] = $fileds['branch'];
-                    $fileds['branch'] = $project->branch;
+                    $fields['commit'] = $fields['branch'];
+                    $fields['branch'] = $project->branch;
                 }
             }
         }
 
         // Get the optional commands and typecast to integers
         if ($request->has('optional') && is_array($request->get('optional'))) {
-            $fileds['optional'] = array_filter(array_map(function ($value) {
+            $fields['optional'] = array_filter(array_map(function ($value) {
                 return filter_var($value, FILTER_VALIDATE_INT);
             }, $request->get('optional')));
         }
 
-        $deployment = $this->createDeployment($fileds);
+        $deployment = Deployment::create($fields);
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,
@@ -137,7 +136,7 @@ class DeploymentController extends Controller
 
         $previous = Deployment::findOrFail($previous_id);
 
-        $fileds = [
+        $fields = [
             'committer'       => $previous->committer,
             'committer_email' => $previous->committer_email,
             'commit'          => $previous->commit,
@@ -152,7 +151,7 @@ class DeploymentController extends Controller
             'optional'        => $optional,
         ];
 
-        $deployment = $this->createDeployment($fileds);
+        $deployment = Deployment::create($fields);
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,
@@ -221,28 +220,5 @@ class DeploymentController extends Controller
         return redirect()->route('deployments', [
             'id' => $deployment_id,
         ]);
-    }
-
-    /**
-     * Creates a new instance of the server.
-     *
-     * @param array $fields
-     *
-     * @return Model
-     */
-    private function createDeployment(array $fields)
-    {
-        $environments = array_pull($fields, 'environments');
-        $optional = array_pull($fields, 'optional');
-
-        $deployment = Deployment::create($fields);
-
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-
-        return $deployment;
     }
 }

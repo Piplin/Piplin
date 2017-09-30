@@ -83,20 +83,6 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     ];
 
     /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saved(function (Deployment $model) {
-            event(new ModelChangedEvent($model, 'deployment'));
-        });
-    }
-
-    /**
      * Belongs to relationship.
      *
      * @return Project
