@@ -62,6 +62,7 @@ class EnvironmentController extends Controller
             'name',
             'description',
             'default_on',
+            'add_commands',
             'targetable_type',
             'targetable_id'
         );
@@ -69,9 +70,24 @@ class EnvironmentController extends Controller
         $targetable_type = array_pull($fields, 'targetable_type');
         $targetable_id = array_pull($fields, 'targetable_id');
 
+        $add_commands = false;
+        if (isset($fields['add_commands'])) {
+            $add_commands = $fields['add_commands'];
+            unset($fields['add_commands']);
+        }
+
         $target = $targetable_type::findOrFail($targetable_id);
 
-        return $target->environments()->create($fields);
+        $environment = $target->environments()->create($fields);
+
+        // Add the environment to the existing commands
+        if ($add_commands) {
+            foreach ($environment->targetable->commands as $command) {
+                $command->environments()->attach($environment->id);
+            }
+        }
+
+        return $environment;
     }
 
     /**

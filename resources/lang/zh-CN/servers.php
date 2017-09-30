@@ -37,6 +37,5 @@ return [
     'runs_code'   => '部署代码?',
     'enabled'     => '是否启用？',
     'disabled'    => '执行部署时跳过该服务器',
-    'add_command' => '在该服务器执行所有本项目的安装步骤',
 
 ];

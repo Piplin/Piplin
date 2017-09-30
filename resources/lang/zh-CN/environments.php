@@ -23,5 +23,6 @@ return [
     'default_description' => '部署时默认选中该环境',
     'webhook_environment' => '可选的环境ID',
     'webhook_args'        => '用逗号分隔的环境ID列表',
+    'add_command'         => '在该部署环境执行所有本项目的安装步骤',
 
 ];

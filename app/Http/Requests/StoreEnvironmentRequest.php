@@ -26,9 +26,10 @@ class StoreEnvironmentRequest extends Request
     public function rules()
     {
         return [
-            'name'        => 'required|max:255',
-            'description' => 'max:255',
-            'default_on'  => 'boolean',
+            'name'         => 'required|max:255',
+            'description'  => 'max:255',
+            'default_on'   => 'boolean',
+            'add_commands' => 'boolean',
         ];
     }
 }

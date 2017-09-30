@@ -1,4 +1,4 @@
-var app = app || {};
+    var app = app || {};
 
 (function ($) {
    // FIXME: This seems very wrong
@@ -11,6 +11,7 @@ var app = app || {};
         $('.callout-danger', modal).hide();
         $('.has-error', modal).removeClass('has-error');
         $('.label-danger', modal).remove();
+        $('#add-environment-command', modal).hide();
 
         if (button.hasClass('btn-edit')) {
             title = trans('environments.edit');
@@ -20,6 +21,7 @@ var app = app || {};
             $('#environment_name').val('');
             $('#environment_description').val('');
             $('#environment_default_on').prop('checked', true);
+            $('#add-environment-command', modal).show();
         }
 
         modal.find('.modal-title span').text(title);
@@ -78,7 +80,8 @@ var app = app || {};
             description:     $('#environment_description').val(),
             default_on:      $('#environment_default_on').is(':checked'),
             targetable_type: $('input[name="targetable_type"]').val(),
-            targetable_id:   $('input[name="targetable_id"]').val()
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            add_commands:    $('#environment_commands').is(':checked')
         }, {
             wait: true,
             success: function(model, response, options) {
