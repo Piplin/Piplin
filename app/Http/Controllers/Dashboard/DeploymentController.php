@@ -42,6 +42,7 @@ class DeploymentController extends Controller
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
                 $log->server;
+                $log->server->environment_name = $log->server->environment->name;
 
                 $log->runtime = ($log->runtime() === false ?
                         null : AutoPresenter::decorate($log)->readable_runtime);

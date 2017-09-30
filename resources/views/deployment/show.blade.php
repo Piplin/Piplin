@@ -40,7 +40,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="30%">{{ trans('deployments.server') }}</th>
+                                <th width="10%">{{ trans('servers.environment') }}</th>
+                                <th width="20%">{{ trans('deployments.server') }}</th>
                                 <th width="20%">{{ trans('deployments.status') }}</th>
                                 <th width="15%">{{ trans('deployments.started') }}</th>
                                 <th width="15%">{{ trans('deployments.finished') }}</th>
@@ -72,6 +73,7 @@
 
 @push('templates')
     <script type="text/template" id="log-template">
+        <td><%- server.environment_name %></td>
         <td><%- server.name %></td>
         <td>
              <span class="label label-<%- status_css %>"><i class="status ion ion-<%- icon_css %>"></i> <span><%- status %></span></span>
