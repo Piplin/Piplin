@@ -31,7 +31,6 @@ class StoreServerRequest extends Request
             'ip_address'     => 'required|host',
             'path'           => 'required',
             'enabled'        => 'boolean',
-            'add_commands'   => 'boolean',
             'project_id'     => 'required|integer|exists:projects,id',
             'environment_id' => 'required|integer|exists:environments,id',
         ];

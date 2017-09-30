@@ -12,7 +12,6 @@
 namespace Fixhub\Bus\Observers;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Fixhub\Bus\Events\ModelChangedEvent;
 use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Deployment;
@@ -22,7 +21,6 @@ use Fixhub\Models\Deployment;
  */
 class DeploymentObserver
 {
-    use DispatchesJobs;
 
     /**
      * @var Dispatcher
@@ -30,53 +28,11 @@ class DeploymentObserver
     private $dispatcher;
 
     /**
-     * @var array
-     */
-    private $optional = [];
-
-    /**
-     * @var array
-     */
-    private $environments = [];
-
-    /**
      * @param Dispatcher $dispatcher
      */
     public function __construct(Dispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
-    }
-
-    /**
-     * Called when the model is being created.
-     *
-     * @param Deployment $deployment
-     */
-    public function creating(Deployment $deployment)
-    {
-        if ($deployment->optional) {
-            $this->optional =$deployment->optional;
-            unset($deployment->optional);
-        }
-
-        if ($deployment->environments) {
-            $this->environments =$deployment->environments;
-            unset($deployment->environments);
-        }
-    }
-
-    /**
-     * Called when the model is created.
-     *
-     * @param Deployment $deployment
-     */
-    public function created(Deployment $deployment)
-    {
-        $this->dispatch(new SetupDeploymentJob(
-            $deployment,
-            $this->environments,
-            $this->optional
-        ));
     }
 
     /**

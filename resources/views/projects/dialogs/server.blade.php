@@ -74,14 +74,6 @@
                                 {{ trans('servers.deploy_code') }}
                             </label>
                         </div>
-                        @if ($project->commands->count() > 0)
-                        <div class="checkbox" id="add-server-command">
-                            <label for="server_commands">
-                                <input type="checkbox" value="1" name="commands" id="server_commands" checked />
-                                {{ trans('servers.add_command') }}
-                            </label>
-                        </div>
-                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

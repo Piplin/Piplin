@@ -27,14 +27,13 @@ class StoreProjectRequest extends Request
     {
         $rules = [
             'name'               => 'required|max:255',
-            'repository'         => 'required',
             'branch'             => 'required|max:255',
             'group_id'           => 'required|integer|exists:project_groups,id',
             'key_id'             => 'required|integer|exists:keys,id',
             'builds_to_keep'     => 'required|integer|min:1|max:20',
-            'template_id'        => 'integer|exists:deploy_templates,id',
-            'url'                => 'url',
-            'build_url'          => 'url',
+            'template_id'        => 'nullable|integer|exists:deploy_templates,id',
+            'url'                => 'url|nullable',
+            'build_url'          => 'url|nullable',
             'allow_other_branch' => 'boolean',
             'need_approve'       => 'boolean',
         ];
@@ -42,6 +41,7 @@ class StoreProjectRequest extends Request
         // On editing remove the template_id rule
         if ($this->get('id')) {
             unset($rules['template_id']);
+            $rules['repository'] = 'required';
         }
 
         return $rules;

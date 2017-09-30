@@ -22,6 +22,8 @@ return [
     'repository_path'   => 'Repository URL',
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
+    'others'            => 'Others',
+    'clone'             => 'Clone',
     'branch'            => 'Branch',
     'last_mirrored'     => 'Last mirrored',
     'image'             => 'Build Image',

@@ -41,8 +41,7 @@ class ServerController extends Controller
             'path',
             'project_id',
             'environment_id',
-            'deploy_code',
-            'add_commands'
+            'deploy_code'
         );
 
         // Get the current highest server order
@@ -58,20 +57,7 @@ class ServerController extends Controller
         $fields['order'] = $order;
         $fields['output'] = null;
 
-        $add_commands = false;
-        if (isset($fields['add_commands'])) {
-            $add_commands = $fields['add_commands'];
-            unset($fields['add_commands']);
-        }
-
         $server = Server::create($fields);
-
-        // Add the server to the existing commands
-        if ($add_commands) {
-            foreach ($server->project->commands as $command) {
-                $command->servers()->attach($server->id);
-            }
-        }
 
         return $server;
     }

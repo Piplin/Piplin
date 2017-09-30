@@ -25,7 +25,7 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('repository');
+            $table->string('repository')->nullable();
             $table->string('hash');
             $table->string('branch')->default('master');
             $table->text('private_key');

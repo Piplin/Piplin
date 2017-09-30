@@ -22,6 +22,8 @@ return [
     'repository_path'   => '仓库路径',
     'builds'            => '版本记录',
     'build_options'     => '构建选项',
+    'others'            => '其他',
+    'clone'             => '克隆',
     'branch'            => '默认分支',
     'last_mirrored'     => '代码同步',
     'image'             => '构建状态',

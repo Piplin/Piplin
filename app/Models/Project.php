@@ -83,24 +83,6 @@ class Project extends Model implements HasPresenter
     ];
 
     /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // When  creating the model generate an SSH Key pair and a webhook hash
-        // Fix me by gsl
-        static::creating(function (Project $model) {
-            if (!array_key_exists('hash', $model->attributes)) {
-                $model->generateHash();
-            }
-        });
-    }
-
-    /**
      * Determines whether the project is currently being deployed.
      *
      * @return bool

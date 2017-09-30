@@ -65,6 +65,7 @@
         </td>
         <td>
             <div class="btn-group pull-right">
+                <button class="btn btn-default btn-clone" title="{{ trans('app.clone') }}" data-toggle="modal" data-target="#project-clone" data-project_id="<%- id %>"><i class="ion ion-ios-browsers-outline"></i></button>
                 <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#project"><i class="ion ion-compose"></i></button>
                 <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
             </div>

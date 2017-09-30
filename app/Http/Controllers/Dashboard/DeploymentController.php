@@ -15,6 +15,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
 use Fixhub\Bus\Jobs\ApproveDeploymentJob;
+use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
@@ -108,7 +109,16 @@ class DeploymentController extends Controller
             }, $request->get('optional')));
         }
 
+        $optional = array_pull($fields, 'optional');
+        $environments = array_pull($fields, 'environments');
+
         $deployment = Deployment::create($fields);
+
+        dispatch(new SetupDeploymentJob(
+            $deployment,
+            $environments,
+            $optional
+        ));
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,

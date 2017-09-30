@@ -97,18 +97,43 @@ class ProjectController extends Controller
             $template_id = array_pull($fields, 'template_id');
         }
 
+        $skeleton = DeployTemplate::find($template_id);
+
         $project = Project::create($fields);
-
-        $template = DeployTemplate::find($template_id);
-
-        if ($template) {
-            dispatch(new SetupProjectJob(
-                $project,
-                $template
-            ));
-        }
+        
+        dispatch(new SetupProjectJob($project, $skeleton));
 
         return $project;
+    }
+
+    /**
+     * Clone a new project based on skeleton.
+     *
+     * @param Request $request
+     * @param int     $previous_id
+     *
+     * @return Response
+     */
+    public function clone($skeleton_id, Request $request)
+    {
+        $skeleton = Project::findOrFail($skeleton_id);
+
+        $fields = $request->only('name');
+
+        if (empty($fields['name'])) {
+            $fields['name'] = $skeleton->name . '_Clone';
+        }
+        $fields['group_id'] = $skeleton->group_id;
+        $fields['key_id'] = $skeleton->key_id;
+        $fields['repository'] = $skeleton->repository;
+
+        $project = Project::create($fields);
+
+        dispatch(new SetupProjectJob($project, $skeleton));
+
+        return redirect()->route('projects', [
+            'id' => $project->id,
+        ]);
     }
 
     /**
