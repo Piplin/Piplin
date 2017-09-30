@@ -159,11 +159,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="group_name">{{ trans('projects.name') }}</label>
+                        <label for="group_name">{{ trans('projects.clone_name') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
                             <input type="text" class="form-control" name="name" id="project_clone_name" placeholder="{{ trans('groups.name') }}" />
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project_key_id">{{ trans('projects.clone_type') }}</label>
+                        <div class="input-group">
+                        <div class="input-group-addon"><i class="ion ion-shuffle"></i></div>
+                        <select id="project_extract_type" name="type" class="form-control">
+                                <option value="project">{{ trans('projects.clone_duplicate') }}</option>
+                                <option value="template">{{ trans('projects.clone_convert') }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

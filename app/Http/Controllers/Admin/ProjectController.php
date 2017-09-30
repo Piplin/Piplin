@@ -109,8 +109,8 @@ class ProjectController extends Controller
     /**
      * Clone a new project based on skeleton.
      *
+     * @param int $skeleton_id
      * @param Request $request
-     * @param int     $previous_id
      *
      * @return Response
      */
@@ -118,21 +118,26 @@ class ProjectController extends Controller
     {
         $skeleton = Project::findOrFail($skeleton_id);
 
-        $fields = $request->only('name');
+        $fields = $request->only('name', 'type');
+        $type = array_pull($fields, 'type');
 
         if (empty($fields['name'])) {
             $fields['name'] = $skeleton->name . '_Clone';
         }
-        $fields['group_id'] = $skeleton->group_id;
-        $fields['key_id'] = $skeleton->key_id;
-        $fields['repository'] = $skeleton->repository;
 
-        $project = Project::create($fields);
+        if ($type == 'project') {
+            $fields['group_id'] = $skeleton->group_id;
+            $fields['key_id'] = $skeleton->key_id;
+            $fields['repository'] = $skeleton->repository;
+            $target = Project::create($fields);
+        } else {
+            $target = DeployTemplate::create($fields);
+        }
 
-        dispatch(new SetupProjectJob($project, $skeleton));
+        dispatch(new SetupProjectJob($target, $skeleton));
 
-        return redirect()->route('projects', [
-            'id' => $project->id,
+        return redirect()->route($type == 'template' ? 'admin.templates.show' : 'projects', [
+            'id' => $target->id,
         ]);
     }
 

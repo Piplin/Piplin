@@ -19,14 +19,14 @@ use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\Variable;
 
 /**
- * A class to handle cloning the command templates for the project.
+ * A class to handle cloning between template and project.
  */
 class SetupProjectJob extends Job
 {
     /**
-    * @var Project
+    * @var mixed
     */
-    private $project;
+    private $target;
 
     /**
     * @var mixed
@@ -36,14 +36,14 @@ class SetupProjectJob extends Job
     /**
      * Create a new command instance.
      *
-     * @param Project $project
+     * @param mixed $target
      * @param mixed $skeleton
      *
      * @return SetupProjectJob
      */
-    public function __construct(Project $project, $skeleton)
+    public function __construct($target, $skeleton)
     {
-        $this->project  = $project;
+        $this->target  = $target;
         $this->skeleton = $skeleton;
     }
 
@@ -65,31 +65,31 @@ class SetupProjectJob extends Job
         foreach ($this->skeleton->commands as $command) {
             $data = $command->toArray();
 
-            $this->project->commands()->create($data);
+            $this->target->commands()->create($data);
         }
 
         foreach ($this->skeleton->environments as $environment) {
             $data = $environment->toArray();
 
-            $this->project->environments()->create($data);
+            $this->target->environments()->create($data);
         }
 
         foreach ($this->skeleton->variables as $variable) {
             $data = $variable->toArray();
 
-            $this->project->variables()->create($data);
+            $this->target->variables()->create($data);
         }
 
         foreach ($this->skeleton->sharedFiles as $file) {
             $data = $file->toArray();
 
-            $this->project->sharedFiles()->create($data);
+            $this->target->sharedFiles()->create($data);
         }
 
         foreach ($this->skeleton->configFiles as $file) {
             $data = $file->toArray();
 
-            $this->project->configFiles()->create($data);
+            $this->target->configFiles()->create($data);
         }
     }
 }
