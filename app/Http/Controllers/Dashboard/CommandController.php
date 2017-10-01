@@ -11,14 +11,14 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use DB;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreCommandRequest;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
 use Fixhub\Models\DeployTemplate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use DB;
 
 /**
  * Controller for managing commands.

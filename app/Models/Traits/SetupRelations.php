@@ -29,7 +29,7 @@ trait SetupRelations
      */
     public function commands()
     {
-        return $this->morphMany(Command::class, 'targetable');
+        return $this->morphMany(Command::class, 'targetable')->orderBy('order', 'ASC');
     }
 
     /**
@@ -69,6 +69,6 @@ trait SetupRelations
      */
     public function environments()
     {
-        return $this->morphMany(Environment::class, 'targetable');
+        return $this->morphMany(Environment::class, 'targetable')->orderBy('order', 'ASC');
     }
 }

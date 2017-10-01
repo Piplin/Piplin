@@ -1,7 +1,6 @@
 var app = app || {};
 
 (function ($) {
-    // FIXME: This seems very wrong
     $('#hook').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -70,7 +69,6 @@ var app = app || {};
         $('#hook_type').val(type);
     }
 
-    // FIXME: This seems very wrong
     //$('#hook button.btn-delete').on('click', function (event) {
     $('body').delegate('.hook-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
@@ -101,7 +99,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#hook button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');

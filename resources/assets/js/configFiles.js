@@ -23,7 +23,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#configfile').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -59,8 +58,6 @@ var app = app || {};
         modal.find('.modal-title span').text(title);
     });
 
-
-    // FIXME: This seems very wrong
     $('body').delegate('.configfile-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -90,7 +87,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#configfile button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');

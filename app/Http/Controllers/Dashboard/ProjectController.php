@@ -11,11 +11,11 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
-use Illuminate\Http\Request;
 
 /**
  * The controller of projects.

@@ -1,7 +1,30 @@
     var app = app || {};
 
 (function ($) {
-   // FIXME: This seems very wrong
+    $('#environment_list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('environment-id'));
+            });
+
+            $.ajax({
+                url: '/environments/reorder',
+                method: 'POST',
+                data: {
+                    environments: ids
+                }
+            });
+        }
+    });
+
     $('#environment').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -27,7 +50,6 @@
         modal.find('.modal-title span').text(title);
     });
 
-    // FIXME: This seems very wrong
     $('body').delegate('.environment-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -57,7 +79,6 @@
         });
     });
 
-    // FIXME: This seems very wrong
     $('#environment button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');

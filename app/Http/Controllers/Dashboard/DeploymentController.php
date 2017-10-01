@@ -11,6 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
@@ -19,7 +20,6 @@ use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
-use Illuminate\Http\Request;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**

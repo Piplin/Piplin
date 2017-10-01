@@ -30,7 +30,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#provider').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);

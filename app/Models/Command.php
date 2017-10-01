@@ -73,7 +73,7 @@ class Command extends Model implements HasPresenter
     public function environments()
     {
         return $this->belongsToMany(Environment::class)
-                    ->orderBy('name', 'ASC');
+                    ->orderBy('order', 'ASC');
     }
 
     /**

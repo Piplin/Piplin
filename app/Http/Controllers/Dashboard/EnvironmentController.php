@@ -11,8 +11,8 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Project;
@@ -108,6 +108,31 @@ class EnvironmentController extends Controller
         ));
 
         return $environment;
+    }
+
+    /**
+     * Re-generates the order for the supplied environments.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function reorder(Request $request)
+    {
+        $order = 0;
+
+        foreach ($request->get('environments') as $environment_id) {
+            $environment = Environment::findOrFail($environment_id);
+            $environment->update([
+                'order' => $order,
+            ]);
+
+            $order++;
+        }
+
+        return [
+            'success' => true,
+        ];
     }
 
     /**

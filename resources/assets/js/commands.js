@@ -31,7 +31,6 @@ var app = app || {};
         editor.destroy();
     });
 
-    // FIXME: This seems very wrong
     $('#command').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -66,7 +65,6 @@ var app = app || {};
         modal.find('.modal-title span').text(title);
     });
 
-    // FIXME: This seems very wrong
     $('body').delegate('.command-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -103,7 +101,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#command button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');

@@ -30,7 +30,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#link').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -83,7 +82,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#link button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');

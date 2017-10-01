@@ -12,7 +12,6 @@
 namespace Fixhub\Http\Controllers\Dashboard;
 
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreVariableRequest;
 use Fixhub\Models\Variable;
 

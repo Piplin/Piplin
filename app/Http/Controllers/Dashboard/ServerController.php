@@ -11,12 +11,11 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Bus\Jobs\TestServerConnectionJob;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreServerRequest;
 use Fixhub\Models\Server;
-use Illuminate\Http\Request;
 
 /**
  * Server management controller.
