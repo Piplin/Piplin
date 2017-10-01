@@ -38,39 +38,39 @@ class DeployProjectJob extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
-    * @var Deployment
-    */
+     * @var Deployment
+     */
     private $deployment;
 
     /**
-    * @var Project
-    */
+     * @var Project
+     */
     private $project;
 
     /**
-    * @var Environment
-    */
+     * @var Environment
+     */
     private $environment;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
 
     private $private_key;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     private $cache_key;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     private $release_archive;
 
     /**
@@ -205,7 +205,7 @@ class DeployProjectJob extends Job implements ShouldQueue
             }
         }
 
-        $this->deployment->save();
+        //$this->deployment->save();
     }
 
     /**

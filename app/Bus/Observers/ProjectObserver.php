@@ -11,14 +11,18 @@
 
 namespace Fixhub\Bus\Observers;
 
-use Fixhub\Models\Project;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
+use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
+use Fixhub\Models\Project;
 
 /**
  * Event observer for Project model.
  */
 class ProjectObserver
 {
+    use DispatchesJobs;
+
     /**
      * Called when the model is being created.
      *
@@ -28,6 +32,20 @@ class ProjectObserver
     {
         if (!$project->hash) {
             $project->hash = Str::random(60);
+        }
+    }
+
+    /**
+     * Called when the model is updated.
+     *
+     * @param Project $project
+     */
+    public function updated(Project $project)
+    {
+        $repoChanged = $project->isDirty('repository');
+
+        if ($repoChanged) {
+            $this->dispatch(new UpdateGitMirrorJob($project));
         }
     }
 }

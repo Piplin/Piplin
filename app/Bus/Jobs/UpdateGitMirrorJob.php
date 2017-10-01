@@ -16,14 +16,16 @@ use Fixhub\Bus\Jobs\UpdateGitReferencesJob;
 use Fixhub\Models\Project;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
 use Fixhub\Services\Scripts\Runner as Process;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\Queue;
 
 /**
  * Updates the git mirror for a project.
  */
-class UpdateGitMirrorJob extends Job
+class UpdateGitMirrorJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
@@ -47,6 +49,18 @@ class UpdateGitMirrorJob extends Job
     public function __construct(Project $project)
     {
         $this->project = $project;
+    }
+
+
+    /**
+     * Overwrite the queue method to push to a different queue.
+     *
+     * @param  Queue         $queue
+     * @param  DeployProjectJob $command
+     */
+    public function queue(Queue $queue, $command)
+    {
+        $queue->pushOn('fixhub-high', $command);
     }
 
     /**
