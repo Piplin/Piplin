@@ -91,10 +91,14 @@ class InstallApp extends Command
         $this->writeEnvFile($config);
 
         $this->generateKey();
-        $this->migrate(($this->getLaravel()->environment() === 'local'));
+        $this->migrate();
 
-        $user = User::findOrFail(1);
+        $user = User::where('level', User::LEVEL_ADMIN)->first();
         $user->update($admin);
+
+        if ($this->getLaravel()->environment() === 'local') {
+            $this->seed();
+        }
 
         $this->optimize();
 
@@ -220,23 +224,28 @@ class InstallApp extends Command
 
     /**
      * Calls the artisan migrate to set up the database
-     * in development mode it also seeds the DB.
      *
      * @param bool $seed Whether or not to seed the database
      */
-    protected function migrate($seed = false)
+    protected function migrate()
     {
         $this->info('Running database migrations');
         $this->line('');
         $this->call('migrate', ['--force' => true]);
         $this->line('');
+    }
 
-        if ($seed) {
-            $this->info('Seeding database');
-            $this->line('');
-            $this->call('db:seed', ['--force' => true]);
-            $this->line('');
-        }
+    /**
+     * Calls the artisan db:seed to seed the database
+     *
+     * @param bool $seed Whether or not to seed the database
+     */
+    protected function seed()
+    {
+        $this->info('Seeding database');
+        $this->line('');
+        $this->call('db:seed', ['--force' => true]);
+        $this->line('');
     }
 
     /**
@@ -279,8 +288,10 @@ class InstallApp extends Command
         while (!$connectionVerified) {
             $database = [];
 
+            $drivers = $this->getDatabaseDrivers();
+
             // Should we just skip this step if only one driver is available?
-            $type = $this->choice('Type', $this->getDatabaseDrivers(), 0);
+            $type = $this->choice('Type', $drivers, (int)array_search('mysql', $drivers, true));
 
             $database['type'] = $type;
 
@@ -288,7 +299,7 @@ class InstallApp extends Command
 
             if ($type !== 'sqlite') {
                 $host = $this->ask('Host', '127.0.0.1');
-                $name = $this->ask('Name', 'fixhub');
+                $name = $this->ask('Database', 'fixhub');
                 $user = $this->ask('Username', 'fixhub');
                 $pass = $this->secret('Password');
 
@@ -333,13 +344,13 @@ class InstallApp extends Command
             return preg_replace('#/$#', '', $answer);
         };
 
-        $url    = $this->askAndValidate('Application URL ("http://fixhub.app" for example)', [], $url_callback);
-        $region = $this->choice('Timezone region', array_keys($regions), 0);
+        $url    = $this->askAndValidate('Application URL ("http://fixhub.app" for example)', [], $url_callback, 'http://fixhub.app');
+        $region = $this->choice('Timezone region', array_keys($regions), 4);
 
         if ($region !== 'UTC') {
             $locations = $this->getTimezoneLocations($regions[$region]);
 
-            $region .= '/' . $this->choice('Timezone location', $locations, 0);
+            $region .= '/' . $this->choice('Timezone location', $locations, 63);
         }
 
         $socket = $this->askAndValidate('Socket URL', [], $url_callback, $url);
@@ -409,7 +420,7 @@ class InstallApp extends Command
 
         $email = [];
 
-        $driver = $this->choice('Type', ['smtp', 'sendmail', 'mail'], 0);
+        $driver = $this->choice('Type', ['smtp', 'sendmail', 'mail'], 2);
 
         if ($driver === 'smtp') {
             $host = $this->ask('Host', 'localhost');
@@ -494,7 +505,7 @@ class InstallApp extends Command
         return [
             'name'     => $name,
             'email'    => $email_address,
-            'password' => $password,
+            'password' => bcrypt($password),
         ];
     }
 
@@ -567,8 +578,8 @@ class InstallApp extends Command
         $errors = false;
 
         // Check PHP version:
-        if (!version_compare(PHP_VERSION, '5.6.4', '>=')) {
-            $this->error('PHP 5.6.4 or higher is required');
+        if (!version_compare(PHP_VERSION, '7.0.0', '>=')) {
+            $this->error('PHP 7.0.0 or higher is required');
             $errors = true;
         }
 

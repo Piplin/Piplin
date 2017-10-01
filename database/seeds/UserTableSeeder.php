@@ -16,18 +16,7 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->delete();
-
         $faker = Faker\Factory::create('en_GB');
-
-        User::create([
-            'name'           => 'fixhub',
-            'email'          => 'fixhub@fixhub.org',
-            'nickname'       => 'Fixhub',
-            'password'       => bcrypt('fixhub'),
-            'level'          => User::LEVEL_ADMIN,
-            'remember_token' => str_random(10),
-        ]);
 
         for ($i = 1; $i < 10; $i++) {
             User::create([
