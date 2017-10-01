@@ -170,7 +170,7 @@
                         <label for="project_key_id">{{ trans('projects.clone_type') }}</label>
                         <div class="input-group">
                         <div class="input-group-addon"><i class="ion ion-shuffle"></i></div>
-                        <select id="project_extract_type" name="type" class="form-control">
+                        <select id="project_extract_type" name="type" class="select2 form-control">
                                 <option value="project">{{ trans('projects.clone_duplicate') }}</option>
                                 <option value="template">{{ trans('projects.clone_convert') }}</option>
                         </select>

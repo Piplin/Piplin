@@ -52,7 +52,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="form-group">
                         <label for="skin">{{ trans('users.theme') }}</label>
-                        <select name="skin" id="skin" class="form-control">
+                        <select name="skin" id="skin" class="select2 form-control">
                             @foreach (['white', 'black', 'yellow', 'red', 'green', 'purple', 'blue'] as $colour)
                                 <option value="{{ $colour }}" @if ($colour === $theme) selected @endif>{{ trans('users.' . $colour )}}</option>
                             @endforeach
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group">
                         <label for="language">{{ trans('users.language') }}</label>
-                        <select name="language" id="language" class="form-control">
+                        <select name="language" id="language" class="select2 form-control">
                             @foreach (['en', 'zh-CN'] as $item)
                                 <option value="{{ $item }}" @if ($item === $language) selected @endif>{{ trans('users.' . $item )}}</option>
                             @endforeach
