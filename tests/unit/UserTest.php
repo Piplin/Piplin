@@ -42,8 +42,8 @@ class UserTest extends \Codeception\TestCase\Test
     public function testIfModelReturnsAdminUserEmail()
     {
         // access model
-        $user = User::where('name', 'fixhub')->first();
+        $user = User::where('name', 'Admin')->first();
 
-        $this->assertEquals('fixhub@fixhub.org', $user->email);
+        $this->assertEquals('admin@example.com', $user->email);
     }
 }

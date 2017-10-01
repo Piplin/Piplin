@@ -344,7 +344,8 @@ class InstallApp extends Command
             return preg_replace('#/$#', '', $answer);
         };
 
-        $url    = $this->askAndValidate('Application URL ("http://fixhub.app" for example)', [], $url_callback, 'http://fixhub.app');
+        $url = $this->askAndValidate('Application URL ("http://fixhub.app" for example)',
+                 [], $url_callback, 'http://fixhub.app');
         $region = $this->choice('Timezone region', array_keys($regions), 4);
 
         if ($region !== 'UTC') {
