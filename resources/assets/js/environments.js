@@ -212,6 +212,12 @@
             });
 
             this.$list.append(view.render().el);
+
+            if (app.Environments.length < 2) {
+                $('#environment_list .drag-handle').hide();
+            } else {
+                $('#environment_list .drag-handle').show();
+            }
         },
         addAll: function () {
             this.$list.html('');

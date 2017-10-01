@@ -19,7 +19,7 @@
 
 @push('templates')
     <script type="text/template" id="command-template">
-        <td data-command-id="<%- id %>"><%- name %></td>
+        <td data-command-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span> <%- name %></td>
         <td>
             <%= user ? user : '{{ trans('commands.default') }}' %>
         </td>

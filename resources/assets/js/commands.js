@@ -290,8 +290,18 @@ var app = app || {};
 
             if (command.isAfter()) {
                 this.$afterList.append(view.render().el);
+                if ($('tr', this.$afterList).length < 2) {
+                    $('#commands-after .drag-handle').hide();
+                } else {
+                    $('#commands-after .drag-handle').show();
+                }
             } else {
                 this.$beforeList.append(view.render().el);
+                if ($('tr', this.$beforeList).length < 2) {
+                    $('#commands-before .drag-handle').hide();
+                } else {
+                    $('#commands-before .drag-handle').show();
+                }
             }
         },
         addAll: function () {
