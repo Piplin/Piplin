@@ -34,7 +34,7 @@
                                     <label for="project_group_id">{{ trans('projects.group') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-browsers-outline"></i></div>
-                                    <select id="project_group_id" name="group_id" class="form-control">
+                                    <select id="project_group_id" name="group_id" class="select2 form-control">
                                         @foreach($groups as $item)
                                             <option value="{{ $item->id }}" {!! isset($group) && $group->id == $item->id ? 'selected="selected"' : NULL !!}>{{ $item->name }}</option>
                                         @endforeach
@@ -46,7 +46,7 @@
                                     <label for="project_template_id">{{ trans('templates.type') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-paper-outline"></i></div>
-                                    <select id="project_template_id" name="template_id" class="form-control">
+                                    <select id="project_template_id" name="template_id" class="select2 form-control">
                                         <option value="">{{ trans('templates.custom') }}</option>
                                         @foreach ($templates as $template)
                                             <option value="{{ $template->id }}">{{ $template->name }}</option>
@@ -88,7 +88,7 @@
                                     <label for="project_key_id">{{ trans('projects.key') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-key"></i></div>
-                                    <select id="project_key_id" name="key_id" class="form-control">
+                                    <select id="project_key_id" name="key_id" class="select2 form-control">
                                         @foreach($keys as $key)
                                             <option value="{{ $key->id }}">{{ $key->name }}</option>
                                         @endforeach
