@@ -38,13 +38,12 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'project_id',
             'environment_id',
             'deploy_code'
         );
 
         // Get the current highest server order
-        $max = Server::where('project_id', $fields['project_id'])
+        $max = Server::where('environment_id', $fields['environment_id'])
                            ->orderBy('order', 'DESC')
                            ->first();
 
@@ -80,7 +79,6 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'project_id',
             'environment_id',
             'deploy_code'
         ));

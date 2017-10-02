@@ -79,7 +79,7 @@ class DeploymentController extends Controller
         // Fix me! see also in DeploymentController and IncomingWebhookController
         $project = Project::findOrFail($project_id);
 
-        if ($project->servers->where('deploy_code', true)->count() === 0) {
+        if ($project->environments->count() === 0) {
             return redirect()->route('projects', ['id' => $project->id]);
         }
 

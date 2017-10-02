@@ -50,7 +50,7 @@ class CreateUsersTable extends Migration
             'password'       => bcrypt('fixhub'),
             'remember_token' => str_random(10),
             'level'          => User::LEVEL_ADMIN,
-            'avatar'         => '/img/avatar.png',
+            'avatar'         => '/img/noavatar.png',
         ]);
     }
 

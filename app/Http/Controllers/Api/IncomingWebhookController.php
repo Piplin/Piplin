@@ -61,7 +61,7 @@ class IncomingWebhookController extends Controller
         $project = Project::where('hash', $hash)->firstOrFail();
 
         $success = false;
-        if ($project->servers->where('deploy_code', true)->count() > 0) {
+        if ($project->environments->count() > 0) {
             $payload = $this->parseWebhookRequest($request, $project);
 
             // Todo: Need improvement.

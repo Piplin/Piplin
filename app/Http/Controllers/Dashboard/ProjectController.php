@@ -41,7 +41,6 @@ class ProjectController extends Controller
         return view('projects.show', [
             'title'           => $project->group->name.'/'.$project->name,
             'project'         => $project,
-            'servers'         => $project->servers,
             'hooks'           => $project->hooks,
             'sharedFiles'     => $project->sharedFiles,
             'configFiles'     => $project->configFiles,

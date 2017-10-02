@@ -41,7 +41,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'hooks', 'commands','group', 'key', 'deployments', 'shareFiles',
+                         'hooks', 'commands','group', 'key', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
 
@@ -226,17 +226,6 @@ class Project extends Model implements HasPresenter
     public function key()
     {
         return $this->belongsTo(Key::class, 'key_id', 'id');
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return Server
-     */
-    public function servers()
-    {
-        return $this->hasMany(Server::class)
-                    ->orderBy('order', 'ASC');
     }
 
     /**

@@ -112,7 +112,6 @@ var app = app || {};
             user:           $('#server_user').val(),
             path:           $('#server_path').val(),
             deploy_code:    $('#server_deploy_code').is(':checked'),
-            project_id:     $('input[name="project_id"]').val(),
             environment_id: $('#server_environment_id').val()
         }, {
             wait: true,
@@ -204,7 +203,7 @@ var app = app || {};
             });
 
             app.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
+                if (parseInt(data.model.environment_id) === parseInt(app.environment_id)) {
                     app.Servers.add(data.model);
                 }
             });

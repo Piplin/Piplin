@@ -67,9 +67,9 @@ class ResetApp extends Command
         return 0;
     }
 
-     /**
-     * Resets the database.
-     */
+    /**
+    * Resets the database.
+    */
     protected function resetDatabase()
     {
         $this->callSilent('migrate', ['--force' => true]);

@@ -40,7 +40,7 @@ class EnvironmentController extends Controller
             ['url' => route('projects', ['id' => $project->id, 'tab' => 'environments']), 'label' => $project->name],
         ];
         return view('environments.show', [
-                'title'           => trans('environments.label'),
+                'title'           => trans('servers.label'),
                 'breadcrumb'      => $breadcrumb,
                 'project'         => $project,
                 'targetable_type' => $targetable_type,
