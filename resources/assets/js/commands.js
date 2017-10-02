@@ -291,16 +291,16 @@ var app = app || {};
             if (command.isAfter()) {
                 this.$afterList.append(view.render().el);
                 if ($('tr', this.$afterList).length < 2) {
-                    $('#commands-after .drag-handle').hide();
+                    $('.drag-handle', this.$afterList).hide();
                 } else {
-                    $('#commands-after .drag-handle').show();
+                    $('.drag-handle', this.$afterList).show();
                 }
             } else {
                 this.$beforeList.append(view.render().el);
                 if ($('tr', this.$beforeList).length < 2) {
-                    $('#commands-before .drag-handle').hide();
+                    $('.drag-handle', this.$beforeList).hide();
                 } else {
-                    $('#commands-before .drag-handle').show();
+                    $('.drag-handle', this.$beforeList).show();
                 }
             }
         },

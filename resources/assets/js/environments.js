@@ -214,9 +214,9 @@
             this.$list.append(view.render().el);
 
             if (app.Environments.length < 2) {
-                $('#environment_list .drag-handle').hide();
+                $('.drag-handle', this.$list).hide();
             } else {
-                $('#environment_list .drag-handle').show();
+                $('.drag-handle', this.$list).show();
             }
         },
         addAll: function () {

@@ -220,9 +220,9 @@ var app = app || {};
             this.$list.append(view.render().el);
 
             if (app.Providers.length < 2) {
-                $('#provider_list .drag-handle').hide();
+                $('.drag-handle', this.$list).hide();
             } else {
-                $('#provider_list .drag-handle').show();
+                $('.drag-handle', this.$list).show();
             }
         },
         addAll: function () {

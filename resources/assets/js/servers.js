@@ -235,9 +235,9 @@ var app = app || {};
             this.$list.append(view.render().el);
 
             if (app.Servers.length < 2) {
-                $('#server_list .drag-handle').hide();
+                $('.drag-handle', this.$list).hide();
             } else {
-                $('#server_list .drag-handle').show();
+                $('.drag-handle', this.$list).show();
             }
         },
         addAll: function () {
