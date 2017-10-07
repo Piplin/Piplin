@@ -58,7 +58,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         $this->server->save();
 
         $key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($key, $this->server->project->key->private_key);
+        file_put_contents($key, $this->server->environment->targetable->key->private_key);
 
         try {
             $process = new Process('TestServerConnection', [
