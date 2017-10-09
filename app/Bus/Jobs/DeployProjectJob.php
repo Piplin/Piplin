@@ -429,7 +429,7 @@ class DeployProjectJob extends Job implements ShouldQueue
                 // Write configuration file to release dir and symlink shared files.
                 $process = new Process('deploy.steps.InstallNewRelease', $tokens);
                 $process->prependScript($this->configurationFileCommands($tokens['release_path']))
-                        ->appendScript($this->shareFileCommands($tokens['release_path'], $tokens['shared_path']));
+                        ->appendScript($this->sharedFileCommands($tokens['release_path'], $tokens['shared_path']));
 
                 return $process;
             case Stage::DO_ACTIVATE:
@@ -526,12 +526,12 @@ class DeployProjectJob extends Job implements ShouldQueue
     }
 
     /**
-     * create the command for share files.
+     * create the command for shared files.
      *
      * @param  string $release_dir
      * @param  string $shared_dir
      */
-    private function shareFileCommands($release_dir, $shared_dir)
+    private function sharedFileCommands($release_dir, $shared_dir)
     {
         if (!$this->deployment->project->sharedFiles->count()) {
             return '';

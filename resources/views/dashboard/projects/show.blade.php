@@ -70,18 +70,18 @@
                 <div class="tab-content">
                     <div class="tab-pane active">
                         @if($tab == 'environments')
-                            @include('projects._partials.environments')
+                            @include('dashboard.projects._partials.environments')
                         @elseif($tab == 'commands')
-                            @include('projects._partials.commands')
-                            @include('projects._partials.variables')
+                            @include('dashboard.projects._partials.commands')
+                            @include('dashboard.projects._partials.variables')
                         @elseif($tab == 'config-files')
-                            @include('projects._partials.config_files')
+                            @include('dashboard.projects._partials.config_files')
                         @elseif($tab == 'shared-files')
-                            @include('projects._partials.shared_files')
+                            @include('dashboard.projects._partials.shared_files')
                         @elseif($tab == 'hooks')
-                            @include('projects._partials.hooks')
+                            @include('dashboard.projects._partials.hooks')
                         @else
-                            @include('projects._partials.deployments')
+                            @include('dashboard.projects._partials.deployments')
                         @endif
                     </div>
                 </div>
@@ -89,21 +89,21 @@
         </div>
     </div>
     @if($tab == 'environments')
-        @include('projects.dialogs.environment')
-        @include('projects.dialogs.server')
+        @include('dashboard.projects.dialogs.environment')
+        @include('dashboard.projects.dialogs.server')
     @elseif($tab == 'commands')
-        @include('projects.dialogs.variable')
+        @include('dashboard.projects.dialogs.variable')
     @elseif($tab == 'config-files')
-        @include('projects.dialogs.config_files')
+        @include('dashboard.projects.dialogs.config_files')
     @elseif($tab == 'shared-files')
-        @include('projects.dialogs.shared_files')
+        @include('dashboard.projects.dialogs.shared_files')
     @elseif($tab == 'hooks')
-        @include('projects.dialogs.hook')
+        @include('dashboard.projects.dialogs.hook')
     @endif
 
-    @include('projects.dialogs.key')
-    @include('projects.dialogs.reason')
-    @include('projects.dialogs.redeploy')
+    @include('dashboard.projects.dialogs.key')
+    @include('dashboard.projects.dialogs.reason')
+    @include('dashboard.projects.dialogs.redeploy')
 @stop
 
 @section('right-buttons')

@@ -17,6 +17,7 @@ return [
     'name'        => 'Variable',
     'value'       => 'Value',
     'warning'     => 'The variable could not be saved, please check the form below.',
+    'none'        => 'There are currently no variables setup',
     'description' => 'Sometimes you need may need certain environmental variables defined during a deployment ' .
                            'but you do not want to set them in the <code>~/.bashrc</code> file on the server.',
     'example'     => 'For example, you may want to set <code>COMPOSER_PROCESS_TIMEOUT</code> to allow composer ' .

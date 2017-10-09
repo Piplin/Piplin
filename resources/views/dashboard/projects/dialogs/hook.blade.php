@@ -36,9 +36,9 @@
                         </div>
                     </div>
 
-                    @include('projects.dialogs.hooks.slack')
-                    @include('projects.dialogs.hooks.mail')
-                    @include('projects.dialogs.hooks.custom')
+                    @include('dashboard.projects.dialogs.hooks.slack')
+                    @include('dashboard.projects.dialogs.hooks.mail')
+                    @include('dashboard.projects.dialogs.hooks.custom')
 
                     <div class="hook-config form-group" id="hook-triggers">
                         <label>{{ trans('hooks.triggers') }}</label>

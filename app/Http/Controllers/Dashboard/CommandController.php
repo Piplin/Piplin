@@ -56,7 +56,7 @@ class CommandController extends Controller
             ];
         }
 
-        return view('commands.index', [
+        return view('dashboard.commands.index', [
             'breadcrumb'      => $breadcrumb,
             'title'           => trans('commands.' . strtolower($action)),
             'subtitle'        => $target->name,

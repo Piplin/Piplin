@@ -61,7 +61,7 @@ class ProjectController extends Controller
             $data['hooks'] = $project->hooks;
         }
 
-        return view('projects.show', $data);
+        return view('dashboard.projects.show', $data);
     }
 
     /**

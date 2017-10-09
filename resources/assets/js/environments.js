@@ -1,4 +1,4 @@
-    var app = app || {};
+var app = app || {};
 
 (function ($) {
     $('#environment_list table').sortable({
@@ -165,6 +165,7 @@
         initialize: function() {
             this.$list = $('#environment_list tbody');
 
+            $('#no_environments').show();
             $('#environment_list').hide();
 
             this.listenTo(app.Environments, 'add', this.addOne);
@@ -200,8 +201,10 @@
         },
         render: function () {
             if (app.Environments.length) {
+                $('#no_environments').hide();
                 $('#environment_list').show();
             } else {
+                $('#no_environments').show();
                 $('#environment_list').hide();
             }
         },
