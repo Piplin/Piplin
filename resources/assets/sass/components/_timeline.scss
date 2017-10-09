@@ -30,7 +30,7 @@
 
     // The content
     > .timeline-item {
-      @include box-shadow($box-boxshadow);
+      box-shadow: 2px 5px 13px 0px rgba(0, 0, 0, 0.1);
       @include border-radius($box-border-radius, $box-border-radius, $box-border-radius, $box-border-radius);
       margin-top: 0;
       background: #fff;
@@ -39,6 +39,12 @@
       margin-right: 15px;
       padding: 0;
       position: relative;
+      border: 1px solid #ECEFF1;
+
+      &:hover {
+        box-shadow: 2px 5px 13px 0px rgba(0, 0, 0, 0.3);
+      }
+      transition: box-shadow 0.3s;
 
       // The time and header
       > .time {
@@ -81,15 +87,22 @@
       left: 18px;
       top: 0;
     }
+    > .ion-clock {
+      background: #64B5F6;
+      color: #FFF!important;
+    }
+    > .ion-checkmark-round {
+      background: #43b748;
+    }
   }
 
   // Time label
   > .time-label {
     > span {
       font-weight: 600;
-      padding: 5px;
+      padding: 3px 8px;
       display: inline-block;
-      background-color: #fff;
+      background-color: #ECEFF1;
 
       @include border-radius(4px,4px,4px,4px);
     }
