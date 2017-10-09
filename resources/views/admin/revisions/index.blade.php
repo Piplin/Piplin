@@ -16,7 +16,8 @@
                     <th>ID</th>
                     <th>{{ trans('revisions.creator') }}</th>
                     <th>{{ trans('revisions.created') }}</th>
-                    <th>{{ trans('revisions.changed_field') }}</th>
+                    <th>{{ trans('revisions.item') }}</th>
+                    <th>{{ trans('revisions.key') }}</th>
                     <th>{{ trans('revisions.old_value') }}</th>
                     <th>{{ trans('revisions.new_value') }}</th>
                     <th>&nbsp;</th>
@@ -28,7 +29,8 @@
                 <td>{{ $revision->id }}</td>
                 <td>{{ $revision->creator }}</td>
                 <td>{{ $revision->created_at }}</td>
-                <td>{!! $revision->changed_field !!}</td>
+                <td>{{ $revision->item_details }}</td>
+                <td>{{ $revision->key }}</td>
                 <td>{{ $revision->old_value }}</td>
                 <td>{{ $revision->new_value }}</td>
                 <td></td>

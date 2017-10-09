@@ -33,45 +33,54 @@ class RevisionPresenter extends BasePresenter
     }
 
     /**
-     * Gets the translated revision changed field string.
+     * Get the item details.
      *
      * @return string
      */
-    public function changed_field()
+    public function item_details()
     {
-        $pre = '';
+        $pre = $post = $key = '';
+
         switch ($this->wrappedObject->revisionable_type) {
             case 'Fixhub\\Models\\ProjectGroup':
-                $pre = trans('revisions.group').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.group');
                 break;
             case 'Fixhub\\Models\\Project':
-                $pre = trans('revisions.project').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.project');
                 break;
             case 'Fixhub\\Models\\DeployTemplate':
-                $pre = trans('revisions.template').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.template');
                 break;
             case 'Fixhub\\Models\\Key':
-                $pre = trans('revisions.key').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.key');
                 break;
             case 'Fixhub\\Models\\Hook':
-                $pre = trans('revisions.hook').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.hook');
                 break;
             case 'Fixhub\\Models\\Environment':
-                $pre = trans('revisions.environment').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.environment');
                 break;
             case 'Fixhub\\Models\\Server':
-                $pre = trans('revisions.server').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.server');
                 break;
             case 'Fixhub\\Models\\Deployment':
-                $pre = trans('revisions.deployment').' : ' . $this->wrappedObject->revisionable->reason;
+                $pre = trans('revisions.deployment');
+                $key = $this->wrappedObject->revisionable->reason;
                 break;
             case 'Fixhub\\Models\\User':
-                $pre = trans('revisions.user').' : ' . $this->wrappedObject->revisionable->name;
+                $pre = trans('revisions.user');
                 break;
             default:
                 break;
         }
 
-        return $pre . '('.$this->wrappedObject->revisionable->id.')'. "<br />\n". $this->wrappedObject->key;
+        if (!$this->wrappedObject->revisionable) {
+            $post = trans('revisions.removed');
+        } else {
+            $key = $this->wrappedObject->revisionable->name;
+            $post = '('.$this->wrappedObject->revisionable->id.')';
+        }
+
+        return $pre .' : '. $key . $post;
     }
 }
