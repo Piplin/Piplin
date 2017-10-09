@@ -47,6 +47,8 @@ class ResetApp extends Command
     /**
      * Execute the console command.
      *
+     * @param Dispatcher $dispatcher
+     *
      * @return mixed
      */
     public function handle(Dispatcher $dispatcher)
