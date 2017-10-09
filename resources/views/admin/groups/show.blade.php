@@ -30,7 +30,7 @@
                                     <th>{{ trans('projects.repository') }}</th>
                                     <th>{{ trans('projects.branch') }}</th>
                                     <th>{{ trans('projects.builds') }}</th>
-                                    <th>{{ trans('projects.latest') }}</th>
+                                    <th>{{ trans('projects.deployed') }}</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>

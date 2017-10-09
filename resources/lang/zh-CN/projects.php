@@ -33,7 +33,7 @@ return [
     'image'             => '构建状态',
     'ci_image'          => '请填写项目构建状态的图标URL',
     'integrations'      => '服务集成',
-    'latest'            => '最近上线',
+    'deployed'          => '最近上线',
     'apply'             => '申请上线',
     'apply_choose'      => '选择项目',
     'apply_intro'       => '申请一旦被逐级审核通过，将由运维执行上线操作。',

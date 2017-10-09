@@ -9,7 +9,7 @@
     </div>
     @else
 
-    <div class="box-body table-responsive" id="link_list">
+    <div class="box-body table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>

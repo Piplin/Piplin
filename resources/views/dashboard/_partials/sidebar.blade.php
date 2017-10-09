@@ -47,7 +47,7 @@
                     <tr>
                         <th width="5%">ID</th>
                         <th width="30%">{{ trans('projects.name') }}</th>
-                        <th width="35%">{{ trans_choice('dashboard.latest', 1) }}</th>
+                        <th width="35%">{{ trans('projects.deployed') }}</th>
                         <th width="20%">{{ trans('dashboard.status') }}</th>
                         <th width="10%"></th>
                     </tr>
