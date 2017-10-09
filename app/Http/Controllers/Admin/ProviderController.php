@@ -17,7 +17,7 @@ use Fixhub\Models\Provider;
 use Illuminate\Http\Request;
 
 /**
- * provider management controller.
+ * Provider management controller.
  */
 class ProviderController extends Controller
 {

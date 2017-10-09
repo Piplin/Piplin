@@ -7125,6 +7125,10 @@ a:focus {
   color: #1a1c22 !important;
 }
 
+.text-white {
+  color: #fff !important;
+}
+
 .text-black {
   color: #111 !important;
 }

@@ -15,13 +15,14 @@ use Fixhub\Models\Traits\BroadcastChanges;
 use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Model for environment.
  */
 class Environment extends Model
 {
-    use SoftDeletes, BroadcastChanges, HasTargetable;
+    use SoftDeletes, BroadcastChanges, HasTargetable, RevisionableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +54,13 @@ class Environment extends Model
      * @var array
      */
     protected $appends = ['server_count'];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * Has many relationship.

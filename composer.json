@@ -37,6 +37,7 @@
         "fixhub/js-localization": "0.0.1",
         "fideloper/proxy": "~3.3",
         "socialiteproviders/gitlab": "^3.0",
+        "venturecraft/revisionable": "~1.28.0",
         "version/version": "^2.2"
     },
     "require-dev": {

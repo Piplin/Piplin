@@ -15,13 +15,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Fixhub\Models\Traits\BroadcastChanges;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Notification hook.
  */
 class Hook extends Model
 {
-    use SoftDeletes, BroadcastChanges, Notifiable;
+    use SoftDeletes, BroadcastChanges, Notifiable, RevisionableTrait;
 
     const EMAIL   = 'mail';
     const SLACK   = 'slack';

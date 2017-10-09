@@ -26,7 +26,7 @@ class StoreProfileRequest extends Request
     public function rules()
     {
         $rules = [
-            'name'     => 'required|max:255',
+            'nickname' => 'required|max:255',
             'password' => 'required|confirmed|min:6',
         ];
 
