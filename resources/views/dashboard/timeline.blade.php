@@ -4,7 +4,7 @@
 <ul class="timeline">
     @foreach ($latest as $date => $deployments)
         <li class="time-label">
-            <span class="bg-gray">{{ $date }}</span>
+            <span>{{ $date }}</span>
         </li>
 
         @foreach ($deployments as $deployment)
