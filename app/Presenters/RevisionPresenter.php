@@ -18,6 +18,11 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  */
 class RevisionPresenter extends BasePresenter
 {
+    /**
+     * Get the creator.
+     *
+     * @return string
+     */
     public function creator()
     {
         if ($this->wrappedObject->user) {
