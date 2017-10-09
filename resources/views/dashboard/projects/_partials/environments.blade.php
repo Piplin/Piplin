@@ -6,6 +6,10 @@
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>
 
+    <div class="box-body" id="no_environments">
+        <p>{{ trans('environments.none') }}</p>
+    </div>
+
     <div class="box-body table-responsive" id="environment_list">
         <table class="table table-striped">
             <thead>

@@ -10,6 +10,9 @@
         <p>{!! trans('variables.example') !!}</p>
     </div>
 
+     <div class="box-body" id="no_variables">
+        <p>{{ trans('variables.none') }}</p>
+    </div>
     <div class="box-body table-responsive" id="variable_list">
         <table class="table table-striped">
             <thead>

@@ -34,4 +34,4 @@
     </div>
 </div>
 
-@include('projects.dialogs.key')
+@include('dashboard.projects.dialogs.key')

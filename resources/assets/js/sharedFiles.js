@@ -1,7 +1,7 @@
 var app = app || {};
 
 (function ($) {
-    $('#sharefile').on('show.bs.modal', function (event) {
+    $('#sharedfile').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
         var title = trans('sharedFiles.create');
@@ -23,7 +23,7 @@ var app = app || {};
         modal.find('.modal-title span').text(title);
     });
 
-    $('body').delegate('.sharefile-trash button.btn-delete','click', function (event) {
+    $('body').delegate('.sharedfile-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -52,7 +52,7 @@ var app = app || {};
         });
     });
 
-    $('#sharefile button.btn-save').on('click', function (event) {
+    $('#sharedfile button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -216,7 +216,7 @@ var app = app || {};
         trashFile: function() {
             var target = $('#model_id');
             target.val(this.model.id);
-            target.parents('.modal').removeClass().addClass('modal fade sharefile-trash');
+            target.parents('.modal').removeClass().addClass('modal fade sharedfile-trash');
         }
     });
 

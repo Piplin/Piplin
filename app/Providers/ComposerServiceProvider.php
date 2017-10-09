@@ -32,7 +32,7 @@ class ComposerServiceProvider extends ServiceProvider
         AppComposer::class         => '*',
         CurrentUserComposer::class => '*',
         DashboardComposer::class   => ['dashboard.index'],
-        DeploymentComposer::class  => ['projects.show'],
+        DeploymentComposer::class  => ['dashboard.projects.show'],
         HeaderComposer::class      => ['dashboard._partials.nav'],
         SidebarComposer::class     => ['dashboard._partials.sidebar'],
         ThemeComposer::class       => ['layouts.dashboard', 'profile.index'],

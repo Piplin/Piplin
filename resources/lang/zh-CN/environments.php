@@ -18,6 +18,7 @@ return [
     'servers'             => '服务器',
     'description'         => '描述',
     'warning'             => '信息保存失败.',
+    'none'                => '还没有设置部署环境',
     'example'             => '例：Staging、QA、Production。',
     'default_on'          => '是否默认选中？',
     'default_description' => '部署时默认选中该环境',

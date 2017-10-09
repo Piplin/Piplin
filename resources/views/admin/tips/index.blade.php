@@ -50,7 +50,7 @@
         <td><%- excerpt %></td>
         <td>
             <div class="btn-group pull-right">
-                <button class="btn btn-default btn-show" title="{{ trans('projects.view_ssh_key') }}" data-toggle="modal" data-target="#show_tip"><i class="ion ion-eye"></i></button>
+                <button class="btn btn-default btn-show" title="{{ trans('tips.preview') }}" data-toggle="modal" data-target="#show_tip"><i class="ion ion-eye"></i></button>
                 <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#tip"><i class="ion ion-compose"></i></button>
                 <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
             </div>

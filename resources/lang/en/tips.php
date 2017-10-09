@@ -10,6 +10,7 @@ return [
     'enabled' => 'Enabled?',
     'create'  => 'Create a new tip',
     'edit'    => 'Edit the tip',
+    'preview' => 'Preview',
     'warning' => 'The tip could not be saved, please check the form below.',
 
 ];

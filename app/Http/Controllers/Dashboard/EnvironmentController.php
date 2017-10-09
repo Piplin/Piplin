@@ -39,7 +39,7 @@ class EnvironmentController extends Controller
         $breadcrumb = [
             ['url' => route('projects', ['id' => $project->id, 'tab' => 'environments']), 'label' => $project->name],
         ];
-        return view('environments.show', [
+        return view('dashboard.environments.show', [
                 'title'           => trans('servers.label'),
                 'breadcrumb'      => $breadcrumb,
                 'project'         => $project,

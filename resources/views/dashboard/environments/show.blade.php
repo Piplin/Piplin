@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="row">
-        @include('projects._partials.servers')
+        @include('dashboard.projects._partials.servers')
     </div>
-    @include('projects.dialogs.server')
+    @include('dashboard.projects.dialogs.server')
 @stop
 
 @push('javascript')

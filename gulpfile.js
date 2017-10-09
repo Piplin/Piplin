@@ -86,7 +86,7 @@ elixir(function(mix) {
         'providers.js',
         'servers.js',
         'hooks.js',
-        'shareFiles.js',
+        'sharedFiles.js',
         'configFiles.js',
         'variables.js',
         'environments.js',

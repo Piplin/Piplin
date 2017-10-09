@@ -136,6 +136,7 @@ var app = app || {};
         initialize: function() {
             this.$list = $('#variable_list tbody');
 
+            $('#no_variables').show();
             $('#variable_list').hide();
 
             this.listenTo(app.Variables, 'add', this.addOne);
@@ -171,8 +172,10 @@ var app = app || {};
         },
         render: function () {
             if (app.Variables.length) {
+                $('#no_variables').hide();
                 $('#variable_list').show();
             } else {
+                $('#no_variables').show();
                 $('#variable_list').hide();
             }
         },

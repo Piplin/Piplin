@@ -12,28 +12,28 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {!! $tab != '' ?: 'active' !!}" id="commands">
-                        @include('projects._partials.commands')
-                        @include('projects._partials.variables')
+                        @include('dashboard.projects._partials.commands')
+                        @include('dashboard.projects._partials.variables')
                     </div>
                     <div class="tab-pane {!! $tab != 'environments' ?: 'active' !!}" id="environments">
-                        @include('projects._partials.environments')
+                        @include('dashboard.projects._partials.environments')
                     </div>
                     <div class="tab-pane {!! $tab != 'config-files' ?: 'active' !!}" id="config-files">
-                        @include('projects._partials.config_files')
+                        @include('dashboard.projects._partials.config_files')
                     </div>
                     <div class="tab-pane {!! $tab != 'shared-files' ?: 'active' !!}" id="shared-files">
-                        @include('projects._partials.shared_files')
+                        @include('dashboard.projects._partials.shared_files')
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @include('projects.dialogs.server')
-    @include('projects.dialogs.variable')
-    @include('projects.dialogs.environment')
-    @include('projects.dialogs.shared_files')
-    @include('projects.dialogs.config_files')
+    @include('dashboard.projects.dialogs.server')
+    @include('dashboard.projects.dialogs.variable')
+    @include('dashboard.projects.dialogs.environment')
+    @include('dashboard.projects.dialogs.shared_files')
+    @include('dashboard.projects.dialogs.config_files')
 @stop
 
 @push('javascript')
