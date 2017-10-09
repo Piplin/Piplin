@@ -37,6 +37,14 @@ var app = app || {};
         });
     });
 
+    $('.btn-cancel').on('click', function (event) {
+        var button = $(event.currentTarget);
+        var deployment = button.data('deployment-id');
+
+        $('form#abort_' + deployment).trigger('submit');
+    });
+
+    var fetchingLog = false;
     $('#log').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var log_id = button.attr('id').replace('log_', '');
@@ -52,27 +60,60 @@ var app = app || {};
         $('#action', modal).text(step);
         log.text('');
 
+        fetchingLog = true;
+
         $.ajax({
             type: 'GET',
             url: '/log/' + log_id
         }).done(function (data) {
-            var output = data.output;
-            // FIXME: There has to be a cleaner way to do this surely?
-            output = output.replace(/<\/error>/g, '</span>')
-            output = output.replace(/<\/info>/g, '</span>');
-            output = output.replace(/<error>/g, '<span class="text-red">')
-            output = output.replace(/<info>/g, '<span class="text-default">');
+            var output = parseOutput(data.output ? data.output : '');
 
             log.html(output);
 
             log.show();
             loader.hide();
-        }).fail(function() {
 
+            app.listener.on('serverlog-' + log_id + ':Fixhub\\Bus\\Events\\ServerOutputChangedEvent', function (data) {
+                if (data.log_id === parseInt(log_id)) {
+                  fetchLog(log, data.log_id);
+                }
+            });
         }).always(function() {
-
+            fetchingLog = false;
         });
     });
+
+    $('#log').on('hide.bs.modal', function () {
+        fetchingLog = false;
+    });
+
+    function fetchLog(element, log_id) {
+        if (fetchingLog) {
+            return;
+        }
+
+        fetchingLog = true;
+
+        $.ajax({
+            type: 'GET',
+            url: '/log/' + log_id
+        }).done(function (data) {
+            var output = parseOutput(data.output ? data.output : '');
+            var atBottom = false;
+
+            if (element.scrollTop() + element.innerHeight() >= element.get(0).scrollHeight) {
+                atBottom = true;
+            }
+
+            element.html(output);
+
+            if (atBottom) {
+                element.scrollTop(element.get(0).scrollHeight);
+            }
+        }).always(function() {
+            fetchingLog = false;
+        });
+    }
 
     app.ServerLog = Backbone.Model.extend({
         urlRoot: '/status'

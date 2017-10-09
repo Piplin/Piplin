@@ -13,6 +13,7 @@ namespace Fixhub\Bus\Observers;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Fixhub\Bus\Events\ServerLogChangedEvent;
+use Fixhub\Bus\Events\ServerOutputChangedEvent;
 use Fixhub\Models\ServerLog;
 
 /**
@@ -41,5 +42,9 @@ class ServerLogObserver
     public function updated(ServerLog $log)
     {
         $this->dispatcher->dispatch(new ServerLogChangedEvent($log));
+
+        if ($log->isDirty('output')) {
+            $this->dispatcher->dispatch(new ServerOutputChangedEvent($log));
+        }
     }
 }

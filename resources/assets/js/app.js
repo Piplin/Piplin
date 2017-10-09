@@ -20,6 +20,13 @@ $('form').submit(function () {
     $form.find(':submit').prop('disabled', true);
 });
 
+function parseOutput(output) {
+  return output.replace(/<\/error>/g, '</span>')
+    .replace(/<\/info>/g, '</span>')
+    .replace(/<error>/g, '<span class="text-red">')
+    .replace(/<info>/g, '<span class="text-default">');
+}
+
 (function ($) {
 
     // Don't need to try and connect to the web socket when not logged in
