@@ -17,7 +17,7 @@ use Fixhub\Models\Tip;
 use Illuminate\Http\Request;
 
 /**
- * tip management controller.
+ * Tip management controller.
  */
 class TipController extends Controller
 {

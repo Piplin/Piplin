@@ -20,13 +20,14 @@ use McCool\LaravelAutoPresenter\HasPresenter;
 use Illuminate\Support\Facades\Hash;
 use Creativeorange\Gravatar\Facades\Gravatar;
 use Fixhub\Bus\Notifications\User\ResetPasswordNotification;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * User model.
  */
 class User extends Authenticatable implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, Notifiable;
+    use SoftDeletes, BroadcastChanges, Notifiable, RevisionableTrait;
 
     /**
      * The admin level of user.
@@ -78,6 +79,20 @@ class User extends Authenticatable implements HasPresenter
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
+
+    /**
+     * Revision ignore attributes.
+     *
+     * @var array
+     */
+    protected $dontKeepRevisionOf = ['password', 'remember_token', 'email_token'];
 
     /**
      * Generate a change email token.

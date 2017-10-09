@@ -133,4 +133,11 @@ Route::group([
         'as'    => 'admin.groups.reorder',
         'uses'  => 'ProjectGroupController@reorder',
     ]);
+
+    Route::resource('revisions', 'RevisionController', [
+        'only' => ['index'],
+        'names' => [
+            'index'   => 'admin.revisions.index',
+        ],
+    ]);
 });

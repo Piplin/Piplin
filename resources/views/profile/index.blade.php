@@ -90,7 +90,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="avatar">
-                            <img src="{{ url('upload/picture.jpg') }}" class="img-rounded img-responsive" />
+                            <img src="{{ url('img/cropper.jpg') }}" class="img-rounded img-responsive" />
                         </div>
                     </div>
                     <div class="col-md-4">

@@ -18,13 +18,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Deployment model.
  */
 class Deployment extends Model implements HasPresenter, RuntimeInterface
 {
-    use SoftDeletes;
+    use SoftDeletes, RevisionableTrait;
 
     const COMPLETED             = 0;
     const PENDING               = 1;
@@ -38,6 +39,20 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     const LOADING               = 'Loading';
 
     public static $currentDeployment = [];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
+
+    /**
+     * Revision keep attributes.
+     *
+     * @var array
+     */
+    protected $keepRevisionOf = ['created_at'];
 
     /**
      * The attributes that are mass assignable.

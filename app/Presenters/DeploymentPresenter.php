@@ -134,7 +134,7 @@ class DeploymentPresenter extends BasePresenter
     public function timeline_css_class()
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
-            return 'green';
+            return 'white';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED], true)) {
             return 'red';
         } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {

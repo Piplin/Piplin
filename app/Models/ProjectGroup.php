@@ -14,13 +14,14 @@ namespace Fixhub\Models;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Project Group model.
  */
 class ProjectGroup extends Model
 {
-    use SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, RevisionableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -51,6 +52,13 @@ class ProjectGroup extends Model
      * @var array
      */
     protected $appends = ['project_count'];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * Has many relationship.

@@ -21,13 +21,14 @@ use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Version\Compare as VersionCompare;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Project model.
  */
 class Project extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, SetupRelations;
+    use SoftDeletes, BroadcastChanges, SetupRelations, RevisionableTrait;
 
     const FINISHED     = 0;
     const PENDING      = 1;
@@ -81,6 +82,20 @@ class Project extends Model implements HasPresenter
         'allow_other_branch' => 'boolean',
         'need_approve'       => 'boolean',
     ];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
+
+    /**
+     * Revision ignore attributes.
+     *
+     * @var array
+     */
+    protected $dontKeepRevisionOf = ['status', 'last_run', 'last_mirrored'];
 
     /**
      * Determines whether the project is currently being deployed.

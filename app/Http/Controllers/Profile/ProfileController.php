@@ -220,7 +220,7 @@ class ProfileController extends Controller
      */
     public function avatar(Request $request)
     {
-        $path   = $request->get('path', '/upload/picture.jpg');
+        $path   = $request->get('path', '/img/cropper.jpg');
         $image  = Image::make(public_path() . $path);
         $rotate = $request->get('dataRotate');
 

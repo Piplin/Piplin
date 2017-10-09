@@ -15,13 +15,14 @@ use Fixhub\Models\Traits\SetupRelations;
 use Fixhub\Presenters\DeployTemplatePresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Model for deploy templates.
  */
 class DeployTemplate extends Model implements HasPresenter
 {
-    use SetupRelations;
+    use SetupRelations, RevisionableTrait;
 
     /**
      * Fields to show in the JSON presentation.
@@ -53,6 +54,13 @@ class DeployTemplate extends Model implements HasPresenter
     protected $casts = [
         'id'          => 'integer',
     ];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * Define a accessor for the count of projects.

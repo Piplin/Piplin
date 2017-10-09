@@ -6,13 +6,14 @@ use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Fixhub\Services\Scripts\Runner as Process;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * SSH keys model.
  */
 class Key extends Model
 {
-    use SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, RevisionableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +35,13 @@ class Key extends Model
      * @var array
      */
     protected $appends = ['fingerprint'];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * Has many relationship.

@@ -9,5 +9,6 @@
         <li {!! set_active('admin/keys') !!}><a href="/admin/keys">{{ trans('keys.manage') }}</a></li>
         <li {!! set_active('admin/links') !!}><a href="/admin/links">{{ trans('links.manage') }}</a></li>
         <li {!! set_active('admin/tips') !!}><a href="/admin/tips">{{ trans('tips.manage') }}</a></li>
+        <li {!! set_active('admin/revisions') !!}><a href="/admin/revisions">{{ trans('revisions.manage') }}</a></li>
     </ul>
 </div>
