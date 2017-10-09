@@ -31,6 +31,14 @@
                                 {{ trans('environments.default_description') }}
                             </label>
                         </div>
+                        @if (Route::currentRouteName() == 'projects' && $project->commands->count() > 0)
+                        <div class="checkbox" id="add-environment-command">
+                            <label for="environment_commands">
+                                <input type="checkbox" value="1" name="commands" id="environment_commands" checked />
+                                {{ trans('environments.add_command') }}
+                            </label>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

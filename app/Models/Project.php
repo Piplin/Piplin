@@ -41,7 +41,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'hooks', 'commands','group', 'key', 'deployments', 'shareFiles',
+                         'hooks', 'commands','group', 'key', 'deployments', 'shareFiles',
                          'configFiles', 'last_mirrored',
                          ];
 
@@ -81,24 +81,6 @@ class Project extends Model implements HasPresenter
         'allow_other_branch' => 'boolean',
         'need_approve'       => 'boolean',
     ];
-
-    /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // When  creating the model generate an SSH Key pair and a webhook hash
-        // Fix me by gsl
-        static::creating(function (Project $model) {
-            if (!array_key_exists('hash', $model->attributes)) {
-                $model->generateHash();
-            }
-        });
-    }
 
     /**
      * Determines whether the project is currently being deployed.
@@ -244,17 +226,6 @@ class Project extends Model implements HasPresenter
     public function key()
     {
         return $this->belongsTo(Key::class, 'key_id', 'id');
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return Server
-     */
-    public function servers()
-    {
-        return $this->hasMany(Server::class)
-                    ->orderBy('order', 'ASC');
     }
 
     /**

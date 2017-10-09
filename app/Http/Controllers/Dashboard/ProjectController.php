@@ -11,11 +11,11 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
-use Illuminate\Http\Request;
 
 /**
  * The controller of projects.
@@ -38,23 +38,30 @@ class ProjectController extends Controller
             return $command->optional;
         });
 
-        return view('projects.show', [
+        $data = [
             'title'           => $project->group->name.'/'.$project->name,
             'project'         => $project,
-            'servers'         => $project->servers,
-            'hooks'           => $project->hooks,
-            'sharedFiles'     => $project->sharedFiles,
-            'configFiles'     => $project->configFiles,
-            'variables'       => $project->variables,
-            'environments'    => $project->environments,
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => $project->id,
             'optional'        => $optional,
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
-            'route'           => 'commands.step',
             'tab'             => $tab,
-        ]);
+        ];
+
+        $data['environments'] = $project->environments;
+        if ($tab == 'commands') {
+            $data['route'] = 'commands.step';
+            $data['variables'] = $project->variables;
+        } elseif ($tab == 'config-files') {
+            $data['configFiles'] = $project->configFiles;
+        } elseif ($tab == 'shared-files') {
+            $data['sharedFiles'] = $project->sharedFiles;
+        } elseif ($tab == 'hooks') {
+            $data['hooks'] = $project->hooks;
+        }
+
+        return view('projects.show', $data);
     }
 
     /**

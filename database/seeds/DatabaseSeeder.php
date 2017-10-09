@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VariableTableSeeder::class);
         $this->call(SharedFileTableSeeder::class);
         $this->call(ConfigFileTableSeeder::class);
+        $this->call(HookTableSeeder::class);
         $this->call(TipTableSeeder::class);
         $this->call(LinkTableSeeder::class);
     }

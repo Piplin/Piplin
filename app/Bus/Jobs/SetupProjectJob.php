@@ -19,32 +19,32 @@ use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\Variable;
 
 /**
- * A class to handle cloning the command templates for the project.
+ * A class to handle cloning between template and project.
  */
 class SetupProjectJob extends Job
 {
     /**
-    * @var Project
+    * @var mixed
     */
-    private $project;
+    private $target;
 
     /**
-    * @var Template
+    * @var mixed
     */
-    private $template;
+    private $skeleton;
 
     /**
      * Create a new command instance.
      *
-     * @param Project        $project
-     * @param DeployTemplate $template
+     * @param mixed $target
+     * @param mixed $skeleton
      *
      * @return SetupProjectJob
      */
-    public function __construct(Project $project, DeployTemplate $template)
+    public function __construct($target, $skeleton)
     {
-        $this->project  = $project;
-        $this->template = $template;
+        $this->target  = $target;
+        $this->skeleton = $skeleton;
     }
 
     /**
@@ -54,38 +54,42 @@ class SetupProjectJob extends Job
      */
     public function handle()
     {
-        if (!$this->template) {
+        if (!$this->skeleton) {
             return;
         }
 
-        foreach ($this->template->commands as $command) {
+        if (!$this->skeleton instanceof DeployTemplate && !$this->skeleton instanceof Project) {
+            return;
+        }
+
+        foreach ($this->skeleton->commands as $command) {
             $data = $command->toArray();
 
-            $this->project->commands()->create($data);
+            $this->target->commands()->create($data);
         }
 
-        foreach ($this->template->environments as $environment) {
+        foreach ($this->skeleton->environments as $environment) {
             $data = $environment->toArray();
 
-            $this->project->environments()->create($data);
+            $this->target->environments()->create($data);
         }
 
-        foreach ($this->template->variables as $variable) {
+        foreach ($this->skeleton->variables as $variable) {
             $data = $variable->toArray();
 
-            $this->project->variables()->create($data);
+            $this->target->variables()->create($data);
         }
 
-        foreach ($this->template->sharedFiles as $file) {
+        foreach ($this->skeleton->sharedFiles as $file) {
             $data = $file->toArray();
 
-            $this->project->sharedFiles()->create($data);
+            $this->target->sharedFiles()->create($data);
         }
 
-        foreach ($this->template->configFiles as $file) {
+        foreach ($this->skeleton->configFiles as $file) {
             $data = $file->toArray();
 
-            $this->project->configFiles()->create($data);
+            $this->target->configFiles()->create($data);
         }
     }
 }

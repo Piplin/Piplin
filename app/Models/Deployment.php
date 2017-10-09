@@ -101,7 +101,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     public function environments()
     {
         return $this->belongsToMany(Environment::class)
-                    ->orderBy('id', 'ASC');
+                    ->orderBy('order', 'ASC');
     }
 
 

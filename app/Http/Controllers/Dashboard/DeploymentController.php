@@ -11,14 +11,15 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
 use Fixhub\Bus\Jobs\ApproveDeploymentJob;
+use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
-use Illuminate\Http\Request;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**
@@ -41,6 +42,7 @@ class DeploymentController extends Controller
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
                 $log->server;
+                $log->server->environment_name = $log->server->environment ? $log->server->environment->name : null;
 
                 $log->runtime = ($log->runtime() === false ?
                         null : AutoPresenter::decorate($log)->readable_runtime);
@@ -77,7 +79,7 @@ class DeploymentController extends Controller
         // Fix me! see also in DeploymentController and IncomingWebhookController
         $project = Project::findOrFail($project_id);
 
-        if ($project->servers->where('deploy_code', true)->count() === 0) {
+        if ($project->environments->count() === 0) {
             return redirect()->route('projects', ['id' => $project->id]);
         }
 
@@ -108,7 +110,16 @@ class DeploymentController extends Controller
             }, $request->get('optional')));
         }
 
+        $optional = array_pull($fields, 'optional');
+        $environments = array_pull($fields, 'environments');
+
         $deployment = Deployment::create($fields);
+
+        dispatch(new SetupDeploymentJob(
+            $deployment,
+            $environments,
+            $optional
+        ));
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,

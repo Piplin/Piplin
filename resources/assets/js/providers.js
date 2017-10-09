@@ -30,7 +30,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#provider').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -219,6 +218,12 @@ var app = app || {};
             });
 
             this.$list.append(view.render().el);
+
+            if (app.Providers.length < 2) {
+                $('.drag-handle', this.$list).hide();
+            } else {
+                $('.drag-handle', this.$list).show();
+            }
         },
         addAll: function () {
             this.$list.html('');

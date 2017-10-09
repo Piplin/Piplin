@@ -26,7 +26,7 @@
 
 @push('templates')
     <script type="text/template" id="environment-template">
-        <td data-environment-id="<%- id %>">
+        <td data-environment-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span>
         @if (Route::currentRouteName() == 'projects')
         <a href="/projects/{{ $project->id }}/environments/<%- id %>"><%- name %></a>
         @else

@@ -18,6 +18,7 @@
                             <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.details') }}</a></li>
                             <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
                             <li><a href="#project_build" data-toggle="tab">{{ trans('projects.build_options') }}</a></li>
+                            <li><a href="#project_others" data-toggle="tab">{{ trans('projects.others') }}</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -33,7 +34,7 @@
                                     <label for="project_group_id">{{ trans('projects.group') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-browsers-outline"></i></div>
-                                    <select id="project_group_id" name="group_id" class="form-control">
+                                    <select id="project_group_id" name="group_id" class="select2 form-control">
                                         @foreach($groups as $item)
                                             <option value="{{ $item->id }}" {!! isset($group) && $group->id == $item->id ? 'selected="selected"' : NULL !!}>{{ $item->name }}</option>
                                         @endforeach
@@ -45,7 +46,7 @@
                                     <label for="project_template_id">{{ trans('templates.type') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-paper-outline"></i></div>
-                                    <select id="project_template_id" name="template_id" class="form-control">
+                                    <select id="project_template_id" name="template_id" class="select2 form-control">
                                         <option value="">{{ trans('templates.custom') }}</option>
                                         @foreach ($templates as $template)
                                             <option value="{{ $template->id }}">{{ $template->name }}</option>
@@ -54,22 +55,6 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="form-group">
-                                    <label for="project_url">{{ trans('projects.url') }}</label>
-                                    <div class="input-group">
-                                    <div class="input-group-addon"><i class="ion ion-android-open"></i></div>
-                                    <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{ trans('projects.options') }}</label>
-                                    <div class="checkbox">
-                                        <label for="project_need_approve">
-                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
-                                            {{ trans('projects.need_approve') }}
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="tab-pane" id="project_repo">
@@ -103,7 +88,7 @@
                                     <label for="project_key_id">{{ trans('projects.key') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-key"></i></div>
-                                    <select id="project_key_id" name="key_id" class="form-control">
+                                    <select id="project_key_id" name="key_id" class="select2 form-control">
                                         @foreach($keys as $key)
                                             <option value="{{ $key->id }}">{{ $key->name }}</option>
                                         @endforeach
@@ -126,12 +111,73 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="project_others">
+                                <div class="form-group">
+                                    <label for="project_url">{{ trans('projects.url') }}</label>
+                                    <div class="input-group">
+                                    <div class="input-group-addon"><i class="ion ion-android-open"></i></div>
+                                    <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ trans('projects.options') }}</label>
+                                    <div class="checkbox">
+                                        <label for="project_need_approve">
+                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
+                                            {{ trans('projects.need_approve') }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary pull-left btn-save">{{ trans('app.save') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="project-clone">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('projects.clone') }}</span></h4>
+            </div>
+            <form role="form" method="post">
+                <input type="hidden" id="skeleton_id" name="id" />
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <div class="modal-body">
+
+                    <div class="callout callout-danger">
+                        <i class="icon ion ion-alert"></i> {{ trans('projects.warning') }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group_name">{{ trans('projects.clone_name') }}</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                            <input type="text" class="form-control" name="name" id="project_clone_name" placeholder="{{ trans('groups.name') }}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project_key_id">{{ trans('projects.clone_type') }}</label>
+                        <div class="input-group">
+                        <div class="input-group-addon"><i class="ion ion-shuffle"></i></div>
+                        <select id="project_extract_type" name="type" class="select2 form-control">
+                                <option value="project">{{ trans('projects.clone_duplicate') }}</option>
+                                <option value="template">{{ trans('projects.clone_convert') }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary pull-left btn-save">{{ trans('app.save') }}</button>
                 </div>
             </form>
         </div>

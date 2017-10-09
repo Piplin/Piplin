@@ -46,6 +46,10 @@ Route::group([
             'destroy' => 'admin.projects.destroy',
         ],
     ]);
+    Route::post('projects/{id}/clone', [
+        'as'   => 'admin.projects.clone',
+        'uses' => 'ProjectController@clone',
+    ]);
 
     Route::resource('users', 'UserController', [
         'only' => ['index', 'store', 'update', 'destroy'],

@@ -11,9 +11,9 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\ServerLog;
-use Illuminate\Http\Request;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**

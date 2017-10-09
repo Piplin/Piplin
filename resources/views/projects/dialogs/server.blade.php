@@ -17,7 +17,7 @@
                         <label for="server_environment_id">{{ trans('servers.environment') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-cube"></i></div>
-                            <select id="server_environment_id" name="environment_id" class="form-control">
+                            <select id="server_environment_id" name="environment_id" class="select2 form-control">
                                 @foreach($environments as $each)
                                     <option value="{{ $each->id }}" {{ isset($environment) && $environment->id == $each->id ? 'selected="true"' : NULL }}>{{ $each->name }}</option>
                                 @endforeach
@@ -74,14 +74,6 @@
                                 {{ trans('servers.deploy_code') }}
                             </label>
                         </div>
-                        @if ($project->commands->count() > 0)
-                        <div class="checkbox" id="add-server-command">
-                            <label for="server_commands">
-                                <input type="checkbox" value="1" name="commands" id="server_commands" checked />
-                                {{ trans('servers.add_command') }}
-                            </label>
-                        </div>
-                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

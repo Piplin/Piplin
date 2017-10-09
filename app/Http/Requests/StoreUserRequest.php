@@ -38,7 +38,7 @@ class StoreUserRequest extends Request
         if ($this->get('id')) {
             $rules['email'] .= ',' . $this->get('id');
 
-            if ($this->get('password') !== '') {
+            if (!empty($this->get('password', null))) {
                 $rules['password'] = 'min:6';
             } else {
                 unset($rules['password']);

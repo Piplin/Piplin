@@ -39,6 +39,11 @@ Route::group([
         ]);
 
 
+        Route::post('environments/reorder', [
+            'as'    => 'environments.reorder',
+            'uses'  => 'EnvironmentController@reorder',
+        ]);
+
         Route::post('servers/reorder', [
             'as'    => 'servers.reorder',
             'uses'  => 'ServerController@reorder',

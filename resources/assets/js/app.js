@@ -31,7 +31,10 @@ $('form').submit(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
 
-
+    $(".select2").select2({
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
 
     var FINISHED     = 0;
     var PENDING      = 1;

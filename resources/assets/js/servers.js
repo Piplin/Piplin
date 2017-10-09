@@ -30,7 +30,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#server').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -40,7 +39,6 @@ var app = app || {};
         $('.callout-danger', modal).hide();
         $('.has-error', modal).removeClass('has-error');
         $('.label-danger', modal).remove();
-        $('#add-server-command', modal).hide();
 
         if (button.hasClass('btn-edit')) {
             title = trans('servers.edit');
@@ -55,13 +53,11 @@ var app = app || {};
             $('#server_path').val('');
             $('#server_environment_id').val($("#server_environment_id option:selected").val());
             $('#server_deploy_code').prop('checked', true);
-            $('#add-server-command', modal).show();
         }
 
         modal.find('.modal-title span').text(title);
     });
 
-    // FIXME: This seems very wrong
     $('body').delegate('.server-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -91,7 +87,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#server button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -112,14 +107,12 @@ var app = app || {};
         server.save({
             name:           $('#server_name').val(),
             ip_address:     $('#server_address').val(),
-            enabled:      $('#server_enabled').is(':checked'),
+            enabled:        $('#server_enabled').is(':checked'),
             port:           $('#server_port').val(),
             user:           $('#server_user').val(),
             path:           $('#server_path').val(),
             deploy_code:    $('#server_deploy_code').is(':checked'),
-            project_id:     $('input[name="project_id"]').val(),
-            environment_id: $('#server_environment_id').val(),
-            add_commands:   $('#server_commands').is(':checked')
+            environment_id: $('#server_environment_id').val()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -210,7 +203,7 @@ var app = app || {};
             });
 
             app.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
+                if (parseInt(data.model.environment_id) === parseInt(app.environment_id)) {
                     app.Servers.add(data.model);
                 }
             });
@@ -239,6 +232,12 @@ var app = app || {};
             });
 
             this.$list.append(view.render().el);
+
+            if (app.Servers.length < 2) {
+                $('.drag-handle', this.$list).hide();
+            } else {
+                $('.drag-handle', this.$list).show();
+            }
         },
         addAll: function () {
             this.$list.html('');

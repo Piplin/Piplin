@@ -34,6 +34,7 @@
 
                         @if(isset($breadcrumb))
                         <ol class="breadcrumb">
+                            <li><a href="{{ route('dashboard') }}">{{ trans('dashboard.title') }}</a>
                             @foreach($breadcrumb as $entry)
                             <li><a href="{{ $entry['url'] }}">{{ $entry['label'] }}</a></li>
                             @endforeach

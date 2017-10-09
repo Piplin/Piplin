@@ -47,7 +47,21 @@ var app = app || {};
         $('button.close', dialog).hide();
     });
 
-   // FIXME: This seems very wrong
+
+     $('#project-clone').on('show.bs.modal', function(event) {
+        var modal = $(this);
+        $('.callout-danger', modal).hide();
+
+        var project_id = $('#skeleton_id').val();
+        $('form', modal).prop('action', '/admin/projects/' + project_id + '/clone');
+    });
+
+     $('#project-clone button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+    });
+
     $('#project').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -82,7 +96,6 @@ var app = app || {};
         modal.find('.modal-title span').text(title);
     });
 
-    // FIXME: This seems very wrong
     $('body').delegate('.project-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -112,7 +125,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#project button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -266,6 +278,7 @@ var app = app || {};
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editProject',
+            'click .btn-clone': 'cloneProject',
             'click .btn-trash': 'trashProject'
         },
         initialize: function () {
@@ -295,6 +308,10 @@ var app = app || {};
             $('#project_build_url').val(this.model.get('build_url'));
             $('#project_allow_other_branch').prop('checked', (this.model.get('allow_other_branch') === true));
             $('#project_need_approve').prop('checked', (this.model.get('need_approve') === true));
+        },
+        cloneProject: function() {
+            $('#skeleton_id').val(this.model.id);
+            $('#project_clone_name').val(this.model.get('name') + '_Clone');
         },
         trashProject: function() {
             var target = $('#model_id');

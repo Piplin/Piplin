@@ -23,10 +23,12 @@ use Fixhub\Bus\Listeners\SendSignupEmailListener;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
+use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
 use Fixhub\Bus\Observers\DeploymentObserver;
 use Fixhub\Bus\Observers\HookObserver;
 use Fixhub\Bus\Observers\KeyObserver;
+use Fixhub\Bus\Observers\ProjectObserver;
 use Fixhub\Bus\Observers\ServerLogObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -65,6 +67,7 @@ class EventServiceProvider extends ServiceProvider
         Deployment::observe(DeploymentObserver::class);
         Key::observe(KeyObserver::class);
         Hook::observe(HookObserver::class);
+        Project::observe(ProjectObserver::class);
         ServerLog::observe(ServerLogObserver::class);
     }
 }

@@ -23,7 +23,6 @@ class ServerTableSeeder extends Seeder
             'ip_address'     => '192.168.75.19',
             'user'           => 'fixhub',
             'path'           => '/var/www',
-            'project_id'     => 1,
             'environment_id' => 1,
             'deploy_code'    => true,
         ]);
@@ -33,7 +32,6 @@ class ServerTableSeeder extends Seeder
             'ip_address'     => '192.168.75.20',
             'user'           => 'fixhub',
             'path'           => '/var/www',
-            'project_id'     => 1,
             'environment_id' => 1,
             'deploy_code'    => true,
         ]);
@@ -43,7 +41,6 @@ class ServerTableSeeder extends Seeder
             'ip_address'     => '192.168.75.21',
             'user'           => 'fixhub',
             'path'           => '/home/fixhub',
-            'project_id'     => 1,
             'environment_id' => 1,
             'deploy_code'    => false,
         ]);

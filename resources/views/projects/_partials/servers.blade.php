@@ -14,12 +14,13 @@
         </div>
     </div>
 </div>
+
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
             <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-success" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
         </div>
-        <h3 class="box-title">{{ trans('servers.label') }}</h3>
+        <h3 class="box-title">{{ trans('environments.label') }} : {{ $environment->name }}</h3>
     </div>
 
     <div class="box-body" id="no_servers">
@@ -48,7 +49,7 @@
 
 @push('templates')
     <script type="text/template" id="server-template">
-        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-ios-drag"></i></span><%- name %><% if (!enabled) { %> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } %></td>
+        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><%- name %><% if (!enabled) { %> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } %></td>
         <td><%- user %></td>
         <td><%- ip_address %></td>
         <td><%- port %></td>

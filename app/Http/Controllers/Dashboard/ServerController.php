@@ -11,12 +11,11 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Bus\Jobs\TestServerConnectionJob;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreServerRequest;
 use Fixhub\Models\Server;
-use Illuminate\Http\Request;
 
 /**
  * Server management controller.
@@ -39,14 +38,12 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'project_id',
             'environment_id',
-            'deploy_code',
-            'add_commands'
+            'deploy_code'
         );
 
         // Get the current highest server order
-        $max = Server::where('project_id', $fields['project_id'])
+        $max = Server::where('environment_id', $fields['environment_id'])
                            ->orderBy('order', 'DESC')
                            ->first();
 
@@ -58,20 +55,7 @@ class ServerController extends Controller
         $fields['order'] = $order;
         $fields['output'] = null;
 
-        $add_commands = false;
-        if (isset($fields['add_commands'])) {
-            $add_commands = $fields['add_commands'];
-            unset($fields['add_commands']);
-        }
-
         $server = Server::create($fields);
-
-        // Add the server to the existing commands
-        if ($add_commands) {
-            foreach ($server->project->commands as $command) {
-                $command->servers()->attach($server->id);
-            }
-        }
 
         return $server;
     }
@@ -95,7 +79,6 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'project_id',
             'environment_id',
             'deploy_code'
         ));

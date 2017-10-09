@@ -30,7 +30,6 @@ var app = app || {};
         }
     });
 
-    // FIXME: This seems very wrong
     $('#link').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -83,7 +82,6 @@ var app = app || {};
         });
     });
 
-    // FIXME: This seems very wrong
     $('#link button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -218,6 +216,12 @@ var app = app || {};
             });
 
             this.$list.append(view.render().el);
+
+            if (app.Links.length < 2) {
+                $('.drag-handle', this.$list).hide();
+            } else {
+                $('.drag-handle', this.$list).show();
+            }
         },
         addAll: function () {
             this.$list.html('');

@@ -28,7 +28,7 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'default_on'];
+    protected $fillable = ['name', 'description', 'order', 'default_on'];
 
     /**
      * The attributes excluded from the model's JSON form.

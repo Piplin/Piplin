@@ -11,8 +11,8 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Project;
@@ -40,7 +40,7 @@ class EnvironmentController extends Controller
             ['url' => route('projects', ['id' => $project->id, 'tab' => 'environments']), 'label' => $project->name],
         ];
         return view('environments.show', [
-                'title'           => trans('environments.label'),
+                'title'           => trans('servers.label'),
                 'breadcrumb'      => $breadcrumb,
                 'project'         => $project,
                 'targetable_type' => $targetable_type,
@@ -62,6 +62,7 @@ class EnvironmentController extends Controller
             'name',
             'description',
             'default_on',
+            'add_commands',
             'targetable_type',
             'targetable_id'
         );
@@ -69,9 +70,24 @@ class EnvironmentController extends Controller
         $targetable_type = array_pull($fields, 'targetable_type');
         $targetable_id = array_pull($fields, 'targetable_id');
 
+        $add_commands = false;
+        if (isset($fields['add_commands'])) {
+            $add_commands = $fields['add_commands'];
+            unset($fields['add_commands']);
+        }
+
         $target = $targetable_type::findOrFail($targetable_id);
 
-        return $target->environments()->create($fields);
+        $environment = $target->environments()->create($fields);
+
+        // Add the environment to the existing commands
+        if ($add_commands) {
+            foreach ($environment->targetable->commands as $command) {
+                $command->environments()->attach($environment->id);
+            }
+        }
+
+        return $environment;
     }
 
     /**
@@ -92,6 +108,31 @@ class EnvironmentController extends Controller
         ));
 
         return $environment;
+    }
+
+    /**
+     * Re-generates the order for the supplied environments.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function reorder(Request $request)
+    {
+        $order = 0;
+
+        foreach ($request->get('environments') as $environment_id) {
+            $environment = Environment::findOrFail($environment_id);
+            $environment->update([
+                'order' => $order,
+            ]);
+
+            $order++;
+        }
+
+        return [
+            'success' => true,
+        ];
     }
 
     /**

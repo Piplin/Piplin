@@ -32,14 +32,14 @@ class Server extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'project', 'environment'];
+    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'environment'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'enabled', 'ip_address','project_id','environment_id',
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address','environment_id',
                            'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
 
     /**
@@ -49,23 +49,12 @@ class Server extends Model
      */
     protected $casts = [
         'id'             => 'integer',
-        'project_id'     => 'integer',
-        'enabled'     => 'boolean',
+        'enabled'        => 'boolean',
         'environment_id' => 'integer',
         'status'         => 'integer',
         'deploy_code'    => 'boolean',
         'port'           => 'integer',
     ];
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Project
-     */
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
 
     /**
      * Belongs to relationship.
