@@ -54,7 +54,7 @@ class DeploymentController extends Controller
 
         $project = $deployment->project;
 
-        return view('deployment.show', [
+        return view('dashboard.deployments.show', [
             'breadcrumb' => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
             ],
