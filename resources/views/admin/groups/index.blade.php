@@ -54,8 +54,8 @@
         <td><%- project_count %></td>
         <td>
             <div class="btn-group pull-right">
-                <button class="btn btn-default btn-edit" title="{{ trans('groups.edit') }}" data-toggle="modal" data-target="#group" data-group-id="<%- id %>"><i class="ion ion-compose"></i></button>
-                <button class="btn btn-danger btn-delete" title="{{ trans('groups.delete') }}" data-toggle="modal" data-target="#model-trash" data-group-id="<%- id %>"><i class="ion ion-trash-a"></i></button>
+                <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#group" data-group-id="<%- id %>"><i class="ion ion-compose"></i></button>
+                <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash" data-group-id="<%- id %>"><i class="ion ion-trash-a"></i></button>
             </div>
         </td>
     </script>

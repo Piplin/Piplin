@@ -11,6 +11,6 @@ return [
     'create'            => '添加链接',
     'edit'              => '编辑',
     'warning'           => '保存失败，请检查表单信息',
-    'view_link'         => '查看站点',
+    'view_link'         => '访问站点',
 
 ];
