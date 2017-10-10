@@ -208,7 +208,6 @@ var app = app || {};
             return this;
         },
         editFile: function() {
-            // FIXME: Sure this is wrong?
             $('#file_id').val(this.model.id);
             $('#name').val(this.model.get('name'));
             $('#file').val(this.model.get('file'));

@@ -78,16 +78,10 @@ var app = app || {};
         app.connection_error = false;
     });
 
-    // Navbar deployment status
-    // FIXME: Convert these menus to backbone
-    // FIXME: Convert the project and deployments to backbone
-    // TODO: Update the timeline
     app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
 
         // Update todo bar
         updateTodoBar(data);
-
-        //var project = $('#project_' + data.model.project_id);
 
         if ($('#timeline').length > 0) {
             updateTimeline();

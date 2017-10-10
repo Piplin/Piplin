@@ -16,22 +16,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="config-file-name">{{ trans('configFiles.name') }}</label>
+                        <label for="name">{{ trans('configFiles.name') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
-                            <input type="text" class="form-control" id="config-file-name" name="config-file-name" placeholder="{{ trans('configFiles.config') }}" />
+                            <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('configFiles.config') }}" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="config-file-path">{{ trans('configFiles.path') }}</label>
+                        <label for="path">{{ trans('configFiles.path') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-folder"></i></div>
-                            <input type="text" class="form-control" id="config-file-path" name="path" placeholder="config/app.php" />
+                            <input type="text" class="form-control" id="path" name="path" placeholder="config/app.php" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="config-file-content">{{ trans('configFiles.content') }}</label>
-                        <div id="config-file-content" class="form-control"></div>
+                        <label for="content">{{ trans('configFiles.content') }}</label>
+                        <div class="configfile-content" id="content" class="form-control"></div>
                     </div>
                 </div>
                 <div class="modal-footer">

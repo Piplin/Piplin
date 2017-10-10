@@ -28,9 +28,9 @@ var app = app || {};
         var modal = $(this);
         var title = trans('configFiles.create');
 
-        editor = ace.edit('config-file-content');
+        editor = ace.edit('content');
 
-        var filename = $('#config-file-path').val();
+        var filename = $('#path').val();
         var extension = filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
 
         if (extension === 'php' || extension === 'ini') {
@@ -48,9 +48,9 @@ var app = app || {};
             title = trans('configFiles.edit');
             $('.btn-danger', modal).show();
         } else {
-            $('#config_file_id').val('');
-            $('#config-file-name').val('');
-            $('#config-file-path').val('');
+            $('#file_id').val('');
+            $('#name').val('');
+            $('#path').val('');
             editor.setValue('');
             editor.gotoLine(1);
         }
@@ -105,8 +105,8 @@ var app = app || {};
         }
 
         file.save({
-            name:       $('#config-file-name').val(),
-            path:       $('#config-file-path').val(),
+            name:       $('#name').val(),
+            path:       $('#path').val(),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val(),
             content:    editor.getValue()
@@ -238,7 +238,7 @@ var app = app || {};
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model, 'destroy', this.remove);
 
-            this.template = _.template($('#config-files-template').html());
+            this.template = _.template($('#configfiles-template').html());
         },
         render: function () {
             var data = this.model.toJSON();
@@ -252,11 +252,10 @@ var app = app || {};
             $('#preview-content').text(this.model.get('content'));
         },
         editFile: function() {
-            // FIXME: Sure this is wrong?
             $('#config_file_id').val(this.model.id);
-            $('#config-file-name').val(this.model.get('name'));
-            $('#config-file-path').val(this.model.get('path'));
-            $('#config-file-content').text(this.model.get('content'));
+            $('#name').val(this.model.get('name'));
+            $('#path').val(this.model.get('path'));
+            $('#content').text(this.model.get('content'));
         },
         trashFile: function () {
             var target = $('#model_id');

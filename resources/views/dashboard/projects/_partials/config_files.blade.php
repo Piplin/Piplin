@@ -28,7 +28,7 @@
 </div>
 
 @push('templates')
-    <script type="text/template" id="config-files-template">
+    <script type="text/template" id="configfiles-template">
         <td><%- name %></td>
         <td><%- path %></td>
         <td>

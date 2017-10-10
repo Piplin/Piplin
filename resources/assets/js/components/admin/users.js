@@ -21,7 +21,6 @@ var app = app || {};
         } else {
             $('#user_id').val('');
             $('#user_name').val('');
-            //$('#user_level').val('');
             $('#user_level').val($("#user_level option:first").val());
             $('#user_nickname').val('');
             $('#user_email').val('');
