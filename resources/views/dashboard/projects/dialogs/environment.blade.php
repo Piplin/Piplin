@@ -16,12 +16,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="environment_name">{{ trans('environments.name') }}</label>
-                        <input type="text" class="form-control" id="environment_name" name="name" placeholder="Environment name" />
+                        <label for="environment_name">{{ trans('environments.name') }}</label> <i class="ion ion-help-buoy" data-toggle="tooltip" data-placement="right" title="{{ trans('environments.example') }}"></i>
+                        <input type="text" class="form-control" id="environment_name" name="name" placeholder="{{ trans('environments.name_placeholder') }}" />
                     </div>
                     <div class="form-group">
                         <label for="environment_description">{{ trans('environments.description') }}</label>
-                        <input type="text" class="form-control" id="environment_description" name="description" placeholder="Description" />
+                        <input type="text" class="form-control" id="environment_description" name="description" placeholder="{{ trans('environments.desc_placeholder') }}" />
                     </div>
                     <div class="form-group">
                         <label>{{ trans('environments.default_on') }}</label>
