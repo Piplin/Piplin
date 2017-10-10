@@ -37,7 +37,7 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## 开发使用到的技术
 
-- [x] Gulp
+- [x] Webpack
 - [x] Sass
 - [x] Codception
 - [x] PHP CodeSniffer
@@ -120,7 +120,7 @@ $ php artisan config:clear
 
 ```shell
 $ git fetch --all
-$ git checkout 0.2.2
+$ git checkout 0.2.3
  ```
 
 二. 更新依赖
@@ -151,11 +151,11 @@ Fixhub代码里已经自带编译后的前端静态资源，如果你不想修�
 工具集：
 
 - Node.js
-- Gulp
+- Webpack
 
 ```shell
 npm install
-gulp
+npm run prod
 ```
 
 ## 鸣谢

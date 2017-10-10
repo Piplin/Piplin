@@ -40,11 +40,11 @@ if (!function_exists('cdn')) {
     function cdn($path, $secure = null)
     {
         if (!config('fixhub.cdn')) {
-            return elixir($path);
+            return mix($path);
         }
         $path = trim($path, '/');
         if (in_array(pathinfo($path, PATHINFO_EXTENSION), ['css', 'js'])) {
-            $path = elixir($path);
+            $path = mix($path);
         }
         return '//' . config('fixhub.cdn') . ($path[0] !== '/' ? ('/' . $path) : $path);
     }
