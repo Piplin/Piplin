@@ -34,7 +34,7 @@ return [
     'mail'                             => 'E-mail',
     'which'                            => 'Which type of notification do you wish to add?',
     'test_subject'                     => 'Test Notification',
-    'test_message'                     => 'This is a test to ensure the notification is setup correctly.',
+    'test_message'                     => 'This is a test to ensure the notification is setup correctly - From :app_url',
     'enabled'                          => 'Hook enabled?',
 
     // Slack

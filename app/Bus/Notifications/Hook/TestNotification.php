@@ -35,7 +35,7 @@ class TestNotification extends Notification
             ->view(['notifications.email', 'notifications.email-plain'], [
                 'name' => $notification->name,
             ])
-            ->subject(trans('hooks.test_subject'))
+            ->subject(trans('hooks.test_subject', ['app_url' => config('app.url')]))
             ->line(trans('hooks.test_message'));
     }
 
@@ -50,7 +50,7 @@ class TestNotification extends Notification
     {
         return (new SlackMessage())
             ->to($notification->config->channel)
-            ->content(trans('hooks.test_message'));
+            ->content(trans('hooks.test_message', ['app_url' => config('app.url')]));
     }
 
     /**
@@ -64,7 +64,7 @@ class TestNotification extends Notification
     {
         return (new WebhookMessage())
             ->data([
-                'message' => trans('hooks.test_message'),
+                'message' => trans('hooks.test_message', ['app_url' => config('app.url')]),
             ])
             ->header('X-Fixhub-Project-Id', $notification->project_id)
             ->header('X-Fixhub-Notification-Id', $notification->id)
