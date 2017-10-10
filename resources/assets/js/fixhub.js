@@ -1,33 +1,26 @@
 var app = app || {};
 
-toastr.options.closeButton = true;
-toastr.options.progressBar = true;
-toastr.options.preventDuplicates = true;
-toastr.options.closeMethod = 'fadeOut';
-toastr.options.closeDuration = 3000;
-toastr.options.closeEasing = 'swing';
-toastr.options.positionClass = 'toast-bottom-right';
-toastr.options.timeOut = 5000;
-toastr.options.extendedTimeOut = 7000;
-
-$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-    jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
-});
-
-// Prevent double form submission
-$('form').submit(function () {
-    var $form = $(this);
-    $form.find(':submit').prop('disabled', true);
-});
-
-function parseOutput(output) {
-  return output.replace(/<\/error>/g, '</span>')
-    .replace(/<\/info>/g, '</span>')
-    .replace(/<error>/g, '<span class="text-red">')
-    .replace(/<info>/g, '<span class="text-default">');
-}
-
 (function ($) {
+
+    toastr.options.closeButton = true;
+    toastr.options.progressBar = true;
+    toastr.options.preventDuplicates = true;
+    toastr.options.closeMethod = 'fadeOut';
+    toastr.options.closeDuration = 3000;
+    toastr.options.closeEasing = 'swing';
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.timeOut = 5000;
+    toastr.options.extendedTimeOut = 7000;
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
+    });
+
+    // Prevent double form submission
+    $('form').submit(function () {
+        var $form = $(this);
+        $form.find(':submit').prop('disabled', true);
+    });
 
     // Don't need to try and connect to the web socket when not logged in
     if (window.location.href.match(/login|password/) != null) {

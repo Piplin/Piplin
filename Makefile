@@ -29,16 +29,6 @@ migration:
 seed:
 	php artisan db:seed
 
-install-gulp:
-	npm install --g gulp
-	npm install
-
-assets-production:
-	gulp --production
-
-assets_dev:
-	gulp
-
 cs:
 	vendor/bin/phpcs -p --standard=PSR2 --ignore="app/Helpers/Helpers.php,app/Presenters" app/
 	vendor/bin/phpdoccheck --directory=app

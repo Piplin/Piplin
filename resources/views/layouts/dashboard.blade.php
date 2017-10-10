@@ -55,6 +55,11 @@
         <script src="{{ cdn('js/vendor.js') }}"></script>
         <script src="/js-localization/messages"></script>
         <script src="{{ cdn('js/app.js') }}"></script>
+        @if (\Route::is('admin*'))
+        <script src="{{ cdn('js/admin.js') }}"></script>
+        @else
+        <script src="{{ cdn('js/dashboard.js') }}"></script>
+        @endif
 
         @stack('templates')
         @stack('javascript')
