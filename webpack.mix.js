@@ -34,19 +34,11 @@ var paths = {
 };
 
 mix
-    .copyDirectory(paths.bootstrap_sass + '/assets/fonts/bootstrap', dist_path + '/fonts')
-    .copyDirectory(paths.ionicons       + '/fonts', dist_path + '/fonts')
-    .sass('resources/assets/sass/app.scss', dist_path + '/css/app.css')
-    .styles([
-        paths.select2      + '/dist/css/select2.min.css',
-        paths.morris       + '/morris.css',
-        paths.ionicons     + '/css/ionicons.min.css',
-        paths.toastr       + '/build/toastr.min.css',
-        paths.cropper      + '/dist/cropper.min.css',
-    ], dist_path + '/css/vendor.css')
     .options({
         processCssUrls: false
     })
+    .copyDirectory(paths.bootstrap_sass + '/assets/fonts/bootstrap', dist_path + '/fonts')
+    .copyDirectory(paths.ionicons       + '/fonts', dist_path + '/fonts')
     .scripts([
         paths.jquery           + '/dist/jquery.min.js',
         paths.jquery_sortable  + '/source/js/jquery-sortable-min.js',
@@ -63,11 +55,11 @@ mix
         paths.cropper          + '/dist/cropper.min.js'
     ], dist_path + '/js/vendor.js')
     .scripts([
-        paths.ace             + '/ace.js',
-        paths.ace             + '/mode-sh.js',
-        paths.ace             + '/mode-php.js',
-        paths.ace             + '/mode-yaml.js',
-        paths.ace             + '/mode-ini.js'
+        paths.ace + '/ace.js',
+        paths.ace + '/mode-sh.js',
+        paths.ace + '/mode-php.js',
+        paths.ace + '/mode-yaml.js',
+        paths.ace + '/mode-ini.js'
     ], dist_path + '/js/ace.js')
     .scripts([
         assets_path + '/js/components/admin/providers.js',
@@ -76,7 +68,7 @@ mix
         assets_path + '/js/components/admin/projects.js',
         assets_path + '/js/components/admin/links.js',
         assets_path + '/js/components/admin/tips.js',
-        assets_path + '/js/components/admin/keys.js',
+        assets_path + '/js/components/admin/keys.js'
     ], dist_path + '/js/admin.js')
     .scripts([
         assets_path + '/js/components/dashboard/projects.js',
@@ -95,7 +87,20 @@ mix
         assets_path + '/js/fixhub.js',
         assets_path + '/js/uploader.js',
     ], dist_path + '/js/app.js')
+    .styles([
+        paths.select2      + '/dist/css/select2.min.css',
+        paths.morris       + '/morris.css',
+        paths.ionicons     + '/css/ionicons.min.css',
+        paths.toastr       + '/build/toastr.min.css',
+        paths.cropper      + '/dist/cropper.min.css'
+    ], dist_path + '/css/vendor.css')
+    .sass(assets_path + '/sass/app.scss', dist_path + '/css/app.css');
 
-if (mix.config.inProduction) {
+if (mix.inProduction()) {
     mix.version();
+}
+
+if (!mix.inProduction()) {
+    mix.sourceMaps()
+    mix.browserSync({proxy: 'localhost:8080'})
 }
