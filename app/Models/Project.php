@@ -210,7 +210,7 @@ class Project extends Model implements HasPresenter
      */
     public function getGroupNameAttribute()
     {
-        return $this->group->name;
+        return $this->group ? $this->group->name : null;
     }
 
     /**
