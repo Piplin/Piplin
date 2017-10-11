@@ -23,7 +23,7 @@
         "bootstrap-sass": "^3.3.6",
         "browser-sync": "^2.18.13",
         "browser-sync-webpack-plugin": "^1.2.0",
-        "cropper": "~2.3.0",
+        "cropper": "~3.1.1",
         "cross-env": "^5.0.5",
         "ionicons": "~2.0.1",
         "jquery": "~3.1.1",
