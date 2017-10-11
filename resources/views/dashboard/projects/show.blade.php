@@ -66,6 +66,7 @@
                     <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
                     <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('projects.integrations') }}</a></li>
+                    <li {!! $tab != 'triggers' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'triggers']) }}"><span class="ion ion-clock"></span> {{ trans('triggers.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -80,6 +81,8 @@
                             @include('dashboard.projects._partials.shared_files')
                         @elseif($tab == 'hooks')
                             @include('dashboard.projects._partials.hooks')
+                        @elseif($tab == 'triggers')
+                            @include('dashboard.projects._partials.triggers')
                         @else
                             @include('dashboard.projects._partials.deployments')
                         @endif
@@ -99,6 +102,8 @@
         @include('dashboard.projects.dialogs.shared_files')
     @elseif($tab == 'hooks')
         @include('dashboard.projects.dialogs.hook')
+    @elseif($tab == 'triggers')
+        @include('dashboard.projects.dialogs.trigger')
     @endif
 
     @include('dashboard.projects.dialogs.key')
@@ -136,6 +141,11 @@
         @elseif($tab == 'hooks')
         new app.HooksTab();
         app.Hooks.add({!! $hooks->toJson() !!});
+
+        @elseif($tab == 'triggers')
+        new app.TriggersTab();
+        app.Triggers.add({!! $triggers->toJson() !!});
+
         @endif
 
         app.project_id = {{ $project->id }};

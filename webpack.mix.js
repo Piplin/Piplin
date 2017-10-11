@@ -62,26 +62,27 @@ mix
         `${paths.ace}/mode-ini.js`
     ], `${dist_path}/js/ace.js`)
     .scripts([
-        `${assets_path}/js/components/admin/providers.js`,
-        `${assets_path}/js/components/admin/users.js`,
         `${assets_path}/js/components/admin/groups.js`,
-        `${assets_path}/js/components/admin/projects.js`,
-        `${assets_path}/js/components/admin/templates.js`,
+        `${assets_path}/js/components/admin/keys.js`,
         `${assets_path}/js/components/admin/links.js`,
+        `${assets_path}/js/components/admin/projects.js`,
+        `${assets_path}/js/components/admin/providers.js`,
+        `${assets_path}/js/components/admin/templates.js`,
         `${assets_path}/js/components/admin/tips.js`,
-        `${assets_path}/js/components/admin/keys.js`
+        `${assets_path}/js/components/admin/users.js`
     ], `${dist_path}/js/admin.js`)
     .scripts([
+        `${assets_path}/js/components/dashboard/commands.js`,
+        `${assets_path}/js/components/dashboard/configFiles.js`,
+        `${assets_path}/js/components/dashboard/deployment.js`,
+        `${assets_path}/js/components/dashboard/environments.js`,
+        `${assets_path}/js/components/dashboard/hooks.js`,
+        `${assets_path}/js/components/dashboard/profile.js`,
         `${assets_path}/js/components/dashboard/projects.js`,
         `${assets_path}/js/components/dashboard/servers.js`,
-        `${assets_path}/js/components/dashboard/hooks.js`,
         `${assets_path}/js/components/dashboard/sharedFiles.js`,
-        `${assets_path}/js/components/dashboard/configFiles.js`,
-        `${assets_path}/js/components/dashboard/variables.js`,
-        `${assets_path}/js/components/dashboard/environments.js`,
-        `${assets_path}/js/components/dashboard/deployment.js`,
-        `${assets_path}/js/components/dashboard/commands.js`,
-        `${assets_path}/js/components/dashboard/profile.js`
+        `${assets_path}/js/components/dashboard/triggers.js`,
+        `${assets_path}/js/components/dashboard/variables.js`
     ], `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/fixhub.js`,

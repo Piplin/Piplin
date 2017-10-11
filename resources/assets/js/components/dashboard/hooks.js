@@ -203,7 +203,7 @@ var app = app || {};
             app.listener.on('hook:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var hook = app.Hooks.get(parseInt(data.model.id));
 
-                if (server) {
+                if (hook) {
                     hook.set(data.model);
                 }
             });

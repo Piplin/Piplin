@@ -124,6 +124,7 @@ Route::group([
                 Route::resource('variables', 'VariableController', $actions);
                 Route::resource('environments', 'EnvironmentController', $actions);
                 Route::resource('hooks', 'HookController', $actions);
+                Route::resource('triggers', 'TriggerController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);

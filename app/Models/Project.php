@@ -266,6 +266,17 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return Trigger
+     */
+    public function triggers()
+    {
+        return $this->hasMany(Trigger::class)
+                    ->orderBy('name');
+    }
+
+    /**
      * Has many relationship for git references.
      *
      * @see PFixhub\Models\Project::tags()

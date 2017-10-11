@@ -59,6 +59,8 @@ class ProjectController extends Controller
             $data['sharedFiles'] = $project->sharedFiles;
         } elseif ($tab == 'hooks') {
             $data['hooks'] = $project->hooks;
+        } elseif ($tab == 'triggers') {
+            $data['triggers'] = $project->triggers;
         }
 
         return view('dashboard.projects.show', $data);
