@@ -43,7 +43,7 @@
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#" target="_blank">{{ trans('projects.group') }} <span class="pull-right">{{ $project->group->name }}</span></a></li>
+                        <li><a href="#" target="_blank">{{ trans('projects.group') }} <span class="pull-right">{{ $project->group ? $project->group->name : null }}</span></a></li>
                         <li><a href="{{ $project->url }}">{{ trans('projects.url') }} <span class="pull-right"><i class="ion ion-earth"></i></span></a></li>
                         @if(!empty($project->build_url))
                         <li><a href="#">{{ trans('projects.build_status') }} <span class="pull-right"><img src="{{ $project->build_url }}" /></span></a></li>

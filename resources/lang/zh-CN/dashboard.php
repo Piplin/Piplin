@@ -22,6 +22,7 @@ return [
     'approving_empty'   => '没有正在审核的任务',
     'author_issues'     => '我发起了 :count 个工单|我发起了 :count 个工单',
     'assignee_issues'   => '当前共有 :count 个工单指派给我|当前共有 :count 个工单指派给我',
+    'projects'          => '项目列表',
     'no_projects'       => '尚无项目',
     'no_deployments'    => '尚未执行过上线.',
     'status'            => '状态',

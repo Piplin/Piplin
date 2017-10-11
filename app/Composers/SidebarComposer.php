@@ -41,6 +41,11 @@ class SidebarComposer
         $projects_by_group = [];
         $projects_need_approve = [];
         foreach ($projects as $project) {
+            if (!$project->group) {
+                $projects_by_group[0]['group'] = trans('dashboard.projects');
+                $projects_by_group[0]['projects'][] = $project;
+                continue;
+            }
             if (!isset($projects_by_group[$project->group->id])) {
                 $projects_by_group[$project->group->id]['group'] = $project->group->name;
                 $projects_by_group[$project->group->id]['order'] = $project->group->order;

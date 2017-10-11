@@ -41,8 +41,9 @@ class DeploymentController extends Controller
         $output = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
-                $log->server;
-                $log->server->environment_name = $log->server->environment ? $log->server->environment->name : null;
+                if ($log->server) {
+                    $log->server->environment_name = $log->server->environment ? $log->server->environment->name : null;
+                }
 
                 $log->runtime = ($log->runtime() === false ?
                         null : AutoPresenter::decorate($log)->readable_runtime);
@@ -52,18 +53,22 @@ class DeploymentController extends Controller
             }
         }
 
-        $project = $deployment->project;
-
-        return view('dashboard.deployments.show', [
-            'breadcrumb' => [
-                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-            ],
+        $data = [
             'title'      => trans('deployments.deployment_number', ['id' => $deployment->id]),
-            'subtitle'   => $project->name,
-            'project'    => $project,
             'deployment' => $deployment,
             'output'     => json_encode($output), // PresentableInterface does not correctly json encode the models
-        ]);
+        ];
+
+        $project = $deployment->project ?: null;
+        if ($project) {
+            $data['breadcrumb'] = [
+                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+            ];
+            $data['project'] = $project;
+            $data['subtitle'] = $project->name;
+        }
+
+        return view('dashboard.deployments.show', $data);
     }
 
     /**
