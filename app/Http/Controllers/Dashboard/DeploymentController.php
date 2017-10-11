@@ -41,7 +41,6 @@ class DeploymentController extends Controller
         $output = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
-
                 if ($log->server) {
                     $log->server->environment_name = $log->server->environment ? $log->server->environment->name : null;
                 }
