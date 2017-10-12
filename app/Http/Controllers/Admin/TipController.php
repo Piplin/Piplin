@@ -42,16 +42,12 @@ class TipController extends Controller
      */
     public function index(Request $request)
     {
-        $this->subMenu['tips']['active'] = true;
-
         $tips = Tip::paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.tips.index', [
             'title'     => trans('tips.manage'),
             'tips_raw' =>$tips,
             'tips'     => $tips->toJson(), // Because PresentableInterface toJson() is not working in the view
-            'sub_title' => trans('tips.manage'),
-            'sub_menu' => $this->subMenu,
         ]);
     }
 

@@ -15,7 +15,6 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreLinkRequest;
 use Fixhub\Models\Link;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 /**
  * link management controller.
