@@ -48,6 +48,20 @@
     }
   }
 
+  .nav-stacked {
+    > li.active > a,
+    > li.active > a:hover {
+      border-left-color: $green;
+    }
+  }
+  .nav-tabs-custom {
+    > .nav-tabs {
+      > li.active {
+        border-top-color: $green;
+      }
+    }
+  }
+
   //Content Header
   .content-header {
     background: transparent;
