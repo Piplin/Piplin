@@ -16,5 +16,6 @@ return [
     'environments' => 'Environments',
     'dependencies' => 'Dependencies',
     'misc'         => 'Links & Tips',
+    'template'     => 'Template steup',
 
 ];

@@ -119,7 +119,7 @@ class AdminComposer
         } elseif ($name == 'admin.groups.index') {
             $subTitle = trans('projects.manage');
             $subMenu = $this->getSubMenu('project', 'groups');
-        } elseif ($name == 'admin.templates.index') {
+        } elseif (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
             $subTitle = trans('templates.manage');
             $subMenu = $this->getSubMenu('project', 'templates');
         } elseif ($name == 'admin.keys.index') {

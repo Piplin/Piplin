@@ -48,33 +48,6 @@ class DeployTemplateController extends Controller
     {
         $template = DeployTemplate::findOrFail($template_id);
 
-        $this->subMenu = [
-            'commands' => [
-                'title' => trans('commands.label'),
-                'url' => route('admin.templates.show', ['id' => $template->id]),
-                'icon' => 'ion-cube',
-                'active' => $tab == '',
-            ],
-            'environments' => [
-                'title' => trans('environments.label'),
-                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'environments']),
-                'icon' => 'ion-ios-browsers-outline',
-                'active' => $tab == 'environments',
-            ],
-            'config-files' => [
-                'title' => trans('configFiles.label'),
-                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'config-files']),
-                'icon' => 'ion-ios-paper-outline',
-                'active' => $tab == 'config-files',
-            ],
-            'shared-files' => [
-                'title' => trans('sharedFiles.label'),
-                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'shared-files']),
-                'icon' => 'ion-key',
-                'active' => $tab == 'shared-files',
-            ],
-        ];
-
         return view('admin.templates.show', [
             'breadcrumb' => [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
@@ -89,7 +62,6 @@ class DeployTemplateController extends Controller
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
             'tab'             => $tab,
-            'sub_menu'        => $this->subMenu,
         ]);
     }
 
