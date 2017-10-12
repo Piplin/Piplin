@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Admin\Base\UserController as UserBaseController;
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProviderRequest;
 use Fixhub\Models\Provider;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 /**
  * Provider management controller.
  */
-class ProviderController extends UserBaseController
+class ProviderController extends Controller
 {
     /**
      * Shows the create provider view.
@@ -42,8 +42,6 @@ class ProviderController extends UserBaseController
      */
     public function index(Request $request)
     {
-        $this->subMenu['providers']['active'] = true;
-
         $providers = Provider::orderBy('order')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -51,8 +49,6 @@ class ProviderController extends UserBaseController
             'title'         => trans('providers.manage'),
             'providers_raw' =>$providers,
             'providers'     => $providers->toJson(), // Because PresentableInterface toJson() is not working in the view
-            'sub_title'     => trans('providers.manage'),
-            'sub_menu'      => $this->subMenu,
         ]);
     }
 

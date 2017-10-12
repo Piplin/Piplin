@@ -11,10 +11,11 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Admin\Base\UserController as Controller;
 use Fixhub\Bus\Events\UserWasCreatedEvent;
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreUserRequest;
 use Fixhub\Models\User;
+use Illuminate\Support\Facades\View;
 
 /**
  * User management controller.
@@ -28,8 +29,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->subMenu['users']['active'] = true;
-
         $users = User::orderBy('id', 'desc')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -42,8 +41,6 @@ class UserController extends Controller
                 User::LEVEL_OPERATOR => trans('users.level.operator'),
                 User::LEVEL_ADMIN    => trans('users.level.admin'),
             ],
-            'sub_title' => trans('users.manage'),
-            'sub_menu'  => $this->subMenu,
         ]);
     }
 

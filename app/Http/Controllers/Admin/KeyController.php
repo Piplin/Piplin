@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Admin\Base\ProjectController as Controller;
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreKeyRequest;
 use Fixhub\Models\Key;
 use Illuminate\Http\Request;
@@ -42,8 +42,6 @@ class KeyController extends Controller
      */
     public function index(Request $request)
     {
-        $this->subMenu['keys']['active'] = true;
-
         $keys = Key::orderBy('name')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -51,7 +49,6 @@ class KeyController extends Controller
             'title'    => trans('keys.manage'),
             'keys_raw' =>$keys,
             'keys'     => $keys->toJson(), // Because PresentableInterface toJson() is not working in the view
-            'sub_menu' => $this->subMenu,
         ]);
     }
 

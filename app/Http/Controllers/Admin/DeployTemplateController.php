@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Admin\Base\ProjectController as Controller;
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeployTemplateRequest;
 use Fixhub\Models\DeployTemplate;
 
@@ -27,8 +27,6 @@ class DeployTemplateController extends Controller
      */
     public function index()
     {
-        $this->subMenu['templates']['active'] = true;
-
         $templates = DeployTemplate::orderBy('name')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -36,7 +34,6 @@ class DeployTemplateController extends Controller
             'title'         => trans('templates.manage'),
             'templates_raw' => $templates,
             'templates'     => $templates->toJson(), //toJson() is not working in the view
-            'sub_menu'      => $this->subMenu,
         ]);
     }
 

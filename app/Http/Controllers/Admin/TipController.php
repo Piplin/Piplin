@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Admin\Base\MiscController;
+use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreTipRequest;
 use Fixhub\Models\Tip;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 /**
  * Tip management controller.
  */
-class TipController extends MiscController
+class TipController extends Controller
 {
     /**
      * Shows the create tip view.
