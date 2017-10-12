@@ -1,8 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
-@section('content')
+@section('admin-content')
 <div class="box">
-    @include('admin._partials.nav')
     @if (!count($revisions))
     <div class="box-body">
         <p>{{ trans('revisions.none') }}</p>

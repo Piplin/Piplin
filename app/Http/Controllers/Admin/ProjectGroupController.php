@@ -35,8 +35,8 @@ class ProjectGroupController extends Controller
                     ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.groups.index', [
-            'title'  => trans('groups.manage'),
-            'groups' => $groups,
+            'title'    => trans('groups.manage'),
+            'groups'   => $groups
         ]);
     }
 

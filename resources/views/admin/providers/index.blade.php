@@ -1,8 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
-@section('content')
+@section('admin-content')
     <div class="box">
-        @include('admin._partials.nav')
         <div class="box-body" id="no_providers">
             <p>{{ trans('providers.none') }}</p>
         </div>

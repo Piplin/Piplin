@@ -46,8 +46,8 @@ class ProviderController extends Controller
                     ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.providers.index', [
-            'title'     => trans('providers.manage'),
-            'providers_raw' =>$providers,
+            'title'         => trans('providers.manage'),
+            'providers_raw' => $providers,
             'providers'     => $providers->toJson(), // Because PresentableInterface toJson() is not working in the view
         ]);
     }

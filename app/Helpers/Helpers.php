@@ -13,15 +13,15 @@ if (!function_exists('set_active')) {
     /**
      * Set active class if request is in path.
      *
-     * @param string $path
-     * @param array  $classes
+     * @param dynamic $patterns
+     * @param array $classes
      * @param string $active
      *
      * @return string
      */
-    function set_active($path, array $classes = [], $active = 'active')
+    function set_active($patterns, array $classes = [], $active = 'active')
     {
-        if (Request::is($path)) {
+        if (Request::is($patterns)) {
             $classes[] = $active;
         }
         $class = e(implode(' ', $classes));
