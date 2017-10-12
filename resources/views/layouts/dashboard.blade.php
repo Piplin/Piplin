@@ -42,7 +42,6 @@
                         </ol>
                         @endif
                     </section>
-
                     <section class="content" id="app">
                         @yield('content')
                     </section>

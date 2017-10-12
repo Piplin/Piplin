@@ -1,8 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
-@section('content')
+@section('admin-content')
     <div class="box">
-        @include('admin._partials.nav')
         <div class="box-body" id="no_projects">
             <p>{{ trans('projects.none') }}</p>
         </div>
@@ -15,7 +14,6 @@
                         <th>{{ trans('projects.name') }}</th>
                         <th>{{ trans('projects.repository') }}</th>
                         <th>{{ trans('projects.branch') }}</th>
-                        <th>{{ trans('projects.builds') }}</th>
                         <th>{{ trans('projects.deployed') }}</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -55,7 +53,6 @@
         <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
         <td><%- repository %></td>
         <td><span class="label label-default"><%- branch %></span></td>
-        <td><%- builds_to_keep %></td>
         <td>
             <% if (deploy) { %>
                 <%- deploy %>
