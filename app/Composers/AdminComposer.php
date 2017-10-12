@@ -18,9 +18,19 @@ use Illuminate\Contracts\View\View;
  */
 class AdminComposer
 {
+    /**
+     * Array of sub-menu items.
+     *
+     * @var array
+     */
     private $subMenus = [];
 
-    public function __construct() 
+    /**
+     * Create a new admin composer instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
         $this->subMenus['user'] = [
                 'users'=> [
@@ -130,6 +140,11 @@ class AdminComposer
         $view->with('sub_menu', $subMenu);
     }
 
+    /**
+     * Returns a submenu by collection and key.
+     *
+     * @return array
+     */
     private function getSubMenu($collection, $key = '')
     {
         if (!isset($this->subMenus[$collection])) {
