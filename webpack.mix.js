@@ -33,6 +33,14 @@ const paths = {
     'localization'     : 'vendor/fixhub/js-localization'
 };
 
+const skeletons = [
+    `${assets_path}/js/components/dashboard/commands.js`,
+    `${assets_path}/js/components/dashboard/configFiles.js`,
+    `${assets_path}/js/components/dashboard/environments.js`,
+    `${assets_path}/js/components/dashboard/sharedFiles.js`,
+    `${assets_path}/js/components/dashboard/variables.js`,
+];
+
 mix
     .options({
         processCssUrls: false
@@ -70,19 +78,15 @@ mix
         `${assets_path}/js/components/admin/links.js`,
         `${assets_path}/js/components/admin/tips.js`,
         `${assets_path}/js/components/admin/keys.js`
-    ], `${dist_path}/js/admin.js`)
+    ].concat(skeletons), `${dist_path}/js/admin.js`)
     .scripts([
+        `${assets_path}/js/components/dashboard/commands.js`,
         `${assets_path}/js/components/dashboard/projects.js`,
         `${assets_path}/js/components/dashboard/servers.js`,
         `${assets_path}/js/components/dashboard/hooks.js`,
-        `${assets_path}/js/components/dashboard/sharedFiles.js`,
-        `${assets_path}/js/components/dashboard/configFiles.js`,
-        `${assets_path}/js/components/dashboard/variables.js`,
-        `${assets_path}/js/components/dashboard/environments.js`,
         `${assets_path}/js/components/dashboard/deployment.js`,
-        `${assets_path}/js/components/dashboard/commands.js`,
         `${assets_path}/js/components/dashboard/profile.js`
-    ], `${dist_path}/js/dashboard.js`)
+    ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/fixhub.js`,
         `${assets_path}/js/uploader.js`,
