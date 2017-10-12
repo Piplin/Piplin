@@ -42,7 +42,6 @@
                         </ol>
                         @endif
                     </section>
-                     @yield('subsider')
                     <section class="content" id="app">
                         @yield('content')
                     </section>
