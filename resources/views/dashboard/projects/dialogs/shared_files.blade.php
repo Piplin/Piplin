@@ -6,7 +6,7 @@
                 <h4 class="modal-title"><i class="ion ion-document"></i> <span>{{ trans('sharedFiles.create') }}</span></h4>
             </div>
             <form role="form">
-                <input type="hidden" id="file_id" name="id" />
+                <input type="hidden" id="sharedfile_id" name="id" />
                 <input type="hidden" name="targetable_type" value="{{ $targetable_type }}" />
                 <input type="hidden" name="targetable_id" value="{{ $targetable_id }}" />
                 <div class="modal-body">

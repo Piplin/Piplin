@@ -247,8 +247,8 @@ var app = app || {};
     app.HookView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editHook',
-            'click .btn-delete': 'trashHook'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -276,7 +276,7 @@ var app = app || {};
 
             return this;
         },
-        editHook: function() {
+        edit: function() {
             var type = this.model.get('type');
 
             $.each(this.model.get('config'), function(field, value) {
@@ -292,7 +292,7 @@ var app = app || {};
 
             setTitleWithIcon(this.model.get('type'), 'edit');
         },
-        trashHook: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade hook-trash');

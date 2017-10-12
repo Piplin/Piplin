@@ -15,7 +15,7 @@ var app = app || {};
             title = trans('sharedFiles.edit');
             $('.btn-danger', modal).show();
         } else {
-            $('#file_id').val('');
+            $('#sharedfile_id').val('');
             $('#name').val('');
             $('#file').val('');
         }
@@ -61,7 +61,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file_id = $('#file_id').val();
+        var file_id = $('#sharedfile_id').val();
 
         if (file_id) {
             var file = app.SharedFiles.get(file_id);
@@ -131,10 +131,10 @@ var app = app || {};
 
         },
         initialize: function() {
-            this.$list = $('#file_list tbody');
+            this.$list = $('#sharedfile_list tbody');
 
-            $('#no_files').show();
-            $('#file_list').hide();
+            $('#no_sharedfiles').show();
+            $('#sharedfile_list').hide();
 
             this.listenTo(app.SharedFiles, 'add', this.addOne);
             this.listenTo(app.SharedFiles, 'reset', this.addAll);
@@ -167,16 +167,16 @@ var app = app || {};
         },
         render: function () {
             if (app.SharedFiles.length) {
-                $('#no_files').hide();
-                $('#file_list').show();
+                $('#no_sharedfiles').hide();
+                $('#sharedfile_list').show();
             } else {
-                $('#no_files').show();
-                $('#file_list').hide();
+                $('#no_sharedfiles').show();
+                $('#sharedfile_list').hide();
             }
         },
         addOne: function (file) {
 
-            var view = new app.FileView({
+            var view = new app.SharedFileView({
                 model: file
             });
 
@@ -188,17 +188,17 @@ var app = app || {};
         }
     });
 
-    app.FileView = Backbone.View.extend({
+    app.SharedFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editFile',
-            'click .btn-delete': 'trashFile'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model, 'destroy', this.remove);
 
-            this.template = _.template($('#files-template').html());
+            this.template = _.template($('#sharedfile-template').html());
         },
         render: function () {
             var data = this.model.toJSON();
@@ -207,12 +207,12 @@ var app = app || {};
 
             return this;
         },
-        editFile: function() {
-            $('#file_id').val(this.model.id);
+        edit: function() {
+            $('#sharedfile_id').val(this.model.id);
             $('#name').val(this.model.get('name'));
             $('#file').val(this.model.get('file'));
         },
-        trashFile: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade sharedfile-trash');

@@ -230,9 +230,9 @@ var app = app || {};
     app.ConfigFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editFile',
-            'click .btn-delete': 'trashFile',
-            'click .btn-view': 'viewFile'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash',
+            'click .btn-view': 'view'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -247,17 +247,17 @@ var app = app || {};
 
             return this;
         },
-        viewFile: function() {
+        view: function() {
             previewfile = this.model.get('path');
             $('#preview-content').text(this.model.get('content'));
         },
-        editFile: function() {
+        edit: function() {
             $('#config_file_id').val(this.model.id);
             $('#name').val(this.model.get('name'));
             $('#path').val(this.model.get('path'));
             $('#content').text(this.model.get('content'));
         },
-        trashFile: function () {
+        trash: function () {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade configfile-trash');

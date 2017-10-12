@@ -231,8 +231,8 @@ var app = app || {};
     app.EnvironmentView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editEnvironment',
-            'click .btn-delete': 'trashEnvironment'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -247,13 +247,13 @@ var app = app || {};
 
             return this;
         },
-        editEnvironment: function() {
+        edit: function() {
             $('#environment_id').val(this.model.id);
             $('#environment_name').val(this.model.get('name'));
             $('#environment_description').val(this.model.get('description'));
             $('#environment_default_on').prop('checked', (this.model.get('default_on') === true));
         },
-        trashEnvironment: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade environment-trash');

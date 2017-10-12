@@ -106,5 +106,5 @@ if (mix.inProduction()) {
 
 if (!mix.inProduction()) {
     mix.sourceMaps()
-    mix.browserSync({proxy: 'localhost:8080'})
+    mix.browserSync({proxy: 'fixhub.app'})
 }

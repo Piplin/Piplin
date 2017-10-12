@@ -250,8 +250,8 @@ var app = app || {};
         events: {
             'click .btn-test': 'testConnection',
             'click .btn-show': 'showLog',
-            'click .btn-edit': 'editServer',
-            'click .btn-delete': 'trashServer'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -284,8 +284,7 @@ var app = app || {};
 
             return this;
         },
-        editServer: function() {
-            // FIXME: Sure this is wrong?
+        edit: function() {
             $('#server_id').val(this.model.id);
             $('#server_name').val(this.model.get('name'));
             $('#server_enabled').prop('checked', (this.model.get('enabled') === true));
@@ -301,7 +300,7 @@ var app = app || {};
 
             $('#log pre').html(data.output);
         },
-        trashServer: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade server-trash');
