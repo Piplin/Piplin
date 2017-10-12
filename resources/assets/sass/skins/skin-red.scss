@@ -62,6 +62,10 @@
     }
   }
 
+  .box.box-primary {
+    border-top-color: $red;
+  }
+
   //Content Header
   .content-header {
     background: transparent;

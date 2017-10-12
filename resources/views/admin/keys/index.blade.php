@@ -26,7 +26,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-success" title="{{ trans('keys.create') }}" data-toggle="modal" data-target="#key"><span class="ion ion-plus-round"></span> {{ trans('keys.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('keys.create') }}" data-toggle="modal" data-target="#key"><span class="ion ion-plus-round"></span> {{ trans('keys.create') }}</button>
 </div>
 @stop
 
@@ -36,7 +36,7 @@
     new app.KeysTab();
     app.Keys.add(keys.data);
     @if(isset($action) && $action == 'create')
-    $('button.btn.btn-success').trigger('click');
+    $('button.btn.btn-primary').trigger('click');
     @endif
 </script>
 @endpush

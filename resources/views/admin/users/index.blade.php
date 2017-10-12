@@ -25,7 +25,7 @@
 
 @section('right-buttons')
     <div class="pull-right">
-        <button type="button" class="btn btn-success" title="{{ trans('users.create') }}" data-toggle="modal" data-target="#user"><span class="ion ion-plus"></span> {{ trans('users.create') }}</button>
+        <button type="button" class="btn btn-primary" title="{{ trans('users.create') }}" data-toggle="modal" data-target="#user"><span class="ion ion-plus"></span> {{ trans('users.create') }}</button>
     </div>
 @stop
 

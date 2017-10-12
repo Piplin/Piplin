@@ -10,7 +10,7 @@
         <div class="tab-content">
             <div class="box-header">
             <div class="pull-right">
-                <button type="button" class="btn btn-success" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
+                <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
             </div>
             <h3 class="box-title">{{ trans('projects.manage') }}</h3>
         </div>

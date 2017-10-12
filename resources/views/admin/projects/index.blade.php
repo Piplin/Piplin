@@ -29,7 +29,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-success" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
 </div>
 @stop
 
@@ -40,7 +40,7 @@
     new app.ProjectsTab();
     app.Projects.add(projects.data);
     @if(isset($action) && $action == 'create')
-    $('button.btn.btn-success').trigger('click');
+    $('button.btn.btn-primary').trigger('click');
     @endif
 </script>
 @endpush

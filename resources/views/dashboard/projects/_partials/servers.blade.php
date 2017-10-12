@@ -18,7 +18,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-success" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
+            <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('environments.label') }} : {{ $environment->name }}</h3>
     </div>

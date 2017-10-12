@@ -30,7 +30,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-success" title="{{ trans('templates.create') }}" data-toggle="modal" data-target="#template"><span class="ion ion-plus"></span> {{ trans('templates.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('templates.create') }}" data-toggle="modal" data-target="#template"><span class="ion ion-plus"></span> {{ trans('templates.create') }}</button>
 </div>
 @stop
 

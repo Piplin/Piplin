@@ -26,7 +26,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-success" title="{{ trans('tips.create') }}" data-toggle="modal" data-target="#tip"><span class="ion ion-plus-round"></span> {{ trans('tips.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('tips.create') }}" data-toggle="modal" data-target="#tip"><span class="ion ion-plus-round"></span> {{ trans('tips.create') }}</button>
 </div>
 @stop
 
@@ -36,7 +36,7 @@
     new app.TipsTab();
     app.Tips.add(tips.data);
     @if(isset($action) && $action == 'create')
-    $('button.btn.btn-success').trigger('click');
+    $('button.btn.btn-primary').trigger('click');
     @endif
 </script>
 @endpush

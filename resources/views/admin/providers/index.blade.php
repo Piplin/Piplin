@@ -28,7 +28,7 @@
 
 @section('right-buttons')
     <div class="pull-right">
-        <button type="button" class="btn btn-success" title="{{ trans('providers.create') }}" data-toggle="modal" data-target="#provider"><span class="ion ion-plus-round"></span> {{ trans('providers.create') }}</button>
+        <button type="button" class="btn btn-primary" title="{{ trans('providers.create') }}" data-toggle="modal" data-target="#provider"><span class="ion ion-plus-round"></span> {{ trans('providers.create') }}</button>
     </div>
 @stop
 
@@ -38,7 +38,7 @@
         new app.ProvidersTab();
         app.Providers.add(providers.data);
         @if(isset($action) && $action == 'create')
-        $('button.btn.btn-success').trigger('click');
+        $('button.btn.btn-primary').trigger('click');
         @endif
     </script>
 @endpush

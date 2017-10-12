@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-success" title="{{ trans('environments.create') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><span class="ion ion-plus"></span> {{ trans('environments.create') }}</button>
+            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('environments.create') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><span class="ion ion-plus"></span> {{ trans('environments.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>

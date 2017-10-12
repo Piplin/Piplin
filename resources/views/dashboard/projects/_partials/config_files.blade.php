@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-success" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><span class="ion ion-plus"></span> {{ trans('configFiles.create') }}</button>
+            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><span class="ion ion-plus"></span> {{ trans('configFiles.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('configFiles.label') }}</h3>
     </div>

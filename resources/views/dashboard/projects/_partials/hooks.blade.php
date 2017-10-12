@@ -5,7 +5,7 @@
     <div class="box-header">
         <h3 class="box-title">{{ trans('hooks.label') }}</h3>
         <div class="pull-right">
-            <button type="button" class="btn btn-success" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="ion ion-plus"></span> {{ trans('hooks.create') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="ion ion-plus"></span> {{ trans('hooks.create') }}</button>
         </div>
     </div>
 
