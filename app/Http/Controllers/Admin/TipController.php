@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Controllers\Admin\Base\MiscController;
 use Fixhub\Http\Requests\StoreTipRequest;
 use Fixhub\Models\Tip;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 /**
  * Tip management controller.
  */
-class TipController extends Controller
+class TipController extends MiscController
 {
     /**
      * Shows the create tip view.
@@ -42,12 +42,16 @@ class TipController extends Controller
      */
     public function index(Request $request)
     {
+        $this->subMenu['tips']['active'] = true;
+
         $tips = Tip::paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.tips.index', [
             'title'     => trans('tips.manage'),
             'tips_raw' =>$tips,
             'tips'     => $tips->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'sub_title' => trans('tips.manage'),
+            'sub_menu' => $this->subMenu,
         ]);
     }
 

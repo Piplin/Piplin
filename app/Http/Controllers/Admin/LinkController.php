@@ -11,15 +11,16 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Controllers\Admin\Base\MiscController;
 use Fixhub\Http\Requests\StoreLinkRequest;
 use Fixhub\Models\Link;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 /**
  * link management controller.
  */
-class LinkController extends Controller
+class LinkController extends MiscController
 {
     /**
      * Shows the create link view.
@@ -42,6 +43,8 @@ class LinkController extends Controller
      */
     public function index(Request $request)
     {
+        $this->subMenu['links']['active'] = true;
+
         $links = Link::orderBy('order')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -49,6 +52,8 @@ class LinkController extends Controller
             'title'     => trans('links.manage'),
             'links_raw' =>$links,
             'links'     => $links->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'sub_title' => trans('links.manage'),
+            'sub_menu'  => $this->subMenu,
         ]);
     }
 

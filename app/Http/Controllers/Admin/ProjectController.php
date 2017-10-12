@@ -12,7 +12,7 @@
 namespace Fixhub\Http\Controllers\Admin;
 
 use Fixhub\Bus\Jobs\SetupProjectJob;
-use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Controllers\Admin\Base\ProjectController as Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Models\Key;
 use Fixhub\Models\ProjectGroup;
@@ -34,6 +34,8 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        $this->subMenu['projects']['active'] = true;
+
         $projects = Project::orderBy('name')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -54,6 +56,7 @@ class ProjectController extends Controller
             'groups'       => $groups,
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
+            'sub_menu'     => $this->subMenu,
         ]);
     }
 

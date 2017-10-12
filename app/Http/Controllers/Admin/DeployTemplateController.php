@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Controllers\Admin\Base\ProjectController as Controller;
 use Fixhub\Http\Requests\StoreDeployTemplateRequest;
 use Fixhub\Models\DeployTemplate;
 
@@ -27,6 +27,8 @@ class DeployTemplateController extends Controller
      */
     public function index()
     {
+        $this->subMenu['templates']['active'] = true;
+
         $templates = DeployTemplate::orderBy('name')
                     ->paginate(config('fixhub.items_per_page', 10));
 
@@ -34,6 +36,7 @@ class DeployTemplateController extends Controller
             'title'         => trans('templates.manage'),
             'templates_raw' => $templates,
             'templates'     => $templates->toJson(), //toJson() is not working in the view
+            'sub_menu'      => $this->subMenu,
         ]);
     }
 
@@ -47,6 +50,33 @@ class DeployTemplateController extends Controller
     public function show($template_id, $tab = '')
     {
         $template = DeployTemplate::findOrFail($template_id);
+
+        $this->subMenu = [
+            'commands' => [
+                'title' => trans('commands.label'),
+                'url' => route('admin.templates.show', ['id' => $template->id]),
+                'icon' => 'ion-cube',
+                'active' => $tab == '',
+            ],
+            'environments' => [
+                'title' => trans('environments.label'),
+                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'environments']),
+                'icon' => 'ion-ios-browsers-outline',
+                'active' => $tab == 'environments',
+            ],
+            'config-files' => [
+                'title' => trans('configFiles.label'),
+                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'config-files']),
+                'icon' => 'ion-ios-paper-outline',
+                'active' => $tab == 'config-files',
+            ],
+            'shared-files' => [
+                'title' => trans('sharedFiles.label'),
+                'url' => route('admin.templates.show', ['id' => $template->id, 'tab' => 'shared-files']),
+                'icon' => 'ion-key',
+                'active' => $tab == 'shared-files',
+            ],
+        ];
 
         return view('admin.templates.show', [
             'breadcrumb' => [
@@ -62,6 +92,7 @@ class DeployTemplateController extends Controller
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
             'tab'             => $tab,
+            'sub_menu'        => $this->subMenu,
         ]);
     }
 

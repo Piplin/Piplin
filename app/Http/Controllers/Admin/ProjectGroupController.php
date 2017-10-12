@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
+use Fixhub\Http\Controllers\Admin\Base\ProjectController as Controller;
 use Fixhub\Http\Requests\StoreProjectGroupRequest;
 use Fixhub\Models\DeployTemplate;
 use Fixhub\Models\Key;
@@ -31,12 +31,15 @@ class ProjectGroupController extends Controller
      */
     public function index()
     {
+        $this->subMenu['groups']['active'] = true;
+
         $groups = ProjectGroup::orderBy('order')
                     ->paginate(config('fixhub.items_per_page', 10));
 
         return view('admin.groups.index', [
-            'title'  => trans('groups.manage'),
-            'groups' => $groups,
+            'title'    => trans('groups.manage'),
+            'groups'   => $groups,
+            'sub_menu' => $this->subMenu,
         ]);
     }
 
