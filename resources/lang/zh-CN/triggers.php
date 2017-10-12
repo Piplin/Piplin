@@ -11,6 +11,8 @@ return [
     'which'    => 'Select trigger',
     'schedule' => 'Scheduled',
     'daily'    => 'Single daily run',
+    'runtime'  => 'Run time',
+    'interval' => 'Interval',
     'help'     => 'If you want Fixhub to deploy this project automatically, you will need to set triggers to specify how and when the deployment will be triggered.',
 
 ];

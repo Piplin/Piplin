@@ -103,6 +103,13 @@ div.deployment-source-container {
     margin-top: 5px;
 }
 
+div.schedule-editor-container {
+    border-top: 1px solid #ccc;
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
 #command_script,
 .configfile-content {
     height: 200px;

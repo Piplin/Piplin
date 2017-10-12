@@ -28,6 +28,21 @@ var app = app || {};
         }
     });
 
+    $('.schedule-editor:radio').on('change', function (event) {
+        var target = $(event.currentTarget);
+        console.log(target.val());
+        $('div.schedule-editor-container').hide();
+        if (target.val() === 'daily') {
+            $('#daily-form').show();
+        } else if (target.val() === 'daysOfWeek') {
+            $('#daysOfWeek-form').show();
+        } else if (target.val() === 'daysOfMonth') {
+            $('#daysOfMonth-form').show();
+        } else if (target.val() === 'advanced') {
+            $('#advanced-form').show();
+        }
+    });
+
     $('#trigger #trigger-type a.btn-app').on('click', function(event) {
         var button = $(event.currentTarget);
         var modal = $('#trigger');
@@ -243,8 +258,8 @@ var app = app || {};
     app.TriggerView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editTrigger',
-            'click .btn-delete': 'trashTrigger'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -272,7 +287,7 @@ var app = app || {};
 
             return this;
         },
-        editTrigger: function() {
+        edit: function() {
             var type = this.model.get('type');
 
             $.each(this.model.get('config'), function(field, value) {
@@ -286,7 +301,7 @@ var app = app || {};
 
             setTitleWithIcon(this.model.get('type'), 'edit');
         },
-        trashTrigger: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade trigger-trash');

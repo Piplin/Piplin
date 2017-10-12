@@ -227,8 +227,6 @@ var app = app || {};
             this.listenTo(app.Commands, 'remove', this.addAll);
             this.listenTo(app.Commands, 'all', this.render);
 
-            // FIXME: Need to regenerate the order!
-
             app.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 var command = app.Commands.get(parseInt(data.model.id));
 
@@ -314,8 +312,8 @@ var app = app || {};
     app.CommandView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editCommand',
-            'click .btn-delete': 'trashCommand'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -330,8 +328,7 @@ var app = app || {};
 
             return this;
         },
-        editCommand: function() {
-            // FIXME: Sure this is wrong?
+        edit: function() {
             $('#command_id').val(this.model.id);
             $('#command_step').val(this.model.get('step'));
             $('#command_name').val(this.model.get('name'));
@@ -350,7 +347,7 @@ var app = app || {};
                 $('#command_environment_' + environment.id).prop('checked', true);
             });
         },
-        trashCommand: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade command-trash');

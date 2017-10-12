@@ -196,8 +196,8 @@ var app = app || {};
     app.VariableView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editVariable',
-            'click .btn-delete': 'trashVariable'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -212,12 +212,12 @@ var app = app || {};
 
             return this;
         },
-        editVariable: function() {
+        edit: function() {
             $('#variable_id').val(this.model.id);
             $('#variable_name').val(this.model.get('name'));
             $('#variable_value').val(this.model.get('value'));
         },
-        trashVariable: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade variable-trash');

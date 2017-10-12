@@ -7,12 +7,12 @@
     </div>
 
 
-    <div class="box-body" id="no_files">
+    <div class="box-body" id="no_sharedfiles">
         <p>{{ trans('sharedFiles.none') }}</p>
     </div>
 
     <div class="box-body table-responsive">
-        <table class="table table-striped" id="file_list">
+        <table class="table table-striped" id="sharedfile_list">
             <thead>
                 <tr>
                     <th width="30%">{{ trans('sharedFiles.name') }}</th>
@@ -28,7 +28,7 @@
 </div>
 
 @push('templates')
-    <script type="text/template" id="files-template">
+    <script type="text/template" id="sharedfile-template">
         <td><%- name %></td>
         <td><%- file %></td>
         <td>

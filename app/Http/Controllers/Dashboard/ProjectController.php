@@ -39,7 +39,6 @@ class ProjectController extends Controller
         });
 
         $data = [
-            'title'           => $project->group->name.'/'.$project->name,
             'project'         => $project,
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => $project->id,
@@ -48,6 +47,12 @@ class ProjectController extends Controller
             'branches'        => $project->branches(),
             'tab'             => $tab,
         ];
+
+        if ($project->group) {
+            $data['title'] = $project->group->name . '/'. $project->name;
+        } else {
+            $data['title'] = $project->name;
+        }
 
         $data['environments'] = $project->environments;
         if ($tab == 'commands') {
