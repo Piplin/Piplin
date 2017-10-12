@@ -47,7 +47,7 @@ class ProviderController extends Controller
 
         return view('admin.providers.index', [
             'title'         => trans('providers.manage'),
-            'providers_raw' =>$providers,
+            'providers_raw' => $providers,
             'providers'     => $providers->toJson(), // Because PresentableInterface toJson() is not working in the view
         ]);
     }
