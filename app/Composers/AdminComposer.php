@@ -20,7 +20,7 @@ class AdminComposer
 {
     private $subMenus = [];
 
-    public function __construct() 
+    public function __construct()
     {
         $this->subMenus['user'] = [
                 'users'=> [
