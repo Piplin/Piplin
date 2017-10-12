@@ -1,28 +1,26 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-    <div class="box">
-        <div class="box-body table-responsive" id="user_list">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>{{ trans('users.name') }}</th>
-                        <th>{{ trans('users.role') }}</th>
-                        <th>{{ trans('users.email') }}</th>
-                        <th>{{ trans('app.created') }}</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="box-body table-responsive" id="user_list">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ trans('users.name') }}</th>
+                <th>{{ trans('users.role') }}</th>
+                <th>{{ trans('users.email') }}</th>
+                <th>{{ trans('app.created') }}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
 
-                </tbody>
-            </table>
-            {!! $users_raw->render() !!}
-        </div>
-    </div>
+        </tbody>
+    </table>
+    {!! $users_raw->render() !!}
+</div>
 
-    @include('admin.users.dialog')
+@include('admin.users.dialog')
 @stop
 
 @section('right-buttons')

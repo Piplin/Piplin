@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="box">
     @if (!count($revisions))
     <div class="box-body">
         <p>{{ trans('revisions.none') }}</p>
@@ -40,5 +39,4 @@
         {!! $revisions->render() !!}
     </div>
     @endif
-</div>
 @stop

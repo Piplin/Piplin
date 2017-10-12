@@ -1,31 +1,29 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-    <div class="box">
-        <div class="box-body" id="no_providers">
-            <p>{{ trans('providers.none') }}</p>
-        </div>
+<div class="box-body" id="no_providers">
+    <p>{{ trans('providers.none') }}</p>
+</div>
 
-        <div class="box-body table-responsive" id="provider_list">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>{{ trans('providers.name') }}</th>
-                        <th>{{ trans('providers.slug') }}</th>
-                        <th>{{ trans('providers.login_button') }}</th>
-                        <th>{{ trans('providers.description') }}</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="box-body table-responsive" id="provider_list">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ trans('providers.name') }}</th>
+                <th>{{ trans('providers.slug') }}</th>
+                <th>{{ trans('providers.login_button') }}</th>
+                <th>{{ trans('providers.description') }}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
 
-                </tbody>
-            </table>
-            {!! $providers_raw->render() !!}
-        </div>
-    </div>
+        </tbody>
+    </table>
+    {!! $providers_raw->render() !!}
+</div>
 
-    @include('admin.providers.dialog')
+@include('admin.providers.dialog')
 @stop
 
 @section('right-buttons')

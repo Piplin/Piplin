@@ -6,7 +6,7 @@
     @endif
     <div class="row">
       <div class="col-md-8">
-          <div class="box box-info">
+          <div class="box box-primary">
               <div class="box-header">
                   <h3 class="box-title"><i class="ion ion-clock"></i> {{ trans_choice('dashboard.latest', 2) }}</h3>
               </div>

@@ -1,11 +1,13 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="col-md-6">
-    @include('admin.dashboard.environments')
-</div>
-<div class="col-md-6">
-    @include('admin.dashboard.dependencies')
+<div class="box-body">
+    <div class="col-md-6">
+        @include('admin.dashboard.environments')
+    </div>
+    <div class="col-md-6">
+        @include('admin.dashboard.dependencies')
+    </div>
 </div>
 @stop
 

@@ -2,10 +2,9 @@
 
 
 @section('content')
-
-<div class="box">
-        @include('admin._partials.nav')
-        <div class="box-body">
+<div class="nav-tabs-custom">
+    @include('admin._partials.nav')
+    <div class="tab-content">
         <!-- start -->
         <div class="row">
             @if(isset($sub_menu) and $sub_menu)
@@ -13,16 +12,19 @@
                 @include('admin._partials.sub-sidebar')
             </div>
             <div class="col-md-9">
-                @yield('admin-content')
+                <div class="box">
+                    @yield('admin-content')
+                </div>
             </div>
             @else
             <div class="col-md-12">
-                @yield('admin-content')
+                <div class="box">
+                    @yield('admin-content')
+                </div>
             </div>
             @endif
         </div>
         <!-- end -->
-        </div>
+    </div>
 </div>
-<!-- /.box -->
 @stop
