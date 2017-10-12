@@ -98,45 +98,35 @@ class AdminComposer
      */
     public function compose(View $view)
     {
-        $subTitle = '';
         $subMenu = [];
 
         $name = $view->name();
 
         //User collection
         if ($name == 'admin.users.index') {
-            $subTitle = trans('users.manage');
             $subMenu = $this->getSubMenu('user', 'users');
         } elseif ($name == 'admin.providers.index') {
-            $subTitle = trans('providers.manage');
             $subMenu = $this->getSubMenu('user', 'providers');
         }
 
         // Project collection
         if ($name == 'admin.projects.index') {
-            $subTitle = trans('projects.manage');
             $subMenu = $this->getSubMenu('project', 'projects');
         } elseif ($name == 'admin.groups.index') {
-            $subTitle = trans('projects.manage');
             $subMenu = $this->getSubMenu('project', 'groups');
         } elseif (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
-            $subTitle = trans('templates.manage');
             $subMenu = $this->getSubMenu('project', 'templates');
         } elseif ($name == 'admin.keys.index') {
-            $subTitle = trans('keys.manage');
             $subMenu = $this->getSubMenu('project', 'keys');
         }
 
         // Misc collection
         if ($name == 'admin.links.index') {
-            $subTitle = trans('admin.misc');
             $subMenu = $this->getSubMenu('misc', 'links');
         } elseif ($name == 'admin.tips.index') {
-            $subTitle = trans('admin.misc');
             $subMenu = $this->getSubMenu('misc', 'tips');
         }
 
-        $view->with('sub_title', $subTitle);
         $view->with('sub_menu', $subMenu);
     }
 

@@ -1,6 +1,5 @@
-<div class="box box-primary">
+<div class="box box-default">
 <div class="box-body">
-    <h3>{{ isset($sub_title) ? $sub_title : null }}</h3>
     <ul class="list-group list-group-unbordered">
         @foreach($sub_menu as $key=>$item)
         @if($item['active'])
