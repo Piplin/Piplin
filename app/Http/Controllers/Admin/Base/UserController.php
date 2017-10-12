@@ -19,8 +19,18 @@ use Illuminate\Support\Facades\View;
  */
 class UserController extends Controller
 {
+    /**
+     * Array of sub-menu items.
+     *
+     * @var array
+     */
     protected $subMenu = [];
 
+    /**
+     * Creates a user controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->subMenu = [
