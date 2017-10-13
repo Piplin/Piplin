@@ -230,7 +230,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function cleanupDeployment()
     {
-        foreach ($this->deployment->environment->servers as $server) {
+        foreach ($this->deployment->environments->pluck('servers') as $server) {
             if (!$server->deploy_code) {
                 continue;
             }
