@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('admin-content')
+<div class="box-header">
+    <h3 class="box-title">{{ $group->name }}</h3>
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
+    </div>
+</div>
 <div class="box-body" id="no_projects">
     <p>{{ trans('projects.none') }}</p>
 </div>
@@ -24,13 +30,6 @@
     {!! $projects_raw->render() !!}
 </div>
 @include('admin.projects.dialog')
-
-@stop
-
-@section('right-buttons')
-<div class="pull-right">
-    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
-</div>
 @stop
 
 @push('javascript')
@@ -49,7 +48,7 @@
 @push('templates')
 <script type="text/template" id="project-template">
     <td><%- id %></td>
-    <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
+    <td><a href="/projects/<%- id %>"><%- name %></a></td>
     <td><%- repository %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
