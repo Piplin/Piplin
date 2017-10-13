@@ -58,8 +58,7 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-        return view('auth.login')
-            ->with('provider_count', Provider::count());
+        return view('auth.login');
     }
 
     /**
@@ -135,8 +134,8 @@ class AuthController extends Controller
             if (is_null($identity)) {
                 // User::create();
                 $user = User::create([
-                    'name' => $extern_user->name,
-                    'nickname' => $extern_user->nickname,
+                    'name' => $extern_user->nickname,
+                    'nickname' => $extern_user->name,
                     'email' => $extern_user->email,
                     'password' => time(),
                 ]);

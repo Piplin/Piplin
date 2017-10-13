@@ -12,7 +12,7 @@
         <meta name="token" content="{{ Session::token() }}" />
         <meta name="socket_url" content="{{ config('fixhub.socket_url') }}" />
         <meta name="jwt" content="{{ Session::get('jwt') }}" />
-        <meta name="locale" content="{{ App::getLocale() }}" />
+        <meta name="locale" content="{{ $language }}" />
     </head>
     <body class="hold-transition skin-{{ $theme }}">
         <div class="wrapper">
@@ -34,6 +34,7 @@
 
                         @if(isset($breadcrumb))
                         <ol class="breadcrumb">
+                            <li><a href="{{ route('dashboard') }}">{{ trans('dashboard.title') }}</a>
                             @foreach($breadcrumb as $entry)
                             <li><a href="{{ $entry['url'] }}">{{ $entry['label'] }}</a></li>
                             @endforeach
@@ -41,7 +42,6 @@
                         </ol>
                         @endif
                     </section>
-
                     <section class="content" id="app">
                         @yield('content')
                     </section>
@@ -54,6 +54,11 @@
         <script src="{{ cdn('js/vendor.js') }}"></script>
         <script src="/js-localization/messages"></script>
         <script src="{{ cdn('js/app.js') }}"></script>
+        @if (\Route::is('admin*'))
+        <script src="{{ cdn('js/admin.js') }}"></script>
+        @else
+        <script src="{{ cdn('js/dashboard.js') }}"></script>
+        @endif
 
         @stack('templates')
         @stack('javascript')

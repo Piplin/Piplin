@@ -27,18 +27,18 @@ class StoreUserRequest extends Request
     public function rules()
     {
         $rules = [
-            'name'     => 'required|max:255',
+            'name'     => 'required|max:255|unique:users,name',
             'level'    => 'required|integer|min:' . User::LEVEL_ADMIN . '|max:' . User::LEVEL_OPERATOR,
             'nickname' => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',
         ];
 
-        // On edit change the password validator
         if ($this->get('id')) {
+            $rules['name'] .= ',' . $this->get('id');
             $rules['email'] .= ',' . $this->get('id');
 
-            if ($this->get('password') !== '') {
+            if (!empty($this->get('password', null))) {
                 $rules['password'] = 'min:6';
             } else {
                 unset($rules['password']);

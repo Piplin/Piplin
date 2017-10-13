@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Bus\Events\UserWasCreated;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreUserRequest;
 use Fixhub\Models\User;
@@ -52,15 +52,18 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->only(
+        $fields = $request->only(
             'name',
             'level',
             'nickname',
             'email',
             'password'
-        ));
+        );
+        $fields['password'] = bcrypt($fields['password']);
 
-        event(new UserWasCreated($user, $request->get('password')));
+        $user = User::create($fields);
+
+        event(new UserWasCreatedEvent($user, $request->get('password')));
 
         return $user;
     }
@@ -77,13 +80,23 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user_id);
 
-        $user->update($request->only(
+        $fields = $request->only(
             'name',
             'level',
             'nickname',
             'email',
             'password'
-        ));
+        );
+
+        if (array_key_exists('password', $fields)) {
+            if (empty($fields['password'])) {
+                unset($fields['password']);
+            } else {
+                $fields['password'] = bcrypt($fields['password']);
+            }
+        }
+
+        $user->update($fields);
 
         return $user;
     }

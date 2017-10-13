@@ -56,6 +56,7 @@ return [
     'different_branch'      => '其他分支',
     'tag'                   => '标签',
     'branch'                => '分支',
+    'environment'           => '部署环境',
     'warning'               => '上线工作尚未启动，请确保完成填写所有必填项.',
     'describe_commit'       => '例如：0c6b0d8',
     'describe_reason'       => '请简单描述本次上线的原因',

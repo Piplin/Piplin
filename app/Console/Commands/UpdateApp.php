@@ -12,7 +12,7 @@
 namespace Fixhub\Console\Commands;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Events\RestartSocketServer;
+use Fixhub\Bus\Events\RestartSocketServerEvent;
 use Fixhub\Models\Deployment;
 use Illuminate\Support\Facades\App;
 
@@ -155,7 +155,7 @@ class UpdateApp extends InstallApp
     protected function restartSocket()
     {
         $this->info('Restarting the socket server');
-        event(new RestartSocketServer);
+        event(new RestartSocketServerEvent());
     }
 
     /**

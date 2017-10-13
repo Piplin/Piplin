@@ -11,17 +11,25 @@
 
 namespace Fixhub\Providers;
 
-use Fixhub\Bus\Events\DeployFinished;
-use Fixhub\Bus\Events\EmailChangeRequested;
-use Fixhub\Bus\Events\JsonWebTokenExpired;
-use Fixhub\Bus\Events\UserWasCreated;
-use Fixhub\Bus\Listeners\ClearJwt;
-use Fixhub\Bus\Listeners\CreateJwt;
-use Fixhub\Bus\Listeners\EmailChangeConfirmation;
-use Fixhub\Bus\Listeners\NotifyDeploy;
-use Fixhub\Bus\Listeners\SendSignupEmail;
-use Fixhub\Models\NotifySlack;
-use Fixhub\Bus\Observers\NotifySlackObserver;
+use Fixhub\Bus\Events\DeployFinishedEvent;
+use Fixhub\Bus\Events\EmailChangeRequestedEvent;
+use Fixhub\Bus\Events\JsonWebTokenExpiredEvent;
+use Fixhub\Bus\Events\UserWasCreatedEvent;
+use Fixhub\Bus\Listeners\ClearJwtListener;
+use Fixhub\Bus\Listeners\CreateJwtListener;
+use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
+use Fixhub\Bus\Listeners\NotifyDeployListener;
+use Fixhub\Bus\Listeners\SendSignupEmailListener;
+use Fixhub\Models\Deployment;
+use Fixhub\Models\Hook;
+use Fixhub\Models\Key;
+use Fixhub\Models\Project;
+use Fixhub\Models\ServerLog;
+use Fixhub\Bus\Observers\DeploymentObserver;
+use Fixhub\Bus\Observers\HookObserver;
+use Fixhub\Bus\Observers\KeyObserver;
+use Fixhub\Bus\Observers\ProjectObserver;
+use Fixhub\Bus\Observers\ServerLogObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -38,13 +46,13 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        UserWasCreated::class       => [SendSignupEmail::class],
-        DeployFinished::class       => [NotifyDeploy::class],
-        EmailChangeRequested::class => [EmailChangeConfirmation::class],
-        JsonWebTokenExpired::class  => [CreateJwt::class],
-        Login::class                => [CreateJwt::class],
-        Logout::class               => [ClearJwt::class],
-        SocialiteWasCalled::class => [
+        DeployFinishedEvent::class       => [NotifyDeployListener::class],
+        EmailChangeRequestedEvent::class => [EmailChangeConfirmationListener::class],
+        UserWasCreatedEvent::class       => [SendSignupEmailListener::class],
+        JsonWebTokenExpiredEvent::class  => [CreateJwtListener::class],
+        Login::class                     => [CreateJwtListener::class],
+        Logout::class                    => [ClearJwtListener::class],
+        SocialiteWasCalled::class        => [
             'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
         ],
     ];
@@ -56,6 +64,10 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        NotifySlack::observe(NotifySlackObserver::class);
+        Deployment::observe(DeploymentObserver::class);
+        Key::observe(KeyObserver::class);
+        Hook::observe(HookObserver::class);
+        Project::observe(ProjectObserver::class);
+        ServerLog::observe(ServerLogObserver::class);
     }
 }

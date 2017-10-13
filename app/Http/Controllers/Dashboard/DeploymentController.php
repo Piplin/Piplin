@@ -11,14 +11,15 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\AbortDeployment;
-use Fixhub\Bus\Jobs\ApproveDeployment;
-use Fixhub\Bus\Jobs\QueueDeployment;
+use Fixhub\Http\Requests\StoreDeploymentRequest;
+use Fixhub\Bus\Jobs\AbortDeploymentJob;
+use Fixhub\Bus\Jobs\ApproveDeploymentJob;
+use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
-use Illuminate\Http\Request;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**
@@ -39,28 +40,94 @@ class DeploymentController extends Controller
 
         $output = [];
         foreach ($deployment->steps as $step) {
-            foreach ($step->servers as $server) {
-                $server->server;
+            foreach ($step->logs as $log) {
+                if ($log->server) {
+                    $log->server->environment_name = $log->server->environment ? $log->server->environment->name : null;
+                }
 
-                $server->runtime = ($server->runtime() === false ?
-                        null : AutoPresenter::decorate($server)->readable_runtime);
-                $server->output  = ((is_null($server->output) || !strlen($server->output)) ? null : '');
+                $log->runtime = ($log->runtime() === false ?
+                        null : AutoPresenter::decorate($log)->readable_runtime);
+                $log->output  = ((is_null($log->output) || !strlen($log->output)) ? null : '');
 
-                $output[] = $server;
+                $output[] = $log;
             }
         }
 
-        $project = $deployment->project;
-
-        return view('deployment.show', [
-            'breadcrumb' => [
-                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-            ],
+        $data = [
             'title'      => trans('deployments.deployment_number', ['id' => $deployment->id]),
-            'subtitle'   => $project->name,
-            'project'    => $project,
             'deployment' => $deployment,
             'output'     => json_encode($output), // PresentableInterface does not correctly json encode the models
+        ];
+
+        $project = $deployment->project ?: null;
+        if ($project) {
+            $data['breadcrumb'] = [
+                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+            ];
+            $data['project'] = $project;
+            $data['subtitle'] = $project->name;
+        }
+
+        return view('dashboard.deployments.show', $data);
+    }
+
+    /**
+     * Adds a deployment for the specified project to the queue.
+     *
+     * @param StoreDeploymentRequest $request
+     * @param int $project_id
+     *
+     * @return Response
+     */
+    public function create(StoreDeploymentRequest $request, $project_id)
+    {
+        // Fix me! see also in DeploymentController and IncomingWebhookController
+        $project = Project::findOrFail($project_id);
+
+        if ($project->environments->count() === 0) {
+            return redirect()->route('projects', ['id' => $project->id]);
+        }
+
+        $fields = [
+            'reason'         => $request->get('reason'),
+            'project_id'     => $project->id,
+            'environments'   => $request->get('environments'),
+            'branch'         => $project->branch,
+            'optional'       => [],
+        ];
+
+        // If allow other branches is set, check for post data
+        if ($project->allow_other_branch) {
+            if ($request->has('source') && $request->has('source_' . $request->get('source'))) {
+                $fields['branch'] = $request->get('source_' . $request->get('source'));
+
+                if ($request->get('source') == 'commit') {
+                    $fields['commit'] = $fields['branch'];
+                    $fields['branch'] = $project->branch;
+                }
+            }
+        }
+
+        // Get the optional commands and typecast to integers
+        if ($request->has('optional') && is_array($request->get('optional'))) {
+            $fields['optional'] = array_filter(array_map(function ($value) {
+                return filter_var($value, FILTER_VALIDATE_INT);
+            }, $request->get('optional')));
+        }
+
+        $optional = array_pull($fields, 'optional');
+        $environments = array_pull($fields, 'environments');
+
+        $deployment = Deployment::create($fields);
+
+        dispatch(new SetupDeploymentJob(
+            $deployment,
+            $environments,
+            $optional
+        ));
+
+        return redirect()->route('deployments', [
+            'id' => $deployment->id,
         ]);
     }
 
@@ -85,22 +152,22 @@ class DeploymentController extends Controller
 
         $previous = Deployment::findOrFail($previous_id);
 
-        $fileds = [
+        $fields = [
             'committer'       => $previous->committer,
             'committer_email' => $previous->committer_email,
             'commit'          => $previous->commit,
             'project_id'      => $previous->project_id,
             'branch'          => $previous->branch,
-            'project_id'      => $previous->project_id,
             'reason'          => trans('deployments.rollback_reason', [
-                    'reason' => $request->get('reason'),
-                    'id'     => $previous_id,
-                    'commit' => $previous->short_commit
+                    'reason'  => $request->get('reason'),
+                    'id'      => $previous_id,
+                    'commit'  => $previous->short_commit
             ]),
+            'environments'    => $previous->environments->pluck('id'),
             'optional'        => $optional,
         ];
 
-        $deployment = $this->createDeployment($fileds);
+        $deployment = Deployment::create($fields);
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,
@@ -122,7 +189,7 @@ class DeploymentController extends Controller
             $deployment->status = Deployment::ABORTING;
             $deployment->save();
 
-            dispatch(new AbortDeployment($deployment));
+            dispatch(new AbortDeploymentJob($deployment));
         }
 
         return redirect()->route('deployments', [
@@ -163,36 +230,11 @@ class DeploymentController extends Controller
         $deployment = Deployment::findOrFail($deployment_id);
 
         if ($deployment->isApproved()) {
-            dispatch(new ApproveDeployment($deployment));
+            dispatch(new ApproveDeploymentJob($deployment));
         }
 
         return redirect()->route('deployments', [
             'id' => $deployment_id,
         ]);
-    }
-
-    /**
-     * Creates a new instance of the server.
-     *
-     * @param array $fields
-     *
-     * @return Model
-     */
-    private function createDeployment(array $fields)
-    {
-        $optional = [];
-        if (array_key_exists('optional', $fields)) {
-            $optional = $fields['optional'];
-            unset($fields['optional']);
-        }
-
-        $deployment = Deployment::create($fields);
-
-        dispatch(new QueueDeployment(
-            $deployment,
-            $optional
-        ));
-
-        return $deployment;
     }
 }

@@ -15,12 +15,12 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
 * 直接从Git仓库克隆项目代码并进行打包、安装
-* 执行远程服务器bash命令
+* 支持项目的多环境部署(可自行建立开发、测试、预发布和生产等多个环境)
 * 通过Websocket实现项目部署状态的实时跟踪
-* 在服务器保留追溯版本记录，以便快速回滚
-* 可通过webhook触发部署
+* 可灵活配置自定义部署命令
+* 可与Gitlab、Github等代码托管平台进行集成，通过incoming webhook触发部署
 * 上线单申请、审核流程
-* 可通过Slack和邮件部署结果进行通知
+* 可通过Slack、邮件和自定义的webhook对部署结果进行通知
 
 ## 使用到的技术
 
@@ -37,7 +37,7 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## 开发使用到的技术
 
-- [x] Gulp
+- [x] Webpack
 - [x] Sass
 - [x] Codception
 - [x] PHP CodeSniffer
@@ -120,7 +120,7 @@ $ php artisan config:clear
 
 ```shell
 $ git fetch --all
-$ git checkout {latest_tag} // please change me
+$ git checkout 0.2.3
  ```
 
 二. 更新依赖
@@ -151,11 +151,11 @@ Fixhub代码里已经自带编译后的前端静态资源，如果你不想修�
 工具集：
 
 - Node.js
-- Gulp
+- Webpack
 
 ```shell
 npm install
-gulp
+npm run prod
 ```
 
 ## 鸣谢

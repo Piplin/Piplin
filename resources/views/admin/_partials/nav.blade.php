@@ -1,12 +1,7 @@
-<div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-        <li {!! set_active('admin') !!}><a href="/admin">{{ trans('admin.dashboard') }}</a></li>
-        <li {!! set_active('admin/projects') !!}><a href="/admin/projects">{{ trans('projects.manage') }}</a></li>
-        <li {!! set_active('admin/groups') !!}><a href="/admin/groups">{{ trans('groups.manage') }}</a></li>
-        <li {!! set_active('admin/templates') !!}><a href="/admin/templates">{{ trans('templates.manage') }}</a></li>
-        <li {!! set_active('admin/users') !!}><a href="/admin/users">{{ trans('users.manage') }}</a></li>
-        <li {!! set_active('admin/keys') !!}><a href="/admin/keys">{{ trans('keys.manage') }}</a></li>
-        <li {!! set_active('admin/links') !!}><a href="/admin/links">{{ trans('links.manage') }}</a></li>
-        <li {!! set_active('admin/tips') !!}><a href="/admin/tips">{{ trans('tips.manage') }}</a></li>
-    </ul>
-</div>
+<ul class="nav nav-tabs">
+    <li {!! set_active('admin') !!}><a href="/admin"><i class="ion ion-ios-home"></i> {{ trans('admin.home') }}</a></li>
+    <li {!! set_active(['admin/projects', 'admin/groups', 'admin/templates*', 'admin/keys']) !!}><a href="/admin/projects"><i class="ion ion-cube"></i> {{ trans('projects.manage') }}</a></li>
+    <li {!! set_active(['admin/users', 'admin/providers']) !!}><a href="/admin/users"><i class="ion ion-ios-people"></i> {{ trans('users.manage') }}</a></li>
+    <li {!! set_active(['admin/links', 'admin/tips']) !!}><a href="/admin/links"><i class="ion ion-link"></i> {{ trans('admin.misc') }}</a></li>
+    <li {!! set_active('admin/revisions') !!}><a href="/admin/revisions"><i class="ion ion-ios-pulse"></i> {{ trans('revisions.manage') }}</a></li>
+</ul>

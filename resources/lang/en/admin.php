@@ -11,7 +11,11 @@
 
 return [
 
-    'label'   => 'Admin Area',
-    'manage'  => 'Admin',
+    'label'        => 'Admin Area',
+    'home'         => 'Admin home',
+    'environments' => 'Environments',
+    'dependencies' => 'Dependencies',
+    'misc'         => 'Links & Tips',
+    'template'     => 'Template steup',
 
 ];

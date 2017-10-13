@@ -11,13 +11,13 @@
 
 return [
 
-    'manage'   => 'Manage groups',
-    'name'     => 'Name',
-    'projects' => 'Number of projects',
-    'create'   => 'Add a new group',
-    'edit'     => 'Edit a group',
-    'projects' => 'Projects',
-    'warning'  => 'The group could not be saved, please check the form below.',
-    'none'     => 'There are currently no groups setup',
+    'manage'           => 'Manage groups',
+    'name'             => 'Name',
+    'name_placeholder' => 'Fixhub',
+    'projects'         => 'Number of projects',
+    'create'           => 'Add a new group',
+    'edit'             => 'Edit a group',
+    'warning'          => 'The group could not be saved, please check the form below.',
+    'none'             => 'There are currently no groups setup',
 
 ];

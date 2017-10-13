@@ -11,14 +11,14 @@
 
 namespace Fixhub\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\UpdateGitMirror;
+use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
-use Illuminate\Http\Request;
 
 /**
  * The controller of repository.
@@ -41,7 +41,7 @@ class RepositoryController extends Controller
 
         $project = Project::findOrFail($project_id);
 
-        dispatch(new UpdateGitMirror($project));
+        dispatch(new UpdateGitMirrorJob($project));
 
         $success = true;
 

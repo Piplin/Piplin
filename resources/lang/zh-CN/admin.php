@@ -11,9 +11,11 @@
 
 return [
 
-    'label'   => '管理后台',
-    'dashboard'  => '后台首页',
-    'environment' => '环境变量',
+    'label'        => '管理后台',
+    'home'         => '后台首页',
+    'environments' => '环境变量',
     'dependencies' => '依赖包',
+    'misc'         => '链接和小贴士',
+    'template'    => '模板设置',
 
 ];

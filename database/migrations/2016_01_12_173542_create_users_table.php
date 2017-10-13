@@ -44,13 +44,13 @@ class CreateUsersTable extends Migration
         });
 
         User::create([
-            'name'           => 'Admin',
-            'nickname'       => 'Administrator',
-            'email'          => 'admin@example.com',
-            'password'       => bcrypt('password'),
+            'name'           => 'fixhub',
+            'nickname'       => 'Fixhub',
+            'email'          => 'fixhub@fixhub.org',
+            'password'       => bcrypt('fixhub'),
             'remember_token' => str_random(10),
             'level'          => User::LEVEL_ADMIN,
-            'avatar'         => '/img/avatar.png',
+            'avatar'         => '/img/noavatar.png',
         ]);
     }
 

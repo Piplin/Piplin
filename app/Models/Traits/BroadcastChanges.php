@@ -11,9 +11,9 @@
 
 namespace Fixhub\Models\Traits;
 
-use Fixhub\Bus\Events\ModelChanged;
-use Fixhub\Bus\Events\ModelCreated;
-use Fixhub\Bus\Events\ModelTrashed;
+use Fixhub\Bus\Events\ModelChangedEvent;
+use Fixhub\Bus\Events\ModelCreatedEvent;
+use Fixhub\Bus\Events\ModelTrashedEvent;
 
 /**
  * A trait to broadcast model changes.
@@ -29,17 +29,17 @@ trait BroadcastChanges
     {
         static::created(function ($model) {
             $channel = strtolower(class_basename(get_class($model)));
-            event(new ModelCreated($model, $channel));
+            event(new ModelCreatedEvent($model, $channel));
         });
 
         static::updated(function ($model) {
             $channel = strtolower(class_basename(get_class($model)));
-            event(new ModelChanged($model, $channel));
+            event(new ModelChangedEvent($model, $channel));
         });
 
         static::deleted(function ($model) {
             $channel = strtolower(class_basename(get_class($model)));
-            event(new ModelTrashed($model, $channel));
+            event(new ModelTrashedEvent($model, $channel));
         });
     }
 }

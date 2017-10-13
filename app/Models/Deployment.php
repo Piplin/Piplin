@@ -11,20 +11,21 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Events\ModelChanged;
+use Fixhub\Bus\Events\ModelChangedEvent;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\DeploymentPresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Deployment model.
  */
 class Deployment extends Model implements HasPresenter, RuntimeInterface
 {
-    use SoftDeletes;
+    use SoftDeletes, RevisionableTrait;
 
     const COMPLETED             = 0;
     const PENDING               = 1;
@@ -38,6 +39,20 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     const LOADING               = 'Loading';
 
     public static $currentDeployment = [];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
+
+    /**
+     * Revision keep attributes.
+     *
+     * @var array
+     */
+    protected $keepRevisionOf = ['created_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -75,26 +90,12 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
-        'project_id' => 'integer',
-        'user_id'    => 'integer',
-        'status'     => 'integer',
-        'is_webhook' => 'boolean',
+        'id'             => 'integer',
+        'project_id'     => 'integer',
+        'user_id'        => 'integer',
+        'status'         => 'integer',
+        'is_webhook'     => 'boolean',
     ];
-
-    /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saved(function (Deployment $model) {
-            event(new ModelChanged($model, 'deployment'));
-        });
-    }
 
     /**
      * Belongs to relationship.
@@ -105,6 +106,19 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     {
         return $this->belongsTo(Project::class);
     }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function environments()
+    {
+        return $this->belongsToMany(Environment::class)
+                    ->orderBy('order', 'ASC');
+    }
+
 
     /**
      * Belongs to relationship.
@@ -325,71 +339,6 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     public function getBranchURLAttribute()
     {
         return $this->project->getBranchUrlAttribute($this->branch);
-    }
-
-    /**
-     * Generates a slack payload for the deployment.
-     *
-     * @return array
-     */
-    public function notifySlackPayload()
-    {
-        $color  = 'good';
-        $message = trans('notifySlacks.success_message');
-
-        if ($this->status === self::FAILED) {
-            $color  = 'danger';
-            $message = trans('notifySlacks.failed_message');
-        }
-
-        $payload = [
-            'attachments' => [
-                [
-                    'fallback' => sprintf($message, '#' . $this->id),
-                    'text'     => sprintf($message, sprintf(
-                        '<%s|#%u>',
-                        route('deployments', ['id' => $this->id]),
-                        $this->id
-                    )),
-                    'color'    => $color,
-                    'fields'   => [
-                        [
-                            'title' => trans('notifySlacks.project'),
-                            'value' => sprintf(
-                                '<%s|%s>',
-                                route('projects', ['id' => $this->project_id]),
-                                $this->project->name
-                            ),
-                            'short' => true,
-                        ], [
-                            'title' => trans('notifySlacks.commit'),
-                            'value' => $this->commit_url ? sprintf(
-                                '<%s|%s>',
-                                $this->commit_url,
-                                $this->short_commit
-                            ) : $this->short_commit,
-                            'short' => true,
-                        ], [
-                            'title' => trans('notifySlacks.committer'),
-                            'value' => $this->committer,
-                            'short' => true,
-                        ], [
-                            'title' => trans('notifySlacks.branch'),
-                            'value' => $this->project->branch,
-                            'short' => true,
-                        ], [
-                            'title' => trans('notifySlacks.deploy_reason'),
-                            'value' => $this->reason,
-                            'short' => false,
-                        ],
-                    ],
-                    'footer' => config('setting.app_name'),
-                    'ts'     => time(),
-                ],
-            ],
-        ];
-
-        return $payload;
     }
 
     /**

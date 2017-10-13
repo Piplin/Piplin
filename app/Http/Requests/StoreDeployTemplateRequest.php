@@ -14,7 +14,7 @@ namespace Fixhub\Http\Requests;
 use Fixhub\Http\Requests\Request;
 
 /**
- * Request for validating groups.
+ * Request for validating deploytemplates.
  */
 class StoreDeployTemplateRequest extends Request
 {

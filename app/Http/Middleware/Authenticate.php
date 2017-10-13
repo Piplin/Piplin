@@ -26,14 +26,17 @@ class Authenticate
      * @var Redirector
      */
     private $redirector;
+
     /**
      * @var ResponseFactory
      */
     private $response;
+
     /**
      * @var AuthFactory
      */
     private $auth;
+
     /**
      * @param Redirector      $redirector
      * @param ResponseFactory $response
@@ -60,7 +63,7 @@ class Authenticate
             if ($request->ajax()) {
                 return $this->response->make('Unauthorized.', Response::HTTP_UNAUTHORIZED);
             }
-            return $this->redirector->guest('auth/login');
+            return $this->redirector->guest('login');
         }
         return $next($request);
     }

@@ -47,7 +47,7 @@
     background: transparent;
     color: #444;
     border-top: 0;
-    border-left-color: $light-blue;
+    border-left-color: $orange;
   }
 
   > li.header {
@@ -98,7 +98,7 @@
     }
 
     > li.active {
-      border-top-color: $light-blue;
+      border-top-color: $orange;
       & > a,
       &:hover > a {
         background-color: #fff;
@@ -156,7 +156,7 @@
 
   > .tab-content {
     background: #fff;
-    padding: 10px;
+    padding: 20px 10px;
     @include border-bottom-radius($box-border-radius);
   }
 

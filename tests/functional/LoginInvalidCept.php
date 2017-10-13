@@ -12,7 +12,7 @@
 $I = new FunctionalTester($scenario);
 $I->am('a guest');
 $I->wantTo('test login with invalid credentials');
-$I->amOnPage('/auth/login');
+$I->amOnPage('/login');
 $I->fillField('login', 'fixhub.org@gmail.com');
 $I->fillField('password', 'test123');
 $I->click('button[type=submit]');

@@ -26,24 +26,10 @@ class LinkTableSeeder extends Seeder
         ]);
 
         Link::create([
-            'title'       => '百度',
-            'url'         => 'http://www.baidu.com/',
+            'title'       => 'Github',
+            'url'         => 'https://github.com/Fixhub/Fixhub',
             'cover'       => '',
-            'description' => '百度一下，你就知道',
-        ]);
-
-        Link::create([
-            'title'       => '阿里巴巴',
-            'url'         => 'http://www.alibba.com/',
-            'cover'       => '',
-            'description' => '让天下没有难做的生意',
-        ]);
-
-        Link::create([
-            'title'       => '腾讯',
-            'url'         => 'http://www.qq.com/',
-            'cover'       => '',
-            'description' => '中国领先的互联网综合服务提供商',
+            'description' => 'Fixhub on Github',
         ]);
     }
 }

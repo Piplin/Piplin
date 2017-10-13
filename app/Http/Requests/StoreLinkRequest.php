@@ -30,7 +30,7 @@ class StoreLinkRequest extends Request
             'url'   => 'required',
         ];
 
-        // On edit add the group ID to the rules
+        // On edit add the link ID to the rules
         if ($this->get('id')) {
             $rules['title'] .= ',' . $this->get('id');
         }

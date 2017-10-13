@@ -1,24 +1,14 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
-@section('content')
-
-<div class="box">
-
-        @include('admin._partials.nav')
-        <div class="box-body">
-        <!-- start -->
-        <div class="row">
-            <div class="col-md-6">
-                @include('admin.dashboard.environment')
-            </div>
-            <div class="col-md-6">
-                @include('admin.dashboard.dependencies')
-            </div>
-        </div>
-        <!-- end -->
-        </div>
+@section('admin-content')
+<div class="box-body">
+    <div class="col-md-6">
+        @include('admin.dashboard.environments')
+    </div>
+    <div class="col-md-6">
+        @include('admin.dashboard.dependencies')
+    </div>
 </div>
-<!-- /.box -->
 @stop
 
 @section('right-buttons')

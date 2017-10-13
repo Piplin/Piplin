@@ -59,6 +59,7 @@ return [
     'different_branch'      => 'A different branch',
     'tag'                   => 'A tag',
     'branch'                => 'Branch',
+    'environment'           => 'Environment',
     'warning'               => 'The deployment could not be started, please make sure you have entered all required values.',
     'describe_commit'       => 'Such as: 0c6b0d8',
     'describe_reason'       => 'Please describe briefly the reason for this deployment',

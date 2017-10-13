@@ -15,20 +15,22 @@ use Fixhub\Models\Traits\SetupRelations;
 use Fixhub\Presenters\DeployTemplatePresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Model for deploy templates.
  */
 class DeployTemplate extends Model implements HasPresenter
 {
-    use SetupRelations;
+    use SetupRelations, RevisionableTrait;
 
     /**
      * Fields to show in the JSON presentation.
      *
      * @var array
      */
-    protected $visible = ['id', 'name', 'command_count', 'file_count', 'config_count', 'variable_count'];
+    protected $visible = ['id', 'name', 'command_count', 'file_count',
+                          'config_count', 'variable_count', 'environment_count'];
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +44,7 @@ class DeployTemplate extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $appends = ['command_count', 'file_count', 'config_count', 'variable_count'];
+    protected $appends = ['command_count', 'file_count', 'config_count', 'variable_count', 'environment_count'];
 
     /**
      * The attributes that should be casted to native types.
@@ -52,6 +54,13 @@ class DeployTemplate extends Model implements HasPresenter
     protected $casts = [
         'id'          => 'integer',
     ];
+
+    /**
+     * Revision creations enabled.
+     *
+     * @var boolean
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * Define a accessor for the count of projects.
@@ -94,6 +103,17 @@ class DeployTemplate extends Model implements HasPresenter
     public function getVariableCountAttribute()
     {
         return $this->variables()
+                    ->count();
+    }
+
+    /**
+     * Define a accessor for the count of env environments.
+     *
+     * @return int
+     */
+    public function getEnvironmentCountAttribute()
+    {
+        return $this->environments()
                     ->count();
     }
 

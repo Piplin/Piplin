@@ -11,7 +11,6 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Events\ServerLogChanged;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\ServerLogPresenter;
 use Illuminate\Database\Eloquent\Model;
@@ -53,20 +52,6 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
         'deploy_step_id' => 'integer',
         'status'         => 'integer',
     ];
-
-    /**
-     * Override the boot method to bind model event listeners.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::updated(function (ServerLog $model) {
-            event(new ServerLogChanged($model));
-        });
-    }
 
     /**
      * Belongs to assocation.

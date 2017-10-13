@@ -13,10 +13,10 @@ return [
 
     // Account creation email
     'creation_subject'   => '创建账户',
-    'created'            => '你的账号已经创建!',
+    'created'            => '您的账号已经创建成功!',
     'login_now'          => '立即登录',
-    'username'           => '您的账号是 :username',
-    'password'           => '您的密码是 :password',
+    'username'           => '登录账号：:username 或 :email',
+    'password'           => '登录密码：:password',
 
     // Password reset email
     'reset_subject'      => '您的密码重置链接',

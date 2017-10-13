@@ -16,7 +16,7 @@ $I->haveRecord('users', [
     'email'      => 'john@smith.com',
     'password'   => bcrypt('password'),
 ]);
-$I->amOnPage('/auth/login');
+$I->amOnPage('/login');
 $I->fillField('login', 'JohnSmith');
 $I->fillField('password', 'password');
 $I->click('button[type=submit]');

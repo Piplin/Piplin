@@ -13,15 +13,15 @@ if (!function_exists('set_active')) {
     /**
      * Set active class if request is in path.
      *
-     * @param string $path
-     * @param array  $classes
+     * @param dynamic $patterns
+     * @param array $classes
      * @param string $active
      *
      * @return string
      */
-    function set_active($path, array $classes = [], $active = 'active')
+    function set_active($patterns, array $classes = [], $active = 'active')
     {
-        if (Request::is($path)) {
+        if (Request::is($patterns)) {
             $classes[] = $active;
         }
         $class = e(implode(' ', $classes));
@@ -40,11 +40,11 @@ if (!function_exists('cdn')) {
     function cdn($path, $secure = null)
     {
         if (!config('fixhub.cdn')) {
-            return elixir($path);
+            return mix($path);
         }
         $path = trim($path, '/');
         if (in_array(pathinfo($path, PATHINFO_EXTENSION), ['css', 'js'])) {
-            $path = elixir($path);
+            $path = mix($path);
         }
         return '//' . config('fixhub.cdn') . ($path[0] !== '/' ? ('/' . $path) : $path);
     }

@@ -70,9 +70,9 @@ class Command extends Model implements HasPresenter
      *
      * @return Server
      */
-    public function servers()
+    public function environments()
     {
-        return $this->belongsToMany(Server::class)
+        return $this->belongsToMany(Environment::class)
                     ->orderBy('order', 'ASC');
     }
 

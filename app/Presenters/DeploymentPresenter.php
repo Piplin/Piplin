@@ -134,7 +134,7 @@ class DeploymentPresenter extends BasePresenter
     public function timeline_css_class()
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
-            return 'green';
+            return 'white';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED], true)) {
             return 'red';
         } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
@@ -180,5 +180,23 @@ class DeploymentPresenter extends BasePresenter
         }
 
         return $this->wrappedObject->short_commit;
+    }
+    /**
+     * Gets the readable list of environments.
+     *
+     * @return string
+     */
+    public function environment_names()
+    {
+        $environments = [];
+        foreach ($this->wrappedObject->environments as $environment) {
+            $environments[] = $environment->name;
+        }
+
+        if (count($environments)) {
+            return implode(', ', $environments);
+        }
+
+        return trans('app.none');
     }
 }

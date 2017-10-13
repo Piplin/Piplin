@@ -22,6 +22,8 @@ return [
     'port'        => 'Port',
     'status'      => 'Connection Status',
     'output'      => 'Output',
+    'updated_at'  => 'Updated at',
+    'environment' => 'Environment',
     'test'        => 'Test the server connection',
     'path'        => 'Project Path',
     'example'     => 'The directory needs to exist on the server already & be both readable and writeable',
@@ -32,7 +34,8 @@ return [
     'untested'    => 'Untested',
     'options'     => 'Options',
     'deploy_code' => 'Code should be deployed to this server',
+    'enabled'     => 'Server enabled?',
+    'disabled'    => 'Skip this server for furture deployments',
     'runs_code'   => 'Deploy Code',
-    'add_command' => 'Add the new server to all existing commands',
 
 ];

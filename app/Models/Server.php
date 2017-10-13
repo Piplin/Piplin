@@ -14,13 +14,14 @@ namespace Fixhub\Models;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Server model.
  */
 class Server extends Model
 {
-    use SoftDeletes, BroadcastChanges;
+    use SoftDeletes, BroadcastChanges, RevisionableTrait;
 
     const SUCCESSFUL = 0;
     const UNTESTED   = 1;
@@ -32,15 +33,15 @@ class Server extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'project'];
+    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'environment'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'ip_address', 'project_id', 'path',
-                           'status', 'output', 'deploy_code', 'port', 'order', ];
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address','environment_id',
+                           'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
 
     /**
      * The attributes that should be casted to native types.
@@ -48,21 +49,22 @@ class Server extends Model
      * @var array
      */
     protected $casts = [
-        'id'          => 'integer',
-        'project_id'  => 'integer',
-        'status'      => 'integer',
-        'deploy_code' => 'boolean',
-        'port'        => 'integer',
+        'id'             => 'integer',
+        'enabled'        => 'boolean',
+        'environment_id' => 'integer',
+        'status'         => 'integer',
+        'deploy_code'    => 'boolean',
+        'port'           => 'integer',
     ];
 
     /**
      * Belongs to relationship.
      *
-     * @return Project
+     * @return Environment
      */
-    public function project()
+    public function environment()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Environment::class);
     }
 
     /**

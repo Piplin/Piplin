@@ -3,7 +3,7 @@
 @section('content')
 <div class="row edit-profile">
     <div class="col-md-4">
-        <div class="box box-success">
+        <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('users.basic') }}</h3>
             </div>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="box box-success">
+        <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('users.settings') }}</h3>
             </div>
@@ -52,7 +52,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="form-group">
                         <label for="skin">{{ trans('users.theme') }}</label>
-                        <select name="skin" id="skin" class="form-control">
+                        <select name="skin" id="skin" class="select2 form-control">
                             @foreach (['white', 'black', 'yellow', 'red', 'green', 'purple', 'blue'] as $colour)
                                 <option value="{{ $colour }}" @if ($colour === $theme) selected @endif>{{ trans('users.' . $colour )}}</option>
                             @endforeach
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group">
                         <label for="language">{{ trans('users.language') }}</label>
-                        <select name="language" id="language" class="form-control">
+                        <select name="language" id="language" class="select2 form-control">
                             @foreach (['en', 'zh-CN'] as $item)
                                 <option value="{{ $item }}" @if ($item === $language) selected @endif>{{ trans('users.' . $item )}}</option>
                             @endforeach
@@ -90,7 +90,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="avatar">
-                            <img src="{{ url('upload/picture.jpg') }}" class="img-rounded img-responsive" />
+                            <img src="{{ url('img/cropper.jpg') }}" class="img-rounded img-responsive" />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="box box-success">
+        <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('users.2fa') }}</h3>
             </div>
@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <div class="box box-danger">
+        <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('users.change_email') }}</h3>
             </div>
@@ -178,7 +178,7 @@
                     <p class="form-control bg-gray">{{ $current_user->email }}</p>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-danger btn-flat" id="request-change-email">{{ trans('users.request_confirm') }}</button>
+                    <button type="button" class="btn btn-warning btn-flat" id="request-change-email">{{ trans('users.request_confirm') }}</button>
                     <span class="help-block hide">{{ trans('users.email_sent') }}</span>
                 </div>
             </div>

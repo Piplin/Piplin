@@ -11,13 +11,13 @@
 
 return [
 
-    'manage'   => '项目分组',
-    'name'     => '名称',
-    'projects' => '项目数',
-    'create'   => '新增分组',
-    'edit'     => '编辑分组',
-    'projects' => '项目',
-    'warning'  => '保存失败，请坚持表单信息.',
-    'none'     => '暂未设置项目分组',
+    'manage'           => '项目分组',
+    'name'             => '名称',
+    'name_placeholder' => 'Fixhub',
+    'projects'         => '项目数',
+    'create'           => '新增分组',
+    'edit'             => '编辑分组',
+    'warning'          => '保存失败，请坚持表单信息.',
+    'none'             => '还没有设置项目分组',
 
 ];

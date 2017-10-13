@@ -54,7 +54,7 @@ class SharedFilesController extends Controller
     {
         $shared_file = SharedFile::findOrFail($file_id);
 
-        return $shared_file->update($request->only(
+        $shared_file->update($request->only(
             'name',
             'file'
         ));

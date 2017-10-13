@@ -14,7 +14,8 @@ namespace Fixhub\Bus\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification as BaseNotification;
-use Fixhub\Models\NotifySlack;
+use Fixhub\Models\Hook;
+use NotificationChannels\Webhook\WebhookChannel;
 
 /**
  * Notification class.
@@ -24,17 +25,17 @@ abstract class Notification extends BaseNotification implements ShouldQueue
     use Queueable;
 
     /**
-     * Get the notification's delivery channels.
+     * Get the notification's delivery hooks.
      *
-     * @param  Model $model
+     * @param  Hook $hook
      * @return array
      */
-    public function via($model)
+    public function via(Hook $hook)
     {
-        if ($model instanceof NotifySlack) {
-            return ['slack'];
-        } else {
-            return ['mail'];
+        if ($hook->type === Hook::WEBHOOK) {
+            return [WebhookChannel::class];
         }
+
+        return [$hook->type];
     }
 }

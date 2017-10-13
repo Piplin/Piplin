@@ -11,15 +11,15 @@
 
 namespace Fixhub\Console\Commands;
 
-use Illuminate\Foundation\Testing\Concerns\MocksApplicationServices;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Console\Command;
+use Fixhub\Bus\Events\RestartSocketServerEvent;
 
 /**
  * A console command for clearing all data and setting up again.
  */
-class ResetApp extends UpdateApp
+class ResetApp extends Command
 {
-    use MocksApplicationServices;
-
     /**
      * The name and signature of the console command.
      *
@@ -47,38 +47,36 @@ class ResetApp extends UpdateApp
     /**
      * Execute the console command.
      *
+     * @param Dispatcher $dispatcher
+     *
      * @return mixed
      */
-    public function handle()
+    public function handle(Dispatcher $dispatcher)
     {
         if (!$this->verifyNotProduction()) {
-            return;
+            return -1;
         }
 
-        $this->app = $this->laravel;
+        $this->callSilent('down');
 
-        $this->withoutEvents();
-
+        $this->resetDatabase();
         $this->clearLogs();
-        $this->updateConfiguration();
-        $this->resetDB();
-        $this->migrate(true);
-        $this->clearCaches();
         $this->restartQueue();
-        $this->restartSocket();
+        $this->restartSocket($dispatcher);
+
+        $this->callSilent('up');
+
+        return 0;
     }
 
     /**
-     * Resets the database.
-     *
-     * @return void
-     */
-    protected function resetDB()
+    * Resets the database.
+    */
+    protected function resetDatabase()
     {
-        $this->info('Resetting the database');
-        $this->line('');
-        $this->call('migrate:reset', ['--force' => true]);
-        $this->line('');
+        $this->callSilent('migrate', ['--force' => true]);
+        $this->callSilent('app:update');
+        $this->call('migrate:fresh', ['--seed' => true, '--force' => true]);
     }
 
     /**
@@ -94,6 +92,29 @@ class ResetApp extends UpdateApp
         foreach (glob(storage_path('logs/') . '*.log*') as $file) {
             unlink($file);
         }
+    }
+
+    /**
+     * Restarts the queues.
+     */
+    protected function restartQueue()
+    {
+        $this->info('Restarting the queue');
+        $this->line('');
+        $this->call('queue:flush');
+        $this->call('queue:restart');
+        $this->line('');
+    }
+
+    /**
+     * Restarts the socket server.
+     *
+     * @param Dispatcher $dispatcher
+     */
+    protected function restartSocket(Dispatcher $dispatcher)
+    {
+        $this->info('Restarting the socket server');
+        $dispatcher->dispatch(new RestartSocketServerEvent());
     }
 
     /**

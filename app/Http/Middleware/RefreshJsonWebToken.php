@@ -16,7 +16,7 @@ use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Redirector;
-use Fixhub\Bus\Events\JsonWebTokenExpired;
+use Fixhub\Bus\Events\JsonWebTokenExpiredEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -113,7 +113,7 @@ class RefreshJsonWebToken
 
         // If there is no valid token, generate one
         if (!$has_valid_token) {
-            $this->dispatcher->dispatch(new JsonWebTokenExpired($authenticated_user));
+            $this->dispatcher->dispatch(new JsonWebTokenExpiredEvent($authenticated_user));
         }
 
         return $next($request);

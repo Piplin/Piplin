@@ -7,5 +7,5 @@
 
     <br />
 
-    {{ trans('emails.reset_here') }}: <a href="{{ route('auth.reset-password-confirm', ['token' => $token]) }}">{{ route('auth.reset-password-confirm', ['token' => $token]) }}</a>
+    {{ trans('emails.reset_here') }}: <a href="{{ route('auth.reset-confirm', ['token' => $token]) }}">{{ route('auth.reset-confirm', ['token' => $token]) }}</a>
 @stop

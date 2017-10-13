@@ -120,6 +120,10 @@ $bs-height-xs: (floor($font-size-small * 1.2) + $padding-small-vertical + 1);
   @include btn-social(#444444);
 }
 
+.btn-gitlab {
+  @include btn-social(#f4731c);
+}
+
 .btn-google {
   @include btn-social(#dd4b39);
 }

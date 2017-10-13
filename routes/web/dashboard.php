@@ -33,6 +33,17 @@ Route::group([
             'uses' => 'CommandController@index',
         ]);
 
+        Route::get('projects/{id}/environments/{environment_id}', [
+            'as'   => 'environments.show',
+            'uses' => 'EnvironmentController@show',
+        ]);
+
+
+        Route::post('environments/reorder', [
+            'as'    => 'environments.reorder',
+            'uses'  => 'EnvironmentController@reorder',
+        ]);
+
         Route::post('servers/reorder', [
             'as'    => 'servers.reorder',
             'uses'  => 'ServerController@reorder',
@@ -61,9 +72,14 @@ Route::group([
             'uses' => 'ProjectController@apply',
         ]);
 
-        Route::post('projects/{id}/deploy', [
-            'as'   => 'projects.deploy',
-            'uses' => 'ProjectController@deploy',
+        Route::get('deployment/{id}', [
+            'as'   => 'deployments',
+            'uses' => 'DeploymentController@show',
+        ]);
+
+        Route::post('deployment/{id}', [
+            'as'   => 'deployments.create',
+            'uses' => 'DeploymentController@create',
         ]);
 
         // Deployment
@@ -87,11 +103,6 @@ Route::group([
             'uses'  => 'DeploymentController@deploy',
         ]);
 
-        Route::get('deployment/{id}', [
-            'as'   => 'deployments',
-            'uses' => 'DeploymentController@show',
-        ]);
-
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
@@ -111,11 +122,11 @@ Route::group([
             ], function () use ($actions) {
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
+                Route::resource('environments', 'EnvironmentController', $actions);
+                Route::resource('hooks', 'HookController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
-                Route::resource('notify-slack', 'NotifySlackController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
-                Route::resource('notify-email', 'NotifyEmailController', $actions);
             });
 
         Route::get('admin/templates/{id}/commands/{step}', [

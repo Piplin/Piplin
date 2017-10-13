@@ -46,6 +46,10 @@ Route::group([
             'destroy' => 'admin.projects.destroy',
         ],
     ]);
+    Route::post('projects/{id}/clone', [
+        'as'   => 'admin.projects.clone',
+        'uses' => 'ProjectController@clone',
+    ]);
 
     Route::resource('users', 'UserController', [
         'only' => ['index', 'store', 'update', 'destroy'],
@@ -87,6 +91,21 @@ Route::group([
         'uses'  => 'LinkController@reorder',
     ]);
 
+    Route::resource('providers', 'ProviderController', [
+        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'names' => [
+            'create'  => 'admin.providers.create',
+            'index'   => 'admin.providers.index',
+            'store'   => 'admin.providers.store',
+            'update'  => 'admin.providers.update',
+            'destroy' => 'admin.providers.destroy',
+        ],
+    ]);
+    Route::post('providers/reorder', [
+        'as'    => 'admin.providers.reorder',
+        'uses'  => 'LinkController@reorder',
+    ]);
+
     Route::resource('tips', 'TipController', [
         'only' => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
@@ -113,5 +132,12 @@ Route::group([
     Route::post('groups/reorder', [
         'as'    => 'admin.groups.reorder',
         'uses'  => 'ProjectGroupController@reorder',
+    ]);
+
+    Route::resource('revisions', 'RevisionController', [
+        'only' => ['index'],
+        'names' => [
+            'index'   => 'admin.revisions.index',
+        ],
     ]);
 });

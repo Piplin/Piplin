@@ -21,13 +21,14 @@ use Illuminate\Support\Str;
 use UnexpectedValueException;
 use Version\Compare as VersionCompare;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Project model.
  */
 class Project extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, SetupRelations;
+    use SoftDeletes, BroadcastChanges, SetupRelations, RevisionableTrait;
 
     const FINISHED     = 0;
     const PENDING      = 1;
@@ -41,8 +42,7 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'servers', 'commands', 'notifyEmails','group', 'key',
-                         'notifySlacks', 'deployments', 'shareFiles',
+                         'hooks', 'commands','group', 'key', 'deployments', 'sharedFiles',
                          'configFiles', 'last_mirrored',
                          ];
 
@@ -84,22 +84,18 @@ class Project extends Model implements HasPresenter
     ];
 
     /**
-     * Override the boot method to bind model event listeners.
+     * Revision creations enabled.
      *
-     * @return void
+     * @var boolean
      */
-    public static function boot()
-    {
-        parent::boot();
+    protected $revisionCreationsEnabled = true;
 
-        // When  creating the model generate an SSH Key pair and a webhook hash
-        // Fix me by gsl
-        static::creating(function (Project $model) {
-            if (!array_key_exists('hash', $model->attributes)) {
-                $model->generateHash();
-            }
-        });
-    }
+    /**
+     * Revision ignore attributes.
+     *
+     * @var array
+     */
+    protected $dontKeepRevisionOf = ['status', 'last_run', 'last_mirrored'];
 
     /**
      * Determines whether the project is currently being deployed.
@@ -214,7 +210,7 @@ class Project extends Model implements HasPresenter
      */
     public function getGroupNameAttribute()
     {
-        return $this->group->name;
+        return $this->group ? $this->group->name : null;
     }
 
     /**
@@ -250,17 +246,6 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship.
      *
-     * @return Server
-     */
-    public function servers()
-    {
-        return $this->hasMany(Server::class)
-                    ->orderBy('order', 'ASC');
-    }
-
-    /**
-     * Has many relationship.
-     *
      * @return Deployment
      */
     public function deployments()
@@ -272,21 +257,12 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship.
      *
-     * @return SharedFile
+     * @return Hook
      */
-    public function notifySlacks()
+    public function hooks()
     {
-        return $this->hasMany(NotifySlack::class);
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return SharedFile
-     */
-    public function notifyEmails()
-    {
-        return $this->hasMany(NotifyEmail::class);
+        return $this->hasMany(Hook::class)
+                    ->orderBy('name');
     }
 
     /**

@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Bus\Jobs\SetupProject;
+use Fixhub\Bus\Jobs\SetupProjectJob;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Models\Key;
@@ -97,18 +97,48 @@ class ProjectController extends Controller
             $template_id = array_pull($fields, 'template_id');
         }
 
+        $skeleton = DeployTemplate::find($template_id);
+
         $project = Project::create($fields);
-
-        $template = DeployTemplate::find($template_id);
-
-        if ($template) {
-            dispatch(new SetupProject(
-                $project,
-                $template
-            ));
-        }
+        
+        dispatch(new SetupProjectJob($project, $skeleton));
 
         return $project;
+    }
+
+    /**
+     * Clone a new project based on skeleton.
+     *
+     * @param int $skeleton_id
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function clone($skeleton_id, Request $request)
+    {
+        $skeleton = Project::findOrFail($skeleton_id);
+
+        $fields = $request->only('name', 'type');
+        $type = array_pull($fields, 'type');
+
+        if (empty($fields['name'])) {
+            $fields['name'] = $skeleton->name . '_Clone';
+        }
+
+        if ($type == 'project') {
+            $fields['group_id'] = $skeleton->group_id;
+            $fields['key_id'] = $skeleton->key_id;
+            $fields['repository'] = $skeleton->repository;
+            $target = Project::create($fields);
+        } else {
+            $target = DeployTemplate::create($fields);
+        }
+
+        dispatch(new SetupProjectJob($target, $skeleton));
+
+        return redirect()->route($type == 'template' ? 'admin.templates.show' : 'projects', [
+            'id' => $target->id,
+        ]);
     }
 
     /**

@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Profile;
 
-use Fixhub\Bus\Events\EmailChangeRequested;
+use Fixhub\Bus\Events\EmailChangeRequestedEvent;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProfileRequest;
 use Fixhub\Http\Requests\StoreUserSettingsRequest;
@@ -76,10 +76,20 @@ class ProfileController extends Controller
      */
     public function update(StoreProfileRequest $request)
     {
-        Auth::user()->update($request->only(
+        $fields = $request->only(
             'nickname',
             'password'
-        ));
+        );
+
+        if (array_key_exists('password', $fields)) {
+            if (empty($fields['password'])) {
+                unset($fields['password']);
+            } else {
+                $fields['password'] = bcrypt($fields['password']);
+            }
+        }
+
+        Auth::user()->update($fields);
 
         return redirect()->to('/');
     }
@@ -110,7 +120,7 @@ class ProfileController extends Controller
      */
     public function requestEmail(Dispatcher $dispatcher)
     {
-        $dispatcher->dispatch(new EmailChangeRequested(Auth::user()));
+        $dispatcher->dispatch(new EmailChangeRequestedEvent(Auth::user()));
 
         return 'success';
     }
@@ -210,7 +220,7 @@ class ProfileController extends Controller
      */
     public function avatar(Request $request)
     {
-        $path   = $request->get('path', '/upload/picture.jpg');
+        $path   = $request->get('path', '/img/cropper.jpg');
         $image  = Image::make(public_path() . $path);
         $rotate = $request->get('dataRotate');
 
