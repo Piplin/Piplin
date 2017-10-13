@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Fixhub\Bus\Jobs\UpdateGitReferencesJob;
 use Fixhub\Models\Project;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
-use Fixhub\Services\Scripts\Runner as Process;  
+use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
