@@ -232,11 +232,12 @@ class SetupDeploymentJob extends Job
             'deployment_id' => $this->deployment->id,
         ]);
 
-        foreach ($this->deployment->environments as $environment) {
-            foreach ($environment->servers->where('enabled', true) as $server) {
+        $servers = $this->deployment->environments->pluck('servers')->flatten();
+
+        foreach ($servers as $server) {
                 // If command is null it is preparing one of the 4 default steps so
                 // skip servers which shouldn't have the code deployed
-                if (!$server->deploy_code) {
+                if (!$server->enabled || !$server->deploy_code) {
                     continue;
                 }
 
@@ -244,7 +245,6 @@ class SetupDeploymentJob extends Job
                     'server_id'      => $server->id,
                     'deploy_step_id' => $step->id,
                 ]);
-            }
         }
     }
 }
