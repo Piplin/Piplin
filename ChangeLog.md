@@ -1,11 +1,24 @@
-Version 0.2.3 (unreleased)
+Version 0.2.3 (2017-10-13)
 --------------------------
 
 新功能:
 
+* 实现操作日志功能
+* 静态资源管理由原来的gulp全面转为webpack
+
 改进:
 
+* 改进排序组件拖拽icon显示逻辑
+* 优化php artisan app:reset实现方式
+* 删除servers表的project_id字段
+* 项目详情页相关数据实现按需加载
+* 美化控制台页面展现 - 感谢 @VoganWong
+* 新增admin layout，优化后台展现形式
+* 对模板和静态资源的结构进行重构
+
 Bug修复:
+
+* 修复服务器连通状态测试报错的问题
 
 
 Version 0.2.2 (2017-10-01)
