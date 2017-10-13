@@ -112,7 +112,7 @@ class AdminComposer
         // Project collection
         if ($name == 'admin.projects.index') {
             $subMenu = $this->getSubMenu('project', 'projects');
-        } elseif ($name == 'admin.groups.index') {
+        } elseif (in_array($name, ['admin.groups.index', 'admin.groups.show'])) {
             $subMenu = $this->getSubMenu('project', 'groups');
         } elseif (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
             $subMenu = $this->getSubMenu('project', 'templates');

@@ -26,7 +26,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-success" title="{{ trans('groups.create') }}" data-toggle="modal" data-target="#group"><span class="ion ion-plus"></span> {{ trans('groups.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('groups.create') }}" data-toggle="modal" data-target="#group"><span class="ion ion-plus"></span> {{ trans('groups.create') }}</button>
 </div>
 @stop
 
@@ -38,7 +38,7 @@
     app.Groups.add(groups.data);
 
     @if(isset($action) && $action == 'create')
-    $('button.btn.btn-success').trigger('click');
+    $('button.btn.btn-primary').trigger('click');
     @endif
 </script>
 @endpush

@@ -66,9 +66,6 @@ class ProjectGroupController extends Controller
                     ->get();
 
         return view('admin.groups.show', [
-            'breadcrumb'   => [
-                ['url' => route('admin.groups.index'), 'label' => trans('groups.manage')],
-            ],
             'title'        => $group->name,
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view

@@ -30,7 +30,7 @@ use Illuminate\Support\ServiceProvider;
 class ComposerServiceProvider extends ServiceProvider
 {
     public $composers = [
-        AdminComposer::class       => ['admin.*.index', 'admin.templates.show'],
+        AdminComposer::class       => ['admin.*.index', 'admin.templates.show', 'admin.groups.show'],
         AppComposer::class         => '*',
         CurrentUserComposer::class => '*',
         DashboardComposer::class   => ['dashboard.index'],
