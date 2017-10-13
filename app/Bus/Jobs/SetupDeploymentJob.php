@@ -235,13 +235,13 @@ class SetupDeploymentJob extends Job
         $servers = $this->deployment->environments->pluck('servers')->flatten();
 
         foreach ($servers as $server) {
-                // If command is null it is preparing one of the 4 default steps so
-                // skip servers which shouldn't have the code deployed
-                if (!$server->enabled || !$server->deploy_code) {
-                    continue;
-                }
+            // If command is null it is preparing one of the 4 default steps so
+            // skip servers which shouldn't have the code deployed
+            if (!$server->enabled || !$server->deploy_code) {
+                continue;
+            }
 
-                ServerLog::create([
+            ServerLog::create([
                     'server_id'      => $server->id,
                     'deploy_step_id' => $step->id,
                 ]);
