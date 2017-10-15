@@ -242,6 +242,7 @@ var app = app || {};
         },
         render: function () {
             var data = this.model.toJSON();
+            data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');
 
             this.$el.html(this.template(data));
 

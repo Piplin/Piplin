@@ -51,7 +51,7 @@ mix
         `${paths.jquery}/dist/jquery.min.js`,
         `${paths.jquery_sortable}/source/js/jquery-sortable-min.js`,
         `${paths.underscore}/underscore-min.js`,
-        `${paths.moment}/min/moment.min.js`,
+        `${paths.moment}/min/moment-with-locales.min.js`,
         `${paths.bootstrap_sass}/assets/javascripts/bootstrap.min.js`,
         `${paths.select2}/dist/js/select2.min.js`,
         `${paths.raphael}/raphael.min.js`,

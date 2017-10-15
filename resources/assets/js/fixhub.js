@@ -26,8 +26,11 @@ var app = app || {};
     if (window.location.href.match(/login|password/) != null) {
         return;
     }
+    var locale = $('meta[name="locale"]').attr('content');
 
-    Lang.setLocale($('meta[name="locale"]').attr('content'));
+    Lang.setLocale(locale);
+
+    moment.locale(locale);
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -197,7 +200,7 @@ var app = app || {};
             }
 
             $('td:first a', project).text(data.model.name);
-            $('td:nth-child(3)', project).text(moment(data.model.last_run).format('MM-DD HH:mm'));
+            $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
             status.attr('class', 'label label-' + label_class)
             $('i', status).attr('class', 'ion ion-' + icon_class);
             $('span', status).text(label);
@@ -222,7 +225,7 @@ var app = app || {};
 
     function updateTodoBar(data) {
 
-        data.model.time = moment(data.model.started_at).format('HH:mm:ss');
+        data.model.time = moment(data.model.started_at).fromNow();
         data.model.url = '/deployment/' + data.model.id;
 
         $('#deployment_info_' + data.model.id).remove();

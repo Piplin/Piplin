@@ -152,6 +152,8 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->deployment->project->last_run = $this->deployment->finished_at;
         $this->deployment->project->save();
 
+         $this->updateEnvironmentsInfo();
+
         // Notify user or others the deployment has been finished
         event(new DeployFinishedEvent($this->deployment));
 
@@ -613,5 +615,17 @@ class DeployProjectJob extends Job implements ShouldQueue
         }
 
         return $tokens;
+    }
+
+    /**
+     * Update the status and last run time of the deployment enviroments.
+     */
+    private function updateEnvironmentsInfo()
+    {
+        foreach ($this->deployment->environments as $environment) {
+            $environment->last_run = $this->project->last_run;
+            $environment->status = $this->project->status;
+            $environment->save();
+        }
     }
 }

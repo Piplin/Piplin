@@ -18,6 +18,7 @@ return [
     'name_placeholder'    => 'Staging',
     'servers'             => 'Servers',
     'description'         => 'Description',
+    'deployed'            => 'Deployed',
     'desc_placeholder'    => 'Please describe briefly the use of this environment',
     'warning'             => 'The variable could not be saved, please check the form below.',
     'none'                => 'There are currently no environments setup',

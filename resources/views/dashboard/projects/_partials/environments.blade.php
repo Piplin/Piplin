@@ -17,6 +17,7 @@
                     <th>{{ trans('environments.name') }}</th>
                     <th>{{ trans('environments.default_on') }}</th>
                     <th>{{ trans('environments.servers') }}</th>
+                    <th>{{ trans('environments.deployed') }}</th>
                     <th>{{ trans('environments.description') }}</th>
                     <th>&nbsp;</th>
                 </tr>
@@ -39,6 +40,7 @@
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td><%- server_count %></td>
+        <td><%- last_run %></td>
         <td><%- description %></td>
         <td>
             <div class="btn-group pull-right">
