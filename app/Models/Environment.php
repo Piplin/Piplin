@@ -73,6 +73,18 @@ class Environment extends Model
     }
 
     /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function deployments()
+    {
+        return $this->belongsToMany(Deployment::class)
+                    ->orderBy('id', 'DESC');
+    }
+
+    /**
      * Define a accessor for the count of projects.
      *
      * @return int

@@ -33,7 +33,7 @@ Route::group([
             'uses' => 'CommandController@index',
         ]);
 
-        Route::get('projects/{id}/environments/{environment_id}', [
+        Route::get('projects/{id}/environments/{environment_id}/{tab?}', [
             'as'   => 'environments.show',
             'uses' => 'EnvironmentController@show',
         ]);
