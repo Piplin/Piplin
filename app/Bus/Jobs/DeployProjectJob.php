@@ -152,7 +152,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->deployment->project->last_run = $this->deployment->finished_at;
         $this->deployment->project->save();
 
-         $this->updateEnvironmentsInfo();
+        $this->updateEnvironmentsInfo();
 
         // Notify user or others the deployment has been finished
         event(new DeployFinishedEvent($this->deployment));
