@@ -66,6 +66,7 @@
                     <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
                     <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('projects.integrations') }}</a></li>
+                    <li {!! $tab != 'members' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'members']) }}"><span class="ion ion-ios-people"></span> {{ trans('members.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -80,6 +81,8 @@
                             @include('dashboard.projects._partials.shared_files')
                         @elseif($tab == 'hooks')
                             @include('dashboard.projects._partials.hooks')
+                        @elseif($tab == 'members')
+                            @include('dashboard.projects._partials.members')
                         @else
                             @include('dashboard.projects._partials.deployments')
                         @endif
@@ -99,6 +102,8 @@
         @include('dashboard.projects._dialogs.shared_files')
     @elseif($tab == 'hooks')
         @include('dashboard.projects._dialogs.hook')
+    @elseif($tab == 'members')
+        @include('dashboard.projects._dialogs.member')
     @endif
 
     @include('dashboard.projects._dialogs.key')
@@ -136,6 +141,10 @@
         @elseif($tab == 'hooks')
         new app.HooksTab();
         app.Hooks.add({!! $hooks->toJson() !!});
+
+        @elseif($tab == 'members')
+        new app.MembersTab();
+        app.Members.add({!! $members !!});
         @endif
 
         app.project_id = {{ $project->id }};

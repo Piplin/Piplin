@@ -64,6 +64,8 @@ class ProjectController extends Controller
             $data['sharedFiles'] = $project->sharedFiles;
         } elseif ($tab == 'hooks') {
             $data['hooks'] = $project->hooks;
+        } elseif ($tab == 'members') {
+            $data['members'] = $project->members->toJson();
         }
 
         return view('dashboard.projects.show', $data);

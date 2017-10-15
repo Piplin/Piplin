@@ -234,6 +234,16 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    public function members()
+    {
+        return $this->belongsToMany(User::class)->withPivot('level');
+    }
+
+    /**
      * Belongs to relationship.
      *
      * @return Key
