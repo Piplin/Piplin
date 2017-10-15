@@ -20,12 +20,12 @@ var app = app || {};
         }
     });
 
-    $('#reason').on('show.bs.modal', function (event) {
+    $('#deploy').on('show.bs.modal', function (event) {
         var modal = $(this);
         $('.callout-danger', modal).hide();
     });
 
-    $('#reason button.btn-save').on('click', function (event) {
+    $('#deploy button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');

@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fa fa-bullhorn"></i> <span>{{ trans('hooks.create') }}</span></h4>
+                <h4 class="modal-title"><i class="ion ion-plus"></i> <span>{{ trans('hooks.create') }}</span></h4>
             </div>
             <form role="form">
                 <input type="hidden" id="hook_id" name="id" />
@@ -11,11 +11,11 @@
                 <input type="hidden" name="type" id="hook_type" value="" />
                 <div class="modal-body">
                     <div class="callout callout-danger">
-                        <i class="icon fa fa-warning"></i> {{ trans('hooks.warning') }}
+                        <i class="icon ion ion-alert"></i> {{ trans('hooks.warning') }}
                     </div>
 
                     <div class="callout callout-warning">
-                        <h4><i class="icon fa fa-ban"></i> {{ trans('hooks.not_configured_title') }}</h4>
+                        <h4><i class="icon ion ion-eye-disabled"></i> {{ trans('hooks.not_configured_title') }}</h4>
                         {{ trans('hooks.not_configured') }}
                     </div>
 
@@ -36,9 +36,9 @@
                         </div>
                     </div>
 
-                    @include('dashboard.projects.dialogs.hooks.slack')
-                    @include('dashboard.projects.dialogs.hooks.mail')
-                    @include('dashboard.projects.dialogs.hooks.custom')
+                    @include('dashboard.projects._dialogs.hooks.slack')
+                    @include('dashboard.projects._dialogs.hooks.mail')
+                    @include('dashboard.projects._dialogs.hooks.custom')
 
                     <div class="hook-config form-group" id="hook-triggers">
                         <label>{{ trans('hooks.triggers') }}</label>
@@ -67,7 +67,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary pull-left btn-save"><i class="fa fa-save"></i> {{ trans('app.save') }}</button>
+                    <div class="btn-group pull-left">
+                        <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -1,4 +1,4 @@
-<div class="modal fade" id="reason">
+<div class="modal fade" id="deploy">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,7 +111,10 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary pull-left btn-save">{{ trans('projects.deploy') }}</button>
+                    <div class="btn-group pull-left">
+                        <button type="submit" class="btn btn-primary btn-save">{{ trans('projects.deploy') }}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
+                    </div>
                 </div>
             </form>
         </div>

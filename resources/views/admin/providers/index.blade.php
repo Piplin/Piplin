@@ -23,7 +23,7 @@
     {!! $providers_raw->render() !!}
 </div>
 
-@include('admin.providers.dialog')
+@include('admin._dialogs.provider')
 @stop
 
 @section('right-buttons')

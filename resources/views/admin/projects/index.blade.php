@@ -24,7 +24,7 @@
     {!! $projects_raw->render() !!}
 </div>
 
-@include('admin.projects.dialog')
+@include('admin._dialogs.project')
 @stop
 
 @section('right-buttons')

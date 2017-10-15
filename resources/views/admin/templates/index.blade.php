@@ -25,7 +25,7 @@
     {!! $templates_raw->render() !!}
 </div>
 
-@include('admin.templates.dialog')
+@include('admin._dialogs.template')
 @stop
 
 @section('right-buttons')

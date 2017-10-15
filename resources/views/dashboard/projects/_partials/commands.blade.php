@@ -33,4 +33,4 @@
     </div>
 </div>
 
-@include('dashboard.projects.dialogs.incoming_webhook')
+@include('dashboard.projects._dialogs.incoming_webhook')

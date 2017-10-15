@@ -21,7 +21,7 @@
     </table>
     {!! $groups->render() !!}
 </div>
-@include('admin.groups.dialog')
+@include('admin._dialogs.group')
 @stop
 
 @section('right-buttons')

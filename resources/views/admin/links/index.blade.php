@@ -22,7 +22,7 @@
     {!! $links_raw->render() !!}
 </div>
 
-@include('admin.links.dialog')
+@include('admin._dialogs.link')
 @stop
 
 @section('right-buttons')

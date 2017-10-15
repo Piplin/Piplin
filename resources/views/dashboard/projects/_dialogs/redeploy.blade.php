@@ -39,7 +39,10 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary pull-left">{{ trans('projects.redeploy') }}</button>
+                    <div class="btn-group pull-left">
+                        <button type="submit" class="btn btn-primary">{{ trans('projects.redeploy') }}</button>
+                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
+                    </div>
                 </div>
             </form>
         </div>

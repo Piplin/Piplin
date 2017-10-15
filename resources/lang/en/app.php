@@ -35,6 +35,7 @@ return [
     'delete'            => 'Delete',
     'save'              => 'Save',
     'close'             => 'Close',
+    'cancel'            => 'Cancel',
     'never'             => 'Never',
     'none'              => 'None',
     'yes'               => 'Yes',

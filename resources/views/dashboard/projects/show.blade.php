@@ -89,28 +89,28 @@
         </div>
     </div>
     @if($tab == 'environments')
-        @include('dashboard.projects.dialogs.environment')
-        @include('dashboard.projects.dialogs.server')
+        @include('dashboard.projects._dialogs.environment')
+        @include('dashboard.projects._dialogs.server')
     @elseif($tab == 'commands')
-        @include('dashboard.projects.dialogs.variable')
+        @include('dashboard.projects._dialogs.variable')
     @elseif($tab == 'config-files')
-        @include('dashboard.projects.dialogs.config_files')
+        @include('dashboard.projects._dialogs.config_files')
     @elseif($tab == 'shared-files')
-        @include('dashboard.projects.dialogs.shared_files')
+        @include('dashboard.projects._dialogs.shared_files')
     @elseif($tab == 'hooks')
-        @include('dashboard.projects.dialogs.hook')
+        @include('dashboard.projects._dialogs.hook')
     @endif
 
-    @include('dashboard.projects.dialogs.key')
-    @include('dashboard.projects.dialogs.reason')
-    @include('dashboard.projects.dialogs.redeploy')
+    @include('dashboard.projects._dialogs.key')
+    @include('dashboard.projects._dialogs.deploy')
+    @include('dashboard.projects._dialogs.redeploy')
 @stop
 
 @section('right-buttons')
     <div class="pull-right">
         <button type="button" class="btn btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="ion ion-key"></span> {{ trans('keys.ssh_key') }}</button>
         @if(($current_user->isAdmin || $current_user->isOperator) || $project->need_approve)
-        <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#reason" type="button" class="btn btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="ion ion-ios-cloud-upload"></span> {{ trans('projects.deploy') }}</button>
+        <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="ion ion-ios-cloud-upload"></span> {{ trans('projects.deploy') }}</button>
         @endif
     </div>
 @stop

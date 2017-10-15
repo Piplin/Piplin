@@ -29,11 +29,11 @@
         </div>
     </div>
 
-    @include('dashboard.projects.dialogs.server')
-    @include('dashboard.projects.dialogs.variable')
-    @include('dashboard.projects.dialogs.environment')
-    @include('dashboard.projects.dialogs.shared_files')
-    @include('dashboard.projects.dialogs.config_files')
+    @include('dashboard.projects._dialogs.server')
+    @include('dashboard.projects._dialogs.variable')
+    @include('dashboard.projects._dialogs.environment')
+    @include('dashboard.projects._dialogs.shared_files')
+    @include('dashboard.projects._dialogs.config_files')
 @stop
 
 @push('javascript')

@@ -27,11 +27,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary pull-left btn-save">{{ trans('app.save') }}</button>
+                    <div class="btn-group pull-left">
+                        <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-@include('dashboard.projects.dialogs.key')
+@include('dashboard.projects._dialogs.key')

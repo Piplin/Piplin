@@ -1,7 +1,7 @@
 <div class="hook-config" id="hook-config-slack">
     <div class="form-group">
         <label for="hook_config_icon">{{ trans('hooks.icon') }}</label>
-        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="{{ trans('hooks.icon_info') }}"></i>
+        <i class="ion ion-help-circled" data-toggle="tooltip" data-placement="right" title="{{ trans('hooks.icon_info') }}"></i>
         <div class="input-group">
             <div class="input-group-addon"><i class="ion ion-image"></i></div>
             <input type="text" class="form-control" id="hook_config_icon" name="icon" placeholder=":ghost:" />

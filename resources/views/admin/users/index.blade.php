@@ -20,7 +20,7 @@
     {!! $users_raw->render() !!}
 </div>
 
-@include('admin.users.dialog')
+@include('admin._dialogs.user')
 @stop
 
 @section('right-buttons')

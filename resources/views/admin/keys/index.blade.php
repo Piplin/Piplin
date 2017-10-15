@@ -21,7 +21,7 @@
     {!! $keys_raw->render() !!}
 </div>
 
-@include('admin.keys.dialog')
+@include('admin._dialogs.key')
 @stop
 
 @section('right-buttons')

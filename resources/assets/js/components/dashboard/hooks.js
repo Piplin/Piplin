@@ -75,7 +75,7 @@ var app = app || {};
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.addClass('ion-load-c fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -87,12 +87,12 @@ var app = app || {};
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -104,7 +104,7 @@ var app = app || {};
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.addClass('ion-load-c fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -138,7 +138,7 @@ var app = app || {};
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -166,7 +166,7 @@ var app = app || {};
                     }
                 });
 
-                icon.removeClass('ion-refresh ion-spin');
+                icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }

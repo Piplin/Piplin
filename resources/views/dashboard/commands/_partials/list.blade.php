@@ -3,7 +3,7 @@
         <div class="box-header with-border">
             <h3 class="box-title"><i class="ion {{ $step == 'before' ? 'ion-arrow-left-a' : 'ion-arrow-right-a' }}"></i> {{ trans('commands.'.$step) }}</h3>
             <div class="box-tools pull-right">
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-success" title="{{ trans('commands.create') }}" data-step="{{ $action }}" data-toggle="modal" data-target="#command"><i class="ion ion-plus"></i> {{ trans('commands.create') }}</button>
+                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('commands.create') }}" data-step="{{ $action }}" data-toggle="modal" data-target="#command"><i class="ion ion-plus"></i> {{ trans('commands.create') }}</button>
             </div>
         </div>
 

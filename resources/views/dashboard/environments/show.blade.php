@@ -4,7 +4,7 @@
     <div class="row">
         @include('dashboard.projects._partials.servers')
     </div>
-    @include('dashboard.projects.dialogs.server')
+    @include('dashboard.projects._dialogs.server')
 @stop
 
 @push('javascript')
