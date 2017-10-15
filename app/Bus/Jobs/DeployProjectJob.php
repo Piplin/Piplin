@@ -105,13 +105,13 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->deployment->status     = Deployment::DEPLOYING;
         $this->deployment->save();
 
-        $this->deployment->project->status = Project::DEPLOYING;
-        $this->deployment->project->save();
+        $this->project->status = Project::DEPLOYING;
+        $this->project->save();
 
         $this->private_key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($this->private_key, $this->deployment->project->key->private_key);
+        file_put_contents($this->private_key, $this->project->key->private_key);
 
-        $this->release_archive = $this->deployment->project_id . '_' . $this->deployment->release_id . '.tar.gz';
+        $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
         try {
             $this->createReleaseArchive();
@@ -121,10 +121,10 @@ class DeployProjectJob extends Job implements ShouldQueue
             }
 
             $this->deployment->status          = Deployment::COMPLETED;
-            $this->deployment->project->status = Project::FINISHED;
+            $this->project->status = Project::FINISHED;
         } catch (\Exception $error) {
             $this->deployment->status          = Deployment::FAILED;
-            $this->deployment->project->status = Project::FAILED;
+            $this->project->status = Project::FAILED;
 
             if ($error->getMessage() === 'Cancelled') {
                 $this->deployment->status = Deployment::ABORTED;
@@ -138,7 +138,7 @@ class DeployProjectJob extends Job implements ShouldQueue
                     $this->cleanupDeployment();
                 } else {
                     $this->deployment->status          = Deployment::COMPLETED_WITH_ERRORS;
-                    $this->deployment->project->status = Project::FINISHED;
+                    $this->project->status = Project::FINISHED;
                 }
             }
         }
@@ -149,8 +149,8 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $this->deployment->save();
 
-        $this->deployment->project->last_run = $this->deployment->finished_at;
-        $this->deployment->project->save();
+        $this->project->last_run = $this->deployment->finished_at;
+        $this->project->save();
 
         $this->updateEnvironmentsInfo();
 
@@ -210,7 +210,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     private function createReleaseArchive()
     {
         $process = new Process('deploy.CreateReleaseArchive', [
-            'mirror_path'     => $this->deployment->project->mirrorPath(),
+            'mirror_path'     => $this->project->mirrorPath(),
             'sha'             => $this->deployment->commit,
             'release_archive' => storage_path('app/' . $this->release_archive),
         ]);
@@ -356,7 +356,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         if ($step->stage === Stage::DO_CLONE) {
             $this->sendFile($local_archive, $remote_archive, $log);
         } elseif ($step->stage === Stage::DO_INSTALL) {
-            foreach ($this->deployment->project->configFiles as $file) {
+            foreach ($this->project->configFiles as $file) {
                 $this->sendFileFromString($latest_release_dir . '/' . $file->path, $file->content, $log);
             }
         }
@@ -374,7 +374,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         // Generate the export
         $exports = '';
-        foreach ($this->deployment->project->variables as $variable) {
+        foreach ($this->project->variables as $variable) {
             $key   = $variable->name;
             $value = $variable->value;
 
@@ -506,7 +506,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function configurationFileCommands($release_dir)
     {
-        if (!$this->deployment->project->configFiles->count()) {
+        if (!$this->project->configFiles->count()) {
             return '';
         }
 
@@ -514,7 +514,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $script = '';
 
-        foreach ($this->deployment->project->configFiles as $file) {
+        foreach ($this->project->configFiles as $file) {
             $script .= $parser->parseFile('deploy.ConfigurationFile', [
                 'path' => $release_dir . '/' . $file->path,
             ]);
@@ -531,7 +531,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function sharedFileCommands($release_dir, $shared_dir)
     {
-        if (!$this->deployment->project->sharedFiles->count()) {
+        if (!$this->project->sharedFiles->count()) {
             return '';
         }
 
@@ -539,7 +539,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $script = '';
 
-        foreach ($this->deployment->project->sharedFiles as $filecfg) {
+        foreach ($this->project->sharedFiles as $filecfg) {
             $pathinfo = pathinfo($filecfg->file);
             $template = 'File';
 
@@ -608,7 +608,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         if (!$step->isCustom()) {
             $tokens = array_merge($tokens, [
                 'remote_archive' => $remote_archive,
-                'builds_to_keep' => $this->deployment->project->builds_to_keep + 1,
+                'builds_to_keep' => $this->project->builds_to_keep + 1,
                 'shared_path'    => $release_shared_dir,
                 'releases_path'  => $releases_dir,
             ]);
