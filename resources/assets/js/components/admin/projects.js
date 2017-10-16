@@ -36,7 +36,9 @@
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_group_id').val($("#project_group_id option:selected").val());
+            $('#project_group_id').select2(Fixhub.select2_otpions)
+                                    .val($("#project_group_id option:selected").val())
+                                    .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
             $('#project_builds_to_keep').val(10);
             $('#project_url').val('');
@@ -229,9 +231,9 @@
     Fixhub.ProjectView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editProject',
-            'click .btn-clone': 'cloneProject',
-            'click .btn-trash': 'trashProject'
+            'click .btn-edit' : 'edit',
+            'click .btn-clone': 'clone',
+            'click .btn-trash': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -248,12 +250,15 @@
 
             return this;
         },
-        editProject: function() {
+        edit: function() {
             $('#project_id').val(this.model.id);
             $('#project_name').val(this.model.get('name'));
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
-            $('#project_group_id').val(this.model.get('group_id'));
+            //$('#project_group_id').val(this.model.get('group_id'));
+            $('#project_group_id').select2(Fixhub.select2_otpions)
+                                    .val(this.model.get('group_id'))
+                                    .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));
             $('#project_url').val(this.model.get('url'));
@@ -261,11 +266,11 @@
             $('#project_allow_other_branch').prop('checked', (this.model.get('allow_other_branch') === true));
             $('#project_need_approve').prop('checked', (this.model.get('need_approve') === true));
         },
-        cloneProject: function() {
+        clone: function() {
             $('#skeleton_id').val(this.model.id);
             $('#project_clone_name').val(this.model.get('name') + '_Clone');
         },
-        trashProject: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade project-trash');

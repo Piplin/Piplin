@@ -19,7 +19,8 @@
         } else {
             $('#user_id').val('');
             $('#user_name').val('');
-            $('#user_level').val($("#user_level option:first").val());
+            //$('#user_level').val($("#user_level option:first").val());
+            $('#user_level').select2(Fixhub.select2_otpions);
             $('#user_nickname').val('');
             $('#user_email').val('');
             $('#user_password').val('');
@@ -187,8 +188,8 @@
     Fixhub.UserView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editUser',
-            'click .btn-delete': 'trashUser'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -205,14 +206,17 @@
 
             return this;
         },
-        editUser: function() {
+        edit: function() {
             $('#user_id').val(this.model.id);
             $('#user_name').val(this.model.get('name'));
-            $('#user_level').val(this.model.get('level'));
+            //$('#user_level').val(this.model.get('level'));
+            $('#user_level').select2(Fixhub.select2_otpions)
+                                .val(this.model.get('level'))
+                                .trigger('change');
             $('#user_nickname').val(this.model.get('nickname'));
             $('#user_email').val(this.model.get('email'));
         },
-        trashUser: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade user-trash');

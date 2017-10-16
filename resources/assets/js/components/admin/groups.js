@@ -217,8 +217,8 @@
     Fixhub.GroupView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editGroup',
-            'click .btn-delete': 'trashGroup'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -233,11 +233,11 @@
 
             return this;
         },
-        editGroup: function() {
+        edit: function() {
             $('#group_id').val(this.model.id);
             $('#group_name').val(this.model.get('name'));
         },
-        trashGroup: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade group-trash');

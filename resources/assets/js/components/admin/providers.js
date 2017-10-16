@@ -232,8 +232,8 @@
     Fixhub.ProviderView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editProvider',
-            'click .btn-delete': 'trashProvider'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -248,7 +248,7 @@
 
             return this;
         },
-        editProvider: function() {
+        edit: function() {
             $('#provider_id').val(this.model.id);
             $('#provider_name').val(this.model.get('name'));
             $('#provider_slug').val(this.model.get('slug'));
@@ -256,7 +256,7 @@
             $('#provider_description').val(this.model.get('description'));
 
         },
-        trashProvider: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade provider-trash');

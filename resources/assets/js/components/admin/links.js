@@ -230,8 +230,8 @@
     Fixhub.LinkView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editLink',
-            'click .btn-delete': 'trashLink'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -246,14 +246,14 @@
 
             return this;
         },
-        editLink: function() {
+        edit: function() {
             $('#link_id').val(this.model.id);
             $('#link_title').val(this.model.get('title'));
             $('#link_url').val(this.model.get('url'));
             $('#link_description').val(this.model.get('description'));
 
         },
-        trashLink: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade link-trash');
