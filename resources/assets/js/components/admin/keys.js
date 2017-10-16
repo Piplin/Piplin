@@ -121,7 +121,7 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form input, form textarea', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');

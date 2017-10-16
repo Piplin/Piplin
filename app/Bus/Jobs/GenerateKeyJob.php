@@ -85,7 +85,7 @@ class GenerateKeyJob extends Job
     private function regeneratePublicKey()
     {
         $key_file = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($key_file, $this->private_key);
+        file_put_contents($key_file, $this->key->private_key);
 
         $process = new Process('tools.RegeneratePublicSSHKey', [
             'key_file' => $key_file,

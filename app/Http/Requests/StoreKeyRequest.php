@@ -26,7 +26,8 @@ class StoreKeyRequest extends Request
     public function rules()
     {
         $rules = [
-            'name' => 'required|max:255|unique:keys,name',
+            'name'        => 'required|max:255|unique:keys,name',
+            'private_key' => 'nullable|sshkey',
         ];
 
         // On edit add the group ID to the rules
