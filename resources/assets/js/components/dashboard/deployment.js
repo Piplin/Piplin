@@ -164,16 +164,16 @@ var app = app || {};
                         started_at: data.started_at ? data.started_at : false,
                         finished_at: data.finished_at ? data.finished_at : false
                     });
-
-                    // FIXME: If cancelled update all other deployments straight away
-                    // FIXME: If completed fake making the next model "running" so it looks responsive
                 }
             });
 
             app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    if (data.model.repo_failure) {
-                        $('#repository_error').show();
+                    if (data.model.deploy_failure) {
+                        $('#deploy_status').find('p').text(data.model.output);
+                        $('#deploy_status').removeClass('hide').show();
+                    } else {
+                        $('#deploy_status').hide();
                     }
                 }
             });

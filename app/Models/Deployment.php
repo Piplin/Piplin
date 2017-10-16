@@ -75,7 +75,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $appends = ['project_name', 'deployer_name', 'commit_url',
-                          'short_commit', 'branch_url', 'repo_failure', ];
+                          'short_commit', 'branch_url', 'deploy_failure', ];
 
     /**
      * The fields which should be tried as Carbon instances.
@@ -368,14 +368,13 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Checks whether the repository failed to load.
+     * Checks whether the deployment failed.
      *
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
-    public function getRepoFailureAttribute()
+    public function getDeployFailureAttribute()
     {
-        return ($this->commit === self::LOADING && $this->status === self::FAILED);
+        return ($this->output !== null && $this->status === self::FAILED);
     }
 
     /**

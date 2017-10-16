@@ -96,11 +96,6 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->dispatch(new UpdateGitMirrorJob($this->project));
-
-        // If the build has been manually triggered get the committer info from the repo
-        $this->updateRepoInfo();
-
         $this->deployment->started_at = Carbon::now();
         $this->deployment->status     = Deployment::DEPLOYING;
         $this->deployment->save();
@@ -114,6 +109,10 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
         try {
+            $this->dispatch(new UpdateGitMirrorJob($this->project));
+            // If the build has been manually triggered get the committer info from the repo
+            $this->updateRepoInfo();
+
             $this->createReleaseArchive();
 
             foreach ($this->deployment->steps as $step) {
@@ -180,7 +179,8 @@ class DeployProjectJob extends Job implements ShouldQueue
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException('Could not get repository info - ' . $process->getErrorOutput());
+            $this->deployment->output = $process->getErrorOutput();
+            throw new \RuntimeException('Could not get repository info');
         }
 
         $git_info = $process->getOutput();
@@ -200,8 +200,6 @@ class DeployProjectJob extends Job implements ShouldQueue
                 $this->deployment->user_id = $user->id;
             }
         }
-
-        //$this->deployment->save();
     }
 
     /**

@@ -19,16 +19,13 @@
         <div class="box-body">
             <p><strong>{{ trans('deployments.reason') }}</strong>: {{ $deployment->reason }}</p>
             <p><strong>{{ trans('deployments.environment') }}</strong>: {{ $deployment->environment_names }}</p>
+            <div class="callout callout-danger {{ $deployment->deploy_failure ? null : 'hide' }}" id="deploy_status">
+                <h4><i class="icon ion ion-close"></i> {{ trans('deployments.deploy_failure') }}</h4>
+                <p>{{ $deployment->output }}</p>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12" id="{{ $deployment->repo_failure ? '' : 'repository_error' }}">
-            <div class="callout callout-danger">
-                <h4><i class="icon ion ion-close"></i> {{ trans('deployments.repo_failure_head') }}</h4>
-                <p>{{ trans('deployments.repo_failure') }}</p>
-            </div>
-        </div>
-
         @foreach($deployment->steps as $index => $step)
         <div class="col-xs-12">
             <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
