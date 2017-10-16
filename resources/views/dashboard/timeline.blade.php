@@ -25,7 +25,7 @@
                         <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="ion ion-social-codepen-outline"></i> {{ $deployment->project->group_name }}/{{ $deployment->project->name }}</a>
                         @endif
                     </span>
-                    <span class="pull-right">
+                    <span class="pull-right text-muted">
                     @if($deployment->committer)<i class="ion ion-merge"></i> {{ $deployment->committer }} @endif - {{ $deployment->branch }}/{{ $deployment->short_commit }}
                     </span>
                 </div>

@@ -65,7 +65,11 @@
         }
       }
       // Item body and footer
-      > .timeline-body, > .timeline-footer {
+      > .timeline-body {
+        padding: 10px;
+        border-bottom: 1px solid $box-border-color;
+      }
+      > .timeline-footer {
         padding: 10px;
       }
 
