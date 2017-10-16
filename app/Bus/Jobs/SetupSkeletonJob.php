@@ -21,7 +21,7 @@ use Fixhub\Models\Variable;
 /**
  * A class to handle cloning between template and project.
  */
-class SetupProjectJob extends Job
+class SetupSkeletonJob extends Job
 {
     /**
     * @var mixed
@@ -39,7 +39,7 @@ class SetupProjectJob extends Job
      * @param mixed $target
      * @param mixed $skeleton
      *
-     * @return SetupProjectJob
+     * @return SetupSkeletonJob
      */
     public function __construct($target, $skeleton)
     {

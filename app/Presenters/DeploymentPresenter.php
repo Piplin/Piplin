@@ -69,6 +69,16 @@ class DeploymentPresenter extends BasePresenter
     }
 
     /**
+     * Gets the formatted deployment reason.
+     *
+     * @return string
+     */
+    public function formatted_reason()
+    {
+        return nl2br($this->wrappedObject->reason);
+    }
+
+    /**
      * Gets the IDs of the optional commands which were included in the deployments, for use in a data attribute.
      *
      * @return string

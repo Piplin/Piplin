@@ -11,8 +11,8 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new app.CommandsTab();
-        app.Commands.add({!! $commands !!});
+        new Fixhub.CommandsTab();
+        Fixhub.Commands.add({!! $commands !!});
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

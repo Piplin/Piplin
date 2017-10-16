@@ -1,4 +1,250 @@
-var app = app || {};
+(function ($) {
+    $('#group_list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('group-id'));
+            });
+
+            $.ajax({
+                url: '/admin/groups/reorder',
+                method: 'POST',
+                data: {
+                    groups: ids
+                }
+            });
+        }
+    });
+
+    $('#group').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('groups.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('groups.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#group_id').val('');
+            $('#group_name').val('');
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.group-trash button.btn-delete','click', function (event) {
+
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.addClass('ion-refresh fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var group = Fixhub.Groups.get($('#model_id').val());
+
+        group.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            },
+            error: function() {
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#group button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.addClass('ion-refresh fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var group_id = $('#group_id').val();
+
+        if (group_id) {
+            var group = Fixhub.Groups.get(group_id);
+        } else {
+            var group = new Fixhub.Group();
+        }
+
+        group.save({
+            name: $('#group_name').val()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                if (!group_id) {
+                    Fixhub.Groups.add(response);
+                }
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Fixhub.Group = Backbone.Model.extend({
+        urlRoot: '/admin/groups',
+        initialize: function() {
+
+        }
+    });
+
+    var Groups = Backbone.Collection.extend({
+        model: Fixhub.Group
+    });
+
+    Fixhub.Groups = new Groups();
+
+    Fixhub.GroupsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#group_list tbody');
+
+            $('#group_list').hide();
+            $('#no_groups').show();
+
+            this.listenTo(Fixhub.Groups, 'add', this.addOne);
+            this.listenTo(Fixhub.Groups, 'reset', this.addAll);
+            this.listenTo(Fixhub.Groups, 'remove', this.addAll);
+            this.listenTo(Fixhub.Groups, 'all', this.render);
+
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                $('#group_' + data.model.id).html(data.model.name);
+
+                var group = Fixhub.Groups.get(parseInt(data.model.id));
+
+                if (group) {
+                    group.set(data.model);
+                }
+            });
+
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Groups.add(data.model);
+            });
+
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var group = Fixhub.Groups.get(parseInt(data.model.id));
+
+                if (group) {
+                    Fixhub.Groups.remove(group);
+                }
+
+                $('#group_' + data.model.id).parent('li').remove();
+
+                if (parseInt(data.model.id) === parseInt(Fixhub.group_id)) {
+                    window.location.href = '/';
+                }
+            });
+        },
+        render: function () {
+            if (Fixhub.Groups.length) {
+                $('#no_groups').hide();
+                $('#group_list').show();
+            } else {
+                $('#no_groups').show();
+                $('#group_list').hide();
+            }
+        },
+        addOne: function (group) {
+
+            var view = new Fixhub.GroupView({
+                model: group
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Fixhub.Groups.each(this.addOne, this);
+        }
+    });
+
+    Fixhub.GroupView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'editGroup',
+            'click .btn-delete': 'trashGroup'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#group-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        editGroup: function() {
+            $('#group_id').val(this.model.id);
+            $('#group_name').val(this.model.get('name'));
+        },
+        trashGroup: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade group-trash');
+        }
+
+    });
+})(jQuery);
 
 (function ($) {
     var SUCCESSFUL = 0;
@@ -63,7 +309,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var provider = app.Providers.get($('#model_id').val());
+        var provider = Fixhub.Providers.get($('#model_id').val());
 
         provider.destroy({
             wait: true,
@@ -95,9 +341,9 @@ var app = app || {};
         var provider_id = $('#provider_id').val();
 
         if (provider_id) {
-            var provider = app.Providers.get(provider_id);
+            var provider = Fixhub.Providers.get(provider_id);
         } else {
-            var provider = new app.Provider();
+            var provider = new Fixhub.Provider();
         }
 
         provider.save({
@@ -116,7 +362,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!provider_id) {
-                    app.Providers.add(response);
+                    Fixhub.Providers.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -147,12 +393,12 @@ var app = app || {};
     });
 
 
-    app.Provider = Backbone.Model.extend({
+    Fixhub.Provider = Backbone.Model.extend({
         urlRoot: '/admin/providers'
     });
 
     var Providers = Backbone.Collection.extend({
-        model: app.Provider,
+        model: Fixhub.Provider,
         comparator: function(providerA, providerB) {
             if (providerA.get('name') > providerB.get('name')) {
                 return -1; // before
@@ -164,9 +410,9 @@ var app = app || {};
         }
     });
 
-    app.Providers = new Providers();
+    Fixhub.Providers = new Providers();
 
-    app.ProvidersTab = Backbone.View.extend({
+    Fixhub.ProvidersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -177,33 +423,33 @@ var app = app || {};
             $('#no_providers').show();
             $('#provider_list').hide();
 
-            this.listenTo(app.Providers, 'add', this.addOne);
-            this.listenTo(app.Providers, 'reset', this.addAll);
-            this.listenTo(app.Providers, 'remove', this.addAll);
-            this.listenTo(app.Providers, 'all', this.render);
+            this.listenTo(Fixhub.Providers, 'add', this.addOne);
+            this.listenTo(Fixhub.Providers, 'reset', this.addAll);
+            this.listenTo(Fixhub.Providers, 'remove', this.addAll);
+            this.listenTo(Fixhub.Providers, 'all', this.render);
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var provider = app.providers.get(parseInt(data.model.id));
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var provider = Fixhub.providers.get(parseInt(data.model.id));
 
                 if (provider) {
                     provider.set(data.model);
                 }
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                    app.Providers.add(data.model);
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                    Fixhub.Providers.add(data.model);
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var provider = app.Providers.get(parseInt(data.model.id));
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var provider = Fixhub.Providers.get(parseInt(data.model.id));
 
                 if (provider) {
-                    app.Providers.remove(provider);
+                    Fixhub.Providers.remove(provider);
                 }
             });
         },
         render: function () {
-            if (app.Providers.length) {
+            if (Fixhub.Providers.length) {
                 $('#no_providers').hide();
                 $('#provider_list').show();
             } else {
@@ -213,13 +459,13 @@ var app = app || {};
         },
         addOne: function (provider) {
 
-            var view = new app.ProviderView({
+            var view = new Fixhub.ProviderView({
                 model: provider
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Providers.length < 2) {
+            if (Fixhub.Providers.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -227,11 +473,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Providers.each(this.addOne, this);
+            Fixhub.Providers.each(this.addOne, this);
         }
     });
 
-    app.ProviderView = Backbone.View.extend({
+    Fixhub.ProviderView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editProvider',
@@ -265,482 +511,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-var app = app || {};
-
-(function ($) {
-    $('#user').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var modal = $(this);
-        var title = trans('users.create');
-
-        $('.btn-danger', modal).hide();
-        $('.callout-danger', modal).hide();
-        $('.existing-only', modal).hide();
-        $('.new-only', modal).hide();
-        $('.has-error', modal).removeClass('has-error');
-        $('.label-danger', modal).remove();
-
-
-        if (button.hasClass('btn-edit')) {
-            title = trans('users.edit');
-            $('.btn-danger', modal).show();
-            $('.existing-only', modal).show();
-        } else {
-            $('#user_id').val('');
-            $('#user_name').val('');
-            $('#user_level').val($("#user_level option:first").val());
-            $('#user_nickname').val('');
-            $('#user_email').val('');
-            $('#user_password').val('');
-            $('#user_password_confirmation').val('');
-
-            $('.new-only', modal).show();
-        }
-
-        modal.find('.modal-title span').text(title);
-    });
-
-    $('body').delegate('.user-trash button.btn-delete','click', function (event) {
-        var target = $(event.currentTarget);
-        var icon = target.find('i');
-        var dialog = target.parents('.modal');
-
-        icon.addClass('ion-refresh fixhub-spin');
-        dialog.find('input').attr('disabled', 'disabled');
-        $('button.close', dialog).hide();
-
-        var user = app.Users.get($('#model_id').val());
-
-        user.destroy({
-            wait: true,
-            success: function(model, response, options) {
-                dialog.modal('hide');
-                $('.callout-danger', dialog).hide();
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            },
-            error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            }
-        });
-    });
-
-    $('#user button.btn-save').on('click', function (event) {
-        var target = $(event.currentTarget);
-        var icon = target.find('i');
-        var dialog = target.parents('.modal');
-
-        icon.addClass('ion-refresh fixhub-spin');
-        dialog.find('input').attr('disabled', 'disabled');
-        $('button.close', dialog).hide();
-
-        var user_id = $('#user_id').val();
-
-        if (user_id) {
-            var user = app.Users.get(user_id);
-        } else {
-            var user = new app.User();
-        }
-
-        user.save({
-            name:                  $('#user_name').val(),
-            level:                 $('#user_level').val(),
-            nickname:              $('#user_nickname').val(),
-            email:                 $('#user_email').val(),
-            password:              $('#user_password').val(),
-            password_confirmation: $('#user_password_confirmation').val()
-        }, {
-            wait: true,
-            success: function(model, response, options) {
-                dialog.modal('hide');
-                $('.callout-danger', dialog).hide();
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-
-                if (!user_id) {
-                    app.Users.add(response);
-                }
-            },
-            error: function(model, response, options) {
-                $('.callout-danger', dialog).show();
-
-                var errors = response.responseJSON;
-
-                $('.has-error', dialog).removeClass('has-error');
-                $('.label-danger', dialog).remove();
-
-                $('form input', dialog).each(function (index, element) {
-                    element = $(element);
-
-                    var name = element.attr('name');
-
-                    if (typeof errors[name] !== 'undefined') {
-                        var parent = element.parent('div');
-                        parent.addClass('has-error');
-                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
-                    }
-                });
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            }
-        });
-    });
-
-    app.User = Backbone.Model.extend({
-        urlRoot: '/admin/users',
-        initialize: function() {
-
-        }
-    });
-
-    var Users = Backbone.Collection.extend({
-        model: app.User
-    });
-
-    app.Users = new Users();
-
-    app.UsersTab = Backbone.View.extend({
-        el: '#app',
-        events: {
-
-        },
-        initialize: function() {
-            this.$list = $('#user_list tbody');
-
-            this.listenTo(app.Users, 'add', this.addOne);
-            this.listenTo(app.Users, 'reset', this.addAll);
-            this.listenTo(app.Users, 'remove', this.addAll);
-            this.listenTo(app.Users, 'all', this.render);
-
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var user = app.Users.get(parseInt(data.model.id));
-
-                if (user) {
-                    user.set(data.model);
-                }
-            });
-
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Users.add(data.model);
-            });
-
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var user = app.Users.get(parseInt(data.model.id));
-
-                if (user) {
-                    app.Users.remove(user);
-                }
-            });
-        },
-        addOne: function (user) {
-            var view = new app.UserView({
-                model: user
-            });
-
-            this.$list.append(view.render().el);
-        },
-        addAll: function () {
-            this.$list.html('');
-            app.Users.each(this.addOne, this);
-        }
-    });
-
-    app.UserView = Backbone.View.extend({
-        tagName:  'tr',
-        events: {
-            'click .btn-edit': 'editUser',
-            'click .btn-delete': 'trashUser'
-        },
-        initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
-            this.listenTo(this.model, 'destroy', this.remove);
-
-            this.template = _.template($('#user-template').html());
-        },
-        render: function () {
-            var data = this.model.toJSON();
-
-            data.created = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
-
-            this.$el.html(this.template(data));
-
-            return this;
-        },
-        editUser: function() {
-            $('#user_id').val(this.model.id);
-            $('#user_name').val(this.model.get('name'));
-            $('#user_level').val(this.model.get('level'));
-            $('#user_nickname').val(this.model.get('nickname'));
-            $('#user_email').val(this.model.get('email'));
-        },
-        trashUser: function() {
-            var target = $('#model_id');
-            target.val(this.model.id);
-            target.parents('.modal').removeClass().addClass('modal fade user-trash');
-        }
-    });
-})(jQuery);
-
-var app = app || {};
-
-(function ($) {
-    $('#group_list table').sortable({
-        containerSelector: 'table',
-        itemPath: '> tbody',
-        itemSelector: 'tr',
-        placeholder: '<tr class="placeholder"/>',
-        delay: 500,
-        onDrop: function (item, container, _super) {
-            _super(item, container);
-
-            var ids = [];
-            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
-                ids.push($(element).data('group-id'));
-            });
-
-            $.ajax({
-                url: '/admin/groups/reorder',
-                method: 'POST',
-                data: {
-                    groups: ids
-                }
-            });
-        }
-    });
-
-    $('#group').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var modal = $(this);
-        var title = trans('groups.create');
-
-        $('.btn-danger', modal).hide();
-        $('.callout-danger', modal).hide();
-        $('.has-error', modal).removeClass('has-error');
-        $('.label-danger', modal).remove();
-
-        if (button.hasClass('btn-edit')) {
-            title = trans('groups.edit');
-            $('.btn-danger', modal).show();
-        } else {
-            $('#group_id').val('');
-            $('#group_name').val('');
-        }
-
-        modal.find('.modal-title span').text(title);
-    });
-
-    $('body').delegate('.group-trash button.btn-delete','click', function (event) {
-
-        var target = $(event.currentTarget);
-        var icon = target.find('i');
-        var dialog = target.parents('.modal');
-
-        icon.addClass('ion-refresh fixhub-spin');
-        dialog.find('input').attr('disabled', 'disabled');
-        $('button.close', dialog).hide();
-
-        var group = app.Groups.get($('#model_id').val());
-
-        group.destroy({
-            wait: true,
-            success: function(model, response, options) {
-                dialog.modal('hide');
-                $('.callout-danger', dialog).hide();
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            },
-            error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            }
-        });
-    });
-
-    $('#group button.btn-save').on('click', function (event) {
-        var target = $(event.currentTarget);
-        var icon = target.find('i');
-        var dialog = target.parents('.modal');
-
-        icon.addClass('ion-refresh fixhub-spin');
-        dialog.find('input').attr('disabled', 'disabled');
-        $('button.close', dialog).hide();
-
-        var group_id = $('#group_id').val();
-
-        if (group_id) {
-            var group = app.Groups.get(group_id);
-        } else {
-            var group = new app.Group();
-        }
-
-        group.save({
-            name: $('#group_name').val()
-        }, {
-            wait: true,
-            success: function(model, response, options) {
-                dialog.modal('hide');
-                $('.callout-danger', dialog).hide();
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-
-                if (!group_id) {
-                    app.Groups.add(response);
-                }
-            },
-            error: function(model, response, options) {
-                $('.callout-danger', dialog).show();
-
-                var errors = response.responseJSON;
-
-                $('.has-error', dialog).removeClass('has-error');
-                $('.label-danger', dialog).remove();
-
-                $('form input', dialog).each(function (index, element) {
-                    element = $(element);
-
-                    var name = element.attr('name');
-
-                    if (typeof errors[name] !== 'undefined') {
-                        var parent = element.parent('div');
-                        parent.addClass('has-error');
-                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
-                    }
-                });
-
-                icon.removeClass('ion-refresh fixhub-spin');
-                $('button.close', dialog).show();
-                dialog.find('input').removeAttr('disabled');
-            }
-        });
-    });
-
-    app.Group = Backbone.Model.extend({
-        urlRoot: '/admin/groups',
-        initialize: function() {
-
-        }
-    });
-
-    var Groups = Backbone.Collection.extend({
-        model: app.Group
-    });
-
-    app.Groups = new Groups();
-
-    app.GroupsTab = Backbone.View.extend({
-        el: '#app',
-        events: {
-
-        },
-        initialize: function() {
-            this.$list = $('#group_list tbody');
-
-            $('#group_list').hide();
-            $('#no_groups').show();
-
-            this.listenTo(app.Groups, 'add', this.addOne);
-            this.listenTo(app.Groups, 'reset', this.addAll);
-            this.listenTo(app.Groups, 'remove', this.addAll);
-            this.listenTo(app.Groups, 'all', this.render);
-
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                $('#group_' + data.model.id).html(data.model.name);
-
-                var group = app.Groups.get(parseInt(data.model.id));
-
-                if (group) {
-                    group.set(data.model);
-                }
-            });
-
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Groups.add(data.model);
-            });
-
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var group = app.Groups.get(parseInt(data.model.id));
-
-                if (group) {
-                    app.Groups.remove(group);
-                }
-
-                $('#group_' + data.model.id).parent('li').remove();
-
-                if (parseInt(data.model.id) === parseInt(app.group_id)) {
-                    window.location.href = '/';
-                }
-            });
-        },
-        render: function () {
-            if (app.Groups.length) {
-                $('#no_groups').hide();
-                $('#group_list').show();
-            } else {
-                $('#no_groups').show();
-                $('#group_list').hide();
-            }
-        },
-        addOne: function (group) {
-
-            var view = new app.GroupView({
-                model: group
-            });
-
-            this.$list.append(view.render().el);
-        },
-        addAll: function () {
-            this.$list.html('');
-            app.Groups.each(this.addOne, this);
-        }
-    });
-
-    app.GroupView = Backbone.View.extend({
-        tagName:  'tr',
-        events: {
-            'click .btn-edit': 'editGroup',
-            'click .btn-delete': 'trashGroup'
-        },
-        initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
-            this.listenTo(this.model, 'destroy', this.remove);
-
-            this.template = _.template($('#group-template').html());
-        },
-        render: function () {
-            var data = this.model.toJSON();
-
-            this.$el.html(this.template(data));
-
-            return this;
-        },
-        editGroup: function() {
-            $('#group_id').val(this.model.id);
-            $('#group_name').val(this.model.get('name'));
-        },
-        trashGroup: function() {
-            var target = $('#model_id');
-            target.val(this.model.id);
-            target.parents('.modal').removeClass().addClass('modal fade group-trash');
-        }
-
-    });
-})(jQuery);
-
-var app = app || {};
-
 (function ($) {
 
      $('#project-clone').on('show.bs.modal', function(event) {
@@ -800,7 +570,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var project = app.Projects.get($('#model_id').val());
+        var project = Fixhub.Projects.get($('#model_id').val());
 
         project.destroy({
             wait: true,
@@ -832,9 +602,9 @@ var app = app || {};
         var project_id = $('#project_id').val();
 
         if (project_id) {
-            var project = app.Projects.get(project_id);
+            var project = Fixhub.Projects.get(project_id);
         } else {
-            var project = new app.Project();
+            var project = new Fixhub.Project();
         }
 
         project.save({
@@ -860,7 +630,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!project_id) {
-                    app.Projects.add(response);
+                    Fixhub.Projects.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -891,17 +661,17 @@ var app = app || {};
         });
     });
 
-    app.Project = Backbone.Model.extend({
+    Fixhub.Project = Backbone.Model.extend({
         urlRoot: '/admin/projects'
     });
 
     var Projects = Backbone.Collection.extend({
-        model: app.Project
+        model: Fixhub.Project
     });
 
-    app.Projects = new Projects();
+    Fixhub.Projects = new Projects();
 
-    app.ProjectsTab = Backbone.View.extend({
+    Fixhub.ProjectsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -912,43 +682,43 @@ var app = app || {};
             $('#project_list').hide();
             $('#no_projects').show();
 
-            this.listenTo(app.Projects, 'add', this.addOne);
-            this.listenTo(app.Projects, 'reset', this.addAll);
-            this.listenTo(app.Projects, 'remove', this.addAll);
-            this.listenTo(app.Projects, 'all', this.render);
+            this.listenTo(Fixhub.Projects, 'add', this.addOne);
+            this.listenTo(Fixhub.Projects, 'reset', this.addAll);
+            this.listenTo(Fixhub.Projects, 'remove', this.addAll);
+            this.listenTo(Fixhub.Projects, 'all', this.render);
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var project = app.Projects.get(parseInt(data.model.id));
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    if(app.group_id == undefined || app.group_id == data.model.group_id) {
+                    if(Fixhub.group_id == undefined || Fixhub.group_id == data.model.group_id) {
                         project.set(data.model);
                     } else {
-                        app.Projects.remove(project);
+                        Fixhub.Projects.remove(project);
                     }
                 }
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Projects.add(data.model);
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Projects.add(data.model);
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var project = app.Projects.get(parseInt(data.model.id));
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    app.Projects.remove(project);
+                    Fixhub.Projects.remove(project);
                 }
 
                 $('#project_' + data.model.id).parent('li').remove();
 
-                if (parseInt(data.model.id) === parseInt(app.project_id)) {
+                if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
                     window.location.href = '/';
                 }
             });
         },
         render: function () {
-            if (app.Projects.length) {
+            if (Fixhub.Projects.length) {
                 $('#no_projects').hide();
                 $('#project_list').show();
             } else {
@@ -957,7 +727,7 @@ var app = app || {};
             }
         },
         addOne: function (project) {
-            var view = new app.ProjectView({
+            var view = new Fixhub.ProjectView({
                 model: project
             });
 
@@ -965,11 +735,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Projects.each(this.addOne, this);
+            Fixhub.Projects.each(this.addOne, this);
         }
     });
 
-    app.ProjectView = Backbone.View.extend({
+    Fixhub.ProjectView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editProject',
@@ -1016,8 +786,6 @@ var app = app || {};
     });
 })(jQuery);
 
-var app = app || {};
-
 (function ($) {
     $('#template').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -1049,7 +817,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var template = app.Templates.get($('#model_id').val());
+        var template = Fixhub.Templates.get($('#model_id').val());
 
         template.destroy({
             wait: true,
@@ -1081,9 +849,9 @@ var app = app || {};
         var template_id = $('#template_id').val();
 
         if (template_id) {
-            var template = app.Templates.get(template_id);
+            var template = Fixhub.Templates.get(template_id);
         } else {
-            var template = new app.Template();
+            var template = new Fixhub.Template();
         }
 
         template.save({
@@ -1099,7 +867,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!template_id) {
-                    app.Templates.add(response);
+                    Fixhub.Templates.add(response);
 
                     window.location.href = '/admin/templates/' + response.id;
                 }
@@ -1131,17 +899,17 @@ var app = app || {};
         });
     });
 
-    app.Template = Backbone.Model.extend({
+    Fixhub.Template = Backbone.Model.extend({
         urlRoot: '/admin/templates'
     });
 
     var Templates = Backbone.Collection.extend({
-        model: app.Template
+        model: Fixhub.Template
     });
 
-    app.Templates = new Templates();
+    Fixhub.Templates = new Templates();
 
-    app.TemplatesTab = Backbone.View.extend({
+    Fixhub.TemplatesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -1152,33 +920,33 @@ var app = app || {};
             $('#template_list').hide();
             $('#no_templates').show();
 
-            this.listenTo(app.Templates, 'add', this.addOne);
-            this.listenTo(app.Templates, 'reset', this.addAll);
-            this.listenTo(app.Templates, 'remove', this.addAll);
-            this.listenTo(app.Templates, 'all', this.render);
+            this.listenTo(Fixhub.Templates, 'add', this.addOne);
+            this.listenTo(Fixhub.Templates, 'reset', this.addAll);
+            this.listenTo(Fixhub.Templates, 'remove', this.addAll);
+            this.listenTo(Fixhub.Templates, 'all', this.render);
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var template = app.Templates.get(parseInt(data.model.id));
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
                     template.set(data.model);
                 }
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Templates.add(data.model);
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Templates.add(data.model);
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var template = app.Templates.get(parseInt(data.model.id));
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
-                    app.Templates.remove(template);
+                    Fixhub.Templates.remove(template);
                 }
             });
         },
         render: function () {
-            if (app.Templates.length) {
+            if (Fixhub.Templates.length) {
                 $('#no_templates').hide();
                 $('#template_list').show();
             } else {
@@ -1187,7 +955,7 @@ var app = app || {};
             }
         },
         addOne: function (template) {
-            var view = new app.TemplateView({
+            var view = new Fixhub.TemplateView({
                 model: template
             });
 
@@ -1195,11 +963,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Templates.each(this.addOne, this);
+            Fixhub.Templates.each(this.addOne, this);
         }
     });
 
-    app.TemplateView = Backbone.View.extend({
+    Fixhub.TemplateView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editTemplate',
@@ -1229,8 +997,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-
-var app = app || {};
 
 (function ($) {
     var SUCCESSFUL = 0;
@@ -1294,7 +1060,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link = app.Links.get($('#model_id').val());
+        var link = Fixhub.Links.get($('#model_id').val());
 
         link.destroy({
             wait: true,
@@ -1326,9 +1092,9 @@ var app = app || {};
         var link_id = $('#link_id').val();
 
         if (link_id) {
-            var link = app.Links.get(link_id);
+            var link = Fixhub.Links.get(link_id);
         } else {
-            var link = new app.Link();
+            var link = new Fixhub.Link();
         }
 
         link.save({
@@ -1346,7 +1112,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!link_id) {
-                    app.Links.add(response);
+                    Fixhub.Links.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -1377,12 +1143,12 @@ var app = app || {};
     });
 
 
-    app.Link = Backbone.Model.extend({
+    Fixhub.Link = Backbone.Model.extend({
         urlRoot: '/admin/links'
     });
 
     var Links = Backbone.Collection.extend({
-        model: app.Link,
+        model: Fixhub.Link,
         comparator: function(linkA, linkB) {
             if (linkA.get('title') > linkB.get('title')) {
                 return -1; // before
@@ -1394,9 +1160,9 @@ var app = app || {};
         }
     });
 
-    app.Links = new Links();
+    Fixhub.Links = new Links();
 
-    app.LinksTab = Backbone.View.extend({
+    Fixhub.LinksTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -1407,33 +1173,33 @@ var app = app || {};
             $('#no_links').show();
             $('#link_list').hide();
 
-            this.listenTo(app.Links, 'add', this.addOne);
-            this.listenTo(app.Links, 'reset', this.addAll);
-            this.listenTo(app.Links, 'remove', this.addAll);
-            this.listenTo(app.Links, 'all', this.render);
+            this.listenTo(Fixhub.Links, 'add', this.addOne);
+            this.listenTo(Fixhub.Links, 'reset', this.addAll);
+            this.listenTo(Fixhub.Links, 'remove', this.addAll);
+            this.listenTo(Fixhub.Links, 'all', this.render);
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
                     link.set(data.model);
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Links.add(data.model);
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Links.add(data.model);
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
-                    app.Links.remove(link);
+                    Fixhub.Links.remove(link);
                 }
             });
         },
         render: function () {
-            if (app.Links.length) {
+            if (Fixhub.Links.length) {
                 $('#no_links').hide();
                 $('#link_list').show();
             } else {
@@ -1443,13 +1209,13 @@ var app = app || {};
         },
         addOne: function (link) {
 
-            var view = new app.LinkView({
+            var view = new Fixhub.LinkView({
                 model: link
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Links.length < 2) {
+            if (Fixhub.Links.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -1457,11 +1223,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Links.each(this.addOne, this);
+            Fixhub.Links.each(this.addOne, this);
         }
     });
 
-    app.LinkView = Backbone.View.extend({
+    Fixhub.LinkView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editLink',
@@ -1494,8 +1260,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -1541,7 +1305,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var tip = app.Tips.get($('#model_id').val());
+        var tip = Fixhub.Tips.get($('#model_id').val());
 
         tip.destroy({
             wait: true,
@@ -1573,9 +1337,9 @@ var app = app || {};
         var tip_id = $('#tip_id').val();
 
         if (tip_id) {
-            var tip = app.Tips.get(tip_id);
+            var tip = Fixhub.Tips.get(tip_id);
         } else {
-            var tip = new app.Tip();
+            var tip = new Fixhub.Tip();
         }
 
         tip.save({
@@ -1592,7 +1356,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!tip_id) {
-                    app.Tips.add(response);
+                    Fixhub.Tips.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -1623,12 +1387,12 @@ var app = app || {};
     });
 
 
-    app.Tip = Backbone.Model.extend({
+    Fixhub.Tip = Backbone.Model.extend({
         urlRoot: '/admin/tips'
     });
 
     var tips = Backbone.Collection.extend({
-        model: app.Tip,
+        model: Fixhub.Tip,
         comparator: function(tipA, tipB) {
             if (tipA.get('id') > tipB.get('id')) {
                 return -1; // before
@@ -1640,9 +1404,9 @@ var app = app || {};
         }
     });
 
-    app.Tips = new tips();
+    Fixhub.Tips = new tips();
 
-    app.TipsTab = Backbone.View.extend({
+    Fixhub.TipsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -1653,33 +1417,33 @@ var app = app || {};
             $('#no_tips').show();
             $('#tip_list').hide();
 
-            this.listenTo(app.Tips, 'add', this.addOne);
-            this.listenTo(app.Tips, 'reset', this.addAll);
-            this.listenTo(app.Tips, 'remove', this.addAll);
-            this.listenTo(app.Tips, 'all', this.render);
+            this.listenTo(Fixhub.Tips, 'add', this.addOne);
+            this.listenTo(Fixhub.Tips, 'reset', this.addAll);
+            this.listenTo(Fixhub.Tips, 'remove', this.addAll);
+            this.listenTo(Fixhub.Tips, 'all', this.render);
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var tip = app.Tips.get(parseInt(data.model.id));
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
                     tip.set(data.model);
                 }
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Tips.add(data.model);
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Tips.add(data.model);
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var tip = app.Tips.get(parseInt(data.model.id));
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
-                    app.Tips.remove(tip);
+                    Fixhub.Tips.remove(tip);
                 }
             });
         },
         render: function () {
-            if (app.Tips.length) {
+            if (Fixhub.Tips.length) {
                 $('#no_tips').hide();
                 $('#tip_list').show();
             } else {
@@ -1689,7 +1453,7 @@ var app = app || {};
         },
         addOne: function (tip) {
 
-            var view = new app.TipView({
+            var view = new Fixhub.TipView({
                 model: tip
             });
 
@@ -1697,11 +1461,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Tips.each(this.addOne, this);
+            Fixhub.Tips.each(this.addOne, this);
         }
     });
 
-    app.TipView = Backbone.View.extend({
+    Fixhub.TipView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-show': 'showTip',
@@ -1739,8 +1503,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -1802,7 +1564,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var key = app.Keys.get($('#model_id').val());
+        var key = Fixhub.Keys.get($('#model_id').val());
 
         key.destroy({
             wait: true,
@@ -1834,9 +1596,9 @@ var app = app || {};
         var key_id = $('#key_id').val();
 
         if (key_id) {
-            var key = app.Keys.get(key_id);
+            var key = Fixhub.Keys.get(key_id);
         } else {
-            var key = new app.Key();
+            var key = new Fixhub.Key();
         }
 
         key.save({
@@ -1853,7 +1615,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!key_id) {
-                    app.Keys.add(response);
+                    Fixhub.Keys.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -1884,12 +1646,12 @@ var app = app || {};
     });
 
 
-    app.Key = Backbone.Model.extend({
+    Fixhub.Key = Backbone.Model.extend({
         urlRoot: '/admin/keys'
     });
 
     var Keys = Backbone.Collection.extend({
-        model: app.Key,
+        model: Fixhub.Key,
         comparator: function(keyA, keyB) {
             if (keyA.get('name') > keyB.get('name')) {
                 return -1; // before
@@ -1901,9 +1663,9 @@ var app = app || {};
         }
     });
 
-    app.Keys = new Keys();
+    Fixhub.Keys = new Keys();
 
-    app.KeysTab = Backbone.View.extend({
+    Fixhub.KeysTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -1914,33 +1676,33 @@ var app = app || {};
             $('#no_keys').show();
             $('#key_list').hide();
 
-            this.listenTo(app.Keys, 'add', this.addOne);
-            this.listenTo(app.Keys, 'reset', this.addAll);
-            this.listenTo(app.Keys, 'remove', this.addAll);
-            this.listenTo(app.Keys, 'all', this.render);
+            this.listenTo(Fixhub.Keys, 'add', this.addOne);
+            this.listenTo(Fixhub.Keys, 'reset', this.addAll);
+            this.listenTo(Fixhub.Keys, 'remove', this.addAll);
+            this.listenTo(Fixhub.Keys, 'all', this.render);
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var key = app.Keys.get(parseInt(data.model.id));
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
                     key.set(data.model);
                 }
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Keys.add(data.model);
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Keys.add(data.model);
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var key = app.Keys.get(parseInt(data.model.id));
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
-                    app.Keys.remove(key);
+                    Fixhub.Keys.remove(key);
                 }
             });
         },
         render: function () {
-            if (app.Keys.length) {
+            if (Fixhub.Keys.length) {
                 $('#no_keys').hide();
                 $('#key_list').show();
             } else {
@@ -1950,13 +1712,13 @@ var app = app || {};
         },
         addOne: function (key) {
 
-            var view = new app.KeyView({
+            var view = new Fixhub.KeyView({
                 model: key
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Keys.length < 2) {
+            if (Fixhub.Keys.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -1964,11 +1726,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Keys.each(this.addOne, this);
+            Fixhub.Keys.each(this.addOne, this);
         }
     });
 
-    app.KeyView = Backbone.View.extend({
+    Fixhub.KeyView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-show': 'showKey',
@@ -2006,7 +1768,227 @@ var app = app || {};
         }
     });
 })(jQuery);
-var app = app || {};
+(function ($) {
+    $('#user').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('users.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.existing-only', modal).hide();
+        $('.new-only', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('users.edit');
+            $('.btn-danger', modal).show();
+            $('.existing-only', modal).show();
+        } else {
+            $('#user_id').val('');
+            $('#user_name').val('');
+            $('#user_level').val($("#user_level option:first").val());
+            $('#user_nickname').val('');
+            $('#user_email').val('');
+            $('#user_password').val('');
+            $('#user_password_confirmation').val('');
+
+            $('.new-only', modal).show();
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.user-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.addClass('ion-refresh fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var user = Fixhub.Users.get($('#model_id').val());
+
+        user.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            },
+            error: function() {
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#user button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.addClass('ion-refresh fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var user_id = $('#user_id').val();
+
+        if (user_id) {
+            var user = Fixhub.Users.get(user_id);
+        } else {
+            var user = new Fixhub.User();
+        }
+
+        user.save({
+            name:                  $('#user_name').val(),
+            level:                 $('#user_level').val(),
+            nickname:              $('#user_nickname').val(),
+            email:                 $('#user_email').val(),
+            password:              $('#user_password').val(),
+            password_confirmation: $('#user_password_confirmation').val()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                if (!user_id) {
+                    Fixhub.Users.add(response);
+                }
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass('ion-refresh fixhub-spin');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Fixhub.User = Backbone.Model.extend({
+        urlRoot: '/admin/users',
+        initialize: function() {
+
+        }
+    });
+
+    var Users = Backbone.Collection.extend({
+        model: Fixhub.User
+    });
+
+    Fixhub.Users = new Users();
+
+    Fixhub.UsersTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#user_list tbody');
+
+            this.listenTo(Fixhub.Users, 'add', this.addOne);
+            this.listenTo(Fixhub.Users, 'reset', this.addAll);
+            this.listenTo(Fixhub.Users, 'remove', this.addAll);
+            this.listenTo(Fixhub.Users, 'all', this.render);
+
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var user = Fixhub.Users.get(parseInt(data.model.id));
+
+                if (user) {
+                    user.set(data.model);
+                }
+            });
+
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Users.add(data.model);
+            });
+
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var user = Fixhub.Users.get(parseInt(data.model.id));
+
+                if (user) {
+                    Fixhub.Users.remove(user);
+                }
+            });
+        },
+        addOne: function (user) {
+            var view = new Fixhub.UserView({
+                model: user
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Fixhub.Users.each(this.addOne, this);
+        }
+    });
+
+    Fixhub.UserView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'editUser',
+            'click .btn-delete': 'trashUser'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#user-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            data.created = moment(data.created_at).format('YYYY-MM-DD HH:mm:ss');
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        editUser: function() {
+            $('#user_id').val(this.model.id);
+            $('#user_name').val(this.model.get('name'));
+            $('#user_level').val(this.model.get('level'));
+            $('#user_nickname').val(this.model.get('nickname'));
+            $('#user_email').val(this.model.get('email'));
+        },
+        trashUser: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade user-trash');
+        }
+    });
+})(jQuery);
 
 (function ($) {
     $('.command-list table').sortable({
@@ -2082,7 +2064,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var command = app.Commands.get($('#model_id').val());
+        var command = Fixhub.Commands.get($('#model_id').val());
 
         command.destroy({
             wait: true,
@@ -2121,9 +2103,9 @@ var app = app || {};
         var command_id = $('#command_id').val();
 
         if (command_id) {
-            var command = app.Commands.get(command_id);
+            var command = Fixhub.Commands.get(command_id);
         } else {
-            var command = new app.Command();
+            var command = new Fixhub.Command();
         }
 
         var server_ids = [];
@@ -2159,7 +2141,7 @@ var app = app || {};
                 dialog.find(':input').removeAttr('disabled');
 
                 if (!command_id) {
-                    app.Commands.add(response);
+                    Fixhub.Commands.add(response);
                 }
 
                 editor.setValue('');
@@ -2192,11 +2174,11 @@ var app = app || {};
         });
     });
 
-    app.Command = Backbone.Model.extend({
+    Fixhub.Command = Backbone.Model.extend({
         urlRoot: '/commands',
         defaults: function() {
             return {
-                order: app.Commands.nextOrder()
+                order: Fixhub.Commands.nextOrder()
             };
         },
         isAfter: function() {
@@ -2205,7 +2187,7 @@ var app = app || {};
     });
 
     var Commands = Backbone.Collection.extend({
-        model: app.Command,
+        model: Fixhub.Command,
         comparator: 'order',
         nextOrder: function() {
             if (!this.length) {
@@ -2216,9 +2198,9 @@ var app = app || {};
         }
     });
 
-    app.Commands = new Commands();
+    Fixhub.Commands = new Commands();
 
-    app.CommandsTab = Backbone.View.extend({
+    Fixhub.CommandsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -2230,42 +2212,42 @@ var app = app || {};
             $('.no-commands').show();
             $('.command-list').hide();
 
-            this.listenTo(app.Commands, 'add', this.addOne);
-            this.listenTo(app.Commands, 'reset', this.addAll);
-            this.listenTo(app.Commands, 'remove', this.addAll);
-            this.listenTo(app.Commands, 'all', this.render);
+            this.listenTo(Fixhub.Commands, 'add', this.addOne);
+            this.listenTo(Fixhub.Commands, 'reset', this.addAll);
+            this.listenTo(Fixhub.Commands, 'remove', this.addAll);
+            this.listenTo(Fixhub.Commands, 'all', this.render);
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var command = app.Commands.get(parseInt(data.model.id));
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {
                     command.set(data.model);
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                //if (data.model.targetable_type == app.targetable_type && parseInt(data.model.targetable_id) === parseInt(app.targetable_id)) {
+                //if (data.model.targetable_type == Fixhub.targetable_type && parseInt(data.model.targetable_id) === parseInt(Fixhub.targetable_id)) {
 
                     // Make sure the command is for this action (clone, install, activate, purge)
-                    if (parseInt(data.model.step) + 1 === parseInt(app.command_action) || parseInt(data.model.step) - 1 === parseInt(app.command_action)) {
-                        app.Commands.add(data.model);
+                    if (parseInt(data.model.step) + 1 === parseInt(Fixhub.command_action) || parseInt(data.model.step) - 1 === parseInt(Fixhub.command_action)) {
+                        Fixhub.Commands.add(data.model);
                     }
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var command = app.Commands.get(parseInt(data.model.id));
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {
-                    app.Commands.remove(command);
+                    Fixhub.Commands.remove(command);
                 }
             });
         },
         render: function () {
-            var before = app.Commands.find(function(model) {
+            var before = Fixhub.Commands.find(function(model) {
                 return !model.isAfter();
             });
 
@@ -2277,7 +2259,7 @@ var app = app || {};
                 $('#commands-before .command-list').hide();
             }
 
-            var after = app.Commands.find(function(model) {
+            var after = Fixhub.Commands.find(function(model) {
                 return model.isAfter();
             });
 
@@ -2290,7 +2272,7 @@ var app = app || {};
             }
         },
         addOne: function (command) {
-            var view = new app.CommandView({
+            var view = new Fixhub.CommandView({
                 model: command
             });
 
@@ -2313,11 +2295,11 @@ var app = app || {};
         addAll: function () {
             this.$beforeList.html('');
             this.$afterList.html('');
-            app.Commands.each(this.addOne, this);
+            Fixhub.Commands.each(this.addOne, this);
         }
     });
 
-    app.CommandView = Backbone.View.extend({
+    Fixhub.CommandView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -2362,8 +2344,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-
-var app = app || {};
 
 (function ($) {
 
@@ -2432,7 +2412,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file = app.ConfigFiles.get($('#model_id').val());
+        var file = Fixhub.ConfigFiles.get($('#model_id').val());
 
         file.destroy({
             wait: true,
@@ -2464,9 +2444,9 @@ var app = app || {};
         var config_file_id = $('#config_file_id').val();
 
         if (config_file_id) {
-            var file = app.ConfigFiles.get(config_file_id);
+            var file = Fixhub.ConfigFiles.get(config_file_id);
         } else {
-            var file = new app.ConfigFile();
+            var file = new Fixhub.ConfigFile();
         }
 
         file.save({
@@ -2486,7 +2466,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!config_file_id) {
-                    app.ConfigFiles.add(response);
+                    Fixhub.ConfigFiles.add(response);
                 }
 
                 editor.setValue('');
@@ -2519,17 +2499,17 @@ var app = app || {};
         });
     });
 
-    app.ConfigFile = Backbone.Model.extend({
+    Fixhub.ConfigFile = Backbone.Model.extend({
         urlRoot: '/config-file'
     });
 
     var ConfigFiles = Backbone.Collection.extend({
-        model: app.ConfigFile
+        model: Fixhub.ConfigFile
     });
 
-    app.ConfigFiles = new ConfigFiles();
+    Fixhub.ConfigFiles = new ConfigFiles();
 
-    app.ConfigFilesTab = Backbone.View.extend({
+    Fixhub.ConfigFilesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -2540,37 +2520,37 @@ var app = app || {};
             $('#no_configfiles').show();
             $('#configfile_list').hide();
 
-            this.listenTo(app.ConfigFiles, 'add', this.addOne);
-            this.listenTo(app.ConfigFiles, 'reset', this.addAll);
-            this.listenTo(app.ConfigFiles, 'remove', this.addAll);
-            this.listenTo(app.ConfigFiles, 'all', this.render);
+            this.listenTo(Fixhub.ConfigFiles, 'add', this.addOne);
+            this.listenTo(Fixhub.ConfigFiles, 'reset', this.addAll);
+            this.listenTo(Fixhub.ConfigFiles, 'remove', this.addAll);
+            this.listenTo(Fixhub.ConfigFiles, 'all', this.render);
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var file = app.ConfigFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {
                     file.set(data.model);
                 }
             });
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.ConfigFiles.add(data.model);
+                    Fixhub.ConfigFiles.add(data.model);
                 }
             });
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var file = app.ConfigFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {
-                    app.ConfigFiles.remove(file);
+                    Fixhub.ConfigFiles.remove(file);
                 }
             });
         },
         render: function () {
-            if (app.ConfigFiles.length) {
+            if (Fixhub.ConfigFiles.length) {
                 $('#no_configfiles').hide();
                 $('#configfile_list').show();
             } else {
@@ -2580,7 +2560,7 @@ var app = app || {};
         },
         addOne: function (file) {
 
-            var view = new app.ConfigFileView({
+            var view = new Fixhub.ConfigFileView({
                 model: file
             });
 
@@ -2588,11 +2568,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.ConfigFiles.each(this.addOne, this);
+            Fixhub.ConfigFiles.each(this.addOne, this);
         }
     });
 
-    app.ConfigFileView = Backbone.View.extend({
+    Fixhub.ConfigFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -2630,8 +2610,6 @@ var app = app || {};
     });
 
 })(jQuery);
-
-var app = app || {};
 
 (function ($) {
     $('#environment_list table').sortable({
@@ -2692,7 +2670,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var environment = app.Environments.get($('#model_id').val());
+        var environment = Fixhub.Environments.get($('#model_id').val());
 
         environment.destroy({
             wait: true,
@@ -2724,9 +2702,9 @@ var app = app || {};
         var environment_id = $('#environment_id').val();
 
         if (environment_id) {
-            var environment = app.Environments.get(environment_id);
+            var environment = Fixhub.Environments.get(environment_id);
         } else {
-            var environment = new app.Environment();
+            var environment = new Fixhub.Environment();
         }
 
         environment.save({
@@ -2747,7 +2725,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!environment_id) {
-                    app.Environments.add(response);
+                    Fixhub.Environments.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -2777,7 +2755,7 @@ var app = app || {};
         });
     });
 
-    app.Environment = Backbone.Model.extend({
+    Fixhub.Environment = Backbone.Model.extend({
         urlRoot: '/environments',
         initialize: function() {
 
@@ -2785,12 +2763,12 @@ var app = app || {};
     });
 
     var Environments = Backbone.Collection.extend({
-        model: app.Environment
+        model: Fixhub.Environment
     });
 
-    app.Environments = new Environments();
+    Fixhub.Environments = new Environments();
 
-    app.EnvironmentsTab = Backbone.View.extend({
+    Fixhub.EnvironmentsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -2801,39 +2779,39 @@ var app = app || {};
             $('#no_environments').show();
             $('#environment_list').hide();
 
-            this.listenTo(app.Environments, 'add', this.addOne);
-            this.listenTo(app.Environments, 'reset', this.addAll);
-            this.listenTo(app.Environments, 'remove', this.addAll);
-            this.listenTo(app.Environments, 'all', this.render);
+            this.listenTo(Fixhub.Environments, 'add', this.addOne);
+            this.listenTo(Fixhub.Environments, 'reset', this.addAll);
+            this.listenTo(Fixhub.Environments, 'remove', this.addAll);
+            this.listenTo(Fixhub.Environments, 'all', this.render);
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#environment_' + data.model.id).html(data.model.name);
 
-                var environment = app.Environments.get(parseInt(data.model.id));
+                var environment = Fixhub.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
                     environment.set(data.model);
                 }
             });
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.Environments.add(data.model);
+                    Fixhub.Environments.add(data.model);
                 }
             });
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var environment = app.Environments.get(parseInt(data.model.id));
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var environment = Fixhub.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
-                    app.Environments.remove(environment);
+                    Fixhub.Environments.remove(environment);
                 }
             });
         },
         render: function () {
-            if (app.Environments.length) {
+            if (Fixhub.Environments.length) {
                 $('#no_environments').hide();
                 $('#environment_list').show();
             } else {
@@ -2843,13 +2821,13 @@ var app = app || {};
         },
         addOne: function (environment) {
 
-            var view = new app.EnvironmentView({
+            var view = new Fixhub.EnvironmentView({
                 model: environment
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Environments.length < 2) {
+            if (Fixhub.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -2857,11 +2835,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Environments.each(this.addOne, this);
+            Fixhub.Environments.each(this.addOne, this);
         }
     });
 
-    app.EnvironmentView = Backbone.View.extend({
+    Fixhub.EnvironmentView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -2875,6 +2853,7 @@ var app = app || {};
         },
         render: function () {
             var data = this.model.toJSON();
+            data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');
 
             this.$el.html(this.template(data));
 
@@ -2893,8 +2872,6 @@ var app = app || {};
         }
     });
 })(jQuery);
-
-var app = app || {};
 
 (function ($) {
     $('#sharedfile').on('show.bs.modal', function (event) {
@@ -2928,7 +2905,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file = app.SharedFiles.get($('#model_id').val());
+        var file = Fixhub.SharedFiles.get($('#model_id').val());
 
         file.destroy({
             wait: true,
@@ -2960,9 +2937,9 @@ var app = app || {};
         var file_id = $('#sharedfile_id').val();
 
         if (file_id) {
-            var file = app.SharedFiles.get(file_id);
+            var file = Fixhub.SharedFiles.get(file_id);
         } else {
-            var file = new app.SharedFile();
+            var file = new Fixhub.SharedFile();
         }
 
         file.save({
@@ -2981,7 +2958,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!file_id) {
-                    app.SharedFiles.add(response);
+                    Fixhub.SharedFiles.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -3011,17 +2988,17 @@ var app = app || {};
         });
     });
 
-    app.SharedFile = Backbone.Model.extend({
+    Fixhub.SharedFile = Backbone.Model.extend({
         urlRoot: '/shared-files'
     });
 
     var SharedFiles = Backbone.Collection.extend({
-        model: app.SharedFile
+        model: Fixhub.SharedFile
     });
 
-    app.SharedFiles = new SharedFiles();
+    Fixhub.SharedFiles = new SharedFiles();
 
-    app.SharedFilesTab = Backbone.View.extend({
+    Fixhub.SharedFilesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -3032,37 +3009,37 @@ var app = app || {};
             $('#no_sharedfiles').show();
             $('#sharedfile_list').hide();
 
-            this.listenTo(app.SharedFiles, 'add', this.addOne);
-            this.listenTo(app.SharedFiles, 'reset', this.addAll);
-            this.listenTo(app.SharedFiles, 'remove', this.addAll);
-            this.listenTo(app.SharedFiles, 'all', this.render);
+            this.listenTo(Fixhub.SharedFiles, 'add', this.addOne);
+            this.listenTo(Fixhub.SharedFiles, 'reset', this.addAll);
+            this.listenTo(Fixhub.SharedFiles, 'remove', this.addAll);
+            this.listenTo(Fixhub.SharedFiles, 'all', this.render);
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var share = app.SharedFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
                     share.set(data.model);
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.SharedFiles.add(data.model);
+                    Fixhub.SharedFiles.add(data.model);
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var share = app.SharedFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
-                    app.SharedFiles.remove(share);
+                    Fixhub.SharedFiles.remove(share);
                 }
             });
         },
         render: function () {
-            if (app.SharedFiles.length) {
+            if (Fixhub.SharedFiles.length) {
                 $('#no_sharedfiles').hide();
                 $('#sharedfile_list').show();
             } else {
@@ -3072,7 +3049,7 @@ var app = app || {};
         },
         addOne: function (file) {
 
-            var view = new app.SharedFileView({
+            var view = new Fixhub.SharedFileView({
                 model: file
             });
 
@@ -3080,11 +3057,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.SharedFiles.each(this.addOne, this);
+            Fixhub.SharedFiles.each(this.addOne, this);
         }
     });
 
-    app.SharedFileView = Backbone.View.extend({
+    Fixhub.SharedFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -3116,8 +3093,6 @@ var app = app || {};
     });
 
 })(jQuery);
-
-var app = app || {};
 
 (function ($) {
     $('#variable').on('show.bs.modal', function (event) {
@@ -3151,7 +3126,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var variable = app.Variables.get($('#model_id').val());
+        var variable = Fixhub.Variables.get($('#model_id').val());
 
         variable.destroy({
             wait: true,
@@ -3183,9 +3158,9 @@ var app = app || {};
         var variable_id = $('#variable_id').val();
 
         if (variable_id) {
-            var variable = app.Variables.get(variable_id);
+            var variable = Fixhub.Variables.get(variable_id);
         } else {
-            var variable = new app.Variable();
+            var variable = new Fixhub.Variable();
         }
 
         variable.save({
@@ -3204,7 +3179,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!variable_id) {
-                    app.Variables.add(response);
+                    Fixhub.Variables.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -3234,7 +3209,7 @@ var app = app || {};
         });
     });
 
-    app.Variable = Backbone.Model.extend({
+    Fixhub.Variable = Backbone.Model.extend({
         urlRoot: '/variables',
         initialize: function() {
 
@@ -3242,12 +3217,12 @@ var app = app || {};
     });
 
     var Variables = Backbone.Collection.extend({
-        model: app.Variable
+        model: Fixhub.Variable
     });
 
-    app.Variables = new Variables();
+    Fixhub.Variables = new Variables();
 
-    app.VariablesTab = Backbone.View.extend({
+    Fixhub.VariablesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -3258,39 +3233,39 @@ var app = app || {};
             $('#no_variables').show();
             $('#variable_list').hide();
 
-            this.listenTo(app.Variables, 'add', this.addOne);
-            this.listenTo(app.Variables, 'reset', this.addAll);
-            this.listenTo(app.Variables, 'remove', this.addAll);
-            this.listenTo(app.Variables, 'all', this.render);
+            this.listenTo(Fixhub.Variables, 'add', this.addOne);
+            this.listenTo(Fixhub.Variables, 'reset', this.addAll);
+            this.listenTo(Fixhub.Variables, 'remove', this.addAll);
+            this.listenTo(Fixhub.Variables, 'all', this.render);
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#variable_' + data.model.id).html(data.model.name);
 
-                var variable = app.Variables.get(parseInt(data.model.id));
+                var variable = Fixhub.Variables.get(parseInt(data.model.id));
 
                 if (variable) {
                     variable.set(data.model);
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.Variables.add(data.model);
+                    Fixhub.Variables.add(data.model);
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var variable = app.Variables.get(parseInt(data.model.id));
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var variable = Fixhub.Variables.get(parseInt(data.model.id));
 
                 if (variable) {
-                    app.Variables.remove(variable);
+                    Fixhub.Variables.remove(variable);
                 }
             });
         },
         render: function () {
-            if (app.Variables.length) {
+            if (Fixhub.Variables.length) {
                 $('#no_variables').hide();
                 $('#variable_list').show();
             } else {
@@ -3300,7 +3275,7 @@ var app = app || {};
         },
         addOne: function (variable) {
 
-            var view = new app.VariableView({
+            var view = new Fixhub.VariableView({
                 model: variable
             });
 
@@ -3308,11 +3283,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Variables.each(this.addOne, this);
+            Fixhub.Variables.each(this.addOne, this);
         }
     });
 
-    app.VariableView = Backbone.View.extend({
+    Fixhub.VariableView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

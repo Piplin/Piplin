@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -63,7 +61,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var provider = app.Providers.get($('#model_id').val());
+        var provider = Fixhub.Providers.get($('#model_id').val());
 
         provider.destroy({
             wait: true,
@@ -95,9 +93,9 @@ var app = app || {};
         var provider_id = $('#provider_id').val();
 
         if (provider_id) {
-            var provider = app.Providers.get(provider_id);
+            var provider = Fixhub.Providers.get(provider_id);
         } else {
-            var provider = new app.Provider();
+            var provider = new Fixhub.Provider();
         }
 
         provider.save({
@@ -116,7 +114,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!provider_id) {
-                    app.Providers.add(response);
+                    Fixhub.Providers.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -147,12 +145,12 @@ var app = app || {};
     });
 
 
-    app.Provider = Backbone.Model.extend({
+    Fixhub.Provider = Backbone.Model.extend({
         urlRoot: '/admin/providers'
     });
 
     var Providers = Backbone.Collection.extend({
-        model: app.Provider,
+        model: Fixhub.Provider,
         comparator: function(providerA, providerB) {
             if (providerA.get('name') > providerB.get('name')) {
                 return -1; // before
@@ -164,9 +162,9 @@ var app = app || {};
         }
     });
 
-    app.Providers = new Providers();
+    Fixhub.Providers = new Providers();
 
-    app.ProvidersTab = Backbone.View.extend({
+    Fixhub.ProvidersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -177,33 +175,33 @@ var app = app || {};
             $('#no_providers').show();
             $('#provider_list').hide();
 
-            this.listenTo(app.Providers, 'add', this.addOne);
-            this.listenTo(app.Providers, 'reset', this.addAll);
-            this.listenTo(app.Providers, 'remove', this.addAll);
-            this.listenTo(app.Providers, 'all', this.render);
+            this.listenTo(Fixhub.Providers, 'add', this.addOne);
+            this.listenTo(Fixhub.Providers, 'reset', this.addAll);
+            this.listenTo(Fixhub.Providers, 'remove', this.addAll);
+            this.listenTo(Fixhub.Providers, 'all', this.render);
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var provider = app.providers.get(parseInt(data.model.id));
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var provider = Fixhub.providers.get(parseInt(data.model.id));
 
                 if (provider) {
                     provider.set(data.model);
                 }
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                    app.Providers.add(data.model);
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                    Fixhub.Providers.add(data.model);
             });
 
-            app.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var provider = app.Providers.get(parseInt(data.model.id));
+            Fixhub.listener.on('provider:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var provider = Fixhub.Providers.get(parseInt(data.model.id));
 
                 if (provider) {
-                    app.Providers.remove(provider);
+                    Fixhub.Providers.remove(provider);
                 }
             });
         },
         render: function () {
-            if (app.Providers.length) {
+            if (Fixhub.Providers.length) {
                 $('#no_providers').hide();
                 $('#provider_list').show();
             } else {
@@ -213,13 +211,13 @@ var app = app || {};
         },
         addOne: function (provider) {
 
-            var view = new app.ProviderView({
+            var view = new Fixhub.ProviderView({
                 model: provider
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Providers.length < 2) {
+            if (Fixhub.Providers.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -227,11 +225,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Providers.each(this.addOne, this);
+            Fixhub.Providers.each(this.addOne, this);
         }
     });
 
-    app.ProviderView = Backbone.View.extend({
+    Fixhub.ProviderView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editProvider',

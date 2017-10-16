@@ -14,7 +14,7 @@
         <table class="table table-striped" id="member_list">
             <thead>
                 <tr>
-                    <th>{{ trans('members.name') }}</th>
+                    <th>{{ trans('users.name') }}</th>
                     <th>{{ trans('members.level') }}</th>
                     <th>&nbsp;</th>
                 </tr>

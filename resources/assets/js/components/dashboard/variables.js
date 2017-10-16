@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#variable').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -32,7 +30,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var variable = app.Variables.get($('#model_id').val());
+        var variable = Fixhub.Variables.get($('#model_id').val());
 
         variable.destroy({
             wait: true,
@@ -64,9 +62,9 @@ var app = app || {};
         var variable_id = $('#variable_id').val();
 
         if (variable_id) {
-            var variable = app.Variables.get(variable_id);
+            var variable = Fixhub.Variables.get(variable_id);
         } else {
-            var variable = new app.Variable();
+            var variable = new Fixhub.Variable();
         }
 
         variable.save({
@@ -85,7 +83,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!variable_id) {
-                    app.Variables.add(response);
+                    Fixhub.Variables.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -115,7 +113,7 @@ var app = app || {};
         });
     });
 
-    app.Variable = Backbone.Model.extend({
+    Fixhub.Variable = Backbone.Model.extend({
         urlRoot: '/variables',
         initialize: function() {
 
@@ -123,12 +121,12 @@ var app = app || {};
     });
 
     var Variables = Backbone.Collection.extend({
-        model: app.Variable
+        model: Fixhub.Variable
     });
 
-    app.Variables = new Variables();
+    Fixhub.Variables = new Variables();
 
-    app.VariablesTab = Backbone.View.extend({
+    Fixhub.VariablesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -139,39 +137,39 @@ var app = app || {};
             $('#no_variables').show();
             $('#variable_list').hide();
 
-            this.listenTo(app.Variables, 'add', this.addOne);
-            this.listenTo(app.Variables, 'reset', this.addAll);
-            this.listenTo(app.Variables, 'remove', this.addAll);
-            this.listenTo(app.Variables, 'all', this.render);
+            this.listenTo(Fixhub.Variables, 'add', this.addOne);
+            this.listenTo(Fixhub.Variables, 'reset', this.addAll);
+            this.listenTo(Fixhub.Variables, 'remove', this.addAll);
+            this.listenTo(Fixhub.Variables, 'all', this.render);
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#variable_' + data.model.id).html(data.model.name);
 
-                var variable = app.Variables.get(parseInt(data.model.id));
+                var variable = Fixhub.Variables.get(parseInt(data.model.id));
 
                 if (variable) {
                     variable.set(data.model);
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.Variables.add(data.model);
+                    Fixhub.Variables.add(data.model);
                 }
             });
 
-            app.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var variable = app.Variables.get(parseInt(data.model.id));
+            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var variable = Fixhub.Variables.get(parseInt(data.model.id));
 
                 if (variable) {
-                    app.Variables.remove(variable);
+                    Fixhub.Variables.remove(variable);
                 }
             });
         },
         render: function () {
-            if (app.Variables.length) {
+            if (Fixhub.Variables.length) {
                 $('#no_variables').hide();
                 $('#variable_list').show();
             } else {
@@ -181,7 +179,7 @@ var app = app || {};
         },
         addOne: function (variable) {
 
-            var view = new app.VariableView({
+            var view = new Fixhub.VariableView({
                 model: variable
             });
 
@@ -189,11 +187,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Variables.each(this.addOne, this);
+            Fixhub.Variables.each(this.addOne, this);
         }
     });
 
-    app.VariableView = Backbone.View.extend({
+    Fixhub.VariableView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

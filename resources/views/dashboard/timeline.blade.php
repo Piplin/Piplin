@@ -11,18 +11,24 @@
         <li>
             <i class="ion ion-{{ $deployment->icon }} text-{{ $deployment->timeline_css_class }}" title="{{ $deployment->readable_status }}"></i>
             <div class="timeline-item">
-                <span class="time">@if($deployment->committer)<i class="ion ion-person-add"></i> {{ $deployment->committer }} @endif <span class="label label-default"><i class="ion ion-pricetag"></i> {{ $deployment->branch }}</span> <i class="ion ion-code-working"></i> {{ $deployment->short_commit }} <i class="ion ion-clock"></i> {{ $deployment->started_at->format('H:i:s') }}</span>
+                <span class="time"><i class="ion ion-clock"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->started_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></span>
                 <h4 class="timeline-header"><i class="ion ion-{{ $deployment->is_webhook ? 'steam' : 'person' }}" title="{{ $deployment->user ? $deployment->user->name : trans('deployments.webhook') }}"></i> <a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ trans('dashboard.deployment_number', ['id' => $deployment->id]) }}</a> 
-                @if($deployment->project)
-                <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="ion ion-social-codepen-outline"></i><span class="small">{{ $deployment->project->group_name }}/{{ $deployment->project->name }}</span> </a>
-                @endif
                 </h4>
-
-                @if (!empty($deployment->reason))
+                @if (!empty($deployment->formatted_reason))
                 <div class="timeline-body">
-                     {{ $deployment->reason }}
+                     {!! $deployment->formatted_reason !!}
                 </div>
                 @endif
+                <div class="timeline-footer small">
+                    <span>
+                        @if($deployment->project)
+                        <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="ion ion-social-codepen-outline"></i> {{ $deployment->project->group_name }}/{{ $deployment->project->name }}</a>
+                        @endif
+                    </span>
+                    <span class="pull-right text-muted">
+                    @if($deployment->committer)<i class="ion ion-merge"></i> {{ $deployment->committer }} @endif - {{ $deployment->branch }}/{{ $deployment->short_commit }}
+                    </span>
+                </div>
             </div>
         </li>
         @endforeach

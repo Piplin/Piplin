@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#user').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -42,7 +40,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var user = app.Users.get($('#model_id').val());
+        var user = Fixhub.Users.get($('#model_id').val());
 
         user.destroy({
             wait: true,
@@ -74,9 +72,9 @@ var app = app || {};
         var user_id = $('#user_id').val();
 
         if (user_id) {
-            var user = app.Users.get(user_id);
+            var user = Fixhub.Users.get(user_id);
         } else {
-            var user = new app.User();
+            var user = new Fixhub.User();
         }
 
         user.save({
@@ -97,7 +95,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!user_id) {
-                    app.Users.add(response);
+                    Fixhub.Users.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -127,7 +125,7 @@ var app = app || {};
         });
     });
 
-    app.User = Backbone.Model.extend({
+    Fixhub.User = Backbone.Model.extend({
         urlRoot: '/admin/users',
         initialize: function() {
 
@@ -135,12 +133,12 @@ var app = app || {};
     });
 
     var Users = Backbone.Collection.extend({
-        model: app.User
+        model: Fixhub.User
     });
 
-    app.Users = new Users();
+    Fixhub.Users = new Users();
 
-    app.UsersTab = Backbone.View.extend({
+    Fixhub.UsersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -148,33 +146,33 @@ var app = app || {};
         initialize: function() {
             this.$list = $('#user_list tbody');
 
-            this.listenTo(app.Users, 'add', this.addOne);
-            this.listenTo(app.Users, 'reset', this.addAll);
-            this.listenTo(app.Users, 'remove', this.addAll);
-            this.listenTo(app.Users, 'all', this.render);
+            this.listenTo(Fixhub.Users, 'add', this.addOne);
+            this.listenTo(Fixhub.Users, 'reset', this.addAll);
+            this.listenTo(Fixhub.Users, 'remove', this.addAll);
+            this.listenTo(Fixhub.Users, 'all', this.render);
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var user = app.Users.get(parseInt(data.model.id));
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var user = Fixhub.Users.get(parseInt(data.model.id));
 
                 if (user) {
                     user.set(data.model);
                 }
             });
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Users.add(data.model);
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Users.add(data.model);
             });
 
-            app.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var user = app.Users.get(parseInt(data.model.id));
+            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var user = Fixhub.Users.get(parseInt(data.model.id));
 
                 if (user) {
-                    app.Users.remove(user);
+                    Fixhub.Users.remove(user);
                 }
             });
         },
         addOne: function (user) {
-            var view = new app.UserView({
+            var view = new Fixhub.UserView({
                 model: user
             });
 
@@ -182,11 +180,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Users.each(this.addOne, this);
+            Fixhub.Users.each(this.addOne, this);
         }
     });
 
-    app.UserView = Backbone.View.extend({
+    Fixhub.UserView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editUser',

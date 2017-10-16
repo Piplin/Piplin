@@ -1,37 +1,31 @@
-var app = app || {};
-
 (function ($) {
 
     // test
     var settings =  {
-        placeholder: 'Search for a collaborator',
-        minimumInputLength: 3,
+        placeholder: trans('members.search'),
+        minimumInputLength: 1,
         width: '100%',
         ajax: {
-          url: function () {
-            return '/test.php';
-          },
-          dataType: 'json',
-          quietMillis: 200,
-          data: function (term, page) {
-            return { q: term };
-          },
-          results: function (data, page) {
-            return {results: data.collaborators};
-          }
-        },
-        formatSelection: function(collaborator, container) {
-          return collaborator.username;
-        },
-        formatResult: function(collaborator, container) {
-          if(collaborator.first_name && collaborator.last_name) {
-            return collaborator.first_name + ' ' + collaborator.last_name + ' (' + collaborator.username + ')';
-          } else {
-            return collaborator.username;
-          }
+            url: "/autocomplete/users",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term // search term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return {id: obj.id, text: obj.username};
+                    })
+                };
+            },
+            cache: true
         }
-    }
-    $('.collaborators').select2(settings);
+    };
+
+    $('.project-members').select2(settings);
 
     // end
     $('#member').on('show.bs.modal', function (event) {
@@ -48,7 +42,6 @@ var app = app || {};
             $('.btn-danger', modal).show();
         } else {
             $('#member_id').val('');
-            $('#member_name').val('');
             modal.find('.modal-title span').text(trans('members.create'));
         }
     });
@@ -75,7 +68,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var member = app.Members.get($('#model_id').val());
+        var member = Fixhub.Members.get($('#model_id').val());
 
         member.destroy({
             wait: true,
@@ -107,22 +100,16 @@ var app = app || {};
         var member_id = $('#member_id').val();
 
         if (member_id) {
-            var member = app.Members.get(member_id);
+            var member = Fixhub.Members.get(member_id);
         } else {
-            var member = new app.Member();
+            var member = new Fixhub.Member();
         }
 
         var data = {
-          config:     null,
-          name:       $('#member_name').val(),
+          users:      $('#member_users').val(),
+          level:      $('#member_level').val(),
           project_id: parseInt($('input[name="project_id"]').val())
         };
-
-        $('#member #member-config-' + data.type + ' :input[id^=member_config]').each(function(key, field) {
-            var name = $(field).attr('name');
-
-            data[name] = $(field).val();
-        });
 
         member.save(data, {
             wait: true,
@@ -135,7 +122,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!member_id) {
-                    app.Members.add(response);
+                    Fixhub.Members.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -165,17 +152,17 @@ var app = app || {};
         });
     });
 
-    app.Member = Backbone.Model.extend({
+    Fixhub.Member = Backbone.Model.extend({
         urlRoot: '/members'
     });
 
     var Members = Backbone.Collection.extend({
-        model: app.Member
+        model: Fixhub.Member
     });
 
-    app.Members = new Members();
+    Fixhub.Members = new Members();
 
-    app.MembersTab = Backbone.View.extend({
+    Fixhub.MembersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -186,36 +173,36 @@ var app = app || {};
             $('#no_members').show();
             $('#member_list').hide();
 
-            this.listenTo(app.Members, 'add', this.addOne);
-            this.listenTo(app.Members, 'reset', this.addAll);
-            this.listenTo(app.Members, 'remove', this.addAll);
-            this.listenTo(app.Members, 'all', this.render);
+            this.listenTo(Fixhub.Members, 'add', this.addOne);
+            this.listenTo(Fixhub.Members, 'reset', this.addAll);
+            this.listenTo(Fixhub.Members, 'remove', this.addAll);
+            this.listenTo(Fixhub.Members, 'all', this.render);
 
 
-            app.listener.on('member:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var member = app.Members.get(parseInt(data.model.id));
+            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var member = Fixhub.Members.get(parseInt(data.model.id));
 
                 if (member) {
                     member.set(data.model);
                 }
             });
 
-            app.listener.on('member:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Members.add(data.model);
+            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
+                    Fixhub.Members.add(data.model);
                 }
             });
 
-            app.listener.on('member:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var member = app.Members.get(parseInt(data.model.id));
+            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var member = Fixhub.Members.get(parseInt(data.model.id));
 
                 if (member) {
-                    app.Members.remove(member);
+                    Fixhub.Members.remove(member);
                 }
             });
         },
         render: function () {
-            if (app.Members.length) {
+            if (Fixhub.Members.length) {
                 $('#no_members').hide();
                 $('#member_list').show();
             } else {
@@ -224,7 +211,7 @@ var app = app || {};
             }
         },
         addOne: function (member) {
-            var view = new app.MemberView({
+            var view = new Fixhub.MemberView({
                 model: member
             });
 
@@ -232,11 +219,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Members.each(this.addOne, this);
+            Fixhub.Members.each(this.addOne, this);
         }
     });
 
-    app.MemberView = Backbone.View.extend({
+    Fixhub.MemberView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -265,9 +252,7 @@ var app = app || {};
             });
 
             $('#member_id').val(this.model.id);
-            $('#member_name').val(this.model.get('name'));
-
-            setTitleWithIcon(this.model.get('type'), 'edit');
+            $('#member_level').val(this.model.get('level'));
         },
         trash: function() {
             var target = $('#model_id');

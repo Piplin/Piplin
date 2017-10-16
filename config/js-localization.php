@@ -38,7 +38,7 @@ return [
     */
 
     'messages' => [
-        'app'           => ['yes', 'no'],
+        'app'           => ['yes', 'no', 'never'],
         'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'approving', 'approving_empty', 'deployment_number'],
         'deployments'   => ['completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', ],
@@ -57,6 +57,7 @@ return [
         'hooks'         => ['create', 'edit', 'custom', 'slack', 'mail', 'create_slack', 'create_mail', 'create_custom', 'edit_slack', 'edit_mail', 'edit_custom',],
         'providers'     => ['create', 'edit'],
         'servers'       => ['create', 'edit', 'successful', 'testing', 'failed', 'untested'],
+        'members'       => ['create', 'edit', 'search'],
     ],
 
     /*

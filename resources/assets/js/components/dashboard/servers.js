@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -52,7 +50,6 @@ var app = app || {};
             $('#server_user').val('');
             $('#server_path').val('');
             $('#server_environment_id').val($("#server_environment_id option:selected").val());
-            $('#server_deploy_code').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
@@ -67,7 +64,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var server = app.Servers.get($('#model_id').val());
+        var server = Fixhub.Servers.get($('#model_id').val());
 
         server.destroy({
             wait: true,
@@ -99,9 +96,9 @@ var app = app || {};
         var server_id = $('#server_id').val();
 
         if (server_id) {
-            var server = app.Servers.get(server_id);
+            var server = Fixhub.Servers.get(server_id);
         } else {
-            var server = new app.Server();
+            var server = new Fixhub.Server();
         }
 
         server.save({
@@ -111,7 +108,6 @@ var app = app || {};
             port:           $('#server_port').val(),
             user:           $('#server_user').val(),
             path:           $('#server_path').val(),
-            deploy_code:    $('#server_deploy_code').is(':checked'),
             environment_id: $('#server_environment_id').val()
         }, {
             wait: true,
@@ -124,7 +120,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!server_id) {
-                    app.Servers.add(response);
+                    Fixhub.Servers.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -155,12 +151,12 @@ var app = app || {};
     });
 
 
-    app.Server = Backbone.Model.extend({
+    Fixhub.Server = Backbone.Model.extend({
         urlRoot: '/servers'
     });
 
     var Servers = Backbone.Collection.extend({
-        model: app.Server,
+        model: Fixhub.Server,
         comparator: function(serverA, serverB) {
             if (serverA.get('name') > serverB.get('name')) {
                 return -1; // before
@@ -172,9 +168,9 @@ var app = app || {};
         }
     });
 
-    app.Servers = new Servers();
+    Fixhub.Servers = new Servers();
 
-    app.ServersTab = Backbone.View.extend({
+    Fixhub.ServersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -185,39 +181,39 @@ var app = app || {};
             $('#no_servers').show();
             $('#server_list').hide();
 
-            this.listenTo(app.Servers, 'add', this.addOne);
-            this.listenTo(app.Servers, 'reset', this.addAll);
-            this.listenTo(app.Servers, 'remove', this.addAll);
-            this.listenTo(app.Servers, 'all', this.render);
+            this.listenTo(Fixhub.Servers, 'add', this.addOne);
+            this.listenTo(Fixhub.Servers, 'reset', this.addAll);
+            this.listenTo(Fixhub.Servers, 'remove', this.addAll);
+            this.listenTo(Fixhub.Servers, 'all', this.render);
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var server = app.Servers.get(parseInt(data.model.id));
+            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
-                    if(app.environment_id == data.model.environment_id) {
+                    if(Fixhub.environment_id == data.model.environment_id) {
                         server.set(data.model);
                     } else {
-                        app.Servers.remove(server);
+                        Fixhub.Servers.remove(server);
                     }
                 }
             });
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                if (parseInt(data.model.environment_id) === parseInt(app.environment_id)) {
-                    app.Servers.add(data.model);
+            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                if (parseInt(data.model.environment_id) === parseInt(Fixhub.environment_id)) {
+                    Fixhub.Servers.add(data.model);
                 }
             });
 
-            app.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var server = app.Servers.get(parseInt(data.model.id));
+            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
-                    app.Servers.remove(server);
+                    Fixhub.Servers.remove(server);
                 }
             });
         },
         render: function () {
-            if (app.Servers.length) {
+            if (Fixhub.Servers.length) {
                 $('#no_servers').hide();
                 $('#server_list').show();
             } else {
@@ -227,13 +223,13 @@ var app = app || {};
         },
         addOne: function (server) {
 
-            var view = new app.ServerView({
+            var view = new Fixhub.ServerView({
                 model: server
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Servers.length < 2) {
+            if (Fixhub.Servers.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -241,11 +237,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Servers.each(this.addOne, this);
+            Fixhub.Servers.each(this.addOne, this);
         }
     });
 
-    app.ServerView = Backbone.View.extend({
+    Fixhub.ServerView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-test': 'testConnection',
@@ -292,8 +288,6 @@ var app = app || {};
             $('#server_port').val(this.model.get('port'));
             $('#server_user').val(this.model.get('user'));
             $('#server_path').val(this.model.get('path'));
-
-            $('#server_deploy_code').prop('checked', (this.model.get('deploy_code') === true));
         },
         showLog: function() {
             var data = this.model.toJSON();

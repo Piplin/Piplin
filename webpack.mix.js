@@ -16,21 +16,22 @@ const assets_path = 'resources/assets';
 const dist_path = 'public';
 
 const paths = {
+    'ace'              : `${node_path}/ace-min-noconflict`,
     'backbone'         : `${node_path}/backbone`,
-    'underscore'       : `${node_path}/underscore`,
-    'moment'           : `${node_path}/moment`,
+    'bootstrap_sass'   : `${node_path}/bootstrap-sass`,
+    'cropper'          : `${node_path}/cropper`,
+    'ionicons'         : `${node_path}/ionicons`,
     'jquery'           : `${node_path}/jquery`,
     'jquery_sortable'  : `${node_path}/jquery-sortable`,
-    'bootstrap_sass'   : `${node_path}/bootstrap-sass`,
-    'socketio_client'  : `${node_path}/socket.io-client`,
-    'ionicons'         : `${node_path}/ionicons`,
-    'cropper'          : `${node_path}/cropper`,
-    'toastr'           : `${node_path}/toastr`,
-    'select2'          : `${node_path}/select2`,
-    'ace'              : `${node_path}/ace-min-noconflict`,
-    'raphael'          : `${node_path}/raphael`,
+    'livestamp'        : `${node_path}/livestamp`,
+    'localization'     : 'vendor/fixhub/js-localization',
+    'moment'           : `${node_path}/moment`,
     'morris'           : `${node_path}/morris.js`,
-    'localization'     : 'vendor/fixhub/js-localization'
+    'raphael'          : `${node_path}/raphael`,
+    'select2'          : `${node_path}/select2`,
+    'socketio_client'  : `${node_path}/socket.io-client`,
+    'toastr'           : `${node_path}/toastr`,
+    'underscore'       : `${node_path}/underscore`
 };
 
 const skeletons = [
@@ -51,7 +52,7 @@ mix
         `${paths.jquery}/dist/jquery.min.js`,
         `${paths.jquery_sortable}/source/js/jquery-sortable-min.js`,
         `${paths.underscore}/underscore-min.js`,
-        `${paths.moment}/min/moment.min.js`,
+        `${paths.moment}/min/moment-with-locales.min.js`,
         `${paths.bootstrap_sass}/assets/javascripts/bootstrap.min.js`,
         `${paths.select2}/dist/js/select2.min.js`,
         `${paths.raphael}/raphael.min.js`,
@@ -60,7 +61,8 @@ mix
         `${paths.socketio_client}/dist/socket.io.js`,
         `${paths.localization}/resources/js/localization.js`,
         `${paths.toastr}/build/toastr.min.js`,
-        `${paths.cropper}/dist/cropper.min.js`
+        `${paths.cropper}/dist/cropper.min.js`,
+        `${paths.livestamp}/livestamp.js`
     ], `${dist_path}/js/vendor.js`)
     .scripts([
         `${paths.ace}/ace.js`,
@@ -70,14 +72,14 @@ mix
         `${paths.ace}/mode-ini.js`
     ], `${dist_path}/js/ace.js`)
     .scripts([
-        `${assets_path}/js/components/admin/providers.js`,
-        `${assets_path}/js/components/admin/users.js`,
         `${assets_path}/js/components/admin/groups.js`,
+        `${assets_path}/js/components/admin/providers.js`,
         `${assets_path}/js/components/admin/projects.js`,
         `${assets_path}/js/components/admin/templates.js`,
         `${assets_path}/js/components/admin/links.js`,
         `${assets_path}/js/components/admin/tips.js`,
-        `${assets_path}/js/components/admin/keys.js`
+        `${assets_path}/js/components/admin/keys.js`,
+        `${assets_path}/js/components/admin/users.js`
     ].concat(skeletons), `${dist_path}/js/admin.js`)
     .scripts([
         `${assets_path}/js/components/dashboard/commands.js`,

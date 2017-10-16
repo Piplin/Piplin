@@ -12,7 +12,7 @@
                         <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository_path') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
                         <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
                         @if(!empty($project->last_mirrored))
-                        <li><a href="javascript:void(0);" data-project-id={{ $project->id }} class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right">{{ $project->last_mirrored }}</span> <i class="ion ion-refresh"></i></a></li>
+                        <li><a href="javascript:void(0);" data-project-id={{ $project->id }} class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right"><i class="ion ion-refresh"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_mirrored }}" data-timeago="{{ $project->last_mirrored }}"></abbr></span></a></li>
                         @else
                         <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
                         @endif
@@ -123,31 +123,32 @@
 @push('javascript')
     <script type="text/javascript">
         @if($tab == 'environments')
-        new app.EnvironmentsTab();
-        app.Environments.add({!! $environments->toJson() !!});
+        new Fixhub.EnvironmentsTab();
+        Fixhub.Environments.add({!! $environments->toJson() !!});
 
         @elseif($tab == 'commands')
-        new app.VariablesTab();
-        app.Variables.add({!! $variables->toJson() !!});
+        new Fixhub.VariablesTab();
+        Fixhub.Variables.add({!! $variables->toJson() !!});
 
         @elseif($tab == 'config-files')
-        new app.ConfigFilesTab();
-        app.ConfigFiles.add({!! $configFiles->toJson() !!});
+        new Fixhub.ConfigFilesTab();
+        Fixhub.ConfigFiles.add({!! $configFiles->toJson() !!});
 
         @elseif($tab == 'shared-files')
-        new app.SharedFilesTab();
-        app.SharedFiles.add({!! $sharedFiles->toJson() !!});
+        new Fixhub.SharedFilesTab();
+        Fixhub.SharedFiles.add({!! $sharedFiles->toJson() !!});
 
         @elseif($tab == 'hooks')
-        new app.HooksTab();
-        app.Hooks.add({!! $hooks->toJson() !!});
+        new Fixhub.HooksTab();
+        Fixhub.Hooks.add({!! $hooks->toJson() !!});
 
         @elseif($tab == 'members')
-        new app.MembersTab();
-        app.Members.add({!! $members !!});
+        new Fixhub.MembersTab();
+        Fixhub.Members.add({!! $members !!});
+
         @endif
 
-        app.project_id = {{ $project->id }};
+        Fixhub.project_id = {{ $project->id }};
         @if(isset($action) && $action == 'apply')
             $('button#deploy_project').trigger('click');
         @endif

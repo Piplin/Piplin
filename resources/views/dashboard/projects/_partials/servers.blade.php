@@ -20,7 +20,7 @@
         <div class="pull-right">
             <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
         </div>
-        <h3 class="box-title">{{ trans('environments.label') }} : {{ $environment->name }}</h3>
+        <h3 class="box-title">{{ trans('environments.servers') }}</h3>
     </div>
 
     <div class="box-body" id="no_servers">

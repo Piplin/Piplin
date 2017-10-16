@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
+use Fixhub\Models\Command;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Project;
 
@@ -29,26 +30,38 @@ class EnvironmentController extends Controller
      * @param int $environment_id     Either clone, install, activate or purge
      * @return Response
      */
-    public function show($targetable_id, $environment_id)
+    public function show($targetable_id, $environment_id, $tab = '')
     {
         $project = Project::findOrFail($targetable_id);
         $targetable_type = 'Fixhub\\Models\\Project';
 
         $environment = Environment::findOrFail($environment_id);
+        $optional = $project->commands->filter(function (Command $command) {
+            return $command->optional;
+        });
 
         $breadcrumb = [
             ['url' => route('projects', ['id' => $project->id, 'tab' => 'environments']), 'label' => $project->name],
         ];
-        return view('dashboard.environments.show', [
-                'title'           => trans('servers.label'),
-                'breadcrumb'      => $breadcrumb,
-                'project'         => $project,
-                'targetable_type' => $targetable_type,
-                'targetable_id'   => $project->id,
-                'environment'     => $environment,
-                'environments'    => $project->environments,
-                'servers'         => $environment->servers,
-            ]);
+        $data = [
+            'title'           => $environment->name,
+            'breadcrumb'      => $breadcrumb,
+            'project'         => $project,
+            'targetable_type' => $targetable_type,
+            'targetable_id'   => $project->id,
+            'environment'     => $environment,
+            'optional'        => $optional,
+            'tab'             => $tab,
+        ];
+
+        if ($tab == 'deployments') {
+            $data['deployments'] = $environment->deployments()->paginate(15);
+        } else {
+            $data['servers'] = $environment->servers;
+            $data['environments'] = $project->environments;
+        }
+
+        return view('dashboard.environments.show', $data);
     }
     /**
      * Store a newly created environment in storage.

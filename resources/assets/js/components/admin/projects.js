@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
 
      $('#project-clone').on('show.bs.modal', function(event) {
@@ -59,7 +57,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var project = app.Projects.get($('#model_id').val());
+        var project = Fixhub.Projects.get($('#model_id').val());
 
         project.destroy({
             wait: true,
@@ -91,9 +89,9 @@ var app = app || {};
         var project_id = $('#project_id').val();
 
         if (project_id) {
-            var project = app.Projects.get(project_id);
+            var project = Fixhub.Projects.get(project_id);
         } else {
-            var project = new app.Project();
+            var project = new Fixhub.Project();
         }
 
         project.save({
@@ -119,7 +117,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!project_id) {
-                    app.Projects.add(response);
+                    Fixhub.Projects.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -150,17 +148,17 @@ var app = app || {};
         });
     });
 
-    app.Project = Backbone.Model.extend({
+    Fixhub.Project = Backbone.Model.extend({
         urlRoot: '/admin/projects'
     });
 
     var Projects = Backbone.Collection.extend({
-        model: app.Project
+        model: Fixhub.Project
     });
 
-    app.Projects = new Projects();
+    Fixhub.Projects = new Projects();
 
-    app.ProjectsTab = Backbone.View.extend({
+    Fixhub.ProjectsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -171,43 +169,43 @@ var app = app || {};
             $('#project_list').hide();
             $('#no_projects').show();
 
-            this.listenTo(app.Projects, 'add', this.addOne);
-            this.listenTo(app.Projects, 'reset', this.addAll);
-            this.listenTo(app.Projects, 'remove', this.addAll);
-            this.listenTo(app.Projects, 'all', this.render);
+            this.listenTo(Fixhub.Projects, 'add', this.addOne);
+            this.listenTo(Fixhub.Projects, 'reset', this.addAll);
+            this.listenTo(Fixhub.Projects, 'remove', this.addAll);
+            this.listenTo(Fixhub.Projects, 'all', this.render);
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var project = app.Projects.get(parseInt(data.model.id));
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    if(app.group_id == undefined || app.group_id == data.model.group_id) {
+                    if(Fixhub.group_id == undefined || Fixhub.group_id == data.model.group_id) {
                         project.set(data.model);
                     } else {
-                        app.Projects.remove(project);
+                        Fixhub.Projects.remove(project);
                     }
                 }
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Projects.add(data.model);
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Projects.add(data.model);
             });
 
-            app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var project = app.Projects.get(parseInt(data.model.id));
+            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    app.Projects.remove(project);
+                    Fixhub.Projects.remove(project);
                 }
 
                 $('#project_' + data.model.id).parent('li').remove();
 
-                if (parseInt(data.model.id) === parseInt(app.project_id)) {
+                if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
                     window.location.href = '/';
                 }
             });
         },
         render: function () {
-            if (app.Projects.length) {
+            if (Fixhub.Projects.length) {
                 $('#no_projects').hide();
                 $('#project_list').show();
             } else {
@@ -216,7 +214,7 @@ var app = app || {};
             }
         },
         addOne: function (project) {
-            var view = new app.ProjectView({
+            var view = new Fixhub.ProjectView({
                 model: project
             });
 
@@ -224,11 +222,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Projects.each(this.addOne, this);
+            Fixhub.Projects.each(this.addOne, this);
         }
     });
 
-    app.ProjectView = Backbone.View.extend({
+    Fixhub.ProjectView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editProject',

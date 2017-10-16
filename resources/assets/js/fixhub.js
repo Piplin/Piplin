@@ -1,16 +1,4 @@
-var app = app || {};
-
 (function ($) {
-
-    toastr.options.closeButton = true;
-    toastr.options.progressBar = true;
-    toastr.options.preventDuplicates = true;
-    toastr.options.closeMethod = 'fadeOut';
-    toastr.options.closeDuration = 3000;
-    toastr.options.closeEasing = 'swing';
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.timeOut = 5000;
-    toastr.options.extendedTimeOut = 7000;
 
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
@@ -26,8 +14,16 @@ var app = app || {};
     if (window.location.href.match(/login|password/) != null) {
         return;
     }
+    var locale = $('meta[name="locale"]').attr('content');
 
-    Lang.setLocale($('meta[name="locale"]').attr('content'));
+    Lang.setLocale(locale);
+
+    moment.locale(locale);
+
+    $('abbr.timeago').each(function () {
+        var $el = $(this);
+        $el.livestamp($el.data('timeago')).tooltip();
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -35,6 +31,17 @@ var app = app || {};
         width: '100%',
         minimumResultsForSearch: Infinity
     });
+
+    // Toastr options
+    toastr.options.closeButton = true;
+    toastr.options.progressBar = true;
+    toastr.options.preventDuplicates = true;
+    toastr.options.closeMethod = 'fadeOut';
+    toastr.options.closeDuration = 3000;
+    toastr.options.closeEasing = 'swing';
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.timeOut = 5000;
+    toastr.options.extendedTimeOut = 7000;
 
     var FINISHED     = 0;
     var PENDING      = 1;
@@ -52,33 +59,35 @@ var app = app || {};
     var DEPLOYMENT_APPROVING = 7;
     var DEPLOYMENT_APPROVED  = 8;
 
-    app.project_id = app.project_id || null;
+    window.Fixhub = {};
 
-    app.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
+    Fixhub.project_id = Fixhub.project_id || null;
+
+    Fixhub.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
         query: 'jwt=' + $('meta[name="jwt"]').attr('content')
     });
 
-    app.connection_error = false;
+    Fixhub.connection_error = false;
 
-    app.listener.on('connect_error', function(error) {
-        if (!app.connection_error) {
+    Fixhub.listener.on('connect_error', function(error) {
+        if (!Fixhub.connection_error) {
             $('#socket_offline').show();
         }
 
-        app.connection_error = true;
+        Fixhub.connection_error = true;
     });
 
-    app.listener.on('connect', function() {
+    Fixhub.listener.on('connect', function() {
         $('#socket_offline').hide();
-        app.connection_error = false;
+        Fixhub.connection_error = false;
     });
 
-    app.listener.on('reconnect', function() {
+    Fixhub.listener.on('reconnect', function() {
         $('#socket_offline').hide();
-        app.connection_error = false;
+        Fixhub.connection_error = false;
     });
 
-    app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+    Fixhub.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
 
         // Update todo bar
         updateTodoBar(data);
@@ -165,7 +174,7 @@ var app = app || {};
         }
     });
 
-    app.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+    Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
 
         var project = $('#project_' + data.model.id);
 
@@ -197,16 +206,16 @@ var app = app || {};
             }
 
             $('td:first a', project).text(data.model.name);
-            $('td:nth-child(3)', project).text(moment(data.model.last_run).format('MM-DD HH:mm'));
+            $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
             status.attr('class', 'label label-' + label_class)
             $('i', status).attr('class', 'ion ion-' + icon_class);
             $('span', status).text(label);
         }
     });
 
-    app.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+    Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
 
-        if (parseInt(data.model.id) === parseInt(app.project_id)) {
+        if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
             window.location.href = '/';
         }
     });
@@ -222,7 +231,7 @@ var app = app || {};
 
     function updateTodoBar(data) {
 
-        data.model.time = moment(data.model.started_at).format('HH:mm:ss');
+        data.model.time = moment(data.model.started_at).fromNow();
         data.model.url = '/deployment/' + data.model.id;
 
         $('#deployment_info_' + data.model.id).remove();

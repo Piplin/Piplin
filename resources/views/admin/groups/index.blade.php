@@ -34,8 +34,8 @@
 <script type="text/javascript">
     var groups = {!! $groups->toJson() !!};
 
-    new app.GroupsTab();
-    app.Groups.add(groups.data);
+    new Fixhub.GroupsTab();
+    Fixhub.Groups.add(groups.data);
 
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');

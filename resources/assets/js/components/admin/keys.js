@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -61,7 +59,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var key = app.Keys.get($('#model_id').val());
+        var key = Fixhub.Keys.get($('#model_id').val());
 
         key.destroy({
             wait: true,
@@ -93,9 +91,9 @@ var app = app || {};
         var key_id = $('#key_id').val();
 
         if (key_id) {
-            var key = app.Keys.get(key_id);
+            var key = Fixhub.Keys.get(key_id);
         } else {
-            var key = new app.Key();
+            var key = new Fixhub.Key();
         }
 
         key.save({
@@ -112,7 +110,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!key_id) {
-                    app.Keys.add(response);
+                    Fixhub.Keys.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -143,12 +141,12 @@ var app = app || {};
     });
 
 
-    app.Key = Backbone.Model.extend({
+    Fixhub.Key = Backbone.Model.extend({
         urlRoot: '/admin/keys'
     });
 
     var Keys = Backbone.Collection.extend({
-        model: app.Key,
+        model: Fixhub.Key,
         comparator: function(keyA, keyB) {
             if (keyA.get('name') > keyB.get('name')) {
                 return -1; // before
@@ -160,9 +158,9 @@ var app = app || {};
         }
     });
 
-    app.Keys = new Keys();
+    Fixhub.Keys = new Keys();
 
-    app.KeysTab = Backbone.View.extend({
+    Fixhub.KeysTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -173,33 +171,33 @@ var app = app || {};
             $('#no_keys').show();
             $('#key_list').hide();
 
-            this.listenTo(app.Keys, 'add', this.addOne);
-            this.listenTo(app.Keys, 'reset', this.addAll);
-            this.listenTo(app.Keys, 'remove', this.addAll);
-            this.listenTo(app.Keys, 'all', this.render);
+            this.listenTo(Fixhub.Keys, 'add', this.addOne);
+            this.listenTo(Fixhub.Keys, 'reset', this.addAll);
+            this.listenTo(Fixhub.Keys, 'remove', this.addAll);
+            this.listenTo(Fixhub.Keys, 'all', this.render);
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var key = app.Keys.get(parseInt(data.model.id));
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
                     key.set(data.model);
                 }
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Keys.add(data.model);
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Keys.add(data.model);
             });
 
-            app.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var key = app.Keys.get(parseInt(data.model.id));
+            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
-                    app.Keys.remove(key);
+                    Fixhub.Keys.remove(key);
                 }
             });
         },
         render: function () {
-            if (app.Keys.length) {
+            if (Fixhub.Keys.length) {
                 $('#no_keys').hide();
                 $('#key_list').show();
             } else {
@@ -209,13 +207,13 @@ var app = app || {};
         },
         addOne: function (key) {
 
-            var view = new app.KeyView({
+            var view = new Fixhub.KeyView({
                 model: key
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Keys.length < 2) {
+            if (Fixhub.Keys.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -223,11 +221,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Keys.each(this.addOne, this);
+            Fixhub.Keys.each(this.addOne, this);
         }
     });
 
-    app.KeyView = Backbone.View.extend({
+    Fixhub.KeyView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-show': 'showKey',

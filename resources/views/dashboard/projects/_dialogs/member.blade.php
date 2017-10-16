@@ -14,12 +14,24 @@
                         <i class="icon ion ion-alert"></i> {{ trans('members.warning') }}
                     </div>
                     <div class="form-group">
-                        <label for="member_name">{{ trans('members.name') }}</label>
+                        <label for="member_users">{{ trans('members.users') }}</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
-                            <select class="collaborators"></select>
+                            <div class="input-group-addon"><i class="ion ion-android-person"></i></div>
+                            <select class="form-control project-members" id="member_users" name="users[]" multiple="multiple"></select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="user_level">{{ trans('members.level') }}</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ion ion-person-stalker"></i></div>
+                            <select id="member_level" name="level" class="select2 form-control">
+                                @foreach([10,20,30] as $level)
+                                    <option value="{{ $level }}">{{ $level }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group pull-left">

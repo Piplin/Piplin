@@ -33,8 +33,8 @@
 @push('javascript')
 <script type="text/javascript">
     var tips = {!! $tips !!};
-    new app.TipsTab();
-    app.Tips.add(tips.data);
+    new Fixhub.TipsTab();
+    Fixhub.Tips.add(tips.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif

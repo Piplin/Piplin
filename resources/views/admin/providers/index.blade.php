@@ -35,8 +35,8 @@
 @push('javascript')
     <script type="text/javascript">
         var providers = {!! $providers !!};
-        new app.ProvidersTab();
-        app.Providers.add(providers.data);
+        new Fixhub.ProvidersTab();
+        Fixhub.Providers.add(providers.data);
         @if(isset($action) && $action == 'create')
         $('button.btn.btn-primary').trigger('click');
         @endif

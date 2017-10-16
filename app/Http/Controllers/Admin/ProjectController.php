@@ -11,7 +11,7 @@
 
 namespace Fixhub\Http\Controllers\Admin;
 
-use Fixhub\Bus\Jobs\SetupProjectJob;
+use Fixhub\Bus\Jobs\SetupSkeletonJob;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Models\Key;
@@ -101,7 +101,7 @@ class ProjectController extends Controller
 
         $project = Project::create($fields);
         
-        dispatch(new SetupProjectJob($project, $skeleton));
+        dispatch(new SetupSkeletonJob($project, $skeleton));
 
         return $project;
     }
@@ -134,7 +134,7 @@ class ProjectController extends Controller
             $target = DeployTemplate::create($fields);
         }
 
-        dispatch(new SetupProjectJob($target, $skeleton));
+        dispatch(new SetupSkeletonJob($target, $skeleton));
 
         return redirect()->route($type == 'template' ? 'admin.templates.show' : 'projects', [
             'id' => $target->id,

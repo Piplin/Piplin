@@ -18,6 +18,7 @@ return [
     'name_placeholder'    => '预发布',
     'servers'             => '服务器',
     'description'         => '描述',
+    'deployed'            => '最近上线',
     'desc_placeholder'    => '简要描述环境用途',
     'warning'             => '信息保存失败.',
     'none'                => '还没有设置部署环境',

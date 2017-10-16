@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#sharedfile').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -32,7 +30,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file = app.SharedFiles.get($('#model_id').val());
+        var file = Fixhub.SharedFiles.get($('#model_id').val());
 
         file.destroy({
             wait: true,
@@ -64,9 +62,9 @@ var app = app || {};
         var file_id = $('#sharedfile_id').val();
 
         if (file_id) {
-            var file = app.SharedFiles.get(file_id);
+            var file = Fixhub.SharedFiles.get(file_id);
         } else {
-            var file = new app.SharedFile();
+            var file = new Fixhub.SharedFile();
         }
 
         file.save({
@@ -85,7 +83,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!file_id) {
-                    app.SharedFiles.add(response);
+                    Fixhub.SharedFiles.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -115,17 +113,17 @@ var app = app || {};
         });
     });
 
-    app.SharedFile = Backbone.Model.extend({
+    Fixhub.SharedFile = Backbone.Model.extend({
         urlRoot: '/shared-files'
     });
 
     var SharedFiles = Backbone.Collection.extend({
-        model: app.SharedFile
+        model: Fixhub.SharedFile
     });
 
-    app.SharedFiles = new SharedFiles();
+    Fixhub.SharedFiles = new SharedFiles();
 
-    app.SharedFilesTab = Backbone.View.extend({
+    Fixhub.SharedFilesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -136,37 +134,37 @@ var app = app || {};
             $('#no_sharedfiles').show();
             $('#sharedfile_list').hide();
 
-            this.listenTo(app.SharedFiles, 'add', this.addOne);
-            this.listenTo(app.SharedFiles, 'reset', this.addAll);
-            this.listenTo(app.SharedFiles, 'remove', this.addAll);
-            this.listenTo(app.SharedFiles, 'all', this.render);
+            this.listenTo(Fixhub.SharedFiles, 'add', this.addOne);
+            this.listenTo(Fixhub.SharedFiles, 'reset', this.addAll);
+            this.listenTo(Fixhub.SharedFiles, 'remove', this.addAll);
+            this.listenTo(Fixhub.SharedFiles, 'all', this.render);
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var share = app.SharedFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
                     share.set(data.model);
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.SharedFiles.add(data.model);
+                    Fixhub.SharedFiles.add(data.model);
                 }
             });
 
-            app.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var share = app.SharedFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
-                    app.SharedFiles.remove(share);
+                    Fixhub.SharedFiles.remove(share);
                 }
             });
         },
         render: function () {
-            if (app.SharedFiles.length) {
+            if (Fixhub.SharedFiles.length) {
                 $('#no_sharedfiles').hide();
                 $('#sharedfile_list').show();
             } else {
@@ -176,7 +174,7 @@ var app = app || {};
         },
         addOne: function (file) {
 
-            var view = new app.SharedFileView({
+            var view = new Fixhub.SharedFileView({
                 model: file
             });
 
@@ -184,11 +182,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.SharedFiles.each(this.addOne, this);
+            Fixhub.SharedFiles.each(this.addOne, this);
         }
     });
 
-    app.SharedFileView = Backbone.View.extend({
+    Fixhub.SharedFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

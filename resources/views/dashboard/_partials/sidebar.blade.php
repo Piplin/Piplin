@@ -57,7 +57,13 @@
                     <tr id="project_{{ $group_project->id }}">
                         <td>{{ $group_project->id }}</td>
                         <td><a href="{{ route('projects', ['id' => $group_project->id]) }}" title="{{ trans('projects.details') }}">{{ $group_project->name }}</a></td>
-                        <td class="small">{{ $group_project->last_run ? $group_project->last_run->format('m-d H:i') : trans('app.never') }}</td>
+                        <td class="small">
+                          @if($group_project->last_run)
+                          <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $group_project->last_run }}" data-timeago="{{ $group_project->last_run }}"></abbr>
+                          @else
+                          {{ trans('app.never') }}
+                          @endif
+                        </td>
                         <td><span class="label label-{{ $group_project->css_class }}"><i class="ion ion-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
                         <td>
                             <div class="btn-group pull-right">

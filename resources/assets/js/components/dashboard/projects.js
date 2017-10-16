@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
 
     $('select.deployment-source').select2({
