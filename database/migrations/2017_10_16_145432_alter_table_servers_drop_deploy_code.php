@@ -13,7 +13,7 @@ class AlterTableServersDropDeployCode extends Migration
      */
     public function up()
     {
-         Schema::table('servers', function (Blueprint $table) {
+        Schema::table('servers', function (Blueprint $table) {
             $table->dropColumn('deploy_code');
         });
     }
