@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#environment_list table').sortable({
         containerSelector: 'table',
@@ -59,7 +57,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var environment = app.Environments.get($('#model_id').val());
+        var environment = Fixhub.Environments.get($('#model_id').val());
 
         environment.destroy({
             wait: true,
@@ -91,9 +89,9 @@ var app = app || {};
         var environment_id = $('#environment_id').val();
 
         if (environment_id) {
-            var environment = app.Environments.get(environment_id);
+            var environment = Fixhub.Environments.get(environment_id);
         } else {
-            var environment = new app.Environment();
+            var environment = new Fixhub.Environment();
         }
 
         environment.save({
@@ -114,7 +112,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!environment_id) {
-                    app.Environments.add(response);
+                    Fixhub.Environments.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -144,7 +142,7 @@ var app = app || {};
         });
     });
 
-    app.Environment = Backbone.Model.extend({
+    Fixhub.Environment = Backbone.Model.extend({
         urlRoot: '/environments',
         initialize: function() {
 
@@ -152,12 +150,12 @@ var app = app || {};
     });
 
     var Environments = Backbone.Collection.extend({
-        model: app.Environment
+        model: Fixhub.Environment
     });
 
-    app.Environments = new Environments();
+    Fixhub.Environments = new Environments();
 
-    app.EnvironmentsTab = Backbone.View.extend({
+    Fixhub.EnvironmentsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -168,39 +166,39 @@ var app = app || {};
             $('#no_environments').show();
             $('#environment_list').hide();
 
-            this.listenTo(app.Environments, 'add', this.addOne);
-            this.listenTo(app.Environments, 'reset', this.addAll);
-            this.listenTo(app.Environments, 'remove', this.addAll);
-            this.listenTo(app.Environments, 'all', this.render);
+            this.listenTo(Fixhub.Environments, 'add', this.addOne);
+            this.listenTo(Fixhub.Environments, 'reset', this.addAll);
+            this.listenTo(Fixhub.Environments, 'remove', this.addAll);
+            this.listenTo(Fixhub.Environments, 'all', this.render);
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#environment_' + data.model.id).html(data.model.name);
 
-                var environment = app.Environments.get(parseInt(data.model.id));
+                var environment = Fixhub.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
                     environment.set(data.model);
                 }
             });
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.Environments.add(data.model);
+                    Fixhub.Environments.add(data.model);
                 }
             });
 
-            app.listener.on('environment:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var environment = app.Environments.get(parseInt(data.model.id));
+            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var environment = Fixhub.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
-                    app.Environments.remove(environment);
+                    Fixhub.Environments.remove(environment);
                 }
             });
         },
         render: function () {
-            if (app.Environments.length) {
+            if (Fixhub.Environments.length) {
                 $('#no_environments').hide();
                 $('#environment_list').show();
             } else {
@@ -210,13 +208,13 @@ var app = app || {};
         },
         addOne: function (environment) {
 
-            var view = new app.EnvironmentView({
+            var view = new Fixhub.EnvironmentView({
                 model: environment
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Environments.length < 2) {
+            if (Fixhub.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -224,11 +222,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Environments.each(this.addOne, this);
+            Fixhub.Environments.each(this.addOne, this);
         }
     });
 
-    app.EnvironmentView = Backbone.View.extend({
+    Fixhub.EnvironmentView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

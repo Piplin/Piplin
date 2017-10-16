@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var COMPLETED = 0;
     var PENDING   = 1;
@@ -73,7 +71,7 @@ var app = app || {};
             log.show();
             loader.hide();
 
-            app.listener.on('serverlog-' + log_id + ':Fixhub\\Bus\\Events\\ServerOutputChangedEvent', function (data) {
+            Fixhub.listener.on('serverlog-' + log_id + ':Fixhub\\Bus\\Events\\ServerOutputChangedEvent', function (data) {
                 if (data.log_id === parseInt(log_id)) {
                   fetchLog(log, data.log_id);
                 }
@@ -123,17 +121,17 @@ var app = app || {};
             .replace(/<info>/g, '<span class="text-default">');
     }
 
-    app.ServerLog = Backbone.Model.extend({
+    Fixhub.ServerLog = Backbone.Model.extend({
         urlRoot: '/status'
     });
 
     var Deployment = Backbone.Collection.extend({
-        model: app.ServerLog
+        model: Fixhub.ServerLog
     });
 
-    app.Deployment = new Deployment();
+    Fixhub.Deployment = new Deployment();
 
-    app.DeploymentView = Backbone.View.extend({
+    Fixhub.DeploymentView = Backbone.View.extend({
         el: '#app',
         $containers: [],
         events: {
@@ -148,13 +146,13 @@ var app = app || {};
                 })
             });
 
-            this.listenTo(app.Deployment, 'add', this.addOne);
-            this.listenTo(app.Deployment, 'reset', this.addAll);
-            this.listenTo(app.Deployment, 'remove', this.addAll);
-            this.listenTo(app.Deployment, 'all', this.render);
+            this.listenTo(Fixhub.Deployment, 'add', this.addOne);
+            this.listenTo(Fixhub.Deployment, 'reset', this.addAll);
+            this.listenTo(Fixhub.Deployment, 'remove', this.addAll);
+            this.listenTo(Fixhub.Deployment, 'all', this.render);
 
-            app.listener.on('serverlog:Fixhub\\Bus\\Events\\ServerLogChangedEvent', function (data) {
-                var deployment = app.Deployment.get(data.log_id);
+            Fixhub.listener.on('serverlog:Fixhub\\Bus\\Events\\ServerLogChangedEvent', function (data) {
+                var deployment = Fixhub.Deployment.get(data.log_id);
 
                 if (deployment) {
                     deployment.set({
@@ -167,8 +165,8 @@ var app = app || {};
                 }
             });
 
-            app.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
+            Fixhub.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
                     if (data.model.deploy_failure) {
                         $('#deploy_status').find('p').text(data.model.output);
                         $('#deploy_status').removeClass('hide').show();
@@ -180,7 +178,7 @@ var app = app || {};
 
         },
         addOne: function (step) {
-            var view = new app.LogView({
+            var view = new Fixhub.LogView({
                 model: step
             });
 
@@ -196,11 +194,11 @@ var app = app || {};
                 element.html('');
             });
 
-            app.Commands.each(this.addOne, this);
+            Fixhub.Commands.each(this.addOne, this);
         }
     });
 
-    app.LogView = Backbone.View.extend({
+    Fixhub.LogView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             //'click .btn-log': 'showLog',

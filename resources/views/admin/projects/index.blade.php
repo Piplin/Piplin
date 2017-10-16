@@ -37,8 +37,8 @@
 <script type="text/javascript">
     var projects = {!! $projects !!}
 
-    new app.ProjectsTab();
-    app.Projects.add(projects.data);
+    new Fixhub.ProjectsTab();
+    Fixhub.Projects.add(projects.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif

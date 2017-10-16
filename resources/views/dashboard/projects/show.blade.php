@@ -118,27 +118,27 @@
 @push('javascript')
     <script type="text/javascript">
         @if($tab == 'environments')
-        new app.EnvironmentsTab();
-        app.Environments.add({!! $environments->toJson() !!});
+        new Fixhub.EnvironmentsTab();
+        Fixhub.Environments.add({!! $environments->toJson() !!});
 
         @elseif($tab == 'commands')
-        new app.VariablesTab();
-        app.Variables.add({!! $variables->toJson() !!});
+        new Fixhub.VariablesTab();
+        Fixhub.Variables.add({!! $variables->toJson() !!});
 
         @elseif($tab == 'config-files')
-        new app.ConfigFilesTab();
-        app.ConfigFiles.add({!! $configFiles->toJson() !!});
+        new Fixhub.ConfigFilesTab();
+        Fixhub.ConfigFiles.add({!! $configFiles->toJson() !!});
 
         @elseif($tab == 'shared-files')
-        new app.SharedFilesTab();
-        app.SharedFiles.add({!! $sharedFiles->toJson() !!});
+        new Fixhub.SharedFilesTab();
+        Fixhub.SharedFiles.add({!! $sharedFiles->toJson() !!});
 
         @elseif($tab == 'hooks')
-        new app.HooksTab();
-        app.Hooks.add({!! $hooks->toJson() !!});
+        new Fixhub.HooksTab();
+        Fixhub.Hooks.add({!! $hooks->toJson() !!});
         @endif
 
-        app.project_id = {{ $project->id }};
+        Fixhub.project_id = {{ $project->id }};
         @if(isset($action) && $action == 'apply')
             $('button#deploy_project').trigger('click');
         @endif

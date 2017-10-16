@@ -33,8 +33,8 @@
 @push('javascript')
 <script type="text/javascript">
     var keys = {!! $keys !!};
-    new app.KeysTab();
-    app.Keys.add(keys.data);
+    new Fixhub.KeysTab();
+    Fixhub.Keys.add(keys.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif

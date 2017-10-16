@@ -34,8 +34,8 @@
 @push('javascript')
 <script type="text/javascript">
     var links = {!! $links !!};
-    new app.LinksTab();
-    app.Links.add(links.data);
+    new Fixhub.LinksTab();
+    Fixhub.Links.add(links.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif

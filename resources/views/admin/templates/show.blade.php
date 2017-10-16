@@ -38,17 +38,17 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new app.SharedFilesTab();
-        new app.ConfigFilesTab();
-        new app.VariablesTab();
-        new app.EnvironmentsTab();
+        new Fixhub.SharedFilesTab();
+        new Fixhub.ConfigFilesTab();
+        new Fixhub.VariablesTab();
+        new Fixhub.EnvironmentsTab();
 
-        app.SharedFiles.add({!! $sharedFiles->toJson() !!});
-        app.ConfigFiles.add({!! $configFiles->toJson() !!});
-        app.Variables.add({!! $variables->toJson() !!});
-        app.Environments.add({!! $environments->toJson() !!});
+        Fixhub.SharedFiles.add({!! $sharedFiles->toJson() !!});
+        Fixhub.ConfigFiles.add({!! $configFiles->toJson() !!});
+        Fixhub.Variables.add({!! $variables->toJson() !!});
+        Fixhub.Environments.add({!! $environments->toJson() !!});
 
-        app.project_id = {{ $project->id }};
+        Fixhub.project_id = {{ $project->id }};
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

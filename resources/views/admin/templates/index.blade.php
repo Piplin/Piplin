@@ -37,8 +37,8 @@
 @push('javascript')
 <script type="text/javascript">
     var templates = {!! $templates !!};
-    new app.TemplatesTab();
-    app.Templates.add(templates.data);
+    new Fixhub.TemplatesTab();
+    Fixhub.Templates.add(templates.data);
 </script>
 @endpush
 

@@ -30,12 +30,12 @@
     <script type="text/javascript">
 
         @if(empty($tab))
-            new app.ServersTab();
-            app.Servers.add({!! $servers->toJson() !!});
+            new Fixhub.ServersTab();
+            Fixhub.Servers.add({!! $servers->toJson() !!});
         @endif
 
-        app.project_id = {{ $project->id }};
-        app.environment_id = {{ $environment->id }};
+        Fixhub.project_id = {{ $project->id }};
+        Fixhub.environment_id = {{ $environment->id }};
         @if(isset($action) && $action == 'apply')
             $('button#deploy_project').trigger('click');
         @endif

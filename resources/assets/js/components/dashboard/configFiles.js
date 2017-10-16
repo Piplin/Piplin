@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
 
     var editor;
@@ -67,7 +65,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file = app.ConfigFiles.get($('#model_id').val());
+        var file = Fixhub.ConfigFiles.get($('#model_id').val());
 
         file.destroy({
             wait: true,
@@ -99,9 +97,9 @@ var app = app || {};
         var config_file_id = $('#config_file_id').val();
 
         if (config_file_id) {
-            var file = app.ConfigFiles.get(config_file_id);
+            var file = Fixhub.ConfigFiles.get(config_file_id);
         } else {
-            var file = new app.ConfigFile();
+            var file = new Fixhub.ConfigFile();
         }
 
         file.save({
@@ -121,7 +119,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!config_file_id) {
-                    app.ConfigFiles.add(response);
+                    Fixhub.ConfigFiles.add(response);
                 }
 
                 editor.setValue('');
@@ -154,17 +152,17 @@ var app = app || {};
         });
     });
 
-    app.ConfigFile = Backbone.Model.extend({
+    Fixhub.ConfigFile = Backbone.Model.extend({
         urlRoot: '/config-file'
     });
 
     var ConfigFiles = Backbone.Collection.extend({
-        model: app.ConfigFile
+        model: Fixhub.ConfigFile
     });
 
-    app.ConfigFiles = new ConfigFiles();
+    Fixhub.ConfigFiles = new ConfigFiles();
 
-    app.ConfigFilesTab = Backbone.View.extend({
+    Fixhub.ConfigFilesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -175,37 +173,37 @@ var app = app || {};
             $('#no_configfiles').show();
             $('#configfile_list').hide();
 
-            this.listenTo(app.ConfigFiles, 'add', this.addOne);
-            this.listenTo(app.ConfigFiles, 'reset', this.addAll);
-            this.listenTo(app.ConfigFiles, 'remove', this.addAll);
-            this.listenTo(app.ConfigFiles, 'all', this.render);
+            this.listenTo(Fixhub.ConfigFiles, 'add', this.addOne);
+            this.listenTo(Fixhub.ConfigFiles, 'reset', this.addAll);
+            this.listenTo(Fixhub.ConfigFiles, 'remove', this.addAll);
+            this.listenTo(Fixhub.ConfigFiles, 'all', this.render);
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var file = app.ConfigFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {
                     file.set(data.model);
                 }
             });
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    app.ConfigFiles.add(data.model);
+                    Fixhub.ConfigFiles.add(data.model);
                 }
             });
 
-            app.listener.on('configfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var file = app.ConfigFiles.get(parseInt(data.model.id));
+            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {
-                    app.ConfigFiles.remove(file);
+                    Fixhub.ConfigFiles.remove(file);
                 }
             });
         },
         render: function () {
-            if (app.ConfigFiles.length) {
+            if (Fixhub.ConfigFiles.length) {
                 $('#no_configfiles').hide();
                 $('#configfile_list').show();
             } else {
@@ -215,7 +213,7 @@ var app = app || {};
         },
         addOne: function (file) {
 
-            var view = new app.ConfigFileView({
+            var view = new Fixhub.ConfigFileView({
                 model: file
             });
 
@@ -223,11 +221,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.ConfigFiles.each(this.addOne, this);
+            Fixhub.ConfigFiles.each(this.addOne, this);
         }
     });
 
-    app.ConfigFileView = Backbone.View.extend({
+    Fixhub.ConfigFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -45,7 +43,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var tip = app.Tips.get($('#model_id').val());
+        var tip = Fixhub.Tips.get($('#model_id').val());
 
         tip.destroy({
             wait: true,
@@ -77,9 +75,9 @@ var app = app || {};
         var tip_id = $('#tip_id').val();
 
         if (tip_id) {
-            var tip = app.Tips.get(tip_id);
+            var tip = Fixhub.Tips.get(tip_id);
         } else {
-            var tip = new app.Tip();
+            var tip = new Fixhub.Tip();
         }
 
         tip.save({
@@ -96,7 +94,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!tip_id) {
-                    app.Tips.add(response);
+                    Fixhub.Tips.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -127,12 +125,12 @@ var app = app || {};
     });
 
 
-    app.Tip = Backbone.Model.extend({
+    Fixhub.Tip = Backbone.Model.extend({
         urlRoot: '/admin/tips'
     });
 
     var tips = Backbone.Collection.extend({
-        model: app.Tip,
+        model: Fixhub.Tip,
         comparator: function(tipA, tipB) {
             if (tipA.get('id') > tipB.get('id')) {
                 return -1; // before
@@ -144,9 +142,9 @@ var app = app || {};
         }
     });
 
-    app.Tips = new tips();
+    Fixhub.Tips = new tips();
 
-    app.TipsTab = Backbone.View.extend({
+    Fixhub.TipsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -157,33 +155,33 @@ var app = app || {};
             $('#no_tips').show();
             $('#tip_list').hide();
 
-            this.listenTo(app.Tips, 'add', this.addOne);
-            this.listenTo(app.Tips, 'reset', this.addAll);
-            this.listenTo(app.Tips, 'remove', this.addAll);
-            this.listenTo(app.Tips, 'all', this.render);
+            this.listenTo(Fixhub.Tips, 'add', this.addOne);
+            this.listenTo(Fixhub.Tips, 'reset', this.addAll);
+            this.listenTo(Fixhub.Tips, 'remove', this.addAll);
+            this.listenTo(Fixhub.Tips, 'all', this.render);
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var tip = app.Tips.get(parseInt(data.model.id));
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
                     tip.set(data.model);
                 }
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Tips.add(data.model);
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Tips.add(data.model);
             });
 
-            app.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var tip = app.Tips.get(parseInt(data.model.id));
+            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
-                    app.Tips.remove(tip);
+                    Fixhub.Tips.remove(tip);
                 }
             });
         },
         render: function () {
-            if (app.Tips.length) {
+            if (Fixhub.Tips.length) {
                 $('#no_tips').hide();
                 $('#tip_list').show();
             } else {
@@ -193,7 +191,7 @@ var app = app || {};
         },
         addOne: function (tip) {
 
-            var view = new app.TipView({
+            var view = new Fixhub.TipView({
                 model: tip
             });
 
@@ -201,11 +199,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Tips.each(this.addOne, this);
+            Fixhub.Tips.each(this.addOne, this);
         }
     });
 
-    app.TipView = Backbone.View.extend({
+    Fixhub.TipView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-show': 'showTip',

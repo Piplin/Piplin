@@ -33,8 +33,8 @@
     <script type="text/javascript">
         var users = {!! $users !!};
 
-        new app.UsersTab();
-        app.Users.add(users.data);
+        new Fixhub.UsersTab();
+        Fixhub.Users.add(users.data);
     </script>
 @endpush
 

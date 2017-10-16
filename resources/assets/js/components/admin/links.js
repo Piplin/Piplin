@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
@@ -62,7 +60,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var link = app.Links.get($('#model_id').val());
+        var link = Fixhub.Links.get($('#model_id').val());
 
         link.destroy({
             wait: true,
@@ -94,9 +92,9 @@ var app = app || {};
         var link_id = $('#link_id').val();
 
         if (link_id) {
-            var link = app.Links.get(link_id);
+            var link = Fixhub.Links.get(link_id);
         } else {
-            var link = new app.Link();
+            var link = new Fixhub.Link();
         }
 
         link.save({
@@ -114,7 +112,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!link_id) {
-                    app.Links.add(response);
+                    Fixhub.Links.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -145,12 +143,12 @@ var app = app || {};
     });
 
 
-    app.Link = Backbone.Model.extend({
+    Fixhub.Link = Backbone.Model.extend({
         urlRoot: '/admin/links'
     });
 
     var Links = Backbone.Collection.extend({
-        model: app.Link,
+        model: Fixhub.Link,
         comparator: function(linkA, linkB) {
             if (linkA.get('title') > linkB.get('title')) {
                 return -1; // before
@@ -162,9 +160,9 @@ var app = app || {};
         }
     });
 
-    app.Links = new Links();
+    Fixhub.Links = new Links();
 
-    app.LinksTab = Backbone.View.extend({
+    Fixhub.LinksTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -175,33 +173,33 @@ var app = app || {};
             $('#no_links').show();
             $('#link_list').hide();
 
-            this.listenTo(app.Links, 'add', this.addOne);
-            this.listenTo(app.Links, 'reset', this.addAll);
-            this.listenTo(app.Links, 'remove', this.addAll);
-            this.listenTo(app.Links, 'all', this.render);
+            this.listenTo(Fixhub.Links, 'add', this.addOne);
+            this.listenTo(Fixhub.Links, 'reset', this.addAll);
+            this.listenTo(Fixhub.Links, 'remove', this.addAll);
+            this.listenTo(Fixhub.Links, 'all', this.render);
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
                     link.set(data.model);
                 }
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Links.add(data.model);
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Links.add(data.model);
             });
 
-            app.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var link = app.Links.get(parseInt(data.model.id));
+            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
-                    app.Links.remove(link);
+                    Fixhub.Links.remove(link);
                 }
             });
         },
         render: function () {
-            if (app.Links.length) {
+            if (Fixhub.Links.length) {
                 $('#no_links').hide();
                 $('#link_list').show();
             } else {
@@ -211,13 +209,13 @@ var app = app || {};
         },
         addOne: function (link) {
 
-            var view = new app.LinkView({
+            var view = new Fixhub.LinkView({
                 model: link
             });
 
             this.$list.append(view.render().el);
 
-            if (app.Links.length < 2) {
+            if (Fixhub.Links.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -225,11 +223,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Links.each(this.addOne, this);
+            Fixhub.Links.each(this.addOne, this);
         }
     });
 
-    app.LinkView = Backbone.View.extend({
+    Fixhub.LinkView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editLink',

@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#template').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -31,7 +29,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var template = app.Templates.get($('#model_id').val());
+        var template = Fixhub.Templates.get($('#model_id').val());
 
         template.destroy({
             wait: true,
@@ -63,9 +61,9 @@ var app = app || {};
         var template_id = $('#template_id').val();
 
         if (template_id) {
-            var template = app.Templates.get(template_id);
+            var template = Fixhub.Templates.get(template_id);
         } else {
-            var template = new app.Template();
+            var template = new Fixhub.Template();
         }
 
         template.save({
@@ -81,7 +79,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!template_id) {
-                    app.Templates.add(response);
+                    Fixhub.Templates.add(response);
 
                     window.location.href = '/admin/templates/' + response.id;
                 }
@@ -113,17 +111,17 @@ var app = app || {};
         });
     });
 
-    app.Template = Backbone.Model.extend({
+    Fixhub.Template = Backbone.Model.extend({
         urlRoot: '/admin/templates'
     });
 
     var Templates = Backbone.Collection.extend({
-        model: app.Template
+        model: Fixhub.Template
     });
 
-    app.Templates = new Templates();
+    Fixhub.Templates = new Templates();
 
-    app.TemplatesTab = Backbone.View.extend({
+    Fixhub.TemplatesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -134,33 +132,33 @@ var app = app || {};
             $('#template_list').hide();
             $('#no_templates').show();
 
-            this.listenTo(app.Templates, 'add', this.addOne);
-            this.listenTo(app.Templates, 'reset', this.addAll);
-            this.listenTo(app.Templates, 'remove', this.addAll);
-            this.listenTo(app.Templates, 'all', this.render);
+            this.listenTo(Fixhub.Templates, 'add', this.addOne);
+            this.listenTo(Fixhub.Templates, 'reset', this.addAll);
+            this.listenTo(Fixhub.Templates, 'remove', this.addAll);
+            this.listenTo(Fixhub.Templates, 'all', this.render);
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var template = app.Templates.get(parseInt(data.model.id));
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
                     template.set(data.model);
                 }
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Templates.add(data.model);
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Templates.add(data.model);
             });
 
-            app.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var template = app.Templates.get(parseInt(data.model.id));
+            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
-                    app.Templates.remove(template);
+                    Fixhub.Templates.remove(template);
                 }
             });
         },
         render: function () {
-            if (app.Templates.length) {
+            if (Fixhub.Templates.length) {
                 $('#no_templates').hide();
                 $('#template_list').show();
             } else {
@@ -169,7 +167,7 @@ var app = app || {};
             }
         },
         addOne: function (template) {
-            var view = new app.TemplateView({
+            var view = new Fixhub.TemplateView({
                 model: template
             });
 
@@ -177,11 +175,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Templates.each(this.addOne, this);
+            Fixhub.Templates.each(this.addOne, this);
         }
     });
 
-    app.TemplateView = Backbone.View.extend({
+    Fixhub.TemplateView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editTemplate',

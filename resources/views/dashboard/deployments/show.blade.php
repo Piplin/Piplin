@@ -61,10 +61,10 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new app.DeploymentView();
-        app.Deployment.add({!! $output !!});
+        new Fixhub.DeploymentView();
+        Fixhub.Deployment.add({!! $output !!});
 
-        app.project_id = {{ $deployment->project_id }};
+        Fixhub.project_id = {{ $deployment->project_id }};
     </script>
 @endpush
 

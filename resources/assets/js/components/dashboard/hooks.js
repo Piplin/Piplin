@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#hook').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -79,7 +77,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var hook = app.Hooks.get($('#model_id').val());
+        var hook = Fixhub.Hooks.get($('#model_id').val());
 
         hook.destroy({
             wait: true,
@@ -111,9 +109,9 @@ var app = app || {};
         var hook_id = $('#hook_id').val();
 
         if (hook_id) {
-            var hook = app.Hooks.get(hook_id);
+            var hook = Fixhub.Hooks.get(hook_id);
         } else {
-            var hook = new app.Hook();
+            var hook = new Fixhub.Hook();
         }
 
         var data = {
@@ -143,7 +141,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!hook_id) {
-                    app.Hooks.add(response);
+                    Fixhub.Hooks.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -173,17 +171,17 @@ var app = app || {};
         });
     });
 
-    app.Hook = Backbone.Model.extend({
+    Fixhub.Hook = Backbone.Model.extend({
         urlRoot: '/hooks'
     });
 
     var Hooks = Backbone.Collection.extend({
-        model: app.Hook
+        model: Fixhub.Hook
     });
 
-    app.Hooks = new Hooks();
+    Fixhub.Hooks = new Hooks();
 
-    app.HooksTab = Backbone.View.extend({
+    Fixhub.HooksTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -194,36 +192,36 @@ var app = app || {};
             $('#no_hooks').show();
             $('#hook_list').hide();
 
-            this.listenTo(app.Hooks, 'add', this.addOne);
-            this.listenTo(app.Hooks, 'reset', this.addAll);
-            this.listenTo(app.Hooks, 'remove', this.addAll);
-            this.listenTo(app.Hooks, 'all', this.render);
+            this.listenTo(Fixhub.Hooks, 'add', this.addOne);
+            this.listenTo(Fixhub.Hooks, 'reset', this.addAll);
+            this.listenTo(Fixhub.Hooks, 'remove', this.addAll);
+            this.listenTo(Fixhub.Hooks, 'all', this.render);
 
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var hook = app.Hooks.get(parseInt(data.model.id));
+            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var hook = Fixhub.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {
                     hook.set(data.model);
                 }
             });
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                if (parseInt(data.model.project_id) === parseInt(app.project_id)) {
-                    app.Hooks.add(data.model);
+            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
+                    Fixhub.Hooks.add(data.model);
                 }
             });
 
-            app.listener.on('hook:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var hook = app.Hooks.get(parseInt(data.model.id));
+            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var hook = Fixhub.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {
-                    app.Hooks.remove(hook);
+                    Fixhub.Hooks.remove(hook);
                 }
             });
         },
         render: function () {
-            if (app.Hooks.length) {
+            if (Fixhub.Hooks.length) {
                 $('#no_hooks').hide();
                 $('#hook_list').show();
             } else {
@@ -232,7 +230,7 @@ var app = app || {};
             }
         },
         addOne: function (hook) {
-            var view = new app.HookView({
+            var view = new Fixhub.HookView({
                 model: hook
             });
 
@@ -240,11 +238,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Hooks.each(this.addOne, this);
+            Fixhub.Hooks.each(this.addOne, this);
         }
     });
 
-    app.HookView = Backbone.View.extend({
+    Fixhub.HookView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

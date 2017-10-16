@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('#group_list table').sortable({
         containerSelector: 'table',
@@ -56,7 +54,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var group = app.Groups.get($('#model_id').val());
+        var group = Fixhub.Groups.get($('#model_id').val());
 
         group.destroy({
             wait: true,
@@ -88,9 +86,9 @@ var app = app || {};
         var group_id = $('#group_id').val();
 
         if (group_id) {
-            var group = app.Groups.get(group_id);
+            var group = Fixhub.Groups.get(group_id);
         } else {
-            var group = new app.Group();
+            var group = new Fixhub.Group();
         }
 
         group.save({
@@ -106,7 +104,7 @@ var app = app || {};
                 dialog.find('input').removeAttr('disabled');
 
                 if (!group_id) {
-                    app.Groups.add(response);
+                    Fixhub.Groups.add(response);
                 }
             },
             error: function(model, response, options) {
@@ -136,7 +134,7 @@ var app = app || {};
         });
     });
 
-    app.Group = Backbone.Model.extend({
+    Fixhub.Group = Backbone.Model.extend({
         urlRoot: '/admin/groups',
         initialize: function() {
 
@@ -144,12 +142,12 @@ var app = app || {};
     });
 
     var Groups = Backbone.Collection.extend({
-        model: app.Group
+        model: Fixhub.Group
     });
 
-    app.Groups = new Groups();
+    Fixhub.Groups = new Groups();
 
-    app.GroupsTab = Backbone.View.extend({
+    Fixhub.GroupsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -160,41 +158,41 @@ var app = app || {};
             $('#group_list').hide();
             $('#no_groups').show();
 
-            this.listenTo(app.Groups, 'add', this.addOne);
-            this.listenTo(app.Groups, 'reset', this.addAll);
-            this.listenTo(app.Groups, 'remove', this.addAll);
-            this.listenTo(app.Groups, 'all', this.render);
+            this.listenTo(Fixhub.Groups, 'add', this.addOne);
+            this.listenTo(Fixhub.Groups, 'reset', this.addAll);
+            this.listenTo(Fixhub.Groups, 'remove', this.addAll);
+            this.listenTo(Fixhub.Groups, 'all', this.render);
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
                 $('#group_' + data.model.id).html(data.model.name);
 
-                var group = app.Groups.get(parseInt(data.model.id));
+                var group = Fixhub.Groups.get(parseInt(data.model.id));
 
                 if (group) {
                     group.set(data.model);
                 }
             });
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
-                app.Groups.add(data.model);
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+                Fixhub.Groups.add(data.model);
             });
 
-            app.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var group = app.Groups.get(parseInt(data.model.id));
+            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var group = Fixhub.Groups.get(parseInt(data.model.id));
 
                 if (group) {
-                    app.Groups.remove(group);
+                    Fixhub.Groups.remove(group);
                 }
 
                 $('#group_' + data.model.id).parent('li').remove();
 
-                if (parseInt(data.model.id) === parseInt(app.group_id)) {
+                if (parseInt(data.model.id) === parseInt(Fixhub.group_id)) {
                     window.location.href = '/';
                 }
             });
         },
         render: function () {
-            if (app.Groups.length) {
+            if (Fixhub.Groups.length) {
                 $('#no_groups').hide();
                 $('#group_list').show();
             } else {
@@ -204,7 +202,7 @@ var app = app || {};
         },
         addOne: function (group) {
 
-            var view = new app.GroupView({
+            var view = new Fixhub.GroupView({
                 model: group
             });
 
@@ -212,11 +210,11 @@ var app = app || {};
         },
         addAll: function () {
             this.$list.html('');
-            app.Groups.each(this.addOne, this);
+            Fixhub.Groups.each(this.addOne, this);
         }
     });
 
-    app.GroupView = Backbone.View.extend({
+    Fixhub.GroupView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'editGroup',

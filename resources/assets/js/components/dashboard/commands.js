@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
     $('.command-list table').sortable({
         containerSelector: 'table',
@@ -74,7 +72,7 @@ var app = app || {};
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var command = app.Commands.get($('#model_id').val());
+        var command = Fixhub.Commands.get($('#model_id').val());
 
         command.destroy({
             wait: true,
@@ -113,9 +111,9 @@ var app = app || {};
         var command_id = $('#command_id').val();
 
         if (command_id) {
-            var command = app.Commands.get(command_id);
+            var command = Fixhub.Commands.get(command_id);
         } else {
-            var command = new app.Command();
+            var command = new Fixhub.Command();
         }
 
         var server_ids = [];
@@ -151,7 +149,7 @@ var app = app || {};
                 dialog.find(':input').removeAttr('disabled');
 
                 if (!command_id) {
-                    app.Commands.add(response);
+                    Fixhub.Commands.add(response);
                 }
 
                 editor.setValue('');
@@ -184,11 +182,11 @@ var app = app || {};
         });
     });
 
-    app.Command = Backbone.Model.extend({
+    Fixhub.Command = Backbone.Model.extend({
         urlRoot: '/commands',
         defaults: function() {
             return {
-                order: app.Commands.nextOrder()
+                order: Fixhub.Commands.nextOrder()
             };
         },
         isAfter: function() {
@@ -197,7 +195,7 @@ var app = app || {};
     });
 
     var Commands = Backbone.Collection.extend({
-        model: app.Command,
+        model: Fixhub.Command,
         comparator: 'order',
         nextOrder: function() {
             if (!this.length) {
@@ -208,9 +206,9 @@ var app = app || {};
         }
     });
 
-    app.Commands = new Commands();
+    Fixhub.Commands = new Commands();
 
-    app.CommandsTab = Backbone.View.extend({
+    Fixhub.CommandsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -222,42 +220,42 @@ var app = app || {};
             $('.no-commands').show();
             $('.command-list').hide();
 
-            this.listenTo(app.Commands, 'add', this.addOne);
-            this.listenTo(app.Commands, 'reset', this.addAll);
-            this.listenTo(app.Commands, 'remove', this.addAll);
-            this.listenTo(app.Commands, 'all', this.render);
+            this.listenTo(Fixhub.Commands, 'add', this.addOne);
+            this.listenTo(Fixhub.Commands, 'reset', this.addAll);
+            this.listenTo(Fixhub.Commands, 'remove', this.addAll);
+            this.listenTo(Fixhub.Commands, 'all', this.render);
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
-                var command = app.Commands.get(parseInt(data.model.id));
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+                var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {
                     command.set(data.model);
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                //if (data.model.targetable_type == app.targetable_type && parseInt(data.model.targetable_id) === parseInt(app.targetable_id)) {
+                //if (data.model.targetable_type == Fixhub.targetable_type && parseInt(data.model.targetable_id) === parseInt(Fixhub.targetable_id)) {
 
                     // Make sure the command is for this action (clone, install, activate, purge)
-                    if (parseInt(data.model.step) + 1 === parseInt(app.command_action) || parseInt(data.model.step) - 1 === parseInt(app.command_action)) {
-                        app.Commands.add(data.model);
+                    if (parseInt(data.model.step) + 1 === parseInt(Fixhub.command_action) || parseInt(data.model.step) - 1 === parseInt(Fixhub.command_action)) {
+                        Fixhub.Commands.add(data.model);
                     }
                 }
             });
 
-            app.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
-                var command = app.Commands.get(parseInt(data.model.id));
+            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+                var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {
-                    app.Commands.remove(command);
+                    Fixhub.Commands.remove(command);
                 }
             });
         },
         render: function () {
-            var before = app.Commands.find(function(model) {
+            var before = Fixhub.Commands.find(function(model) {
                 return !model.isAfter();
             });
 
@@ -269,7 +267,7 @@ var app = app || {};
                 $('#commands-before .command-list').hide();
             }
 
-            var after = app.Commands.find(function(model) {
+            var after = Fixhub.Commands.find(function(model) {
                 return model.isAfter();
             });
 
@@ -282,7 +280,7 @@ var app = app || {};
             }
         },
         addOne: function (command) {
-            var view = new app.CommandView({
+            var view = new Fixhub.CommandView({
                 model: command
             });
 
@@ -305,11 +303,11 @@ var app = app || {};
         addAll: function () {
             this.$beforeList.html('');
             this.$afterList.html('');
-            app.Commands.each(this.addOne, this);
+            Fixhub.Commands.each(this.addOne, this);
         }
     });
 
-    app.CommandView = Backbone.View.extend({
+    Fixhub.CommandView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
