@@ -24,8 +24,8 @@
                         <label for="user_level">{{ trans('members.level') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-person-stalker"></i></div>
-                            <select id="member_level" name="level" class="select2 form-control">
-                                @foreach([10,20,30] as $level)
+                            <select id="member_level" name="level" class="form-control">
+                                @foreach([1,2,3] as $level)
                                     <option value="{{ $level }}">{{ $level }}</option>
                                 @endforeach
                             </select>

@@ -34,9 +34,9 @@
                                     <label for="project_group_id">{{ trans('projects.group') }}</label>
                                     <div class="input-group">
                                     <div class="input-group-addon"><i class="ion ion-ios-browsers-outline"></i></div>
-                                    <select id="project_group_id" name="group_id" class="select2 form-control">
+                                    <select id="project_group_id" name="group_id" class="form-control">
                                         @foreach($groups as $item)
-                                            <option value="{{ $item->id }}" {!! isset($group) && $group->id == $item->id ? 'selected="selected"' : NULL !!}>{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>

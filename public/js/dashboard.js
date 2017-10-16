@@ -1144,18 +1144,12 @@
             return this;
         },
         edit: function() {
-            var type = this.model.get('type');
-
-            $.each(this.model.get('config'), function(field, value) {
-                $('#member-config-' + type + ' #member_config_' + field).val(value);
-            });
-
-            $('#member_id').val(this.model.id);
-            $('#member_level').val(this.model.get('level'));
+            $('#member_id').val(this.model.get('pivot').id);
+            $('#member_level').val(this.model.get('pivot').level);
         },
         trash: function() {
             var target = $('#model_id');
-            target.val(this.model.id);
+            target.val(this.model.get('pivot').id);
             target.parents('.modal').removeClass().addClass('modal fade member-trash');
         }
     });
