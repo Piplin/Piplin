@@ -33,7 +33,6 @@ return [
     'failed'      => 'Failed',
     'untested'    => 'Untested',
     'options'     => 'Options',
-    'deploy_code' => 'Code should be deployed to this server',
     'enabled'     => 'Server enabled?',
     'disabled'    => 'Skip this server for furture deployments',
     'runs_code'   => 'Deploy Code',

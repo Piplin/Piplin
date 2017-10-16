@@ -68,12 +68,6 @@
                                 {{ trans('servers.enabled') }}
                             </label>
                         </div>
-                        <div class="checkbox">
-                            <label for="server_deploy_code">
-                                <input type="checkbox" value="1" name="deploy_code" id="server_deploy_code" />
-                                {{ trans('servers.deploy_code') }}
-                            </label>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
