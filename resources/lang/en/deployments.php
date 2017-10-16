@@ -69,7 +69,6 @@ return [
     'hour'                  => ':time hour|:time hours',
     'minute'                => ':time minute|:time minutes',
     'second'                => ':time second|:time seconds',
-    'repo_failure'          => 'There was an error retrieving the repository information, please check that the URL is correct and that the SSH key has been added',
-    'repo_failure_head'     => 'Problem with the repository',
+    'deploy_failure'        => 'Problem with the deployment',
 
 ];

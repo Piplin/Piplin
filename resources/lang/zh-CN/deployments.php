@@ -66,7 +66,6 @@ return [
     'hour'                  => ':time 小时|:time 小时',
     'minute'                => ':time 分钟|:time 分钟',
     'second'                => ':time 秒|:time 秒',
-    'repo_failure'          => '获取git仓库信息失败，请确认git仓库地址正确，并且SSH秘钥被添加。',
-    'repo_failure_head'     => '获取代码库失败',
+    'deploy_failure'        => '部署失败',
 
 ];
