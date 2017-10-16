@@ -227,7 +227,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         $servers = $this->deployment->environments->pluck('servers')->flatten();
 
         foreach ($servers as $server) {
-            if (!$server->deploy_code) {
+            if (!$server->enabled) {
                 continue;
             }
 

@@ -41,7 +41,7 @@ class Server extends Model
      * @var array
      */
     protected $fillable = ['name', 'user', 'enabled', 'ip_address','environment_id',
-                           'path', 'status', 'output', 'deploy_code', 'port', 'order', ];
+                           'path', 'status', 'output', 'port', 'order', ];
 
     /**
      * The attributes that should be casted to native types.
@@ -53,7 +53,6 @@ class Server extends Model
         'enabled'        => 'boolean',
         'environment_id' => 'integer',
         'status'         => 'integer',
-        'deploy_code'    => 'boolean',
         'port'           => 'integer',
     ];
 

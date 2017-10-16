@@ -50,7 +50,6 @@
             $('#server_user').val('');
             $('#server_path').val('');
             $('#server_environment_id').val($("#server_environment_id option:selected").val());
-            $('#server_deploy_code').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
@@ -109,7 +108,6 @@
             port:           $('#server_port').val(),
             user:           $('#server_user').val(),
             path:           $('#server_path').val(),
-            deploy_code:    $('#server_deploy_code').is(':checked'),
             environment_id: $('#server_environment_id').val()
         }, {
             wait: true,
@@ -290,8 +288,6 @@
             $('#server_port').val(this.model.get('port'));
             $('#server_user').val(this.model.get('user'));
             $('#server_path').val(this.model.get('path'));
-
-            $('#server_deploy_code').prop('checked', (this.model.get('deploy_code') === true));
         },
         showLog: function() {
             var data = this.model.toJSON();

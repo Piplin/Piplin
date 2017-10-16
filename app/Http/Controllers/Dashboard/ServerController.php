@@ -38,8 +38,7 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'environment_id',
-            'deploy_code'
+            'environment_id'
         );
 
         // Get the current highest server order
@@ -79,8 +78,7 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'environment_id',
-            'deploy_code'
+            'environment_id'
         ));
 
         return $server;

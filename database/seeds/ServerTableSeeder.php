@@ -24,7 +24,7 @@ class ServerTableSeeder extends Seeder
             'user'           => 'fixhub',
             'path'           => '/var/www',
             'environment_id' => 1,
-            'deploy_code'    => true,
+            'enabled'        => true,
         ]);
 
         Server::create([
@@ -33,7 +33,7 @@ class ServerTableSeeder extends Seeder
             'user'           => 'fixhub',
             'path'           => '/var/www',
             'environment_id' => 1,
-            'deploy_code'    => true,
+            'enabled'        => true,
         ]);
 
         Server::create([
@@ -42,7 +42,7 @@ class ServerTableSeeder extends Seeder
             'user'           => 'fixhub',
             'path'           => '/home/fixhub',
             'environment_id' => 1,
-            'deploy_code'    => false,
+            'enabled'        => false,
         ]);
     }
 }
