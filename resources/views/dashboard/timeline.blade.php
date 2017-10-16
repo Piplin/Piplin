@@ -14,9 +14,9 @@
                 <span class="time"><i class="ion ion-clock"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->started_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></span>
                 <h4 class="timeline-header"><i class="ion ion-{{ $deployment->is_webhook ? 'steam' : 'person' }}" title="{{ $deployment->user ? $deployment->user->name : trans('deployments.webhook') }}"></i> <a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ trans('dashboard.deployment_number', ['id' => $deployment->id]) }}</a> 
                 </h4>
-                @if (!empty($deployment->reason))
+                @if (!empty($deployment->formatted_reason))
                 <div class="timeline-body">
-                     {{ $deployment->reason }}
+                     {!! $deployment->formatted_reason !!}
                 </div>
                 @endif
                 <div class="timeline-footer small">
