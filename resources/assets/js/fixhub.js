@@ -32,6 +32,13 @@ var app = app || {};
 
     moment.locale(locale);
 
+    $('abbr.timeago').each(function () {
+        var $el = $(this);
+        $el
+            .livestamp($el.data('timeago'))
+            .tooltip();
+    });
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $(".select2").select2({

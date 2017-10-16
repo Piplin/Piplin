@@ -28,7 +28,7 @@
                 @foreach ($deployments as $deployment)
                 <tr id="deployment_{{ $deployment->id }}">
                     <td><a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ $deployment->id }}</a></td>
-                    <td>{{ $deployment->started_at->format('Y-m-d H:i:s') }}</td>
+                    <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->finished_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></td>
                     <td>{{ $deployment->environment_names }}</td>
                     <td>
                         {{ $deployment->is_webhook ? trans('deployments.webhook') : trans('deployments.manually') }}
