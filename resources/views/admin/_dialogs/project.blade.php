@@ -181,7 +181,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group pull-left">
-                        <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
+                        <button type="submit" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>
