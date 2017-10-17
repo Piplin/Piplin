@@ -44,6 +44,13 @@ class Key extends Model
     protected $revisionCreationsEnabled = true;
 
     /**
+     * Revision ignore attributes.
+     *
+     * @var array
+     */
+    protected $dontKeepRevisionOf = ['private_key'];
+
+    /**
      * Has many relationship.
      *
      * @return Project
