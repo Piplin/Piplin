@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label>{{ trans('links.description') }}</label>
                         <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('links.description_info') }}"></i>
-                        <textarea name="description" rows="10" id="link_description" class="form-control" placeholder="{{ trans('links.description') }}"></textarea>
+                        <textarea name="description" rows="3" id="link_description" class="form-control" placeholder="{{ trans('links.description') }}"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

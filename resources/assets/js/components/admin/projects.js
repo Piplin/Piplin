@@ -1,6 +1,6 @@
 (function ($) {
 
-     $('#project-clone').on('show.bs.modal', function(event) {
+    $('#project-clone').on('show.bs.modal', function(event) {
         var modal = $(this);
         $('.callout-danger', modal).hide();
 
@@ -8,7 +8,7 @@
         $('form', modal).prop('action', '/admin/projects/' + project_id + '/clone');
     });
 
-     $('#project-clone button.btn-save').on('click', function (event) {
+    $('#project-clone button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -70,6 +70,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('projects.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -118,9 +120,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('projects.edit_success');
                 if (!project_id) {
                     Fixhub.Projects.add(response);
+                    msg = trans('projects.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();

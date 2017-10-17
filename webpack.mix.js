@@ -59,6 +59,7 @@ mix
         `${paths.morris}/morris.min.js`,
         `${paths.backbone}/backbone-min.js`,
         `${paths.socketio_client}/dist/socket.io.js`,
+        `${paths.localization}/resources/js/config.js`,
         `${paths.localization}/resources/js/localization.js`,
         `${paths.toastr}/build/toastr.min.js`,
         `${paths.cropper}/dist/cropper.min.js`,

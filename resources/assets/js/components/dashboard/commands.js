@@ -83,6 +83,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('commands.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -99,7 +101,8 @@
         }
     });
 
-    $('#command button.btn-save').on('click', function (event) {
+    //If no `off`, the code below will be executed twice.
+    $('#command button.btn-save').off('click').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -148,12 +151,16 @@
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
 
+                var msg = trans('commands.edit_success');
                 if (!command_id) {
                     Fixhub.Commands.add(response);
+                    msg = trans('commands.create_success');
                 }
 
                 editor.setValue('');
                 editor.gotoLine(1);
+
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();

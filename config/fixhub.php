@@ -18,4 +18,5 @@ return [
     'cdn'                => env('CDN_URL', null),
     'items_per_page'     => 10,
     'gravatar'           => false,
+    'toastr'             => true,
 ];

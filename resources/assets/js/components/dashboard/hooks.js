@@ -88,6 +88,8 @@
                 icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('hooks.delete_success'));
             },
             error: function() {
                 icon.removeClass();
@@ -140,9 +142,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('hooks.edit_success');
                 if (!hook_id) {
                     Fixhub.Hooks.add(response);
+                    msg = trans('hooks.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
