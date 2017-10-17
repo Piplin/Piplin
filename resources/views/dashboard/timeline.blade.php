@@ -26,7 +26,7 @@
                         @endif
                     </span>
                     <span class="pull-right text-muted">
-                    @if($deployment->committer)<i class="ion ion-merge"></i> {{ $deployment->committer }} @endif - {{ $deployment->branch }}/{{ $deployment->short_commit }}
+                    @if($deployment->committer)<i class="ion ion-merge"></i> {{ $deployment->committer }} @endif - @if($deployment->committer)<a class="btn-default btn-xs" href="{{ $deployment->commit_url }}" target="_blank">{{ $deployment->branch }}/{{ $deployment->short_commit }}</a>@else{{ $deployment->branch }}/{{ $deployment->short_commit }}@endif
                     </span>
                 </div>
             </div>
