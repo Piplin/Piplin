@@ -47,11 +47,11 @@
             });
 
             if (data.model.status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
-                toastr.success(toast_title + ' - ' + trans('deployments.completed'), data.model.project_name);
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed'), data.model.project_name, 'success');
             } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_FAILED) {
-                toastr.error(toast_title + ' - ' + trans('deployments.failed'), data.model.project_name);
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.failed'), data.model.project_name, 'error');
             } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_ERRORS) {
-                toastr.warning(toast_title + ' - ' + trans('deployments.completed_with_errors'), data.model.project_name);
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed_with_errors'), data.model.project_name, 'warning');
             } // FIXME: Add cancelled
         }
     });

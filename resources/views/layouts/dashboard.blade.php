@@ -52,6 +52,7 @@
         </div>
 
         <script src="{{ cdn('js/vendor.js') }}"></script>
+        <script src="/js-localization/config"></script>
         <script src="/js-localization/messages"></script>
         <script src="{{ cdn('js/app.js') }}"></script>
         @if (\Route::is('admin*'))

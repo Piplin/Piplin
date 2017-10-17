@@ -44,7 +44,7 @@ return [
                             'deploying', 'running', 'cancelled', 'failed', ],
         'variables'     => ['create', 'edit'],
         'environments'  => ['create', 'edit'],
-        'projects'      => ['create', 'edit', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
+        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
         'commands'      => ['create', 'edit'],
         'groups'        => ['create', 'edit'],
         'keys'          => ['create', 'edit'],
@@ -66,7 +66,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'config' => [
-        /*'app.debug'  // example*/
+        'app.debug',  'fixhub.toastr'
     ],
 
     /*

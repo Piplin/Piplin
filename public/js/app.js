@@ -1,1 +1,747 @@
-function Uploader(e){if(!(this instanceof Uploader))return new Uploader(e);isString(e)&&(e={trigger:e});var t={trigger:null,name:null,action:null,data:null,accept:null,change:null,error:null,multiple:!0,success:null};e&&$.extend(t,e);var n=$(t.trigger);t.action=t.action||n.data("action")||"/upload",t.name=t.name||n.attr("name")||n.data("name")||"file",t.data=t.data||parse(n.data("data")),t.accept=t.accept||n.data("accept"),t.success=t.success||n.data("success"),this.settings=t,this.setup(),this.bind()}function isString(e){return"[object String]"===Object.prototype.toString.call(e)}function createInputs(e){if(!e)return[];var t,n=[];for(var s in e)t=document.createElement("input"),t.type="hidden",t.name=s,t.value=e[s],n.push(t);return n}function parse(e){if(!e)return{};for(var t={},n=e.split("&"),s=function(e){return decodeURIComponent(e.replace(/\+/g," "))},o=0;o<n.length;o++){var i=n[o].split("="),a=s(i[0]),r=s(i[1]);t[a]=r}return t}function findzIndex(e){for(var t=e.parentsUntil("body"),n=0,s=0;s<t.length;s++){var o=t.eq(s);"static"!==o.css("position")&&(n=parseInt(o.css("zIndex"),10)||n)}return n}function newIframe(){var e="iframe-uploader-"+iframeCount,t=$('<iframe name="'+e+'" />').hide();return iframeCount+=1,t}function MultipleUploader(e){if(!(this instanceof MultipleUploader))return new MultipleUploader(e);isString(e)&&(e={trigger:e});var t=$(e.trigger),n=[];t.each(function(t,s){e.trigger=s,n.push(new Uploader(e))}),this._uploaders=n}!function(e){if(window.Fixhub={},Fixhub.project_id=Fixhub.project_id||null,Fixhub.statuses={FINISHED:0,PENDING:1,DEPLOYING:2,FAILED:3,NOT_DEPLOYED:4,DEPLOYMENT_COMPLETED:0,DEPLOYMENT_PENDING:1,DEPLOYMENT_DEPLOYING:2,DEPLOYMENT_FAILED:3,DEPLOYMENT_ERRORS:4,DEPLOYMENT_CANCELLED:5,DEPLOYMENT_ABORTED:6,DEPLOYMENT_APPROVING:7,DEPLOYMENT_APPROVED:8},Fixhub.events={MODEL_CREATED:"Fixhub\\Bus\\Events\\ModelCreatedEvent",MODEL_CHANGED:"Fixhub\\Bus\\Events\\ModelChangedEvent",MODEL_TRASHED:"Fixhub\\Bus\\Events\\ModelTrashedEvent",SVRLOG_CHANGED:"Fixhub\\Bus\\Events\\ServerLogChangedEvent",OUTPUT_CHANGED:"Fixhub\\Bus\\Events\\ServerOutputChangedEvent"},toastr.options.closeButton=!0,toastr.options.progressBar=!0,toastr.options.preventDuplicates=!0,toastr.options.closeMethod="fadeOut",toastr.options.closeDuration=3e3,toastr.options.closeEasing="swing",toastr.options.positionClass="toast-bottom-right",toastr.options.timeOut=5e3,toastr.options.extendedTimeOut=7e3,e.ajaxPrefilter(function(t,n,s){s.setRequestHeader("X-CSRF-Token",e('meta[name="token"]').attr("content"))}),e("form").submit(function(){e(this).find(":submit").prop("disabled",!0)}),null==window.location.href.match(/login|password/)){var t=e('meta[name="locale"]').attr("content");Lang.setLocale(t),moment.locale(t),e('[data-toggle="tooltip"]').tooltip(),Fixhub.select2_options={width:"100%",minimumResultsForSearch:1/0},e(".select2").select2(Fixhub.select2_options),Fixhub.listener=io.connect(e('meta[name="socket_url"]').attr("content"),{query:"jwt="+e('meta[name="jwt"]').attr("content")}),Fixhub.connection_error=!1,Fixhub.listener.on("connect_error",function(t){Fixhub.connection_error||e("#socket_offline").show(),Fixhub.connection_error=!0}),Fixhub.listener.on("connect",function(){e("#socket_offline").hide(),Fixhub.connection_error=!1}),Fixhub.listener.on("reconnect",function(){e("#socket_offline").hide(),Fixhub.connection_error=!1}),Fixhub.loadLivestamp=function(){e("abbr.timeago").each(function(){var t=e(this);t.livestamp(t.data("timeago")).tooltip()})},Fixhub.formatProjectStatus=function(e){var t={};return t.icon_class="help",t.label_class="default",t.label=trans("projects.not_deployed"),e===Fixhub.statuses.FINISHED?(t.icon_class="checkmark-round",t.label_class="success",t.label=trans("projects.finished")):e===Fixhub.statuses.DEPLOYING?(t.icon_class="load-c fixhub-spin",t.label_class="warning",t.label=trans("projects.deploying")):e===Fixhub.statuses.FAILED?(t.icon_class="close-round",t.label_class="danger",t.label=trans("projects.failed")):e===Fixhub.statuses.PENDING&&(t.icon_class="clock",t.label_class="info",t.label=trans("projects.pending")),t},Fixhub.formatDeploymentStatus=function(e){var t={};return t.icon_class="clock-o",t.label_class="info",t.label=trans("deployments.pending"),t.done=!1,t.success=!1,e===Fixhub.statuses.DEPLOYMENT_COMPLETED?(t.icon_class="checkmark-round",t.label_class="success",t.label=trans("deployments.completed"),t.done=!0,t.success=!0):e===Fixhub.statuses.DEPLOYMENT_DEPLOYING?(t.icon_class="load-c fixhub-spin",t.label_class="warning",t.label=trans("deployments.running")):e===Fixhub.statuses.DEPLOYMENT_FAILED?(t.icon_class="close-round",t.label_class="danger",t.label=trans("deployments.failed"),t.done=!0):e===Fixhub.statuses.DEPLOYMENT_ERRORS?(t.icon_class="close",t.label_class="success",t.label=trans("deployments.completed_with_errors"),t.done=!0,t.success=!0):e===Fixhub.statuses.DEPLOYMENT_CANCELLED&&(t.icon_class="alert",t.label_class="danger",t.label=trans("deployments.cancelled"),t.done=!0),t}}}(jQuery),function(e){function t(){e.ajax({type:"GET",url:"/timeline"}).done(function(t){e("#timeline").html(t),Fixhub.loadLivestamp()})}function n(t){t.model.time=moment(t.model.started_at).fromNow(),t.model.url="/deployment/"+t.model.id,e("#deployment_info_"+t.model.id).remove();var n=_.template(e("#deployment-list-template").html()),s=n(t.model);t.model.status===Fixhub.statuses.DEPLOYMENT_PENDING?e(".pending_menu").append(s):t.model.status===Fixhub.statuses.DEPLOYMENT_DEPLOYING?e(".deploying_menu").append(s):t.model.status!==Fixhub.statuses.DEPLOYMENT_APPROVING&&t.model.status!==Fixhub.statuses.DEPLOYMENT_APPROVED||e(".approving_menu").append(s);var o=e(".pending_menu li.todo_item").length,i=e(".deploying_menu li.todo_item").length,a=e(".approving_menu li.todo_item").length,r=o+i+a;r>0?(e("#todo_menu span.label").html(r).addClass("label-success"),e("#todo_menu .dropdown-toggle i.ion").addClass("text-danger")):(e("#todo_menu span.label").html("").removeClass("label-success"),e("#todo_menu .dropdown-toggle i.ion").removeClass("text-danger"));var l=_.template(e("#todo-item-empty-template").html());o>0?(e(".pending_header i").addClass("fixhub-spin"),e(".pending_menu li.item_empty").remove()):(e(".pending_header i").removeClass("fixhub-spin"),e(".pending_menu li.item_empty").remove(),e(".pending_menu").append(l({empty_text:trans("dashboard.pending_empty")}))),i>0?(e(".deploying_header i").addClass("fixhub-spin"),e(".deploying_menu li.item_empty").remove()):(e(".deploying_header i").removeClass("fixhub-spin"),e(".deploying_menu li.item_empty").remove(),e(".deploying_menu").append(l({empty_text:trans("dashboard.running_empty")}))),a>0?(e(".approving_header i").addClass("fixhub-spin"),e(".approving_menu li.item_empty").remove()):(e(".approving_header i").removeClass("fixhub-spin"),e(".approving_menu li.item_empty").remove(),e(".approving_menu").append(l({empty_text:trans("dashboard.approving_empty")})));var u=Lang.choice("dashboard.pending",o,{count:o}),p=Lang.choice("dashboard.running",i,{count:i}),c=Lang.choice("dashboard.approving",a,{count:a});e(".deploying_header span").text(p),e(".pending_header span").text(u),e(".approving_header span").text(c)}Fixhub.loadLivestamp(),Fixhub.listener.on("deployment:"+Fixhub.events.MODEL_CHANGED,function(s){n(s),e("#timeline").length>0&&t();var o=e("#deployment_"+s.model.id);if(o.length>0){e("td:nth-child(6)",o).text(s.model.committer),s.model.commit_url?e("td:nth-child(7)",o).html('<a href="'+s.model.commit_url+'" target="_blank">'+s.model.short_commit+"</a>"):e("td:nth-child(8)",o).text(s.model.short_commit);var i=e("td:nth-child(9) span.label",o),a=Fixhub.formatDeploymentStatus(parseInt(s.model.status));a.done&&(e("button#deploy_project:disabled").removeAttr("disabled"),e("td:nth-child(10) a.btn-cancel",o).remove(),a.success&&e("button.btn-rollback").removeClass("hide")),i.attr("class","label label-"+a.label_class),e("i",i).attr("class","ion ion-"+a.icon_class),e("span",i).text(a.label)}else{var r=trans("dashboard.deployment_number",{id:s.model.id});s.model.status===Fixhub.statuses.DEPLOYMENT_COMPLETED?toastr.success(r+" - "+trans("deployments.completed"),s.model.project_name):s.model.status===Fixhub.statuses.DEPLOYMENT_FAILED?toastr.error(r+" - "+trans("deployments.failed"),s.model.project_name):s.model.status===Fixhub.statuses.DEPLOYMENT_ERRORS&&toastr.warning(r+" - "+trans("deployments.completed_with_errors"),s.model.project_name)}}),Fixhub.listener.on("project:"+Fixhub.events.MODEL_CHANGED,function(t){var n=e("#project_"+t.model.id);if(n.length>0){var s=e("td:nth-child(4) span.label",n),o=Fixhub.formatProjectStatus(parseInt(t.model.status));e("td:first a",n).text(t.model.name),e("td:nth-child(3)",n).text(moment(t.model.last_run).fromNow()),s.attr("class","label label-"+o.label_class),e("i",s).attr("class","ion ion-"+o.icon_class),e("span",s).text(o.label)}}),Fixhub.listener.on("project:"+Fixhub.events.MODEL_TRASHED,function(e){parseInt(e.model.id)===parseInt(Fixhub.project_id)&&(window.location.href="/")})}(jQuery);var iframeCount=0;Uploader.prototype.setup=function(){this.form=$('<form method="post" enctype="multipart/form-data"target="" action="'+this.settings.action+'" />'),this.iframe=newIframe(),this.form.attr("target",this.iframe.attr("name"));var e=this.settings.data;this.form.append(createInputs(e)),window.FormData?this.form.append(createInputs({_uploader_:"formdata"})):this.form.append(createInputs({_uploader_:"iframe"}));var t=document.createElement("input");t.type="file",t.name=this.settings.name,this.settings.accept&&(t.accept=this.settings.accept),this.settings.multiple&&(t.multiple=!0,t.setAttribute("multiple","multiple")),this.input=$(t);var n=$(this.settings.trigger);return this.input.attr("hidefocus",!0).css({position:"absolute",top:0,right:0,opacity:0,outline:0,cursor:"pointer",height:n.outerHeight(),fontSize:Math.max(64,5*n.outerHeight())}),this.form.append(this.input),this.form.css({position:"absolute",top:n.offset().top,left:n.offset().left,overflow:"hidden",width:n.outerWidth(),height:n.outerHeight(),zIndex:findzIndex(n)+10}).appendTo("body"),this},Uploader.prototype.bind=function(){var e=this,t=$(e.settings.trigger);t.mouseenter(function(){e.form.css({top:t.offset().top,left:t.offset().left,width:t.outerWidth(),height:t.outerHeight()})}),e.bindInput()},Uploader.prototype.bindInput=function(){var e=this;e.input.change(function(t){e._files=this.files||[{name:t.target.value}];var n=e.input.val();if(e.settings.change)e.settings.change.call(e,e._files);else if(n)return e.submit()})},Uploader.prototype.submit=function(){var e=this;if(window.FormData&&e._files){var t=new FormData(e.form.get(0));t.append(e.settings.name,e._files);var n;if(e.settings.progress){var s=e._files;n=function(){var t=$.ajaxSettings.xhr();return t.upload&&t.upload.addEventListener("progress",function(t){var n=0,o=t.loaded||t.position,i=t.total;t.lengthComputable&&(n=Math.ceil(o/i*100)),e.settings.progress(t,o,i,n,s)},!1),t}}return $.ajax({url:e.settings.action,type:"post",processData:!1,contentType:!1,data:t,xhr:n,context:this,success:e.settings.success,error:e.settings.error}),this}return e.iframe=newIframe(),e.form.attr("target",e.iframe.attr("name")),$("body").append(e.iframe),e.iframe.one("load",function(){$('<iframe src="javascript:false;"></iframe>').appendTo(e.form).remove();var t;try{t=$(this).contents().find("body").html()}catch(e){t="cross-domain"}$(this).remove(),t?e.settings.success&&e.settings.success(t):e.settings.error&&e.settings.error(e.input.val())}),e.form.submit(),this},Uploader.prototype.refreshInput=function(){var e=this.input.clone();this.input.before(e),this.input.off("change"),this.input.remove(),this.input=e,this.bindInput()},Uploader.prototype.change=function(e){return e?(this.settings.change=e,this):this},Uploader.prototype.success=function(e){var t=this;return this.settings.success=function(n){t.refreshInput(),e&&e(n)},this},Uploader.prototype.error=function(e){var t=this;return this.settings.error=function(n){e&&(t.refreshInput(),e(n))},this},Uploader.prototype.enable=function(){this.input.prop("disabled",!1),this.input.css("cursor","pointer")},Uploader.prototype.disable=function(){this.input.prop("disabled",!0),this.input.css("cursor","not-allowed")},MultipleUploader.prototype.submit=function(){return $.each(this._uploaders,function(e,t){t.submit()}),this},MultipleUploader.prototype.change=function(e){return $.each(this._uploaders,function(t,n){n.change(e)}),this},MultipleUploader.prototype.success=function(e){return $.each(this._uploaders,function(t,n){n.success(e)}),this},MultipleUploader.prototype.error=function(e){return $.each(this._uploaders,function(t,n){n.error(e)}),this},MultipleUploader.prototype.enable=function(){return $.each(this._uploaders,function(e,t){t.enable()}),this},MultipleUploader.prototype.disable=function(){return $.each(this._uploaders,function(e,t){t.disable()}),this},MultipleUploader.Uploader=Uploader;
+(function ($) {
+
+    //App setup
+    window.Fixhub = {};
+
+    Fixhub.project_id = Fixhub.project_id || null;
+
+    Fixhub.statuses = {
+        //Project and Environment
+        FINISHED:     0,
+        PENDING:      1,
+        DEPLOYING:    2,
+        FAILED:       3,
+        NOT_DEPLOYED: 4,
+
+        // Deployment status
+        DEPLOYMENT_COMPLETED: 0,
+        DEPLOYMENT_PENDING:   1,
+        DEPLOYMENT_DEPLOYING: 2,
+        DEPLOYMENT_FAILED:    3,
+        DEPLOYMENT_ERRORS:    4,
+        DEPLOYMENT_CANCELLED: 5,
+        DEPLOYMENT_ABORTED:   6,
+        DEPLOYMENT_APPROVING: 7,
+        DEPLOYMENT_APPROVED : 8
+    };
+
+    Fixhub.events = {
+        // Common events
+        MODEL_CREATED: 'Fixhub\\Bus\\Events\\ModelCreatedEvent',
+        MODEL_CHANGED: 'Fixhub\\Bus\\Events\\ModelChangedEvent',
+        MODEL_TRASHED: 'Fixhub\\Bus\\Events\\ModelTrashedEvent',
+
+        // Server log changed
+        SVRLOG_CHANGED: 'Fixhub\\Bus\\Events\\ServerLogChangedEvent',
+        OUTPUT_CHANGED: 'Fixhub\\Bus\\Events\\ServerOutputChangedEvent'
+
+    };
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
+    });
+
+    // Prevent double form submission
+    $('form').submit(function () {
+        var $form = $(this);
+        $form.find(':submit').prop('disabled', true);
+    });
+
+    // Don't need to try and connect to the web socket when not logged in
+    if (window.location.href.match(/login|password/) != null) {
+        return;
+    }
+
+    var locale = $('meta[name="locale"]').attr('content');
+
+    Lang.setLocale(locale);
+
+    moment.locale(locale);
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    Fixhub.select2_options = {
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    };
+
+    $(".select2").select2(Fixhub.select2_options);
+
+    // Socket.io
+    Fixhub.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
+        query: 'jwt=' + $('meta[name="jwt"]').attr('content')
+    });
+
+    Fixhub.connection_error = false;
+
+    Fixhub.listener.on('connect_error', function(error) {
+        if (!Fixhub.connection_error) {
+            $('#socket_offline').show();
+        }
+
+        Fixhub.connection_error = true;
+    });
+
+    Fixhub.listener.on('connect', function() {
+        $('#socket_offline').hide();
+        Fixhub.connection_error = false;
+    });
+
+    Fixhub.listener.on('reconnect', function() {
+        $('#socket_offline').hide();
+        Fixhub.connection_error = false;
+    });
+
+    // Load livestamp
+    Fixhub.loadLivestamp = function () {
+        $('abbr.timeago').each(function () {
+            var $el = $(this);
+            $el.livestamp($el.data('timeago')).tooltip();
+        });
+    };
+
+    // Format the project status
+    Fixhub.formatProjectStatus = function (deploy_status) {
+        var data = {};
+
+        data.icon_class = 'help';
+        data.label_class = 'default';
+        data.label = trans('projects.not_deployed');
+
+        if (deploy_status === Fixhub.statuses.FINISHED) {
+            data.icon_class = 'checkmark-round';
+            data.label_class = 'success';
+            data.label = trans('projects.finished');
+        } else if (deploy_status === Fixhub.statuses.DEPLOYING) {
+            data.icon_class = 'load-c fixhub-spin';
+            data.label_class = 'warning';
+            data.label = trans('projects.deploying');
+        } else if (deploy_status === Fixhub.statuses.FAILED) {
+            data.icon_class = 'close-round';
+            data.label_class = 'danger';
+            data.label = trans('projects.failed');
+        } else if (deploy_status === Fixhub.statuses.PENDING) {
+            data.icon_class = 'clock';
+            data.label_class = 'info';
+            data.label = trans('projects.pending');
+        }
+
+        return data;
+    };
+
+    // Format the deployment status
+    Fixhub.formatDeploymentStatus = function (deploy_status) {
+
+        var data = {};
+
+        data.icon_class = 'clock-o';
+        data.label_class = 'info';
+        data.label = trans('deployments.pending');
+        data.done = false;
+        data.success = false;
+
+        if (deploy_status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
+            data.icon_class = 'checkmark-round';
+            data.label_class = 'success';
+            data.label = trans('deployments.completed');
+            data.done = true;
+            data.success = true;
+        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
+            data.icon_class = 'load-c fixhub-spin';
+            data.label_class = 'warning';
+            data.label = trans('deployments.running');
+        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_FAILED) {
+            data.icon_class = 'close-round';
+            data.label_class = 'danger';
+            data.label = trans('deployments.failed');
+            data.done = true;
+        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_ERRORS) {
+            data.icon_class = 'close';
+            data.label_class = 'success';
+            data.label = trans('deployments.completed_with_errors');
+            data.done = true;
+            data.success = true;
+        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_CANCELLED) {
+            data.icon_class = 'alert';
+            data.label_class = 'danger';
+            data.label = trans('deployments.cancelled');
+            data.done = true;
+        }
+
+        return data;
+    };
+
+    Fixhub.toast = function (content, title, caller) {
+        title = title || '';
+        caller = caller || 'not_in_progress';
+
+        if (!Config.get('fixhub.toastr') && caller == 'not_in_progress') {
+            return;
+        }
+
+        if (caller == 'not_in_progress') {
+            toastr.options.positionClass = 'toast-top-center';
+            toastr.options.progressBar = false;
+            toastr.options.closeDuration = 1000;
+            toastr.options.timeOut = 3000;
+            toastr.options.extendedTimeOut = 1000;
+        } else {
+            toastr.options.closeButton = true;
+            toastr.options.progressBar = true;
+            toastr.options.preventDuplicates = true;
+            toastr.options.closeMethod = 'fadeOut';
+            toastr.options.closeDuration = 3000;
+            toastr.options.closeEasing = 'swing';
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.timeOut = 5000;
+            toastr.options.extendedTimeOut = 7000;
+        }
+
+        if (caller == 'error') {
+            toastr.error(content, title);
+        } else if(caller == 'warning') {
+            toastr.warning(content, title);
+        } else {
+            toastr.success(content, title);
+        }
+    };
+
+})(jQuery);
+(function ($) {
+
+    Fixhub.loadLivestamp();
+
+    Fixhub.listener.on('deployment:' + Fixhub.events.MODEL_CHANGED, function (data) {
+
+        // Update todo bar
+        updateTodoBar(data);
+
+        if ($('#timeline').length > 0) {
+            updateTimeline();
+        }
+
+        var deployment  = $('#deployment_' + data.model.id);
+
+        if (deployment.length > 0) {
+
+            $('td:nth-child(6)', deployment).text(data.model.committer);
+
+            if (data.model.commit_url) {
+                $('td:nth-child(7)', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
+            } else {
+                $('td:nth-child(8)', deployment).text(data.model.short_commit);
+            }
+
+            var status_bar = $('td:nth-child(9) span.label', deployment);
+
+            var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
+
+            if (status_data.done) {
+                $('button#deploy_project:disabled').removeAttr('disabled');
+                $('td:nth-child(10) a.btn-cancel', deployment).remove();
+
+                if (status_data.success) {
+                    $('button.btn-rollback').removeClass('hide');
+                }
+            }
+
+            status_bar.attr('class', 'label label-' + status_data.label_class);
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
+        //} else if ($('#timeline').length === 0) { // Don't show on dashboard
+            // FIXME: Also don't show if viewing the deployment, or the project the deployment is for
+        } else {
+            var toast_title = trans('dashboard.deployment_number', {
+                'id': data.model.id
+            });
+
+            if (data.model.status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed'), data.model.project_name, 'success');
+            } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_FAILED) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.failed'), data.model.project_name, 'error');
+            } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_ERRORS) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed_with_errors'), data.model.project_name, 'warning');
+            } // FIXME: Add cancelled
+        }
+    });
+
+    Fixhub.listener.on('project:' + Fixhub.events.MODEL_CHANGED, function (data) {
+
+        var project = $('#project_' + data.model.id);
+
+        if (project.length > 0) {
+            var status_bar = $('td:nth-child(4) span.label', project);
+
+            var status_data = Fixhub.formatProjectStatus(parseInt(data.model.status));
+
+            $('td:first a', project).text(data.model.name);
+            $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
+            status_bar.attr('class', 'label label-' + status_data.label_class)
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
+        }
+    });
+
+    Fixhub.listener.on('project:' + Fixhub.events.MODEL_TRASHED, function (data) {
+
+        if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
+            window.location.href = '/';
+        }
+    });
+
+    function updateTimeline() {
+        $.ajax({
+            type: 'GET',
+            url: '/timeline'
+        }).done(function (response) {
+            $('#timeline').html(response);
+            Fixhub.loadLivestamp();
+        });
+    }
+
+    function updateTodoBar(data) {
+        data.model.time = moment(data.model.started_at).fromNow();
+        data.model.url = '/deployment/' + data.model.id;
+
+        $('#deployment_info_' + data.model.id).remove();
+
+        var template = _.template($('#deployment-list-template').html());
+        var html = template(data.model);
+
+        if (data.model.status === Fixhub.statuses.DEPLOYMENT_PENDING) {
+            $('.pending_menu').append(html);
+        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
+            $('.deploying_menu').append(html);
+        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVING || data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVED) {
+            $('.approving_menu').append(html);
+        }
+
+        var pending = $('.pending_menu li.todo_item').length;
+        var deploying = $('.deploying_menu li.todo_item').length;
+        var approving = $('.approving_menu li.todo_item').length;
+
+        var todo_count = pending + deploying + approving;
+
+    
+        if(todo_count > 0) {
+            $('#todo_menu span.label').html(todo_count).addClass('label-success');
+            $('#todo_menu .dropdown-toggle i.ion').addClass('text-danger');
+        } else {
+            $('#todo_menu span.label').html('').removeClass('label-success');
+            $('#todo_menu .dropdown-toggle i.ion').removeClass('text-danger')
+        }
+
+        var empty_template = _.template($('#todo-item-empty-template').html());
+        if(pending > 0) {
+            $('.pending_header i').addClass('fixhub-spin');
+            $('.pending_menu li.item_empty').remove();
+        } else {
+            $('.pending_header i').removeClass('fixhub-spin');
+            $('.pending_menu li.item_empty').remove();
+            $('.pending_menu').append(empty_template({empty_text:trans('dashboard.pending_empty')}));
+        }
+
+        if(deploying > 0) {
+            $('.deploying_header i').addClass('fixhub-spin');
+            $('.deploying_menu li.item_empty').remove();
+        } else {
+            $('.deploying_header i').removeClass('fixhub-spin');
+            $('.deploying_menu li.item_empty').remove();
+            $('.deploying_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
+        }
+
+        if(approving > 0) {
+            $('.approving_header i').addClass('fixhub-spin');
+            $('.approving_menu li.item_empty').remove();
+        } else {
+            $('.approving_header i').removeClass('fixhub-spin');
+            $('.approving_menu li.item_empty').remove();
+            $('.approving_menu').append(empty_template({empty_text:trans('dashboard.approving_empty')}));
+        }
+
+        var pending_label = Lang.choice('dashboard.pending', pending, {
+            'count': pending
+        });
+        var deploying_label = Lang.choice('dashboard.running', deploying, {
+            'count': deploying
+        });
+        var approving_label = Lang.choice('dashboard.approving', approving, {
+            'count': approving
+        });
+
+        $('.deploying_header span').text(deploying_label);
+        $('.pending_header span').text(pending_label);
+        $('.approving_header span').text(approving_label);
+    }
+
+})(jQuery);
+var iframeCount = 0;
+
+function Uploader(options) {
+  if (!(this instanceof Uploader)) {
+    return new Uploader(options);
+  }
+  if (isString(options)) {
+    options = {trigger: options};
+  }
+
+  var settings = {
+    trigger: null,
+    name: null,
+    action: null,
+    data: null,
+    accept: null,
+    change: null,
+    error: null,
+    multiple: true,
+    success: null
+  };
+  if (options) {
+    $.extend(settings, options);
+  }
+  var $trigger = $(settings.trigger);
+
+  settings.action = settings.action || $trigger.data('action') || '/upload';
+  settings.name = settings.name || $trigger.attr('name') || $trigger.data('name') || 'file';
+  settings.data = settings.data || parse($trigger.data('data'));
+  settings.accept = settings.accept || $trigger.data('accept');
+  settings.success = settings.success || $trigger.data('success');
+  this.settings = settings;
+
+  this.setup();
+  this.bind();
+}
+
+// initialize
+// create input, form, iframe
+Uploader.prototype.setup = function() {
+  this.form = $(
+    '<form method="post" enctype="multipart/form-data"'
+    + 'target="" action="' + this.settings.action + '" />'
+  );
+
+  this.iframe = newIframe();
+  this.form.attr('target', this.iframe.attr('name'));
+
+  var data = this.settings.data;
+  this.form.append(createInputs(data));
+  if (window.FormData) {
+    this.form.append(createInputs({'_uploader_': 'formdata'}));
+  } else {
+    this.form.append(createInputs({'_uploader_': 'iframe'}));
+  }
+
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.name = this.settings.name;
+  if (this.settings.accept) {
+    input.accept = this.settings.accept;
+  }
+  if (this.settings.multiple) {
+    input.multiple = true;
+    input.setAttribute('multiple', 'multiple');
+  }
+  this.input = $(input);
+
+  var $trigger = $(this.settings.trigger);
+  this.input.attr('hidefocus', true).css({
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    opacity: 0,
+    outline: 0,
+    cursor: 'pointer',
+    height: $trigger.outerHeight(),
+    fontSize: Math.max(64, $trigger.outerHeight() * 5)
+  });
+  this.form.append(this.input);
+  this.form.css({
+    position: 'absolute',
+    top: $trigger.offset().top,
+    left: $trigger.offset().left,
+    overflow: 'hidden',
+    width: $trigger.outerWidth(),
+    height: $trigger.outerHeight(),
+    zIndex: findzIndex($trigger) + 10
+  }).appendTo('body');
+  return this;
+};
+
+// bind events
+Uploader.prototype.bind = function() {
+  var self = this;
+  var $trigger = $(self.settings.trigger);
+  $trigger.mouseenter(function() {
+    self.form.css({
+      top: $trigger.offset().top,
+      left: $trigger.offset().left,
+      width: $trigger.outerWidth(),
+      height: $trigger.outerHeight()
+    });
+  });
+  self.bindInput();
+};
+
+Uploader.prototype.bindInput = function() {
+  var self = this;
+  self.input.change(function(e) {
+    // ie9 don't support FileList Object
+    // http://stackoverflow.com/questions/12830058/ie8-input-type-file-get-files
+    self._files = this.files || [{
+      name: e.target.value
+    }];
+    var file = self.input.val();
+    if (self.settings.change) {
+      self.settings.change.call(self, self._files);
+    } else if (file) {
+      return self.submit();
+    }
+  });
+};
+
+// handle submit event
+// prepare for submiting form
+Uploader.prototype.submit = function() {
+  var self = this;
+  if (window.FormData && self._files) {
+    // build a FormData
+    var form = new FormData(self.form.get(0));
+    // use FormData to upload
+    form.append(self.settings.name, self._files);
+
+    var optionXhr;
+    if (self.settings.progress) {
+      // fix the progress target file
+      var files = self._files;
+      optionXhr = function() {
+        var xhr = $.ajaxSettings.xhr();
+        if (xhr.upload) {
+          xhr.upload.addEventListener('progress', function(event) {
+            var percent = 0;
+            var position = event.loaded || event.position; /*event.position is deprecated*/
+            var total = event.total;
+            if (event.lengthComputable) {
+                percent = Math.ceil(position / total * 100);
+            }
+            self.settings.progress(event, position, total, percent, files);
+          }, false);
+        }
+        return xhr;
+      };
+    }
+    $.ajax({
+      url: self.settings.action,
+      type: 'post',
+      processData: false,
+      contentType: false,
+      data: form,
+      xhr: optionXhr,
+      context: this,
+      success: self.settings.success,
+      error: self.settings.error
+    });
+    return this;
+  } else {
+    // iframe upload
+    self.iframe = newIframe();
+    self.form.attr('target', self.iframe.attr('name'));
+    $('body').append(self.iframe);
+    self.iframe.one('load', function() {
+      // https://github.com/blueimp/jQuery-File-Upload/blob/9.5.6/js/jquery.iframe-transport.js#L102
+      // Fix for IE endless progress bar activity bug
+      // (happens on form submits to iframe targets):
+      $('<iframe src="javascript:false;"></iframe>')
+        .appendTo(self.form)
+        .remove();
+      var response;
+      try {
+        response = $(this).contents().find("body").html();
+      } catch (e) {
+        response = "cross-domain";
+      }
+      $(this).remove();
+      if (!response) {
+        if (self.settings.error) {
+          self.settings.error(self.input.val());
+        }
+      } else {
+        if (self.settings.success) {
+          self.settings.success(response);
+        }
+      }
+    });
+    self.form.submit();
+  }
+  return this;
+};
+
+Uploader.prototype.refreshInput = function() {
+  //replace the input element, or the same file can not to be uploaded
+  var newInput = this.input.clone();
+  this.input.before(newInput);
+  this.input.off('change');
+  this.input.remove();
+  this.input = newInput;
+  this.bindInput();
+};
+
+// handle change event
+// when value in file input changed
+Uploader.prototype.change = function(callback) {
+  if (!callback) {
+    return this;
+  }
+  this.settings.change = callback;
+  return this;
+};
+
+// handle when upload success
+Uploader.prototype.success = function(callback) {
+  var me = this;
+  this.settings.success = function(response) {
+    me.refreshInput();
+    if (callback) {
+      callback(response);
+    }
+  };
+
+  return this;
+};
+
+// handle when upload success
+Uploader.prototype.error = function(callback) {
+  var me = this;
+  this.settings.error = function(response) {
+    if (callback) {
+      me.refreshInput();
+      callback(response);
+    }
+  };
+  return this;
+};
+
+// enable
+Uploader.prototype.enable = function(){
+  this.input.prop('disabled', false);
+  this.input.css('cursor', 'pointer');
+};
+
+// disable
+Uploader.prototype.disable = function(){
+  this.input.prop('disabled', true);
+  this.input.css('cursor', 'not-allowed');
+};
+
+// Helpers
+// -------------
+
+function isString(val) {
+  return Object.prototype.toString.call(val) === '[object String]';
+}
+
+function createInputs(data) {
+  if (!data) return [];
+
+  var inputs = [], i;
+  for (var name in data) {
+    i = document.createElement('input');
+    i.type = 'hidden';
+    i.name = name;
+    i.value = data[name];
+    inputs.push(i);
+  }
+  return inputs;
+}
+
+function parse(str) {
+  if (!str) return {};
+  var ret = {};
+
+  var pairs = str.split('&');
+  var unescape = function(s) {
+    return decodeURIComponent(s.replace(/\+/g, ' '));
+  };
+
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i].split('=');
+    var key = unescape(pair[0]);
+    var val = unescape(pair[1]);
+    ret[key] = val;
+  }
+
+  return ret;
+}
+
+function findzIndex($node) {
+  var parents = $node.parentsUntil('body');
+  var zIndex = 0;
+  for (var i = 0; i < parents.length; i++) {
+    var item = parents.eq(i);
+    if (item.css('position') !== 'static') {
+      zIndex = parseInt(item.css('zIndex'), 10) || zIndex;
+    }
+  }
+  return zIndex;
+}
+
+function newIframe() {
+  var iframeName = 'iframe-uploader-' + iframeCount;
+  var iframe = $('<iframe name="' + iframeName + '" />').hide();
+  iframeCount += 1;
+  return iframe;
+}
+
+function MultipleUploader(options) {
+  if (!(this instanceof MultipleUploader)) {
+    return new MultipleUploader(options);
+  }
+
+  if (isString(options)) {
+    options = {trigger: options};
+  }
+  var $trigger = $(options.trigger);
+
+  var uploaders = [];
+  $trigger.each(function(i, item) {
+    options.trigger = item;
+    uploaders.push(new Uploader(options));
+  });
+  this._uploaders = uploaders;
+}
+MultipleUploader.prototype.submit = function() {
+  $.each(this._uploaders, function(i, item) {
+    item.submit();
+  });
+  return this;
+};
+MultipleUploader.prototype.change = function(callback) {
+  $.each(this._uploaders, function(i, item) {
+    item.change(callback);
+  });
+  return this;
+};
+MultipleUploader.prototype.success = function(callback) {
+  $.each(this._uploaders, function(i, item) {
+    item.success(callback);
+  });
+  return this;
+};
+MultipleUploader.prototype.error = function(callback) {
+  $.each(this._uploaders, function(i, item) {
+    item.error(callback);
+  });
+  return this;
+};
+MultipleUploader.prototype.enable = function (){
+  $.each(this._uploaders, function (i, item){
+    item.enable();
+  });
+  return this;
+};
+MultipleUploader.prototype.disable = function (){
+  $.each(this._uploaders, function (i, item){
+    item.disable();
+  });
+  return this;
+};
+MultipleUploader.Uploader = Uploader;

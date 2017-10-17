@@ -37,17 +37,6 @@
 
     };
 
-    // Toastr options
-    toastr.options.closeButton = true;
-    toastr.options.progressBar = true;
-    toastr.options.preventDuplicates = true;
-    toastr.options.closeMethod = 'fadeOut';
-    toastr.options.closeDuration = 3000;
-    toastr.options.closeEasing = 'swing';
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.timeOut = 5000;
-    toastr.options.extendedTimeOut = 7000;
-
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
     });
@@ -180,6 +169,41 @@
         }
 
         return data;
+    };
+
+    Fixhub.toast = function (content, title, caller) {
+        title = title || '';
+        caller = caller || 'not_in_progress';
+
+        if (!Config.get('fixhub.toastr') && caller == 'not_in_progress') {
+            return;
+        }
+
+        if (caller == 'not_in_progress') {
+            toastr.options.positionClass = 'toast-top-center';
+            toastr.options.progressBar = false;
+            toastr.options.closeDuration = 1000;
+            toastr.options.timeOut = 3000;
+            toastr.options.extendedTimeOut = 1000;
+        } else {
+            toastr.options.closeButton = true;
+            toastr.options.progressBar = true;
+            toastr.options.preventDuplicates = true;
+            toastr.options.closeMethod = 'fadeOut';
+            toastr.options.closeDuration = 3000;
+            toastr.options.closeEasing = 'swing';
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.timeOut = 5000;
+            toastr.options.extendedTimeOut = 7000;
+        }
+
+        if (caller == 'error') {
+            toastr.error(content, title);
+        } else if(caller == 'warning') {
+            toastr.warning(content, title);
+        } else {
+            toastr.success(content, title);
+        }
     };
 
 })(jQuery);
