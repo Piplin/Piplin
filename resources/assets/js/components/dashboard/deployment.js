@@ -71,7 +71,7 @@
             log.show();
             loader.hide();
 
-            Fixhub.listener.on('serverlog-' + log_id + ':' + Fixhub.events.LOG_CHANGED, function (data) {
+            Fixhub.listener.on('serverlog-' + log_id + ':' + Fixhub.events.OUTPUT_CHANGED, function (data) {
                 if (data.log_id === parseInt(log_id)) {
                   fetchLog(log, data.log_id);
                 }
@@ -151,7 +151,7 @@
             this.listenTo(Fixhub.Deployment, 'remove', this.addAll);
             this.listenTo(Fixhub.Deployment, 'all', this.render);
 
-            Fixhub.listener.on('serverlog:' + Fixhub.events.LOG_CHANGED, function (data) {
+            Fixhub.listener.on('serverlog:' + Fixhub.events.SVRLOG_CHANGED, function (data) {
                 var deployment = Fixhub.Deployment.get(data.log_id);
 
                 if (deployment) {

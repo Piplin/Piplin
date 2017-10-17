@@ -15,12 +15,12 @@
 
         // Deployment status
         DEPLOYMENT_COMPLETED: 0,
-        DEPLOYMENT_PENDING  : 1,
+        DEPLOYMENT_PENDING:   1,
         DEPLOYMENT_DEPLOYING: 2,
-        DEPLOYMENT_FAILED   : 3,
-        DEPLOYMENT_ERRORS   : 4,
+        DEPLOYMENT_FAILED:    3,
+        DEPLOYMENT_ERRORS:    4,
         DEPLOYMENT_CANCELLED: 5,
-        DEPLOYMENT_ABORTED  : 6,
+        DEPLOYMENT_ABORTED:   6,
         DEPLOYMENT_APPROVING: 7,
         DEPLOYMENT_APPROVED : 8
     };
@@ -32,7 +32,8 @@
         MODEL_TRASHED: 'Fixhub\\Bus\\Events\\ModelTrashedEvent',
 
         // Server log changed
-        LOG_CHANGED: 'Fixhub\\Bus\\Events\\ServerOutputChangedEvent'
+        SVRLOG_CHANGED: 'Fixhub\\Bus\\Events\\ServerLogChangedEvent',
+        OUTPUT_CHANGED: 'Fixhub\\Bus\\Events\\ServerOutputChangedEvent'
 
     };
 
