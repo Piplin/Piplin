@@ -142,7 +142,7 @@
             this.listenTo(Fixhub.Variables, 'remove', this.addAll);
             this.listenTo(Fixhub.Variables, 'all', this.render);
 
-            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('variable:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 $('#variable_' + data.model.id).html(data.model.name);
 
                 var variable = Fixhub.Variables.get(parseInt(data.model.id));
@@ -152,7 +152,7 @@
                 }
             });
 
-            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('variable:' + Fixhub.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -160,7 +160,7 @@
                 }
             });
 
-            Fixhub.listener.on('variable:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('variable:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var variable = Fixhub.Variables.get(parseInt(data.model.id));
 
                 if (variable) {

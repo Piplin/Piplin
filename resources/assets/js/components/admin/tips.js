@@ -160,7 +160,7 @@
             this.listenTo(Fixhub.Tips, 'remove', this.addAll);
             this.listenTo(Fixhub.Tips, 'all', this.render);
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
@@ -168,11 +168,11 @@
                 }
             });
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Tips.add(data.model);
             });
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {

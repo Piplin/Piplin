@@ -90,6 +90,7 @@ mix
         `${assets_path}/js/components/dashboard/servers.js`
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
+        `${assets_path}/js/bootstrap.js`,
         `${assets_path}/js/fixhub.js`,
         `${assets_path}/js/uploader.js`,
     ], `${dist_path}/js/app.js`)

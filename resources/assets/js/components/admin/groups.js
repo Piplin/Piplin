@@ -163,7 +163,7 @@
             this.listenTo(Fixhub.Groups, 'remove', this.addAll);
             this.listenTo(Fixhub.Groups, 'all', this.render);
 
-            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('group:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 $('#group_' + data.model.id).html(data.model.name);
 
                 var group = Fixhub.Groups.get(parseInt(data.model.id));
@@ -173,11 +173,11 @@
                 }
             });
 
-            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('group:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Groups.add(data.model);
             });
 
-            Fixhub.listener.on('group:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('group:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var group = Fixhub.Groups.get(parseInt(data.model.id));
 
                 if (group) {

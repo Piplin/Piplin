@@ -137,7 +137,7 @@
             this.listenTo(Fixhub.Templates, 'remove', this.addAll);
             this.listenTo(Fixhub.Templates, 'all', this.render);
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
@@ -145,11 +145,11 @@
                 }
             });
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Templates.add(data.model);
             });
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {

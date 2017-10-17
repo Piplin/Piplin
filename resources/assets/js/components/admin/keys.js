@@ -176,7 +176,7 @@
             this.listenTo(Fixhub.Keys, 'remove', this.addAll);
             this.listenTo(Fixhub.Keys, 'all', this.render);
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
@@ -184,11 +184,11 @@
                 }
             });
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Keys.add(data.model);
             });
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {

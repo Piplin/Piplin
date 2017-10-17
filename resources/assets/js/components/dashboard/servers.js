@@ -186,7 +186,7 @@
             this.listenTo(Fixhub.Servers, 'remove', this.addAll);
             this.listenTo(Fixhub.Servers, 'all', this.render);
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
@@ -198,13 +198,13 @@
                 }
             });
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CREATED, function (data) {
                 if (parseInt(data.model.environment_id) === parseInt(Fixhub.environment_id)) {
                     Fixhub.Servers.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {

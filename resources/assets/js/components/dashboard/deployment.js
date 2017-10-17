@@ -71,7 +71,7 @@
             log.show();
             loader.hide();
 
-            Fixhub.listener.on('serverlog-' + log_id + ':Fixhub\\Bus\\Events\\ServerOutputChangedEvent', function (data) {
+            Fixhub.listener.on('serverlog-' + log_id + ':' + Fixhub.events.LOG_CHANGED, function (data) {
                 if (data.log_id === parseInt(log_id)) {
                   fetchLog(log, data.log_id);
                 }
@@ -151,7 +151,7 @@
             this.listenTo(Fixhub.Deployment, 'remove', this.addAll);
             this.listenTo(Fixhub.Deployment, 'all', this.render);
 
-            Fixhub.listener.on('serverlog:Fixhub\\Bus\\Events\\ServerLogChangedEvent', function (data) {
+            Fixhub.listener.on('serverlog:' + Fixhub.events.LOG_CHANGED, function (data) {
                 var deployment = Fixhub.Deployment.get(data.log_id);
 
                 if (deployment) {
@@ -165,10 +165,10 @@
                 }
             });
 
-            Fixhub.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('deployment:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
                     var status_bar = $('#deploy_status_bar');
-                    var status_data = Fixhub.parseDeploymentStatus(parseInt(data.model.status));
+                    var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
                     
                     status_bar.attr('class', 'label label-' + status_data.label_class);
                     $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);

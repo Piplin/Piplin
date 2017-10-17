@@ -178,7 +178,7 @@
             this.listenTo(Fixhub.Links, 'remove', this.addAll);
             this.listenTo(Fixhub.Links, 'all', this.render);
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
@@ -186,11 +186,11 @@
                 }
             });
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Links.add(data.model);
             });
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
