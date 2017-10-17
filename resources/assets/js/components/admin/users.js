@@ -20,7 +20,7 @@
             $('#user_id').val('');
             $('#user_name').val('');
             //$('#user_level').val($("#user_level option:first").val());
-            $('#user_level').select2(Fixhub.select2_otpions);
+            $('#user_level').select2(Fixhub.select2_options);
             $('#user_nickname').val('');
             $('#user_email').val('');
             $('#user_password').val('');
@@ -210,7 +210,7 @@
             $('#user_id').val(this.model.id);
             $('#user_name').val(this.model.get('name'));
             //$('#user_level').val(this.model.get('level'));
-            $('#user_level').select2(Fixhub.select2_otpions)
+            $('#user_level').select2(Fixhub.select2_options)
                                 .val(this.model.get('level'))
                                 .trigger('change');
             $('#user_nickname').val(this.model.get('nickname'));

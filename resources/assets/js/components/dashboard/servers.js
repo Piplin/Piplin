@@ -284,7 +284,7 @@
             $('#server_id').val(this.model.id);
             $('#server_name').val(this.model.get('name'));
             $('#server_environment_id')
-                .select2(Fixhub.select2_otpions)
+                .select2(Fixhub.select2_options)
                 .val(this.model.get('environment_id'))
                 .trigger('change');
             $('#server_enabled').prop('checked', (this.model.get('enabled') === true));

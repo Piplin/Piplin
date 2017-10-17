@@ -36,7 +36,7 @@
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_group_id').select2(Fixhub.select2_otpions)
+            $('#project_group_id').select2(Fixhub.select2_options)
                                     .val($("#project_group_id option:selected").val())
                                     .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
@@ -256,7 +256,7 @@
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
             //$('#project_group_id').val(this.model.get('group_id'));
-            $('#project_group_id').select2(Fixhub.select2_otpions)
+            $('#project_group_id').select2(Fixhub.select2_options)
                                     .val(this.model.get('group_id'))
                                     .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));

@@ -30,12 +30,12 @@
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    Fixhub.select2_otpions = {
+    Fixhub.select2_options = {
         width: '100%',
         minimumResultsForSearch: Infinity
     };
 
-    $(".select2").select2(Fixhub.select2_otpions);
+    $(".select2").select2(Fixhub.select2_options);
 
     // Toastr options
     toastr.options.closeButton = true;
