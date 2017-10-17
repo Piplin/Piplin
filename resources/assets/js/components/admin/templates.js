@@ -182,8 +182,8 @@
     Fixhub.TemplateView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editTemplate',
-            'click .btn-delete': 'trashTemplate'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -198,11 +198,11 @@
 
             return this;
         },
-        editTemplate: function() {
+        edit: function() {
             $('#template_id').val(this.model.id);
             $('#template_name').val(this.model.get('name'));
         },
-        trashTemplate: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade template-trash');

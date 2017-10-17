@@ -217,8 +217,8 @@
     Fixhub.GroupView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editGroup',
-            'click .btn-delete': 'trashGroup'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -233,11 +233,11 @@
 
             return this;
         },
-        editGroup: function() {
+        edit: function() {
             $('#group_id').val(this.model.id);
             $('#group_name').val(this.model.get('name'));
         },
-        trashGroup: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade group-trash');
@@ -480,8 +480,8 @@
     Fixhub.ProviderView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editProvider',
-            'click .btn-delete': 'trashProvider'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -496,7 +496,7 @@
 
             return this;
         },
-        editProvider: function() {
+        edit: function() {
             $('#provider_id').val(this.model.id);
             $('#provider_name').val(this.model.get('name'));
             $('#provider_slug').val(this.model.get('slug'));
@@ -504,7 +504,7 @@
             $('#provider_description').val(this.model.get('description'));
 
         },
-        trashProvider: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade provider-trash');
@@ -549,7 +549,9 @@
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_group_id').val($("#project_group_id option:selected").val());
+            $('#project_group_id').select2(Fixhub.select2_options)
+                                    .val($("#project_group_id option:selected").val())
+                                    .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
             $('#project_builds_to_keep').val(10);
             $('#project_url').val('');
@@ -742,9 +744,9 @@
     Fixhub.ProjectView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editProject',
-            'click .btn-clone': 'cloneProject',
-            'click .btn-trash': 'trashProject'
+            'click .btn-edit' : 'edit',
+            'click .btn-clone': 'clone',
+            'click .btn-trash': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -761,12 +763,15 @@
 
             return this;
         },
-        editProject: function() {
+        edit: function() {
             $('#project_id').val(this.model.id);
             $('#project_name').val(this.model.get('name'));
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
-            $('#project_group_id').val(this.model.get('group_id'));
+            //$('#project_group_id').val(this.model.get('group_id'));
+            $('#project_group_id').select2(Fixhub.select2_options)
+                                    .val(this.model.get('group_id'))
+                                    .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));
             $('#project_url').val(this.model.get('url'));
@@ -774,11 +779,11 @@
             $('#project_allow_other_branch').prop('checked', (this.model.get('allow_other_branch') === true));
             $('#project_need_approve').prop('checked', (this.model.get('need_approve') === true));
         },
-        cloneProject: function() {
+        clone: function() {
             $('#skeleton_id').val(this.model.id);
             $('#project_clone_name').val(this.model.get('name') + '_Clone');
         },
-        trashProject: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade project-trash');
@@ -970,8 +975,8 @@
     Fixhub.TemplateView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editTemplate',
-            'click .btn-delete': 'trashTemplate'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -986,11 +991,11 @@
 
             return this;
         },
-        editTemplate: function() {
+        edit: function() {
             $('#template_id').val(this.model.id);
             $('#template_name').val(this.model.get('name'));
         },
-        trashTemplate: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade template-trash');
@@ -1230,8 +1235,8 @@
     Fixhub.LinkView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editLink',
-            'click .btn-delete': 'trashLink'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -1246,14 +1251,14 @@
 
             return this;
         },
-        editLink: function() {
+        edit: function() {
             $('#link_id').val(this.model.id);
             $('#link_title').val(this.model.get('title'));
             $('#link_url').val(this.model.get('url'));
             $('#link_description').val(this.model.get('description'));
 
         },
-        trashLink: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade link-trash');
@@ -1367,7 +1372,7 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form input, form textarea', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');
@@ -1468,9 +1473,9 @@
     Fixhub.TipView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-show': 'showTip',
-            'click .btn-edit': 'editTip',
-            'click .btn-delete': 'trashTip'
+            'click .btn-show': 'show',
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -1485,18 +1490,18 @@
 
             return this;
         },
-        editTip: function() {
+        edit: function() {
             $('#tip_id').val(this.model.id);
             $('#tip_body').val(this.model.get('body'));
             $('#tip_status').prop('checked', (this.model.get('status') === true));
 
         },
-        showTip: function() {
+        show: function() {
             var data = this.model.toJSON();
 
             $('#tip_preview').html(data.body);
         },
-        trashTip: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade tip-trash');
@@ -1626,7 +1631,7 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form input, form textarea', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');
@@ -1733,9 +1738,9 @@
     Fixhub.KeyView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-show': 'showKey',
-            'click .btn-edit': 'editKey',
-            'click .btn-delete': 'trashKey'
+            'click .btn-show': 'show',
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -1750,18 +1755,18 @@
 
             return this;
         },
-        editKey: function() {
+        edit: function() {
             $('#key_id').val(this.model.id);
             $('#key_name').val(this.model.get('name'));
             $('#key_private_key').val(this.model.get('private_key'));
 
         },
-        showKey: function() {
+        show: function() {
             var data = this.model.toJSON();
 
             $('#log pre').html(data.public_key);
         },
-        trashKey: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade key-trash');
@@ -1789,7 +1794,8 @@
         } else {
             $('#user_id').val('');
             $('#user_name').val('');
-            $('#user_level').val($("#user_level option:first").val());
+            //$('#user_level').val($("#user_level option:first").val());
+            $('#user_level').select2(Fixhub.select2_options);
             $('#user_nickname').val('');
             $('#user_email').val('');
             $('#user_password').val('');
@@ -1957,8 +1963,8 @@
     Fixhub.UserView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'editUser',
-            'click .btn-delete': 'trashUser'
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -1975,14 +1981,17 @@
 
             return this;
         },
-        editUser: function() {
+        edit: function() {
             $('#user_id').val(this.model.id);
             $('#user_name').val(this.model.get('name'));
-            $('#user_level').val(this.model.get('level'));
+            //$('#user_level').val(this.model.get('level'));
+            $('#user_level').select2(Fixhub.select2_options)
+                                .val(this.model.get('level'))
+                                .trigger('change');
             $('#user_nickname').val(this.model.get('nickname'));
             $('#user_email').val(this.model.get('email'));
         },
-        trashUser: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade user-trash');

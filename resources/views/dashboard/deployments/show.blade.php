@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="box-body">
-            <p><strong>{{ trans('deployments.reason') }}</strong>: {{ $deployment->reason }}</p>
+            <p><strong>{{ trans('deployments.reason') }}</strong>: {!! $deployment->formatted_reason !!}</p>
             <p><strong>{{ trans('deployments.environment') }}</strong>: {{ $deployment->environment_names }}</p>
             <div class="callout callout-danger {{ $deployment->deploy_failure ? null : 'hide' }}" id="deploy_status">
                 <h4><i class="icon ion ion-close"></i> {{ trans('deployments.deploy_failure') }}</h4>

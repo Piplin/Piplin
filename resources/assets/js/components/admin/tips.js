@@ -105,7 +105,7 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form input, form textarea', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');
@@ -206,9 +206,9 @@
     Fixhub.TipView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-show': 'showTip',
-            'click .btn-edit': 'editTip',
-            'click .btn-delete': 'trashTip'
+            'click .btn-show': 'show',
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -223,18 +223,18 @@
 
             return this;
         },
-        editTip: function() {
+        edit: function() {
             $('#tip_id').val(this.model.id);
             $('#tip_body').val(this.model.get('body'));
             $('#tip_status').prop('checked', (this.model.get('status') === true));
 
         },
-        showTip: function() {
+        show: function() {
             var data = this.model.toJSON();
 
             $('#tip_preview').html(data.body);
         },
-        trashTip: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade tip-trash');

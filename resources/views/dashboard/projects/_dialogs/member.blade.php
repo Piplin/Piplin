@@ -17,13 +17,13 @@
                         <label for="member_users">{{ trans('members.users') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-android-person"></i></div>
-                            <select class="form-control project-members" id="member_users" name="users[]" multiple="multiple"></select>
+                            <select class="form-control project-members" id="member_user_id" name="user_id"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="user_level">{{ trans('members.level') }}</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-person-stalker"></i></div>
+                            <div class="input-group-addon"><i class="ion ion-ios-locked"></i></div>
                             <select id="member_level" name="level" class="form-control">
                                 @foreach([1,2,3] as $level)
                                     <option value="{{ $level }}">{{ $level }}</option>

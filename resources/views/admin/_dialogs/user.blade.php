@@ -25,7 +25,7 @@
                         <label for="user_level">{{ trans('users.role') }}</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ion ion-person-stalker"></i></div>
-                            <select id="user_level" name="level" class="select2 form-control">
+                            <select id="user_level" name="level" class="form-control">
                                 @foreach($levels as $level => $role)
                                     <option value="{{ $level }}">{{ $role }}</option>
                                 @endforeach

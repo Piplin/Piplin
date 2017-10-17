@@ -121,7 +121,7 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form input, form textarea', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');
@@ -228,9 +228,9 @@
     Fixhub.KeyView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-show': 'showKey',
-            'click .btn-edit': 'editKey',
-            'click .btn-delete': 'trashKey'
+            'click .btn-show': 'show',
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -245,18 +245,18 @@
 
             return this;
         },
-        editKey: function() {
+        edit: function() {
             $('#key_id').val(this.model.id);
             $('#key_name').val(this.model.get('name'));
             $('#key_private_key').val(this.model.get('private_key'));
 
         },
-        showKey: function() {
+        show: function() {
             var data = this.model.toJSON();
 
             $('#log pre').html(data.public_key);
         },
-        trashKey: function() {
+        trash: function() {
             var target = $('#model_id');
             target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade key-trash');

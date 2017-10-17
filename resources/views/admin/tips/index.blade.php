@@ -21,7 +21,7 @@
     {!! $tips_raw->render() !!}
 </div>
 
-@include('admin._dialogs.tips')
+@include('admin._dialogs.tip')
 @stop
 
 @section('right-buttons')

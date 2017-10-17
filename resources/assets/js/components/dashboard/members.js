@@ -25,12 +25,13 @@
         }
     };
 
-    $('.project-members').select2(settings);
+    var member_select2 = $('.project-members').select2(settings);
 
     // end
     $('#member').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
+        var title = trans('members.create');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -39,11 +40,18 @@
         $('.label-danger', modal).remove();
 
         if (button.hasClass('btn-edit')) {
+            title = trans('members.edit');
+            $('#member_user_id').parent().parent().hide();
             $('.btn-danger', modal).show();
         } else {
+            $('#member_user_id').parent().parent().show();
             $('#member_id').val('');
+            member_select2.val(1).trigger('change');
+            $('#member_level').select2(Fixhub.select2_options);
             modal.find('.modal-title span').text(trans('members.create'));
         }
+
+        modal.find('.modal-title span').text(title);
     });
 
     $('#member #member-type a.btn-app').on('click', function(event) {
@@ -106,7 +114,7 @@
         }
 
         var data = {
-          users:      $('#member_users').val(),
+          user_id:    $('#member_user_id').val(),
           level:      $('#member_level').val(),
           project_id: parseInt($('input[name="project_id"]').val())
         };
@@ -245,8 +253,12 @@
             return this;
         },
         edit: function() {
-            $('#member_id').val(this.model.get('pivot').id);
-            $('#member_level').val(this.model.get('pivot').level);
+            //$('#member_id').val(this.model.get('pivot').id);
+            console.log(this.model.id);
+            $('#member_id').val(this.model.id);
+            $('#member_level').select2(Fixhub.select2_options)
+                                .val(this.model.get('pivot').level)
+                                .trigger('change');
         },
         trash: function() {
             var target = $('#model_id');

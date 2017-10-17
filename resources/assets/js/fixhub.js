@@ -14,6 +14,9 @@
     if (window.location.href.match(/login|password/) != null) {
         return;
     }
+
+    window.Fixhub = {};
+
     var locale = $('meta[name="locale"]').attr('content');
 
     Lang.setLocale(locale);
@@ -27,10 +30,12 @@
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    $(".select2").select2({
+    Fixhub.select2_options = {
         width: '100%',
         minimumResultsForSearch: Infinity
-    });
+    };
+
+    $(".select2").select2(Fixhub.select2_options);
 
     // Toastr options
     toastr.options.closeButton = true;
@@ -58,8 +63,6 @@
     var DEPLOYMENT_ABORTED   = 6;
     var DEPLOYMENT_APPROVING = 7;
     var DEPLOYMENT_APPROVED  = 8;
-
-    window.Fixhub = {};
 
     Fixhub.project_id = Fixhub.project_id || null;
 

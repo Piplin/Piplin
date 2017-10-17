@@ -33,7 +33,7 @@
         <td>
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('members.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#member"><i class="ion ion-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-android-exit"></i></button>
             </div>
         </td>
     </script>
