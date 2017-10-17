@@ -48,12 +48,7 @@
     toastr.options.timeOut = 5000;
     toastr.options.extendedTimeOut = 7000;
 
-    var FINISHED     = 0;
-    var PENDING      = 1;
-    var DEPLOYING    = 2;
-    var FAILED       = 3;
-    var NOT_DEPLOYED = 4;
-
+    // Deployment status
     var DEPLOYMENT_COMPLETED = 0;
     var DEPLOYMENT_PENDING   = 1;
     var DEPLOYMENT_DEPLOYING = 2;
@@ -111,55 +106,22 @@
                 $('td:nth-child(8)', deployment).text(data.model.short_commit);
             }
 
-            var icon_class = 'clock-o';
-            var label_class = 'info';
-            var label = trans('deployments.pending');
-            var done = false;
-            var success = false;
+            var status_bar = $('td:nth-child(9) span.label', deployment);
 
-            data.model.status = parseInt(data.model.status);
-            var status = $('td:nth-child(9) span.label', deployment);
+            var status_data = Fixhub.parseDeploymentStatus(parseInt(data.model.status));
 
-            if (data.model.status === DEPLOYMENT_COMPLETED) {
-                icon_class = 'checkmark-round';
-                label_class = 'success';
-                label = trans('deployments.completed');
-                done = true;
-                success = true;
-            } else if (data.model.status === DEPLOYMENT_DEPLOYING) {
-                icon_class = 'load-c fixhub-spin';
-                label_class = 'warning';
-                label = trans('deployments.running');
-            } else if (data.model.status === DEPLOYMENT_FAILED) {
-                icon_class = 'close-round';
-                label_class = 'danger';
-                label = trans('deployments.failed');
-                done = true;
-            } else if (data.model.status === DEPLOYMENT_ERRORS) {
-                icon_class = 'close';
-                label_class = 'success';
-                label = trans('deployments.completed_with_errors');
-                done = true;
-                success = true;
-            } else if (data.model.status === DEPLOYMENT_CANCELLED) {
-                icon_class = 'alert';
-                label_class = 'danger';
-                label = trans('deployments.cancelled');
-                done = true;
-            }
-
-            if (done) {
+            if (status_data.done) {
                 $('button#deploy_project:disabled').removeAttr('disabled');
                 $('td:nth-child(10) a.btn-cancel', deployment).remove();
 
-                if (success) {
+                if (status_data.success) {
                     $('button.btn-rollback').removeClass('hide');
                 }
             }
 
-            status.attr('class', 'label label-' + label_class)
-            $('i', status).attr('class', 'ion ion-' + icon_class);
-            $('span', status).text(label);
+            status_bar.attr('class', 'label label-' + status_data.label_class);
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
         //} else if ($('#timeline').length === 0) { // Don't show on dashboard
             // FIXME: Also don't show if viewing the deployment, or the project the deployment is for
         } else {
@@ -182,37 +144,15 @@
         var project = $('#project_' + data.model.id);
 
         if (project.length > 0) {
-
-            var icon_class = 'question-circle';
-            var label_class = 'primary';
-            var label = trans('projects.not_deployed');
-
-            data.model.status = parseInt(data.model.status);
             var status = $('td:nth-child(4) span.label', project);
 
-            if (data.model.status === FINISHED) {
-                icon_class = 'checkmark-round';
-                label_class = 'success';
-                label = trans('projects.finished');
-            } else if (data.model.status === DEPLOYING) {
-                icon_class = 'load-c fixhub-spin';
-                label_class = 'warning';
-                label = trans('projects.deploying');
-            } else if (data.model.status === FAILED) {
-                icon_class = 'close-round';
-                label_class = 'danger';
-                label = trans('projects.failed');
-            } else if (data.model.status === PENDING) {
-                icon_class = 'clock';
-                label_class = 'info';
-                label = trans('projects.pending');
-            }
+            var formatted_status = Fixhub.parseProjectStatus(parseInt(data.model.status));
 
             $('td:first a', project).text(data.model.name);
             $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
-            status.attr('class', 'label label-' + label_class)
-            $('i', status).attr('class', 'ion ion-' + icon_class);
-            $('span', status).text(label);
+            status.attr('class', 'label label-' + formatted_status.label_class)
+            $('i', status).attr('class', 'ion ion-' + formatted_status.icon_class);
+            $('span', status).text(formatted_status.label);
         }
     });
 
@@ -223,17 +163,92 @@
         }
     });
 
+    Fixhub.parseProjectStatus = function (status) {
+        // Project and Environment status
+        var FINISHED     = 0;
+        var PENDING      = 1;
+        var DEPLOYING    = 2;
+        var FAILED       = 3;
+        var NOT_DEPLOYED = 4;
+
+        var data = {};
+
+        data.icon_class = 'help';
+        data.label_class = 'default';
+        data.label = trans('projects.not_deployed');
+
+        if (status === FINISHED) {
+            data.icon_class = 'checkmark-round';
+            data.label_class = 'success';
+            data.label = trans('projects.finished');
+        } else if (status === DEPLOYING) {
+            data.icon_class = 'load-c fixhub-spin';
+            data.label_class = 'warning';
+            data.label = trans('projects.deploying');
+        } else if (status === FAILED) {
+            data.icon_class = 'close-round';
+            data.label_class = 'danger';
+            data.label = trans('projects.failed');
+        } else if (status === PENDING) {
+            data.icon_class = 'clock';
+            data.label_class = 'info';
+            data.label = trans('projects.pending');
+        }
+
+        return data;
+    };
+
+    Fixhub.parseDeploymentStatus = function (status) {
+
+        var data = {};
+
+        data.icon_class = 'clock-o';
+        data.label_class = 'info';
+        data.label = trans('deployments.pending');
+        data.done = false;
+        data.success = false;
+
+        if (status === DEPLOYMENT_COMPLETED) {
+            data.icon_class = 'checkmark-round';
+            data.label_class = 'success';
+            data.label = trans('deployments.completed');
+            data.done = true;
+            data.success = true;
+        } else if (status === DEPLOYMENT_DEPLOYING) {
+            data.icon_class = 'load-c fixhub-spin';
+            data.label_class = 'warning';
+            data.label = trans('deployments.running');
+        } else if (status === DEPLOYMENT_FAILED) {
+            data.icon_class = 'close-round';
+            data.label_class = 'danger';
+            data.label = trans('deployments.failed');
+            data.done = true;
+        } else if (status === DEPLOYMENT_ERRORS) {
+            data.icon_class = 'close';
+            data.label_class = 'success';
+            data.label = trans('deployments.completed_with_errors');
+            data.done = true;
+            data.success = true;
+        } else if (status === DEPLOYMENT_CANCELLED) {
+            data.icon_class = 'alert';
+            data.label_class = 'danger';
+            data.label = trans('deployments.cancelled');
+            data.done = true;
+        }
+
+        return data;
+    };
+
     function updateTimeline() {
         $.ajax({
             type: 'GET',
             url: '/timeline'
-        }).success(function (response) {
+        }).done(function (response) {
             $('#timeline').html(response);
         });
     }
 
     function updateTodoBar(data) {
-
         data.model.time = moment(data.model.started_at).fromNow();
         data.model.url = '/deployment/' + data.model.id;
 

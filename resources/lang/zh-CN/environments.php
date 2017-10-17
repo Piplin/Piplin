@@ -17,6 +17,8 @@ return [
     'name'                => '环境名称',
     'name_placeholder'    => '预发布',
     'servers'             => '服务器',
+    'status'              => '部署状态',
+    'completed'           => '部署时间',
     'description'         => '描述',
     'deployed'            => '最近上线',
     'desc_placeholder'    => '简要描述环境用途',

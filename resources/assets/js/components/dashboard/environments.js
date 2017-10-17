@@ -1,4 +1,11 @@
 (function ($) {
+    //Fix me please
+    var FINISHED     = 0;
+    var PENDING      = 1;
+    var DEPLOYING    = 2;
+    var FAILED       = 3;
+    var NOT_DEPLOYED = 4;
+
     $('#environment_list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
@@ -240,6 +247,10 @@
         },
         render: function () {
             var data = this.model.toJSON();
+
+            var parse_data = Fixhub.parseProjectStatus(parseInt(this.model.get('status')));
+            data = $.extend(data, parse_data);
+
             data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');
 
             this.$el.html(this.template(data));

@@ -17,9 +17,10 @@
                     <th>{{ trans('environments.name') }}</th>
                     <th>{{ trans('environments.default_on') }}</th>
                     <th>{{ trans('environments.servers') }}</th>
-                    <th>{{ trans('environments.deployed') }}</th>
+                    <th>{{ trans('environments.status') }}</th>
+                    <th>{{ trans('environments.completed') }}</th>
                     <th>{{ trans('environments.description') }}</th>
-                    <th>&nbsp;</th>
+                    <th class="pull-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,7 @@
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td><%- server_count %></td>
+        <td><span class="label label-<%- label_class %>"><i class="ion ion-<%-icon_class %>"></i> <%- label %></td>
         <td><%- last_run %></td>
         <td><%- description %></td>
         <td>

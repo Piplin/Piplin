@@ -17,6 +17,8 @@ return [
     'name'                => 'Name',
     'name_placeholder'    => 'Staging',
     'servers'             => 'Servers',
+    'status'              => 'Result',
+    'completed'           => 'Completed',
     'description'         => 'Description',
     'deployed'            => 'Deployed',
     'desc_placeholder'    => 'Please describe briefly the use of this environment',

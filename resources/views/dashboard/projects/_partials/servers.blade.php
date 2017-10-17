@@ -53,8 +53,7 @@
         <td><%- user %></td>
         <td><%- ip_address %></td>
         <td><%- port %></td>
-        <td>
-             <span class="label label-<%- status_css %>"><i class="ion ion-<%-icon_css %>"></i> <%- status %></span>
+        <td><span class="label label-<%- status_css %>"><i class="ion ion-<%-icon_css %>"></i> <%- status %></span>
         </td>
         <td><%- updated_at %></td>
         <td>

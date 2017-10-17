@@ -6,7 +6,7 @@
             <h3 class="box-title"><i class="ion ion-ios-paperplane-outline"></i>{{ trans('deployments.label') }}</h3>
             <div class="box-tools pull-right">
                 {{ trans('deployments.status') }}:
-                <span class="label label-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}" title="{{ $deployment->readable_status }}"></i>{{ $deployment->readable_status }}</span>
+                <span class="label label-{{ $deployment->css_class }}" id="deploy_status_bar"><i class="ion ion-{{ $deployment->icon }}" title="{{ $deployment->readable_status }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                 @if($current_user->isAdmin || $current_user->isOperator)
                     @if($deployment->isApproving())
                         <a href="{{ route('deployments.approve', ['id' => $deployment->id]) }}" class="btn btn-info"> {{ trans('deployments.approve') }}</a>
