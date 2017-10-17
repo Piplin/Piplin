@@ -309,7 +309,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
                     $path = 'commits';
                 }
 
-                return 'http://' . $info['domain'] . $info['reference'] . '/' . $path . '/' . $this->commit;
+                return 'http://' . $info['domain'] . '/' . $info['reference'] . '/' . $path . '/' . $this->commit;
             }
         }
 

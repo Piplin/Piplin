@@ -35,8 +35,8 @@ class TestNotification extends Notification
             ->view(['notifications.email', 'notifications.email-plain'], [
                 'name' => $notification->name,
             ])
-            ->subject(trans('hooks.test_subject', ['app_url' => config('app.url')]))
-            ->line(trans('hooks.test_message'));
+            ->subject(trans('hooks.test_subject'))
+            ->line(trans('hooks.test_message', ['app_url' => config('app.url')]));
     }
 
     /**
