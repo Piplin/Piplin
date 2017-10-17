@@ -48,8 +48,7 @@
                         <th width="5%">ID</th>
                         <th width="30%">{{ trans('projects.name') }}</th>
                         <th width="35%">{{ trans('projects.deployed') }}</th>
-                        <th width="20%">{{ trans('dashboard.status') }}</th>
-                        <th width="10%"></th>
+                        <th width="30%">{{ trans('dashboard.status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,13 +64,6 @@
                           @endif
                         </td>
                         <td><span class="label label-{{ $group_project->css_class }}"><i class="ion ion-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
-                        <td>
-                            <div class="btn-group pull-right">
-                                @if(isset($group_project->url))
-                                <a href="{{ $group_project->url }}" class="btn btn-xs btn-default" title="{{ trans('dashboard.site') }}" target="_blank"><i class="ion ion-earth"></i></a>
-                                @endif
-                            </div>
-                        </td>
                     </tr>
                     @endforeach
                 </tbody>
