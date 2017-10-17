@@ -39,6 +39,10 @@ class RevisionPresenter extends BasePresenter
      */
     public function item_details()
     {
+        if (!$this->wrappedObject->revisionable) {
+            return trans('revisions.removed');
+        }
+
         $pre = $post = $key = '';
 
         switch ($this->wrappedObject->revisionable_type) {
