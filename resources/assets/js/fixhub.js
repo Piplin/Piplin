@@ -144,15 +144,15 @@
         var project = $('#project_' + data.model.id);
 
         if (project.length > 0) {
-            var status = $('td:nth-child(4) span.label', project);
+            var status_bar = $('td:nth-child(4) span.label', project);
 
-            var formatted_status = Fixhub.parseProjectStatus(parseInt(data.model.status));
+            var status_data = Fixhub.parseProjectStatus(parseInt(data.model.status));
 
             $('td:first a', project).text(data.model.name);
             $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
-            status.attr('class', 'label label-' + formatted_status.label_class)
-            $('i', status).attr('class', 'ion ion-' + formatted_status.icon_class);
-            $('span', status).text(formatted_status.label);
+            status_bar.attr('class', 'label label-' + status_data.label_class)
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
         }
     });
 
@@ -163,7 +163,7 @@
         }
     });
 
-    Fixhub.parseProjectStatus = function (status) {
+    Fixhub.parseProjectStatus = function (deploy_status) {
         // Project and Environment status
         var FINISHED     = 0;
         var PENDING      = 1;
@@ -177,19 +177,19 @@
         data.label_class = 'default';
         data.label = trans('projects.not_deployed');
 
-        if (status === FINISHED) {
+        if (deploy_status === FINISHED) {
             data.icon_class = 'checkmark-round';
             data.label_class = 'success';
             data.label = trans('projects.finished');
-        } else if (status === DEPLOYING) {
+        } else if (deploy_status === DEPLOYING) {
             data.icon_class = 'load-c fixhub-spin';
             data.label_class = 'warning';
             data.label = trans('projects.deploying');
-        } else if (status === FAILED) {
+        } else if (deploy_status === FAILED) {
             data.icon_class = 'close-round';
             data.label_class = 'danger';
             data.label = trans('projects.failed');
-        } else if (status === PENDING) {
+        } else if (deploy_status === PENDING) {
             data.icon_class = 'clock';
             data.label_class = 'info';
             data.label = trans('projects.pending');
@@ -198,7 +198,7 @@
         return data;
     };
 
-    Fixhub.parseDeploymentStatus = function (status) {
+    Fixhub.parseDeploymentStatus = function (deploy_status) {
 
         var data = {};
 
@@ -208,28 +208,28 @@
         data.done = false;
         data.success = false;
 
-        if (status === DEPLOYMENT_COMPLETED) {
+        if (deploy_status === DEPLOYMENT_COMPLETED) {
             data.icon_class = 'checkmark-round';
             data.label_class = 'success';
             data.label = trans('deployments.completed');
             data.done = true;
             data.success = true;
-        } else if (status === DEPLOYMENT_DEPLOYING) {
+        } else if (deploy_status === DEPLOYMENT_DEPLOYING) {
             data.icon_class = 'load-c fixhub-spin';
             data.label_class = 'warning';
             data.label = trans('deployments.running');
-        } else if (status === DEPLOYMENT_FAILED) {
+        } else if (deploy_status === DEPLOYMENT_FAILED) {
             data.icon_class = 'close-round';
             data.label_class = 'danger';
             data.label = trans('deployments.failed');
             data.done = true;
-        } else if (status === DEPLOYMENT_ERRORS) {
+        } else if (deploy_status === DEPLOYMENT_ERRORS) {
             data.icon_class = 'close';
             data.label_class = 'success';
             data.label = trans('deployments.completed_with_errors');
             data.done = true;
             data.success = true;
-        } else if (status === DEPLOYMENT_CANCELLED) {
+        } else if (deploy_status === DEPLOYMENT_CANCELLED) {
             data.icon_class = 'alert';
             data.label_class = 'danger';
             data.label = trans('deployments.cancelled');
