@@ -13,7 +13,10 @@ return [
 
     'label'               => 'Environments',
     'create'              => 'Add a new environment',
+    'create_success'      => 'Environment created.',
     'edit'                => 'Edit the environment',
+    'edit_success'        => 'Environment updated.',
+    'delete_success'      => 'The environment has been deleted.',
     'name'                => 'Name',
     'name_placeholder'    => 'Staging',
     'servers'             => 'Servers',

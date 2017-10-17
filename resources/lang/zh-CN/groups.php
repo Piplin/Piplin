@@ -16,8 +16,11 @@ return [
     'name_placeholder' => 'Fixhub',
     'projects'         => '项目数',
     'create'           => '新增分组',
+    'create_success'   => '项目分组创建成功。',
     'edit'             => '编辑分组',
+    'edit_success'     => '项目分组信息更新成功。',
     'warning'          => '保存失败，请坚持表单信息.',
+    'delete_success'   => '项目分组已被成功删除。',
     'none'             => '还没有设置项目分组',
 
 ];

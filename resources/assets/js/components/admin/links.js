@@ -71,6 +71,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('links.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -111,9 +113,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('links.edit_success');
                 if (!link_id) {
                     Fixhub.Links.add(response);
+                    msg = trans('links.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();

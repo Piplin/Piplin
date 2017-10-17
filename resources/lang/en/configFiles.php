@@ -11,15 +11,18 @@
 
 return [
 
-    'label'   => 'Configuration Files',
-    'create'  => 'Add a new file',
-    'edit'    => 'Edit the file',
-    'none'    => 'Add files which you want to write into the release directory',
-    'name'    => 'Name',
-    'path'    => 'Path',
-    'content' => 'Content',
-    'warning' => 'The file could not be saved, please check the form below.',
-    'view'    => 'View file content',
-    'config'  => 'Application Configuration',
+    'label'          => 'Configuration Files',
+    'create'         => 'Add a new file',
+    'create_success' => 'Configuration file created.',
+    'edit'           => 'Edit the file',
+    'edit_success'   => 'Configuration file updated.',
+    'delete_success' => 'The configuration file has been deleted.',
+    'none'           => 'Add files which you want to write into the release directory',
+    'name'           => 'Name',
+    'path'           => 'Path',
+    'content'        => 'Content',
+    'warning'        => 'The file could not be saved, please check the form below.',
+    'view'           => 'View file content',
+    'config'         => 'Application Configuration',
 
 ];

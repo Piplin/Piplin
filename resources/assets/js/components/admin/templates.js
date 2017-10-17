@@ -40,6 +40,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('templates.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -78,11 +80,13 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('templates.edit_success');
                 if (!template_id) {
                     Fixhub.Templates.add(response);
-
-                    window.location.href = '/admin/templates/' + response.id;
+                    msg = trans('templates.create_success');
+                    //window.location.href = '/admin/templates/' + response.id;
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
