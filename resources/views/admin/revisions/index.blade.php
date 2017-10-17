@@ -18,7 +18,6 @@
                     <th>{{ trans('revisions.key') }}</th>
                     <th>{{ trans('revisions.old_value') }}</th>
                     <th>{{ trans('revisions.new_value') }}</th>
-                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +30,6 @@
                 <td>{{ $revision->key }}</td>
                 <td>{{ $revision->old_value }}</td>
                 <td>{{ $revision->new_value }}</td>
-                <td></td>
             </tr>
             @endforeach
             </tbody>

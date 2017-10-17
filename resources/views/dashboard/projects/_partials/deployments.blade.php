@@ -21,7 +21,7 @@
                     <th>{{ trans('deployments.commit') }}</th>
                     <th>{{ trans('deployments.branch') }}</th>
                     <th>{{ trans('app.status') }}</th>
-                    <th>&nbsp;</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>

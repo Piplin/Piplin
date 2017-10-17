@@ -12,7 +12,7 @@
             <tr>
                 <th>{{ trans('groups.name') }}</th>
                 <th>{{ trans('groups.projects') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

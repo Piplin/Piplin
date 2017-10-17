@@ -20,7 +20,7 @@
                     <th>{{ trans('environments.status') }}</th>
                     <th>{{ trans('environments.completed') }}</th>
                     <th>{{ trans('environments.description') }}</th>
-                    <th class="pull-right">Actions</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>

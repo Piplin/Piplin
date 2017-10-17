@@ -15,7 +15,7 @@
                 <th>{{ trans('variables.label') }}</th>
                 <th>{{ trans('sharedFiles.label') }}</th>
                 <th>{{ trans('configFiles.label') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

@@ -19,7 +19,7 @@
                 <tr>
                     <th>{{ trans('variables.name') }}</th>
                     <th>{{ trans('variables.value') }}</th>
-                    <th>&nbsp;</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>

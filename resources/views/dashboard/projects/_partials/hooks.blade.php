@@ -22,7 +22,7 @@
                     <th>{{ trans('hooks.enabled') }}</th>
                     <th class="text-center">{{ trans('hooks.on_deployment_success') }}</th>
                     <th class="text-center">{{ trans('hooks.on_deployment_failure') }}</th>
-                    <th>&nbsp;</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>

@@ -40,6 +40,7 @@ return [
     'none'              => 'None',
     'yes'               => 'Yes',
     'no'                => 'No',
+    'actions'           => 'Actions',
     'warning'           => 'WARNING',
     'socket_error'      => 'Server error',
     'socket_error_info' => 'A connection could not be established to the socket at <strong>' . config('fixhub.socket_url') . '</strong>. This is required ' .

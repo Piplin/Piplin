@@ -12,7 +12,7 @@
                 <th>{{ trans('links.title') }}</th>
                 <th>{{ trans('links.url') }}</th>
                 <th>{{ trans('links.description') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>
