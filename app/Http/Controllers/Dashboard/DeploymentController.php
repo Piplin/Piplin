@@ -163,11 +163,17 @@ class DeploymentController extends Controller
                     'id'      => $previous_id,
                     'commit'  => $previous->short_commit
             ]),
-            'environments'    => $previous->environments->pluck('id'),
-            'optional'        => $optional,
         ];
 
+        $environments = $previous->environments->pluck('id')->toArray();
+
         $deployment = Deployment::create($fields);
+
+        dispatch(new SetupDeploymentJob(
+            $deployment,
+            $environments,
+            $optional
+        ));
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,

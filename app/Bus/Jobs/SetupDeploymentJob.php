@@ -46,23 +46,23 @@ class SetupDeploymentJob extends Job
     /**
      * @var array
      */
-    private $environments;
+    private $environmentIds;
 
     /**
      * Create a new command instance.
      *
      * @param Deployment $deployment
-     * @param array $environments
+     * @param array $environmentIds
      * @param array $optional
      *
      * @return void
      */
-    public function __construct(Deployment $deployment, array $environments = [], array $optional = [])
+    public function __construct(Deployment $deployment, array $environmentIds = [], array $optional = [])
     {
-        $this->deployment   = $deployment;
-        $this->environments = $environments;
-        $this->optional     = $optional;
-        $this->project      = $deployment->project;
+        $this->deployment     = $deployment;
+        $this->environmentIds = $environmentIds;
+        $this->optional       = $optional;
+        $this->project        = $deployment->project;
     }
 
     /**
@@ -103,19 +103,19 @@ class SetupDeploymentJob extends Job
     }
 
     /**
-     * Set the deployment environments.
+     * Set the deployment environment ids.
      *
      * @return void
      */
     private function setDeploymentEnvironments()
     {
-        if (!$this->environments) {
-            $this->environments = $this->project->environments
+        if (!$this->environmentIds) {
+            $this->environmentIds = $this->project->environments
                     ->where('default_on', true)
-                    ->pluck('id');
+                    ->pluck('id')->toArray();
         }
 
-        $this->deployment->environments()->sync($this->environments);
+        $this->deployment->environments()->sync($this->environmentIds);
         $this->deployment->environments; // Triggers the loading
     }
 
