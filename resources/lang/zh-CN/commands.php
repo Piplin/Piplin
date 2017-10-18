@@ -35,7 +35,7 @@ return [
     'bash'                 => 'Bash脚本',
     'environments'         => '部署环境',
     'servers'              => '服务器',
-    'default'              => '默认',
+    'default'              => '跟随服务器',
     'options'              => 'Bash脚本中可使用的变量 (点击查看)',
     'release_id'           => '发布版本',
     'release_path'         => '发布路径',
@@ -62,7 +62,7 @@ return [
     'none'                 => '还没有配置安装命令',
     'optional'             => '是否可选?',
     'example'              => '例如:',
-    'optional_description' => '将该步骤设置为可选',
+    'optional_description' => '设置为可选步骤',
     'default_description'  => '默认选中',
     'services'             => 'Fixhub支持的服务',
     'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .

@@ -34,6 +34,7 @@ return [
     'run_as'               => 'Run as',
     'migrations'           => 'Migrations',
     'bash'                 => 'Bash Script',
+    'environments'         => 'Environments',
     'servers'              => 'Servers',
     'default'              => 'Server default',
     'options'              => 'You can use the following tokens in your script (click the view)',
