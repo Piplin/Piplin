@@ -6,7 +6,7 @@
     Fixhub.project_id = Fixhub.project_id || null;
 
     Fixhub.statuses = {
-        //Project and Environment
+        // Project and Environment
         FINISHED:     0,
         PENDING:      1,
         DEPLOYING:    2,
@@ -22,7 +22,14 @@
         DEPLOYMENT_CANCELLED: 5,
         DEPLOYMENT_ABORTED:   6,
         DEPLOYMENT_APPROVING: 7,
-        DEPLOYMENT_APPROVED : 8
+        DEPLOYMENT_APPROVED : 8,
+
+        // Server log status
+        SVRLOG_COMPLETED: 0,
+        SVRLOG_PENDING:   1,
+        SVRLOG_RUNNING:   2,
+        SVRLOG_FAILED:    3,
+        SVRLOG_CANCELLED: 4
     };
 
     Fixhub.events = {
@@ -131,7 +138,6 @@
 
     // Format the deployment status
     Fixhub.formatDeploymentStatus = function (deploy_status) {
-
         var data = {};
 
         data.icon_class = 'clock-o';

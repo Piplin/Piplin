@@ -212,27 +212,28 @@
         },
         render: function () {
             var data = this.model.toJSON();
+            var deploy_status = parseInt(this.model.get('status'));
 
-            data.status_css = 'info';
+            data.label_class = 'info';
             data.icon_css = 'clock';
-            data.status = trans('deployments.pending');
+            data.label = trans('deployments.pending');
 
-            if (parseInt(this.model.get('status')) === Fixhub.statuses.FINISHED) {
-                data.status_css = 'success';
+            if (deploy_status === Fixhub.statuses.SVRLOG_COMPLETED) {
+                data.label_class = 'success';
                 data.icon_css = 'checkmark-round';
-                data.status = trans('deployments.completed');
-            } else if (parseInt(this.model.get('status')) === Fixhub.statuses.DEPLOYING) {
-                data.status_css = 'warning';
+                data.label = trans('deployments.completed');
+            } else if (deploy_status === Fixhub.statuses.SVRLOG_RUNNING) {
+                data.label_class = 'warning';
                 data.icon_css = 'load-c fixhub-spin';
-                data.status = trans('deployments.running');
-            } else if (parseInt(this.model.get('status')) === Fixhub.statuses.FAILED || parseInt(this.model.get('status')) === Fixhub.statuses.NOT_DEPLOYED) {
-                data.status_css = 'danger';
+                data.label = trans('deployments.running');
+            } else if (deploy_status === Fixhub.statuses.SVRLOG_FAILED) {
+                data.label_class = 'danger';
                 data.icon_css = 'close-round';
-
-                data.status = trans('deployments.failed');
-                if (parseInt(this.model.get('status')) === Fixhub.statuses.NOT_DEPLOYED) {
-                    data.status = trans('deployments.cancelled');
-                }
+                data.label = trans('deployments.failed');
+             } else if (deploy_status === Fixhub.statuses.SVRLOG_CANCELLED) {
+                data.label_class = 'danger';
+                data.icon_css = 'close-round';
+                data.label = trans('deployments.cancelled');
             }
 
             data.formatted_start_time = data.started_at ? moment(data.started_at).format('HH:mm:ss') : false;

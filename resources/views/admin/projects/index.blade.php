@@ -52,8 +52,8 @@
     <td><%- repository %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
-        <% if (deploy) { %>
-            <%- deploy %>
+        <% if (deployed) { %>
+            <%- deployed %>
         <% } else { %>
             {{ trans('app.never') }}
         <% } %>

@@ -249,7 +249,7 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.deploy = data.last_run ? moment(data.last_run).format('YYYY-MM-DD HH:mm:ss') : false;
+            data.deployed = data.last_run ? moment(data.last_run).fromNow() : false;
 
             this.$el.html(this.template(data));
 

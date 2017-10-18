@@ -15,7 +15,7 @@ return [
     'home'         => 'Admin home',
     'environments' => 'Environments',
     'dependencies' => 'Dependencies',
-    'misc'         => 'Links & Tips',
-    'template'     => 'Template steup',
+    'misc'         => 'Add-ons',
+    'deployment'   => 'Deployment settings',
 
 ];
