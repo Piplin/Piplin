@@ -60,9 +60,9 @@ return [
     'committer_name'       => '代码最后提交者',
     'committer_email'      => '代码最后提交者邮箱',
     'none'                 => '还没有配置安装命令',
-    'optional'             => '该步骤是否为可选？',
+    'optional'             => '是否可选?',
     'example'              => '例如:',
-    'optional_description' => '是可选步骤',
+    'optional_description' => '将该步骤设置为可选',
     'default_description'  => '默认选中',
     'services'             => 'Fixhub支持的服务',
     'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .
