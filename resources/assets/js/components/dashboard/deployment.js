@@ -170,7 +170,7 @@
                     var status_bar = $('#deploy_status_bar');
                     var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
                     
-                    status_bar.attr('class', 'label label-' + status_data.label_class);
+                    status_bar.attr('class', 'btn btn-lg btn-' + status_data.label_class);
                     $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
                     $('span', status_bar).text(status_data.label);
 
