@@ -1,10 +1,4 @@
 (function ($) {
-    var COMPLETED = 0;
-    var PENDING   = 1;
-    var RUNNING   = 2;
-    var FAILED    = 3;
-    var CANCELLED = 4;
-
     $('#redeploy').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);
 
@@ -223,20 +217,20 @@
             data.icon_css = 'clock';
             data.status = trans('deployments.pending');
 
-            if (parseInt(this.model.get('status')) === COMPLETED) {
+            if (parseInt(this.model.get('status')) === Fixhub.statuses.FINISHED) {
                 data.status_css = 'success';
                 data.icon_css = 'checkmark-round';
                 data.status = trans('deployments.completed');
-            } else if (parseInt(this.model.get('status')) === RUNNING) {
+            } else if (parseInt(this.model.get('status')) === Fixhub.statuses.DEPLOYING) {
                 data.status_css = 'warning';
                 data.icon_css = 'load-c fixhub-spin';
                 data.status = trans('deployments.running');
-            } else if (parseInt(this.model.get('status')) === FAILED || parseInt(this.model.get('status')) === CANCELLED) {
+            } else if (parseInt(this.model.get('status')) === Fixhub.statuses.FAILED || parseInt(this.model.get('status')) === Fixhub.statuses.NOT_DEPLOYED) {
                 data.status_css = 'danger';
                 data.icon_css = 'close-round';
 
                 data.status = trans('deployments.failed');
-                if (parseInt(this.model.get('status')) === CANCELLED) {
+                if (parseInt(this.model.get('status')) === Fixhub.statuses.NOT_DEPLOYED) {
                     data.status = trans('deployments.cancelled');
                 }
             }

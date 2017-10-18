@@ -127,9 +127,9 @@ class DeploymentPresenter extends BasePresenter
             return 'success';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::APPROVED, Deployment::COMPLETED_WITH_ERRORS], true)) {
             return 'danger';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED])) {
             return 'warning';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::APPROVING])) {
             return 'success';
         }
 
@@ -147,9 +147,9 @@ class DeploymentPresenter extends BasePresenter
             return 'white';
         } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED], true)) {
             return 'red';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
             return 'yellow';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::APPROVING])) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::APPROVING])) {
             return 'green';
         }
 
