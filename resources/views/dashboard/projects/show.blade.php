@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-flush">
                 <div class="panel-heading">
                     <h4>{{ trans('projects.deployments') }}</h4>
@@ -60,7 +60,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="panel panel-flush">
                 <div class="panel-heading">
