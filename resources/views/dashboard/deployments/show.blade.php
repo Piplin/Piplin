@@ -18,7 +18,7 @@
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button type="button" class="btn btn-lg btn-{{ $deployment->css_class }}" id="deploy_status_bar"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></button>
+                <button type="button" class="btn btn-lg btn-default"><span  id="deploy_status_bar" class="text-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span></button>
             </div>
         </div>
         <div class="row">
