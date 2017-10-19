@@ -96,7 +96,7 @@ class ProjectPresenter extends CommandPresenter
             return 'info';
         }
 
-        return 'primary';
+        return 'default';
     }
 
     /**

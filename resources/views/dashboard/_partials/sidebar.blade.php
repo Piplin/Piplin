@@ -45,16 +45,14 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="5%">ID</th>
                         <th width="30%">{{ trans('projects.name') }}</th>
                         <th width="35%">{{ trans('projects.deployed') }}</th>
-                        <th width="30%">{{ trans('dashboard.status') }}</th>
+                        <th width="35%">{{ trans('dashboard.status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($group_projects['projects'] as $group_project)
                     <tr id="project_{{ $group_project->id }}">
-                        <td>{{ $group_project->id }}</td>
                         <td><a href="{{ route('projects', ['id' => $group_project->id]) }}" title="{{ trans('projects.details') }}">{{ $group_project->name }}</a></td>
                         <td class="small">
                           @if($group_project->last_run)

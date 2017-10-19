@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="panel panel-flush">
                 <div class="panel-heading">
                     <h4>{{ trans('projects.repository') }}</h4>
@@ -32,10 +32,10 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="panel panel-flush">
                 <div class="panel-heading">
-                    <h4 class="box-title">{{ trans('projects.deployments') }}</h4>
+                    <h4>{{ trans('projects.deployments') }}</h4>
                 </div>
                 <div class="panel-body">
 					<table class="table table-relaxed">
