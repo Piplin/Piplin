@@ -7,7 +7,7 @@ return [
     'none'           => 'There are currently no tips setup',
     'body'           => 'Body',
     'status'         => 'Status',
-    'enabled'        => 'Enabled?',
+    'enabled'        => 'Enabled',
     'create'         => 'Create a new tip',
     'create_success' => 'Tip created.',
     'edit'           => 'Edit the tip',

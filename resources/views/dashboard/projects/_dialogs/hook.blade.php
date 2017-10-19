@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-plus"></i> <span>{{ trans('hooks.create') }}</span></h4>
             </div>
-            <form role="form">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="hook_id" name="id" />
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <input type="hidden" name="type" id="hook_type" value="" />

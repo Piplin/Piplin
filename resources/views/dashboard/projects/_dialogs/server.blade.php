@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-social-buffer-outline"></i> <span>{{ trans('servers.create') }}</span></h4>
             </div>
-            <form role="form" class="form-horizontal">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="server_id" name="id" />
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <div class="modal-body">

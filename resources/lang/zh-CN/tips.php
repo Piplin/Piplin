@@ -7,7 +7,7 @@ return [
     'none'           => '尚未配置小贴士',
     'body'           => '内容',
     'status'         => '是否显示?',
-    'enabled'        => '是否显示?',
+    'enabled'        => '是',
     'create'         => '新增小贴士',
     'create_success' => '小贴士创建成功',
     'edit'           => '编辑小贴士',

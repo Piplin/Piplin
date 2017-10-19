@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('groups.create') }}</span></h4>
             </div>
-            <form role="form">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="group_id" name="id" />
                 <div class="modal-body">
 
@@ -14,15 +14,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="group_name">{{ trans('groups.name') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                        <label class="col-sm-3 control-label" for="group_name">{{ trans('groups.name') }}</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="name" id="group_name" placeholder="{{ trans('groups.name_placeholder') }}" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="btn-group pull-left">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
