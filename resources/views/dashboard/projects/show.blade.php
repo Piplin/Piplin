@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.repository') }}</h3>
+        <div class="col-md-5">
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4>{{ trans('projects.repository') }}</h4>
                 </div>
-                <div class="box-body no-padding">
+                <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
                         <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository_path') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
                         <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
@@ -21,12 +21,12 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.deployments') }}</h3>
+        <div class="col-md-3">
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4 class="box-title">{{ trans('projects.deployments') }}</h4>
                 </div>
-                <div class="box-body no-padding">
+                <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
                         <li><a href="#">{{ trans('projects.today') }} <span class="pull-right">{{ number_format($today) }}</span></a></li>
                         <li><a href="#">{{ trans('projects.last_week') }} <span class="pull-right">{{ number_format($last_week) }}</span></a></li>
@@ -37,11 +37,11 @@
         </div>
 
         <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.details') }}</h3>
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4>{{ trans('projects.details') }}</h4>
                 </div>
-                <div class="box-body no-padding">
+                <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
                         <li><a href="#" target="_blank">{{ trans('projects.group') }} <span class="pull-right">{{ $project->group ? $project->group->name : null }}</span></a></li>
                         <li><a href="{{ $project->url }}">{{ trans('projects.url') }} <span class="pull-right"><i class="ion ion-earth"></i></span></a></li>
