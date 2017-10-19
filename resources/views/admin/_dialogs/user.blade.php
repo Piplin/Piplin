@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-android-person-add"></i> <span>{{ trans('users.add') }}</span></h4>
             </div>
-            <form role="form">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="user_id" name="id" />
                 <div class="modal-body">
 
@@ -14,17 +14,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="user_name">{{ trans('users.name') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                        <label class="col-sm-3 control-label" for="user_name">{{ trans('users.name') }}</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="name" id="user_name" placeholder="Demo" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="user_level">{{ trans('users.role') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-person-stalker"></i></div>
+                        <label class="col-sm-3 control-label" for="user_level">{{ trans('users.role') }}</label>
+                        <div class="col-sm-9">
                             <select id="user_level" name="level" class="form-control">
                                 @foreach($levels as $level => $role)
                                     <option value="{{ $level }}">{{ $role }}</option>
@@ -34,40 +32,36 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="user_nickname">{{ trans('users.nickname') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-android-bookmark"></i></div>
+                        <label class="col-sm-3 control-label" for="user_nickname">{{ trans('users.nickname') }}</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="nickname" id="user_nickname" placeholder="John Smith" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="user_email">{{ trans('users.email') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-email"></i></div>
+                        <label class="col-sm-3 control-label" for="user_email">{{ trans('users.email') }}</label>
+                        <div class="col-sm-9">
                             <input type="email" class="form-control" name="email" id="user_email" placeholder="john.smith@example.net" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="user_password" class="user_password existing-only">{{ trans('users.password_existing') }}</label>
-                        <label for="user_password" class="new-only">{{ trans('users.password') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-unlocked"></i></div>
+                        <label class="col-sm-3 control-label" for="user_password">{{ trans('users.password') }}</label>
+                        <div class="col-sm-9">
                             <input type="password" class="form-control" name="password" id="user_password" />
+							<label class="existing-only">{{ trans('users.password_existing') }}</label>
                         </div>
                     </div>
 
                     <div class="form-group new-only">
-                        <label for="user_password_confirmation">{{ trans('users.password_confirm') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-locked"></i></div>
+                        <label class="col-sm-3 control-label" for="user_password_confirmation">{{ trans('users.password_confirm') }}</label>
+                        <div class="col-sm-9">
                             <input type="password" class="form-control" name="password_confirmation" id="user_password_confirmation" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="btn-group pull-left">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>

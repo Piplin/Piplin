@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="btn-group pull-left">
+                <div class="btn-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.close') }}</button>
                 </div>
             </div>

@@ -41,7 +41,7 @@
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td><%- server_count %></td>
-        <td><span class="label label-<%- label_class %>"><i class="ion ion-<%-icon_class %>"></i> <%- label %></td>
+        <td><span class="text-<%- label_class %>"><i class="ion ion-<%-icon_class %>"></i> <span><%- label %></span></td>
         <td><%- last_run %></td>
         <td><%- description %></td>
         <td>

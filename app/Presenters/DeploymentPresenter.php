@@ -104,7 +104,7 @@ class DeploymentPresenter extends BasePresenter
         } elseif (in_array($this->wrappedObject->status, $finished_statuses, true)) {
             return 'close-round';
         } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
-            return 'alert';
+            return 'alert-circled';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load-c fixhub-spin';
         } elseif ($this->wrappedObject->status === Deployment::APPROVING) {

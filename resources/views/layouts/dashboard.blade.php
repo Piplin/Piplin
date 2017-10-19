@@ -16,7 +16,7 @@
     </head>
     <body class="hold-transition skin-{{ $theme }}">
         <div class="wrapper">
-            @include('dashboard._partials.nav')
+            @include('_partials.nav')
                 <div class="content-wrapper">
                     <div class="container">
                     <section class="content-header">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             @include('dashboard._partials.trash_dialog')
-            @include('dashboard._partials.footer')
+            @include('_partials.footer')
         </div>
 
         <script src="{{ cdn('js/vendor.js') }}"></script>

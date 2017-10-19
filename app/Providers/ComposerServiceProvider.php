@@ -35,7 +35,7 @@ class ComposerServiceProvider extends ServiceProvider
         CurrentUserComposer::class => '*',
         DashboardComposer::class   => ['dashboard.index'],
         DeploymentComposer::class  => ['dashboard.projects.show'],
-        HeaderComposer::class      => ['dashboard._partials.nav'],
+        HeaderComposer::class      => ['_partials.nav'],
         SidebarComposer::class     => ['dashboard._partials.sidebar'],
         ThemeComposer::class       => ['layouts.dashboard', 'profile.index'],
         VersionComposer::class     => ['dashboard._partials.update'],

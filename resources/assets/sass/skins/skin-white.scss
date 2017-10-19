@@ -57,19 +57,19 @@
   .nav-stacked {
     > li.active > a,
     > li.active > a:hover {
-      border-left-color: $black;
+      border-left-color: $orange;;
     }
   }
   .nav-tabs-custom {
     > .nav-tabs {
       > li.active {
-        border-top-color: $black;
+        border-top-color: $orange;
       }
     }
   }
 
   .box.box-primary {
-    border-top-color: $black;
+    border-top-color: $blue;
   }
 
   //Content Header

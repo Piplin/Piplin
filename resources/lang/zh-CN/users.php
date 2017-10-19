@@ -15,7 +15,7 @@ return [
     'email'             => '邮箱',
     'password'          => '密码',
     'password_confirm'  => '确认密码',
-    'password_existing' => '密码 (不修改请留空)',
+    'password_existing' => '(不修改请留空)',
     'nickname'          => '昵称',
     'create'            => '新增用户',
     'create_success'    => '用户创建成功。',
