@@ -65,7 +65,7 @@ class DeploymentController extends Controller
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
             ];
             $data['project'] = $project;
-            $data['subtitle'] = $project->name;
+            $data['subtitle'] = '('.$deployment->short_commit . ' - ' . $deployment->branch.')';
         }
 
         return view('dashboard.deployments.show', $data);

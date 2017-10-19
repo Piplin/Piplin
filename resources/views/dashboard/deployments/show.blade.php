@@ -85,7 +85,7 @@
         <td><%- server.environment_name %></td>
         <td><%- server.name %></td>
         <td>
-             <span class="label label-<%- label_class %>"><i class="status ion ion-<%- icon_css %>"></i> <span><%- label %></span></span>
+             <span class="text-<%- label_class %>"><i class="status ion ion-<%- icon_css %>"></i> <span><%- label %></span></span>
         </td>
         <td>
             <% if (formatted_start_time) { %>

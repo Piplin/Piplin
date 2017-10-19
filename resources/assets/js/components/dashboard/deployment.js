@@ -239,7 +239,7 @@
             data.formatted_start_time = data.started_at ? moment(data.started_at).format('HH:mm:ss') : false;
             data.formatted_end_time   = data.finished_at ? moment(data.finished_at).format('HH:mm:ss') : false;
 
-            this.$el.html(this.template(data));
+            this.$el.addClass('bg-' + data.label_class).html(this.template(data));
 
             return this;
         }
