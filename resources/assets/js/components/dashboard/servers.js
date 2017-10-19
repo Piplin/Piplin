@@ -269,7 +269,7 @@
 
             if (parseInt(this.model.get('status')) === SUCCESSFUL) {
                 data.status_css = 'success';
-                data.icon_css   = 'checkmark-round';
+                data.icon_css   = 'record';
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
                 data.status_css = 'warning';

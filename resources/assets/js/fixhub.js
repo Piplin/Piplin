@@ -15,15 +15,15 @@
 
         if (deployment.length > 0) {
 
-            $('td:nth-child(6)', deployment).text(data.model.committer);
+            $('td.committer', deployment).text(data.model.committer);
 
             if (data.model.commit_url) {
-                $('td:nth-child(7)', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
+                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
             } else {
-                $('td:nth-child(8)', deployment).text(data.model.short_commit);
+                $('td.branch', deployment).text(data.model.short_commit);
             }
 
-            var status_bar = $('td:nth-child(9) span.label', deployment);
+            var status_bar = $('td.status span', deployment);
 
             var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
 
@@ -36,7 +36,7 @@
                 }
             }
 
-            status_bar.attr('class', 'label label-' + status_data.label_class);
+            status_bar.attr('class', 'text-' + status_data.label_class);
             $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         //} else if ($('#timeline').length === 0) { // Don't show on dashboard
@@ -61,13 +61,13 @@
         var project = $('#project_' + data.model.id);
 
         if (project.length > 0) {
-            var status_bar = $('td:nth-child(4) span.label', project);
+            var status_bar = $('td.status span', project);
 
             var status_data = Fixhub.formatProjectStatus(parseInt(data.model.status));
 
-            $('td:first a', project).text(data.model.name);
-            $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
-            status_bar.attr('class', 'label label-' + status_data.label_class)
+            $('td.name', project).text(data.model.name);
+            $('td.time', project).text(moment(data.model.last_run).fromNow());
+            status_bar.attr('class', 'text-' + status_data.label_class)
             $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         }

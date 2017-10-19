@@ -71,7 +71,7 @@ class ProjectPresenter extends CommandPresenter
         } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
             return 'load-c fixhub-spin';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
-            return 'alert';
+            return 'close-round';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
             return 'clock';
         }

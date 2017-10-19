@@ -83,7 +83,7 @@
 							<tr>
 								<td>{{ trans('projects.deploy_status') }}</td>
 								<td class="text-right">
-									<span class="pull-right label label-{{ $project->css_class }}"><i class="ion ion-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span>
+                                    <span class="text-{{$project->css_class}}"><i class="ion ion-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
 								</td>
 							</tr>
 						</tbody>

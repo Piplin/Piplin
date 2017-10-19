@@ -9,10 +9,9 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="modal-body">
 
-                    <div class="alert alert-danger">
+                    <div class="alert alert-warning">
                         <h4>{{ trans('deployments.caution') }}</h4>
                         <p>{{ trans('deployments.expert') }}</p>
-                        <br />
                         <p>{{ trans('deployments.rollback_warning') }}</p>
                     </div>
                     <hr />

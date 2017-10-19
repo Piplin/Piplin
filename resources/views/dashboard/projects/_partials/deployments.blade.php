@@ -43,17 +43,17 @@
                             {{ $deployment->deployer_name }}
                         @endif
                     </td>
-                    <td>{{ $deployment->committer_name }}</td>
-                    <td>
+                    <td class="committer">{{ $deployment->committer_name }}</td>
+                    <td class="commit">
                         @if ($deployment->commit_url)
                         <a href="{{ $deployment->commit_url }}" target="_blank">{{ $deployment->short_commit_hash }}</a>
                         @else
                         {{ $deployment->short_commit_hash }}
                         @endif
                     </td>
-                    <td><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-default">{{ $deployment->branch }}</span></a></td>
-                    <td>
-                        <span class="label label-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
+                    <td class="branch"><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-default">{{ $deployment->branch }}</span></a></td>
+                    <td class="status">
+                        <span class="text-{{$deployment->css_class}}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                     </td>
                     <td>
                         <div class="btn-group pull-right">
