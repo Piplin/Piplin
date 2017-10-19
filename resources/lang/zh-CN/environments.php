@@ -13,10 +13,15 @@ return [
 
     'label'               => '部署环境',
     'create'              => '新增',
+    'create_success'      => '部署环境创建成功。',
     'edit'                => '编辑',
+    'edit_success'        => '部署环境信息更新成功。',
+    'delete_success'      => '该部署环境已被成功删除。',
     'name'                => '环境名称',
     'name_placeholder'    => '预发布',
     'servers'             => '服务器',
+    'status'              => '部署状态',
+    'completed'           => '部署时间',
     'description'         => '描述',
     'deployed'            => '最近上线',
     'desc_placeholder'    => '简要描述环境用途',
@@ -27,6 +32,7 @@ return [
     'default_description' => '部署时默认选中该环境',
     'webhook_environment' => '可选的环境ID',
     'webhook_args'        => '用逗号分隔的环境ID列表',
-    'add_command'         => '在该部署环境执行所有本项目的安装步骤',
+    'add_command'         => '自动添加所有安装步骤',
+    'optional'            => '可选项',
 
 ];

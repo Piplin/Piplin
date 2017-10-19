@@ -59,6 +59,7 @@ mix
         `${paths.morris}/morris.min.js`,
         `${paths.backbone}/backbone-min.js`,
         `${paths.socketio_client}/dist/socket.io.js`,
+        `${paths.localization}/resources/js/config.js`,
         `${paths.localization}/resources/js/localization.js`,
         `${paths.toastr}/build/toastr.min.js`,
         `${paths.cropper}/dist/cropper.min.js`,
@@ -91,6 +92,7 @@ mix
         `${assets_path}/js/components/dashboard/servers.js`,
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
+        `${assets_path}/js/bootstrap.js`,
         `${assets_path}/js/fixhub.js`,
         `${assets_path}/js/uploader.js`,
     ], `${dist_path}/js/app.js`)

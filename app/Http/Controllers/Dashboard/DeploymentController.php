@@ -65,7 +65,7 @@ class DeploymentController extends Controller
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
             ];
             $data['project'] = $project;
-            $data['subtitle'] = $project->name;
+            $data['subtitle'] = '('.$deployment->short_commit . ' - ' . $deployment->branch.')';
         }
 
         return view('dashboard.deployments.show', $data);
@@ -163,11 +163,17 @@ class DeploymentController extends Controller
                     'id'      => $previous_id,
                     'commit'  => $previous->short_commit
             ]),
-            'environments'    => $previous->environments->pluck('id'),
-            'optional'        => $optional,
         ];
 
+        $environments = $previous->environments->pluck('id')->toArray();
+
         $deployment = Deployment::create($fields);
+
+        dispatch(new SetupDeploymentJob(
+            $deployment,
+            $environments,
+            $optional
+        ));
 
         return redirect()->route('deployments', [
             'id' => $deployment->id,

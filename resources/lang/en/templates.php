@@ -11,15 +11,18 @@
 
 return [
 
-    'manage'  => 'Manage templates',
-    'label'   => 'Deployment Templates',
-    'none'    => 'There are currently no deployment templates setup',
-    'type'    => 'Deployment type',
-    'custom'  => 'Custom',
-    'example' => 'Laravel 5 Application',
-    'name'    => 'Name',
-    'create'  => 'Add a new template',
-    'edit'    => 'Edit the template',
-    'warning' => 'The deployment template could not be saved, please check the form below.',
+    'manage'         => 'Manage templates',
+    'label'          => 'Deployment Templates',
+    'none'           => 'There are currently no deployment templates setup',
+    'type'           => 'Deployment type',
+    'custom'         => 'Custom',
+    'example'        => 'Laravel 5 Application',
+    'name'           => 'Name',
+    'create'         => 'Add a new template',
+    'create_success' => 'Template created.',
+    'edit'           => 'Edit the template',
+    'edit_success'   => 'Template updated.',
+    'delete_success' => 'The template has been deleted.',
+    'warning'        => 'The deployment template could not be saved, please check the form below.',
 
 ];

@@ -1,4 +1,5 @@
 (function ($) {
+
     $('#user').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -52,6 +53,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('users.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -95,9 +98,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('users.edit_success');
                 if (!user_id) {
                     Fixhub.Users.add(response);
+                    msg = trans('users.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -152,7 +158,7 @@
             this.listenTo(Fixhub.Users, 'remove', this.addAll);
             this.listenTo(Fixhub.Users, 'all', this.render);
 
-            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('user:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var user = Fixhub.Users.get(parseInt(data.model.id));
 
                 if (user) {
@@ -160,11 +166,11 @@
                 }
             });
 
-            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('user:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Users.add(data.model);
             });
 
-            Fixhub.listener.on('user:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('user:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var user = Fixhub.Users.get(parseInt(data.model.id));
 
                 if (user) {

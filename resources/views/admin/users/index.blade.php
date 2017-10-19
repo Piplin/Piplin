@@ -10,7 +10,7 @@
                 <th>{{ trans('users.role') }}</th>
                 <th>{{ trans('users.email') }}</th>
                 <th>{{ trans('app.created') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

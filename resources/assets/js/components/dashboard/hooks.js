@@ -1,4 +1,5 @@
 (function ($) {
+
     $('#hook').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -88,6 +89,8 @@
                 icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('hooks.delete_success'));
             },
             error: function() {
                 icon.removeClass();
@@ -140,9 +143,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('hooks.edit_success');
                 if (!hook_id) {
                     Fixhub.Hooks.add(response);
+                    msg = trans('hooks.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -198,7 +204,7 @@
             this.listenTo(Fixhub.Hooks, 'all', this.render);
 
 
-            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var hook = Fixhub.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {
@@ -206,13 +212,13 @@
                 }
             });
 
-            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_CREATED, function (data) {
                 if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
                     Fixhub.Hooks.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('hook:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var hook = Fixhub.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {

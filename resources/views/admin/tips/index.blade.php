@@ -11,7 +11,7 @@
             <tr>
                 <th>ID</th>
                 <th>{{ trans('tips.body') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

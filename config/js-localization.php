@@ -42,22 +42,22 @@ return [
         'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'approving', 'approving_empty', 'deployment_number'],
         'deployments'   => ['completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', ],
-        'variables'     => ['create', 'edit'],
-        'environments'  => ['create', 'edit'],
-        'projects'      => ['create', 'edit', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
-        'commands'      => ['create', 'edit'],
-        'groups'        => ['create', 'edit'],
-        'keys'          => ['create', 'edit'],
-        'links'         => ['create', 'edit'],
-        'tips'          => ['create', 'edit'],
-        'users'         => ['create', 'edit'],
-        'templates'     => ['create', 'edit'],
-        'sharedFiles'   => ['create', 'edit'],
-        'configFiles'   => ['create', 'edit'],
-        'hooks'         => ['create', 'edit', 'custom', 'slack', 'mail', 'create_slack', 'create_mail', 'create_custom', 'edit_slack', 'edit_mail', 'edit_custom',],
-        'providers'     => ['create', 'edit'],
-        'servers'       => ['create', 'edit', 'successful', 'testing', 'failed', 'untested'],
-        'members'       => ['create', 'edit', 'search'],
+        'variables'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'environments'  => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'deleted_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
+        'commands'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'groups'        => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'keys'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'links'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'tips'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'users'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'templates'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'sharedFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'configFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'hooks'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'custom', 'slack', 'mail', 'create_slack', 'create_mail', 'create_custom', 'edit_slack', 'edit_mail', 'edit_custom'],
+        'providers'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'servers'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'successful', 'testing', 'failed', 'untested'],
+        'members'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'search'],
     ],
 
     /*
@@ -67,7 +67,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'config' => [
-        /*'app.debug'  // example*/
+        'app.debug',  'fixhub.toastr'
     ],
 
     /*

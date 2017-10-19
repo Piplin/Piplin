@@ -71,7 +71,7 @@ class ProjectPresenter extends CommandPresenter
         } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
             return 'load-c fixhub-spin';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
-            return 'alert';
+            return 'close-round';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
             return 'clock';
         }
@@ -96,7 +96,7 @@ class ProjectPresenter extends CommandPresenter
             return 'info';
         }
 
-        return 'primary';
+        return 'default';
     }
 
     /**
@@ -112,11 +112,11 @@ class ProjectPresenter extends CommandPresenter
             if (preg_match('/github\.com/', $details['domain'])) {
                 return 'ion-social-github';
             } elseif (preg_match('/gitlab\.com/', $details['domain'])) {
-                return 'fa-gitlab';
+                return 'ion-ios-flask-outline';
             } elseif (preg_match('/bitbucket/', $details['domain'])) {
-                return 'fa-bitbucket';
+                return 'ion-social-bitcoin-outline';
             } elseif (preg_match('/amazonaws\.com/', $details['domain'])) {
-                return 'fa-amazon';
+                return 'ion-social-angular-outline';
             }
         }
 

@@ -60,6 +60,9 @@ class AdminComposer
                 'icon' => 'ion-ios-browsers-outline',
                 'active' => false,
             ],
+        ];
+
+        $this->subMenus['deployment'] = [
             'templates' => [
                 'title' => trans('templates.manage'),
                 'url' => route('admin.templates.index'),
@@ -114,10 +117,13 @@ class AdminComposer
             $subMenu = $this->getSubMenu('project', 'projects');
         } elseif (in_array($name, ['admin.groups.index', 'admin.groups.show'])) {
             $subMenu = $this->getSubMenu('project', 'groups');
-        } elseif (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
-            $subMenu = $this->getSubMenu('project', 'templates');
+        }
+
+        // Deployment collection
+        if (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
+            $subMenu = $this->getSubMenu('deployment', 'templates');
         } elseif ($name == 'admin.keys.index') {
-            $subMenu = $this->getSubMenu('project', 'keys');
+            $subMenu = $this->getSubMenu('deployment', 'keys');
         }
 
         // Misc collection

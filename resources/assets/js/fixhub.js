@@ -1,96 +1,8 @@
 (function ($) {
 
-    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-        jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="token"]').attr('content'));
-    });
+    Fixhub.loadLivestamp();
 
-    // Prevent double form submission
-    $('form').submit(function () {
-        var $form = $(this);
-        $form.find(':submit').prop('disabled', true);
-    });
-
-    // Don't need to try and connect to the web socket when not logged in
-    if (window.location.href.match(/login|password/) != null) {
-        return;
-    }
-
-    window.Fixhub = {};
-
-    var locale = $('meta[name="locale"]').attr('content');
-
-    Lang.setLocale(locale);
-
-    moment.locale(locale);
-
-    $('abbr.timeago').each(function () {
-        var $el = $(this);
-        $el.livestamp($el.data('timeago')).tooltip();
-    });
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    Fixhub.select2_options = {
-        width: '100%',
-        minimumResultsForSearch: Infinity
-    };
-
-    $(".select2").select2(Fixhub.select2_options);
-
-    // Toastr options
-    toastr.options.closeButton = true;
-    toastr.options.progressBar = true;
-    toastr.options.preventDuplicates = true;
-    toastr.options.closeMethod = 'fadeOut';
-    toastr.options.closeDuration = 3000;
-    toastr.options.closeEasing = 'swing';
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.timeOut = 5000;
-    toastr.options.extendedTimeOut = 7000;
-
-    var FINISHED     = 0;
-    var PENDING      = 1;
-    var DEPLOYING    = 2;
-    var FAILED       = 3;
-    var NOT_DEPLOYED = 4;
-
-    var DEPLOYMENT_COMPLETED = 0;
-    var DEPLOYMENT_PENDING   = 1;
-    var DEPLOYMENT_DEPLOYING = 2;
-    var DEPLOYMENT_FAILED    = 3;
-    var DEPLOYMENT_ERRORS    = 4;
-    var DEPLOYMENT_CANCELLED = 5;
-    var DEPLOYMENT_ABORTED   = 6;
-    var DEPLOYMENT_APPROVING = 7;
-    var DEPLOYMENT_APPROVED  = 8;
-
-    Fixhub.project_id = Fixhub.project_id || null;
-
-    Fixhub.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
-        query: 'jwt=' + $('meta[name="jwt"]').attr('content')
-    });
-
-    Fixhub.connection_error = false;
-
-    Fixhub.listener.on('connect_error', function(error) {
-        if (!Fixhub.connection_error) {
-            $('#socket_offline').show();
-        }
-
-        Fixhub.connection_error = true;
-    });
-
-    Fixhub.listener.on('connect', function() {
-        $('#socket_offline').hide();
-        Fixhub.connection_error = false;
-    });
-
-    Fixhub.listener.on('reconnect', function() {
-        $('#socket_offline').hide();
-        Fixhub.connection_error = false;
-    });
-
-    Fixhub.listener.on('deployment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+    Fixhub.listener.on('deployment:' + Fixhub.events.MODEL_CHANGED, function (data) {
 
         // Update todo bar
         updateTodoBar(data);
@@ -103,63 +15,30 @@
 
         if (deployment.length > 0) {
 
-            $('td:nth-child(6)', deployment).text(data.model.committer);
+            $('td.committer', deployment).text(data.model.committer);
 
             if (data.model.commit_url) {
-                $('td:nth-child(7)', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
+                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
             } else {
-                $('td:nth-child(8)', deployment).text(data.model.short_commit);
+                $('td.branch', deployment).text(data.model.short_commit);
             }
 
-            var icon_class = 'clock-o';
-            var label_class = 'info';
-            var label = trans('deployments.pending');
-            var done = false;
-            var success = false;
+            var status_bar = $('td.status span', deployment);
 
-            data.model.status = parseInt(data.model.status);
-            var status = $('td:nth-child(9) span.label', deployment);
+            var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
 
-            if (data.model.status === DEPLOYMENT_COMPLETED) {
-                icon_class = 'checkmark-round';
-                label_class = 'success';
-                label = trans('deployments.completed');
-                done = true;
-                success = true;
-            } else if (data.model.status === DEPLOYMENT_DEPLOYING) {
-                icon_class = 'load-c fixhub-spin';
-                label_class = 'warning';
-                label = trans('deployments.running');
-            } else if (data.model.status === DEPLOYMENT_FAILED) {
-                icon_class = 'close-round';
-                label_class = 'danger';
-                label = trans('deployments.failed');
-                done = true;
-            } else if (data.model.status === DEPLOYMENT_ERRORS) {
-                icon_class = 'close';
-                label_class = 'success';
-                label = trans('deployments.completed_with_errors');
-                done = true;
-                success = true;
-            } else if (data.model.status === DEPLOYMENT_CANCELLED) {
-                icon_class = 'alert';
-                label_class = 'danger';
-                label = trans('deployments.cancelled');
-                done = true;
-            }
-
-            if (done) {
+            if (status_data.done) {
                 $('button#deploy_project:disabled').removeAttr('disabled');
                 $('td:nth-child(10) a.btn-cancel', deployment).remove();
 
-                if (success) {
+                if (status_data.success) {
                     $('button.btn-rollback').removeClass('hide');
                 }
             }
 
-            status.attr('class', 'label label-' + label_class)
-            $('i', status).attr('class', 'ion ion-' + icon_class);
-            $('span', status).text(label);
+            status_bar.attr('class', 'text-' + status_data.label_class);
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
         //} else if ($('#timeline').length === 0) { // Don't show on dashboard
             // FIXME: Also don't show if viewing the deployment, or the project the deployment is for
         } else {
@@ -167,56 +46,34 @@
                 'id': data.model.id
             });
 
-            if (data.model.status === DEPLOYMENT_COMPLETED) {
-                toastr.success(toast_title + ' - ' + trans('deployments.completed'), data.model.project_name);
-            } else if (data.model.status === DEPLOYMENT_FAILED) {
-                toastr.error(toast_title + ' - ' + trans('deployments.failed'), data.model.project_name);
-            } else if (data.model.status === DEPLOYMENT_ERRORS) {
-                toastr.warning(toast_title + ' - ' + trans('deployments.completed_with_errors'), data.model.project_name);
+            if (data.model.status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed'), data.model.project_name, 'success');
+            } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_FAILED) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.failed'), data.model.project_name, 'error');
+            } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_ERRORS) {
+                Fixhub.toast(toast_title + ' - ' + trans('deployments.completed_with_errors'), data.model.project_name, 'warning');
             } // FIXME: Add cancelled
         }
     });
 
-    Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+    Fixhub.listener.on('project:' + Fixhub.events.MODEL_CHANGED, function (data) {
 
         var project = $('#project_' + data.model.id);
 
         if (project.length > 0) {
+            var status_bar = $('td.status span', project);
 
-            var icon_class = 'question-circle';
-            var label_class = 'primary';
-            var label = trans('projects.not_deployed');
+            var status_data = Fixhub.formatProjectStatus(parseInt(data.model.status));
 
-            data.model.status = parseInt(data.model.status);
-            var status = $('td:nth-child(4) span.label', project);
-
-            if (data.model.status === FINISHED) {
-                icon_class = 'checkmark-round';
-                label_class = 'success';
-                label = trans('projects.finished');
-            } else if (data.model.status === DEPLOYING) {
-                icon_class = 'load-c fixhub-spin';
-                label_class = 'warning';
-                label = trans('projects.deploying');
-            } else if (data.model.status === FAILED) {
-                icon_class = 'close-round';
-                label_class = 'danger';
-                label = trans('projects.failed');
-            } else if (data.model.status === PENDING) {
-                icon_class = 'clock';
-                label_class = 'info';
-                label = trans('projects.pending');
-            }
-
-            $('td:first a', project).text(data.model.name);
-            $('td:nth-child(3)', project).text(moment(data.model.last_run).fromNow());
-            status.attr('class', 'label label-' + label_class)
-            $('i', status).attr('class', 'ion ion-' + icon_class);
-            $('span', status).text(label);
+            $('td.name', project).text(data.model.name);
+            $('td.time', project).text(moment(data.model.last_run).fromNow());
+            status_bar.attr('class', 'text-' + status_data.label_class)
+            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
         }
     });
 
-    Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+    Fixhub.listener.on('project:' + Fixhub.events.MODEL_TRASHED, function (data) {
 
         if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
             window.location.href = '/';
@@ -227,13 +84,13 @@
         $.ajax({
             type: 'GET',
             url: '/timeline'
-        }).success(function (response) {
+        }).done(function (response) {
             $('#timeline').html(response);
+            Fixhub.loadLivestamp();
         });
     }
 
     function updateTodoBar(data) {
-
         data.model.time = moment(data.model.started_at).fromNow();
         data.model.url = '/deployment/' + data.model.id;
 
@@ -242,11 +99,11 @@
         var template = _.template($('#deployment-list-template').html());
         var html = template(data.model);
 
-        if (data.model.status === DEPLOYMENT_PENDING) {
+        if (data.model.status === Fixhub.statuses.DEPLOYMENT_PENDING) {
             $('.pending_menu').append(html);
-        } else if (data.model.status === DEPLOYMENT_DEPLOYING) {
+        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
             $('.deploying_menu').append(html);
-        } else if (data.model.status === DEPLOYMENT_APPROVING || data.model.status === DEPLOYMENT_APPROVED) {
+        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVING || data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVED) {
             $('.approving_menu').append(html);
         }
 

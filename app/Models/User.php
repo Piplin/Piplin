@@ -108,6 +108,18 @@ class User extends Authenticatable implements HasPresenter
     }
 
     /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+                    ->orderBy('id', 'ASC');
+    }
+
+    /**
      * Returns whether a user is at user level.
      *
      * @return bool

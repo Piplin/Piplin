@@ -40,6 +40,7 @@ return [
     'none'              => '无',
     'yes'               => '是',
     'no'                => '否',
+    'actions'           => '操作',
     'warning'           => '警告',
     'socket_error'      => 'Websocket通信失败',
     'socket_error_info' => '浏览器与webcocket服务器 <strong>' . config('fixhub.socket_url') . '</strong> 连接失败。'

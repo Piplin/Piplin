@@ -1,8 +1,4 @@
 (function ($) {
-    var SUCCESSFUL = 0;
-    var UNTESTED   = 1;
-    var FAILED     = 2;
-    var TESTING    = 3;
 
     $('#key_list table').sortable({
         containerSelector: 'table',
@@ -70,6 +66,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('keys.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -109,9 +107,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('keys.edit_success');
                 if (!key_id) {
                     Fixhub.Keys.add(response);
+                    msg = trans('keys.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -176,7 +177,7 @@
             this.listenTo(Fixhub.Keys, 'remove', this.addAll);
             this.listenTo(Fixhub.Keys, 'all', this.render);
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {
@@ -184,11 +185,11 @@
                 }
             });
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Keys.add(data.model);
             });
 
-            Fixhub.listener.on('key:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('key:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var key = Fixhub.Keys.get(parseInt(data.model.id));
 
                 if (key) {

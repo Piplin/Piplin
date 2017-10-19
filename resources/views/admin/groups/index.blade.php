@@ -12,7 +12,7 @@
             <tr>
                 <th>{{ trans('groups.name') }}</th>
                 <th>{{ trans('groups.projects') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
 
 @push('templates')
 <script type="text/template" id="group-template">
-    <td data-group-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><a href="/admin/groups/<%- id %>"><%- name %></a></td>
+    <td data-group-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><%- name %></td>
     <td><%- project_count %></td>
     <td>
         <div class="btn-group pull-right">

@@ -1,4 +1,5 @@
 (function ($) {
+
     $('#sharedfile').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -41,6 +42,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('sharedFiles.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -82,9 +85,13 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('sharedFiles.edit_success');
                 if (!file_id) {
                     Fixhub.SharedFiles.add(response);
+                    trans('sharedFiles.create_success');
                 }
+
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -139,7 +146,7 @@
             this.listenTo(Fixhub.SharedFiles, 'remove', this.addAll);
             this.listenTo(Fixhub.SharedFiles, 'all', this.render);
 
-            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
@@ -147,7 +154,7 @@
                 }
             });
 
-            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -155,7 +162,7 @@
                 }
             });
 
-            Fixhub.listener.on('sharedfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {

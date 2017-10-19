@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-plus"></i> <span>{{ trans('hooks.create') }}</span></h4>
             </div>
-            <form role="form">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="hook_id" name="id" />
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <input type="hidden" name="type" id="hook_type" value="" />
@@ -29,9 +29,8 @@
                     </div>
 
                     <div class="hook-config form-group" id="hook-name">
-                        <label for="hook_name">{{ trans('hooks.name') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
+                        <label class="col-sm-3 control-label" for="hook_name">{{ trans('hooks.name') }}</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" id="hook_name" name="name" placeholder="{{ trans('hooks.bot') }}" />
                         </div>
                     </div>
@@ -41,33 +40,37 @@
                     @include('dashboard.projects._dialogs.hooks.custom')
 
                     <div class="hook-config form-group" id="hook-triggers">
-                        <label>{{ trans('hooks.triggers') }}</label>
-                        <div class="checkbox">
-                            <label for="hook_on_deployment_success">
-                                <input type="checkbox" value="1" name="on_deployment_success" id="hook_on_deployment_success" />
-                                {{ trans('hooks.on_deployment_success') }}
-                            </label>
-                        </div>
+                        <label class="col-sm-3 control-label">{{ trans('hooks.triggers') }}</label>
+                        <div class="col-sm-9">
+                            <div class="checkbox">
+                                <label for="hook_on_deployment_success">
+                                    <input type="checkbox" value="1" name="on_deployment_success" id="hook_on_deployment_success" />
+                                    {{ trans('hooks.on_deployment_success') }}
+                                </label>
+                            </div>
 
-                        <div class="checkbox">
-                            <label for="hook_on_deployment_failure">
-                                <input type="checkbox" value="1" name="on_deployment_failure" id="hook_on_deployment_failure" />
-                                {{ trans('hooks.on_deployment_failure') }}
-                            </label>
-                        </div>
+                            <div class="checkbox">
+                                <label for="hook_on_deployment_failure">
+                                    <input type="checkbox" value="1" name="on_deployment_failure" id="hook_on_deployment_failure" />
+                                    {{ trans('hooks.on_deployment_failure') }}
+                                </label>
+                            </div>
+                         </div>
                     </div>
-                    <div class="hook-enabled from-group">
-                        <label for="hook_name">{{ trans('hooks.enabled') }}</label>
-                         <div class="checkbox">
-                            <label for="hook_enabled">
-                                <input type="checkbox" value="1" name="enabled" id="hook_enabled" />
-                                {{ trans('hooks.enabled') }}
-                            </label>
+
+                    <div class="hook-enabled form-group">
+                        <label class="col-sm-3 control-label" for="hook_enabled">{{ trans('hooks.enabled') }}</label>
+                        <div class="col-sm-9">
+                            <div class="checkbox">
+                                <label for="hook_enabled">
+                                    <input type="checkbox" value="1" name="enabled" id="hook_enabled" />{{ trans('hooks.enabled') }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="btn-group pull-left">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>

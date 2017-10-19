@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 use Fixhub\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Fixhub\Models\Variable;
+use Fixhub\Models\User;
 
 /**
  * Project members management controller.
@@ -21,14 +22,22 @@ use Fixhub\Models\Variable;
 class MemberController extends Controller
 {
     /**
-     * Update the specified variable in storage.
+     * Remove the specified user from project.
      *
-     * @param  int                  $user_id
-     * @param  Request $request
+     * @param int $user_id
+     *
      * @return Response
      */
-    public function update($user_id, Request $request)
+    public function destroy(Request $request, $user_id)
     {
-        print_r($request->all());
+        $user = User::findOrFail($user_id);
+        $project_id = $request->get('project_id');
+
+        var_dump($project_id);
+
+
+        return [
+            'success' => true,
+        ];
     }
 }

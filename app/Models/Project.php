@@ -137,7 +137,7 @@ class Project extends Model implements HasPresenter
             $info['user']      = isset($data['user']) ? $data['user'] : '';
             $info['domain']    = $data['host'];
             $info['port']      = isset($data['port']) ? $data['port'] : '';
-            $info['reference'] = substr($data['path'], 1, -4);
+            $info['reference'] = substr(str_replace('.git', '', $data['path']), 1);
         }
 
         return $info;

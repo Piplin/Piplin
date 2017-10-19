@@ -1,11 +1,11 @@
 <div class="modal fade" id="command">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-code"></i> <span>{{ trans('commands.create') }}</span></h4>
             </div>
-            <form role="form">
+            <form class="form-horizontal" role="form">
                 <input type="hidden" id="command_id" name="id" />
                 <input type="hidden" name="targetable_type" value="{{ $targetable_type }}" />
                 <input type="hidden" name="targetable_id" value="{{ $targetable_id }}" />
@@ -17,21 +17,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="command_name">{{ trans('commands.name') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-pricetag"></i></div>
-                            <input type="text" class="form-control" name="name" id="command_name" placeholder="{{ trans('commands.migrations') }}" />
-                        </div>
+                        <label class="col-sm-2 control-label" for="command_name">{{ trans('commands.name') }}</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="name" id="command_name" placeholder="{{ trans('commands.migrations') }}" />
+						</div>
                     </div>
                     <div class="form-group">
-                        <label for="command_user">{{ trans('commands.run_as') }}</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="ion ion-person"></i></div>
+                        <label class="col-sm-2 control-label" for="command_user">{{ trans('commands.run_as') }}</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="user" id="command_user" placeholder="{{ trans('commands.default') }}" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="command_script">{{ trans('commands.bash') }}</label>
+                        <label class="col-sm-2 control-label" for="command_script">{{ trans('commands.bash') }}</label>
+						<div class="col-sm-9">
                         <div id="command_script" class="form-control"></div>
                         <h5><a data-toggle="collapse" data-parent="#accordion" href="#tokens">{{ trans('commands.options') }}</a></h5>
 
@@ -49,10 +48,12 @@
                                 <li><code>@{{ committer_name }}</code> - {{ trans('commands.committer_name') }}, {{ trans('commands.example') }} <span class="label label-default">Phecho</span></li>
                             </ul>
                         </div>
+						</div>
                     </div>
                     @if (count($project->environments))
                     <div class="form-group">
-                        <label for="command_environments">{{ trans('commands.environments') }}</label>
+                        <label class="col-sm-2 control-label" for="command_environments">{{ trans('commands.environments') }}</label>
+						<div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($project->environments as $environment)
                             <li>
@@ -64,31 +65,33 @@
                             </li>
                             @endforeach
                         </ul>
+						</div>
                     </div>
                     @endif
                     <div class="form-group">
-                        <label>{{ trans('commands.optional') }}</label>
-                        <div class="checkbox">
-                            <label for="command_optional">
-                                <input type="checkbox" value="1" name="optional" id="command_optional" />
-                                {{ trans('commands.optional_description') }}
-                            </label>
-                        </div>
+                        <label class="col-sm-2 control-label">{{ trans('commands.optional') }}</label>
+						<div class="col-sm-9">
+							<div class="checkbox">
+								<label for="command_optional">
+									<input type="checkbox" value="1" name="optional" id="command_optional" />
+									{{ trans('commands.optional_description') }}
+								</label>
+							</div>
 
-                        <div class="checkbox hide" id="command_default_on_row">
-                            <label for="command_default_on">
-                                <input type="checkbox" value="1" name="default_on" id="command_default_on" />
-                                {{ trans('commands.default_description') }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="btn-group pull-left">
+							<div class="checkbox hide" id="command_default_on_row">
+								<label for="command_default_on">
+									<input type="checkbox" value="1" name="default_on" id="command_default_on" />
+									{{ trans('commands.default_description') }}
+								</label>
+							</div>
+						</div>
+					</div>
+				<div class="modal-footer">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
-                    </div>
-                </div>
+				</div>
+			</div>
             </form>
         </div>
     </div>

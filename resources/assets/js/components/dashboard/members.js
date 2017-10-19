@@ -262,7 +262,7 @@
         },
         trash: function() {
             var target = $('#model_id');
-            target.val(this.model.get('pivot').id);
+            target.val(this.model.id);
             target.parents('.modal').removeClass().addClass('modal fade member-trash');
         }
     });

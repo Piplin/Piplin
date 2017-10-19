@@ -1,8 +1,4 @@
 (function ($) {
-    var SUCCESSFUL = 0;
-    var UNTESTED   = 1;
-    var FAILED     = 2;
-    var TESTING    = 3;
 
     $('#tip_list table').sortable({
         containerSelector: 'table',
@@ -54,6 +50,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('tips.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -93,9 +91,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('tips.edit_success');
                 if (!tip_id) {
                     Fixhub.Tips.add(response);
+                    msg = trans('tips.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -160,7 +161,7 @@
             this.listenTo(Fixhub.Tips, 'remove', this.addAll);
             this.listenTo(Fixhub.Tips, 'all', this.render);
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {
@@ -168,11 +169,11 @@
                 }
             });
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Tips.add(data.model);
             });
 
-            Fixhub.listener.on('tip:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('tip:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var tip = Fixhub.Tips.get(parseInt(data.model.id));
 
                 if (tip) {

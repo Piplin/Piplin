@@ -15,8 +15,8 @@
             <thead>
                 <tr>
                     <th>{{ trans('users.name') }}</th>
-                    <th>{{ trans('members.level') }}</th>
-                    <th>&nbsp;</th>
+                    <th>{{ trans('users.email') }}</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,10 +29,9 @@
 @push('templates')
     <script type="text/template" id="member-template">
         <td><%- name %></td>
-        <td><%- label %></td>
-        <td>
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('members.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#member"><i class="ion ion-edit"></i></button>
+        <td><%- email %></td>
+        <td class="text-right">
+            <div class="btn-group">
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-android-exit"></i></button>
             </div>
         </td>

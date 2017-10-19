@@ -1,4 +1,5 @@
 (function ($) {
+
     // Stop the uploader causing errors on pages it shouldn't be used
     if ($('#upload').length === 0) {
         return;

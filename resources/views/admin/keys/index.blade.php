@@ -11,7 +11,7 @@
             <tr>
                 <th>{{ trans('keys.name') }}</th>
                 <th>{{ trans('keys.fingerprint') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

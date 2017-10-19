@@ -17,7 +17,7 @@
                 <tr>
                     <th width="30%">{{ trans('sharedFiles.name') }}</th>
                     <th width="40%">{{ trans('sharedFiles.file') }}</th>
-                    <th width="30%">&nbsp;</th>
+                    <th width="30%" class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>

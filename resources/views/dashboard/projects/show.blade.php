@@ -2,55 +2,90 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.repository') }}</h3>
+        <div class="col-md-5">
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4>{{ trans('projects.repository') }}</h4>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ $project->repository_url }}" target="_blank">{{ trans('projects.repository_path') }} <span class="pull-right" title="{{ $project->repository }}"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</span></a></li>
-                        <li><a href="{{ $project->branch_url?:'#' }}">{{ trans('projects.branch') }} <span class="pull-right label label-default">{{ $project->branch }}</span></a></li>
-                        @if(!empty($project->last_mirrored))
-                        <li><a href="javascript:void(0);" data-project-id={{ $project->id }} class="repo-refresh">{{ trans('projects.last_mirrored') }}<span class="pull-right"><i class="ion ion-refresh"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_mirrored }}" data-timeago="{{ $project->last_mirrored }}"></abbr></span></a></li>
-                        @else
-                        <li><a href="{{ $project->url }}" target="_blank">{{ trans('projects.url') }} <span class="pull-right text-blue">{{ $project->url }}</span></a></li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.deployments') }}</h3>
-                </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#">{{ trans('projects.today') }} <span class="pull-right">{{ number_format($today) }}</span></a></li>
-                        <li><a href="#">{{ trans('projects.last_week') }} <span class="pull-right">{{ number_format($last_week) }}</span></a></li>
-                        <li><a href="#">{{ trans('projects.latest_duration') }}<span class="pull-right">{{ (count($deployments) == 0 OR !$deployments[0]->finished_at) ? trans('app.not_applicable') : $deployments[0]->readable_runtime }} </span></a></li>
-                    </ul>
+                <div class="panel-body">
+					<table class="table table-relaxed">
+						<tbody>
+							<tr>
+								<td>{{ trans('projects.repository_path') }}</td>
+								<td class="text-right">
+									<i class="ion {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
+								</td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.branch') }}</td>
+								<td class="text-right"><a href="{{ $project->branch_url?:'#' }}"><span class="label label-default">{{ $project->branch }}</span></td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.change_branch') }}</td>
+								<td class="text-right">
+									{{ $project->allow_other_branch ? trans('app.yes') : trans('app.no') }}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('projects.details') }}</h3>
+        <div class="col-md-3">
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4>{{ trans('projects.deployments') }}</h4>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#" target="_blank">{{ trans('projects.group') }} <span class="pull-right">{{ $project->group ? $project->group->name : null }}</span></a></li>
-                        <li><a href="{{ $project->url }}">{{ trans('projects.url') }} <span class="pull-right"><i class="ion ion-earth"></i></span></a></li>
-                        @if(!empty($project->build_url))
-                        <li><a href="#">{{ trans('projects.build_status') }} <span class="pull-right"><img src="{{ $project->build_url }}" /></span></a></li>
-                        @else
-                        <li><a href="#">{{ trans('projects.deploy_status') }}<span class="pull-right label label-{{ $project->css_class }}"><i class="ion ion-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span></a></li>
-                        @endif
-                    </ul>
+                <div class="panel-body">
+					<table class="table table-relaxed">
+						<tbody>
+							<tr>
+								<td>{{ trans('projects.today') }}</td>
+								<td class="text-right">
+									{{ number_format($today) }}
+								</td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.last_week') }}</td>
+								<td class="text-right">{{ number_format($last_week) }}</td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.latest_duration') }}</td>
+								<td class="text-right">
+									{{ (count($deployments) == 0 OR !$deployments[0]->finished_at) ? trans('app.not_applicable') : $deployments[0]->readable_runtime }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-flush">
+                <div class="panel-heading">
+                    <h4>{{ trans('projects.details') }}</h4>
+                </div>
+                <div class="panel-body">
+					<table class="table table-relaxed">
+						<tbody>
+							<tr>
+								<td>{{ trans('projects.group') }}</td>
+								<td class="text-right">
+									{{ $project->group ? $project->group->name : null }}
+								</td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.deployed') }}</td>
+								<td class="text-right"><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr></td>
+							</tr>
+							<tr>
+								<td>{{ trans('projects.deploy_status') }}</td>
+								<td class="text-right">
+                                    <span class="text-{{$project->css_class}}"><i class="ion ion-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
                 </div>
             </div>
         </div>
@@ -61,10 +96,10 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="ion ion-clock"></span> {{ trans('deployments.label') }}</a></li>
-                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'environments']) }}"><span class="ion ion-cube"></span> {{ trans('environments.label') }}</a></li>
+                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'environments']) }}"><span class="ion ion-ios-filing-outline"></span> {{ trans('environments.label') }}</a></li>
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
-                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-android-settings"></span> {{ trans('configFiles.label') }}</a></li>
-                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="ion ion-document"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
+                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-ios-copy-outline"></span> {{ trans('configFiles.label') }}</a></li>
+                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="ion ion-ios-folder-outline"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                     <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('projects.integrations') }}</a></li>
                     <li {!! $tab != 'members' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'members']) }}"><span class="ion ion-ios-people"></span> {{ trans('members.label') }}</a></li>
                 </ul>

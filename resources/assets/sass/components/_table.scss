@@ -4,6 +4,7 @@
  */
 
 .table {
+  margin-bottom: 0;
   //Cells
   > thead,
   > tbody,
@@ -12,6 +13,8 @@
       > th,
       > td {
         border-top: 1px solid $box-border-color;
+        padding: 10px 15px;
+        vertical-align: middle;
       }
     }
   }

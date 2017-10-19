@@ -10,7 +10,7 @@
             <input type="hidden" id="model_id" name="id" />
             <div class="modal-body">{{ trans('app.confirm_text') }}</div> 
             <div class="modal-footer"> 
-                <div class="btn-group pull-left">
+                <div class="btn-group">
                     <button type="button" class="btn btn-danger btn-delete">{{ trans('app.confirm') }}</button> 
                      <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                 </div>

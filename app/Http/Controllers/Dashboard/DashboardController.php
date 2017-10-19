@@ -16,6 +16,7 @@ use Fixhub\Models\Deployment;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * The dashboard controller.
@@ -29,6 +30,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $ids = $user->projects->pluck('id')->toArray();
+        var_dump($ids);
         $data = $this->buildTimelineData();
         return view('dashboard.index', [
             'title'           => trans('dashboard.title'),

@@ -14,7 +14,7 @@
                 <th>{{ trans('projects.repository') }}</th>
                 <th>{{ trans('projects.branch') }}</th>
                 <th>{{ trans('projects.deployed') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -49,11 +49,11 @@
 <script type="text/template" id="project-template">
     <td><%- id %></td>
     <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
-    <td><%- repository %></td>
+    <td><%- repository_path %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
-        <% if (deploy) { %>
-            <%- deploy %>
+        <% if (deployed) { %>
+            <%- deployed %>
         <% } else { %>
             {{ trans('app.never') }}
         <% } %>

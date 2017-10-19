@@ -1,4 +1,5 @@
 (function ($) {
+
     var SUCCESSFUL = 0;
     var UNTESTED   = 1;
     var FAILED     = 2;
@@ -75,6 +76,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('servers.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -119,9 +122,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('servers.edit_success');
                 if (!server_id) {
                     Fixhub.Servers.add(response);
+                    msg = trans('servers.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -186,7 +192,7 @@
             this.listenTo(Fixhub.Servers, 'remove', this.addAll);
             this.listenTo(Fixhub.Servers, 'all', this.render);
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
@@ -198,13 +204,13 @@
                 }
             });
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CREATED, function (data) {
                 if (parseInt(data.model.environment_id) === parseInt(Fixhub.environment_id)) {
                     Fixhub.Servers.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('server:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('server:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
@@ -264,7 +270,7 @@
 
             if (parseInt(this.model.get('status')) === SUCCESSFUL) {
                 data.status_css = 'success';
-                data.icon_css   = 'checkmark-round';
+                data.icon_css   = 'record';
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
                 data.status_css = 'warning';

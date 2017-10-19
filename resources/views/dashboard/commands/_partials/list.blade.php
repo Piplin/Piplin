@@ -18,7 +18,7 @@
                         <th>{{ trans('commands.name') }}</th>
                         <th>{{ trans('commands.run_as') }}</th>
                         <th>{{ trans('commands.optional') }}</th>
-                        <th>&nbsp;</th>
+                        <th class="text-right">{{ trans('app.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>

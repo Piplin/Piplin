@@ -118,10 +118,9 @@ Route::group([
     ]);
 
     Route::resource('groups', 'ProjectGroupController', [
-        'only' => ['index', 'show', 'create', 'store', 'update', 'destroy'],
+        'only' => ['index', 'create', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.groups.index',
-            'show'    => 'admin.groups.show',
             'create'  => 'admin.groups.create',
             'store'   => 'admin.groups.store',
             'update'  => 'admin.groups.update',

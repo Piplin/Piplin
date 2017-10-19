@@ -13,7 +13,7 @@
                 <th>{{ trans('providers.slug') }}</th>
                 <th>{{ trans('providers.login_button') }}</th>
                 <th>{{ trans('providers.description') }}</th>
-                <th>&nbsp;</th>
+                <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>
         <tbody>

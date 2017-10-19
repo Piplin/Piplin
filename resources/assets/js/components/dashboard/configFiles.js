@@ -76,6 +76,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('configFiles.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -118,12 +120,16 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('configFiles.edit_success');
                 if (!config_file_id) {
                     Fixhub.ConfigFiles.add(response);
+                    trans('configFiles.create_success');
                 }
 
                 editor.setValue('');
                 editor.gotoLine(1);
+
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -178,7 +184,7 @@
             this.listenTo(Fixhub.ConfigFiles, 'remove', this.addAll);
             this.listenTo(Fixhub.ConfigFiles, 'all', this.render);
 
-            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('configfile:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {
@@ -186,7 +192,7 @@
                 }
             });
 
-            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('configfile:' + Fixhub.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -194,7 +200,7 @@
                 }
             });
 
-            Fixhub.listener.on('configfile:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('configfile:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var file = Fixhub.ConfigFiles.get(parseInt(data.model.id));
 
                 if (file) {

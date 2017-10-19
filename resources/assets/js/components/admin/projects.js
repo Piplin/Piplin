@@ -1,6 +1,6 @@
 (function ($) {
 
-     $('#project-clone').on('show.bs.modal', function(event) {
+    $('#project-clone').on('show.bs.modal', function(event) {
         var modal = $(this);
         $('.callout-danger', modal).hide();
 
@@ -8,7 +8,7 @@
         $('form', modal).prop('action', '/admin/projects/' + project_id + '/clone');
     });
 
-     $('#project-clone button.btn-save').on('click', function (event) {
+    $('#project-clone button.btn-save').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -70,6 +70,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('projects.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -118,9 +120,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('projects.edit_success');
                 if (!project_id) {
                     Fixhub.Projects.add(response);
+                    msg = trans('projects.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -176,7 +181,7 @@
             this.listenTo(Fixhub.Projects, 'remove', this.addAll);
             this.listenTo(Fixhub.Projects, 'all', this.render);
 
-            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('project:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
@@ -188,11 +193,11 @@
                 }
             });
 
-            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('project:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Projects.add(data.model);
             });
 
-            Fixhub.listener.on('project:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('project:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
@@ -244,7 +249,7 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.deploy = data.last_run ? moment(data.last_run).format('YYYY-MM-DD HH:mm:ss') : false;
+            data.deployed = data.last_run ? moment(data.last_run).fromNow() : false;
 
             this.$el.html(this.template(data));
 

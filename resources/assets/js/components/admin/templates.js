@@ -1,4 +1,5 @@
 (function ($) {
+
     $('#template').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -40,6 +41,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('templates.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -78,11 +81,13 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('templates.edit_success');
                 if (!template_id) {
                     Fixhub.Templates.add(response);
-
-                    window.location.href = '/admin/templates/' + response.id;
+                    msg = trans('templates.create_success');
+                    //window.location.href = '/admin/templates/' + response.id;
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -137,7 +142,7 @@
             this.listenTo(Fixhub.Templates, 'remove', this.addAll);
             this.listenTo(Fixhub.Templates, 'all', this.render);
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {
@@ -145,11 +150,11 @@
                 }
             });
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Templates.add(data.model);
             });
 
-            Fixhub.listener.on('template:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('template:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var template = Fixhub.Templates.get(parseInt(data.model.id));
 
                 if (template) {

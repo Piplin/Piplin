@@ -41,43 +41,6 @@ class ProjectGroupController extends Controller
     }
 
     /**
-     * Show the group details.
-     *
-     * @param int $group_id
-     * @param string $tab
-     *
-     * @return Response
-     */
-    public function show($group_id, $tab = '')
-    {
-        $group = ProjectGroup::findOrFail($group_id);
-
-        $projects = Project::where('group_id', $group_id)
-                    ->orderBy('name')
-                    ->paginate(config('fixhub.items_per_page', 10));
-
-        $groups = ProjectGroup::orderBy('order')
-                    ->paginate(config('fixhub.items_per_page', 10));
-
-        $templates = DeployTemplate::orderBy('name')
-                    ->get();
-
-        $keys = Key::orderBy('name')
-                    ->get();
-
-        return view('admin.groups.show', [
-            'title'        => $group->name,
-            'projects_raw' => $projects,
-            'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
-            'groups'       => $groups,
-            'group'        => $group,
-            'templates'    => $templates,
-            'keys'         => $keys,
-            'tab'          => $tab,
-        ]);
-    }
-
-    /**
      * Shows the create project group view.
      *
      * @param \Illuminate\Http\Request $request

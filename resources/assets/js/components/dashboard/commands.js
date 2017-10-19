@@ -1,4 +1,5 @@
 (function ($) {
+
     $('.command-list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
@@ -83,6 +84,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('commands.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -99,7 +102,8 @@
         }
     });
 
-    $('#command button.btn-save').on('click', function (event) {
+    //If no `off`, the code below will be executed twice.
+    $('#command button.btn-save').off('click').on('click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
@@ -148,12 +152,16 @@
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
 
+                var msg = trans('commands.edit_success');
                 if (!command_id) {
                     Fixhub.Commands.add(response);
+                    msg = trans('commands.create_success');
                 }
 
                 editor.setValue('');
                 editor.gotoLine(1);
+
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -225,7 +233,7 @@
             this.listenTo(Fixhub.Commands, 'remove', this.addAll);
             this.listenTo(Fixhub.Commands, 'all', this.render);
 
-            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('command:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {
@@ -233,7 +241,7 @@
                 }
             });
 
-            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('command:' + Fixhub.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -246,7 +254,7 @@
                 }
             });
 
-            Fixhub.listener.on('command:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('command:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var command = Fixhub.Commands.get(parseInt(data.model.id));
 
                 if (command) {

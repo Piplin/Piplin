@@ -1,4 +1,12 @@
 (function ($) {
+
+    //Fix me please
+    var FINISHED     = 0;
+    var PENDING      = 1;
+    var DEPLOYING    = 2;
+    var FAILED       = 3;
+    var NOT_DEPLOYED = 4;
+
     $('#environment_list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
@@ -68,6 +76,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('environments.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -111,9 +121,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('environments.edit_success');
                 if (!environment_id) {
                     Fixhub.Environments.add(response);
+                    msg = trans('environments.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -171,7 +184,7 @@
             this.listenTo(Fixhub.Environments, 'remove', this.addAll);
             this.listenTo(Fixhub.Environments, 'all', this.render);
 
-            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 $('#environment_' + data.model.id).html(data.model.name);
 
                 var environment = Fixhub.Environments.get(parseInt(data.model.id));
@@ -181,7 +194,7 @@
                 }
             });
 
-            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
@@ -189,7 +202,7 @@
                 }
             });
 
-            Fixhub.listener.on('environment:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var environment = Fixhub.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
@@ -240,6 +253,10 @@
         },
         render: function () {
             var data = this.model.toJSON();
+
+            var parse_data = Fixhub.formatProjectStatus(parseInt(this.model.get('status')));
+            data = $.extend(data, parse_data);
+
             data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');
 
             this.$el.html(this.template(data));

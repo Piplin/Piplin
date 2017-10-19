@@ -1,8 +1,4 @@
 (function ($) {
-    var SUCCESSFUL = 0;
-    var UNTESTED   = 1;
-    var FAILED     = 2;
-    var TESTING    = 3;
 
     $('#link_list table').sortable({
         containerSelector: 'table',
@@ -71,6 +67,8 @@
                 icon.removeClass('ion-refresh fixhub-spin');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('links.delete_success'));
             },
             error: function() {
                 icon.removeClass('ion-refresh fixhub-spin');
@@ -111,9 +109,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('links.edit_success');
                 if (!link_id) {
                     Fixhub.Links.add(response);
+                    msg = trans('links.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -178,7 +179,7 @@
             this.listenTo(Fixhub.Links, 'remove', this.addAll);
             this.listenTo(Fixhub.Links, 'all', this.render);
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {
@@ -186,11 +187,11 @@
                 }
             });
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_CREATED, function (data) {
                 Fixhub.Links.add(data.model);
             });
 
-            Fixhub.listener.on('link:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('link:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var link = Fixhub.Links.get(parseInt(data.model.id));
 
                 if (link) {

@@ -44,6 +44,13 @@ class Key extends Model
     protected $revisionCreationsEnabled = true;
 
     /**
+     * Revision ignore attributes.
+     *
+     * @var array
+     */
+    protected $dontKeepRevisionOf = ['private_key'];
+
+    /**
      * Has many relationship.
      *
      * @return Project
@@ -61,7 +68,7 @@ class Key extends Model
      */
     public function getFingerprintAttribute()
     {
-        $key    = preg_replace('/^(ssh-[dr]s[as]\s+)|(\s+.+)|\n/', '', trim($this->private_key));
+        $key    = preg_replace('/^(ssh-[dr]s[as]\s+)|(\s+.+)|\n/', '', trim($this->public_key));
         $buffer = base64_decode($key);
         $hash   = md5($buffer);
         return preg_replace('/(.{2})(?=.)/', '$1:', $hash);

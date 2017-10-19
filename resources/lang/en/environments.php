@@ -13,10 +13,15 @@ return [
 
     'label'               => 'Environments',
     'create'              => 'Add a new environment',
+    'create_success'      => 'Environment created.',
     'edit'                => 'Edit the environment',
+    'edit_success'        => 'Environment updated.',
+    'delete_success'      => 'The environment has been deleted.',
     'name'                => 'Name',
     'name_placeholder'    => 'Staging',
     'servers'             => 'Servers',
+    'status'              => 'Result',
+    'completed'           => 'Completed',
     'description'         => 'Description',
     'deployed'            => 'Deployed',
     'desc_placeholder'    => 'Please describe briefly the use of this environment',
@@ -28,5 +33,6 @@ return [
     'webhook_environment' => 'Optional Environment IDs',
     'webhook_args'        => 'A comma seperated list of optional environment IDs to run',
     'add_command'         => 'Add the new environment to all existing commands',
+    'optional'            => 'Optional',
 
 ];
