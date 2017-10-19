@@ -18,7 +18,6 @@
                             <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.details') }}</a></li>
                             <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
                             <li><a href="#project_build" data-toggle="tab">{{ trans('projects.build_options') }}</a></li>
-                            <li><a href="#project_others" data-toggle="tab">{{ trans('projects.others') }}</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -52,6 +51,21 @@
                                     </div>
                                 </div>
                                 @endif
+								<div class="form-group">
+                                    <label class="col-sm-3 control-label" for="project_url">{{ trans('projects.url') }}</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{ trans('projects.options') }}</label>
+                                    <div class="col-sm-9 checkbox">
+                                        <label for="project_need_approve">
+                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
+                                            {{ trans('projects.need_approve') }}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="project_repo">
@@ -103,24 +117,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="project_others">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_url">{{ trans('projects.url') }}</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{ trans('projects.options') }}</label>
-                                    <div class="col-sm-9 checkbox">
-                                        <label for="project_need_approve">
-                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
-                                            {{ trans('projects.need_approve') }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
