@@ -19,6 +19,7 @@ use Fixhub\Services\Webhooks\Bitbucket;
 use Fixhub\Services\Webhooks\Custom;
 use Fixhub\Services\Webhooks\Github;
 use Fixhub\Services\Webhooks\Gitlab;
+use Fixhub\Services\Webhooks\Oschina;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class IncomingWebhookController extends Controller
         Bitbucket::class,
         Github::class,
         Gitlab::class,
+        Oschina::class,
     ];
 
     /**
