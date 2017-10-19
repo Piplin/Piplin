@@ -45,8 +45,8 @@
                 <i class="{{ $step->icon }}"></i>
                 <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> </h3>
             </div>
-            <div class="box-body table-responsive">
-                <table class="table table-hover">
+            <div class="box-body">
+                <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th width="10%">{{ trans('servers.environment') }}</th>

@@ -139,7 +139,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('projects.clone') }}</span></h4>
             </div>
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" method="post">
                 <input type="hidden" id="skeleton_id" name="id" />
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="modal-body">
