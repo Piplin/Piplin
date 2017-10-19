@@ -1,8 +1,4 @@
 (function ($) {
-    var SUCCESSFUL = 0;
-    var UNTESTED   = 1;
-    var FAILED     = 2;
-    var TESTING    = 3;
 
     $('#key_list table').sortable({
         containerSelector: 'table',

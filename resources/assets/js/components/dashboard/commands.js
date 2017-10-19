@@ -1,4 +1,5 @@
 (function ($) {
+
     $('.command-list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',

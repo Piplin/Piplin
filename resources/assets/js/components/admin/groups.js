@@ -1,4 +1,5 @@
 (function ($) {
+
     $('#group_list table').sortable({
         containerSelector: 'table',
         itemPath: '> tbody',
