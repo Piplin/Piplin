@@ -36,8 +36,7 @@
                     <th>{{ trans('servers.ip_address') }}</th>
                     <th>{{ trans('servers.port') }}</th>
                     <th>{{ trans('servers.status') }}</th>
-                    <th>{{ trans('servers.updated_at') }}</th>
-                    <th>&nbsp;</th>
+                    <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +54,6 @@
         <td><%- port %></td>
         <td><span class="label label-<%- status_css %>"><i class="ion ion-<%-icon_css %>"></i> <%- status %></span>
         </td>
-        <td><%- updated_at %></td>
         <td>
             <div class="btn-group pull-right">
                 <% if (output !== null) { %>
