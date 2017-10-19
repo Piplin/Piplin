@@ -49,7 +49,7 @@
 <script type="text/template" id="project-template">
     <td><%- id %></td>
     <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
-    <td><%- repository %></td>
+    <td><%- repository_path %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
         <% if (deployed) { %>
