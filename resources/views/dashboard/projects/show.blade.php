@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="panel panel-flush">
                 <div class="panel-heading">
                     <h4>{{ trans('projects.repository') }}</h4>
@@ -13,7 +13,7 @@
 							<tr>
 								<td>{{ trans('projects.repository_path') }}</td>
 								<td class="text-right">
-									<a href="{{ $project->repository_url }}" target="_blank"><i class="ion {{ $project->type_icon }}"></i> {{ $project->repository_path }}</a>
+									<i class="ion {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
 								</td>
 							</tr>
 							<tr>
@@ -21,9 +21,9 @@
 								<td class="text-right"><a href="{{ $project->branch_url?:'#' }}"><span class="label label-default">{{ $project->branch }}</span></td>
 							</tr>
 							<tr>
-								<td>{{ trans('projects.url') }}</td>
+								<td>{{ trans('projects.change_branch') }}</td>
 								<td class="text-right">
-									<a href="{{ $project->url }}" target="_blank">{{ $project->url }}</a>
+									{{ $project->allow_other_branch ? trans('app.yes') : trans('app.no') }}</a>
 								</td>
 							</tr>
 						</tbody>
@@ -31,7 +31,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="panel panel-flush">
                 <div class="panel-heading">
@@ -77,8 +76,8 @@
 								</td>
 							</tr>
 							<tr>
-								<td>{{ trans('projects.url') }}</td>
-								<td class="text-right"><a href="{{ $project->url }}"><i class="ion ion-earth"></i></a></td>
+								<td>{{ trans('projects.deployed') }}</td>
+								<td class="text-right"><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr></td>
 							</tr>
 							<tr>
 								<td>{{ trans('projects.deploy_status') }}</td>
