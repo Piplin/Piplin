@@ -34,7 +34,8 @@ class ConfigFileController extends Controller
             'path',
             'content',
             'targetable_type',
-            'targetable_id'
+            'targetable_id',
+            'environments'
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
@@ -42,7 +43,21 @@ class ConfigFileController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
-        return $target->configFiles()->create($fields);
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
+        }
+
+        $config_file = $target->configFiles()->create($fields);
+
+        if ($environments) {
+            $config_file->environments()->sync($environments);
+        }
+
+        $config_file->environments; // Triggers the loading
+
+        return $config_file;
     }
 
     /**
@@ -57,11 +72,26 @@ class ConfigFileController extends Controller
     {
         $config_file = ConfigFile::findOrFail($file_id);
 
-        $config_file->update($request->only(
+        $fields = $request->only(
             'name',
             'path',
-            'content'
-        ));
+            'content',
+            'environments'
+        );
+
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
+        }
+
+        $config_file->update($fields);
+
+        if ($environments) {
+            $config_file->environments()->sync($environments);
+        }
+
+        $config_file->environments; // Triggers the loading
 
         return $config_file;
     }

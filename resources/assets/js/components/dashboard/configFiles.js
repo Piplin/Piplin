@@ -49,6 +49,7 @@
             $('#file_id').val('');
             $('#name').val('');
             $('#path').val('');
+            $('.configfile-environment').prop('checked', true);
             editor.setValue('');
             editor.gotoLine(1);
         }
@@ -104,12 +105,19 @@
             var file = new Fixhub.ConfigFile();
         }
 
+        var environment_ids = [];
+
+        $('.configfile-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
         file.save({
-            name:       $('#name').val(),
-            path:       $('#path').val(),
+            name:            $('#name').val(),
+            path:            $('#path').val(),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val(),
-            content:    editor.getValue()
+            environments:    environment_ids,
+            content:         editor.getValue()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -260,6 +268,11 @@
             $('#name').val(this.model.get('name'));
             $('#path').val(this.model.get('path'));
             $('#content').text(this.model.get('content'));
+
+            $('.configfile-environment').prop('checked', false);
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#configfile_environment_' + environment.id).prop('checked', true);
+            });
         },
         trash: function () {
             var target = $('#model_id');

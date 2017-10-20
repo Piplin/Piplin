@@ -354,9 +354,20 @@ class DeployProjectJob extends Job implements ShouldQueue
         if ($step->stage === Stage::DO_CLONE) {
             $this->sendFile($local_archive, $remote_archive, $log);
         } elseif ($step->stage === Stage::DO_INSTALL) {
-            foreach ($this->project->configFiles as $file) {
-                $this->sendFileFromString($latest_release_dir . '/' . $file->path, $file->content, $log);
-            }
+            $this->sendConfigFileFromString($latest_release_dir, $log);
+        }
+    }
+
+    /**
+     * Sends the config files to the server.
+     *
+     * @param  string $release_dir
+     * @param  ServerLog  $log
+     */
+    private function sendConfigFileFromString($release_dir, ServerLog $log)
+    {
+        foreach ($log->server->environment->configFiles as $file) {
+            $this->sendFileFromString($release_dir . '/' . $file->path, $file->content, $log);
         }
     }
 
@@ -385,7 +396,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         }
 
         // Now get the full script
-        return $this->getScriptForStep($step, $tokens)
+        return $this->getScriptForStep($step, $server, $tokens)
                     ->prependScript($exports)
                     ->setServer($server, $this->private_key, $user);
     }
@@ -414,9 +425,10 @@ class DeployProjectJob extends Job implements ShouldQueue
      * Gets the script which is used for the supplied step.
      *
      * @param DeployStep $step
+     * @param Server $server
      * @param array $tokens
      */
-    private function getScriptForStep(DeployStep $step, array $tokens = [])
+    private function getScriptForStep(DeployStep $step, Server $server, array $tokens = [])
     {
         switch ($step->stage) {
             case Stage::DO_CLONE:
@@ -424,7 +436,7 @@ class DeployProjectJob extends Job implements ShouldQueue
             case Stage::DO_INSTALL:
                 // Write configuration file to release dir and symlink shared files.
                 $process = new Process('deploy.steps.InstallNewRelease', $tokens);
-                $process->prependScript($this->configurationFileCommands($tokens['release_path']))
+                $process->prependScript($this->configurationFileCommands($server, $tokens['release_path']))
                         ->appendScript($this->sharedFileCommands($tokens['release_path'], $tokens['shared_path']));
 
                 return $process;
@@ -500,11 +512,12 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * create the command for sending uploaded files.
      *
-     * @param  string $release_dir
+     * @param Server $server
+     * @param string $release_dir
      */
-    private function configurationFileCommands($release_dir)
+    private function configurationFileCommands(Server $server, $release_dir)
     {
-        if (!$this->project->configFiles->count()) {
+        if (!$server->environment->configFiles->count()) {
             return '';
         }
 
@@ -512,7 +525,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $script = '';
 
-        foreach ($this->project->configFiles as $file) {
+        foreach ($server->environment->configFiles as $file) {
             $script .= $parser->parseFile('deploy.ConfigurationFile', [
                 'path' => $release_dir . '/' . $file->path,
             ]);
