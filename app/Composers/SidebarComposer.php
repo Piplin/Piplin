@@ -39,7 +39,7 @@ class SidebarComposer
 
         $projects = Project::all();
         $projects_by_group = [];
-        $projects_need_approve = [];
+
         foreach ($projects as $project) {
             if (!$project->group) {
                 $projects_by_group[0]['group'] = trans('dashboard.projects');
@@ -52,9 +52,6 @@ class SidebarComposer
                 $projects_by_group[$project->group->id]['projects'] = [];
             }
 
-            if ($project->need_approve) {
-                $projects_need_approve[] = $project;
-            }
             $projects_by_group[$project->group->id]['projects'][] = $project;
         }
 
@@ -67,7 +64,6 @@ class SidebarComposer
             return ($al < $bl) ? -1 : 1;
         });
 
-        $view->withProjectsNeedApprove($projects_need_approve);
         $view->withProjects($projects_by_group);
     }
 

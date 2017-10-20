@@ -264,8 +264,8 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.status_css = 'primary';
-            data.icon_css   = 'help';
+            data.status_css = 'orange';
+            data.icon_css   = 'record';
             data.status     = trans('servers.untested');
 
             if (parseInt(this.model.get('status')) === SUCCESSFUL) {
@@ -273,12 +273,12 @@
                 data.icon_css   = 'record';
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
-                data.status_css = 'warning';
+                data.status_css = 'purple';
                 data.icon_css   = 'load-c fixhub-spin';
                 data.status     = trans('servers.testing');
             } else if (parseInt(this.model.get('status')) === FAILED) {
                 data.status_css = 'danger';
-                data.icon_css   = 'close-round';
+                data.icon_css   = 'record';
                 data.status     = trans('servers.failed');
             }
 

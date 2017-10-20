@@ -29,14 +29,16 @@ class CreateServersTable extends Migration
             $table->string('user');
             $table->string('path');
             $table->integer('port')->default(22);
-            $table->unsignedInteger('project_id');
             $table->tinyInteger('status')->default(Server::UNTESTED);
-            $table->boolean('deploy_code')->default(true);
             $table->unsignedInteger('order')->default(0);
+            $table->boolean('enabled')->default(true);
+            $table->unsignedInteger('environment_id');
+            $table->longtext('output')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('environment_id')->references('id')->on('environments');
         });
     }
 

@@ -34,8 +34,7 @@ class StoreProjectRequest extends Request
             'template_id'        => 'nullable|integer|exists:deploy_templates,id',
             'url'                => 'url|nullable',
             'build_url'          => 'url|nullable',
-            'allow_other_branch' => 'boolean',
-            'need_approve'       => 'boolean',
+            'allow_other_branch' => 'boolean'
         ];
 
         // On editing remove the template_id rule

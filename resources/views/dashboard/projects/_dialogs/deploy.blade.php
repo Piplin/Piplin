@@ -14,7 +14,7 @@
                         <i class="icon ion ion-alert"></i> {{ trans('deployments.warning') }}
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="command_environments">{{ trans('deployments.environment') }}</label>
+                        <label class="col-sm-3 control-label" for="command_environments">{{ trans('deployments.environments') }}</label>
 						<div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($environments as $each)

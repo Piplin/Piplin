@@ -23,6 +23,7 @@ class CreateIdentitiesTable extends Migration
             $table->string('slug')->unique();
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
 

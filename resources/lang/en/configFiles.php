@@ -21,7 +21,7 @@ return [
     'name'           => 'Name',
     'path'           => 'Path',
     'content'        => 'Content',
-    'environments'   => 'Environments',
+    'environments'   => 'Send To',
     'warning'        => 'The file could not be saved, please check the form below.',
     'view'           => 'View file content',
     'config'         => 'Application Configuration',

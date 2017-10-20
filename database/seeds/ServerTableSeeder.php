@@ -20,7 +20,7 @@ class ServerTableSeeder extends Seeder
 
         Server::create([
             'name'           => 'Web服务器',
-            'ip_address'     => '192.168.75.19',
+            'ip_address'     => '127.0.0.1',
             'user'           => 'fixhub',
             'path'           => '/var/www',
             'environment_id' => 1,
@@ -32,7 +32,7 @@ class ServerTableSeeder extends Seeder
             'ip_address'     => '192.168.75.20',
             'user'           => 'fixhub',
             'path'           => '/var/www',
-            'environment_id' => 1,
+            'environment_id' => 2,
             'enabled'        => true,
         ]);
 
@@ -41,7 +41,7 @@ class ServerTableSeeder extends Seeder
             'ip_address'     => '192.168.75.21',
             'user'           => 'fixhub',
             'path'           => '/home/fixhub',
-            'environment_id' => 1,
+            'environment_id' => 2,
             'enabled'        => false,
         ]);
     }

@@ -59,10 +59,6 @@ class DeploymentPresenter extends BasePresenter
             return trans('deployments.failed');
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return trans('deployments.deploying');
-        } elseif ($this->wrappedObject->status === Deployment::APPROVING) {
-            return trans('deployments.approving');
-        } elseif ($this->wrappedObject->status === Deployment::APPROVED) {
-            return trans('deployments.approved');
         }
 
         return trans('deployments.pending');
@@ -107,10 +103,6 @@ class DeploymentPresenter extends BasePresenter
             return 'alert-circled';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load-c fixhub-spin';
-        } elseif ($this->wrappedObject->status === Deployment::APPROVING) {
-            return 'play';
-        } elseif ($this->wrappedObject->status === Deployment::APPROVED) {
-            return 'android-checkbox-outline';
         }
 
         return 'clock';
@@ -125,12 +117,10 @@ class DeploymentPresenter extends BasePresenter
     {
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
             return 'success';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::APPROVED, Deployment::COMPLETED_WITH_ERRORS], true)) {
+        } elseif (in_array($this->wrappedObject->status, [Deployment::FAILED, Deployment::COMPLETED_WITH_ERRORS], true)) {
             return 'danger';
         } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED])) {
             return 'warning';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::APPROVING])) {
-            return 'success';
         }
 
         return 'info';
@@ -149,8 +139,6 @@ class DeploymentPresenter extends BasePresenter
             return 'red';
         } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
             return 'yellow';
-        } elseif (in_array($this->wrappedObject->status, [Deployment::APPROVING])) {
-            return 'green';
         }
 
         return 'aqua';

@@ -57,25 +57,6 @@
                                 @endforelse
                             </ul>
                         </li>
-                        <li class="header approving_header"><i class="ion ion-play"></i> <span>{{ trans_choice('dashboard.approving', $approving_count, ['count' => $approving_count]) }}</span></li>
-                        <li>
-                            <ul class="menu approving_menu">
-                                @forelse ($approving as $deployment)
-                                    <li class="todo_item" id="deployment_info_{{ $deployment->id }}">
-                                        <a href="{{ route('deployments', ['id' => $deployment->id]) }}">
-                                            <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
-                                            <p>{{ trans('deployments.branch') }}: {{ $deployment->branch }}</p>
-                                        </a>
-                                    </li>
-                                @empty
-                                    <li class="item_empty">
-                                        <a href="javascript:void(0);">
-                                        <small>{{ trans('dashboard.approving_empty') }}</small>
-                                        </a>
-                                    </li>
-                                @endforelse
-                            </ul>
-                        </li>
                         <li class="footer"><a href="javascript:void(0);">{{ trans('app.close') }}</a></li>
                     </ul>
                 </li>

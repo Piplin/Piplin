@@ -11,7 +11,7 @@
 
 return [
 
-    'label'          => 'Persistent Files',
+    'label'          => 'Shared Files',
     'tab_label'      => 'Shared Files',
     'create'         => 'Add a new file or folder',
     'create_success' => 'Shared file created.',

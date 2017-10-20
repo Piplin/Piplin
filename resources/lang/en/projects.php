@@ -59,10 +59,9 @@ return [
     'pending'           => 'Pending',
     'deploying'         => 'Deploying',
     'failed'            => 'Failed',
-    'not_deployed'      => 'Not Deployed',
+    'not_deployed'      => 'Unknown',
     'options'           => 'Options',
     'change_branch'     => 'Allow other branches to be deployed?',
-    'need_approve'      => 'Need approvement to deploy?',
     'insecure'          => 'Your Fixhub installation is not running over a secure connection, it is recommended ' .
                            'that you let Fixhub generate an SSH key rather than supply one yourself so that the ' .
                            'private key is not transmitted over an insecure connection.',

@@ -1,23 +1,7 @@
-<div class="modal fade" id="show_log">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-code"></i> {{ trans('servers.output') }}</h4>
-            </div>
-            <div class="modal-body">
-                <div id="log"><pre>loading</pre></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
+            <button type="button" class="btn btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="ion ion-key"></span> {{ trans('keys.ssh_key') }}</button>
             <button {{ $current_user->is_admin ?: 'disabled="true"' }} type="button" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="ion ion-plus"></span> {{ trans('servers.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('environments.servers') }}</h3>
@@ -43,6 +27,25 @@
 
             </tbody>
         </table>
+    </div>
+</div>
+
+@include('dashboard.projects._dialogs.key')
+
+<div class="modal fade" id="show_log">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><i class="ion ion-code"></i> {{ trans('servers.output') }}</h4>
+            </div>
+            <div class="modal-body">
+                <div id="log"><pre>loading</pre></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
+            </div>
+        </div>
     </div>
 </div>
 
