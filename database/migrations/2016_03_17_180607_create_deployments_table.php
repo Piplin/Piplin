@@ -37,6 +37,7 @@ class CreateDeploymentsTable extends Migration
             $table->dateTime('finished_at')->nullable();
             $table->string('source')->nullable();
             $table->string('build_url')->nullable();
+            $table->text('output')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

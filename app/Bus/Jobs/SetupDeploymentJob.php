@@ -97,9 +97,7 @@ class SetupDeploymentJob extends Job
             }
         }
 
-        if (!$this->project->need_approve || $this->deployment->is_webhook) {
-            $this->dispatch(new DeployProjectJob($this->deployment));
-        }
+        $this->dispatch(new DeployProjectJob($this->deployment));
     }
 
     /**
@@ -166,11 +164,8 @@ class SetupDeploymentJob extends Job
      */
     private function setDeploymentStatus()
     {
-        if ($this->project->need_approve && !$this->deployment->is_webhook) {
-            $this->deployment->status = Deployment::APPROVING;
-        } else {
-            $this->deployment->status = Deployment::PENDING;
-        }
+
+        $this->deployment->status = Deployment::PENDING;
 
         $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;

@@ -28,6 +28,15 @@ class DeployTemplateTableSeeder extends Seeder
         ]);
 
         Command::create([
+            'name'            => 'Composer',
+            'script'          => 'composer install -o --no-dev',
+            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_id'   => $laravel->id,
+            'user'            => '',
+            'step'            => Command::AFTER_INSTALL,
+        ]);
+
+        Command::create([
             'name'            => 'Down',
             'script'          => 'php {{ release_path }}/artisan down',
             'targetable_type' => 'Fixhub\\Models\\DeployTemplate',

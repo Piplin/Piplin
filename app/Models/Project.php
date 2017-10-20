@@ -51,7 +51,7 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'key_id', 'need_approve',
+    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'key_id',
                            'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
                            ];
 
@@ -79,8 +79,7 @@ class Project extends Model implements HasPresenter
         'group_id'           => 'integer',
         'status'             => 'integer',
         'builds_to_keep'     => 'integer',
-        'allow_other_branch' => 'boolean',
-        'need_approve'       => 'boolean',
+        'allow_other_branch' => 'boolean'
     ];
 
     /**

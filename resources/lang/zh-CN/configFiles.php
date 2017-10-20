@@ -21,7 +21,7 @@ return [
     'name'           => '名称',
     'path'           => '路径',
     'content'        => '文件内容',
-    'environments'   => '部署环境',
+    'environments'   => '绑定环境',
     'warning'        => '保存失败，请检查相关表单信息.',
     'view'           => '查看文件内容',
     'config'         => '应用配置',

@@ -34,8 +34,6 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     const COMPLETED_WITH_ERRORS = 4;
     const ABORTING              = 5;
     const ABORTED               = 6;
-    const APPROVING             = 7;
-    const APPROVED              = 8;
     const LOADING               = 'Loading';
 
     public static $currentDeployment = [];
@@ -217,26 +215,6 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     public function isFailed()
     {
         return ($this->status === self::FAILED);
-    }
-
-    /**
-     * Determines whether the deployment is waiting to be approved.
-     *
-     * @return bool
-     */
-    public function isApproving()
-    {
-        return ($this->status === self::APPROVING);
-    }
-
-    /**
-     * Determines whether the deployment is approved.
-     *
-     * @return bool
-     */
-    public function isApproved()
-    {
-        return ($this->status === self::APPROVED);
     }
 
     /**

@@ -1,31 +1,3 @@
-@if(!$current_user->isOperator && isset($projects_need_approve) && count($projects_need_approve) > 0)
-<div class="box box-success">
-  <div class="box-header">
-    <h3 class="box-title">{{ trans('projects.apply') }}</h3>
-  </div>
-  <div class="box-body text-center">
-    <p>
-      <div class="btn-group">
-      <button class="btn btn-info"><i class="ion ion-ios-cloud-upload"></i>{{ trans('projects.apply_choose') }}</button>
-      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        @foreach ($projects_need_approve as $project)
-        <li><a href="{{ route('projects.apply', ['id' => $project->id]) }}">{{$project->group_name}}/{{ $project->name }}</a></li>
-        @endforeach
-      </ul>
-      </div>
-    </p>
-  </div>
-  <div class="box-footer text-center">
-    {{ trans('projects.apply_intro') }}
-  </div>
-<!-- /.box-footer -->
-</div>
-@endif
-
 @if (!count($projects))
     <div class="box">
         <div class="box-header">

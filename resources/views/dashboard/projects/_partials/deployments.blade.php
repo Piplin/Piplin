@@ -14,7 +14,7 @@
                 <tr>
                     <th>ID</th>
                     <th>{{ trans('app.date') }}</th>
-                    <th>{{ trans('deployments.environment') }}</th>
+                    <th>{{ trans('deployments.environments') }}</th>
                     <th>{{ trans('deployments.started_by') }}</th>
                     <th>{{ trans('deployments.deployer') }}</th>
                     <th>{{ trans('deployments.committer') }}</th>
@@ -62,14 +62,7 @@
                             @endif
 
                             @if ($deployment->isPending() || $deployment->isRunning())
-                                <!-- FIXME: Try and change this to a form as abort should be a POST request -->
                                 <a href="{{ route('deployments.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('deployments.cancel') }}"><i class="ion ion-eye-disabled"></i></a>
-                            @endif
-                            @if ($deployment->isApproving())
-                                <a href="{{ route('deployments.approve', ['id' => $deployment->id]) }}" class="btn btn-default btn-approve" title="{{ trans('deployments.approve') }}"><i class="ion ion-checkmark"></i></a>
-                            @endif
-                            @if ($deployment->isApproved())
-                                <a href="{{ route('deployments.deploy', ['id' => $deployment->id]) }}" class="btn btn-default btn-deploy" title="{{ trans('deployments.deploy') }}"><i class="ion ion-ios-cloud-upload"></i></a>
                             @endif
                             <a href="{{ route('deployments', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="ion ion-information-circled"></i></a>
                         </div>

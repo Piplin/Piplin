@@ -18,7 +18,7 @@ class ConfigFileTableSeeder extends Seeder
     {
         DB::table('config_files')->delete();
 
-        ConfigFile::create([
+        $config_file = ConfigFile::create([
             'name'    => 'Configuration',
             'path'    => '.env',
             'content' => 'APP_ENV=local
@@ -57,6 +57,6 @@ IMAGE_DRIVER=gd
 ',
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id' => 1,
-        ]);
+        ])->environments()->sync([1,2]);
     }
 }

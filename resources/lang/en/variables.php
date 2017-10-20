@@ -11,7 +11,7 @@
 
 return [
 
-    'label'          => 'Environment Variables',
+    'label'          => 'Variables',
     'create'         => 'Add a new variable',
     'create_success' => 'Variable created.',
     'edit'           => 'Edit the variable',
