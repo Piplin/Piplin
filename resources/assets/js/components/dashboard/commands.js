@@ -57,7 +57,6 @@
             $('#command_default_on').prop('checked', false);
             $('#command_default_on_row').addClass('hide');
 
-            $('.command-server').prop('checked', true);
             $('.command-environment').prop('checked', true);
         }
 
@@ -119,12 +118,6 @@
         } else {
             var command = new Fixhub.Command();
         }
-
-        var server_ids = [];
-
-        $('.command-server:checked').each(function() {
-            server_ids.push($(this).val());
-        });
 
         var environment_ids = [];
 

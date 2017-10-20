@@ -33,6 +33,22 @@
 							<div class="configfile-content" id="content" class="form-control"></div>
 						</div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="command_environments">{{ trans('configFiles.environments') }}</label>
+                        <div class="col-sm-9">
+                        <ul class="list-unstyled">
+                            @foreach ($environments as $each)
+                            <li>
+                                <div class="checkbox">
+                                    <label for="configfile_environment_{{ $each->id }}">
+                                        <input type="checkbox" class="configfile-environment" name="environments[]" id="configfile_environment_{{ $each->id }}" value="{{ $each->id }}" @if ($each->default_on === true) checked @endif/> {{ $each->name }}
+                                    </label>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">

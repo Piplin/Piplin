@@ -38,6 +38,13 @@ class ConfigFile extends Model
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
+     * Additional attributes to include in the JSON representation.
+     *
+     * @var array
+     */
+    protected $appends = ['environment_names'];
+
+    /**
      * The attributes that should be casted to native types.
      *
      * @var array
@@ -45,4 +52,34 @@ class ConfigFile extends Model
     protected $casts = [
         'id'         => 'integer',
     ];
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    public function environments()
+    {
+        return $this->belongsToMany(Environment::class)
+                    ->orderBy('order', 'ASC');
+    }
+
+    /**
+     * Gets the readable list of environments.
+     *
+     * @return string
+     */
+    public function getEnvironmentNamesAttribute()
+    {
+        $environments = [];
+        foreach ($this->environments as $environment) {
+            $environments[] = $environment->name;
+        }
+
+        if (count($environments)) {
+            return implode(', ', $environments);
+        }
+
+        return trans('app.none');
+    }
 }

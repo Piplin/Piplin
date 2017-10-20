@@ -85,6 +85,18 @@ class Environment extends Model
     }
 
     /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function configFiles()
+    {
+        return $this->belongsToMany(ConfigFile::class)
+                    ->orderBy('id', 'DESC');
+    }
+
+    /**
      * Define a accessor for the count of projects.
      *
      * @return int

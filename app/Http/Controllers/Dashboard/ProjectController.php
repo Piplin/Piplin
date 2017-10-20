@@ -16,12 +16,25 @@ use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * The controller of projects.
  */
 class ProjectController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+
+        $data = [
+            'title'    => 'Project Dashboard',
+            'projects' => $user->projects,
+        ];
+
+        return view('dashboard.projects.index', $data);
+    }
+
     /**
      * The details of an individual project.
      *

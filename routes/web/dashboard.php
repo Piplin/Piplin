@@ -18,6 +18,11 @@ Route::group([
             'uses' => 'DashboardController@index',
         ]);
 
+        Route::get('dashboard', [
+            'as'   => 'dashboard.index',
+            'uses' => 'ProjectController@index',
+        ]);
+
         Route::get('timeline', [
             'as'   => 'dashboard.timeline',
             'uses' => 'DashboardController@timeline',
