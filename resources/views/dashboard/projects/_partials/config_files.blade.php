@@ -16,7 +16,8 @@
             <thead>
                 <tr>
                     <th width="30%">{{ trans('configFiles.name') }}</th>
-                    <th width="40%">{{ trans('configFiles.path') }}</th>
+                    <th width="20%">{{ trans('configFiles.path') }}</th>
+                    <th width="20%">{{ trans('configFiles.environments') }}</th>
                     <th width="30%" class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
@@ -31,6 +32,7 @@
     <script type="text/template" id="configfiles-template">
         <td><%- name %></td>
         <td><%- path %></td>
+        <td><%- environment_names %></td>
         <td>
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-view" title="{{ trans('configFiles.view') }}" data-toggle="modal" data-backdrop="static" data-target="#view-configfile"><i class="ion ion-eye"></i></button>

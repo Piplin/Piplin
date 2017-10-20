@@ -57,11 +57,26 @@ class ConfigFileController extends Controller
     {
         $config_file = ConfigFile::findOrFail($file_id);
 
-        $config_file->update($request->only(
+        $fields = $request->only(
             'name',
             'path',
-            'content'
-        ));
+            'content',
+            'environments'
+        );
+
+        $environments = null;
+        if (isset($fields['environments'])) {
+            $environments = $fields['environments'];
+            unset($fields['environments']);
+        }
+
+        $config_file->update($fields);
+
+        if ($environments) {
+            $config_file->environments()->sync($environments);
+        }
+
+        $config_file->environments; // Triggers the loading
 
         return $config_file;
     }
