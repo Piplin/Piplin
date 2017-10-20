@@ -40,7 +40,7 @@
         @endif
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td><%- server_count %></td>
+        <td><%- server_count %> <i class="ion ion-ios-chatboxes-outline server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
         <td><span class="text-<%- label_class %>"><i class="ion ion-<%-icon_class %>"></i> <span><%- label %></span></td>
         <td><%- last_run %></td>
         <td><%- description %></td>

@@ -20,9 +20,8 @@
                 <div class="content-wrapper">
                     <div class="container">
                     <section class="content-header">
+                        <div class="content-title">{{ $title }} @if(isset($subtitle)) <small>{{ $subtitle }}</small>@endif</div>
                         @yield('right-buttons')
-
-                        <h1>{{ $title }} @if(isset($subtitle)) <small>{{ $subtitle }}</small>@endif</h1>
                         @if(Request::is('/'))
                             @include('dashboard._partials.update')
                         @endif

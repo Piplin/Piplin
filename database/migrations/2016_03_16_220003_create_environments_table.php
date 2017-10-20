@@ -17,7 +17,7 @@ class CreateEnvironmentsTable extends Migration
         Schema::create('environments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('order')->default(0);
             $table->integer('targetable_id');
             $table->string('targetable_type');
