@@ -12,14 +12,12 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>{{ trans('app.date') }}</th>
+                    <th>{{ trans('deployments.started') }}</th>
                     <th>{{ trans('deployments.environments') }}</th>
                     <th>{{ trans('deployments.started_by') }}</th>
                     <th>{{ trans('deployments.deployer') }}</th>
                     <th>{{ trans('deployments.committer') }}</th>
                     <th>{{ trans('deployments.commit') }}</th>
-                    <th>{{ trans('deployments.branch') }}</th>
                     <th>{{ trans('app.status') }}</th>
                     <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
@@ -27,7 +25,6 @@
             <tbody>
                 @foreach ($deployments as $deployment)
                 <tr id="deployment_{{ $deployment->id }}">
-                    <td><a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ $deployment->id }}</a></td>
                     <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->finished_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></td>
                     <td>{{ $deployment->environment_names }}</td>
                     <td>
@@ -50,8 +47,8 @@
                         @else
                         {{ $deployment->short_commit_hash }}
                         @endif
+                        ({{ $deployment->branch }})
                     </td>
-                    <td class="branch"><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-default">{{ $deployment->branch }}</span></a></td>
                     <td class="status">
                         <span class="text-{{$deployment->css_class}}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                     </td>

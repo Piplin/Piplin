@@ -18,9 +18,7 @@
             $('td.committer', deployment).text(data.model.committer);
 
             if (data.model.commit_url) {
-                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
-            } else {
-                $('td.branch', deployment).text(data.model.short_commit);
+                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>'+'('+data.model.branch+')');
             }
 
             var status_bar = $('td.status span', deployment);
@@ -102,8 +100,9 @@
         }
 
         var deploying = $('.deploying_menu li.todo_item').length;
+        var pending = $('.pending_menu li.todo_item').length;
 
-        var todo_count = deploying;
+        var todo_count = deploying+pending;
 
     
         if(todo_count > 0) {
