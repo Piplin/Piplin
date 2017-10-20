@@ -164,7 +164,6 @@ class SetupDeploymentJob extends Job
      */
     private function setDeploymentStatus()
     {
-
         $this->deployment->status = Deployment::PENDING;
 
         $this->deployment->started_at = Carbon::now();
