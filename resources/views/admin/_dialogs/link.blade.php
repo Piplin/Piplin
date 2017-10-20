@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('links.create') }}</span></h4>
+                <h4 class="modal-title"><i class="ion ion-link"></i> <span>{{ trans('links.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="link_id" name="id" />
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">{{ trans('links.description') }} <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('links.description_info') }}"></i></label>
+                        <label class="col-sm-3 control-label">{{ trans('links.description') }}</label>
 						<div class="col-sm-9">
 							<textarea name="description" rows="3" id="link_description" class="form-control" placeholder="{{ trans('links.description') }}"></textarea>
 						</div>

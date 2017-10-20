@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('tips.create') }}</span></h4>
+                <h4 class="modal-title"><i class="ion ion-ios-lightbulb-outline"></i> <span>{{ trans('tips.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="tip_id" name="id" />
@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">{{ trans('tips.body') }}<i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('tips.body_info') }}"></i></label>
+                        <label class="col-sm-3 control-label">{{ trans('tips.body') }}</label>
 						<div class="col-sm-9">
 							<textarea name="body" rows="10" id="tip_body" class="form-control" placeholder="{{ trans('tips.body') }}"></textarea>
 						</div>
