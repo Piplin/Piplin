@@ -141,6 +141,11 @@
 .content-header {
   position: relative;
   padding: 15px 15px 0 15px;
+
+  button {
+    margin-left: 15px;
+  }
+
   // Header Text
   > h1 {
     margin: 0;

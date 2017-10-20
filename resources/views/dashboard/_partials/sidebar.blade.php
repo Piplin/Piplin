@@ -46,18 +46,6 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">{{ trans('app.tips') }}</h3>
-    @if($current_user->is_admin)
-  <div class="box-tools pull-right">
-      <div class="btn-group">
-        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="ion ion-wrench"></i></button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="/admin/tips">{{ trans('tips.manage') }}</a></li>
-          <li><a href="/admin/tips/create">{{ trans('tips.create') }}</a></li>
-        </ul>
-      </div>
-  </div>
-  @endif
   </div>
   <div class="box-body">
     <p>
@@ -70,18 +58,6 @@
 <div class="box">
 <div class="box-header with-border">
   <h3 class="box-title">{{ trans('app.links') }}</h3>
-  @if($current_user->is_admin)
-  <div class="box-tools pull-right">
-      <div class="btn-group">
-        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="ion ion-wrench"></i></button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="/admin/links">{{ trans('links.manage') }}</a></li>
-          <li><a href="/admin/links/create">{{ trans('links.create') }}</a></li>
-        </ul>
-      </div>
-  </div>
-  @endif
 </div>
 <!-- /.box-header -->
 <div class="box-body">

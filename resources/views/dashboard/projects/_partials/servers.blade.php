@@ -51,7 +51,7 @@
 
 @push('templates')
     <script type="text/template" id="server-template">
-        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><%- name %><% if (!enabled) { %> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } %></td>
+        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><% if (!enabled) { %><span class="text-gray"><%- name %></span> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } else { %><%- name %><% } %></td>
         <td><code><%- user %></code></td>
         <td><%- ip_address %></td>
         <td><%- port %></td>
