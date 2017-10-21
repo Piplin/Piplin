@@ -33,7 +33,7 @@
     <div class="col-xs-12">
         <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
             <div class="box-header">
-                <i class="{{ $step->icon }}"></i>
+                <i class="fixhub {{ $step->icon }}"></i>
                 <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> </h3>
             </div>
             <div class="box-body">
