@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Fixhub\Models\Project;
 
 class CreateEnvironmentsTable extends Migration
 {
@@ -16,10 +17,13 @@ class CreateEnvironmentsTable extends Migration
         Schema::create('environments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->boolean('order')->default(0);
             $table->integer('targetable_id');
             $table->string('targetable_type');
             $table->boolean('default_on')->default(true);
+            $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);
+            $table->dateTime('last_run')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
 

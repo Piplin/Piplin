@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
-use Fixhub\Bus\Jobs\ApproveDeploymentJob;
 use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
@@ -196,47 +195,6 @@ class DeploymentController extends Controller
             $deployment->save();
 
             dispatch(new AbortDeploymentJob($deployment));
-        }
-
-        return redirect()->route('deployments', [
-            'id' => $deployment_id,
-        ]);
-    }
-
-    /**
-     * Approve a deployment.
-     *
-     * @param int $deployment_id
-     *
-     * @return Response
-     */
-    public function approve($deployment_id)
-    {
-        $deployment = Deployment::findOrFail($deployment_id);
-
-        if (!$deployment->isApproved()) {
-            $deployment->status = Deployment::APPROVED;
-            $deployment->save();
-        }
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
-    }
-
-    /**
-     * Deploy a deployment.
-     *
-     * @param int $deployment_id
-     *
-     * @return Response
-     */
-    public function deploy($deployment_id)
-    {
-        $deployment = Deployment::findOrFail($deployment_id);
-
-        if ($deployment->isApproved()) {
-            dispatch(new ApproveDeploymentJob($deployment));
         }
 
         return redirect()->route('deployments', [

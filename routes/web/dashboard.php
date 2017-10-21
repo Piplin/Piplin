@@ -125,6 +125,15 @@ Route::group([
 
         Route::group(['middleware' => 'admin',
             ], function () use ($actions) {
+
+                Route::post('members/{project_id}', [
+                    'uses' => 'MemberController@store',
+                ]);
+
+                Route::delete('members/{project_id}/{id}', [
+                    'uses' => 'MemberController@destroy',
+                ]);
+
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
                 Route::resource('environments', 'EnvironmentController', $actions);
@@ -132,7 +141,6 @@ Route::group([
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
-                Route::resource('members', 'MemberController', $actions);
             });
 
         Route::get('admin/templates/{id}/commands/{step}', [

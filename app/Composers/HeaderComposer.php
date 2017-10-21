@@ -38,12 +38,7 @@ class HeaderComposer
         $view->with('deploying', $deploying);
         $view->with('deploying_count', $deploying_count);
 
-        $approving = $this->getApproving();
-        $approving_count = count($approving);
-        $view->with('approving', $approving);
-        $view->with('approving_count', $approving_count);
-
-        $view->with('todo_count', $pending_count + $deploying_count + $approving_count);
+        $view->with('todo_count', $pending_count + $deploying_count);
     }
 
     /**
@@ -64,16 +59,6 @@ class HeaderComposer
     private function getRunning()
     {
         return $this->getStatus(Deployment::DEPLOYING);
-    }
-
-    /**
-     * Gets approving deployments.
-     *
-     * @return array
-     */
-    private function getApproving()
-    {
-        return $this->getStatus([Deployment::APPROVING, Deployment::APPROVED]);
     }
 
     /**

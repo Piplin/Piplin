@@ -1,20 +1,3 @@
-<div class="modal fade" id="show_log">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-code"></i> {{ trans('servers.output') }}</h4>
-            </div>
-            <div class="modal-body">
-                <div id="log"><pre>loading</pre></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
@@ -46,9 +29,28 @@
     </div>
 </div>
 
+@include('dashboard.projects._dialogs.key')
+
+<div class="modal fade" id="show_log">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><i class="ion ion-code"></i> {{ trans('servers.output') }}</h4>
+            </div>
+            <div class="modal-body">
+                <div id="log"><pre>loading</pre></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('templates')
     <script type="text/template" id="server-template">
-        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><%- name %><% if (!enabled) { %> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } %></td>
+        <td data-server-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><% if (!enabled) { %><span class="text-gray"><%- name %></span> <i class="ion ion-android-remove-circle text-danger" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.disabled') }}"></i><% } else { %><%- name %><% } %></td>
         <td><code><%- user %></code></td>
         <td><%- ip_address %></td>
         <td><%- port %></td>

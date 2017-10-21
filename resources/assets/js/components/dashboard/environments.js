@@ -227,6 +227,8 @@
 
             this.$list.append(view.render().el);
 
+            $('.server-names', this.$list).tooltip();
+            
             if (Fixhub.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {

@@ -88,8 +88,7 @@ class ProjectController extends Controller
             'url',
             'build_url',
             'template_id',
-            'allow_other_branch',
-            'need_approve'
+            'allow_other_branch'
         );
 
         $template_id = null;
@@ -162,8 +161,7 @@ class ProjectController extends Controller
             'builds_to_keep',
             'url',
             'build_url',
-            'allow_other_branch',
-            'need_approve'
+            'allow_other_branch'
         ));
 
         return $project;

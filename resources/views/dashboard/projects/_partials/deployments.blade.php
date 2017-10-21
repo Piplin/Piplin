@@ -12,14 +12,12 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>{{ trans('app.date') }}</th>
-                    <th>{{ trans('deployments.environment') }}</th>
+                    <th>{{ trans('deployments.started') }}</th>
+                    <th>{{ trans('deployments.environments') }}</th>
                     <th>{{ trans('deployments.started_by') }}</th>
                     <th>{{ trans('deployments.deployer') }}</th>
                     <th>{{ trans('deployments.committer') }}</th>
                     <th>{{ trans('deployments.commit') }}</th>
-                    <th>{{ trans('deployments.branch') }}</th>
                     <th>{{ trans('app.status') }}</th>
                     <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
@@ -27,7 +25,6 @@
             <tbody>
                 @foreach ($deployments as $deployment)
                 <tr id="deployment_{{ $deployment->id }}">
-                    <td><a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ $deployment->id }}</a></td>
                     <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->finished_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></td>
                     <td>{{ $deployment->environment_names }}</td>
                     <td>
@@ -50,8 +47,8 @@
                         @else
                         {{ $deployment->short_commit_hash }}
                         @endif
+                        ({{ $deployment->branch }})
                     </td>
-                    <td class="branch"><a href="{{ $deployment->branch_url }}" target="_blank"><span class="label label-default">{{ $deployment->branch }}</span></a></td>
                     <td class="status">
                         <span class="text-{{$deployment->css_class}}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                     </td>
@@ -62,16 +59,9 @@
                             @endif
 
                             @if ($deployment->isPending() || $deployment->isRunning())
-                                <!-- FIXME: Try and change this to a form as abort should be a POST request -->
                                 <a href="{{ route('deployments.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('deployments.cancel') }}"><i class="ion ion-eye-disabled"></i></a>
                             @endif
-                            @if ($deployment->isApproving())
-                                <a href="{{ route('deployments.approve', ['id' => $deployment->id]) }}" class="btn btn-default btn-approve" title="{{ trans('deployments.approve') }}"><i class="ion ion-checkmark"></i></a>
-                            @endif
-                            @if ($deployment->isApproved())
-                                <a href="{{ route('deployments.deploy', ['id' => $deployment->id]) }}" class="btn btn-default btn-deploy" title="{{ trans('deployments.deploy') }}"><i class="ion ion-ios-cloud-upload"></i></a>
-                            @endif
-                            <a href="{{ route('deployments', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="ion ion-information-circled"></i></a>
+                            <a href="{{ route('deployments', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="ion ion-arrow-right-c"></i></a>
                         </div>
                     </td>
                 </tr>

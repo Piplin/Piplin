@@ -564,7 +564,6 @@
             $('#project_url').val('');
             $('#project_build_url').val('');
             $('#project_allow_other_branch').prop('checked', true);
-            $('#project_need_approve').prop('checked', false);
         }
 
         modal.find('.modal-title span').text(title);
@@ -628,8 +627,7 @@
             url:                $('#project_url').val(),
             build_url:          $('#project_build_url').val(),
             template_id:        $('#project_template_id') ? $('#project_template_id').val() : null,
-            allow_other_branch: $('#project_allow_other_branch').is(':checked'),
-            need_approve:       $('#project_need_approve').is(':checked')
+            allow_other_branch: $('#project_allow_other_branch').is(':checked')
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -789,7 +787,6 @@
             $('#project_url').val(this.model.get('url'));
             $('#project_build_url').val(this.model.get('build_url'));
             $('#project_allow_other_branch').prop('checked', (this.model.get('allow_other_branch') === true));
-            $('#project_need_approve').prop('checked', (this.model.get('need_approve') === true));
         },
         clone: function() {
             $('#skeleton_id').val(this.model.id);
@@ -2895,6 +2892,8 @@
 
             this.$list.append(view.render().el);
 
+            $('.server-names', this.$list).tooltip();
+            
             if (Fixhub.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {

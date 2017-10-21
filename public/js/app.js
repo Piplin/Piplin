@@ -21,8 +21,6 @@
         DEPLOYMENT_ERRORS:    4,
         DEPLOYMENT_CANCELLED: 5,
         DEPLOYMENT_ABORTED:   6,
-        DEPLOYMENT_APPROVING: 7,
-        DEPLOYMENT_APPROVED : 8,
 
         // Server log status
         SVRLOG_COMPLETED: 0,
@@ -233,9 +231,7 @@
             $('td.committer', deployment).text(data.model.committer);
 
             if (data.model.commit_url) {
-                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>');
-            } else {
-                $('td.branch', deployment).text(data.model.short_commit);
+                $('td.commit', deployment).html('<a href="' + data.model.commit_url + '" target="_blank">' + data.model.short_commit + '</a>'+'('+data.model.branch+')');
             }
 
             var status_bar = $('td.status span', deployment);
@@ -244,7 +240,7 @@
 
             if (status_data.done) {
                 $('button#deploy_project:disabled').removeAttr('disabled');
-                $('td:nth-child(10) a.btn-cancel', deployment).remove();
+                $('td a.btn-cancel', deployment).remove();
 
                 if (status_data.success) {
                     $('button.btn-rollback').removeClass('hide');
@@ -254,8 +250,6 @@
             status_bar.attr('class', 'text-' + status_data.label_class);
             $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
-        //} else if ($('#timeline').length === 0) { // Don't show on dashboard
-            // FIXME: Also don't show if viewing the deployment, or the project the deployment is for
         } else {
             var toast_title = trans('dashboard.deployment_number', {
                 'id': data.model.id
@@ -314,19 +308,14 @@
         var template = _.template($('#deployment-list-template').html());
         var html = template(data.model);
 
-        if (data.model.status === Fixhub.statuses.DEPLOYMENT_PENDING) {
-            $('.pending_menu').append(html);
-        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
+        if (data.model.status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
             $('.deploying_menu').append(html);
-        } else if (data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVING || data.model.status === Fixhub.statuses.DEPLOYMENT_APPROVED) {
-            $('.approving_menu').append(html);
         }
 
-        var pending = $('.pending_menu li.todo_item').length;
         var deploying = $('.deploying_menu li.todo_item').length;
-        var approving = $('.approving_menu li.todo_item').length;
+        var pending = $('.pending_menu li.todo_item').length;
 
-        var todo_count = pending + deploying + approving;
+        var todo_count = deploying+pending;
 
     
         if(todo_count > 0) {
@@ -338,14 +327,6 @@
         }
 
         var empty_template = _.template($('#todo-item-empty-template').html());
-        if(pending > 0) {
-            $('.pending_header i').addClass('fixhub-spin');
-            $('.pending_menu li.item_empty').remove();
-        } else {
-            $('.pending_header i').removeClass('fixhub-spin');
-            $('.pending_menu li.item_empty').remove();
-            $('.pending_menu').append(empty_template({empty_text:trans('dashboard.pending_empty')}));
-        }
 
         if(deploying > 0) {
             $('.deploying_header i').addClass('fixhub-spin');
@@ -356,28 +337,15 @@
             $('.deploying_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
         }
 
-        if(approving > 0) {
-            $('.approving_header i').addClass('fixhub-spin');
-            $('.approving_menu li.item_empty').remove();
-        } else {
-            $('.approving_header i').removeClass('fixhub-spin');
-            $('.approving_menu li.item_empty').remove();
-            $('.approving_menu').append(empty_template({empty_text:trans('dashboard.approving_empty')}));
-        }
-
         var pending_label = Lang.choice('dashboard.pending', pending, {
             'count': pending
         });
         var deploying_label = Lang.choice('dashboard.running', deploying, {
             'count': deploying
         });
-        var approving_label = Lang.choice('dashboard.approving', approving, {
-            'count': approving
-        });
 
         $('.deploying_header span').text(deploying_label);
         $('.pending_header span').text(pending_label);
-        $('.approving_header span').text(approving_label);
     }
 
 })(jQuery);

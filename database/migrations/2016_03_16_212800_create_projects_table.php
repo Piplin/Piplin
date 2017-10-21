@@ -28,14 +28,13 @@ class CreateProjectsTable extends Migration
             $table->string('repository')->nullable();
             $table->string('hash');
             $table->string('branch')->default('master');
-            $table->text('private_key');
-            $table->text('public_key');
             $table->unsignedInteger('group_id');
+            $table->unsignedInteger('key_id')->nullable();
+
             $table->unsignedInteger('builds_to_keep')->default(10);
             $table->string('url')->nullable();
             $table->string('build_url')->nullable();
             $table->boolean('allow_other_branch')->default(true);
-            $table->boolean('include_dev')->default(true);
             $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->dateTime('last_mirrored')->nullable()->default(null);
@@ -43,6 +42,7 @@ class CreateProjectsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('group_id')->references('id')->on('project_groups');
+            $table->foreign('key_id')->references('id')->on('keys');
         });
     }
 

@@ -57,15 +57,6 @@
                                     <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{ trans('projects.options') }}</label>
-                                    <div class="col-sm-9 checkbox">
-                                        <label for="project_need_approve">
-                                            <input type="checkbox" value="1" name="need_approve" id="project_need_approve" />
-                                            {{ trans('projects.need_approve') }}
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="tab-pane" id="project_repo">

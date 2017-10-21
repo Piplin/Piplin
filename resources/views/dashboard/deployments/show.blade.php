@@ -5,15 +5,6 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="ion ion-ios-paperplane-outline"></i> {{ trans('deployments.reason') }} :</h3>
         <span>{{ $deployment->reason }}</span>
-        <div class="box-tools pull-right">
-            @if($current_user->isAdmin || $current_user->isOperator)
-                @if($deployment->isApproving())
-                    <a href="{{ route('deployments.approve', ['id' => $deployment->id]) }}" class="btn btn-info"> {{ trans('deployments.approve') }}</a>
-                @elseif($deployment->isApproved())
-                <a href="{{ route('deployments.deploy', ['id' => $deployment->id]) }}" class="btn btn-success"> {{ trans('deployments.deploy') }}</a>
-                @endif
-            @endif
-        </div>
     </div>
     <div class="box-body">
         <div class="row">
@@ -32,7 +23,7 @@
     </div>
     <div class="box-footer">
         <span>
-            <strong>{{ trans('deployments.environment') }}</strong>: {{ $deployment->environment_names }}
+            <strong>{{ trans('deployments.environments') }}</strong>: {{ $deployment->environment_names }}
         </span>
         <span class="pull-right">{{ trans('deployments.started') }} : <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->started_at }}" data-timeago="{{ $deployment->started_at }}"></abbr></span>
     </div>

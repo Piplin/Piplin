@@ -17,7 +17,7 @@ Route::group([
     Route::resource('/', 'AdminController', [
         'only'  => ['index'],
         'names' => [
-            'index' => 'admin.index',
+            'index' => 'admin',
         ],
     ]);
 

@@ -21,8 +21,6 @@
         DEPLOYMENT_ERRORS:    4,
         DEPLOYMENT_CANCELLED: 5,
         DEPLOYMENT_ABORTED:   6,
-        DEPLOYMENT_APPROVING: 7,
-        DEPLOYMENT_APPROVED : 8,
 
         // Server log status
         SVRLOG_COMPLETED: 0,

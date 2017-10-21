@@ -53,7 +53,7 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $appends = ['server_count'];
+    protected $appends = ['server_count', 'server_names'];
 
     /**
      * Revision creations enabled.
@@ -104,5 +104,25 @@ class Environment extends Model
     public function getServerCountAttribute()
     {
         return $this->servers->count();
+    }
+
+
+    /**
+     * Gets the readable list of servers.
+     *
+     * @return string
+     */
+    public function getServerNamesAttribute()
+    {
+        $servers = [];
+        foreach ($this->servers as $key => $server) {
+            $servers[] = ($key+1) . '. ' . $server->name . ' : ' .$server->ip_address;
+        }
+
+        if (count($servers)) {
+            return implode("<br />", $servers);
+        }
+
+        return trans('app.none');
     }
 }

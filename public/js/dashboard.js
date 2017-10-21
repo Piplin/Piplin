@@ -926,7 +926,7 @@
             processResults: function (data) {
                 return {
                     results: $.map(data, function (obj) {
-                        return {id: obj.id, text: obj.username};
+                        return {id: obj.id, text: obj.name};
                     })
                 };
             },
@@ -996,6 +996,8 @@
                 icon.removeClass();
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('members.delete_success'));
             },
             error: function() {
                 icon.removeClass();
@@ -1038,9 +1040,12 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                var msg = trans('members.edit_success');
                 if (!member_id) {
                     Fixhub.Members.add(response);
+                    msg = trans('members.create_success');
                 }
+                Fixhub.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -1070,7 +1075,7 @@
     });
 
     Fixhub.Member = Backbone.Model.extend({
-        urlRoot: '/members'
+        urlRoot: '/members/' + parseInt($('input[name="project_id"]').val())
     });
 
     var Members = Backbone.Collection.extend({
@@ -1143,7 +1148,6 @@
     Fixhub.MemberView = Backbone.View.extend({
         tagName:  'tr',
         events: {
-            'click .btn-edit': 'edit',
             'click .btn-delete': 'trash'
         },
         initialize: function () {
@@ -1155,19 +1159,9 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.label = this.model.get('pivot').level;
-
             this.$el.html(this.template(data));
 
             return this;
-        },
-        edit: function() {
-            //$('#member_id').val(this.model.get('pivot').id);
-            console.log(this.model.id);
-            $('#member_id').val(this.model.id);
-            $('#member_level').select2(Fixhub.select2_options)
-                                .val(this.model.get('pivot').level)
-                                .trigger('change');
         },
         trash: function() {
             var target = $('#model_id');
@@ -1666,8 +1660,8 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.status_css = 'primary';
-            data.icon_css   = 'help';
+            data.status_css = 'orange';
+            data.icon_css   = 'record';
             data.status     = trans('servers.untested');
 
             if (parseInt(this.model.get('status')) === SUCCESSFUL) {
@@ -1675,12 +1669,12 @@
                 data.icon_css   = 'record';
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
-                data.status_css = 'warning';
+                data.status_css = 'purple';
                 data.icon_css   = 'load-c fixhub-spin';
                 data.status     = trans('servers.testing');
             } else if (parseInt(this.model.get('status')) === FAILED) {
                 data.status_css = 'danger';
-                data.icon_css   = 'close-round';
+                data.icon_css   = 'record';
                 data.status     = trans('servers.failed');
             }
 
@@ -2604,6 +2598,8 @@
 
             this.$list.append(view.render().el);
 
+            $('.server-names', this.$list).tooltip();
+            
             if (Fixhub.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {

@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Api;
 use Fixhub\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Fixhub\Models\User;
 
 /**
  * The Auto-complete controller.
@@ -30,12 +31,8 @@ class AutocompleteController extends Controller
     {
         $q = $request->get('q');
 
-        $response = [
-            ['id' => 1, 'username' => '张三'.$q],
-            ['id' => 2, 'username' => '李四'.$q],
-            ['id' => 3, 'username' => '王五'.$q],
-        ];
+        $users = User::where('name', 'like', $q.'%')->get(['id', 'name'])->toArray();
 
-        return Response::json($response);
+        return Response::json($users);
     }
 }

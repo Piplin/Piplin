@@ -20,9 +20,24 @@
                 <div class="content-wrapper">
                     <div class="container">
                     <section class="content-header">
+                      <div class="content-title">
+                        <ol class="breadcrumb">
+                            @if($in_admin)
+                                <li><a href="{{ route('admin') }}">{{ trans('admin.title') }}</a>
+                            @else
+                                <li><a href="{{ route('dashboard') }}">{{ trans('dashboard.title') }}</a>
+                            @endif
+                            @if(isset($breadcrumb))
+                                @foreach($breadcrumb as $entry)
+                                    <li><a href="{{ $entry['url'] }}">{{ $entry['label'] }}</a></li>
+                                @endforeach
+                            @endif
+                            @if(isset($title))
+                                <li>{{ $title }}</li>
+                            @endif
+                        </ol>
+                      </div>
                         @yield('right-buttons')
-
-                        <h1>{{ $title }} @if(isset($subtitle)) <small>{{ $subtitle }}</small>@endif</h1>
                         @if(Request::is('/'))
                             @include('dashboard._partials.update')
                         @endif
@@ -31,16 +46,6 @@
                             <h4><i class="icon ion ion-eye-disabled"></i> {{ trans('app.socket_error') }}</h4>
                             {!! trans('app.socket_error_info') !!}
                         </div>
-
-                        @if(isset($breadcrumb))
-                        <ol class="breadcrumb">
-                            <li><a href="{{ route('dashboard') }}">{{ trans('dashboard.title') }}</a>
-                            @foreach($breadcrumb as $entry)
-                            <li><a href="{{ $entry['url'] }}">{{ $entry['label'] }}</a></li>
-                            @endforeach
-                            <li class="active">{{ $title }}</li>
-                        </ol>
-                        @endif
                     </section>
                     <section class="content" id="app">
                         @yield('content')

@@ -59,26 +59,30 @@ class ProjectController extends Controller
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
+            'title'           => trans('projects.deployments'),
+            'breadcrumb'      => [
+                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+            ]
         ];
-
-        if ($project->group) {
-            $data['title'] = $project->group->name . '/'. $project->name;
-        } else {
-            $data['title'] = $project->name;
-        }
 
         $data['environments'] = $project->environments;
         if ($tab == 'commands') {
             $data['route'] = 'commands.step';
             $data['variables'] = $project->variables;
+            $data['title'] = trans('commands.label');
         } elseif ($tab == 'config-files') {
             $data['configFiles'] = $project->configFiles;
+            $data['title'] = trans('configFiles.label');
         } elseif ($tab == 'shared-files') {
             $data['sharedFiles'] = $project->sharedFiles;
+            $data['title'] = trans('sharedFiles.label');
         } elseif ($tab == 'hooks') {
             $data['hooks'] = $project->hooks;
         } elseif ($tab == 'members') {
             $data['members'] = $project->members->toJson();
+            $data['title'] = trans('hooks.label');
+        } elseif ($tab == 'environments') {
+            $data['title'] = trans('environments.label');
         }
 
         return view('dashboard.projects.show', $data);

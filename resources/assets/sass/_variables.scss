@@ -92,7 +92,7 @@ $box-default-border-top-color: #d2d6de;
 
 //BUTTONS
 //--------------------------------------------------------
-$btn-boxshadow: none;
+$btn-boxshadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 
 //PROGRESS BARS
 //--------------------------------------------------------
@@ -102,7 +102,7 @@ $progress-bar-xs-border-radius: 1px;
 
 //FORMS
 //--------------------------------------------------------
-$input-radius: 0;
+$input-radius: 4px;
 
 //BUTTONS
 //--------------------------------------------------------
@@ -128,3 +128,8 @@ $attachment-border-radius: 3px;
 $transition-speed: .3s;
 $transition-fn: ease-in-out;
 //cubic-bezier(0.32,1.25,0.375,1.15);
+
+//Breadcrumb
+$breadcrumb-padding-vertical: 0px;
+$breadcrumb-padding-horizontal: 0px;
+
