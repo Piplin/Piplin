@@ -102,7 +102,7 @@ $progress-bar-xs-border-radius: 1px;
 
 //FORMS
 //--------------------------------------------------------
-$input-radius: 0;
+$input-radius: 4px;
 
 //BUTTONS
 //--------------------------------------------------------
@@ -128,3 +128,8 @@ $attachment-border-radius: 3px;
 $transition-speed: .3s;
 $transition-fn: ease-in-out;
 //cubic-bezier(0.32,1.25,0.375,1.15);
+
+//Breadcrumb
+$breadcrumb-padding-vertical: 0px;
+$breadcrumb-padding-horizontal: 0px;
+

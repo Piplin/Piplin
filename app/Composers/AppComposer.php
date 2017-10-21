@@ -13,6 +13,7 @@ namespace Fixhub\Composers;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Request;
 
 /**
  * The composer for the app.
@@ -46,6 +47,7 @@ class AppComposer
      */
     public function compose(View $view)
     {
+        $view->with('in_admin', Request::is('admin*'));
         $view->with('app_name', config('setting.app_name'));
         $view->with('app_url', config('setting.app_url'));
         $view->with('app_about', config('setting.app_about'));
