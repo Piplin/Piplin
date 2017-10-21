@@ -139,6 +139,9 @@ class AdminComposer
     /**
      * Returns a submenu by collection and key.
      *
+     * @param string $collection
+     * @param string $key
+     *
      * @return array
      */
     private function getSubMenu($collection, $key = '')

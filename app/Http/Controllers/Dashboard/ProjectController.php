@@ -23,6 +23,11 @@ use Illuminate\Support\Facades\Auth;
  */
 class ProjectController extends Controller
 {
+    /**
+     * Shows the project index view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $user = Auth::user();

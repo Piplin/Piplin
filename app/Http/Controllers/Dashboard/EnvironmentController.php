@@ -28,6 +28,8 @@ class EnvironmentController extends Controller
      *
      * @param int $targetable_id
      * @param int $environment_id     Either clone, install, activate or purge
+     * @param string $tab
+     *
      * @return Response
      */
     public function show($targetable_id, $environment_id, $tab = '')
@@ -67,6 +69,7 @@ class EnvironmentController extends Controller
      * Store a newly created environment in storage.
      *
      * @param  StoreEnvironmentRequest $request
+     *
      * @return Response
      */
     public function store(StoreEnvironmentRequest $request)
@@ -108,6 +111,7 @@ class EnvironmentController extends Controller
      *
      * @param  int                  $variable_id
      * @param  StoreEnvironmentRequest $request
+     *
      * @return Response
      */
     public function update($variable_id, StoreEnvironmentRequest $request)
