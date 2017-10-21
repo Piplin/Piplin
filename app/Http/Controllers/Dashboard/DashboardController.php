@@ -31,7 +31,7 @@ class DashboardController extends Controller
     {
         $data = $this->buildTimelineData();
         return view('dashboard.index', [
-            'title'           => trans('dashboard.title'),
+            'breadcrumb'      => [],
             'latest'          => $data[0],
             'deployments_raw' => $data[1],
         ]);

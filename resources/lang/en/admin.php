@@ -11,6 +11,7 @@
 
 return [
 
+    'title'        => 'Admin',
     'label'        => 'Admin Area',
     'home'         => 'Admin home',
     'environments' => 'Environments',

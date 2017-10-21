@@ -141,9 +141,9 @@
 .content-header {
   position: relative;
   padding: 15px 15px 0px 15px;
+  margin-bottom: 15px;
 
   > .content-title {
-    font-size: 24px;
     display: inline-block;
   }
 
@@ -163,16 +163,15 @@
     }
   }
 
-  > .breadcrumb {
-    float: right;
+  .breadcrumb {
     background: transparent;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 12px;
+    font-size: 16px;
     padding: 7px 5px;
     position: absolute;
     top: 15px;
-    right: 10px;
+    left: 10px;
     @include border-radius(2px,2px,2px,2px);
     > li > a {
       color: #444;

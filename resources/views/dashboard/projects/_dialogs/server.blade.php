@@ -36,15 +36,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="server_user">{{ trans('servers.connect_as') }}</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="server_user" name="user" placeholder="fixhub" />
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label" for="server_port">{{ trans('servers.port') }}</label>
                         <div class="col-sm-9">
                             <input type="number" class="form-control" id="server_port" name="port" placeholder="22" value="22" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="server_user">{{ trans('servers.connect_as') }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="server_user" name="user" placeholder="fixhub" />
                         </div>
                     </div>
                     <div class="form-group">
