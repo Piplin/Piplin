@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="overlay" id="upload-overlay">
-                <i class="ion ion-refresh fixhub-spin"></i>
+                <i class="fixhub fixhub-refresh fixhub-spin"></i>
             </div>
         </div>
 
@@ -183,7 +183,7 @@
                 </div>
             </div>
             <div class="overlay hide">
-                <i class="ion ion-refresh fixhub-spin"></i>
+                <i class="fixhub fixhub-refresh fixhub-spin"></i>
             </div>
         </div>
     </div>

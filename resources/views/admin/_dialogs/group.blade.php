@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('groups.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhug-group"></i> <span>{{ trans('groups.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="group_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('groups.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('groups.warning') }}
                     </div>
 
                     <div class="form-group">

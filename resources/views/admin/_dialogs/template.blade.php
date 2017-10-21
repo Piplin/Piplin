@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-paper-outline"></i> <span>{{ trans('templates.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-template"></i> <span>{{ trans('templates.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="template_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('templates.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('templates.warning') }}
                     </div>
 
                     <div class="form-group">

@@ -522,7 +522,7 @@
                     var status_data = Fixhub.formatDeploymentStatus(parseInt(data.model.status));
                     
                     status_bar.attr('class', 'text-' + status_data.label_class);
-                    $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+                    $('i', status_bar).attr('class', 'fixhub fixhub-' + status_data.icon_class);
                     $('span', status_bar).text(status_data.label);
 
                     if (data.model.deploy_failure) {
@@ -577,19 +577,19 @@
 
             if (deploy_status === Fixhub.statuses.SVRLOG_COMPLETED) {
                 data.label_class = 'success';
-                data.icon_css = 'checkmark-round';
+                data.icon_css = 'check';
                 data.label = trans('deployments.completed');
             } else if (deploy_status === Fixhub.statuses.SVRLOG_RUNNING) {
                 data.label_class = 'warning';
-                data.icon_css = 'load-c fixhub-spin';
+                data.icon_css = 'load fixhub-spin';
                 data.label = trans('deployments.running');
             } else if (deploy_status === Fixhub.statuses.SVRLOG_FAILED) {
                 data.label_class = 'danger';
-                data.icon_css = 'close-round';
+                data.icon_css = 'close';
                 data.label = trans('deployments.failed');
              } else if (deploy_status === Fixhub.statuses.SVRLOG_CANCELLED) {
                 data.label_class = 'danger';
-                data.icon_css = 'close-round';
+                data.icon_css = 'close';
                 data.label = trans('deployments.cancelled');
             }
 

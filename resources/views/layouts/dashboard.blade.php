@@ -43,7 +43,7 @@
                         @endif
 
                         <div class="alert alert-danger" id="socket_offline">
-                            <h4><i class="icon ion ion-eye-disabled"></i> {{ trans('app.socket_error') }}</h4>
+                            <h4><i class="icon fixhub fixhub-warning"></i> {{ trans('app.socket_error') }}</h4>
                             {!! trans('app.socket_error_info') !!}
                         </div>
                     </section>

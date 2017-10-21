@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('providers.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-provider"></i> <span>{{ trans('providers.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="provider_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('providers.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('providers.warning') }}
                     </div>
 
                     <div class="form-group">
@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="provider_icon">{{ trans('providers.icon') }}</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="icon" id="provider_icon" placeholder="ion-android-open" />
+                            <input type="text" class="form-control" name="icon" id="provider_icon" placeholder="" />
                         </div>
                     </div>
                     <div class="form-group">

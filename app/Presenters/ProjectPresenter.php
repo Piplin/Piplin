@@ -67,11 +67,11 @@ class ProjectPresenter extends CommandPresenter
     public function icon()
     {
         if ($this->wrappedObject->status === Project::FINISHED) {
-            return 'checkmark-round';
+            return 'check';
         } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
             return 'load-c fixhub-spin';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
-            return 'close-round';
+            return 'close';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
             return 'clock';
         }
@@ -110,16 +110,16 @@ class ProjectPresenter extends CommandPresenter
 
         if (isset($details['domain'])) {
             if (preg_match('/github\.com/', $details['domain'])) {
-                return 'ion-social-github';
+                return 'fixhub-github';
             } elseif (preg_match('/gitlab\.com/', $details['domain'])) {
-                return 'ion-ios-flask-outline';
+                return 'fixhub-gitlab';
             } elseif (preg_match('/bitbucket/', $details['domain'])) {
-                return 'ion-social-bitcoin-outline';
+                return 'fixhub-bitbucket';
             } elseif (preg_match('/amazonaws\.com/', $details['domain'])) {
-                return 'ion-social-angular-outline';
+                return 'fixhub-amazon';
             }
         }
 
-        return 'ion-cube';
+        return 'fixhub-cube';
     }
 }

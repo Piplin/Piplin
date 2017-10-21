@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-social-codepen-outline"></i> <span>{{ trans('projects.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-project"></i> <span>{{ trans('projects.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="project_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('projects.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('projects.warning') }}
                     </div>
 
                     <div class="nav-tabs-custom">
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_build_url">{{ trans('projects.image') }} <i class="ion ion-help-buoy" data-toggle="tooltip" data-placement="right" title="{{ trans('projects.ci_image') }}"></i>
+                                    <label class="col-sm-3 control-label" for="project_build_url">{{ trans('projects.image') }} <i class="fixhub fixhub-help" data-toggle="tooltip" data-placement="right" title="{{ trans('projects.ci_image') }}"></i>
 									</label>
                                     <div class="col-sm-9">
 										<input type="text" class="form-control" name="build_url" id="project_build_url" placeholder="http://ci.example.com/status.png?project=1" />
@@ -128,7 +128,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('projects.clone') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-copy"></i> <span>{{ trans('projects.clone') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form" method="post">
                 <input type="hidden" id="skeleton_id" name="id" />
@@ -136,7 +136,7 @@
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('projects.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('projects.warning') }}
                     </div>
 
                     <div class="form-group">
