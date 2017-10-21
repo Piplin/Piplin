@@ -46,7 +46,7 @@ class ProjectController extends Controller
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
-            'title'           => trans('projects.deployments'),
+            'title'           => trans('deployments.label'),
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
             ]
@@ -62,10 +62,10 @@ class ProjectController extends Controller
             $data['title'] = trans('configFiles.label');
         } elseif ($tab == 'shared-files') {
             $data['sharedFiles'] = $project->sharedFiles;
-            $data['title'] = trans('sharedFiles.label');
+            $data['title'] = trans('sharedFiles.tab_label');
         } elseif ($tab == 'hooks') {
             $data['hooks'] = $project->hooks;
-            $data['title'] = trans('hooks.label');
+            $data['title'] = trans('projects.integrations');
         } elseif ($tab == 'environments') {
             $data['title'] = trans('environments.label');
         }

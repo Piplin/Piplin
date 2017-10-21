@@ -11,9 +11,9 @@
 
 return [
 
-    'title'        => '后台',
+    'title'        => '管理后台',
     'label'        => '管理后台',
-    'home'         => '后台首页',
+    'home'         => '首页',
     'environments' => '环境变量',
     'dependencies' => '依赖包',
     'misc'         => '其他',
