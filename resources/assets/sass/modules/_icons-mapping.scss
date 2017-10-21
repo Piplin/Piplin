@@ -111,7 +111,9 @@
 
 .fixhub-checkbox-blank:before { content: "\f372"; }
 
-.fixhub-lock :before { content: "\f200"; }
+.fixhub-lock:before { content: "\f200"; }
+
+.fixhub-circle:before { content: ""\f21b""}
 
 //
 .fixhub-github:before { content: "\f233"; }

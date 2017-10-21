@@ -69,7 +69,7 @@ class ProjectPresenter extends CommandPresenter
         if ($this->wrappedObject->status === Project::FINISHED) {
             return 'check';
         } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
-            return 'load-c fixhub-spin';
+            return 'load fixhub-spin';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
             return 'close';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
