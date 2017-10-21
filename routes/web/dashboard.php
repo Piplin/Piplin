@@ -125,7 +125,6 @@ Route::group([
 
         Route::group(['middleware' => 'admin',
             ], function () use ($actions) {
-
                 Route::post('members/{project_id}', [
                     'uses' => 'MemberController@store',
                 ]);
