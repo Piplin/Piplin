@@ -13,5 +13,6 @@ return [
     'level'          => 'Level',
     'search'         => 'Search a user',
     'none'           => 'No collaborators have been added to this project.',
+    'warning'        => 'There were some problems with your input.',
 
 ];

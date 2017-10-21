@@ -768,7 +768,7 @@
                     var name = element.attr('name');
 
                     if (typeof errors[name] !== 'undefined') {
-                        var parent = element.parents('div.form-group');
+                        var parent = element.parent();
                         parent.addClass('has-error');
                         parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
                     }
@@ -1055,13 +1055,13 @@
                 $('.has-error', dialog).removeClass('has-error');
                 $('.label-danger', dialog).remove();
 
-                $('form input', dialog).each(function (index, element) {
+                $('form select', dialog).each(function (index, element) {
                     element = $(element);
 
                     var name = element.attr('name');
 
                     if (typeof errors[name] !== 'undefined') {
-                        var parent = element.parents('div.form-group');
+                        var parent = element.parent();
                         parent.addClass('has-error');
                         parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
                     }

@@ -14,9 +14,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="provider_title">{{ trans('providers.name') }}</label>
+                        <label class="col-sm-3 control-label" for="provider_name">{{ trans('providers.name') }}</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="title" id="provider_name" placeholder="{{ trans('providers.name') }}" />
+                            <input type="text" class="form-control" name="name" id="provider_name" placeholder="{{ trans('providers.name') }}" />
                         </div>
                     </div>
                     <div class="form-group">

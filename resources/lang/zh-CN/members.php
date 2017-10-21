@@ -12,6 +12,7 @@ return [
     'users'          => '用户',
     'level'          => '访问级别',
     'search'         => '搜索用户',
-    'none'           => 'No collaborators have been added to this project.',
+    'none'           => '该项目还没有成员。',
+    'warning'        => 'There were some problems with your input.',
 
 ];
