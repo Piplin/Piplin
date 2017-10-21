@@ -72,7 +72,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -84,14 +84,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('members.delete_success'));
             },
             error: function() {
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -103,7 +103,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -127,7 +127,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -158,7 +158,7 @@
                     }
                 });
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
