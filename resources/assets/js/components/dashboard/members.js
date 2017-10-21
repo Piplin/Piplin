@@ -45,8 +45,7 @@
             $('.btn-danger', modal).show();
         } else {
             $('#member_user_id').parent().parent().show();
-            $('#member_id').val('');
-            member_select2.val(1).trigger('change');
+            member_select2.val('').trigger('change');
             $('#member_level').select2(Fixhub.select2_options);
             modal.find('.modal-title span').text(trans('members.create'));
         }
@@ -66,7 +65,6 @@
         $('.callout-warning', modal).hide();
     });
 
-    //$('#member button.btn-delete').on('click', function (event) {
     $('body').delegate('.member-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -191,8 +189,7 @@
             this.listenTo(Fixhub.Members, 'remove', this.addAll);
             this.listenTo(Fixhub.Members, 'all', this.render);
 
-
-            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelChangedEvent', function (data) {
+            Fixhub.listener.on('member:' + Fixhub.events.MODEL_CHANGED, function (data) {
                 var member = Fixhub.Members.get(parseInt(data.model.id));
 
                 if (member) {
@@ -200,13 +197,13 @@
                 }
             });
 
-            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelCreatedEvent', function (data) {
+            Fixhub.listener.on('member:' + Fixhub.events.MODEL_CREATED, function (data) {
                 if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
                     Fixhub.Members.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('member:Fixhub\\Bus\\Events\\ModelTrashedEvent', function (data) {
+            Fixhub.listener.on('member:' + Fixhub.events.MODEL_TRASHED, function (data) {
                 var member = Fixhub.Members.get(parseInt(data.model.id));
 
                 if (member) {
