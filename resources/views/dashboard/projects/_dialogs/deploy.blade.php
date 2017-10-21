@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-paperplane-outline"></i> {{ trans('deployments.label') }}</h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-deploy"></i> {{ trans('deployments.label') }}</h4>
             </div>
             <form class="form-horizontal" role="form" method="post" action="{{ route('deployments.create', ['id' => $project->id]) }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -11,7 +11,7 @@
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('deployments.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('deployments.warning') }}
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="command_environments">{{ trans('deployments.environments') }}</label>

@@ -5,7 +5,7 @@
     <div class="box-header">
         <h3 class="box-title">{{ trans('hooks.label') }}</h3>
         <div class="pull-right">
-            <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="ion ion-plus"></span> {{ trans('hooks.create') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="fixhub fixhub-plus"></span> {{ trans('hooks.create') }}</button>
         </div>
     </div>
 
@@ -35,14 +35,14 @@
 @push('templates')
     <script type="text/template" id="hook-template">
         <td><%- name %></td>
-        <td><span class="ion ion-<%- icon %>"></span> <%- label %></td>
+        <td><span class="fixhub fixhub-<%- icon %>"></span> <%- label %></td>
         <td><% if (enabled) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td class="text-center"><% if (on_deployment_success) { %><i class="ion ion-android-checkbox-outline"></i><% } else { %> <i class="ion ion-android-checkbox-outline-blank"></i> <% } %></td>
-        <td class="text-center"><% if (on_deployment_failure) { %><i class="ion ion-android-checkbox-outline"></i><% } else { %> <i class="ion ion-android-checkbox-outline-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_deployment_success) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_deployment_failure) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('hooks.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#hook"><i class="ion ion-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('hooks.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('hooks.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#hook"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('hooks.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
             </div>
         </td>
     </script>

@@ -19,7 +19,7 @@
                             @foreach ($projects as $project)
                             <tr>
                                 <td class="column-status">
-                                    <i class="ion ion-warning"></i>
+                                    <i class="fixhub fixhub-warning"></i>
                                 </td>
 
                                 <th>
@@ -32,7 +32,7 @@
                                     <i class="ion {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
                                 </td>
 
-                                <td class="status"><span class="text-{{$project->css_class}}"><i class="ion ion-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span>
+                                <td class="status"><span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span>
                                 </td>
                                 <td>
                                     
@@ -45,7 +45,7 @@
 
                                 <td class="text-right">
                                     <a href="{{ route('projects', ['id' => $project->id]) }}" class="btn btn-default" data-toggle="tooltip" title="View Project">
-                                        <i class="ion ion-arrow-right-c"></i>
+                                        <i class="fixhub fixhug-right"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-social-buffer-outline"></i> <span>{{ trans('servers.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-server"></i> <span>{{ trans('servers.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="server_id" name="id" />
@@ -11,7 +11,7 @@
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('servers.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('servers.warning') }}
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="server_environment_id">{{ trans('servers.environment') }}</label>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="server_path">{{ trans('servers.path') }}
-                        <i class="ion ion-help" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
+                        <i class="fixhub fixhub-help" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="server_path" name="path" placeholder="/var/www/project" />
                         </div>

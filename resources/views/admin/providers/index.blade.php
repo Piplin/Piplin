@@ -28,7 +28,7 @@
 
 @section('right-buttons')
     <div class="pull-right">
-        <button type="button" class="btn btn-primary" title="{{ trans('providers.create') }}" data-toggle="modal" data-target="#provider"><span class="ion ion-plus-round"></span> {{ trans('providers.create') }}</button>
+        <button type="button" class="btn btn-primary" title="{{ trans('providers.create') }}" data-toggle="modal" data-target="#provider"><span class="fixhub fixhub-plus"></span> {{ trans('providers.create') }}</button>
     </div>
 @stop
 
@@ -45,16 +45,16 @@
 
 @push('templates')
     <script type="text/template" id="provider-template">
-        <td data-provider-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span><%- name %></td>
+        <td data-provider-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span><%- name %></td>
         <td><%- slug %></td>
         <td>
-            <button class="btn btn-social btn-<%- slug %>"><i class="ion <% if (icon) { %> <%- icon %><% } else { %>ion-android-open<% } %>"></i> <%- name %></button>
+            <button class="btn btn-social btn-<%- slug %>"><i class="fixhub fixhub-cube"></i> <%- name %></button>
         </td>
         <td><%- description %></td>
         <td>
             <div class="btn-group pull-right">
-                <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#provider"><i class="ion ion-compose"></i></button>
-                <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#provider"><i class="fixhub fixhub-edit"></i></button>
+                <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
             </div>
         </td>
     </script>

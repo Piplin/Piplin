@@ -5,8 +5,8 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id]) }}"><span class="ion ion-social-buffer-outline"></span> {{ trans('environments.servers') }}</a></li>
-                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'deployments']) }}"><span class="ion ion-clock"></span> {{ trans('deployments.label') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id]) }}"><span class="fixhub fixhub-server"></span> {{ trans('environments.servers') }}</a></li>
+                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'deployments']) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">
@@ -29,9 +29,9 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-lg btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="ion ion-key"></span> {{ trans('keys.ssh_key') }}</button>
+    <button type="button" class="btn btn-lg btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="fixhub fixhub-key"></span> {{ trans('keys.ssh_key') }}</button>
     @if(($current_user->isAdmin || $current_user->isOperator))
-    <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="ion ion-ios-cloud-upload"></span> {{ trans('projects.deploy') }}</button>
+    <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
     @endif
 </div>
 @stop

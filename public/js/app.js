@@ -248,7 +248,7 @@
             }
 
             status_bar.attr('class', 'text-' + status_data.label_class);
-            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('i', status_bar).attr('class', 'fixhub fixhub-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         } else {
             var toast_title = trans('dashboard.deployment_number', {
@@ -277,7 +277,7 @@
             $('td.name', project).text(data.model.name);
             $('td.time', project).text(moment(data.model.last_run).fromNow());
             status_bar.attr('class', 'text-' + status_data.label_class)
-            $('i', status_bar).attr('class', 'ion ion-' + status_data.icon_class);
+            $('i', status_bar).attr('class', 'fixhub fixhub-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         }
     });

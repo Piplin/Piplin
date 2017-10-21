@@ -1,7 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('variables.create') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><span class="ion ion-plus"></span> {{ trans('variables.create') }}</button>
+            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('variables.create') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><span class="fixhub fixhub-plus"></span> {{ trans('variables.create') }}</button>
         </div>
         <h3 class="box-title">{{ trans('variables.label') }}</h3>
     </div>
@@ -35,8 +35,8 @@
         <td><%- value %></td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('variables.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><i class="ion ion-compose"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('variables.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('variables.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#variable"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('variables.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
             </div>
         </td>
     </script>

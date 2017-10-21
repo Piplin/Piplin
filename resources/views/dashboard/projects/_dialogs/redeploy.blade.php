@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-cloud-upload"></i> {{ trans('deployments.rollback_title') }}</h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-rollback"></i> {{ trans('deployments.rollback_title') }}</h4>
             </div>
             <form class="form-horizontal" role="form" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />

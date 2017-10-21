@@ -2,7 +2,7 @@
     <div class="box-header">
         <h3 class="box-title">{{ trans('members.label') }}</h3>
         <div class="pull-right">
-            <button type="button" class="btn btn-primary" title="{{ trans('members.create') }}" data-toggle="modal" data-target="#member"><span class="ion ion-plus"></span> {{ trans('members.create') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('members.create') }}" data-toggle="modal" data-target="#member"><span class="fixhub fixhub-plus"></span> {{ trans('members.create') }}</button>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
         <td>{{ trans('members.joined') }}</td>
         <td class="text-right">
             <div class="btn-group">
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-android-exit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-leave"></i></button>
             </div>
         </td>
     </script>

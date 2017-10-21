@@ -8,7 +8,7 @@
       <div class="col-md-8">
           <div class="box box-primary">
               <div class="box-header">
-                  <h3 class="box-title"><i class="ion ion-clock"></i> {{ trans_choice('dashboard.latest', 2) }}</h3>
+                  <h3 class="box-title"><i class="fixhub fixhub-clock"></i> {{ trans_choice('dashboard.latest', 2) }}</h3>
               </div>
               <div class="box-body" id="timeline">
                   @include('dashboard.timeline')

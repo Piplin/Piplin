@@ -29,11 +29,11 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="form-group has-feedback">
                     <input type="login" class="form-control" placeholder="{{ trans('auth.login') }}" name="login" value="{{ old('login') }}" required />
-                    <span class="ion ion-person form-control-feedback"></span>
+                    <span class="fixhub fixhub-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="{{ trans('auth.password') }}" name="password" required />
-                    <span class="ion ion-locked form-control-feedback"></span>
+                    <span class="fixhub fixhub-lock form-control-feedback"></span>
                 </div>
 
                 <div class="row">
@@ -56,7 +56,7 @@
             <div class="social-auth-links text-center">
               <p>- OR -</p>
               @foreach($providers as $provider)
-              <a href="{{ route('oauth.provider', ['provider' => $provider->slug]) }}" class="btn btn-block btn-social btn-{{$provider->slug}}"><i class="ion {{ $provider->icon ?: 'ion-android-open'}}"></i> {{ trans('auth.oauth_login', ['provider' => $provider->name]) }}</a>
+              <a href="{{ route('oauth.provider', ['provider' => $provider->slug]) }}" class="btn btn-block btn-social btn-{{$provider->slug}}"><i class="fixhub fixhub-cube"></i> {{ trans('auth.oauth_login', ['provider' => $provider->name]) }}</a>
               @endforeach
             </div>
             @endif
