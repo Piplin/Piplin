@@ -68,7 +68,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -80,14 +80,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('commands.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -107,7 +107,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find(':input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -141,7 +141,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
 
@@ -176,7 +176,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
             }
@@ -650,17 +650,17 @@
         $('#hook .modal-title span').text(trans('hooks.' + action + '_' + type));
 
         var element = $('#hook .modal-title i').removeClass().addClass('ion');
-        var icon = 'cogs';
+        var icon = 'edit';
 
         if (type === 'slack') {
-            icon = 'pound';
+            icon = 'slack';
         } else if (type === 'mail') {
             icon = 'email';
         } else if (type === 'custom') {
-            icon = 'compose';
+            icon = 'edit';
         }
 
-        element.addClass('ion-' + icon);
+        element.addClass('fixhub-' + icon);
 
         $('#hook .modal-footer').show();
         $('.hook-config').hide();
@@ -672,13 +672,12 @@
         $('#hook_type').val(type);
     }
 
-    //$('#hook button.btn-delete').on('click', function (event) {
     $('body').delegate('.hook-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -690,14 +689,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('hooks.delete_success'));
             },
             error: function() {
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -709,7 +708,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -743,7 +742,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -774,7 +773,7 @@
                     }
                 });
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -1210,7 +1209,7 @@
             }
         }
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         $('button.close', dialog).hide();
     });
 
@@ -1454,7 +1453,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -1466,14 +1465,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('servers.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -1485,7 +1484,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -1511,7 +1510,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -1542,7 +1541,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -1795,7 +1794,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -1807,14 +1806,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('commands.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -1834,7 +1833,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find(':input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -1868,7 +1867,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
 
@@ -1903,7 +1902,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
             }
@@ -2145,7 +2144,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2157,14 +2156,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('configFiles.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2176,7 +2175,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2207,7 +2206,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -2242,7 +2241,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2441,14 +2440,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('environments.delete_success'));
             },
             error: function() {
-               icon.removeClass().addClass('fixhub fixhub-save');
+               icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2676,7 +2675,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2688,14 +2687,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('sharedFiles.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2707,7 +2706,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2730,7 +2729,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -2762,7 +2761,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2904,7 +2903,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2916,14 +2915,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('variables.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -2935,7 +2934,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -2958,7 +2957,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -2989,7 +2988,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }

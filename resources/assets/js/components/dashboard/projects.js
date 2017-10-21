@@ -41,7 +41,7 @@
             }
         }
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         $('button.close', dialog).hide();
     });
 

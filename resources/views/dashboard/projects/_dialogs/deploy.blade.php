@@ -120,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary btn-save">{{ trans('projects.deploy') }}</button>
+                        <button type="submit" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('projects.deploy') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

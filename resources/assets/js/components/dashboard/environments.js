@@ -73,14 +73,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('environments.delete_success'));
             },
             error: function() {
-               icon.removeClass().addClass('fixhub fixhub-save');
+               icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
