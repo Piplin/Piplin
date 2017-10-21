@@ -14,5 +14,7 @@ return [
     'search'         => '搜索用户',
     'none'           => '该项目还没有成员。',
     'warning'        => 'There were some problems with your input.',
+    'status'         => '状态',
+    'joined'         => '已加入',
 
 ];

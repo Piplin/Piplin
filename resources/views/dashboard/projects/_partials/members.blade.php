@@ -16,6 +16,7 @@
                 <tr>
                     <th>{{ trans('users.name') }}</th>
                     <th>{{ trans('users.email') }}</th>
+                    <th>{{ trans('members.status') }}</th>
                     <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
@@ -30,6 +31,7 @@
     <script type="text/template" id="member-template">
         <td><%- name %></td>
         <td><%- email %></td>
+        <td>{{ trans('members.joined') }}</td>
         <td class="text-right">
             <div class="btn-group">
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-android-exit"></i></button>

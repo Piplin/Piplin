@@ -239,7 +239,7 @@ class Project extends Model implements HasPresenter
      */
     public function members()
     {
-        return $this->belongsToMany(User::class)->withPivot(['id', 'level']);
+        return $this->belongsToMany(User::class)->withPivot(['id', 'status']);
     }
 
     /**

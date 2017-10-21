@@ -17,7 +17,7 @@ class CreateProjectsMembers extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id');
-            $table->tinyInteger('level')->default(3);
+            $table->tinyInteger('status')->default(1);
 
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('user_id')->references('id')->on('users');

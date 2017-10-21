@@ -29,9 +29,7 @@ class AutocompleteController extends Controller
      */
     public function users(Request $request)
     {
-        $q = $request->get('q');
-
-        $users = User::where('name', 'like', $q.'%')->get(['id', 'name'])->toArray();
+        $users = User::where('name', 'like', $request->get('q') . '%')->get(['id', 'name'])->toArray();
 
         return Response::json($users);
     }
