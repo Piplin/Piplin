@@ -112,5 +112,5 @@ Route::group([
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
-        });
+            });
     });
