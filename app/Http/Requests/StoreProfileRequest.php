@@ -30,7 +30,7 @@ class StoreProfileRequest extends Request
             'password' => 'required|confirmed|min:6',
         ];
 
-        if ($this->get('password') === '') {
+        if (empty($this->get('password'))) {
             unset($rules['password']);
         }
 
