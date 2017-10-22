@@ -59,12 +59,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'admin'      => \Fixhub\Http\Middleware\Admin::class,
-        'auth'       => \Fixhub\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'      => \Fixhub\Http\Middleware\RedirectIfAuthenticated::class,
-        'jwt'        => \Fixhub\Http\Middleware\RefreshJsonWebToken::class,
-        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'localize'   => \Fixhub\Http\Middleware\Localize::class,
+        'admin'       => \Fixhub\Http\Middleware\Admin::class,
+        'project.acl' => \Fixhub\Http\Middleware\ProjectAcl::class,
+        'auth'        => \Fixhub\Http\Middleware\Authenticate::class,
+        'auth.basic'  => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest'       => \Fixhub\Http\Middleware\RedirectIfAuthenticated::class,
+        'jwt'         => \Fixhub\Http\Middleware\RefreshJsonWebToken::class,
+        'throttle'    => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'localize'    => \Fixhub\Http\Middleware\Localize::class,
     ];
 }

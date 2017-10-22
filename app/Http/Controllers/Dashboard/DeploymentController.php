@@ -37,6 +37,8 @@ class DeploymentController extends Controller
     {
         $deployment = Deployment::findOrFail($deployment_id);
 
+        $this->authorize('view', $deployment->project);
+
         $output = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
@@ -82,6 +84,8 @@ class DeploymentController extends Controller
     {
         // Fix me! see also in DeploymentController and IncomingWebhookController
         $project = Project::findOrFail($project_id);
+
+        $this->authorize('deploy', $project);
 
         if ($project->environments->count() === 0) {
             return redirect()->route('projects', ['id' => $project->id]);
@@ -151,6 +155,8 @@ class DeploymentController extends Controller
 
         $previous = Deployment::findOrFail($previous_id);
 
+        $this->authorize('deploy', $previous->project);
+
         $fields = [
             'committer'       => $previous->committer,
             'committer_email' => $previous->committer_email,
@@ -189,6 +195,8 @@ class DeploymentController extends Controller
     public function abort($deployment_id)
     {
         $deployment = Deployment::findOrFail($deployment_id);
+
+        $this->authorize('deploy', $deployment->project);
 
         if (!$deployment->isAborting()) {
             $deployment->status = Deployment::ABORTING;

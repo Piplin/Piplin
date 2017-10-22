@@ -14,6 +14,9 @@ namespace Fixhub\Providers;
 use Fixhub\Models\ServerLog;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
+use Fixhub\Models\Deployment;
+use Fixhub\Models\Project;
 
 /**
  * The route service provider.
@@ -37,16 +40,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         Route::pattern('id', '[0-9]+');
         Route::pattern('step', '(clone|install|activate|purge)');
 
-        parent::boot();
+        Route::model('deployment', Deployment::class);
+        Route::model('project', Project::class);
     }
 
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function map()
@@ -65,7 +70,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::group(['namespace' => $this->namespace], function () {
+        Route::group(['namespace' => $this->namespace, 'middleware' => 'web'], function () {
             foreach (glob(base_path('routes') . '/web/*.php') as $file) {
                 require $file;
             }
@@ -81,7 +86,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::group(['namespace' => $this->namespace], function () {
+        Route::group(['namespace' => $this->namespace, 'middleware' => 'api'], function () {
             foreach (glob(base_path('routes') . '/api/*.php') as $file) {
                 require $file;
             }

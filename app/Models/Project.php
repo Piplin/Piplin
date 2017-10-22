@@ -22,6 +22,7 @@ use UnexpectedValueException;
 use Version\Compare as VersionCompare;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Project model.
@@ -140,6 +141,28 @@ class Project extends Model implements HasPresenter
         }
 
         return $info;
+    }
+
+    /**
+     * Checks ability for specified project and user.
+     *
+     * @param string $name
+     * @param User $user
+     * @return bool
+     */
+    public function can($name, User $user = null)
+    {
+        if ($user == null) {
+            $user = Auth::user();
+        }
+
+        static $isExists = null;
+
+        if (is_null($isExists)) {
+            $isExists = $this->members()->find($user->id)->exists();
+        }
+
+        return $user->is_admin || $isExists;
     }
 
     /**

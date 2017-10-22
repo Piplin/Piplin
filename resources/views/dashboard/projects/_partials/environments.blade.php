@@ -1,7 +1,9 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('environments.create') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><span class="fixhub fixhub-plus"></span> {{ trans('environments.create') }}</button>
+            @if($project->can('update'))
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="fixhub fixhub-plus"></i> {{ trans('environments.create') }}</button>
+            @endif
         </div>
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>
