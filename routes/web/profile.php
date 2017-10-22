@@ -10,7 +10,7 @@
  */
 
 Route::group([
-    'middleware' => ['web', 'auth', 'jwt'],
+    'middleware' => ['auth', 'jwt'],
     'namespace'  => 'Profile',
 ], function () {
     Route::get('profile', [

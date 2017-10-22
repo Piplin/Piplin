@@ -10,7 +10,7 @@
  */
 
 Route::group([
-        'middleware' => ['web', 'auth', 'jwt'],
+        'middleware' => ['auth', 'jwt'],
         'namespace'  => 'Dashboard',
     ], function () {
         Route::get('/', [
@@ -64,17 +64,6 @@ Route::group([
             'middleware' => 'admin',
             'as'         => 'webhook.refresh',
             'uses'       => 'WebhookController@refresh',
-        ]);
-
-        // Project
-        Route::get('projects/{project}/{tab?}', [
-            'as'   => 'projects',
-            'uses' => 'ProjectController@show',
-        ]);
-
-        Route::get('projects/{project}/apply', [
-            'as'   => 'projects.apply',
-            'uses' => 'ProjectController@apply',
         ]);
 
         Route::get('deployment/{deployment}', [

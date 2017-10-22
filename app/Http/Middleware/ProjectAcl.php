@@ -18,25 +18,24 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 /**
  * Project Acl middleware.
  */
-class ProjectAcl
+class ProjectAcl extends AbstractMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
-     * @param  string|null              $guard
+     * @param  string|null              $ability
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $ability = null)
     {
-        /*
-        if (!Auth::guard($guard)->check() || (Auth::guard($guard)->check() && !Auth::guard($guard)->user()->isAdmin)) {
-            throw new HttpException(401);
+        $project = $request->route('project');
+
+        if (!$project->can($ability, $request->user() ?: null)) {
+            return $this->unauthorized($request);
         }
-        */
-        $project = $request->route('project_id');
-        error_log(var_export($project, true), 3, '/tmp/gsl.log');
+
         return $next($request);
     }
 }

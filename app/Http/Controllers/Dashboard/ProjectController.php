@@ -48,7 +48,7 @@ class ProjectController extends Controller
      *
      * @return View
      */
-    public function show($project, $tab = '')
+    public function show(Project $project, $tab = '')
     {
         $this->authorize('view', $project);
 
@@ -96,12 +96,12 @@ class ProjectController extends Controller
     /**
      * The details of an individual project with a apply dialog.
      *
-     * @param int $project_id
+     * @param Project $project_id
      *
      * @return View
      */
-    public function apply($project_id)
+    public function apply(Project $project)
     {
-        return $this->show($project_id)->withAction('apply');
+        return $this->show($project)->withAction('apply');
     }
 }

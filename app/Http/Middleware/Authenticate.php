@@ -12,59 +12,45 @@
 namespace Fixhub\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Routing\Redirector;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 
 /**
  * Authentication middleware.
  */
-class Authenticate
+class Authenticate extends AbstractMiddleware
 {
     /**
-     * @var Redirector
-     */
-    private $redirector;
-
-    /**
-     * @var ResponseFactory
-     */
-    private $response;
-
-    /**
-     * @var AuthFactory
+     * The Guard implementation.
+     *
+     * @var Guard
      */
     private $auth;
 
     /**
-     * @param Redirector      $redirector
-     * @param ResponseFactory $response
-     * @param AuthFactory     $auth
+     * Create a new filter instance.
+     *
+     * @param  Guard $auth
      */
-    public function __construct(Redirector $redirector, ResponseFactory $response, AuthFactory $auth)
+    public function __construct(Guard $auth)
     {
-        $this->redirector = $redirector;
-        $this->response   = $response;
         $this->auth       = $auth;
     }
+
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Closure                  $next
-     * @param string|null              $guard
+     * @param  Request $request
+     * @param  Closure $next
      *
-     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            if ($request->ajax()) {
-                return $this->response->make('Unauthorized.', Response::HTTP_UNAUTHORIZED);
-            }
-            return $this->redirector->guest('login');
+        if ($this->auth->guest()) {
+            return $this->login($request);
         }
+
         return $next($request);
     }
 }
