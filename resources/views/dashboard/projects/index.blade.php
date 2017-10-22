@@ -13,7 +13,7 @@
                 @else
                 <table class="table table-relaxed">
                     <thead>
-                        <tr><th class="column-status"></th>
+                        <tr>
                                 <th class="column-name">Name</th>
                                 <th class="column-repo">Repository</th>
                                 <th class="column-status">Status</th>
@@ -24,9 +24,6 @@
                     <tbody>
                     @foreach ($projects as $project)
                     <tr>
-                        <td class="column-status">
-                            <i class="fixhub fixhub-warning"></i>
-                        </td>
                         <th>
                             <a href="{{ route('projects', ['id' => $project->id]) }}" title="{{ trans('projects.details') }}">
                                 {{ $project->name }}

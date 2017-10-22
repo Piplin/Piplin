@@ -35,7 +35,7 @@
 @push('templates')
     <script type="text/template" id="hook-template">
         <td><%- name %></td>
-        <td><span class="fixhub fixhub-<%- icon %>"></span> <%- label %></td>
+        <td><i class="fixhub fixhub-<%- icon %>"></i> <%- label %></td>
         <td><% if (enabled) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td class="text-center"><% if (on_deployment_success) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
         <td class="text-center"><% if (on_deployment_failure) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>

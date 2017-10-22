@@ -262,7 +262,7 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.icon = 'compose';
+            data.icon = 'edit';
             data.label = trans('hooks.custom');
 
             if (this.model.get('type') !== 'custom') {
@@ -270,7 +270,7 @@
             }
 
             if (this.model.get('type') === 'slack') {
-                data.icon = 'pound';
+                data.icon = 'slack';
             } else if (this.model.get('type') === 'mail') {
                 data.icon = 'email';
             }

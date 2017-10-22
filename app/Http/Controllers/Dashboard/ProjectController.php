@@ -52,6 +52,8 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($project_id);
 
+        $this->authorize('view', $project);
+
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
