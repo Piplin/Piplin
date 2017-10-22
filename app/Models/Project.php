@@ -157,9 +157,11 @@ class Project extends Model implements HasPresenter
             $user = Auth::user();
         }
 
+        /*
         if ($name == 'manage') {
             return $user->is_admin;
         }
+        */
 
         static $isExists = null;
 

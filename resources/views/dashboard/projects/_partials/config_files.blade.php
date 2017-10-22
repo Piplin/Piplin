@@ -2,7 +2,7 @@
     <div class="box-header">
         <div class="pull-right">
             @if($project->can('manage'))
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><i class="fixhub fixhub-plus"></i> {{ trans('configFiles.create') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('configFiles.create') }}" data-toggle="modal" data-target="#configfile"><i class="fixhub fixhub-plus"></i> {{ trans('configFiles.create') }}</button>
             @endif
         </div>
         <h3 class="box-title">{{ trans('configFiles.label') }}</h3>
@@ -39,8 +39,8 @@
             @if($project->can('manage'))
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-view" title="{{ trans('configFiles.view') }}" data-toggle="modal" data-backdrop="static" data-target="#view-configfile"><i class="fixhub fixhub-preview"></i></button>
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="fixhub fixhub-edit"></i></button>
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
             </div>
             @endif
         </td>

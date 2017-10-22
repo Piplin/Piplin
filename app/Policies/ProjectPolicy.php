@@ -59,6 +59,6 @@ class ProjectPolicy
      */
     public function manage(User $user, Project $project)
     {
-        return $user->is_admin;
+        return $project->can('manage', $user);
     }
 }
