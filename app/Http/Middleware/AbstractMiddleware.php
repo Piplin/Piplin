@@ -13,6 +13,9 @@ namespace Fixhub\Http\Middleware;
 
 use Illuminate\Http\Request;
 
+/**
+ * Abstract class of middleware.
+ */
 abstract class AbstractMiddleware
 {
     /**

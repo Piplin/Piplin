@@ -64,7 +64,7 @@ class VariableController extends Controller
     /**
      * Remove the specified variable from storage.
      *
-     * @param  int      $variable_id
+     * @param  Variable $variable
      * @return Response
      */
     public function destroy(Variable $variable)
