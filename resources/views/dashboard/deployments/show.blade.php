@@ -3,19 +3,19 @@
 @section('content')
 <div class="box box-solid">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="ion ion-ios-paperplane-outline"></i> {{ trans('deployments.reason') }} :</h3>
+        <h3 class="box-title">{{ trans('deployments.reason') }} :</h3>
         <span>{{ $deployment->reason }}</span>
     </div>
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button type="button" class="btn btn-lg btn-default"><span  id="deploy_status_bar" class="text-{{ $deployment->css_class }}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span></button>
+                <button type="button" class="btn btn-lg btn-default"><span  id="deploy_status_bar" class="text-{{ $deployment->css_class }}"><i class="fixhub fixhub-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span></button>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
                 <p><div class="callout callout-danger {{ $deployment->deploy_failure ? null : 'hide' }}" id="deploy_status">
-                        <h4><i class="icon ion ion-close"></i> {{ trans('deployments.deploy_failure') }}</h4>
+                        <h4><i class="icon fixhub fixhub-close"></i> {{ trans('deployments.deploy_failure') }}</h4>
                         <p>{{ $deployment->output }}</p>
                     </div></p>
             </div>
@@ -33,7 +33,7 @@
     <div class="col-xs-12">
         <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
             <div class="box-header">
-                <i class="{{ $step->icon }}"></i>
+                <i class="fixhub {{ $step->icon }}"></i>
                 <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> </h3>
             </div>
             <div class="box-body">
@@ -76,7 +76,7 @@
         <td><%- server.environment_name %></td>
         <td><%- server.name %></td>
         <td>
-             <span class="text-<%- label_class %>"><i class="status ion ion-<%- icon_css %>"></i> <span><%- label %></span></span>
+             <span class="text-<%- label_class %>"><i class="status fixhub fixhub-<%- icon_css %>"></i> <span><%- label %></span></span>
         </td>
         <td>
             <% if (formatted_start_time) { %>
@@ -102,7 +102,7 @@
         <td>
             <div class="btn-group pull-right">
                 <% if (output !== null) { %>
-                    <button type="button" class="btn btn-default" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#log"><i class="ion ion-ios-copy-outline"></i></button>
+                    <button type="button" class="btn btn-default" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#log"><i class="fixhub fixhub-copy"></i></button>
                 <% } %>
             </div>
         </td>

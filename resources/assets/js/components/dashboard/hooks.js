@@ -46,17 +46,17 @@
         $('#hook .modal-title span').text(trans('hooks.' + action + '_' + type));
 
         var element = $('#hook .modal-title i').removeClass().addClass('ion');
-        var icon = 'cogs';
+        var icon = 'edit';
 
         if (type === 'slack') {
-            icon = 'pound';
+            icon = 'slack';
         } else if (type === 'mail') {
             icon = 'email';
         } else if (type === 'custom') {
-            icon = 'compose';
+            icon = 'edit';
         }
 
-        element.addClass('ion-' + icon);
+        element.addClass('fixhub-' + icon);
 
         $('#hook .modal-footer').show();
         $('.hook-config').hide();
@@ -68,13 +68,12 @@
         $('#hook_type').val(type);
     }
 
-    //$('#hook button.btn-delete').on('click', function (event) {
     $('body').delegate('.hook-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -86,14 +85,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('hooks.delete_success'));
             },
             error: function() {
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -105,7 +104,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-load-c fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -139,7 +138,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -164,13 +163,13 @@
                     var name = element.attr('name');
 
                     if (typeof errors[name] !== 'undefined') {
-                        var parent = element.parents('div.form-group');
+                        var parent = element.parent();
                         parent.addClass('has-error');
                         parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
                     }
                 });
 
-                icon.removeClass();
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -178,7 +177,7 @@
     });
 
     Fixhub.Hook = Backbone.Model.extend({
-        urlRoot: '/hooks'
+        urlRoot: '/hooks/' + parseInt($('input[name="project_id"]').val())
     });
 
     var Hooks = Backbone.Collection.extend({
@@ -263,7 +262,7 @@
         render: function () {
             var data = this.model.toJSON();
 
-            data.icon = 'compose';
+            data.icon = 'edit';
             data.label = trans('hooks.custom');
 
             if (this.model.get('type') !== 'custom') {
@@ -271,7 +270,7 @@
             }
 
             if (this.model.get('type') === 'slack') {
-                data.icon = 'pound';
+                data.icon = 'slack';
             } else if (this.model.get('type') === 'mail') {
                 data.icon = 'email';
             }

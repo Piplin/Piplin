@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-cloud-upload"></i> {{ trans('deployments.rollback_title') }}</h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-rollback"></i> {{ trans('deployments.rollback_title') }}</h4>
             </div>
             <form class="form-horizontal" role="form" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -43,7 +43,7 @@
 
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">{{ trans('projects.redeploy') }}</button>
+                        <button type="submit" class="btn btn-primary"><i class="fixhub fixhub-save"></i> {{ trans('projects.redeploy') }}</button>
                          <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
 use Fixhub\Presenters\UserPresenter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -94,6 +95,14 @@ class User extends Authenticatable implements HasPresenter
      */
     protected $dontKeepRevisionOf = ['password', 'remember_token', 'email_token'];
 
+
+    /**
+     * The searchable fields.
+     *
+     * @var string[]
+     */
+    protected $searchable = ['id', 'name', 'email', 'nickname'];
+
     /**
      * Generate a change email token.
      *
@@ -105,6 +114,18 @@ class User extends Authenticatable implements HasPresenter
         $this->save();
 
         return $this->email_token;
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+                    ->orderBy('id', 'ASC');
     }
 
     /**
@@ -175,6 +196,25 @@ class User extends Authenticatable implements HasPresenter
         }
 
         return 'Unknown';
+    }
+
+    /**
+     * Adds a search scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $search
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch(Builder $query, array $search = [])
+    {
+        if (empty($search)) {
+            return $query;
+        }
+        if (!array_intersect(array_keys($search), $this->searchable)) {
+            return $query;
+        }
+        return $query->where($search);
     }
 
     /**

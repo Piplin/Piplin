@@ -69,5 +69,6 @@ return [
     'services_description' => 'You can use the webhook with these services and the relevant details will be gathered from the data ' .
                               'they send across. The &quot;<em>update_only</em>&quot; and &quot;<em>commands</em>&quot; parameters ' .
                               'may be included in the query string, all other fields are ignored.',
+    'help'                 => 'Commands allow you to perform extra tasks such as database migrations, dependency installation, unit tests, and more.',
 
 ];

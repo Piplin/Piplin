@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * The controller of projects.
@@ -23,17 +24,32 @@ use Fixhub\Models\Project;
 class ProjectController extends Controller
 {
     /**
+     * Shows the project index view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $user = Auth::user();
+
+        $data = [
+            'title'    => 'Project Dashboard',
+            'projects' => $user->projects,
+        ];
+
+        return view('dashboard.projects.index', $data);
+    }
+
+    /**
      * The details of an individual project.
      *
-     * @param int $project_id
+     * @param Project $project
      * @param string $tab
      *
      * @return View
      */
-    public function show($project_id, $tab = '')
+    public function show(Project $project, $tab = '')
     {
-        $project = Project::findOrFail($project_id);
-
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
@@ -65,23 +81,13 @@ class ProjectController extends Controller
             $data['title'] = trans('sharedFiles.tab_label');
         } elseif ($tab == 'hooks') {
             $data['hooks'] = $project->hooks;
-            $data['title'] = trans('projects.integrations');
+        } elseif ($tab == 'members') {
+            $data['members'] = $project->members->toJson();
+            $data['title'] = trans('hooks.label');
         } elseif ($tab == 'environments') {
             $data['title'] = trans('environments.label');
         }
 
         return view('dashboard.projects.show', $data);
-    }
-
-    /**
-     * The details of an individual project with a apply dialog.
-     *
-     * @param int $project_id
-     *
-     * @return View
-     */
-    public function apply($project_id)
-    {
-        return $this->show($project_id)->withAction('apply');
     }
 }

@@ -33,7 +33,7 @@
                           {{ trans('app.never') }}
                           @endif
                         </td>
-                        <td class="status"><span class="text-{{$group_project->css_class}}"><i class="ion ion-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
+                        <td class="status"><span class="text-{{$group_project->css_class}}"><i class="fixhub fixhub-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
                     </tr>
                     @endforeach
                 </tbody>

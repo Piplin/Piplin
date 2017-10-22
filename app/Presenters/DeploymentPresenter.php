@@ -96,13 +96,13 @@ class DeploymentPresenter extends BasePresenter
         $finished_statuses = [Deployment::FAILED, Deployment::COMPLETED_WITH_ERRORS];
 
         if ($this->wrappedObject->status === Deployment::COMPLETED) {
-            return 'checkmark-round';
+            return 'check';
         } elseif (in_array($this->wrappedObject->status, $finished_statuses, true)) {
-            return 'close-round';
+            return 'close';
         } elseif (in_array($this->wrappedObject->status, [Deployment::ABORTING, Deployment::ABORTED])) {
-            return 'alert-circled';
+            return 'warning';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
-            return 'load-c fixhub-spin';
+            return 'load fixhub-spin';
         }
 
         return 'clock';

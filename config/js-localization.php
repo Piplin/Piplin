@@ -57,6 +57,7 @@ return [
         'hooks'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'custom', 'slack', 'mail', 'create_slack', 'create_mail', 'create_custom', 'edit_slack', 'edit_mail', 'edit_custom'],
         'providers'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'servers'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'successful', 'testing', 'failed', 'untested'],
+        'members'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'search'],
     ],
 
     /*

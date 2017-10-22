@@ -13,7 +13,7 @@
 							<tr>
 								<td>{{ trans('projects.repository_path') }}</td>
 								<td class="text-right">
-									<i class="ion {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
+									<i class="fixhub {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
 								</td>
 							</tr>
 							<tr>
@@ -81,7 +81,7 @@
 							<tr>
 								<td>{{ trans('projects.deploy_status') }}</td>
 								<td class="text-right">
-                                    <span class="text-{{$project->css_class}}"><i class="ion ion-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
+                                    <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
 								</td>
 							</tr>
 						</tbody>
@@ -95,12 +95,13 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="ion ion-clock"></span> {{ trans('deployments.label') }}</a></li>
-                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'environments']) }}"><span class="ion ion-ios-filing-outline"></span> {{ trans('environments.label') }}</a></li>
-                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="ion ion-code"></span> {{ trans('commands.label') }}</a></li>
-                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="ion ion-ios-copy-outline"></span> {{ trans('configFiles.label') }}</a></li>
-                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="ion ion-ios-folder-outline"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
-                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="ion ion-paper-airplane"></span> {{ trans('projects.integrations') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
+                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'environments']) }}"><span class="fixhub fixhub-environment"></span> {{ trans('environments.label') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'commands']) }}"><span class="fixhub fixhub-command"></span> {{ trans('commands.label') }}</a></li>
+                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'config-files']) }}"><span class="fixhub fixhub-config-file"></span> {{ trans('configFiles.label') }}</a></li>
+                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'shared-files']) }}"><span class="fixhub fixhub-shared-file"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
+                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="fixhub fixhub-hook"></span> {{ trans('projects.integrations') }}</a></li>
+                    <li {!! $tab != 'members' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'members']) }}"><span class="fixhub fixhub-users"></span> {{ trans('members.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -115,6 +116,8 @@
                             @include('dashboard.projects._partials.shared_files')
                         @elseif($tab == 'hooks')
                             @include('dashboard.projects._partials.hooks')
+                        @elseif($tab == 'members')
+                            @include('dashboard.projects._partials.members')
                         @else
                             @include('dashboard.projects._partials.deployments')
                         @endif
@@ -134,6 +137,8 @@
         @include('dashboard.projects._dialogs.shared_files')
     @elseif($tab == 'hooks')
         @include('dashboard.projects._dialogs.hook')
+    @elseif($tab == 'members')
+        @include('dashboard.projects._dialogs.member')
     @endif
 
     @include('dashboard.projects._dialogs.key')
@@ -141,14 +146,16 @@
     @include('dashboard.projects._dialogs.redeploy')
 @stop
 
+@if($project->can('deploy'))
 @section('right-buttons')
     <div class="pull-right">
-        <button type="button" class="btn btn-lg btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="ion ion-key"></span> {{ trans('keys.ssh_key') }}</button>
-        @if(($current_user->isAdmin || $current_user->isOperator))
-        <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="ion ion-ios-cloud-upload"></span> {{ trans('projects.deploy') }}</button>
+        @if($project->can('deploy'))
+        <button type="button" class="btn btn-lg btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="fixhub fixhub-key"></span> {{ trans('keys.ssh_key') }}</button>
+        <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
         @endif
     </div>
 @stop
+@endif
 
 @push('javascript')
     <script type="text/javascript">
@@ -171,12 +178,14 @@
         @elseif($tab == 'hooks')
         new Fixhub.HooksTab();
         Fixhub.Hooks.add({!! $hooks->toJson() !!});
+
+        @elseif($tab == 'members')
+        new Fixhub.MembersTab();
+        Fixhub.Members.add({!! $members !!});
+
         @endif
 
         Fixhub.project_id = {{ $project->id }};
-        @if(isset($action) && $action == 'apply')
-            $('button#deploy_project').trigger('click');
-        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

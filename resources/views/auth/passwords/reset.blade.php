@@ -24,15 +24,15 @@
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" placeholder="{{ trans('auth.email') }}" name="email" value="{{ old('email') }}" required />
-                    <span class="ion ion-email form-control-feedback"></span>
+                    <span class="fixhub fixhub-email form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="{{ trans('auth.password') }}" name="password" required />
-                    <span class="ion ion-lock form-control-feedback"></span>
+                    <span class="fixhub fixhub-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="{{ trans('auth.password_confirmation') }}" name="password_confirmation" required />
-                    <span class="ion ion-lock form-control-feedback"></span>
+                    <span class="fixhub fixhub-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-6">

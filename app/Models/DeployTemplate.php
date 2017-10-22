@@ -63,6 +63,19 @@ class DeployTemplate extends Model implements HasPresenter
     protected $revisionCreationsEnabled = true;
 
     /**
+     * Checks ability for specified project and user.
+     *
+     * @param string $name
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function can($name = '', User $user = null)
+    {
+        return true;
+    }
+
+    /**
      * Define a accessor for the count of projects.
      *
      * @return int

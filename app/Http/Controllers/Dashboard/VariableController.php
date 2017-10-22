@@ -46,14 +46,13 @@ class VariableController extends Controller
     /**
      * Update the specified variable in storage.
      *
-     * @param  int                  $variable_id
+     * @param  Variable $variable
      * @param  StoreVariableRequest $request
+     *
      * @return Response
      */
-    public function update($variable_id, StoreVariableRequest $request)
+    public function update(Variable $variable, StoreVariableRequest $request)
     {
-        $variable = Variable::findOrFail($variable_id);
-
         $variable->update($request->only(
             'name',
             'value'
@@ -65,13 +64,11 @@ class VariableController extends Controller
     /**
      * Remove the specified variable from storage.
      *
-     * @param  int      $variable_id
+     * @param  Variable $variable
      * @return Response
      */
-    public function destroy($variable_id)
+    public function destroy(Variable $variable)
     {
-        $variable = Variable::findOrFail($variable_id);
-
         $variable->delete();
 
         return [

@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion ion-document"></i> <span>{{ trans('configFiles.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-config-file"></i> <span>{{ trans('configFiles.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="config_file_id" name="id" />
@@ -12,7 +12,7 @@
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('configFiles.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('configFiles.warning') }}
                     </div>
 
                     <div class="form-group">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-eye"></i> <span>{{ trans('configFiles.view') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-preview"></i> <span>{{ trans('configFiles.view') }}</span></h4>
             </div>
             <div class="modal-body" id="preview-content">
             </div>

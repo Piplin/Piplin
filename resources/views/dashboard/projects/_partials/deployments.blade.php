@@ -30,7 +30,7 @@
                     <td>
                         {{ $deployment->is_webhook ? trans('deployments.webhook') : trans('deployments.manually') }}
                         @if (!empty($deployment->reason))
-                            <i class="ion ion-ios-chatboxes-outline deploy-reason" data-toggle="tooltip" data-placement="right" title="{{ $deployment->reason }}"></i>
+                            <i class="fixhub fixhub-chatbox deploy-reason" data-toggle="tooltip" data-placement="right" title="{{ $deployment->reason }}"></i>
                         @endif
                     </td>
                     <td>
@@ -50,18 +50,18 @@
                         ({{ $deployment->branch }})
                     </td>
                     <td class="status">
-                        <span class="text-{{$deployment->css_class}}"><i class="ion ion-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
+                        <span class="text-{{$deployment->css_class}}"><i class="fixhub fixhub-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
                     </td>
                     <td>
                         <div class="btn-group pull-right">
                             @if ($deployment->isSuccessful())
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#redeploy" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('deployments.rollback') }}"><i class="ion ion-arrow-return-left"></i></button>
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#redeploy" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('deployments.rollback') }}"><i class="fixhub fixhub-rollback"></i></button>
                             @endif
 
                             @if ($deployment->isPending() || $deployment->isRunning())
-                                <a href="{{ route('deployments.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('deployments.cancel') }}"><i class="ion ion-eye-disabled"></i></a>
+                                <a href="{{ route('deployments.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('deployments.cancel') }}"><i class="fixhub fixhub-cancel"></i></a>
                             @endif
-                            <a href="{{ route('deployments', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="ion ion-arrow-right-c"></i></a>
+                            <a href="{{ route('deployments', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="fixhub fixhub-go"></i></a>
                         </div>
                     </td>
                 </tr>

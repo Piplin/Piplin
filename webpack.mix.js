@@ -86,9 +86,10 @@ mix
         `${assets_path}/js/components/dashboard/commands.js`,
         `${assets_path}/js/components/dashboard/deployment.js`,
         `${assets_path}/js/components/dashboard/hooks.js`,
-        `${assets_path}/js/components/dashboard/profile.js`,
+        `${assets_path}/js/components/dashboard/members.js`,
         `${assets_path}/js/components/dashboard/projects.js`,
-        `${assets_path}/js/components/dashboard/servers.js`
+        `${assets_path}/js/components/dashboard/profile.js`,
+        `${assets_path}/js/components/dashboard/servers.js`,
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/bootstrap.js`,

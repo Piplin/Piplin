@@ -61,7 +61,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -73,14 +73,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('servers.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -92,7 +92,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -118,7 +118,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -149,7 +149,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -265,20 +265,18 @@
             var data = this.model.toJSON();
 
             data.status_css = 'orange';
-            data.icon_css   = 'record';
+            data.icon_css   = 'circle';
             data.status     = trans('servers.untested');
 
             if (parseInt(this.model.get('status')) === SUCCESSFUL) {
                 data.status_css = 'success';
-                data.icon_css   = 'record';
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
                 data.status_css = 'purple';
-                data.icon_css   = 'load-c fixhub-spin';
+                data.icon_css   = 'load fixhub-spin';
                 data.status     = trans('servers.testing');
             } else if (parseInt(this.model.get('status')) === FAILED) {
                 data.status_css = 'danger';
-                data.icon_css   = 'record';
                 data.status     = trans('servers.failed');
             }
 

@@ -39,15 +39,16 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Fixhub\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Fixhub\Http\Middleware\EncryptCookies::class,
             \Fixhub\Http\Middleware\VerifyCsrfToken::class,
             \Fixhub\Http\Middleware\Localize::class,
         ],
         'api' => [
-            'throttle:60,1',
+            'throttle:600,1',
         ],
     ];
 
@@ -59,12 +60,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'admin'      => \Fixhub\Http\Middleware\Admin::class,
-        'auth'       => \Fixhub\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'      => \Fixhub\Http\Middleware\RedirectIfAuthenticated::class,
-        'jwt'        => \Fixhub\Http\Middleware\RefreshJsonWebToken::class,
-        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'localize'   => \Fixhub\Http\Middleware\Localize::class,
+        'admin'       => \Fixhub\Http\Middleware\Admin::class,
+        'project.acl' => \Fixhub\Http\Middleware\ProjectAcl::class,
+        'auth'        => \Fixhub\Http\Middleware\Authenticate::class,
+        'auth.basic'  => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest'       => \Fixhub\Http\Middleware\RedirectIfAuthenticated::class,
+        'jwt'         => \Fixhub\Http\Middleware\RefreshJsonWebToken::class,
+        'throttle'    => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'localize'    => \Fixhub\Http\Middleware\Localize::class,
     ];
 }

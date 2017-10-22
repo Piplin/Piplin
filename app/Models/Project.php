@@ -22,6 +22,7 @@ use UnexpectedValueException;
 use Version\Compare as VersionCompare;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Project model.
@@ -143,6 +144,35 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Checks ability for specified project and user.
+     *
+     * @param string $name
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function can($name, User $user = null)
+    {
+        if ($user === null) {
+            $user = Auth::user();
+        }
+
+        /*
+        if ($name == 'manage') {
+            return $user->is_admin;
+        }
+        */
+
+        static $isExists = null;
+
+        if (is_null($isExists)) {
+            $isExists = $this->members()->find($user->id) != null;
+        }
+
+        return $user->is_admin || $isExists;
+    }
+
+    /**
      * Gets the repository path.
      *
      * @return string|false
@@ -230,6 +260,16 @@ class Project extends Model implements HasPresenter
     public function group()
     {
         return $this->belongsTo(ProjectGroup::class, 'group_id', 'id');
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Server
+     */
+    public function members()
+    {
+        return $this->belongsToMany(User::class)->withPivot(['id', 'status']);
     }
 
     /**

@@ -26,16 +26,16 @@ class EnvironmentController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param int $targetable_id
-     * @param int $environment_id     Either clone, install, activate or purge
+     * @param Project $project
+     * @param Environment $environment
+     * @param string $tab
+     *
      * @return Response
      */
-    public function show($targetable_id, $environment_id, $tab = '')
+    public function show(Project $project, Environment $environment, $tab = '')
     {
-        $project = Project::findOrFail($targetable_id);
         $targetable_type = 'Fixhub\\Models\\Project';
 
-        $environment = Environment::findOrFail($environment_id);
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
@@ -49,7 +49,10 @@ class EnvironmentController extends Controller
             'project'         => $project,
             'targetable_type' => $targetable_type,
             'targetable_id'   => $project->id,
+            'environments'    => $project->environments,
             'environment'     => $environment,
+            'branches'        => $project->branches(),
+            'tags'            => $project->tags()->reverse(),
             'optional'        => $optional,
             'tab'             => $tab,
         ];
@@ -58,7 +61,6 @@ class EnvironmentController extends Controller
             $data['deployments'] = $environment->deployments()->paginate(15);
         } else {
             $data['servers'] = $environment->servers;
-            $data['environments'] = $project->environments;
         }
 
         return view('dashboard.environments.show', $data);
@@ -67,6 +69,7 @@ class EnvironmentController extends Controller
      * Store a newly created environment in storage.
      *
      * @param  StoreEnvironmentRequest $request
+     *
      * @return Response
      */
     public function store(StoreEnvironmentRequest $request)
@@ -106,14 +109,13 @@ class EnvironmentController extends Controller
     /**
      * Update the specified environment in storage.
      *
-     * @param  int                  $variable_id
+     * @param  Environment $environment
      * @param  StoreEnvironmentRequest $request
+     *
      * @return Response
      */
-    public function update($variable_id, StoreEnvironmentRequest $request)
+    public function update(Environment $environment, StoreEnvironmentRequest $request)
     {
-        $environment = Environment::findOrFail($variable_id);
-
         $environment->update($request->only(
             'name',
             'description',
@@ -151,13 +153,11 @@ class EnvironmentController extends Controller
     /**
      * Remove the specified environment from storage.
      *
-     * @param  int $environment_id
+     * @param  Environment $environment
      * @return Response
      */
-    public function destroy($environment_id)
+    public function destroy(Environment $environment)
     {
-        $environment = Environment::findOrFail($environment_id);
-
         $environment->delete();
 
         return [

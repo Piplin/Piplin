@@ -1,13 +1,13 @@
 @if (Route::currentRouteName() == 'projects' && $current_user->is_admin)
 <div class="callout">
-    <h4>{{ trans('commands.deploy_webhook') }} <i class="ion ion-help-buoy" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
-    <code id="webhook">{{ $project->webhook_url }}</code><button class="btn btn-xs btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="ion ion-refresh"></i></button>
+    <h4>{{ trans('commands.deploy_webhook') }} <i class="fixhub fixhub-help" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
+    <code id="webhook">{{ $project->webhook_url }}</code><button class="btn btn-xs btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="fixhub fixhub-refresh"></i></button>
 </div>
 @endif
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">{{ trans('commands.label') }}</h3>
+        <h3 class="box-title">{{ trans('commands.label') }} <i class="text-gray fixhub fixhub-help" data-toggle="tooltip" data-placement="right" data-original-title="{{ trans('commands.help') }}"></i></h3>
     </div>
     <div class="box-body table-responsive">
         <table class="table table-striped">

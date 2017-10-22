@@ -16,6 +16,7 @@ use Fixhub\Models\Deployment;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\Project;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * The dashboard controller.
@@ -57,8 +58,15 @@ class DashboardController extends Controller
      */
     private function buildTimelineData()
     {
-        $deployments = Deployment::whereNotNull('started_at')
-                           ->orderBy('started_at', 'DESC')
+        $user = Auth::user();
+        $deployments = Deployment::whereNotNull('started_at');
+
+        if (!$user->is_admin) {
+            $projectIds = $user->projects->pluck('id')->toArray();
+            $deployments = $deployments->whereIn('project_id', $projectIds);
+        }
+
+        $deployments = $deployments->orderBy('started_at', 'DESC')
                            ->paginate(10);
 
         $deploys_by_date = [];

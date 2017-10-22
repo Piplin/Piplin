@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="ion ion-ios-browsers-outline"></i> <span>{{ trans('keys.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-key"></i> <span>{{ trans('keys.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="key_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon ion ion-alert"></i> {{ trans('keys.warning') }}
+                        <i class="icon fixhub fixhub-warning"></i> {{ trans('keys.warning') }}
                     </div>
 
                     <div class="form-group">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">{{ trans('keys.private_ssh_key') }} <i class="ion ion-help" data-toggle="tooltip" data-placement="right" title="{{ trans('keys.ssh_key_info') }}"></i></label>
+                        <label class="col-sm-3 control-label">{{ trans('keys.private_ssh_key') }} <i class="fixhub fixhub-help" data-toggle="tooltip" data-placement="right" title="{{ trans('keys.ssh_key_info') }}"></i></label>
 						<div class="col-sm-9">
                         <textarea name="private_key" rows="10" id="key_private_key" class="form-control" placeholder="{{ trans('keys.ssh_key_example') }}"></textarea>
 						</div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-save">{{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

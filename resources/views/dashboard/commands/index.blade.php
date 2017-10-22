@@ -19,7 +19,7 @@
 
 @push('templates')
     <script type="text/template" id="command-template">
-        <td data-command-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span> <%- name %></td>
+        <td data-command-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span> <%- name %></td>
         <td>
             <%= user ? user : '{{ trans('commands.default') }}' %>
         </td>
@@ -32,8 +32,10 @@
         </td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('commands.edit') }}" data-toggle="modal" data-target="#command"><i class="ion ion-compose"></i></button>
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('commands.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                @if($project->can('manage'))
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('commands.edit') }}" data-toggle="modal" data-target="#command"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('commands.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                @endif
             </div>
         </td>
     </script>

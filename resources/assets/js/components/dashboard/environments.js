@@ -1,4 +1,5 @@
 (function ($) {
+
     //Fix me please
     var FINISHED     = 0;
     var PENDING      = 1;
@@ -60,7 +61,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -72,14 +73,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 Fixhub.toast(trans('environments.delete_success'));
             },
             error: function() {
-                icon.removeClass('ion-refresh fixhub-spin');
+               icon.removeClass().addClass('fixhub fixhub-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -91,7 +92,7 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.addClass('ion-refresh fixhub-spin');
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
@@ -116,7 +117,7 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
@@ -147,7 +148,7 @@
                     }
                 });
 
-                icon.removeClass('ion-refresh fixhub-spin');
+                icon.removeClass().addClass('fixhub fixhub-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }

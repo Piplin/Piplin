@@ -28,11 +28,11 @@ class CommandController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param  int      $targetable_id
-     * @param  string   $action     Either clone, install, activate or purge
+     * @param  mixed $target
+     * @param  string  $action Either clone, install, activate or purge
      * @return Response
      */
-    public function index($targetable_id, $action)
+    public function index($target, $action)
     {
         $types = [
             'clone'    => Command::DO_CLONE,
@@ -41,15 +41,13 @@ class CommandController extends Controller
             'purge'    => Command::DO_PURGE,
         ];
 
-        if (Str::contains(\Route::currentRouteName(), 'templates')) {
-            $target = DeployTemplate::findOrFail($targetable_id);
+        if ($target instanceof DeployTemplate) {
             $targetable_type = 'Fixhub\\Models\\DeployTemplate';
             $breadcrumb = [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
                 ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
             ];
         } else {
-            $target = Project::findOrFail($targetable_id);
             $targetable_type = 'Fixhub\\Models\\Project';
             $breadcrumb = [
                 ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],

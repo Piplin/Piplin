@@ -13,6 +13,8 @@ namespace Fixhub\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Fixhub\Policies\ProjectPolicy;
+use Fixhub\Models\Project;
 
 /**
  * Add auth policy provider.
@@ -25,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'Fixhub\Model' => 'Fixhub\Policies\ModelPolicy',
+        Project::class => ProjectPolicy::class,
     ];
 
     /**

@@ -29,7 +29,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><span class="ion ion-plus-round"></span> {{ trans('projects.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><i class="fixhub fixhub-plus"></i> {{ trans('projects.create') }}</button>
 </div>
 @stop
 
@@ -60,9 +60,9 @@
     </td>
     <td>
         <div class="btn-group pull-right">
-            <button class="btn btn-default btn-clone" title="{{ trans('projects.clone') }}" data-toggle="modal" data-target="#project-clone" data-project_id="<%- id %>"><i class="ion ion-ios-browsers-outline"></i></button>
-            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#project"><i class="ion ion-compose"></i></button>
-            <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+            <button class="btn btn-default btn-clone" title="{{ trans('projects.clone') }}" data-toggle="modal" data-target="#project-clone" data-project_id="<%- id %>"><i class="fixhub fixhub-copy"></i></button>
+            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#project"><i class="fixhub fixhub-edit"></i></button>
+            <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
         </div>
     </td>
 </script>

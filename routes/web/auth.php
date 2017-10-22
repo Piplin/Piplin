@@ -10,7 +10,6 @@
  */
 
 Route::group([
-    'middleware' => ['web'],
     'namespace'  => 'Auth',
 ], function () {
     Route::get('login', [

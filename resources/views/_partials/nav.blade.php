@@ -8,18 +8,18 @@
                 @if($current_user->is_admin)
                 <li {!! set_active('admin*') !!}>
                     <a href="/admin">
-                        <i class="ion ion-wrench"></i>
+                        <i class="fixhub fixhub-admin"></i>
                         <span class="hidden-xs">{{ trans('admin.label') }}</span>
                     </a>
                 </li>
                 @endif
                 <li class="dropdown messages-menu" id="todo_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="ion ion-android-notifications {{$todo_count ? 'text-danger' : null}}""></i>
+                        <i class="fixhub fixhub-bell {{$todo_count ? 'text-danger' : null}}""></i>
                         <span class="label {{$todo_count ? 'label-success' : null}}">{{ $todo_count ?:null }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header deploying_header"><i class="ion ion-load-c"></i> <span>{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</span></li>
+                        <li class="header deploying_header"><i class="fixhub fixhub-load"></i> <span>{{ trans_choice('dashboard.running', $deploying_count, ['count' => $deploying_count]) }}</span></li>
                         <li>
                             <ul class="menu deploying_menu">
                                 @forelse ($deploying as $deployment)
@@ -38,7 +38,7 @@
                                 @endforelse
                             </ul>
                         </li>
-                        <li class="header pending_header"><i class="ion ion-clock"></i> <span>{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</span></li>
+                        <li class="header pending_header"><i class="fixhub fixhub-clock"></i> <span>{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</span></li>
                         <li>
                             <ul class="menu pending_menu">
                                 @forelse ($pending as $deployment)

@@ -1,7 +1,9 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('environments.create') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><span class="ion ion-plus"></span> {{ trans('environments.create') }}</button>
+            @if($project->can('update'))
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="fixhub fixhub-plus"></i> {{ trans('environments.create') }}</button>
+            @endif
         </div>
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>
@@ -32,7 +34,7 @@
 
 @push('templates')
     <script type="text/template" id="environment-template">
-        <td data-environment-id="<%- id %>"><span class="drag-handle"><i class="ion ion-drag"></i></span>
+        <td data-environment-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span>
         @if (Route::currentRouteName() == 'projects')
         <a href="/projects/{{ $project->id }}/environments/<%- id %>"><%- name %></a>
         @else
@@ -40,14 +42,14 @@
         @endif
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td><%- server_count %> <i class="ion ion-ios-chatboxes-outline server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
-        <td><span class="text-<%- label_class %>"><i class="ion ion-<%-icon_class %>"></i> <span><%- label %></span></td>
+        <td><%- server_count %> <i class="fixhub fixhub-chatbox server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
+        <td><span class="text-<%- label_class %>"><i class="fixhub fixhub-<%-icon_class %>"></i> <span><%- label %></span></td>
         <td><%- last_run %></td>
         <td><%- description %></td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('environments.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="ion ion-compose"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('environments.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="ion ion-trash-a"></i></button>
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('environments.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('environments.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
             </div>
         </td>
     </script>

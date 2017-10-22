@@ -114,15 +114,15 @@
         data.label = trans('projects.not_deployed');
 
         if (deploy_status === Fixhub.statuses.FINISHED) {
-            data.icon_class = 'checkmark-round';
+            data.icon_class = 'check';
             data.label_class = 'success';
             data.label = trans('projects.finished');
         } else if (deploy_status === Fixhub.statuses.DEPLOYING) {
-            data.icon_class = 'load-c fixhub-spin';
+            data.icon_class = 'load fixhub-spin';
             data.label_class = 'warning';
             data.label = trans('projects.deploying');
         } else if (deploy_status === Fixhub.statuses.FAILED) {
-            data.icon_class = 'close-round';
+            data.icon_class = 'close';
             data.label_class = 'danger';
             data.label = trans('projects.failed');
         } else if (deploy_status === Fixhub.statuses.PENDING) {
@@ -138,24 +138,24 @@
     Fixhub.formatDeploymentStatus = function (deploy_status) {
         var data = {};
 
-        data.icon_class = 'clock-o';
+        data.icon_class = 'clock';
         data.label_class = 'info';
         data.label = trans('deployments.pending');
         data.done = false;
         data.success = false;
 
         if (deploy_status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
-            data.icon_class = 'checkmark-round';
+            data.icon_class = 'check';
             data.label_class = 'success';
             data.label = trans('deployments.completed');
             data.done = true;
             data.success = true;
         } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
-            data.icon_class = 'load-c fixhub-spin';
+            data.icon_class = 'load fixhub-spin';
             data.label_class = 'warning';
             data.label = trans('deployments.running');
         } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_FAILED) {
-            data.icon_class = 'close-round';
+            data.icon_class = 'close';
             data.label_class = 'danger';
             data.label = trans('deployments.failed');
             data.done = true;
@@ -166,7 +166,7 @@
             data.done = true;
             data.success = true;
         } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_CANCELLED) {
-            data.icon_class = 'alert';
+            data.icon_class = 'warning';
             data.label_class = 'danger';
             data.label = trans('deployments.cancelled');
             data.done = true;
