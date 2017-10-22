@@ -49,7 +49,7 @@ class ProfileController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($action = 'basic')
     {
         $user = Auth::user();
 
@@ -61,6 +61,7 @@ class ProfileController extends Controller
         $img = $this->google2fa->getQRCodeGoogleUrl('Fixhub', $user->email, $code);
 
         return view('profile.index', [
+            'action'          => $action ?: 'basic',
             'google_2fa_url'  => $img,
             'google_2fa_code' => $code,
             'title'           => trans('users.update_profile'),
