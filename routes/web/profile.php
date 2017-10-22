@@ -13,7 +13,6 @@ Route::group([
     'middleware' => ['auth', 'jwt'],
     'namespace'  => 'Profile',
 ], function () {
-
     Route::get('profile/{action?}', [
         'as'   => 'profile.index',
         'uses' => 'ProfileController@index',
