@@ -5,7 +5,9 @@
     <div class="box-header">
         <h3 class="box-title">{{ trans('hooks.label') }}</h3>
         <div class="pull-right">
+            @if($project->can('manage'))
             <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="fixhub fixhub-plus"></span> {{ trans('hooks.create') }}</button>
+            @endif
         </div>
     </div>
 
@@ -41,8 +43,10 @@
         <td class="text-center"><% if (on_deployment_failure) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
         <td>
             <div class="btn-group pull-right">
+                @if($project->can('manage'))
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('hooks.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#hook"><i class="fixhub fixhub-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('hooks.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                @endif
             </div>
         </td>
     </script>

@@ -2,7 +2,9 @@
     <div class="box-header">
         <h3 class="box-title">{{ trans('members.label') }}</h3>
         <div class="pull-right">
+            @if($project->can('manage'))
             <button type="button" class="btn btn-primary" title="{{ trans('members.create') }}" data-toggle="modal" data-target="#member"><span class="fixhub fixhub-plus"></span> {{ trans('members.create') }}</button>
+            @endif
         </div>
     </div>
 
@@ -33,9 +35,11 @@
         <td><%- email %></td>
         <td>{{ trans('members.joined') }}</td>
         <td class="text-right">
+            @if($project->can('manage'))
             <div class="btn-group">
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('members.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-leave"></i></button>
             </div>
+            @endif
         </td>
     </script>
 @endpush

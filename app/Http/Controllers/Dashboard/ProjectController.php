@@ -50,8 +50,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $tab = '')
     {
-        $this->authorize('view', $project);
-
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
@@ -91,17 +89,5 @@ class ProjectController extends Controller
         }
 
         return view('dashboard.projects.show', $data);
-    }
-
-    /**
-     * The details of an individual project with a apply dialog.
-     *
-     * @param Project $project_id
-     *
-     * @return View
-     */
-    public function apply(Project $project)
-    {
-        return $this->show($project)->withAction('apply');
     }
 }

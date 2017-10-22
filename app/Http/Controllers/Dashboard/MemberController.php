@@ -26,17 +26,15 @@ class MemberController extends Controller
     /**
      * Store a newly created notification in storage.
      *
-     * @param int $project_id
+     * @param Project $project
      * @param StoreProjectUserRequest $request
      *
      * @return Response
      */
-    public function store($project_id, StoreProjectUserRequest $request)
+    public function store($project, StoreProjectUserRequest $request)
     {
         $user_id = $request->get('user_id');
-
         $user = User::findOrFail($user_id);
-        $project = Project::findOrFail($project_id);
 
         $project->members()->attach($user_id);
 
@@ -46,15 +44,14 @@ class MemberController extends Controller
     /**
      * Remove the specified user from project.
      *
-     * @param int $project_id
+     * @param Project $project
      * @param int $user_id
      *
      * @return Response
      */
-    public function destroy($project_id, $user_id)
+    public function destroy(Project $project, $user_id)
     {
         $user = User::findOrFail($user_id);
-        $project = Project::findOrFail($project_id);
 
         $project->members()->detach($user_id);
 

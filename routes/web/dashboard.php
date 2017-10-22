@@ -28,7 +28,7 @@ Route::group([
             'uses' => 'ProjectController@index',
         ]);
 
-        Route::get('admin/templates/{id}/commands/{step}', [
+        Route::get('admin/templates/{template}/commands/{step}', [
             'as'   => 'admin.templates.commands.step',
             'uses' => 'CommandController@index',
         ]);

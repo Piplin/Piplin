@@ -28,11 +28,11 @@ class CommandController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param  int      $targetable_id
+     * @param  mixed      $project
      * @param  string   $action     Either clone, install, activate or purge
      * @return Response
      */
-    public function index($targetable_id, $action)
+    public function index($targetable, $action)
     {
         $types = [
             'clone'    => Command::DO_CLONE,
@@ -41,30 +41,28 @@ class CommandController extends Controller
             'purge'    => Command::DO_PURGE,
         ];
 
-        if (Str::contains(\Route::currentRouteName(), 'templates')) {
-            $target = DeployTemplate::findOrFail($targetable_id);
+        if ($targetable instanceof DeployTemplate) {
             $targetable_type = 'Fixhub\\Models\\DeployTemplate';
             $breadcrumb = [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
-                ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
+                ['url' => route('admin.templates.show', ['templates' => $targetable->id]), 'label' => $targetable->name],
             ];
         } else {
-            $target = Project::findOrFail($targetable_id);
             $targetable_type = 'Fixhub\\Models\\Project';
             $breadcrumb = [
-                ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
+                ['url' => route('projects', ['id' => $targetable->id, 'tab' => 'commands']), 'label' => $targetable->name],
             ];
         }
 
         return view('dashboard.commands.index', [
             'breadcrumb'      => $breadcrumb,
             'title'           => trans('commands.' . strtolower($action)),
-            'subtitle'        => $target->name,
-            'project'         => $target,
+            'subtitle'        => $targetable->name,
+            'project'         => $targetable,
             'targetable_type' => $targetable_type,
-            'targetable_id'   => $target->id,
+            'targetable_id'   => $targetable->id,
             'action'          => $types[$action],
-            'commands'        => $this->getForDeployStep($target, $types[$action]),
+            'commands'        => $this->getForDeployStep($targetable, $types[$action]),
         ]);
     }
 

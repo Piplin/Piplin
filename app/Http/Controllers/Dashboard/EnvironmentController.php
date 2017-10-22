@@ -49,7 +49,10 @@ class EnvironmentController extends Controller
             'project'         => $project,
             'targetable_type' => $targetable_type,
             'targetable_id'   => $project->id,
+            'environments'    => $project->environments,
             'environment'     => $environment,
+            'branches'        => $project->branches(),
+            'tags'            => $project->tags()->reverse(),
             'optional'        => $optional,
             'tab'             => $tab,
         ];
@@ -58,7 +61,6 @@ class EnvironmentController extends Controller
             $data['deployments'] = $environment->deployments()->paginate(15);
         } else {
             $data['servers'] = $environment->servers;
-            $data['environments'] = $project->environments;
         }
 
         return view('dashboard.environments.show', $data);

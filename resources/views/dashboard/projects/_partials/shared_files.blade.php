@@ -1,7 +1,9 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-primary" title="{{ trans('sharedFiles.create') }}" data-toggle="modal" data-target="#sharedfile"><span class="fixhub fixhub-plus"></span> {{ trans('sharedFiles.create') }}</button>
+            @if($project->can('manage'))
+            <button type="button" class="btn btn-primary" title="{{ trans('sharedFiles.create') }}" data-toggle="modal" data-target="#sharedfile"><i class="fixhub fixhub-plus"></i> {{ trans('sharedFiles.create') }}</button>
+            @endif
         </div>
         <h3 class="box-title">{{ trans('sharedFiles.label') }}</h3>
     </div>
@@ -33,8 +35,10 @@
         <td><%- file %></td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-edit" title="{{ trans('sharedFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#sharedfile"><i class="fixhub fixhub-edit"></i></button>
-                <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-danger btn-delete" title="{{ trans('sharedFiles.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                @if($project->can('manage'))
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('sharedFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#sharedfile"><i class="fixhub fixhub-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('sharedFiles.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                @endif
             </div>
         </td>
     </script>

@@ -17,12 +17,7 @@ Route::group([
         Route::get('projects/{project}/{tab?}', [
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
-        ]);
-
-        Route::get('projects/{project}/apply', [
-            'as'   => 'projects.apply',
-            'uses' => 'ProjectController@apply',
-        ]);
+        ])->middleware('project.acl:view');
 
         Route::post('commands/reorder', [
             'as'   => 'commands.reorder',
@@ -55,13 +50,6 @@ Route::group([
             'uses'  => 'ServerController@test',
         ]);
 
-        // Webhook
-        Route::get('webhook/{project}/refresh', [
-            'middleware' => 'admin',
-            'as'         => 'webhook.refresh',
-            'uses'       => 'WebhookController@refresh',
-        ]);
-
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
@@ -70,52 +58,51 @@ Route::group([
         Route::post('deployment/{project}', [
             'as'   => 'deployments.create',
             'uses' => 'DeploymentController@create',
-        ]);
+        ])->middleware('project.acl:deploy');
 
         // Deployment
         Route::post('deployment/{deployment}/rollback', [
             'as'   => 'deployments.rollback',
             'uses' => 'DeploymentController@rollback',
-        ]);
+        ])->middleware('project.acl:deploy');
 
         Route::get('deployment/{deployment}/abort', [
             'as'   => 'deployments.abort',
             'uses' => 'DeploymentController@abort',
-        ]);
-
-        Route::get('deployment/{deployment}/approve', [
-            'as'    => 'deployments.approve',
-            'uses'  => 'DeploymentController@approve',
-        ]);
-
-        Route::get('deployment/{deployment}/deploy', [
-            'as'    => 'deployments.deploy',
-            'uses'  => 'DeploymentController@deploy',
-        ]);
+        ])->middleware('project.acl:deploy');
 
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
         ]);
 
-        Route::get('repository/{id}/refresh', [
-            'as'     => 'repository.refresh',
-            'uses'   => 'RepositoryController@refresh',
-            'middle' => 'api',
-        ]);
-
-        $actions = [
-            'only' => ['store', 'update', 'destroy'],
-        ];
 
         Route::group(['middleware' => 'project.acl:manage',
-            ], function () use ($actions) {
-                Route::post('members/{project_id}', [
+            ], function () {
+
+                $actions = [
+                    'only' => ['store', 'update', 'destroy'],
+                ];
+
+                // Webhook
+                Route::get('webhook/{project}/refresh', [
+                    'middleware' => 'admin',
+                    'as'         => 'webhook.refresh',
+                    'uses'       => 'WebhookController@refresh',
+                ]);
+
+                Route::post('members/{project}', [
                     'uses' => 'MemberController@store',
                 ]);
 
-                Route::delete('members/{project_id}/{id}', [
+                Route::delete('members/{project}/{id}', [
                     'uses' => 'MemberController@destroy',
+                ]);
+
+                Route::get('repository/{id}/refresh', [
+                    'as'     => 'repository.refresh',
+                    'uses'   => 'RepositoryController@refresh',
+                    'middle' => 'api',
                 ]);
 
                 Route::resource('servers', 'ServerController', $actions);
