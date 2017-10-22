@@ -46,14 +46,13 @@ class SharedFilesController extends Controller
     /**
      * Update the specified file in storage.
      *
-     * @param  int                    $file_id
+     * @param  SharedFile $shared_file
      * @param  StoreSharedFileRequest $request
+     *
      * @return Response
      */
-    public function update($file_id, StoreSharedFileRequest $request)
+    public function update(SharedFile $shared_file, StoreSharedFileRequest $request)
     {
-        $shared_file = SharedFile::findOrFail($file_id);
-
         $shared_file->update($request->only(
             'name',
             'file'
@@ -65,13 +64,12 @@ class SharedFilesController extends Controller
     /**
      * Remove the specified file from storage.
      *
-     * @param  int      $file_id
+     * @param  SharedFile $shared_file
+     *
      * @return Response
      */
-    public function destroy($file_id)
+    public function destroy(SharedFile $shared_file)
     {
-        $shared_file = SharedFile::findOrFail($file_id);
-
         $shared_file->delete();
 
         return [

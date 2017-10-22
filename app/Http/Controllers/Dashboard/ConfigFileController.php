@@ -63,15 +63,13 @@ class ConfigFileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $file_id
+     * @param ConfigFile $config_file
      * @param StoreConfigFileRequest $request
      *
      * @return Response
      */
-    public function update($file_id, StoreConfigFileRequest $request)
+    public function update(ConfigFile $config_file, StoreConfigFileRequest $request)
     {
-        $config_file = ConfigFile::findOrFail($file_id);
-
         $fields = $request->only(
             'name',
             'path',
@@ -99,14 +97,12 @@ class ConfigFileController extends Controller
     /**
      * Remove the specified file from storage.
      *
-     * @param int $file_id
+     * @param ConfigFile $config_file
      *
      * @return Response
      */
-    public function destroy($file_id)
+    public function destroy(ConfigFile $config_file)
     {
-        $config_file = ConfigFile::findOrFail($file_id);
-
         $config_file->delete();
 
         return [

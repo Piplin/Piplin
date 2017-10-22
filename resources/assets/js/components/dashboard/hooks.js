@@ -177,7 +177,7 @@
     });
 
     Fixhub.Hook = Backbone.Model.extend({
-        urlRoot: '/hooks'
+        urlRoot: '/hooks/' + parseInt($('input[name="project_id"]').val())
     });
 
     var Hooks = Backbone.Collection.extend({

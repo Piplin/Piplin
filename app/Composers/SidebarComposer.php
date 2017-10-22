@@ -37,8 +37,8 @@ class SidebarComposer
         $view->withLinks($this->getLinks());
         $view->withTip($this->getRandomTip());
 
-        $projects = Project::all();
         $projects_by_group = [];
+        $projects = $view->current_user->is_admin ? Project::all() : $view->current_user->projects;
 
         foreach ($projects as $project) {
             if (!$project->group) {

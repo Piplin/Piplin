@@ -32,7 +32,17 @@ class ProjectAcl extends AbstractMiddleware
     {
         $project = $request->route('project');
 
-        if (!$project->can($ability, $request->user() ?: null)) {
+        if (!$project) {
+            foreach (['environment', 'command', 'variable', 'config_file', 'shared_file'] as $key) {
+                $module = $request->route($key);
+
+                if ($module && $project = $module->targetable) {
+                    break;
+                }
+            }
+        }
+
+        if (!$project || !$project->can($ability, $request->user() ?: null)) {
             return $this->unauthorized($request);
         }
 

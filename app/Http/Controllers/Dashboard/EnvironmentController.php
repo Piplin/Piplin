@@ -109,15 +109,13 @@ class EnvironmentController extends Controller
     /**
      * Update the specified environment in storage.
      *
-     * @param  int                  $variable_id
+     * @param  Environment $environment
      * @param  StoreEnvironmentRequest $request
      *
      * @return Response
      */
-    public function update($variable_id, StoreEnvironmentRequest $request)
+    public function update(Environment $environment, StoreEnvironmentRequest $request)
     {
-        $environment = Environment::findOrFail($variable_id);
-
         $environment->update($request->only(
             'name',
             'description',
@@ -155,13 +153,11 @@ class EnvironmentController extends Controller
     /**
      * Remove the specified environment from storage.
      *
-     * @param  int $environment_id
+     * @param  Environment $environment
      * @return Response
      */
-    public function destroy($environment_id)
+    public function destroy(Environment $environment)
     {
-        $environment = Environment::findOrFail($environment_id);
-
         $environment->delete();
 
         return [

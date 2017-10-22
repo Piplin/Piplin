@@ -34,12 +34,6 @@ Route::group([
             'uses' => 'EnvironmentController@show',
         ]);
 
-
-        Route::post('environments/reorder', [
-            'as'    => 'environments.reorder',
-            'uses'  => 'EnvironmentController@reorder',
-        ]);
-
         Route::post('servers/reorder', [
             'as'    => 'servers.reorder',
             'uses'  => 'ServerController@reorder',
@@ -98,16 +92,33 @@ Route::group([
                     'uses' => 'MemberController@destroy',
                 ]);
 
+                // Hook
+                Route::post('hooks/{project}', [
+                    'uses' => 'HookController@store',
+                ]);
+                Route::put('hooks/{project}/{hook}', [
+                    'uses' => 'HookController@update',
+                ]);
+                Route::delete('hooks/{project}/{hook}', [
+                    'uses' => 'HookController@destroy',
+                ]);
+
+                // Refresh
                 Route::get('repository/{id}/refresh', [
                     'as'     => 'repository.refresh',
                     'uses'   => 'RepositoryController@refresh',
                     'middle' => 'api',
                 ]);
 
+                // Environment
+                Route::post('environments/reorder', [
+                    'as'    => 'environments.reorder',
+                    'uses'  => 'EnvironmentController@reorder',
+                ]);
+
                 Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
                 Route::resource('environments', 'EnvironmentController', $actions);
-                Route::resource('hooks', 'HookController', $actions);
                 Route::resource('commands', 'CommandController', $actions);
                 Route::resource('shared-files', 'SharedFilesController', $actions);
                 Route::resource('config-file', 'ConfigFileController', $actions);
