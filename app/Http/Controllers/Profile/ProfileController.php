@@ -53,6 +53,10 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        if (!in_array($action, ['basic', 'settings', 'avatar', 'email', '2fa'])) {
+            $action = 'basic';
+        }
+
         $code = $this->google2fa->generateSecretKey();
         if ($user->has_two_factor_authentication || old('google_code')) {
             $code = old('google_code', $user->google2fa_secret);
