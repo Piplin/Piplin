@@ -14,7 +14,7 @@
         "ioredis": "^2.4.3",
         "jsonwebtoken": "^8.0.1",
         "parseuri": "^0.0.5",
-        "socket.io": "^1.7.1",
+        "socket.io": "^2.0.4",
         "socket.io-client": "^2.0.3"
     },
     "devDependencies": {
