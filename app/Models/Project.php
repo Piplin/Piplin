@@ -148,12 +148,17 @@ class Project extends Model implements HasPresenter
      *
      * @param string $name
      * @param User $user
+     *
      * @return bool
      */
     public function can($name, User $user = null)
     {
-        if ($user == null) {
+        if ($user === null) {
             $user = Auth::user();
+        }
+
+        if ($name == 'manage') {
+            return $user->is_admin;
         }
 
         static $isExists = null;

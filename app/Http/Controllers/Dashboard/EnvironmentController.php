@@ -26,18 +26,16 @@ class EnvironmentController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param int $targetable_id
-     * @param int $environment_id     Either clone, install, activate or purge
+     * @param Project $project
+     * @param Environment $environment
      * @param string $tab
      *
      * @return Response
      */
-    public function show($targetable_id, $environment_id, $tab = '')
+    public function show(Project $project, Environment $environment, $tab = '')
     {
-        $project = Project::findOrFail($targetable_id);
         $targetable_type = 'Fixhub\\Models\\Project';
 
-        $environment = Environment::findOrFail($environment_id);
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
