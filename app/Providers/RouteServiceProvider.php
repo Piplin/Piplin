@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
+use Fixhub\Models\ProjectGroup;
 
 /**
  * The route service provider.
@@ -45,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('id', '[0-9]+');
         Route::pattern('step', '(clone|install|activate|purge)');
 
+        Route::model('group', ProjectGroup::class);
         Route::model('deployment', Deployment::class);
         Route::model('project', Project::class);
     }

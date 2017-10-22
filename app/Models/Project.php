@@ -159,7 +159,7 @@ class Project extends Model implements HasPresenter
         static $isExists = null;
 
         if (is_null($isExists)) {
-            $isExists = $this->members()->find($user->id)->exists();
+            $isExists = $this->members()->find($user->id) != null;
         }
 
         return $user->is_admin || $isExists;

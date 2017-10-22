@@ -43,15 +43,13 @@ class ProjectController extends Controller
     /**
      * The details of an individual project.
      *
-     * @param int $project_id
+     * @param Project $project
      * @param string $tab
      *
      * @return View
      */
-    public function show($project_id, $tab = '')
+    public function show($project, $tab = '')
     {
-        $project = Project::findOrFail($project_id);
-
         $this->authorize('view', $project);
 
         $optional = $project->commands->filter(function (Command $command) {

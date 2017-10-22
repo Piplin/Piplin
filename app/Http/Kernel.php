@@ -39,10 +39,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Fixhub\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Fixhub\Http\Middleware\EncryptCookies::class,
             \Fixhub\Http\Middleware\VerifyCsrfToken::class,
             \Fixhub\Http\Middleware\Localize::class,
         ],

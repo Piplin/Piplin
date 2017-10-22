@@ -33,12 +33,12 @@ Route::group([
             'uses' => 'CommandController@reorder',
         ]);
 
-        Route::get('projects/{id}/commands/{step}', [
+        Route::get('projects/{project}/commands/{step}', [
             'as'   => 'commands.step',
             'uses' => 'CommandController@index',
         ]);
 
-        Route::get('projects/{id}/environments/{environment_id}/{tab?}', [
+        Route::get('projects/{project}/environments/{environment_id}/{tab?}', [
             'as'   => 'environments.show',
             'uses' => 'EnvironmentController@show',
         ]);
@@ -54,13 +54,13 @@ Route::group([
             'uses'  => 'ServerController@reorder',
         ]);
 
-        Route::get('servers/{id}/test', [
+        Route::get('servers/{server}/test', [
             'as'    => 'servers.test',
             'uses'  => 'ServerController@test',
         ]);
 
         // Webhook
-        Route::get('webhook/{id}/refresh', [
+        Route::get('webhook/{project}/refresh', [
             'middleware' => 'admin',
             'as'         => 'webhook.refresh',
             'uses'       => 'WebhookController@refresh',
@@ -72,38 +72,38 @@ Route::group([
             'uses' => 'ProjectController@show',
         ]);
 
-        Route::get('projects/{id}/apply', [
+        Route::get('projects/{project}/apply', [
             'as'   => 'projects.apply',
             'uses' => 'ProjectController@apply',
         ]);
 
-        Route::get('deployment/{id}', [
+        Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
         ]);
 
-        Route::post('deployment/{id}', [
+        Route::post('deployment/{project}', [
             'as'   => 'deployments.create',
             'uses' => 'DeploymentController@create',
         ]);
 
         // Deployment
-        Route::post('deployment/{id}/rollback', [
+        Route::post('deployment/{deployment}/rollback', [
             'as'   => 'deployments.rollback',
             'uses' => 'DeploymentController@rollback',
         ]);
 
-        Route::get('deployment/{id}/abort', [
+        Route::get('deployment/{deployment}/abort', [
             'as'   => 'deployments.abort',
             'uses' => 'DeploymentController@abort',
         ]);
 
-        Route::get('deployment/{id}/approve', [
+        Route::get('deployment/{deployment}/approve', [
             'as'    => 'deployments.approve',
             'uses'  => 'DeploymentController@approve',
         ]);
 
-        Route::get('deployment/{id}/deploy', [
+        Route::get('deployment/{deployment}/deploy', [
             'as'    => 'deployments.deploy',
             'uses'  => 'DeploymentController@deploy',
         ]);

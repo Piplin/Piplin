@@ -29,14 +29,12 @@ class DeploymentController extends Controller
     /**
      * Show the deployment details.
      *
-     * @param int $deployment_id
+     * @param Deployment $deployment
      *
      * @return Response
      */
-    public function show($deployment_id)
+    public function show(Deployment $deployment)
     {
-        $deployment = Deployment::findOrFail($deployment_id);
-
         $this->authorize('view', $deployment->project);
 
         $output = [];
@@ -76,15 +74,12 @@ class DeploymentController extends Controller
      * Adds a deployment for the specified project to the queue.
      *
      * @param StoreDeploymentRequest $request
-     * @param int $project_id
+     * @param Project $project
      *
      * @return Response
      */
-    public function create(StoreDeploymentRequest $request, $project_id)
+    public function create(StoreDeploymentRequest $request, Project $project)
     {
-        // Fix me! see also in DeploymentController and IncomingWebhookController
-        $project = Project::findOrFail($project_id);
-
         $this->authorize('deploy', $project);
 
         if ($project->environments->count() === 0) {
@@ -138,12 +133,14 @@ class DeploymentController extends Controller
      * Loads a previous deployment and then creates a new deployment based on it.
      *
      * @param Request $request
-     * @param int     $previous_id
+     * @param Deployment $previous
      *
      * @return Response
      */
-    public function rollback(Request $request, $previous_id)
+    public function rollback(Request $request, Deployment $previous)
     {
+        $this->authorize('deploy', $previous->project);
+
         $optional = [];
 
         // Get the optional commands and typecast to integers
@@ -152,10 +149,6 @@ class DeploymentController extends Controller
                 return filter_var($value, FILTER_VALIDATE_INT);
             }, $request->get('optional')));
         }
-
-        $previous = Deployment::findOrFail($previous_id);
-
-        $this->authorize('deploy', $previous->project);
 
         $fields = [
             'committer'       => $previous->committer,
@@ -188,14 +181,12 @@ class DeploymentController extends Controller
     /**
      * Abort a deployment.
      *
-     * @param int $deployment_id
+     * @param Deployment $deployment
      *
      * @return Response
      */
-    public function abort($deployment_id)
+    public function abort(Deployment $deployment)
     {
-        $deployment = Deployment::findOrFail($deployment_id);
-
         $this->authorize('deploy', $deployment->project);
 
         if (!$deployment->isAborting()) {
