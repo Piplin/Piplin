@@ -66,5 +66,11 @@ return [
         'manager' => '管理员',
         'user'    => '研发工程师',
     ],
+    'dashboard'         => [
+        'title'       => '控制台显示页',
+        'system'      => '跟随系统',
+        'projects'    => '我的项目',
+        'deployments' => '部署记录',
+    ],
 
 ];

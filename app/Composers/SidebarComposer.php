@@ -36,50 +36,6 @@ class SidebarComposer
     {
         $view->withLinks($this->getLinks());
         $view->withTip($this->getRandomTip());
-
-        $projects_by_group = [];
-        $projects = $view->current_user->is_admin ? Project::all() : $view->current_user->projects;
-
-        foreach ($projects as $project) {
-            if (!$project->group) {
-                $projects_by_group[0]['group'] = trans('projects.ungrouped');
-                $projects_by_group[0]['projects'][] = $project;
-                continue;
-            }
-            if (!isset($projects_by_group[$project->group->id])) {
-                $projects_by_group[$project->group->id]['group'] = $project->group->name;
-                $projects_by_group[$project->group->id]['order'] = $project->group->order;
-                $projects_by_group[$project->group->id]['projects'] = [];
-            }
-
-            $projects_by_group[$project->group->id]['projects'][] = $project;
-        }
-
-        usort($projects_by_group, function ($a, $b) {
-            if (!isset($a['order']) || !isset($b['order'])) {
-                return 0;
-            }
-
-            $al = $a['order'];
-            $bl = $b['order'];
-            if ($al == $bl) {
-                return 0;
-            }
-            return ($al < $bl) ? -1 : 1;
-        });
-
-        $view->withProjects($projects_by_group);
-    }
-
-    /**
-     * Gets the groups.
-     *
-     * @return array
-     */
-    protected function getGroups()
-    {
-        $usedProjectGroups = Project::where('group_id', '>', 0)->groupBy('group_id')->pluck('group_id');
-        return ProjectGroup::whereIn('id', $usedProjectGroups)->orderBy('order')->get();
     }
 
     /**

@@ -19,4 +19,5 @@ return [
     'items_per_page'     => 10,
     'gravatar'           => false,
     'toastr'             => true,
+    'dashboard'          => env('DASHBOARD', 'timeline'),
 ];

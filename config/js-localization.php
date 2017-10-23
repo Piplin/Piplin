@@ -44,7 +44,7 @@ return [
                             'deploying', 'running', 'cancelled', 'failed', ],
         'variables'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'environments'  => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
-        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'deleted_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
+        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
         'commands'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'groups'        => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'keys'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],

@@ -24,23 +24,6 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
     /**
-     * Shows the project index view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        $user = Auth::user();
-
-        $data = [
-            'title'    => 'Project Dashboard',
-            'projects' => $user->projects,
-        ];
-
-        return view('dashboard.projects.index', $data);
-    }
-
-    /**
      * The details of an individual project.
      *
      * @param Project $project

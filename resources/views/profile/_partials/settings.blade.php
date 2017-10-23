@@ -22,6 +22,15 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="dashboard">{{ trans('users.dashboard.title') }}</label>
+                <select name="dashboard" id="dashboard" class="select2 form-control">
+                    <option value="">{{ trans('users.dashboard.system') }}</option>
+                    @foreach (['deployments', 'projects'] as $item)
+                        <option value="{{ $item }}" @if ($item === $dashboard) selected @endif>{{ trans('users.dashboard.' . $item )}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat">{{ trans('users.save') }}</button>
             </div>
         </form>

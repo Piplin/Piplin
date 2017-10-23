@@ -17,6 +17,7 @@ use Fixhub\Composers\CurrentUserComposer;
 use Fixhub\Composers\DashboardComposer;
 use Fixhub\Composers\DeploymentComposer;
 use Fixhub\Composers\HeaderComposer;
+use Fixhub\Composers\ProjectComposer;
 use Fixhub\Composers\SidebarComposer;
 use Fixhub\Composers\ThemeComposer;
 use Fixhub\Composers\VersionComposer;
@@ -33,10 +34,11 @@ class ComposerServiceProvider extends ServiceProvider
         AdminComposer::class       => ['admin.*.index', 'admin.templates.show', 'admin.groups.show'],
         AppComposer::class         => '*',
         CurrentUserComposer::class => '*',
-        DashboardComposer::class   => ['dashboard.index'],
+        DashboardComposer::class   => ['dashboard._partials.shortcut'],
         DeploymentComposer::class  => ['dashboard.projects.show'],
         HeaderComposer::class      => ['_partials.nav'],
         SidebarComposer::class     => ['dashboard._partials.sidebar'],
+        ProjectComposer::class     => ['dashboard._partials.sidebar', 'dashboard.projects'],
         ThemeComposer::class       => ['layouts.dashboard', 'profile.index'],
         VersionComposer::class     => ['dashboard._partials.update'],
         OAuthComposer::class       => ['auth.login'],
