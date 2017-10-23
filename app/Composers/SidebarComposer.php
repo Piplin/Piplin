@@ -42,7 +42,7 @@ class SidebarComposer
 
         foreach ($projects as $project) {
             if (!$project->group) {
-                $projects_by_group[0]['group'] = trans('dashboard.projects');
+                $projects_by_group[0]['group'] = trans('projects.ungrouped');
                 $projects_by_group[0]['projects'][] = $project;
                 continue;
             }
@@ -56,6 +56,10 @@ class SidebarComposer
         }
 
         usort($projects_by_group, function ($a, $b) {
+            if (!isset($a['order']) || !isset($b['order'])) {
+                return 0;
+            }
+
             $al = $a['order'];
             $bl = $b['order'];
             if ($al == $bl) {
