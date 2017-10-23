@@ -47,14 +47,16 @@ class ProfileController extends Controller
     /**
      * View user profile.
      *
+     * @param string $tab
+     *
      * @return Response
      */
-    public function index($action = 'basic')
+    public function index($tab = 'basic')
     {
         $user = Auth::user();
 
-        if (!in_array($action, ['basic', 'settings', 'avatar', 'email', '2fa'])) {
-            $action = 'basic';
+        if (!in_array($tab, ['basic', 'settings', 'avatar', 'email', '2fa'])) {
+            $tab = 'basic';
         }
 
         $code = $this->google2fa->generateSecretKey();
@@ -65,7 +67,7 @@ class ProfileController extends Controller
         $img = $this->google2fa->getQRCodeGoogleUrl('Fixhub', $user->email, $code);
 
         return view('profile.index', [
-            'action'          => $action ?: 'basic',
+            'tab'             => $tab ?: 'basic',
             'google_2fa_url'  => $img,
             'google_2fa_code' => $code,
             'title'           => trans('users.update_profile'),
