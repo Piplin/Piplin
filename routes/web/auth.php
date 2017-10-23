@@ -62,9 +62,9 @@ Route::group([
         ]);
 
     // OAuth 2.0 provider
-    Route::get('oauth/{provider}', [
+    Route::get('oauth/{oauth_provider}', [
         'as'   => 'oauth.provider',
         'uses' => 'AuthController@provider',
     ]);
-    Route::get('oauth/{provider}/callback', 'AuthController@callback');
+    Route::get('oauth/{oauth_provider}/callback', 'AuthController@callback');
 });
