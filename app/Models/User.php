@@ -129,6 +129,23 @@ class User extends Authenticatable implements HasPresenter
     }
 
     /**
+     * Checks ability for user.
+     *
+     * @param string $name
+     * @param mixed $arg
+     *
+     * @return bool
+     */
+    public function can($name, $arg = null)
+    {
+        if ($name == 'project.create') {
+            return $this->is_admin || $this->is_manager;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns whether a user is at user level.
      *
      * @return bool
