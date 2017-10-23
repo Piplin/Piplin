@@ -23,6 +23,11 @@ Route::group([
             'uses' => 'DashboardController@timeline',
         ]);
 
+        Route::get('deployments', [
+            'as'   => 'dashboard.deployments',
+            'uses' => 'DashboardController@deployments',
+        ]);
+
         Route::get('projects', [
             'as'   => 'dashboard.projects',
             'uses' => 'DashboardController@projects',

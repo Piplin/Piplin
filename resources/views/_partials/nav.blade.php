@@ -4,7 +4,13 @@
         <a href="/" class="navbar-brand">{{ $app_name }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
+                <li>
+                    @if($dashboard == 'projects')
+                    <a href="{{ route('dashboard.deployments') }}">{{ trans('users.dashboard.deployments') }}</a>
+                    @else
+                    <a href="{{ route('dashboard.projects') }}">{{ trans('users.dashboard.projects') }}</a>
+                    @endif
+                </li>
                 @if($current_user->is_admin)
                 <li {!! set_active('admin*') !!}>
                     <a href="/admin">
