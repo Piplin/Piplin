@@ -40,6 +40,11 @@ class VariableController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
+        // In project
+        if ($targetable_type == 'Fixhub\\Models\Project') {
+            $this->authorize('manage', $target);
+        }
+
         return $target->variables()->create($fields);
     }
 

@@ -26,11 +26,12 @@ class ServerController extends Controller
     /**
      * Store a newly created server in storage.
      *
+     * @param Project $project
      * @param StoreServerRequest $request
      *
      * @return Response
      */
-    public function store(StoreServerRequest $request)
+    public function store(Project $project, StoreServerRequest $request)
     {
         $fields = $request->only(
             'name',

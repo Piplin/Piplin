@@ -91,6 +91,11 @@ class CommandController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
+        // In project
+        if ($targetable_type == 'Fixhub\\Models\Project') {
+            $this->authorize('manage', $target);
+        }
+
         // Get the current highest command order
         $max = $target->commands()->where('step', $fields['step'])
                            ->orderBy('order', 'DESC')
@@ -124,11 +129,12 @@ class CommandController extends Controller
     /**
      * Update the specified command in storage.
      *
-     * @param  int                 $command_id
+     * @param  Command             $command
      * @param  StoreCommandRequest $request
+     *
      * @return Response
      */
-    public function update($command_id, StoreCommandRequest $request)
+    public function update(Command $command, StoreCommandRequest $request)
     {
         $fields = $request->only(
             'name',
@@ -138,8 +144,6 @@ class CommandController extends Controller
             'default_on',
             'environments'
         );
-
-        $command = Command::findOrFail($command_id);
 
         $environments = null;
         if (isset($fields['environments'])) {

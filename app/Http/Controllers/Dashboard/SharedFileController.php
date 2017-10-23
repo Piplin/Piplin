@@ -18,7 +18,7 @@ use Fixhub\Models\SharedFile;
 /**
  * Controller for managing files.
  */
-class SharedFilesController extends Controller
+class SharedFileController extends Controller
 {
     /**
      * Store a newly created file in storage.
@@ -39,6 +39,11 @@ class SharedFilesController extends Controller
         $targetable_id = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
+
+        // In project
+        if ($targetable_type == 'Fixhub\\Models\Project') {
+            $this->authorize('manage', $target);
+        }
 
         return $target->sharedFiles()->create($fields);
     }

@@ -19,16 +19,6 @@ Route::group([
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
 
-        Route::post('commands/reorder', [
-            'as'   => 'commands.reorder',
-            'uses' => 'CommandController@reorder',
-        ]);
-
-        Route::get('projects/{project}/commands/{step}', [
-            'as'   => 'commands.step',
-            'uses' => 'CommandController@index',
-        ]);
-
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
@@ -54,7 +44,31 @@ Route::group([
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
         ]);
+        Route::post('commands/reorder', [
+            'as'   => 'commands.reorder',
+            'uses' => 'CommandController@reorder',
+        ]);
+        Route::post('environments/reorder', [
+            'as'    => 'environments.reorder',
+            'uses'  => 'EnvironmentController@reorder',
+        ]);
 
+        // In both of template & project
+        Route::post('environments', [
+            'uses' => 'EnvironmentController@store',
+        ]);
+        Route::post('variables', [
+            'uses' => 'VariableController@store',
+        ]);
+        Route::post('commands', [
+            'uses' => 'CommandController@store',
+        ]);
+        Route::post('config_files', [
+            'uses' => 'ConfigFileController@store',
+        ]);
+        Route::post('shared_files', [
+            'uses' => 'SharedFilesController@store',
+        ]);
 
         Route::group(['middleware' => 'project.acl:manage',
             ], function () {
@@ -119,15 +133,47 @@ Route::group([
                     'as'   => 'environments.show',
                     'uses' => 'EnvironmentController@show',
                 ]);
-                Route::post('environments/{project}/reorder', [
-                    'as'    => 'environments.reorder',
-                    'uses'  => 'EnvironmentController@reorder',
+                Route::put('environments/{environment}', [
+                    'uses' => 'EnvironmentController@update',
+                ]);
+                Route::delete('environments/{environment}', [
+                    'uses' => 'EnvironmentController@destroy',
                 ]);
 
-                Route::resource('variables', 'VariableController', $actions);
-                Route::resource('environments', 'EnvironmentController', $actions);
-                Route::resource('commands', 'CommandController', $actions);
-                Route::resource('shared-files', 'SharedFilesController', $actions);
-                Route::resource('config-file', 'ConfigFileController', $actions);
+                // Variable
+                Route::put('variables/{variable}', [
+                    'uses' => 'VariableController@update',
+                ]);
+                Route::delete('variables/{variable}', [
+                    'uses' => 'VariableController@destroy',
+                ]);
+
+                // Command
+                Route::put('commands/{command}', [
+                    'uses' => 'CommandController@update',
+                ]);
+                Route::delete('commands/{command}', [
+                    'uses' => 'CommandController@destroy',
+                ]);
+                Route::get('projects/{project}/commands/{step}', [
+                    'as'   => 'commands.step',
+                    'uses' => 'CommandController@index',
+                ]);
+
+                // SharedFile
+                Route::put('shared-files/{shared_file}', [
+                    'uses' => 'SharedFileController@update',
+                ]);
+                Route::delete('shared-files/{shared_file}', [
+                    'uses' => 'SharedFileController@destroy',
+                ]);
+
+                // ConfigFile
+                Route::put('config-files/{config_file}', [
+                    'uses' => 'ConfigFileController@update',
+                ]);
+                Route::delete('config-files/{config_file}', [
+                    'uses' => 'ConfigFileController@destroy',
+                ]);
             });
     });

@@ -94,6 +94,11 @@ class EnvironmentController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
+        // In project
+        if ($targetable_type == 'Fixhub\\Models\Project') {
+            $this->authorize('manage', $target);
+        }
+
         $environment = $target->environments()->create($fields);
 
         // Add the environment to the existing commands
