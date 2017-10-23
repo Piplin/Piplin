@@ -38,18 +38,18 @@ class User extends Authenticatable implements HasPresenter
     const LEVEL_ADMIN = 1;
 
     /**
+     * The management level of user.
+     *
+     * @var int
+     */
+    const LEVEL_MANAGER = 2;
+
+    /**
      * The general level of user.
      *
      * @var int
      */
-    const LEVEL_USER = 2;
-
-    /**
-     * The operator level of user.
-     *
-     * @var int
-     */
-    const LEVEL_OPERATOR = 3;
+    const LEVEL_USER = 3;
 
     /**
      * The attributes that are mass assignable.
@@ -149,13 +149,13 @@ class User extends Authenticatable implements HasPresenter
     }
 
     /**
-     * Returns whether a user is at operator level.
+     * Returns whether a user is at management level.
      *
      * @return bool
      */
-    public function getIsOperatorAttribute()
+    public function getIsManagerAttribute()
     {
-        return $this->level == self::LEVEL_OPERATOR;
+        return $this->level == self::LEVEL_MANAGER;
     }
 
     /**
@@ -189,8 +189,8 @@ class User extends Authenticatable implements HasPresenter
     {
         if ($this->level == User::LEVEL_ADMIN) {
             return trans('users.level.admin');
-        } elseif ($this->level == User::LEVEL_OPERATOR) {
-            return trans('users.level.operator');
+        } elseif ($this->level == User::LEVEL_MANAGER) {
+            return trans('users.level.manager');
         } elseif ($this->level == User::LEVEL_USER) {
             return trans('users.level.user');
         }

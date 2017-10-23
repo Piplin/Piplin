@@ -13,7 +13,7 @@ return [
     'level'          => '访问级别',
     'search'         => '搜索用户',
     'none'           => '该项目还没有成员。',
-    'warning'        => 'There were some problems with your input.',
+    'warning'        => '抱歉，输入信息有误，请根据提示进行修改。',
     'status'         => '状态',
     'joined'         => '已加入',
 

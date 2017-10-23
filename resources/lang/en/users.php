@@ -63,9 +63,9 @@ return [
     'black'             => 'Black',
     'role'              => 'Role',
     'level'             => [
-        'admin'    => 'Administrator',
-        'operator' => 'DevOps',
-        'user'     => 'Developer',
+        'admin'   => 'Administrator',
+        'manager' => 'Manager',
+        'user'    => 'Developer',
     ],
 
 ];
