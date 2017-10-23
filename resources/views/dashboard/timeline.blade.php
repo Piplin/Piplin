@@ -22,7 +22,7 @@
                 <div class="timeline-footer small">
                     <span>
                         @if($deployment->project)
-                        <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="fixhub fixhub-project"></i> {{ $deployment->project->group_name }}/{{ $deployment->project->name }}</a>
+                        <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $deployment->project_id]) }}"><i class="fixhub fixhub-project"></i> {{ $deployment->project->group_name ? $deployment->project->group_name.'/': null }}{{ $deployment->project->name }}</a>
                         @endif
                     </span>
                     <span class="pull-right text-muted hidden-xs">

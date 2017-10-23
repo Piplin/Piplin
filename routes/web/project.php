@@ -29,21 +29,6 @@ Route::group([
             'uses' => 'CommandController@index',
         ]);
 
-        Route::get('projects/{project}/environments/{environment}/{tab?}', [
-            'as'   => 'environments.show',
-            'uses' => 'EnvironmentController@show',
-        ]);
-
-        Route::post('servers/reorder', [
-            'as'    => 'servers.reorder',
-            'uses'  => 'ServerController@reorder',
-        ]);
-
-        Route::get('servers/{server}/test', [
-            'as'    => 'servers.test',
-            'uses'  => 'ServerController@test',
-        ]);
-
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
@@ -84,12 +69,31 @@ Route::group([
                     'uses'       => 'WebhookController@refresh',
                 ]);
 
+                // Member
                 Route::post('members/{project}', [
                     'uses' => 'MemberController@store',
                 ]);
 
                 Route::delete('members/{project}/{id}', [
                     'uses' => 'MemberController@destroy',
+                ]);
+
+                // Server
+                Route::post('servers/{project}', [
+                    'uses' => 'ServerController@store',
+                ]);
+                Route::put('servers/{project}/{server}', [
+                    'uses' => 'ServerController@update',
+                ]);
+                Route::delete('servers/{project}/{server}', [
+                    'uses' => 'ServerController@destroy',
+                ]);
+                Route::post('servers/{project}/reorder', [
+                    'uses' => 'ServerController@reorder',
+                ]);
+                Route::get('servers/{project}/{server}/test', [
+                    'as'    => 'servers.test',
+                    'uses'  => 'ServerController@test',
                 ]);
 
                 // Hook
@@ -111,12 +115,15 @@ Route::group([
                 ]);
 
                 // Environment
-                Route::post('environments/reorder', [
+                Route::get('projects/{project}/environments/{environment}/{tab?}', [
+                    'as'   => 'environments.show',
+                    'uses' => 'EnvironmentController@show',
+                ]);
+                Route::post('environments/{project}/reorder', [
                     'as'    => 'environments.reorder',
                     'uses'  => 'EnvironmentController@reorder',
                 ]);
 
-                Route::resource('servers', 'ServerController', $actions);
                 Route::resource('variables', 'VariableController', $actions);
                 Route::resource('environments', 'EnvironmentController', $actions);
                 Route::resource('commands', 'CommandController', $actions);

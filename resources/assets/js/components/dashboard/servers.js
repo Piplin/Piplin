@@ -20,7 +20,7 @@
             });
 
             $.ajax({
-                url: '/servers/reorder',
+                url: '/servers/' + parseInt($('input[name="project_id"]').val()) + '/reorder',
                 method: 'POST',
                 data: {
                     servers: ids
@@ -158,7 +158,7 @@
 
 
     Fixhub.Server = Backbone.Model.extend({
-        urlRoot: '/servers'
+        urlRoot: '/servers/' + parseInt($('input[name="project_id"]').val())
     });
 
     var Servers = Backbone.Collection.extend({

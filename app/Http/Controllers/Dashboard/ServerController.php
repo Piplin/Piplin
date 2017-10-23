@@ -16,6 +16,7 @@ use Fixhub\Bus\Jobs\TestServerConnectionJob;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreServerRequest;
 use Fixhub\Models\Server;
+use Fixhub\Models\Project;
 
 /**
  * Server management controller.
@@ -62,15 +63,14 @@ class ServerController extends Controller
     /**
      * Update the specified server in storage.
      *
-     * @param int $server_id
+     * @param Project $project
+     * @param Server $server
      * @param StoreServerRequest $request
      *
      * @return Response
      */
-    public function update($server_id, StoreServerRequest $request)
+    public function update(Project $project, Server $server, StoreServerRequest $request)
     {
-        $server = Server::findOrFail($server_id);
-
         $server->update($request->only(
             'name',
             'enabled',
@@ -87,14 +87,13 @@ class ServerController extends Controller
     /**
      * Queues a connection test for the specified server.
      *
-     * @param int $server_id
+     * @param Project $project
+     * @param Server $server
      *
      * @return Response
      */
-    public function test($server_id)
+    public function test(Project $project, Server $server)
     {
-        $server = Server::findOrFail($server_id);
-
         if (!$server->isTesting()) {
             $server->status = Server::TESTING;
             $server->save();
@@ -110,11 +109,12 @@ class ServerController extends Controller
     /**
      * Re-generates the order for the supplied servers.
      *
+     * @param Project $project
      * @param Request $request
      *
      * @return Response
      */
-    public function reorder(Request $request)
+    public function reorder(Project $project, Request $request)
     {
         $order = 0;
 
@@ -135,14 +135,12 @@ class ServerController extends Controller
     /**
      * Remove the specified server from storage.
      *
-     * @param int $server_id
+     * @param Server $server
      *
      * @return Response
      */
-    public function destroy($server_id)
+    public function destroy(Project $project, Server $server)
     {
-        $server = Server::findOrFail($server_id);
-
         $server->delete();
 
         return [

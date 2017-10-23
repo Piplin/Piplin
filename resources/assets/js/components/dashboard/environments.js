@@ -22,7 +22,7 @@
             });
 
             $.ajax({
-                url: '/environments/reorder',
+                url: '/environments/'+ parseInt($('input[name="project_id"]').val()) + '/reorder',
                 method: 'POST',
                 data: {
                     environments: ids
