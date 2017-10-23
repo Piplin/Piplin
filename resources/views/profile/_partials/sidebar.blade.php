@@ -2,7 +2,7 @@
     <div class="box-body">
         <ul class="nav nav-pills nav-stacked">
             <li {!! set_active(['profile/basic', 'profile']) !!}>
-                <a href="{{ route('profile', ['tab' => 'basic']) }}"><i class="fixhub fixhub-user"></i> Basic</a>
+                <a href="{{ route('profile', ['tab' => 'basic']) }}"><i class="fixhub fixhub-user"></i> {{ trans('users.basic') }}</a>
             </li>
             <li {!! set_active('profile/settings') !!}>
                 <a href="{{ route('profile', ['tab' => 'settings']) }}"><i class="fixhub fixhub-setting"></i> {{ trans('users.settings') }}</a>
