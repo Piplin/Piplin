@@ -30,11 +30,33 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $method = Auth::user()->dashboard == 'deployments' ? 'deployments' : 'projects';
+        
+        return $this->{$method}();
+    }
+
+    /**
+     * Returns the deployments.
+     *
+     * @return View
+     */
+    public function deployments()
+    {
         $data = $this->buildTimelineData();
         return view('dashboard.index', [
             'latest'          => $data[0],
             'deployments_raw' => $data[1],
         ]);
+    }
+
+    /**
+     * Returns the projects.
+     *
+     * @return View
+     */
+    public function projects()
+    {
+        return view('dashboard.projects', []);
     }
 
     /**

@@ -67,5 +67,11 @@ return [
         'manager' => 'Manager',
         'user'    => 'Developer',
     ],
+    'dashboard'         => [
+        'title'       => 'Default dashboard',
+        'system'      => 'Use system dashboard',
+        'projects'    => 'My projects',
+        'deployments' => 'Timeline',
+    ],
 
 ];

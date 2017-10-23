@@ -31,6 +31,7 @@ class ThemeComposer
         $user  = Auth::user();
 
         $language = config('app.locale');
+        $dashboard = config('fixhub.dashboard');
 
         if ($user) {
             if (!empty($user->skin)) {
@@ -39,9 +40,13 @@ class ThemeComposer
             if (!empty($user->language)) {
                 $language = $user->language;
             }
+            if (!empty($user->dashboard)) {
+                $dashboard = $user->dashboard;
+            }
         }
 
         $view->with('theme', $theme);
         $view->with('language', $language);
+        $view->with('dashboard', $dashboard);
     }
 }

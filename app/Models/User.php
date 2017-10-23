@@ -56,7 +56,7 @@ class User extends Authenticatable implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'nickname', 'level', 'avatar', 'skin', 'language'];
+    protected $fillable = ['name', 'email', 'password', 'nickname', 'level', 'avatar', 'skin', 'language', 'dashboard'];
 
     /**
      * The attributes excluded from the model's JSON form.

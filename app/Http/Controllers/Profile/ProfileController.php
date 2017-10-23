@@ -112,7 +112,8 @@ class ProfileController extends Controller
     {
         Auth::user()->update($request->only(
             'skin',
-            'language'
+            'language',
+            'dashboard'
         ));
 
         return redirect()->to('/');

@@ -23,9 +23,9 @@ Route::group([
             'uses' => 'DashboardController@timeline',
         ]);
 
-        Route::get('dashboard', [
-            'as'   => 'dashboard.index',
-            'uses' => 'ProjectController@index',
+        Route::get('projects', [
+            'as'   => 'dashboard.projects',
+            'uses' => 'DashboardController@projects',
         ]);
 
         Route::get('admin/templates/{template}/commands/{step}', [
