@@ -186,6 +186,7 @@
         if (caller == 'not_in_progress') {
             toastr.options.positionClass = 'toast-top-center';
             toastr.options.progressBar = false;
+            toastr.options.preventDuplicates = true;
             toastr.options.closeDuration = 1000;
             toastr.options.timeOut = 3000;
             toastr.options.extendedTimeOut = 1000;

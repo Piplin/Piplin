@@ -22,6 +22,7 @@ use Fixhub\Models\Deployment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\ConfigFile;
 use Fixhub\Models\SharedFile;
+use Fixhub\Models\Command;
 use Fixhub\Models\Variable;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Server;
@@ -61,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('template', DeployTemplate::class);
 
         Route::model('environment', Environment::class);
-        Route::model('command', Environment::class);
+        Route::model('command', Command::class);
         Route::model('variable', Variable::class);
         Route::model('config_file', ConfigFile::class);
         Route::model('shared_file', SharedFile::class);

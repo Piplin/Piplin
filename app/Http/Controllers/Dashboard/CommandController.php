@@ -189,13 +189,11 @@ class CommandController extends Controller
     /**
      * Remove the specified command from storage.
      *
-     * @param  int      $command_id
+     * @param  Command $command
      * @return Response
      */
-    public function destroy($command_id)
+    public function destroy(Command $command)
     {
-        $command = Command::findOrFail($command_id);
-
         $command->delete();
 
         return [
