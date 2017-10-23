@@ -69,15 +69,13 @@ class ProjectGroupController extends Controller
     /**
      * Update the specified group in storage.
      *
-     * @param int                      $group_id
+     * @param ProjectGroup $group
      * @param StoreProjectGroupRequest $request
      *
      * @return Response
      */
-    public function update($group_id, StoreProjectGroupRequest $request)
+    public function update(ProjectGroup $group, StoreProjectGroupRequest $request)
     {
-        $group = ProjectGroup::findOrFail($group_id);
-
         $group->update($request->only(
             'name'
         ));
@@ -113,14 +111,12 @@ class ProjectGroupController extends Controller
     /**
      * Remove the specified group from storage.
      *
-     * @param int $group_id
+     * @param ProjectGroup $group
      *
      * @return Response
      */
-    public function destroy($group_id)
+    public function destroy(ProjectGroup $group)
     {
-        $group = ProjectGroup::findOrFail($group_id);
-
         $group->delete();
 
         return [

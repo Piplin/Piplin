@@ -26,6 +26,10 @@ use Fixhub\Models\Command;
 use Fixhub\Models\Variable;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Server;
+use Fixhub\Models\Provider;
+use Fixhub\Models\Link;
+use Fixhub\Models\Tip;
+use Fixhub\Models\User;
 
 /**
  * The route service provider.
@@ -59,7 +63,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('deployment', Deployment::class);
         Route::model('hook', Hook::class);
         Route::model('server', Server::class);
+        Route::model('provider', Provider::class);
         Route::model('template', DeployTemplate::class);
+        Route::model('link', Link::class);
+        Route::model('tip', Tip::class);
+        Route::model('user', User::class);
 
         Route::model('environment', Environment::class);
         Route::model('command', Command::class);

@@ -71,15 +71,13 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      *
-     * @param int              $user_id
+     * @param User             $user
      * @param StoreUserRequest $request
      *
      * @return Response
      */
-    public function update($user_id, StoreUserRequest $request)
+    public function update(User $user, StoreUserRequest $request)
     {
-        $user = User::findOrFail($user_id);
-
         $fields = $request->only(
             'name',
             'level',
@@ -104,14 +102,12 @@ class UserController extends Controller
     /**
      * Remove the specified user from storage.
      *
-     * @param int $user_id
+     * @param User $user
      *
      * @return Response
      */
-    public function destroy($user_id)
+    public function destroy(User $use)
     {
-        $user = User::findOrFail($user_id);
-
         $user->delete();
 
         return [

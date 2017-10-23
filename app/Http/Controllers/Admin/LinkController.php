@@ -71,15 +71,13 @@ class LinkController extends Controller
     /**
      * Store a newly created link in storage.
      *
-     * @param int              $link_id
+     * @param Link             $link
      * @param StoreLinkRequest $request
      *
      * @return Response
      */
-    public function update($link_id, StoreLinkRequest $request)
+    public function update(Link $link, StoreLinkRequest $request)
     {
-        $link = Link::findOrFail($link_id);
-
         $link->update($request->only(
             'title',
             'url',
@@ -117,14 +115,12 @@ class LinkController extends Controller
     /**
      * Remove the specified link from storage.
      *
-     * @param int $link_id
+     * @param Link $link
      *
      * @return Response
      */
-    public function destroy($link_id)
+    public function destroy(Link $link)
     {
-        $link = Link::findOrFail($link_id);
-
         $link->delete();
 
         return [

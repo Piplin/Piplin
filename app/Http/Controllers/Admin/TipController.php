@@ -69,15 +69,13 @@ class TipController extends Controller
     /**
      * Store a newly created tip in storage.
      *
-     * @param int $tip_id
+     * @param Tip $tip
      * @param StoretipRequest $request
      *
      * @return Response
      */
-    public function update($tip_id, StoretipRequest $request)
+    public function update(Tip $tip, StoretipRequest $request)
     {
-        $tip = Tip::findOrFail($tip_id);
-
         $tip->update($request->only(
             'body',
             'status'
@@ -93,10 +91,8 @@ class TipController extends Controller
      *
      * @return Response
      */
-    public function destroy($tip_id)
+    public function destroy(Tip $tip)
     {
-        $tip = Tip::findOrFail($tip_id);
-
         $tip->delete();
 
         return [

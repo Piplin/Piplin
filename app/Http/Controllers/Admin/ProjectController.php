@@ -108,15 +108,13 @@ class ProjectController extends Controller
     /**
      * Clone a new project based on skeleton.
      *
-     * @param int $skeleton_id
+     * @param Project $skeleton_id
      * @param Request $request
      *
      * @return Response
      */
-    public function clone($skeleton_id, Request $request)
+    public function clone(Project $skeleton, Request $request)
     {
-        $skeleton = Project::findOrFail($skeleton_id);
-
         $fields = $request->only('name', 'type');
         $type = array_pull($fields, 'type');
 

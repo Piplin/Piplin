@@ -72,15 +72,13 @@ class ProviderController extends Controller
     /**
      * Store a newly created provider in storage.
      *
-     * @param int              $provider_id
+     * @param Provider             $provider
      * @param StoreProviderRequest $request
      *
      * @return Response
      */
-    public function update($provider_id, StoreProviderRequest $request)
+    public function update(Provider $provider, StoreProviderRequest $request)
     {
-        $provider = Provider::findOrFail($provider_id);
-
         $provider->update($request->only(
             'name',
             'slug',
@@ -119,14 +117,12 @@ class ProviderController extends Controller
     /**
      * Remove the specified provider from storage.
      *
-     * @param int $provider_id
+     * @param Provider $provider
      *
      * @return Response
      */
-    public function destroy($provider_id)
+    public function destroy(Provider $provider)
     {
-        $provider = Provider::findOrFail($provider_id);
-
         $provider->delete();
 
         return [
