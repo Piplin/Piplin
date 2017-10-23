@@ -6,9 +6,9 @@
             <ul class="nav navbar-nav">
                 <li>
                     @if($dashboard == 'projects')
-                    <a href="{{ route('dashboard.deployments') }}">{{ trans('users.dashboard.deployments') }}</a>
+                    <a href="{{ route('dashboard.deployments') }}"><i class="fixhub fixhub-clock"></i> {{ trans('users.dashboard.deployments') }}</a>
                     @else
-                    <a href="{{ route('dashboard.projects') }}">{{ trans('users.dashboard.projects') }}</a>
+                    <a href="{{ route('dashboard.projects') }}"><i class="fixhub fixhub-project"></i> {{ trans('users.dashboard.projects') }}</a>
                     @endif
                 </li>
                 @if($current_user->is_admin)
