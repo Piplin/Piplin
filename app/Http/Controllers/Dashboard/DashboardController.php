@@ -30,7 +30,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
         $dashboard = Auth::user()->dashboard;
 
         if (empty($dashboard)) {
