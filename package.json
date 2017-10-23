@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "dotenv": "^4.0.0",
-        "ioredis": "^2.4.3",
+        "ioredis": "^3.2.0",
         "jsonwebtoken": "^8.0.1",
         "parseuri": "^0.0.5",
         "socket.io": "^1.7.1",
