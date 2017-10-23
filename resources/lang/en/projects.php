@@ -17,6 +17,7 @@ return [
     'name'              => 'Name',
     'name_placeholder'  => 'My awesome webapp',
     'group'             => 'Group',
+    'ungrouped'         => 'Ungrouped',
     'key'               => 'SSH Key',
     'repository'        => 'Repository',
     'repository_path'   => 'Repository URL',

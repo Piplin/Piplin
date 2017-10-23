@@ -77,7 +77,6 @@ class Project extends Model implements HasPresenter
      */
     protected $casts = [
         'id'                 => 'integer',
-        'group_id'           => 'integer',
         'status'             => 'integer',
         'builds_to_keep'     => 'integer',
         'allow_other_branch' => 'boolean'

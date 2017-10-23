@@ -48,7 +48,7 @@
 @push('templates')
 <script type="text/template" id="project-template">
     <td><%- id %></td>
-    <td><a href="/projects/<%- id %>"><%- group_name %>/<%- name %></a></td>
+    <td><a href="/projects/<%- id %>"><% if (group_name) { %><%- group_name %>/<% } %><%- name %></a></td>
     <td><%- repository_path %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>

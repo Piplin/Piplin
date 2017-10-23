@@ -143,21 +143,18 @@ class ProjectController extends Controller
     /**
      * Update the specified project in storage.
      *
-     * @param int                 $project_id
+     * @param Project             $project
      * @param StoreProjectRequest $request
      *
      * @return Response
      */
-    public function update($project_id, StoreProjectRequest $request)
+    public function update(Project $project, StoreProjectRequest $request)
     {
-        $project = Project::findOrFail($project_id);
-
         $project->update($request->only(
             'name',
             'repository',
             'branch',
             'group_id',
-            'key_id',
             'builds_to_keep',
             'url',
             'build_url',
@@ -170,14 +167,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified model from storage.
      *
-     * @param int $project_id
+     * @param Project $project
      *
      * @return Response
      */
-    public function destroy($project_id)
+    public function destroy(Project $project)
     {
-        $project = Project::findOrFail($project_id);
-
         $project->delete();
 
         return [

@@ -17,6 +17,7 @@ return [
     'name'              => '项目名称',
     'name_placeholder'  => '我的项目',
     'group'             => '项目分组',
+    'ungrouped'         => '不属于任何分组',
     'key'               => '部署秘钥',
     'repository'        => 'Git仓库',
     'repository_path'   => '仓库路径',
