@@ -30,7 +30,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $method = Auth::user()->dashboard == 'deployments' ? 'deployments' : 'projects';
+
+        $dashboard = Auth::user()->dashboard;
+
+        if (empty($dashboard)) {
+            $dashboard = config('fixhub.dashboard');
+        }
+
+        $method = $dashboard == 'deployments' ? 'deployments' : 'projects';
         
         return $this->{$method}();
     }

@@ -26,7 +26,7 @@
                 <select name="dashboard" id="dashboard" class="select2 form-control">
                     <option value="">{{ trans('users.dashboard.system') }}</option>
                     @foreach (['deployments', 'projects'] as $item)
-                        <option value="{{ $item }}" @if ($item === $dashboard) selected @endif>{{ trans('users.dashboard.' . $item )}}</option>
+                        <option value="{{ $item }}" @if ($item === $current_user->dashboard) selected @endif>{{ trans('users.dashboard.' . $item )}}</option>
                     @endforeach
                 </select>
             </div>
