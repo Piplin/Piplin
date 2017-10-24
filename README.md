@@ -18,7 +18,7 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 * 支持项目的多环境部署(可自行建立开发、测试、预发布和生产等多个环境)
 * 通过Websocket实现项目部署状态的实时跟踪
 * 可灵活配置自定义部署命令
-* 可与Gitlab、Github等代码托管平台进行集成，通过incoming webhook触发部署
+* 支持Gitlab、Github、Gogs、Gitee(Oschina)等代码托管平台进行集成
 * 上线单申请、审核流程
 * 可通过Slack、邮件和自定义的webhook对部署结果进行通知
 
