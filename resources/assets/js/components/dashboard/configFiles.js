@@ -167,7 +167,7 @@
     });
 
     Fixhub.ConfigFile = Backbone.Model.extend({
-        urlRoot: '/config-file'
+        urlRoot: '/config-files'
     });
 
     var ConfigFiles = Backbone.Collection.extend({
