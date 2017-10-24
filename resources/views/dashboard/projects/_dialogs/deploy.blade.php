@@ -96,7 +96,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="deployment_reason">{{ trans('deployments.reason') }}</label>
 						<div class="col-sm-9">
-							<textarea rows="5" id="deployment_reason" class="form-control" name="reason" placeholder="{{ trans('deployments.describe_reason') }}"></textarea>
+							<textarea rows="3" id="deployment_reason" class="form-control" name="reason" placeholder="{{ trans('deployments.describe_reason') }}"></textarea>
 						</div>
                     </div>
                     @if (count($optional))

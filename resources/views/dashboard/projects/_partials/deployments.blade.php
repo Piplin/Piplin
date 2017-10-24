@@ -57,6 +57,9 @@
                             @if ($deployment->isSuccessful())
                                 <button type="button" data-toggle="modal" data-backdrop="static" data-target="#redeploy" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('deployments.rollback') }}"><i class="fixhub fixhub-rollback"></i></button>
                             @endif
+                            @if ($deployment->isDraft())
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $deployment->id }}" class="btn btn-success btn-draft"><i class="fixhub fixhub-check"></i></button>
+                            @endif
 
                             @if ($deployment->isPending() || $deployment->isRunning())
                                 <a href="{{ route('deployments.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('deployments.cancel') }}"><i class="fixhub fixhub-cancel"></i></a>

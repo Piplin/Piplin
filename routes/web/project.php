@@ -19,6 +19,7 @@ Route::group([
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
 
+        // Deployment
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
@@ -29,16 +30,20 @@ Route::group([
             'uses' => 'DeploymentController@create',
         ])->middleware('project.acl:deploy');
 
-        // Deployment
+        Route::post('deployment/{deployment}/deploy-draft', [
+            'as'   => 'deployments.deploy-draft',
+            'uses' => 'DeploymentController@deployDraft',
+        ]);
+
         Route::post('deployment/{deployment}/rollback', [
             'as'   => 'deployments.rollback',
             'uses' => 'DeploymentController@rollback',
-        ])->middleware('project.acl:deploy');
+        ]);
 
         Route::get('deployment/{deployment}/abort', [
             'as'   => 'deployments.abort',
             'uses' => 'DeploymentController@abort',
-        ])->middleware('project.acl:deploy');
+        ]);
 
         Route::get('log/{log}', [
             'as'   => 'server_log.show',

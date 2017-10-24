@@ -27,6 +27,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
 {
     use SoftDeletes, RevisionableTrait;
 
+    const DRAFT                 = -1;
     const COMPLETED             = 0;
     const PENDING               = 1;
     const DEPLOYING             = 2;
@@ -57,7 +58,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['reason', 'branch', 'project_id', 'source', 'build_url',
+    protected $fillable = ['reason', 'branch', 'project_id', 'status', 'source', 'build_url',
                            'commit', 'committer_email', 'committer', ];
 
     /**
@@ -91,7 +92,6 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
         'id'             => 'integer',
         'project_id'     => 'integer',
         'user_id'        => 'integer',
-        'status'         => 'integer',
         'is_webhook'     => 'boolean',
     ];
 
@@ -175,6 +175,16 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     public function steps()
     {
         return $this->hasMany(DeployStep::class);
+    }
+
+    /**
+     * Determines whether the deployment is draft.
+     *
+     * @return bool
+     */
+    public function isDraft()
+    {
+        return ($this->status === self::DRAFT);
     }
 
     /**

@@ -97,7 +97,9 @@ class SetupDeploymentJob extends Job
             }
         }
 
-        $this->dispatch(new DeployProjectJob($this->deployment));
+        if (!$this->deployment->isDraft()) {
+            $this->dispatch(new DeployProjectJob($this->deployment));
+        }
     }
 
     /**
@@ -164,7 +166,10 @@ class SetupDeploymentJob extends Job
      */
     private function setDeploymentStatus()
     {
-        $this->deployment->status = Deployment::PENDING;
+        if ($this->deployment->status != Deployment::DRAFT) {
+            $this->deployment->status = Deployment::PENDING;
+            $this->deployment->project->status = Project::PENDING;
+        }
 
         $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;
@@ -179,7 +184,6 @@ class SetupDeploymentJob extends Job
         $this->deployment->commit    = $this->deployment->commit ?: Deployment::LOADING;
         $this->deployment->save();
 
-        $this->deployment->project->status = Project::PENDING;
         $this->deployment->project->save();
     }
 

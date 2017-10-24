@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
+use Fixhub\Bus\Jobs\DeployDraftProjectJob;
 use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
@@ -185,6 +186,26 @@ class DeploymentController extends Controller
     }
 
     /**
+     * Execute the deployment from draft.
+     *
+     * @param Deployment $deployment
+     *
+     * @return Response
+     */
+    public function deployDraft(Deployment $deployment)
+    {
+        $this->authorize('deploy', $deployment->project);
+
+        if ($deployment->isDraft()) {
+            dispatch(new DeployDraftProjectJob($deployment));
+        }
+
+        return redirect()->route('deployments', [
+            'id' => $deployment->id,
+        ]);
+    }
+
+    /**
      * Abort a deployment.
      *
      * @param Deployment $deployment
@@ -203,7 +224,7 @@ class DeploymentController extends Controller
         }
 
         return redirect()->route('deployments', [
-            'id' => $deployment_id,
+            'id' => $deployment->id,
         ]);
     }
 }

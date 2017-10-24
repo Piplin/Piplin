@@ -144,6 +144,7 @@
     @include('dashboard.projects._dialogs.key')
     @include('dashboard.projects._dialogs.deploy')
     @include('dashboard.projects._dialogs.redeploy')
+    @include('dashboard.projects._dialogs.deploy-draft')
 @stop
 
 @if($project->can('deploy'))

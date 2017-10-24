@@ -1,5 +1,15 @@
 (function ($) {
 
+    $('#deploy_draft').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+
+        var deployment = button.data('deployment-id');
+
+        var modal = $(this);
+
+         $('form', modal).prop('action', '/deployment/' + deployment + '/deploy-draft');
+    });
+
     $('#redeploy').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);
 
