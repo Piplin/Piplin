@@ -59,9 +59,9 @@ class DeploymentPresenter extends BasePresenter
             return trans('deployments.failed');
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return trans('deployments.deploying');
-       } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
+        } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
             return trans('deployments.draft');
-       }
+        }
 
         return trans('deployments.pending');
     }
