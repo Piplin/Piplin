@@ -186,6 +186,10 @@
         @endif
 
         Fixhub.project_id = {{ $project->id }};
+
+        @if($tab == 'deploy')
+            $('button#deploy_project').trigger('click');
+        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
