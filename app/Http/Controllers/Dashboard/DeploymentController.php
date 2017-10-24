@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
-use Fixhub\Bus\Jobs\DeployDraftProjectJob;
+use Fixhub\Bus\Jobs\DeployDraftJob;
 use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
@@ -197,7 +197,7 @@ class DeploymentController extends Controller
         $this->authorize('deploy', $deployment->project);
 
         if ($deployment->isDraft()) {
-            dispatch(new DeployDraftProjectJob($deployment));
+            dispatch(new DeployDraftJob($deployment));
         }
 
         return redirect()->route('deployments', [

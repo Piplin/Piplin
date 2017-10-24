@@ -16,9 +16,9 @@ use Fixhub\Bus\Jobs\DeployProjectJob;
 use Fixhub\Models\Deployment;
 
 /**
- * Deploys an actual project.
+ * Deploys a draft.
  */
-class DeployDraftProjectJob extends Job
+class DeployDraftJob extends Job
 {
     use DispatchesJobs;
 
