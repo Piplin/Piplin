@@ -87,9 +87,18 @@ class Environment extends Model
     /**
      * Belongs to many relationship.
      *
-     * @return Server
+     * @return Environment
      */
-    
+    public function opposite_environments()
+    {
+        return $this->belongsToMany('Fixhub\Models\Environment', 'environment_links', 'environment_id', 'opposite_environment_id');
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return ConfigFile
+     */
     public function configFiles()
     {
         return $this->belongsToMany(ConfigFile::class)

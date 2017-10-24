@@ -34,5 +34,6 @@ return [
     'webhook_args'        => '用逗号分隔的环境ID列表',
     'add_command'         => '自动添加所有安装步骤',
     'optional'            => '可选项',
+    'links'               => '部署环境关联',
 
 ];

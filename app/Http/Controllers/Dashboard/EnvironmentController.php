@@ -17,6 +17,7 @@ use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Command;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Project;
+use Fixhub\Models\Link;
 
 /**
  * Environment management controller.
@@ -34,6 +35,13 @@ class EnvironmentController extends Controller
      */
     public function show(Project $project, Environment $environment, $tab = '')
     {
+        /*
+        $tmp = $environment->opposite_environments->toArray();
+        foreach($tmp as $each) {
+            var_dump($each);
+        }
+        exit;
+        */
         $targetable_type = 'Fixhub\\Models\\Project';
 
         $optional = $project->commands->filter(function (Command $command) {
@@ -59,6 +67,9 @@ class EnvironmentController extends Controller
 
         if ($tab == 'deployments') {
             $data['deployments'] = $environment->deployments()->paginate(15);
+        } else if($tab == 'links') {
+            $data['links'] = Link::all();
+            $data['environmentLinks'] = json_encode($environment->opposite_environments);
         } else {
             $data['servers'] = $environment->servers;
         }

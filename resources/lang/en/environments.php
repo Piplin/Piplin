@@ -34,5 +34,6 @@ return [
     'webhook_args'        => 'A comma seperated list of optional environment IDs to run',
     'add_command'         => 'Add the new environment to all existing commands',
     'optional'            => 'Optional',
+    'links'               => 'Links',
 
 ];
