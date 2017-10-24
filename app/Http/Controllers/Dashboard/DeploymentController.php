@@ -38,16 +38,16 @@ class DeploymentController extends Controller
         $this->authorize('view', $deployment->project);
 
         $output = [];
-	$envLocks = [];
+        $envLocks = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
                 if ($log->server && $log->server->environment) {
-			if (!isset($envLocks[$step->id.'_'.$log->server->environment_id])) {
-				$log->server->environment_name = $log->server->environment->name;
-				$envLocks[$step->id.'_'.$log->server->environment_id] = true;
-			} else {
-				$log->server->environment_name = null;
-			}
+                    if (!isset($envLocks[$step->id.'_'.$log->server->environment_id])) {
+                        $log->server->environment_name = $log->server->environment->name;
+                        $envLocks[$step->id.'_'.$log->server->environment_id] = true;
+                    } else {
+                        $log->server->environment_name = null;
+                    }
                 }
 
                 $log->runtime = ($log->runtime() === false ?
