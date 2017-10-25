@@ -48,6 +48,13 @@ class DeployDraftJob extends Job
      */
     public function handle()
     {
+        if (!$this->deployment->isDraft()) {
+            return;
+        }
+
+        $this->deployment->status = Deployment::PENDING;
+        $this->deployment->save();
+
         $this->dispatch(new DeployProjectJob($this->deployment));
     }
 }

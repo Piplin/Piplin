@@ -18,12 +18,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EnvironmentLink extends Model
 {
+    const AUTOMATIC = 1;
+    const MANUAL    = 2;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['link_id', 'environment_id', 'opposite_environment_id'];
+    protected $fillable = ['link_type', 'environment_id', 'opposite_environment_id'];
 
     /**
      * The attributes that should be casted to native types.
@@ -31,7 +34,7 @@ class EnvironmentLink extends Model
      * @var array
      */
     protected $casts = [
-        'link_id'                 => 'integer',
+        'link_type'                 => 'integer',
         'environment_id'          => 'integer',
         'opposite_environment_id' => 'integer',
     ];

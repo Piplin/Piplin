@@ -1,5 +1,8 @@
 (function ($) {
 
+    var AUTOMATIC = 1;
+    var MANUAL = 2;
+
     $('#link').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
@@ -14,6 +17,9 @@
             title = trans('links.edit');
             $('.btn-danger', modal).show();
             $('.link-environment').prop('checked', false);
+            Fixhub.EnvironmentLinks.each(function (environment){
+                $('#link_opposite_environment_' + environment.id).prop('checked', true);
+            });
         } else {
             //$('#link_id').val('');
             $('.link-environment').prop('checked', true);
@@ -48,7 +54,7 @@
 
         environment_link.save({
             environment_id:   $('input[name="environment_id"]').val(),
-            link_id:        $('#link_id').val(),
+            link_type:        $('#link_type').val(),
             environments:   environment_ids
         }, {
             wait: true,
@@ -60,14 +66,22 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
+                Fixhub.EnvironmentLinks.reset(response);
+
+                //Fixhub.EnvironmentLinks.add(response);
+
+                /*
                 var str = [];
                 $.each(response, function(index, content) {
                     str.push(content.name)
                 });
 
                 $('.opposite-environments').fadeIn(interval).html(str.join(','));
+                */
+                //Fixhub.EnvironmentLinks.reset();
+                //Fixhub.EnvironmentLinks.add(response);
 
-                Fixhub.toast(trans('environmentLinks.edit_success'));
+                Fixhub.toast(trans('environments.link_success'));
             },
             error: function(model, response, options) {
                 icon.removeClass().addClass('fixhub fixhub-delete');
@@ -98,6 +112,55 @@
 
             $('#no_links').show();
             $('#link_list').hide();
+
+            this.listenTo(Fixhub.EnvironmentLinks, 'add', this.addOne);
+            this.listenTo(Fixhub.EnvironmentLinks, 'reset', this.addAll);
+            this.listenTo(Fixhub.EnvironmentLinks, 'remove', this.addAll);
+            this.listenTo(Fixhub.EnvironmentLinks, 'all', this.render);
+        },
+        render: function () {
+            if (Fixhub.EnvironmentLinks.length) {
+                $('#no_links').hide();
+                $('#link_list').show();
+            } else {
+                $('#no_links').show();
+                $('#link_list').hide();
+            }
+        },
+        addOne: function (link) {
+
+            var view = new Fixhub.EnvironmentLinkView({
+                model: link
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Fixhub.EnvironmentLinks.each(this.addOne, this);
+        }
+    });
+
+    Fixhub.EnvironmentLinkView = Backbone.View.extend({
+        tagName:  'tr',
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+            this.template = _.template($('#link-template').html());
+        },
+        render: function () {
+             var data = this.model.toJSON();
+
+             var link_type = parseInt(data.pivot.link_type);
+             if (link_type == AUTOMATIC) {
+                data.link_type = trans('environments.link_auto');
+             } else {
+                data.link_type = trans('environments.link_manual');
+             }
+
+             this.$el.html(this.template(data));
+
+            return this;
         }
     });
 

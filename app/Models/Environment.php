@@ -91,7 +91,12 @@ class Environment extends Model
      */
     public function opposite_environments()
     {
-        return $this->belongsToMany('Fixhub\Models\Environment', 'environment_links', 'environment_id', 'opposite_environment_id')->withPivot('link_id');
+        return $this->belongsToMany('Fixhub\Models\Environment', 'environment_links', 'environment_id', 'opposite_environment_id');
+    }
+
+    public function opposite_pivot()
+    {
+        return $this->opposite_environments()->withPivot('link_type');
     }
 
     /**

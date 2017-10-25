@@ -1,16 +1,3 @@
-<div class="callout">
-    <h4>自动关联环境:  <span>
-         @if($project->can('manage'))
-            <button type="button" class="btn btn-primary btn-edit" title="{{ trans('links.create') }}" data-toggle="modal" data-target="#link"><span class="fixhub fixhub-edit"></span> {{ trans('links.edit') }}</button>
-            @endif
-    </span>
-    </h4>
-    <code class="opposite-environments">
-        @foreach($oppositeEnvironments as $item)
-            {{ $item->name }}
-        @endforeach
-    </code>
-</div>
 <div class="box">
     <div class="box-header">
         <div class="pull-right">

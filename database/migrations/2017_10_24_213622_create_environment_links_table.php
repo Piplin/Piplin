@@ -15,10 +15,13 @@ class CreateEnvironmentLinksTable extends Migration
     {
         Schema::create('environment_links', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('link_id');
+            $table->unsignedInteger('link_type');
             $table->unsignedInteger('environment_id');
             $table->unsignedInteger('opposite_environment_id');
             $table->timestamps();
+
+            $table->unique(['environment_id', 'opposite_environment_id']);
+
             $table->foreign('environment_id')->references('id')->on('environments');
             $table->foreign('opposite_environment_id')->references('id')->on('environments');
         });

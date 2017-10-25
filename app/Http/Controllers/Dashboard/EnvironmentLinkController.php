@@ -31,7 +31,7 @@ class EnvironmentLinkController extends Controller
     {
         $fields = $request->only(
             'environment_id',
-            'link_id',
+            'link_type',
             'environments'
         );
 
@@ -40,7 +40,7 @@ class EnvironmentLinkController extends Controller
         $data = [];
 
         foreach($fields['environments'] as $id) {
-            $data[$id] = ['link_id' => $fields['link_id']];
+            $data[$id] = ['link_type' => $fields['link_type']];
         }
 
         $environment->opposite_environments()->sync($data);

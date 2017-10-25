@@ -3,18 +3,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-link"></i> <span>{{ trans('configFiles.create') }}</span></h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-setting"></i> <span>{{ trans('environments.link_settings') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="environment_link_id" name="id" />
                 <input type="hidden" name="environment_id" value="{{ $environment->id }}" />
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="link_links">Links</label>
+                    <label class="col-sm-3 control-label" for="link_types">{{ trans('environments.link_type') }}</label>
                     <div class="col-sm-9">
-                        <select name="link_id" id="link_id" class="select2 form-control">
+                        <select name="link_type" id="link_type" class="select2 form-control">
                         @foreach ($links as $item)
-                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                         @endforeach
                     </select>
                     </div>

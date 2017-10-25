@@ -16,6 +16,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Command;
 use Fixhub\Models\Environment;
+use Fixhub\Models\EnvironmentLink;
 use Fixhub\Models\Project;
 use Fixhub\Models\Link;
 
@@ -65,14 +66,25 @@ class EnvironmentController extends Controller
             'tab'             => $tab,
         ];
 
+        $links = [
+            [
+                'id' => EnvironmentLink::MANUAL,
+                'name' => trans('environments.link_manual'),
+            ],
+            [
+                'id' => EnvironmentLink::AUTOMATIC,
+                'name' => trans('environments.link_auto'),
+            ],
+        ];
         if ($tab == 'deployments') {
             $data['deployments'] = $environment->deployments()->paginate(15);
         } else if($tab == 'links') {
-            $data['links'] = Link::all();
+            $data['links'] = $links;
         } else {
-            $data['links'] = Link::all();
+            $data['links'] = $links;
             $data['servers'] = $environment->servers;
         }
+        $data['servers'] = $environment->servers;
         $data['oppositeEnvironments'] = $environment->opposite_environments;
 
         return view('dashboard.environments.show', $data);

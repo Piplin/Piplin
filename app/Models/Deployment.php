@@ -92,6 +92,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
         'id'             => 'integer',
         'project_id'     => 'integer',
         'user_id'        => 'integer',
+        'status'         => 'integer',
         'is_webhook'     => 'boolean',
     ];
 
