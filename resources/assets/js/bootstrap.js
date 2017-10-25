@@ -14,6 +14,7 @@
         NOT_DEPLOYED: 4,
 
         // Deployment status
+        DEPLOYMENT_DRAFT:    -1,
         DEPLOYMENT_COMPLETED: 0,
         DEPLOYMENT_PENDING:   1,
         DEPLOYMENT_DEPLOYING: 2,
@@ -170,6 +171,10 @@
             data.label_class = 'danger';
             data.label = trans('deployments.cancelled');
             data.done = true;
+        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_DRAFT) {
+            data.icon_class = 'edit';
+            data.label_class = 'danger';
+            data.label = trans('deployments.draft');
         }
 
         return data;

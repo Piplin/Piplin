@@ -59,6 +59,8 @@ class DeploymentPresenter extends BasePresenter
             return trans('deployments.failed');
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return trans('deployments.deploying');
+        } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
+            return trans('deployments.draft');
         }
 
         return trans('deployments.pending');
@@ -103,6 +105,8 @@ class DeploymentPresenter extends BasePresenter
             return 'warning';
         } elseif ($this->wrappedObject->status === Deployment::DEPLOYING) {
             return 'load fixhub-spin';
+        } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
+            return 'edit';
         }
 
         return 'clock';
@@ -121,6 +125,8 @@ class DeploymentPresenter extends BasePresenter
             return 'danger';
         } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED])) {
             return 'warning';
+        } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
+            return 'navy';
         }
 
         return 'info';
@@ -139,6 +145,8 @@ class DeploymentPresenter extends BasePresenter
             return 'red';
         } elseif (in_array($this->wrappedObject->status, [Deployment::DEPLOYING, Deployment::ABORTING, Deployment::ABORTED, Deployment::COMPLETED_WITH_ERRORS])) {
             return 'yellow';
+        } elseif ($this->wrappedObject->status === Deployment::DRAFT) {
+            return 'navy';
         }
 
         return 'aqua';
