@@ -35,6 +35,7 @@ return [
     'add_command'         => '自动添加所有安装步骤',
     'optional'            => '可选项',
     'links'               => '联动部署',
+    'link_none'           => '该环境还没有设置过关联环境',
     'link_type'           => '关联类型',
     'link_auto'           => '自动模式',
     'link_manual'         => '手动模式',

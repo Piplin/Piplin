@@ -35,6 +35,7 @@ return [
     'add_command'         => 'Add the new environment to all existing commands',
     'optional'            => 'Optional',
     'links'               => 'Links',
+    'link_none'           => 'The environment does not currently have any links setup',
     'link_type'           => 'Link type',
     'link_auto'           => 'Triggered automatically',
     'link_manual'         => 'Triggered manually',
