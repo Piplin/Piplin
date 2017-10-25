@@ -54,6 +54,30 @@ class TestNotification extends Notification
     }
 
     /**
+     * Get the dingtalk version of the notification.
+     *
+     * @param Hook $notification
+     *
+     * @return WebhookMessage
+     */
+    public function toDingtalk(Hook $notification)
+    {
+        return (new WebhookMessage())
+            ->data([
+                'msgtype' => 'text',
+                'text' => [
+                    'content' => trans('hooks.test_message', ['app_url' => config('app.url')]),
+                ],
+                'at' => [
+                    'isAtAll' => !!$notification->config->is_at_all,
+                ],
+            ])
+            ->header('Content-Type', 'application/json;charset=utf-8')
+            ->header('X-Fixhub-Project-Id', $notification->project_id)
+            ->header('X-Fixhub-Notification-Id', $notification->id)
+            ->header('X-Fixhub-Event', 'notification_test');
+    }
+    /**
      * Get the webhook version of the notification.
      *
      * @param Hook $notification

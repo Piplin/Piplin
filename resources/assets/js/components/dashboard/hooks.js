@@ -50,6 +50,8 @@
 
         if (type === 'slack') {
             icon = 'slack';
+        } else if (type === 'dingtalk') {
+            icon = 'pin';
         } else if (type === 'mail') {
             icon = 'email';
         } else if (type === 'custom') {
@@ -271,6 +273,8 @@
 
             if (this.model.get('type') === 'slack') {
                 data.icon = 'slack';
+            } else if (this.model.get('type') === 'dingtalk') {
+                data.icon = 'pin';
             } else if (this.model.get('type') === 'mail') {
                 data.icon = 'email';
             }

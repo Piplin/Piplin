@@ -22,10 +22,10 @@ class HookObserver
     /**
      * Called when the model is saved.
      *
-     * @param Hook $notification
+     * @param Hook $hook
      */
-    public function saved(Hook $notification)
+    public function saved(Hook $hook)
     {
-        $notification->notify(new TestNotification());
+        $hook->notify(new TestNotification());
     }
 }
