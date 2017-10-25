@@ -44,6 +44,8 @@ class EnvironmentLinkController extends Controller
         }
 
         $environment->opposite_environments()->sync($data);
-        var_dump($fields);
+
+        // Trigger
+        return $environment->opposite_environments;
     }
 }

@@ -49,9 +49,7 @@
         @if(empty($tab))
             new Fixhub.ServersTab();
             Fixhub.Servers.add({!! $servers->toJson() !!});
-        @elseif($tab == 'links')
-            new Fixhub.EnvironmentLinksTab();
-            Fixhub.EnvironmentLinks.add({!! $environmentLinks !!});
+            Fixhub.EnvironmentLinks.add({!! $oppositeEnvironments->toJson() !!});
         @endif
 
         Fixhub.project_id = {{ $project->id }};

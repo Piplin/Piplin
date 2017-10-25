@@ -13,6 +13,7 @@
         if (button.hasClass('btn-edit')) {
             title = trans('links.edit');
             $('.btn-danger', modal).show();
+            $('.link-environment').prop('checked', false);
         } else {
             //$('#link_id').val('');
             $('.link-environment').prop('checked', true);
@@ -30,13 +31,8 @@
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var environment_link_id = $('#environment_link_id').val();
 
-        if (environment_link_id) {
-            var environment_link = Fixhub.EnvironmentLinks.get(environment_link_id);
-        } else {
-            var environment_link = new Fixhub.EnvironmentLink();
-        }
+        var environment_link = new Fixhub.EnvironmentLink();
 
         var environment_ids = [];
 
@@ -44,8 +40,11 @@
             environment_ids.push($(this).val());
         });
 
-        console.log(environment_link);
-        console.log(environment_ids);
+        //console.log(environment_link);
+        //console.log(environment_ids);
+
+        var interval = 3000;
+        $('.opposite-environments').fadeOut(interval);
 
         environment_link.save({
             environment_id:   $('input[name="environment_id"]').val(),
@@ -54,10 +53,26 @@
         }, {
             wait: true,
             success: function(model, response, options) {
-                //
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('fixhub fixhub-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var str = [];
+                $.each(response, function(index, content) {
+                    str.push(content.name)
+                });
+
+                $('.opposite-environments').fadeIn(interval).html(str.join(','));
+
+                Fixhub.toast(trans('environmentLinks.edit_success'));
             },
             error: function(model, response, options) {
-                //
+                icon.removeClass().addClass('fixhub fixhub-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
             }
         });
 

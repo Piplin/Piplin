@@ -69,10 +69,11 @@ class EnvironmentController extends Controller
             $data['deployments'] = $environment->deployments()->paginate(15);
         } else if($tab == 'links') {
             $data['links'] = Link::all();
-            $data['environmentLinks'] = json_encode($environment->opposite_environments);
         } else {
+            $data['links'] = Link::all();
             $data['servers'] = $environment->servers;
         }
+        $data['oppositeEnvironments'] = $environment->opposite_environments;
 
         return view('dashboard.environments.show', $data);
     }
