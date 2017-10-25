@@ -36,13 +36,6 @@ class EnvironmentController extends Controller
      */
     public function show(Project $project, Environment $environment, $tab = '')
     {
-        /*
-        $tmp = $environment->opposite_environments->toArray();
-        foreach($tmp as $each) {
-            var_dump($each);
-        }
-        exit;
-        */
         $targetable_type = 'Fixhub\\Models\\Project';
 
         $optional = $project->commands->filter(function (Command $command) {
@@ -78,17 +71,16 @@ class EnvironmentController extends Controller
         ];
         if ($tab == 'deployments') {
             $data['deployments'] = $environment->deployments()->paginate(15);
-        } else if($tab == 'links') {
+        } elseif ($tab == 'links') {
             $data['links'] = $links;
+            $data['environmentLinks'] = $environment->oppositePivot;
         } else {
-            $data['links'] = $links;
             $data['servers'] = $environment->servers;
         }
-        $data['servers'] = $environment->servers;
-        $data['oppositeEnvironments'] = $environment->opposite_environments;
 
         return view('dashboard.environments.show', $data);
     }
+
     /**
      * Store a newly created environment in storage.
      *

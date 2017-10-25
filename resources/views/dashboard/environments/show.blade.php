@@ -51,15 +51,12 @@
             Fixhub.Servers.add({!! $servers->toJson() !!});
         @elseif($tab == 'links')
             new Fixhub.EnvironmentLinksTab();
-            Fixhub.EnvironmentLinks.add({!! $oppositeEnvironments->toJson() !!});
+            Fixhub.EnvironmentLinks.add({!! $environmentLinks->toJson() !!});
         @endif
 
 
         Fixhub.project_id = {{ $project->id }};
         Fixhub.environment_id = {{ $environment->id }};
-        @if(isset($action) && $action == 'apply')
-            $('button#deploy_project').trigger('click');
-        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

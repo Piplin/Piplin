@@ -87,7 +87,7 @@ class TipController extends Controller
     /**
      * Remove the specified tip from storage.
      *
-     * @param int $tip_id
+     * @param Tip $tip
      *
      * @return Response
      */

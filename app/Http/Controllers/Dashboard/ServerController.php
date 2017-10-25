@@ -136,6 +136,7 @@ class ServerController extends Controller
     /**
      * Remove the specified server from storage.
      *
+     * @param Project $project
      * @param Server $server
      *
      * @return Response

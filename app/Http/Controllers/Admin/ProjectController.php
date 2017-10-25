@@ -108,7 +108,7 @@ class ProjectController extends Controller
     /**
      * Clone a new project based on skeleton.
      *
-     * @param Project $skeleton_id
+     * @param Project $skeleton
      * @param Request $request
      *
      * @return Response

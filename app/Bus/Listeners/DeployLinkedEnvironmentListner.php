@@ -34,33 +34,32 @@ class DeployLinkedEnvironmentListner implements ShouldQueue
      */
     public function handle(DeployFinishedEvent $event)
     {
-         $deployment = $event->deployment;
+        $deployment = $event->deployment;
 
-         if (!$deployment->isSuccessful()) {
+        if (!$deployment->isSuccessful()) {
             return;
-         }
+        }
 
-         $project = $deployment->project;
+        $project = $deployment->project;
 
-         //
-        $opposite_environments = $deployment->environments->pluck('opposite_pivot')->flatten()->toArray();
+        $oppositeEnvironments = $deployment->environments->pluck('oppositePivot')->flatten();
         $ids = [];
-        $link_type = 2;
-        foreach ($opposite_environments as $item) {
-            $ids[] = $item['id'];
+        $link_type = EnvironmentLink::MANUAL;
+        foreach ($oppositeEnvironments as $item) {
+            $ids[] = $item->id;
 
-            if (isset($item['pivot']['link_type'])) {
-                $link_type = $item['pivot']['link_type'];
+            if ($item->pivot) {
+                $link_type = $item->pivot->link_type;
             }
         }
 
-        if( sizeof($ids) < 1) {
+        if (sizeof($ids) < 1) {
             return;
         }
 
         // Fix me
         $fields = [
-            'reason'         => 'Triggered automaticlly',
+            'reason'         => trans('environments.link_deploy_reason'),
             'project_id'     => $project->id,
             'environments'   => $ids,
             'branch'         => $project->branch,

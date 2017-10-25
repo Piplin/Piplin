@@ -152,6 +152,7 @@
              var data = this.model.toJSON();
 
              var link_type = parseInt(data.pivot.link_type);
+
              if (link_type == AUTOMATIC) {
                 data.link_type = trans('environments.link_auto');
              } else {

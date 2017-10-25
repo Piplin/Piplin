@@ -23,7 +23,7 @@ class EnvironmentLinkController extends Controller
     /**
      * Store a newly created notification in storage.
      *
-     * @param StoreHookRequest $request
+     * @param StoreEnvironmentLinkRequest $request
      *
      * @return Response
      */
@@ -38,14 +38,13 @@ class EnvironmentLinkController extends Controller
         $environment = Environment::findOrFail($fields['environment_id']);
 
         $data = [];
-
-        foreach($fields['environments'] as $id) {
+        foreach ($fields['environments'] as $id) {
             $data[$id] = ['link_type' => $fields['link_type']];
         }
 
-        $environment->opposite_environments()->sync($data);
+        $environment->oppositeEnvironments()->sync($data);
 
         // Trigger
-        return $environment->opposite_environments;
+        return $environment->oppositeEnvironments;
     }
 }
