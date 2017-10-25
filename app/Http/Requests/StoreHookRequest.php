@@ -26,7 +26,7 @@ class StoreHookRequest extends Request
         $rules = array_merge([
             'name'                       => 'required|max:255',
             'project_id'                 => 'required|integer|exists:projects,id',
-            'type'                       => 'required|in:slack,mail,custom',
+            'type'                       => 'required|in:slack,dingtalk,mail,custom',
             'enabled'                    => 'boolean',
             'on_deployment_success'      => 'boolean',
             'on_deployment_failure'      => 'boolean',
@@ -64,6 +64,20 @@ class StoreHookRequest extends Request
     }
 
     /**
+     * Validation rules specific to dingtalk.
+     *
+     * @return array
+     */
+    private function dingtalkRules()
+    {
+        return [
+            'webhook'    => 'required|url',
+            'at_mobiles' => 'nullable|string',
+            'is_at_all'  => 'nullable',
+        ];
+    }
+
+    /**
      * Validation rules specific to email.
      *
      * @return array
@@ -97,6 +111,8 @@ class StoreHookRequest extends Request
         switch ($this->get('type')) {
             case 'slack':
                 return $this->slackRules();
+            case 'dingtalk':
+                return $this->dingtalkRules();
             case 'mail':
                 return $this->mailRules();
             case 'custom':

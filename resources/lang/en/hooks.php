@@ -6,11 +6,13 @@ return [
     'create'                           => 'Add a new hook',
     'create_success'                   => 'Hook created.',
     'create_slack'                     => 'Add a new Slack notification',
+    'create_dingtalk'                  => 'Add a new Dingtalk notification',
     'create_mail'                      => 'Add a new e-mail notification',
     'create_custom'                    => 'Add a new custom notification',
     'edit'                             => 'Edit the notification',
     'edit_success'                     => 'Hook updated.',
     'edit_slack'                       => 'Edit the Slack notification',
+    'edit_dingtalk'                    => 'Edit the Dingtalk notification',
     'edit_mail'                        => 'Edit the e-mail notification',
     'edit_custom'                      => 'Edit the custom notification',
     'delete_success'                   => 'The hook has been deleted.',
@@ -34,6 +36,7 @@ return [
     'on_deployment_failure'            => 'Deployment Failed',
     'custom'                           => 'Custom',
     'slack'                            => 'Slack',
+    'dingtalk'                         => 'Dingtalk',
     'mail'                             => 'E-mail',
     'which'                            => 'Which type of notification do you wish to add?',
     'test_subject'                     => 'Test Notification',
@@ -45,10 +48,15 @@ return [
     'project'                          => 'Project',
     'commit'                           => 'Commit',
     'committer'                        => 'Committer',
-    'deployment_details'               => 'Deployment details',
     'deployment_reason'                => 'Deployment reason - :reason',
     'deployment_success_slack_message' => ':white_check_mark: Deployment %s successful! :smile:',
     'deployment_failed_slack_message'  => ':x: Deployment %s failed! :cry:',
+
+    // Dingtalk
+    'deployment_success_ding_message' => 'Deployment %s successful!',
+    'deployment_failed_ding_message'  => ':Deployment %s failed!',
+    'at_mobiles'                      => 'At mobiles',
+    'is_at_all'                       => 'Is at all',
 
     // Email
     'project_name'                     => 'Project name',

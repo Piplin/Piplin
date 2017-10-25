@@ -47,8 +47,8 @@ class NotifyDeployListener implements ShouldQueue
             $event = 'deployment_success';
         }
 
-        foreach ($project->hooks->where('enabled', true)->where('on_'. $event, true) as $channel) {
-            $channel->notify(new $notification($project, $deployment));
+        foreach ($project->hooks->where('enabled', true)->where('on_'. $event, true) as $hook) {
+            $hook->notify(new $notification($project, $deployment));
         }
     }
 }

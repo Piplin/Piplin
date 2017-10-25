@@ -50,6 +50,18 @@ class DeploymentSucceededNotification extends DeploymentFinishedNotification
      *
      * @return WebhookMessage
      */
+    public function toDingtalk(Hook $notification)
+    {
+        return $this->buildDingtalkMessage('hooks.deployment_success_ding_message', $notification);
+    }
+
+    /**
+     * Get the webhook version of the notification.
+     *
+     * @param Hook $notification
+     *
+     * @return WebhookMessage
+     */
     public function toWebhook(Hook $notification)
     {
         return $this->buildWebhookMessage('deployment_succeeded', $notification);

@@ -15,6 +15,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Fixhub\Models\Hook;
+use Fixhub\Bus\Notifications\Channels\DingtalkChannel;
 use NotificationChannels\Webhook\WebhookChannel;
 
 /**
@@ -32,8 +33,10 @@ abstract class Notification extends BaseNotification implements ShouldQueue
      */
     public function via(Hook $hook)
     {
-        if ($hook->type === Hook::WEBHOOK) {
+        if ($hook->type == Hook::WEBHOOK) {
             return [WebhookChannel::class];
+        } elseif ($hook->type == Hook::DINGTALK) {
+            return [DingtalkChannel::class];
         }
 
         return [$hook->type];

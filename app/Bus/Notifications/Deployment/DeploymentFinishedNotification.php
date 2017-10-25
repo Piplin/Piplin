@@ -123,6 +123,56 @@ abstract class DeploymentFinishedNotification extends Notification
     }
 
     /**
+     * Get the dingtalk version of the notification.
+     *
+     * @param string  $event
+     * @param Hook $notification
+     *
+     * @return WebhookMessage
+     */
+    protected function buildDingtalkMessage($translation, Hook $notification)
+    {
+        $message = trans($translation);
+        $subject = sprintf($message, '#' . $this->deployment->id);
+        $commit = $this->deployment->commit_url ? sprintf(
+                '[%s](%s)',
+                $this->deployment->short_commit,
+                $this->deployment->commit_url
+            ) : $this->deployment->short_commit;
+        $deployment_url = route('deployments', ['id' => $this->deployment->id]);
+
+        $content = trans('hooks.project') . ': ' . sprintf(
+                '[%s](%s)',
+                $this->project->name,
+                route('projects', ['id' => $this->project->id])
+        ). ' ';
+        $content .= trans('hooks.commit'). ': ' . $commit . "\n\n";
+
+        $content .= trans('hooks.committer') . ':' . $this->deployment->committer . ' ';
+        $content .= trans('hooks.branch') . ':' . $this->deployment->branch . "\n\n";
+
+        if (!empty($this->deployment->reason)) {
+            $content .= "> " . trans('hooks.deployment_reason', ['reason' => $this->deployment->reason])."\n\n";
+        }
+
+        $text = "#### ". $subject . "\n"
+                 . $content
+                 . "##### [". trans('hooks.deployment_details') ."](".$deployment_url.")\n\n";
+
+        return (new WebhookMessage())
+            ->data([
+                'msgtype'  => 'markdown',
+                'markdown' => [
+                    'title' => $subject,
+                    'text'  => $text,
+                ],
+                'at' => [
+                    'isAtAll' => !!$notification->config->is_at_all,
+                ],
+            ])->header('Content-Type', 'application/json;charset=utf-8');
+    }
+
+    /**
      * Get the webhook version of the notification.
      *
      * @param string  $event

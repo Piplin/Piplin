@@ -6,11 +6,13 @@ return [
     'create'                           => '添加新的通知',
     'create_success'                   => '通知创建成功',
     'create_slack'                     => '添加新的Slack通知',
+    'create_dingtalk'                  => '添加新的钉钉通知',
     'create_mail'                      => '添加新的邮件通知',
     'create_custom'                    => '添加新的Webhook通知',
     'edit'                             => '编辑通知',
     'edit_success'                     => '通知信息更新成功。',
     'edit_slack'                       => '编辑Slack通知',
+    'edit_dingtalk'                    => '编辑钉钉通知',
     'edit_mail'                        => '编辑邮件通知',
     'edit_custom'                      => '编辑Webhook通知',
     'delete_success'                   => '该通知已被成功删除。',
@@ -34,6 +36,7 @@ return [
     'on_deployment_failure'            => '部署失败',
     'custom'                           => 'Webhook',
     'slack'                            => 'Slack',
+    'dingtalk'                         => '钉钉',
     'mail'                             => '邮件',
     'which'                            => '请选择通知类型',
     'test_subject'                     => 'Fixhub测试通知',
@@ -45,10 +48,15 @@ return [
     'project'                          => '项目',
     'commit'                           => '代码版本号',
     'committer'                        => '代码提交者',
-    'deployment_details'               => '部署详情',
     'deployment_reason'                => '部署原因 - :reason',
     'deployment_success_slack_message' => ':white_check_mark: 上线任务 %s 部署成功! :smile:',
     'deployment_failed_slack_message'  => ':x: 上线任务 %s 部署失败! :cry:',
+
+    // Dingtalk
+    'deployment_success_ding_message' => '上线任务 %s 部署成功!',
+    'deployment_failed_ding_message'  => '上线任务 %s 部署失败!',
+    'at_mobiles'                      => '被@人的手机号',
+    'is_at_all'                       => '@所有人',
 
     // Email
     'project_name'                     => '项目名称',

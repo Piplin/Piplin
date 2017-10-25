@@ -24,9 +24,10 @@ class Hook extends Model
 {
     use SoftDeletes, BroadcastChanges, Notifiable, RevisionableTrait;
 
-    const EMAIL   = 'mail';
-    const SLACK   = 'slack';
-    const WEBHOOK = 'custom';
+    const EMAIL    = 'mail';
+    const SLACK    = 'slack';
+    const DINGTALK = 'dingtalk';
+    const WEBHOOK  = 'custom';
 
     /**
      * The attributes that are mass assignable.
@@ -87,6 +88,18 @@ class Hook extends Model
     public function routeNotificationForSlack()
     {
         if ($this->type === self::SLACK) {
+            return $this->config->webhook;
+        }
+    }
+
+    /**
+     * Returns the URL for the dingtalk webhook.
+     *
+     * @return string|null
+     */
+    public function routeNotificationForDingtalk()
+    {
+        if ($this->type === self::DINGTALK) {
             return $this->config->webhook;
         }
     }

@@ -23,6 +23,7 @@
                         <p>{{ trans('hooks.which') }}</p>
                         <div class="row text-center">
                             <a class="btn btn-app" data-type="slack"><i class="fixhub fixhub-slack"></i> {{ trans('hooks.slack') }}</a>
+                            <a class="btn btn-app" data-type="dingtalk"><i class="fixhub fixhub-pin"></i> {{ trans('hooks.dingtalk') }}</a>
                             <a class="btn btn-app" data-type="mail"><i class="fixhub fixhub-email"></i> {{ trans('hooks.mail') }}</a>
                             <a class="btn btn-app" data-type="custom"><i class="fixhub fixhub-edit"></i> {{ trans('hooks.custom') }}</a>
                         </div>
@@ -36,6 +37,7 @@
                     </div>
 
                     @include('dashboard.projects._dialogs.hooks.slack')
+                    @include('dashboard.projects._dialogs.hooks.dingtalk')
                     @include('dashboard.projects._dialogs.hooks.mail')
                     @include('dashboard.projects._dialogs.hooks.custom')
 
