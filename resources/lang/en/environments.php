@@ -34,5 +34,14 @@ return [
     'webhook_args'        => 'A comma seperated list of optional environment IDs to run',
     'add_command'         => 'Add the new environment to all existing commands',
     'optional'            => 'Optional',
+    'links'               => 'Links',
+    'link_none'           => 'The environment does not currently have any links setup',
+    'link_type'           => 'Link type',
+    'link_auto'           => 'Triggered automatically',
+    'link_manual'         => 'Triggered manually',
+    'link_opposite'       => 'Opposite environment',
+    'link_settings'       => 'Link settings',
+    'link_success'        => 'Environment links updated.',
+    'link_deploy_reason'  => 'Triggered by environment link.',
 
 ];

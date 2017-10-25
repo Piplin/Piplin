@@ -7,11 +7,14 @@
                 <ul class="nav nav-tabs">
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id]) }}"><span class="fixhub fixhub-server"></span> {{ trans('environments.servers') }}</a></li>
                     <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'deployments']) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
+                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'links']) }}"><span class="fixhub fixhub-link"></span> {{ trans('environments.links') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">
                 @if($tab == 'deployments')
                     @include('dashboard.projects._partials.deployments')
+                @elseif($tab == 'links')
+                    @include('dashboard.projects._partials.links')
                 @else
                     @include('dashboard.projects._partials.servers')
                 @endif
@@ -22,6 +25,8 @@
     </div>
     @if(empty($tab))
         @include('dashboard.projects._dialogs.server')
+    @elseif($tab == 'links')
+        @include('dashboard.projects._dialogs.link')
     @endif
     @include('dashboard.projects._dialogs.key')
     @include('dashboard.projects._dialogs.deploy')
@@ -44,13 +49,14 @@
         @if(empty($tab))
             new Fixhub.ServersTab();
             Fixhub.Servers.add({!! $servers->toJson() !!});
+        @elseif($tab == 'links')
+            new Fixhub.EnvironmentLinksTab();
+            Fixhub.EnvironmentLinks.add({!! $environmentLinks->toJson() !!});
         @endif
+
 
         Fixhub.project_id = {{ $project->id }};
         Fixhub.environment_id = {{ $environment->id }};
-        @if(isset($action) && $action == 'apply')
-            $('button#deploy_project').trigger('click');
-        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

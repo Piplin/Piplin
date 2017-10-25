@@ -45,6 +45,11 @@ Route::group([
             'uses' => 'DeploymentController@abort',
         ]);
 
+        // Environment Link
+        Route::post('environment-links', [
+            'uses' => 'EnvironmentLinkController@store',
+        ]);
+
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',

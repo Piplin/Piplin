@@ -106,7 +106,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function destroy(User $use)
+    public function destroy(User $user)
     {
         $user->delete();
 

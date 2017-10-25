@@ -87,9 +87,33 @@ class Environment extends Model
     /**
      * Belongs to many relationship.
      *
-     * @return Server
+     * @return Environment
      */
-    
+    public function oppositeEnvironments()
+    {
+        return $this->belongsToMany(
+            Environment::class,
+            'environment_links',
+            'environment_id',
+            'opposite_environment_id'
+        );
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return Environment
+     */
+    public function oppositePivot()
+    {
+        return $this->oppositeEnvironments()->withPivot('link_type');
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return ConfigFile
+     */
     public function configFiles()
     {
         return $this->belongsToMany(ConfigFile::class)

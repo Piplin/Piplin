@@ -20,6 +20,7 @@ use Fixhub\Bus\Listeners\CreateJwtListener;
 use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
 use Fixhub\Bus\Listeners\NotifyDeployListener;
 use Fixhub\Bus\Listeners\SendSignupEmailListener;
+use Fixhub\Bus\Listeners\DeployLinkedEnvironmentListner;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
@@ -46,7 +47,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        DeployFinishedEvent::class       => [NotifyDeployListener::class],
+        DeployFinishedEvent::class       => [
+            DeployLinkedEnvironmentListner::class,
+            NotifyDeployListener::class,
+        ],
         EmailChangeRequestedEvent::class => [EmailChangeConfirmationListener::class],
         UserWasCreatedEvent::class       => [SendSignupEmailListener::class],
         JsonWebTokenExpiredEvent::class  => [CreateJwtListener::class],

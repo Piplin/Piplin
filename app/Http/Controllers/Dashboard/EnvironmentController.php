@@ -16,7 +16,9 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreEnvironmentRequest;
 use Fixhub\Models\Command;
 use Fixhub\Models\Environment;
+use Fixhub\Models\EnvironmentLink;
 use Fixhub\Models\Project;
+use Fixhub\Models\Link;
 
 /**
  * Environment management controller.
@@ -57,14 +59,28 @@ class EnvironmentController extends Controller
             'tab'             => $tab,
         ];
 
+        $links = [
+            [
+                'id' => EnvironmentLink::MANUAL,
+                'name' => trans('environments.link_manual'),
+            ],
+            [
+                'id' => EnvironmentLink::AUTOMATIC,
+                'name' => trans('environments.link_auto'),
+            ],
+        ];
         if ($tab == 'deployments') {
             $data['deployments'] = $environment->deployments()->paginate(15);
+        } elseif ($tab == 'links') {
+            $data['links'] = $links;
+            $data['environmentLinks'] = $environment->oppositePivot;
         } else {
             $data['servers'] = $environment->servers;
         }
 
         return view('dashboard.environments.show', $data);
     }
+
     /**
      * Store a newly created environment in storage.
      *
