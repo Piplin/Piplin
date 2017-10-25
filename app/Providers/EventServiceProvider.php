@@ -49,7 +49,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         DeployFinishedEvent::class       => [
             DeployLinkedEnvironmentListner::class,
-            NotifyDeployListener::class, 
+            NotifyDeployListener::class,
         ],
         EmailChangeRequestedEvent::class => [EmailChangeConfirmationListener::class],
         UserWasCreatedEvent::class       => [SendSignupEmailListener::class],

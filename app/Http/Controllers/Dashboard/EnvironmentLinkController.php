@@ -39,7 +39,7 @@ class EnvironmentLinkController extends Controller
 
         $data = [];
 
-        foreach($fields['environments'] as $id) {
+        foreach ($fields['environments'] as $id) {
             $data[$id] = ['link_type' => $fields['link_type']];
         }
 
