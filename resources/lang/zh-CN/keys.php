@@ -15,11 +15,11 @@ return [
     'warning'           => '保存失败，请检查表单信息',
     'view_ssh_key'      => '预览部署秘钥(SSH Key)',
     'private_ssh_key'   => 'SSH私钥',
-    'public_ssh_key'    => 'SSH公钥',
-    'ssh_key'           => '部署秘钥',
+    'public_ssh_key'    => '部署公钥',
+    'ssh_key'           => '部署公钥',
     'ssh_key_info'      => '想要用指定的私钥，请将其内容拷贝至此。(私钥本身不要设置密码)',
     'ssh_key_example'   => '私钥内容为空，系统将自动创建(推荐)',
-    'server_keys'       => '请将以下内容追加到目标服务器部署用户的<code>~/.ssh/authorized_keys</code>文件。',
+    'server_keys'       => '目标服务器需要添加部署公钥方可执行部署任务。请将公钥拷贝到服务器部署用户目录的<code>$HOME/.ssh/authorized_keys</code>文件中。项目部署公钥如下：',
     'git_keys'          => '如果与项目关联的Git仓库需要身份验证，请将以上内容添加到Git仓库的<strong>Deploy Keys</strong>里。',
 
 ];
