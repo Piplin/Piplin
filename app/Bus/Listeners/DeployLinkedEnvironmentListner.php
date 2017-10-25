@@ -34,15 +34,15 @@ class DeployLinkedEnvironmentListner implements ShouldQueue
      */
     public function handle(DeployFinishedEvent $event)
     {
-         $deployment = $event->deployment;
+        $deployment = $event->deployment;
 
-         if (!$deployment->isSuccessful()) {
+        if (!$deployment->isSuccessful()) {
             return;
-         }
+        }
 
-         $project = $deployment->project;
+        $project = $deployment->project;
 
-         //
+        //
         $opposite_environments = $deployment->environments->pluck('opposite_pivot')->flatten()->toArray();
         $ids = [];
         $link_type = 2;
@@ -54,7 +54,7 @@ class DeployLinkedEnvironmentListner implements ShouldQueue
             }
         }
 
-        if( sizeof($ids) < 1) {
+        if (sizeof($ids) < 1) {
             return;
         }
 

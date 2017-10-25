@@ -78,7 +78,7 @@ class EnvironmentController extends Controller
         ];
         if ($tab == 'deployments') {
             $data['deployments'] = $environment->deployments()->paginate(15);
-        } else if($tab == 'links') {
+        } elseif ($tab == 'links') {
             $data['links'] = $links;
         } else {
             $data['links'] = $links;
