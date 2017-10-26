@@ -5,11 +5,17 @@ php:
   - 7.1
   - 7.2
 
+env:
+  - DB=sqlite
+
 sudo: false
 
 cache:
   directories:
     - $HOME/.composer/cache
+
+services:
+  - redis-server
 
 matrix:
   include:
