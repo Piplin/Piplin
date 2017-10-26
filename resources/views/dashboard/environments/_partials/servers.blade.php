@@ -30,7 +30,7 @@
         </table>
     </div>
 </div>
-@include('dashboard.projects._dialogs.key')
+@include('dashboard.projects._dialogs.public_key')
 
 <div class="modal fade" id="show_log">
     <div class="modal-dialog">

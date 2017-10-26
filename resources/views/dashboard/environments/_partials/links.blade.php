@@ -26,8 +26,8 @@
         </table>
     </div>
 </div>
-@include('dashboard.projects._dialogs.link')
-@include('dashboard.projects._dialogs.key')
+@include('dashboard.environments._dialogs.link')
+@include('dashboard.projects._dialogs.public_key')
 
 @push('templates')
     <script type="text/template" id="link-template">

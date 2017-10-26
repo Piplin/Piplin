@@ -12,10 +12,10 @@
 return [
 
     'label'                => '部署步骤',
-    'deploy_webhook'       => '第三方服务调用以下链接，触发Fixhub进行自动化部署工作。',
+    'deploy_webhook'       => '第三方服务以POST方式调用该链接，Fixhub会自动触发部署工作。',
     'webhook_help'         => 'Webhook 帮助',
     'webhook_example'      => '以HTTP POST方式调用该URL, Fixhub会获取最近提交的代码，并自动触发部署工作。',
-    'webhook_fields'       => 'POST参数说明(可选项)',
+    'webhook_fields'       => 'POST参数说明(可选参数)',
     'webhook_reason'       => '部署原因，尽可能简短地描述本次部署意图',
     'webhook_source'       => '触发该部署工作的来源 如： "CI Server"',
     'webhook_branch'       => '不填写将自动读取项目的默认分支',

@@ -3,7 +3,7 @@
 return [
 
     'label'          => '项目成员',
-    'create'         => '添加',
+    'create'         => '添加成员',
     'create_success' => '项目成员添加成功。',
     'edit'           => '编辑',
     'edit_success'   => '项目成员信息更新成功。',

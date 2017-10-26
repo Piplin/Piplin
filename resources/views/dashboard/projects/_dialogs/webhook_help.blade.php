@@ -59,7 +59,7 @@
                 <p>{!! trans('commands.services_description') !!}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('app.close') }}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.close') }}</button>
             </div>
         </div>
     </div>

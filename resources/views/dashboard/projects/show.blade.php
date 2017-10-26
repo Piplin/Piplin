@@ -128,7 +128,6 @@
     </div>
     @if($tab == 'environments')
         @include('dashboard.projects._dialogs.environment')
-        @include('dashboard.projects._dialogs.server')
     @elseif($tab == 'commands')
         @include('dashboard.projects._dialogs.variable')
     @elseif($tab == 'config-files')
@@ -141,10 +140,10 @@
         @include('dashboard.projects._dialogs.member')
     @endif
 
-    @include('dashboard.projects._dialogs.key')
+    @include('dashboard.projects._dialogs.public_key')
     @include('dashboard.projects._dialogs.deploy')
     @include('dashboard.projects._dialogs.redeploy')
-    @include('dashboard.projects._dialogs.deploy-draft')
+    @include('dashboard.projects._dialogs.deploy_draft')
 @stop
 
 @if($project->can('deploy'))

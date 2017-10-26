@@ -1,6 +1,6 @@
 @if (Route::currentRouteName() == 'projects' && $current_user->is_admin)
 <div class="callout">
-    <h4>{{ trans('commands.deploy_webhook') }} <i class="fixhub fixhub-help" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
+    <h4>{{ trans('commands.deploy_webhook') }} <i class="fixhub fixhub-help text-gray" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
     <code id="webhook">{{ $project->webhook_url }}</code><button class="btn btn-xs btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="fixhub fixhub-refresh"></i></button>
 </div>
 @endif
@@ -33,4 +33,4 @@
     </div>
 </div>
 
-@include('dashboard.projects._dialogs.incoming_webhook')
+@include('dashboard.projects._dialogs.webhook_help')

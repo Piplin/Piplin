@@ -22,10 +22,10 @@
                     <div id="hook-type">
                         <p>{{ trans('hooks.which') }}</p>
                         <div class="row text-center">
-                            <a class="btn btn-app" data-type="slack"><i class="fixhub fixhub-slack"></i> {{ trans('hooks.slack') }}</a>
-                            <a class="btn btn-app" data-type="dingtalk"><i class="fixhub fixhub-pin"></i> {{ trans('hooks.dingtalk') }}</a>
-                            <a class="btn btn-app" data-type="mail"><i class="fixhub fixhub-email"></i> {{ trans('hooks.mail') }}</a>
-                            <a class="btn btn-app" data-type="custom"><i class="fixhub fixhub-edit"></i> {{ trans('hooks.custom') }}</a>
+                            <a class="btn btn-app bg-purple" data-type="slack"><i class="fixhub fixhub-slack"></i> {{ trans('hooks.slack') }}</a>
+                            <a class="btn btn-app bg-aqua" data-type="dingtalk"><i class="fixhub fixhub-pin"></i> {{ trans('hooks.dingtalk') }}</a>
+                            <a class="btn btn-app bg-orange" data-type="mail"><i class="fixhub fixhub-email"></i> {{ trans('hooks.mail') }}</a>
+                            <a class="btn btn-app bg-olive" data-type="custom"><i class="fixhub fixhub-edit"></i> {{ trans('hooks.custom') }}</a>
                         </div>
                     </div>
 

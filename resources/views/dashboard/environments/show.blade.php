@@ -14,9 +14,9 @@
                 @if($tab == 'deployments')
                     @include('dashboard.projects._partials.deployments')
                 @elseif($tab == 'links')
-                    @include('dashboard.projects._partials.links')
+                    @include('dashboard.environments._partials.links')
                 @else
-                    @include('dashboard.projects._partials.servers')
+                    @include('dashboard.environments._partials.servers')
                 @endif
                 </div>
                 </div>
@@ -24,11 +24,11 @@
         </div>
     </div>
     @if(empty($tab))
-        @include('dashboard.projects._dialogs.server')
+        @include('dashboard.environments._dialogs.server')
     @elseif($tab == 'links')
-        @include('dashboard.projects._dialogs.link')
+        @include('dashboard.environments._dialogs.link')
     @endif
-    @include('dashboard.projects._dialogs.key')
+    @include('dashboard.projects._dialogs.public_key')
     @include('dashboard.projects._dialogs.deploy')
     @include('dashboard.projects._dialogs.redeploy')
 @stop
