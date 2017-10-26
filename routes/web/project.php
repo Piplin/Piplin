@@ -73,11 +73,11 @@ Route::group([
         Route::post('commands', [
             'uses' => 'CommandController@store',
         ]);
-        Route::post('config_files', [
+        Route::post('config-files', [
             'uses' => 'ConfigFileController@store',
         ]);
-        Route::post('shared_files', [
-            'uses' => 'SharedFilesController@store',
+        Route::post('shared-files', [
+            'uses' => 'SharedFileController@store',
         ]);
 
         Route::group(['middleware' => 'project.acl:manage',
