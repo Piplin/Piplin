@@ -29,7 +29,6 @@
         </div>
     </div>
 
-    @include('dashboard.projects._dialogs.server')
     @include('dashboard.projects._dialogs.variable')
     @include('dashboard.projects._dialogs.environment')
     @include('dashboard.projects._dialogs.shared_files')
