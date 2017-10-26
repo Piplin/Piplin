@@ -28,6 +28,6 @@ class EnvironmentObserver
         $environment->commands()->detach();
         $environment->configFiles()->detach();
         $environment->oppositeEnvironments()->detach();
-        $environment->servers()->forceDelete(); 
+        $environment->servers()->forceDelete();
     }
 }

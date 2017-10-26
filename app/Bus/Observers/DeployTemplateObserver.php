@@ -28,11 +28,11 @@ class DeployTemplateObserver
         $template->variables()->forceDelete();
         $template->sharedFiles()->forceDelete();
 
-        foreach($template->commands as $command) {
+        foreach ($template->commands as $command) {
             $command->environments()->detach();
         }
 
-        foreach($template->environments as $environment) {
+        foreach ($template->environments as $environment) {
             $environment->commands()->detach();
             $environment->configFiles()->detach();
         }
