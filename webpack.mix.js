@@ -95,7 +95,7 @@ mix
     .scripts([
         `${assets_path}/js/bootstrap.js`,
         `${assets_path}/js/fixhub.js`,
-        `${assets_path}/js/uploader.js`,
+        `${assets_path}/js/utils/uploader.js`,
     ], `${dist_path}/js/app.js`)
     .styles([
         `${paths.select2}/dist/css/select2.min.css`,
