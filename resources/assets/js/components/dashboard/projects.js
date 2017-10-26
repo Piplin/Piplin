@@ -1,10 +1,5 @@
 (function ($) {
 
-    $('select.deployment-source').select2({
-        width: '100%',
-        minimumResultsForSearch: 6
-    });
-
     $('.deployment-source:radio').on('change', function (event) {
         var target = $(event.currentTarget);
 
