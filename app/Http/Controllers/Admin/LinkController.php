@@ -121,7 +121,7 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        $link->delete();
+        $link->forceDelete();
 
         return [
             'success' => true,

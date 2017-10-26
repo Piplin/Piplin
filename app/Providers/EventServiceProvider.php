@@ -21,12 +21,20 @@ use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
 use Fixhub\Bus\Listeners\NotifyDeployListener;
 use Fixhub\Bus\Listeners\SendSignupEmailListener;
 use Fixhub\Bus\Listeners\DeployLinkedEnvironmentListner;
+use Fixhub\Models\Command;
+use Fixhub\Models\ConfigFile;
 use Fixhub\Models\Deployment;
+use Fixhub\Models\DeployTemplate;
+use Fixhub\Models\Environment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
+use Fixhub\Bus\Observers\CommandObserver;
+use Fixhub\Bus\Observers\ConfigFileObserver;
 use Fixhub\Bus\Observers\DeploymentObserver;
+use Fixhub\Bus\Observers\DeployTemplateObserver;
+use Fixhub\Bus\Observers\EnvironmentObserver;
 use Fixhub\Bus\Observers\HookObserver;
 use Fixhub\Bus\Observers\KeyObserver;
 use Fixhub\Bus\Observers\ProjectObserver;
@@ -68,7 +76,11 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        Command::observe(CommandObserver::class);
+        ConfigFile::observe(ConfigFileObserver::class);
         Deployment::observe(DeploymentObserver::class);
+        DeployTemplate::observe(DeployTemplateObserver::class);
+        Environment::observe(EnvironmentObserver::class);
         Key::observe(KeyObserver::class);
         Hook::observe(HookObserver::class);
         Project::observe(ProjectObserver::class);

@@ -48,4 +48,33 @@ class ProjectObserver
             $this->dispatch(new UpdateGitMirrorJob($project));
         }
     }
+
+    /**
+     * Called when the model is deleting.
+     *
+     * @param Project $project
+     */
+    public function deleting(Project $project)
+    {
+        $project->variables()->forceDelete();
+        $project->sharedFiles()->forceDelete();
+        $project->hooks()->forceDelete();
+        $project->members()->detach();
+
+        foreach ($project->commands as $command) {
+            $command->environments()->detach();
+        }
+
+        foreach ($project->environments as $environment) {
+            $environment->commands()->detach();
+            $environment->configFiles()->detach();
+            $environment->servers()->forceDelete();
+        }
+
+        $project->commands()->forceDelete();
+
+
+        $project->environments()->forceDelete();
+        $project->configFiles()->forceDelete();
+    }
 }

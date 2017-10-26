@@ -100,7 +100,7 @@ class DeployTemplateController extends Controller
      */
     public function destroy(DeployTemplate $template)
     {
-        $template->delete();
+        $template->forceDelete();
 
         return [
             'success' => true,

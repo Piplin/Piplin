@@ -143,7 +143,7 @@ class ServerController extends Controller
      */
     public function destroy(Project $project, Server $server)
     {
-        $server->delete();
+        $server->forceDelete();
 
         return [
             'success' => true,

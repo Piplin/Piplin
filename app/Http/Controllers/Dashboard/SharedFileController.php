@@ -75,7 +75,7 @@ class SharedFileController extends Controller
      */
     public function destroy(SharedFile $shared_file)
     {
-        $shared_file->delete();
+        $shared_file->forceDelete();
 
         return [
             'success' => true,
