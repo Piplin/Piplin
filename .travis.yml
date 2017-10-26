@@ -22,6 +22,7 @@ matrix:
     - php: 7.0
       env: DB=mysql
       services:
+        - redis-server
         - mysql
     - php: 7.0
       env: DB=maria
@@ -32,6 +33,7 @@ matrix:
       addons:
         postgresql: "9.3"
       services:
+        - redis-server
         - postgresql
 
 before_install:
