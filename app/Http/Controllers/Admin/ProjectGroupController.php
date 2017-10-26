@@ -117,7 +117,7 @@ class ProjectGroupController extends Controller
      */
     public function destroy(ProjectGroup $group)
     {
-        $group->delete();
+        $group->forceDelete();
 
         return [
             'success' => true,

@@ -108,7 +108,7 @@ class ConfigFileController extends Controller
      */
     public function destroy(ConfigFile $config_file)
     {
-        $config_file->delete();
+        $config_file->forceDelete();
 
         return [
             'success' => true,

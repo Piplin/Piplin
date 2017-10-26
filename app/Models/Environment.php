@@ -87,6 +87,28 @@ class Environment extends Model
     /**
      * Belongs to many relationship.
      *
+     * @return Command
+     */
+    public function commands()
+    {
+        return $this->belongsToMany(Command::class)
+                    ->orderBy('order', 'ASC');
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
+     * @return ConfigFile
+     */
+    public function configFiles()
+    {
+        return $this->belongsToMany(ConfigFile::class)
+                    ->orderBy('id', 'DESC');
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
      * @return Environment
      */
     public function oppositeEnvironments()
@@ -107,17 +129,6 @@ class Environment extends Model
     public function oppositePivot()
     {
         return $this->oppositeEnvironments()->withPivot('link_type');
-    }
-
-    /**
-     * Belongs to many relationship.
-     *
-     * @return ConfigFile
-     */
-    public function configFiles()
-    {
-        return $this->belongsToMany(ConfigFile::class)
-                    ->orderBy('id', 'DESC');
     }
 
     /**

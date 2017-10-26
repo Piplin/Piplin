@@ -93,7 +93,7 @@ class TipController extends Controller
      */
     public function destroy(Tip $tip)
     {
-        $tip->delete();
+        $tip->forceDelete();
 
         return [
             'success' => true,
