@@ -33,6 +33,7 @@
 							<div class="configfile-content" id="content" class="form-control"></div>
 						</div>
                     </div>
+                    @if(count($environments))
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="command_environments">{{ trans('configFiles.environments') }}</label>
                         <div class="col-sm-9">
@@ -49,6 +50,7 @@
                         </ul>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">

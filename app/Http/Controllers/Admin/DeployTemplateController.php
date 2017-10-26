@@ -40,14 +40,12 @@ class DeployTemplateController extends Controller
     /**
      * Show the template configuration.
      *
-     * @param int $template_id
+     * @param DeployTemplate $template
      * @param string $tab
      * @return Response
      */
-    public function show($template_id, $tab = '')
+    public function show(DeployTemplate $template, $tab = '')
     {
-        $template = DeployTemplate::findOrFail($template_id);
-
         return view('admin.templates.show', [
             'breadcrumb' => [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
@@ -81,14 +79,12 @@ class DeployTemplateController extends Controller
     /**
      * Update the specified template in storage.
      *
-     * @param  int                  $template_id
+     * @param  DeployTemplate $template
      * @param  StoreDeployTemplateRequest $request
      * @return Response
      */
-    public function update($template_id, StoreDeployTemplateRequest $request)
+    public function update(DeployTemplate $template, StoreDeployTemplateRequest $request)
     {
-        $template = DeployTemplate::findOrFail($template_id);
-
         $template->update($request->only(
             'name'
         ));
@@ -99,13 +95,11 @@ class DeployTemplateController extends Controller
     /**
      * Remove the specified template from storage.
      *
-     * @param  int      $template_id
+     * @param  DeployTemplate $template
      * @return Response
      */
-    public function destroy($template_id)
+    public function destroy(DeployTemplate $template)
     {
-        $template = DeployTemplate::findOrFail($template_id);
-
         $template->delete();
 
         return [

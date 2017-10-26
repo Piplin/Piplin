@@ -31,7 +31,7 @@ Route::group([
         ],
     ]);
 
-    Route::get('templates/{id}/{tab?}', [
+    Route::get('templates/{template}/{tab?}', [
         'as'   => 'admin.templates.show',
         'uses' => 'DeployTemplateController@show',
     ]);
