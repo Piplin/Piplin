@@ -5,6 +5,9 @@ php:
   - 7.1
   - 7.2
 
+env:
+  - DB=sqlite
+
 sudo: false
 
 cache:
@@ -12,11 +15,26 @@ cache:
     - $HOME/.composer/cache
 
 services:
-  - postgresql
   - redis-server
 
-addons:
-  postgresql: "9.3"
+matrix:
+  include:
+    - php: 7.0
+      env: DB=mysql
+      services:
+        - redis-server
+        - mysql
+    - php: 7.0
+      env: DB=maria
+      addons:
+        mariadb: 10.1
+    - php: 7.0
+      env: DB=pgsql
+      addons:
+        postgresql: "9.3"
+      services:
+        - redis-server
+        - postgresql
 
 before_install:
   - phpenv config-rm xdebug.ini
