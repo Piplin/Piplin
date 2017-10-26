@@ -61,11 +61,11 @@ class ProjectObserver
         $project->hooks()->forceDelete();
         $project->members()->detach();
 
-        foreach($project->commands as $command) {
+        foreach ($project->commands as $command) {
             $command->environments()->detach();
         }
 
-        foreach($project->environments as $environment) {
+        foreach ($project->environments as $environment) {
             $environment->commands()->detach();
             $environment->configFiles()->detach();
             $environment->servers()->forceDelete();
