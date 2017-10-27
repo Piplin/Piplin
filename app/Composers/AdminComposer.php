@@ -69,6 +69,12 @@ class AdminComposer
                 'icon' => 'template',
                 'active' => false,
             ],
+            'cabinets' => [
+                'title' => trans('cabinets.manage'),
+                'url' => route('admin.cabinets.index'),
+                'icon' => 'cabinet',
+                'active' => false,
+            ],
             'keys' => [
                 'title' => trans('keys.manage'),
                 'url' => route('admin.keys.index'),

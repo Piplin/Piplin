@@ -133,10 +133,27 @@ Route::group([
         'uses'  => 'ProjectGroupController@reorder',
     ]);
 
+    Route::resource('cabinets', 'CabinetController', [
+        'only' => ['index', 'show', 'store', 'update', 'destroy'],
+        'names' => [
+            'index'   => 'admin.cabinets.index',
+            'show'    => 'admin.cabinets.show',
+            'store'   => 'admin.cabinets.store',
+            'update'  => 'admin.cabinets.update',
+            'destroy' => 'admin.cabinets.destroy',
+        ],
+    ]);
+
+    Route::post('cabinets/reorder', [
+        'as'    => 'admin.cabinets.reorder',
+        'uses'  => 'CabinetController@reorder',
+    ]);
+
     Route::resource('revisions', 'RevisionController', [
         'only' => ['index'],
         'names' => [
             'index'   => 'admin.revisions.index',
         ],
     ]);
+
 });

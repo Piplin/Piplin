@@ -80,6 +80,7 @@ mix
         `${assets_path}/js/components/admin/links.js`,
         `${assets_path}/js/components/admin/tips.js`,
         `${assets_path}/js/components/admin/keys.js`,
+        `${assets_path}/js/components/admin/cabinets.js`,
         `${assets_path}/js/components/admin/users.js`
     ].concat(skeletons), `${dist_path}/js/admin.js`)
     .scripts([
