@@ -50,6 +50,14 @@ Route::group([
             'uses' => 'EnvironmentLinkController@store',
         ]);
 
+        // Environment Cabinets
+        Route::post('cabinets/{environment}', [
+            'uses' => 'CabinetController@store',
+        ]);
+        Route::delete('cabinets/{environment}/{cabinet}', [
+            'uses' => 'CabinetController@destroy',
+        ]);
+
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',

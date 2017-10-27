@@ -14,3 +14,9 @@ Route::any('autocomplete/users', [
     'middleware' => 'api',
     'uses'       => 'Api\AutocompleteController@users',
 ]);
+
+Route::any('autocomplete/cabinets', [
+    'as'         => 'autocomplete.cabinets',
+    'middleware' => 'api',
+    'uses'       => 'Api\AutocompleteController@cabinets',
+]);

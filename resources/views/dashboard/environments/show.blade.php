@@ -17,6 +17,7 @@
                     @include('dashboard.environments._partials.links')
                 @else
                     @include('dashboard.environments._partials.servers')
+                    @include('dashboard.environments._partials.cabinets')
                 @endif
                 </div>
                 </div>
@@ -25,6 +26,7 @@
     </div>
     @if(empty($tab))
         @include('dashboard.environments._dialogs.server')
+        @include('dashboard.environments._dialogs.cabinet')
     @elseif($tab == 'links')
         @include('dashboard.environments._dialogs.link')
     @endif
@@ -49,6 +51,8 @@
         @if(empty($tab))
             new Fixhub.ServersTab();
             Fixhub.Servers.add({!! $servers->toJson() !!});
+            new Fixhub.CabinetsTab();
+            Fixhub.Cabinets.add({!! $cabinets !!});
         @elseif($tab == 'links')
             new Fixhub.EnvironmentLinksTab();
             Fixhub.EnvironmentLinks.add({!! $environmentLinks->toJson() !!});

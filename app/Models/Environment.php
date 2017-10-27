@@ -75,6 +75,16 @@ class Environment extends Model
     /**
      * Belongs to many relationship.
      *
+     * @return Cabinet
+     */
+    public function cabinets()
+    {
+        return $this->belongsToMany(Cabinet::class)->withPivot(['id', 'status']);
+    }
+
+    /**
+     * Belongs to many relationship.
+     *
      * @return Server
      */
     

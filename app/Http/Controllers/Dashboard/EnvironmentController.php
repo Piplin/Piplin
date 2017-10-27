@@ -76,6 +76,7 @@ class EnvironmentController extends Controller
             $data['environmentLinks'] = $environment->oppositePivot;
         } else {
             $data['servers'] = $environment->servers;
+            $data['cabinets'] = $environment->cabinets->toJson();
         }
 
         return view('dashboard.environments.show', $data);

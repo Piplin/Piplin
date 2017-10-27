@@ -44,4 +44,5 @@ return [
     'link_success'        => 'Environment links updated.',
     'link_deploy_reason'  => 'Triggered by environment link.',
 
+    'cabinets'            => 'Cabinets',
 ];

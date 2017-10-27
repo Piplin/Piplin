@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Api;
 use Fixhub\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Fixhub\Models\Cabinet;
 use Fixhub\Models\User;
 
 /**
@@ -25,6 +26,7 @@ class AutocompleteController extends Controller
      * Search users by key word.
      *
      * @param  Request  $request
+     *
      * @return Response
      */
     public function users(Request $request)
@@ -32,5 +34,19 @@ class AutocompleteController extends Controller
         $users = User::where('name', 'like', $request->get('q') . '%')->get(['id', 'name'])->toArray();
 
         return Response::json($users);
+    }
+
+    /**
+     * Search cabinets by key word.
+     *
+     * @param  Request  $request
+     *
+     * @return Response
+     */
+    public function cabinets(Request $request)
+    {
+        $cabinets = Cabinet::where('name', 'like', $request->get('q') . '%')->get(['id', 'name'])->toArray();
+
+        return Response::json($cabinets);
     }
 }

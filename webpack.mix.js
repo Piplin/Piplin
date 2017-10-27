@@ -92,6 +92,7 @@ mix
         `${assets_path}/js/components/dashboard/profile.js`,
         `${assets_path}/js/components/dashboard/servers.js`,
         `${assets_path}/js/components/dashboard/environmentLinks.js`,
+        `${assets_path}/js/components/dashboard/cabinets.js`
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/bootstrap.js`,

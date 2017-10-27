@@ -51,7 +51,7 @@ class Cabinet extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['server_count', 'server_names'];
 
     /**
      * Revision creations enabled.
@@ -59,4 +59,33 @@ class Cabinet extends Model
      * @var boolean
      */
     protected $revisionCreationsEnabled = true;
+
+    /**
+     * Define a accessor for the count of projects.
+     *
+     * @return int
+     */
+    public function getServerCountAttribute()
+    {
+        return 3;
+    }
+
+    /**
+     * Gets the readable list of servers.
+     *
+     * @return string
+     */
+    public function getServerNamesAttribute()
+    {
+        $servers = [];
+        $servers[] = '1. name1' . ' : 127.0.0.1';
+        $servers[] = '2. name2' . ' : 127.0.0.2';
+        $servers[] = '3. name3' . ' : 127.0.0.3';
+
+        if (count($servers)) {
+            return implode("<br />", $servers);
+        }
+
+        return trans('app.none');
+    }
 }
