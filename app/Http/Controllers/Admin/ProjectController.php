@@ -171,7 +171,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->forceDelete();
+        $project->delete();
 
         return [
             'success' => true,

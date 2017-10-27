@@ -13,6 +13,7 @@ namespace Fixhub\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
+use Fixhub\Bus\Jobs\PurgeProjectJob;
 use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
 use Fixhub\Models\Project;
 
@@ -56,25 +57,10 @@ class ProjectObserver
      */
     public function deleting(Project $project)
     {
-        $project->variables()->forceDelete();
-        $project->sharedFiles()->forceDelete();
-        $project->hooks()->forceDelete();
-        $project->members()->detach();
-
-        foreach ($project->commands as $command) {
-            $command->environments()->detach();
+        if ($project->trashed()) {
+            return;
         }
 
-        foreach ($project->environments as $environment) {
-            $environment->commands()->detach();
-            $environment->configFiles()->detach();
-            $environment->servers()->forceDelete();
-        }
-
-        $project->commands()->forceDelete();
-
-
-        $project->environments()->forceDelete();
-        $project->configFiles()->forceDelete();
+        $this->dispatch(new PurgeProjectJob($project));
     }
 }
