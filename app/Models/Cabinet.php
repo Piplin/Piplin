@@ -61,6 +61,16 @@ class Cabinet extends Model
     protected $revisionCreationsEnabled = true;
 
     /**
+     * Has many relationship.
+     *
+     * @return Server
+     */
+    public function servers()
+    {
+        return $this->morphMany(Server::class, 'targetable');
+    }
+
+    /**
      * Define a accessor for the count of projects.
      *
      * @return int

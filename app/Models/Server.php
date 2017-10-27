@@ -12,6 +12,7 @@
 namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
+use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Venturecraft\Revisionable\RevisionableTrait;
@@ -21,7 +22,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class Server extends Model
 {
-    use SoftDeletes, BroadcastChanges, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, RevisionableTrait, HasTargetable;
 
     const SUCCESSFUL = 0;
     const UNTESTED   = 1;
@@ -40,7 +41,7 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'enabled', 'ip_address','environment_id',
+    protected $fillable = ['name', 'user', 'enabled', 'ip_address','targetable_id', 'targetable_type',
                            'path', 'status', 'output', 'port', 'order', ];
 
     /**
@@ -51,7 +52,7 @@ class Server extends Model
     protected $casts = [
         'id'             => 'integer',
         'enabled'        => 'boolean',
-        'environment_id' => 'integer',
+        'targetable_id'  => 'integer',
         'status'         => 'integer',
         'port'           => 'integer',
     ];

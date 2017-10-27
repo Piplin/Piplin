@@ -26,12 +26,13 @@ class StoreServerRequest extends Request
     public function rules()
     {
         return [
-            'name'           => 'required|max:255',
-            'user'           => 'required|max:255',
-            'ip_address'     => 'required|host',
-            'path'           => 'required',
-            'enabled'        => 'boolean',
-            'environment_id' => 'required|integer|exists:environments,id',
+            'name'            => 'required|max:255',
+            'user'            => 'required|max:255',
+            'ip_address'      => 'required|host',
+            'path'            => 'required',
+            'enabled'         => 'boolean',
+            'targetable_id'   => 'required|integer',
+            'targetable_type' => 'required|string',
         ];
     }
 }

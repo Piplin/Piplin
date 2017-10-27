@@ -42,7 +42,16 @@ class CabinetController extends Controller
 
     public function show(Cabinet $cabinet)
     {
-        echo $cabinet->id;
+        $cabinets = Cabinet::all();
+        return view('admin.cabinets.show', [
+            'title'           => trans('cabinets.manage'),
+            'servers_raw'     => $cabinet->servers,
+            'targetable_type' => 'Fixhub\\Models\\Cabinet',
+            'targetable_id'   => $cabinet->id,
+            'targetable'      => $cabinet,
+            'environments'    => $cabinets,
+            'servers'         => $cabinet->servers->toJson()
+        ]);
     }
 
     /**

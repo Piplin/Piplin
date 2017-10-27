@@ -130,6 +130,8 @@ class AdminComposer
             $subMenu = $this->getSubMenu('deployment', 'templates');
         } elseif ($name == 'admin.keys.index') {
             $subMenu = $this->getSubMenu('deployment', 'keys');
+        } elseif (in_array($name, ['admin.cabinets.index', 'admin.cabinets.show'])) {
+            $subMenu = $this->getSubMenu('deployment', 'cabinets');
         }
 
         // Misc collection

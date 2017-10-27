@@ -60,7 +60,7 @@
 
 
         Fixhub.project_id = {{ $project->id }};
-        Fixhub.environment_id = {{ $environment->id }};
+        Fixhub.targetable_id = {{ $environment->id }};
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

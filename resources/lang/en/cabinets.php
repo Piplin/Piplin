@@ -19,5 +19,6 @@ return [
     'enabled'        => 'Enabled',
     'link'           => 'Link Cabinets',
     'search'         => 'Search a cabinet',
+    'manage'         => 'Manage cabinets',
 
 ];

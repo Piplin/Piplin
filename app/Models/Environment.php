@@ -65,11 +65,12 @@ class Environment extends Model
     /**
      * Has many relationship.
      *
-     * @return Project
+     * @return Server
      */
     public function servers()
     {
-        return $this->hasMany(Server::class, 'environment_id', 'id');
+        //return $this->hasMany(Server::class, 'environment_id', 'id');
+        return $this->morphMany(Server::class, 'targetable');
     }
 
     /**
