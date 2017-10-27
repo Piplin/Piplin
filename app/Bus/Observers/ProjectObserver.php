@@ -13,10 +13,10 @@ namespace Fixhub\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Fixhub\Bus\Jobs\PurgeProjectJob;
 use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
 use Fixhub\Models\Project;
-
 /**
  * Event observer for Project model.
  */
@@ -33,6 +33,10 @@ class ProjectObserver
     {
         if (!$project->hash) {
             $project->hash = Str::random(60);
+        }
+
+        if(!$project->owner_id) {
+            $project->owner_id = Auth::user()->id;
         }
     }
 

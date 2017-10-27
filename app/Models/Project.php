@@ -52,7 +52,7 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'key_id',
+    protected $fillable = ['name', 'repository', 'branch', 'owner_id', 'group_id', 'key_id',
                            'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
                            ];
 
