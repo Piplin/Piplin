@@ -16,7 +16,7 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
 use Fixhub\Bus\Jobs\DeployDraftJob;
-use Fixhub\Bus\Jobs\SetupDeploymentJob;
+use Fixhub\Bus\Jobs\CreateDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
@@ -121,19 +121,10 @@ class DeploymentController extends Controller
             }, $request->get('optional')));
         }
 
-        $optional = array_pull($fields, 'optional');
-        $environments = array_pull($fields, 'environments');
+        dispatch(new CreateDeploymentJob($project,$fields));
 
-        $deployment = Deployment::create($fields);
-
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
+        return redirect()->route('projects', [
+            'id' => $project->id,
         ]);
     }
 
@@ -165,24 +156,18 @@ class DeploymentController extends Controller
             'project_id'      => $previous->project_id,
             'branch'          => $previous->branch,
             'reason'          => trans('deployments.rollback_reason', [
-                    'reason'  => $request->get('reason'),
-                    'id'      => $previous_id,
-                    'commit'  => $previous->short_commit
+            'reason'          => $request->get('reason'),
+            'id'              => $previous_id,
+            'commit'          => $previous->short_commit,
+            'optional'        => $optional,
+            'environments'    => $previous->environments->pluck('id')->toArray(),
             ]),
         ];
 
-        $environments = $previous->environments->pluck('id')->toArray();
+        dispatch(new CreateDeploymentJob($previous->project, $fields));
 
-        $deployment = Deployment::create($fields);
-
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
+        return redirect()->route('projects', [
+            'id' => $previous->project_id,
         ]);
     }
 
