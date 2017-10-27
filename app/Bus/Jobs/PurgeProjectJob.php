@@ -66,7 +66,7 @@ class PurgeProjectJob extends Job implements ShouldQueue
             $environment->commands()->detach();
             $environment->configFiles()->detach();
 
-            foreach($environment->servers as $server) {
+            foreach ($environment->servers as $server) {
                 $server->logs()->forceDelete();
                 $server->forceDelete();
             }
@@ -82,5 +82,4 @@ class PurgeProjectJob extends Job implements ShouldQueue
         $this->project->environments()->forceDelete();
         $this->project->commands()->forceDelete();
     }
-
 }
