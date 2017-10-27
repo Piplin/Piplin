@@ -27,7 +27,7 @@ class StoreProjectUserRequest extends Request
     {
         $rules = [
             'project_id' => 'required',
-            'user_id'    => 'required',
+            'user_ids'   => 'required',
         ];
 
         return $rules;

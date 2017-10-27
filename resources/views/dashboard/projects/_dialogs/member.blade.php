@@ -6,7 +6,6 @@
                 <h4 class="modal-title"><i class="fixhub fixhub-user"></i> <span>{{ trans('members.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
-                <input type="hidden" id="member_id" name="id" />
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <div class="modal-body">
 
@@ -16,7 +15,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="member_users">{{ trans('members.users') }}</label>
                         <div class="col-sm-9">
-                            <select class="form-control project-members" id="member_user_id" name="user_id"></select>
+                            <select class="form-control project-members" id="user_ids" name="user_ids" multiple="multiple"></select>
                         </div>
                     </div>
                 </div>

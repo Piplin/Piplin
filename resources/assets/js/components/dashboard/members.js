@@ -41,12 +41,11 @@
 
         if (button.hasClass('btn-edit')) {
             title = trans('members.edit');
-            $('#member_user_id').parent().parent().hide();
+            $('#user_ids').parent().parent().hide();
             $('.btn-danger', modal).show();
         } else {
-            $('#member_user_id').parent().parent().show();
+            $('#user_ids').parent().parent().show();
             member_select2.val('').trigger('change');
-            $('#member_level').select2(Fixhub.select2_options);
             modal.find('.modal-title span').text(trans('members.create'));
         }
 
@@ -114,8 +113,7 @@
         }
 
         var data = {
-          user_id:    $('#member_user_id').val(),
-          level:      $('#member_level').val(),
+          user_ids:    $('#user_ids').val(),
           project_id: parseInt($('input[name="project_id"]').val())
         };
 

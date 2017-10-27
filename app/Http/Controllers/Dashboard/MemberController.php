@@ -33,27 +33,26 @@ class MemberController extends Controller
      */
     public function store($project, StoreProjectUserRequest $request)
     {
-        $user_id = $request->get('user_id');
-        $user = User::findOrFail($user_id);
+        $user_ids = $request->get('user_ids');
 
-        $project->members()->attach($user_id);
+        $users = User::whereIn('id', $user_ids)->get();
 
-        return $user;
+        $project->members()->attach($user_ids);
+
+        return $users;
     }
 
     /**
      * Remove the specified user from project.
      *
      * @param Project $project
-     * @param int $user_id
+     * @param User $user
      *
      * @return Response
      */
-    public function destroy(Project $project, $user_id)
+    public function destroy(Project $project, User $user)
     {
-        $user = User::findOrFail($user_id);
-
-        $project->members()->detach($user_id);
+        $project->members()->detach($user->id);
 
         return [
             'success' => true,
