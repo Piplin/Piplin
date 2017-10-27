@@ -155,5 +155,4 @@ Route::group([
             'index'   => 'admin.revisions.index',
         ],
     ]);
-
 });
