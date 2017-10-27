@@ -12,6 +12,8 @@
 namespace Fixhub\Bus\Jobs;
 
 use Fixhub\Models\Server;
+use Fixhub\Models\Environment;
+use Fixhub\Models\Cabinet;
 use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -58,8 +60,14 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         $this->server->save();
 
         // Fix me please
+        if ($this->server->targetable instanceof Cabinet) {
+            $private_key = $this->server->targetable->key->private_key;
+        } else {
+            $private_key = $this->server->targetable->targetable->key->private_key;
+        }
+
         $key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($key, $this->server->targetable->targetable->key->private_key);
+        file_put_contents($key, $private_key);
 
         try {
             $process = new Process('TestServerConnection', [

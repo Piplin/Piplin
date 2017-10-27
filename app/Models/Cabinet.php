@@ -28,7 +28,7 @@ class Cabinet extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'order'];
+    protected $fillable = ['name', 'description', 'order', 'key_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -59,6 +59,16 @@ class Cabinet extends Model
      * @var boolean
      */
     protected $revisionCreationsEnabled = true;
+
+    /**
+     * Belongs to relationship.
+     *
+     * @return Key
+     */
+    public function key()
+    {
+        return $this->belongsTo(Key::class, 'key_id', 'id');
+    }
 
     /**
      * Has many relationship.

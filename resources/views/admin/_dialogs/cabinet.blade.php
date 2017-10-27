@@ -25,6 +25,16 @@
                             <input type="text" class="form-control" name="description" id="cabinet_description" placeholder="{{ trans('cabinets.description') }}" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="cabinet_key_id">{{ trans('cabinets.key') }}</label>
+                        <div class="col-sm-9">
+                        <select id="cabinet_key_id" name="key_id" class="select2 form-control">
+                            @foreach($keys as $key)
+                                <option value="{{ $key->id }}">{{ $key->name }}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">

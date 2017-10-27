@@ -20,6 +20,7 @@ use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
+use Fixhub\Models\Environment;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**
@@ -42,12 +43,12 @@ class DeploymentController extends Controller
         $envLocks = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
-                if ($log->server && $log->server->environment) {
-                    if (!isset($envLocks[$step->id.'_'.$log->server->environment_id])) {
-                        $log->server->environment_name = $log->server->environment->name;
-                        $envLocks[$step->id.'_'.$log->server->environment_id] = true;
-                    } else {
-                        $log->server->environment_name = null;
+                if ($log->server && $log->environment) {
+
+                    $log->server->environment_name = $log->environment->name;
+                    
+                    if (!$log->server->targetable instanceof Environment) {
+                        $log->server->environment_name .= '[Cabinet]';
                     }
                 }
 

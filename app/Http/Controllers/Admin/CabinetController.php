@@ -33,16 +33,20 @@ class CabinetController extends Controller
     {
         $cabinets = Cabinet::orderBy('order')
                     ->paginate(config('fixhub.items_per_page', 10));
+        $keys = Key::orderBy('name')
+            ->get();
 
         return view('admin.cabinets.index', [
             'title'    => trans('cabinets.manage'),
-            'cabinets'   => $cabinets
+            'cabinets' => $cabinets,
+            'keys'     => $keys,
         ]);
     }
 
     public function show(Cabinet $cabinet)
     {
         $cabinets = Cabinet::all();
+
         return view('admin.cabinets.show', [
             'title'           => trans('cabinets.manage'),
             'servers_raw'     => $cabinet->servers,
@@ -65,7 +69,8 @@ class CabinetController extends Controller
     {
         return Cabinet::create($request->only(
             'name',
-            'description'
+            'description',
+            'key_id'
         ));
     }
 
@@ -81,7 +86,8 @@ class CabinetController extends Controller
     {
         $cabinet->update($request->only(
             'name',
-            'description'
+            'description',
+            'key_id'
         ));
 
         return $cabinet;

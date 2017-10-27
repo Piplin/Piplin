@@ -15,6 +15,7 @@ return [
     'name'           => 'Name',
     'servers'        => 'Servers',
     'description'    => 'Description',
+    'key'            => 'Key',
     'status'         => 'Status',
     'enabled'        => 'Enabled',
     'link'           => 'Link Cabinets',

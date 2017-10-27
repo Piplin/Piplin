@@ -90,7 +90,7 @@ class ConfigFileController extends Controller
 
         $config_file->update($fields);
 
-        if ($environments) {
+        if ($environments !== null) {
             $config_file->environments()->sync($environments);
         }
 

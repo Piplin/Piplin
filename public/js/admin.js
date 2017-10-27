@@ -1833,6 +1833,7 @@
             $('#cabinet_id').val('');
             $('#cabinet_name').val('');
             $('#cabinet_description').val('');
+            $('#cabinet_key_id').val($("#cabinet_key_id option:first").val());
         }
 
         modal.find('.modal-title span').text(title);
@@ -1889,7 +1890,8 @@
 
         cabinet.save({
             name:        $('#cabinet_name').val(),
-            description: $('#cabinet_description').val()
+            description: $('#cabinet_description').val(),
+            key_id:      $('#cabinet_key_id').val()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -2037,6 +2039,9 @@
             $('#cabinet_id').val(this.model.id);
             $('#cabinet_name').val(this.model.get('name'));
             $('#cabinet_description').val(this.model.get('description'));
+            $('#cabinet_key_id').select2(Fixhub.select2_options)
+                                .val(this.model.get('key_id'))
+                                .trigger('change');
         },
         trash: function() {
             var target = $('#model_id');
