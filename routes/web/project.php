@@ -98,7 +98,7 @@ Route::group([
                     'uses' => 'MemberController@store',
                 ]);
 
-                Route::delete('members/{project}/{id}', [
+                Route::delete('members/{project}/{user}', [
                     'uses' => 'MemberController@destroy',
                 ]);
 
