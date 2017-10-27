@@ -67,6 +67,16 @@ class Server extends Model
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return ServerLog
+     */
+    public function logs()
+    {
+        return $this->hasMany(ServerLog::class, 'server_id', 'id');
+    }
+
+    /**
      * Determines whether the server is currently being testing.
      *
      * @return bool
