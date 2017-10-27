@@ -44,7 +44,6 @@ class DeploymentController extends Controller
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
                 if ($log->server && $log->environment) {
-
                     $log->server->environment_name = $log->environment->name;
                     
                     if (!$log->server->targetable instanceof Environment) {
