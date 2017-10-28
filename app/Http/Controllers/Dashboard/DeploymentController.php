@@ -12,6 +12,7 @@
 namespace Fixhub\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
@@ -124,6 +125,7 @@ class DeploymentController extends Controller
                 return filter_var($value, FILTER_VALIDATE_INT);
             }, $request->get('optional')));
         }
+        $fields['user_id'] = Auth::user()->id;
 
         dispatch(new CreateDeploymentJob($project, $fields));
 
@@ -167,6 +169,7 @@ class DeploymentController extends Controller
             ]),
         ];
 
+        $fields['user_id'] = Auth::user()->id;
         dispatch(new CreateDeploymentJob($previous->project, $fields));
 
         return redirect()->route('dashboard');

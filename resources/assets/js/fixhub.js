@@ -76,6 +76,14 @@
         }
     });
 
+    Fixhub.listener.on('deployment:' + Fixhub.events.MODEL_CREATED, function (data) {
+        var userId = parseInt($('meta[name="user_id"]').attr('content'));
+
+        if (data.model.user_id == userId) {
+            window.location.href = '/deployment/' + data.model.id;
+        }
+    });
+
     function updateTimeline() {
         $.ajax({
             type: 'GET',

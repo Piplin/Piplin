@@ -11,7 +11,7 @@
 
 namespace Fixhub\Models;
 
-use Fixhub\Bus\Events\ModelChangedEvent;
+use Fixhub\Models\Traits\BroadcastChanges;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\DeploymentPresenter;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class Deployment extends Model implements HasPresenter, RuntimeInterface
 {
-    use SoftDeletes, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, RevisionableTrait;
 
     const DRAFT                 = -1;
     const COMPLETED             = 0;
@@ -58,7 +58,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['reason', 'branch', 'project_id', 'status', 'source', 'build_url',
+    protected $fillable = ['reason', 'branch', 'project_id', 'user_id', 'status', 'source', 'build_url',
                            'commit', 'committer_email', 'committer', ];
 
     /**
