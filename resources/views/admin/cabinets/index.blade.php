@@ -11,6 +11,7 @@
         <thead>
             <tr>
                 <th>{{ trans('cabinets.name') }}</th>
+                <th>{{ trans('cabinets.servers') }}</th>
                 <th>{{ trans('cabinets.description') }}</th>
                 <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
@@ -47,6 +48,7 @@
 <script type="text/template" id="cabinet-template">
     <td data-cabinet-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span><a href="/admin/cabinets/<%- id %>"><%- name %></a>
     </td>
+    <td><%- server_count %> <i class="fixhub fixhub-server server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
     <td><%- description %></td>
     <td>
         <div class="btn-cabinet pull-right">

@@ -53,7 +53,7 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $appends = ['server_count', 'server_names'];
+    protected $appends = ['cabinet_count', 'cabinet_names', 'server_count', 'server_names'];
 
     /**
      * Revision creations enabled.
@@ -143,7 +143,36 @@ class Environment extends Model
     }
 
     /**
-     * Define a accessor for the count of projects.
+     * Define a accessor for the count of cabinets.
+     *
+     * @return int
+     */
+    public function getCabinetCountAttribute()
+    {
+        return $this->cabinets->count();
+    }
+
+    /**
+     * Gets the readable list of cabinets.
+     *
+     * @return string
+     */
+    public function getCabinetNamesAttribute()
+    {
+        $cabinets = [];
+        foreach ($this->cabinets as $key => $cabinet) {
+            $cabinets[] = ($key+1) . '. ' . $cabinet->name;
+        }
+
+        if (count($cabinets)) {
+            return implode("<br />", $cabinets);
+        }
+
+        return trans('app.none');
+    }
+
+    /**
+     * Define a accessor for the count of servers.
      *
      * @return int
      */
@@ -151,7 +180,6 @@ class Environment extends Model
     {
         return $this->servers->count();
     }
-
 
     /**
      * Gets the readable list of servers.

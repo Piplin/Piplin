@@ -2009,6 +2009,8 @@
             });
 
             this.$list.append(view.render().el);
+
+            $('.server-names', this.$list).tooltip();
         },
         addAll: function () {
             this.$list.html('');

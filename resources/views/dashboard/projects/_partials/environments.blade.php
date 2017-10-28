@@ -42,7 +42,7 @@
         @endif
         </td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td><%- server_count %> <i class="fixhub fixhub-server server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
+        <td><i class="fixhub fixhub-server server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i> <%- server_count %> <i class="fixhub fixhub-cabinet server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- cabinet_names %>"></i> <%- cabinet_count %></td>
         <td><span class="text-<%- label_class %>"><i class="fixhub fixhub-<%-icon_class %>"></i> <span><%- label %></span></td>
         <td><%- last_run %></td>
         <td><%- description %></td>
