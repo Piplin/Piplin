@@ -58,7 +58,7 @@ return [
         'providers'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'servers'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'successful', 'testing', 'failed', 'untested'],
         'members'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'search'],
-        'cabinets'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'link', 'link_success'],
+        'cabinets'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'link', 'link_success', 'search'],
     ],
 
     /*
