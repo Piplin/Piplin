@@ -129,6 +129,14 @@ div#reason div.radio label {
     margin-right: 0;
 }
 
+.alerts {
+    margin: 0 15px;
+    .alert {
+        margin-top: 15px;
+        margin-bottom: 0px;
+    }
+}
+
 #socket_offline {
     margin-top: 30px;
     display: none;

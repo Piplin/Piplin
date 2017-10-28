@@ -31,5 +31,6 @@ return [
     'invalid_code'          => 'The authentication code was incorrect.',
     'remember'              => 'Remember Me',
     'oauth_login'           => 'Sign in using :provider',
+    'logged_in'             => 'You\'re logged in.',
 
 ];

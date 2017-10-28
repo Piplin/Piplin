@@ -127,7 +127,8 @@ class DeploymentController extends Controller
 
         dispatch(new CreateDeploymentJob($project, $fields));
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.projects')
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('deployments.submit_success')));
     }
 
     /**

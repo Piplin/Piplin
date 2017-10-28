@@ -42,6 +42,8 @@ return [
     'no'                => 'No',
     'actions'           => 'Actions',
     'warning'           => 'WARNING',
+    'awesome'           => 'Awesome.',
+    'whoops'            => 'Whoops.',
     'socket_error'      => 'Server error',
     'socket_error_info' => 'A connection could not be established to the socket at <strong>' . config('fixhub.socket_url') . '</strong>. This is required ' .
                            'for reporting the status on running deployments. Please reload, if the issue continues please contact the system administrator',
