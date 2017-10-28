@@ -1,5 +1,74 @@
 (function ($) {
 
+    $('#deploy button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var deployment = new Fixhub.Deploy();
+
+        var environment_ids = [];
+
+        $('.deployment-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        var optional = [];
+        $('.deployment-command:checked').each(function() {
+            optional.push($(this).val());
+        });
+
+        deployment.save({
+            environments: environment_ids,
+            project_id: $('input[name="project_id"]').val(),
+            reason: $('#deployment_reason').val(),
+            source: $('input[name="source"]:checked').val(),
+            source_branch: $('#deployment_branch').val(),
+            source_tag: $('#deployment_tag').val(),
+            source_commit: $('#deployment_commit').val(),
+            optional: optional
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('fixhub fixhub-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('deployments.submit_success');
+                Fixhub.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                if (typeof errors['environments'] !== 'undefined') {
+                    var element = $('.deployment-environment');
+                    var parent = element.parents('div.form-group');
+                    parent.addClass('has-error');
+                }
+
+                icon.removeClass().addClass('fixhub fixhub-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Fixhub.Deploy = Backbone.Model.extend({
+        urlRoot: '/deployments'
+    });
+
     $('#deploy_draft').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);
 

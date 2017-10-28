@@ -20,7 +20,6 @@ use Fixhub\Models\DeployStep;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Generates the required database entries to queue a deployment.

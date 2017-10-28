@@ -25,10 +25,10 @@ Route::group([
             'uses' => 'DeploymentController@show',
         ]);
 
-        Route::post('deployment/{project}', [
+        Route::post('deployments', [
             'as'   => 'deployments.create',
             'uses' => 'DeploymentController@create',
-        ])->middleware('project.acl:deploy');
+        ]);
 
         Route::post('deployment/{deployment}/deploy-draft', [
             'as'   => 'deployments.deploy-draft',

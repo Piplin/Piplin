@@ -83,20 +83,16 @@ class DeploymentController extends Controller
         return view('dashboard.deployments.show', $data);
     }
 
-    /**
-     * Adds a deployment for the specified project to the queue.
-     *
-     * @param StoreDeploymentRequest $request
-     * @param Project $project
-     *
-     * @return Response
-     */
-    public function create(StoreDeploymentRequest $request, Project $project)
+    public function create(StoreDeploymentRequest $request)
     {
+        $project = Project::findOrFail($request->get('project_id'));
+
         $this->authorize('deploy', $project);
 
         if ($project->environments->count() === 0) {
-            return redirect()->route('projects', ['id' => $project->id]);
+            return [
+                'success' => false,
+            ];
         }
 
         $fields = [
@@ -129,8 +125,9 @@ class DeploymentController extends Controller
 
         dispatch(new CreateDeploymentJob($project, $fields));
 
-        return redirect()->route('dashboard.projects')
-            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('deployments.submit_success')));
+        return [
+            'success' => true,
+        ];
     }
 
     /**
