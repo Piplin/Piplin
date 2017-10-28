@@ -156,7 +156,8 @@ class AuthController extends Controller
             if (!Auth::check()) {
                 Auth::login($user, true);
             }
-            return Redirect::to('/');
+            return Redirect::to('/')
+                ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('auth.logged_in')));
         }
     }
 
