@@ -44,11 +44,15 @@ class DeploymentController extends Controller
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
                 $log->cabinet = false;
+                $log->environment_name = null;
                 if ($log->server && $log->environment) {
-                    $log->server->environment_name = $log->environment->name;
-
                     if (!$log->server->targetable instanceof Environment) {
                         $log->cabinet = true;
+                    }
+
+                    if (!isset($envLocks[$step->id.'_'.$log->environment_id])) {
+                        $log->environment_name = $log->environment->name;
+                        $envLocks[$step->id.'_'.$log->environment_id] = true;
                     }
                 }
 
