@@ -9,7 +9,6 @@ return [
     'edit_success'   => 'Cabinet updated.',
     'delete'         => 'Leave',
     'delete_success' => 'The cabinet has been deleted.',
-    'search'         => 'Search a cabinet',
     'none'           => 'No cabinets have been added to this environment.',
     'warning'        => 'There were some problems with your input.',
     'name'           => 'Name',
