@@ -19,30 +19,33 @@ class ServerTableSeeder extends Seeder
         DB::table('servers')->delete();
 
         Server::create([
-            'name'           => 'Web服务器',
-            'ip_address'     => '127.0.0.1',
-            'user'           => 'fixhub',
-            'path'           => '/var/www',
-            'environment_id' => 1,
-            'enabled'        => true,
+            'name'            => 'Web服务器',
+            'ip_address'      => '127.0.0.1',
+            'user'            => 'fixhub',
+            'path'            => '/var/www',
+            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'targetable_id'   => 1,
+            'enabled'         => true,
         ]);
 
         Server::create([
-            'name'           => 'API服务器',
-            'ip_address'     => '192.168.75.20',
-            'user'           => 'fixhub',
-            'path'           => '/var/www',
-            'environment_id' => 2,
-            'enabled'        => true,
+            'name'            => 'API服务器',
+            'ip_address'      => '192.168.75.20',
+            'user'            => 'fixhub',
+            'path'            => '/var/www',
+            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'targetable_id'   => 2,
+            'enabled'         => true,
         ]);
 
         Server::create([
-            'name'           => '数据库服务器',
-            'ip_address'     => '192.168.75.21',
-            'user'           => 'fixhub',
-            'path'           => '/home/fixhub',
-            'environment_id' => 2,
-            'enabled'        => false,
+            'name'            => '数据库服务器',
+            'ip_address'      => '192.168.75.21',
+            'user'            => 'fixhub',
+            'path'            => '/home/fixhub',
+            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'targetable_id'   => 2,
+            'enabled'         => false,
         ]);
     }
 }
