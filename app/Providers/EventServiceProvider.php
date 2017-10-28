@@ -29,6 +29,7 @@ use Fixhub\Models\Environment;
 use Fixhub\Models\Hook;
 use Fixhub\Models\Key;
 use Fixhub\Models\Project;
+use Fixhub\Models\Server;
 use Fixhub\Models\ServerLog;
 use Fixhub\Bus\Observers\CommandObserver;
 use Fixhub\Bus\Observers\ConfigFileObserver;
@@ -38,6 +39,7 @@ use Fixhub\Bus\Observers\EnvironmentObserver;
 use Fixhub\Bus\Observers\HookObserver;
 use Fixhub\Bus\Observers\KeyObserver;
 use Fixhub\Bus\Observers\ProjectObserver;
+use Fixhub\Bus\Observers\ServerObserver;
 use Fixhub\Bus\Observers\ServerLogObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -84,6 +86,7 @@ class EventServiceProvider extends ServiceProvider
         Key::observe(KeyObserver::class);
         Hook::observe(HookObserver::class);
         Project::observe(ProjectObserver::class);
+        Server::observe(ServerObserver::class);
         ServerLog::observe(ServerLogObserver::class);
     }
 }

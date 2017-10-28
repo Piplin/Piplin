@@ -29,7 +29,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
     /**
     * @var int
     */
-    public $timeout = 0;
+    public $timeout = 10;
 
     /**
     * @var Server
