@@ -15,7 +15,7 @@ class AlterServerLogsTableAddEnvironmentId extends Migration
     public function up()
     {
         Schema::table('server_logs', function (Blueprint $table) {
-            $table->unsignedInteger('environment_id')->after('deploy_step_id');
+            $table->unsignedInteger('environment_id')->nullable()->after('deploy_step_id');
         });
     }
 
