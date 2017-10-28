@@ -5,9 +5,9 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id]) }}"><span class="fixhub fixhub-server"></span> {{ trans('environments.servers') }}</a></li>
-                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'deployments']) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
-                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$environment->id, 'tab'=>'links']) }}"><span class="fixhub fixhub-link"></span> {{ trans('environments.links') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id]) }}"><span class="fixhub fixhub-server"></span> {{ trans('environments.servers') }}</a></li>
+                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
+                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="fixhub fixhub-link"></span> {{ trans('environments.links') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">
@@ -60,7 +60,7 @@
 
 
         Fixhub.project_id = {{ $project->id }};
-        Fixhub.targetable_id = {{ $environment->id }};
+        Fixhub.targetable_id = {{ $targetable->id }};
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

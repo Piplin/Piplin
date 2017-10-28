@@ -6,7 +6,7 @@
                 <h4 class="modal-title"><i class="fixhub fixhub-cabinet"></i> <span>{{ trans('cabinets.link') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
-                <input type="hidden" name="environment_id" value="{{ $environment->id }}" />
+                <input type="hidden" name="environment_id" value="{{ $targetable->id }}" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">

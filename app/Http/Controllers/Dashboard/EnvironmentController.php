@@ -52,7 +52,7 @@ class EnvironmentController extends Controller
             'targetable_type' => $targetable_type,
             'targetable_id'   => $environment->id,
             'environments'    => $project->environments,
-            'environment'     => $environment,
+            'targetable'      => $environment,
             'branches'        => $project->branches(),
             'tags'            => $project->tags()->reverse(),
             'optional'        => $optional,
