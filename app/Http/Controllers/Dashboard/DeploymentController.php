@@ -122,9 +122,7 @@ class DeploymentController extends Controller
 
         dispatch(new CreateDeploymentJob($project, $fields));
 
-        return redirect()->route('projects', [
-            'id' => $project->id,
-        ]);
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -165,9 +163,7 @@ class DeploymentController extends Controller
 
         dispatch(new CreateDeploymentJob($previous->project, $fields));
 
-        return redirect()->route('projects', [
-            'id' => $previous->project_id,
-        ]);
+        return redirect()->route('dashboard');
     }
 
     /**
