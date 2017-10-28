@@ -175,9 +175,7 @@ class SetupDeploymentJob extends Job
         $this->deployment->started_at = Carbon::now();
         $this->deployment->project_id = $this->project->id;
 
-        if (Auth::check()) {
-            $this->deployment->user_id = Auth::user()->id;
-        } else {
+        if (!$this->deployment->user_id) {
             $this->deployment->is_webhook = true;
         }
 
