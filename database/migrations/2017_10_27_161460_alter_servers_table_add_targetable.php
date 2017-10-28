@@ -15,8 +15,8 @@ class AlterServersTableAddTargetable extends Migration
     public function up()
     {
         Schema::table('servers', function (Blueprint $table) {
-            $table->string('targetable_type')->nullable()->after('enabled');
-            $table->integer('targetable_id')->nullable()->after('enabled');
+            $table->string('targetable_type')->default('')->after('enabled');
+            $table->integer('targetable_id')->default(0)->after('enabled');
 
             $table->index(['targetable_id', 'targetable_type']);
         });
