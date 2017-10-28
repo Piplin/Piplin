@@ -32,6 +32,7 @@ class AlterServersTableAddTargetable extends Migration
         });
 
         Schema::table('servers', function (Blueprint $table) {
+            $table->dropForeign('servers_environment_id_foreign');
             $table->dropColumn('environment_id');
         });
     }

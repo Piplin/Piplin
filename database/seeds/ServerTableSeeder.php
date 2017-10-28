@@ -22,7 +22,7 @@ class ServerTableSeeder extends Seeder
             'name'            => 'Web服务器',
             'ip_address'      => '127.0.0.1',
             'user'            => 'fixhub',
-            'path'            => '/var/www',
+            'path'            => '/var/www/web',
             'targetable_type' => 'Fixhub\\Models\\Environment',
             'targetable_id'   => 1,
             'enabled'         => true,
@@ -46,6 +46,16 @@ class ServerTableSeeder extends Seeder
             'targetable_type' => 'Fixhub\\Models\\Environment',
             'targetable_id'   => 2,
             'enabled'         => false,
+        ]);
+
+        Server::create([
+            'name'            => '数据库服务器',
+            'ip_address'      => 'localhost',
+            'user'            => 'fixhub',
+            'path'            => '/var/www/db',
+            'targetable_type' => 'Fixhub\\Models\\Cabinet',
+            'targetable_id'   => 1,
+            'enabled'         => true,
         ]);
     }
 }
