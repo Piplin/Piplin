@@ -42,6 +42,8 @@ return [
     'no'                => '否',
     'actions'           => '操作',
     'warning'           => '警告',
+    'awesome'           => '恭喜！',
+    'whoops'            => '糟糕！',
     'socket_error'      => 'Websocket通信失败',
     'socket_error_info' => '浏览器与webcocket服务器 <strong>' . config('fixhub.socket_url') . '</strong> 连接失败。'
                             .' Fixhub通过Websocket进行状态通信。'

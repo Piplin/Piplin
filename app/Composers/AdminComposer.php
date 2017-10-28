@@ -69,6 +69,12 @@ class AdminComposer
                 'icon' => 'template',
                 'active' => false,
             ],
+            'cabinets' => [
+                'title' => trans('cabinets.manage'),
+                'url' => route('admin.cabinets.index'),
+                'icon' => 'cabinet',
+                'active' => false,
+            ],
             'keys' => [
                 'title' => trans('keys.manage'),
                 'url' => route('admin.keys.index'),
@@ -124,6 +130,8 @@ class AdminComposer
             $subMenu = $this->getSubMenu('deployment', 'templates');
         } elseif ($name == 'admin.keys.index') {
             $subMenu = $this->getSubMenu('deployment', 'keys');
+        } elseif (in_array($name, ['admin.cabinets.index', 'admin.cabinets.show'])) {
+            $subMenu = $this->getSubMenu('deployment', 'cabinets');
         }
 
         // Misc collection

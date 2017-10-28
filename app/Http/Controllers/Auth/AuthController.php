@@ -90,7 +90,8 @@ class AuthController extends Controller
 
             Auth::attempt($credentials, $request->has('remember'));
 
-            return Redirect::intended('/');
+            return Redirect::intended('/')
+                ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('auth.logged_in')));
         }
 
         $this->incrementLoginAttempts($request);

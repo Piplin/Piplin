@@ -39,7 +39,7 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['server_id', 'deploy_step_id'];
+    protected $fillable = ['server_id', 'deploy_step_id', 'environment_id'];
 
     /**
      * The attributes that should be casted to native types.
@@ -50,6 +50,7 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
         'id'             => 'integer',
         'server_id'      => 'integer',
         'deploy_step_id' => 'integer',
+        'environment_id' => 'integer',
         'status'         => 'integer',
     ];
 
@@ -62,6 +63,17 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
     {
         return $this->belongsTo(Server::class);
     }
+
+    /**
+     * Belongs to assocation.
+     *
+     * @return Server
+     */
+    public function environment()
+    {
+        return $this->belongsTo(Environment::class);
+    }
+
 
     /**
      * Calculates how long the commands were running on the server for.

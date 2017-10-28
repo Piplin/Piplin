@@ -70,5 +70,6 @@ return [
     'minute'                => ':time minute|:time minutes',
     'second'                => ':time second|:time seconds',
     'deploy_failure'        => 'Problem with the deployment',
+    'subbmit_success'       => 'New Deployment Submitted',
 
 ];

@@ -7,18 +7,18 @@
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="server_id" name="id" />
-                <input type="hidden" name="project_id" value="{{ $project->id }}" />
+                <input type="hidden" name="targetable_type" value="{{ $targetable_type }}" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('servers.warning') }}
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="server_environment_id">{{ trans('servers.environment') }}</label>
+                        <label class="col-sm-3 control-label" for="server_targetable_id">{{ trans('servers.environment') }}</label>
                         <div class="col-sm-9">
-                            <select id="server_environment_id" name="environment_id" class="form-control select2">
+                            <select id="server_targetable_id" name="targetable_id" class="form-control select2">
                                 @foreach($environments as $each)
-                                    <option value="{{ $each->id }}" {{ isset($environment) && $environment->id == $each->id ? 'selected="true"' : NULL }}>{{ $each->name }}</option>
+                                    <option value="{{ $each->id }}" {{ isset($targetable) && $targetable->id == $each->id ? 'selected="true"' : NULL }}>{{ $each->name }}</option>
                                 @endforeach
                             </select>
                         </div>

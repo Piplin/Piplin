@@ -12,7 +12,7 @@
 return [
 
     'label'          => 'Servers',
-    'create'         => 'Add a new server',
+    'create'         => 'Add Server',
     'create_success' => 'Server created.',
     'web'            => 'Web server',
     'edit'           => 'Edit the server',

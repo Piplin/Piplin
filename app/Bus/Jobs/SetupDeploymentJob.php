@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Fixhub\Bus\Jobs\DeployProjectJob;
 use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
+use Fixhub\Models\Environment;
 use Fixhub\Models\DeployStep;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
@@ -207,12 +208,8 @@ class SetupDeploymentJob extends Job
             if ($this->deployment->environments()->find($environment->id) === null) {
                 continue;
             }
-            foreach ($environment->servers->where('enabled', true) as $server) {
-                ServerLog::create([
-                    'server_id'      => $server->id,
-                    'deploy_step_id' => $step->id,
-                ]);
-            }
+
+            $this->createServerLog($environment, $step);
         }
     }
 
@@ -230,17 +227,39 @@ class SetupDeploymentJob extends Job
             'deployment_id' => $this->deployment->id,
         ]);
 
-        $servers = $this->deployment->environments->pluck('servers')->flatten();
+        foreach ($this->deployment->environments as $environment) {
+            $this->createServerLog($environment, $step);
+        }
+    }
 
-        foreach ($servers as $server) {
+    /**
+     * Create server logs.
+     *
+     * @param Environment $environment
+     * @param inet $step
+     *
+     * @return void
+     */
+    private function createServerLog(Environment $environment, $step)
+    {
+        foreach ($environment->cabinets->pluck('servers')->flatten() as $server) {
             if (!$server->enabled) {
                 continue;
             }
 
             ServerLog::create([
-                    'server_id'      => $server->id,
-                    'deploy_step_id' => $step->id,
-                ]);
+                'environment_id' => $environment->id,
+                'server_id'      => $server->id,
+                'deploy_step_id' => $step->id,
+            ]);
+        }
+
+        foreach ($environment->servers->where('enabled', true) as $server) {
+            ServerLog::create([
+                'environment_id' => $environment->id,
+                'server_id'      => $server->id,
+                'deploy_step_id' => $step->id,
+            ]);
         }
     }
 }

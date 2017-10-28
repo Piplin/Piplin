@@ -36,7 +36,7 @@ class EnvironmentController extends Controller
      */
     public function show(Project $project, Environment $environment, $tab = '')
     {
-        $targetable_type = 'Fixhub\\Models\\Project';
+        $targetable_type = 'Fixhub\\Models\\Environment';
 
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
@@ -50,9 +50,9 @@ class EnvironmentController extends Controller
             'breadcrumb'      => $breadcrumb,
             'project'         => $project,
             'targetable_type' => $targetable_type,
-            'targetable_id'   => $project->id,
+            'targetable_id'   => $environment->id,
             'environments'    => $project->environments,
-            'environment'     => $environment,
+            'targetable'      => $environment,
             'branches'        => $project->branches(),
             'tags'            => $project->tags()->reverse(),
             'optional'        => $optional,
@@ -76,6 +76,7 @@ class EnvironmentController extends Controller
             $data['environmentLinks'] = $environment->oppositePivot;
         } else {
             $data['servers'] = $environment->servers;
+            $data['cabinets'] = $environment->cabinets->toJson();
         }
 
         return view('dashboard.environments.show', $data);

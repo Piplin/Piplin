@@ -19,6 +19,7 @@
             @include('_partials.nav')
                 <div class="content-wrapper">
                     <div class="container">
+                    @include('_partials.errors')
                     <section class="content-header">
                       <div class="content-title">
                         <ol class="breadcrumb">
@@ -41,7 +42,6 @@
                         @if(Request::is('/'))
                             @include('dashboard._partials.update')
                         @endif
-
                         <div class="alert alert-danger" id="socket_offline">
                             <h4><i class="icon fixhub fixhub-warning"></i> {{ trans('app.socket_error') }}</h4>
                             {!! trans('app.socket_error_info') !!}

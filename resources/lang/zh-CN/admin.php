@@ -17,6 +17,6 @@ return [
     'environments' => '环境变量',
     'dependencies' => '依赖包',
     'misc'         => '其他',
-    'deployment'   => '部署设置',
+    'resources'    => '资源管理',
 
 ];

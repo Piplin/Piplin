@@ -40,6 +40,7 @@ const skeletons = [
     `${assets_path}/js/components/dashboard/environments.js`,
     `${assets_path}/js/components/dashboard/sharedFiles.js`,
     `${assets_path}/js/components/dashboard/variables.js`,
+    `${assets_path}/js/components/dashboard/servers.js`,
 ];
 
 mix
@@ -80,6 +81,7 @@ mix
         `${assets_path}/js/components/admin/links.js`,
         `${assets_path}/js/components/admin/tips.js`,
         `${assets_path}/js/components/admin/keys.js`,
+        `${assets_path}/js/components/admin/cabinets.js`,
         `${assets_path}/js/components/admin/users.js`
     ].concat(skeletons), `${dist_path}/js/admin.js`)
     .scripts([
@@ -89,8 +91,8 @@ mix
         `${assets_path}/js/components/dashboard/members.js`,
         `${assets_path}/js/components/dashboard/projects.js`,
         `${assets_path}/js/components/dashboard/profile.js`,
-        `${assets_path}/js/components/dashboard/servers.js`,
         `${assets_path}/js/components/dashboard/environmentLinks.js`,
+        `${assets_path}/js/components/dashboard/cabinets.js`
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/bootstrap.js`,

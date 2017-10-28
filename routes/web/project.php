@@ -50,6 +50,33 @@ Route::group([
             'uses' => 'EnvironmentLinkController@store',
         ]);
 
+        // Environment Cabinets
+        Route::post('cabinets/{environment}', [
+            'uses' => 'CabinetController@store',
+        ]);
+        Route::delete('cabinets/{environment}/{cabinet}', [
+            'uses' => 'CabinetController@destroy',
+        ]);
+
+        // Server
+        Route::post('servers', [
+            'uses' => 'ServerController@store',
+        ]);
+        Route::put('servers/{server}', [
+            'uses' => 'ServerController@update',
+        ]);
+        Route::delete('servers/{server}', [
+            'uses' => 'ServerController@destroy',
+        ]);
+        Route::post('servers/reorder', [
+            'uses' => 'ServerController@reorder',
+        ]);
+        Route::get('servers/{server}/test', [
+            'as'    => 'servers.test',
+            'uses'  => 'ServerController@test',
+        ]);
+
+
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
@@ -102,23 +129,6 @@ Route::group([
                     'uses' => 'MemberController@destroy',
                 ]);
 
-                // Server
-                Route::post('servers/{project}', [
-                    'uses' => 'ServerController@store',
-                ]);
-                Route::put('servers/{project}/{server}', [
-                    'uses' => 'ServerController@update',
-                ]);
-                Route::delete('servers/{project}/{server}', [
-                    'uses' => 'ServerController@destroy',
-                ]);
-                Route::post('servers/{project}/reorder', [
-                    'uses' => 'ServerController@reorder',
-                ]);
-                Route::get('servers/{project}/{server}/test', [
-                    'as'    => 'servers.test',
-                    'uses'  => 'ServerController@test',
-                ]);
 
                 // Hook
                 Route::post('hooks/{project}', [

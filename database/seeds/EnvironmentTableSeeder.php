@@ -18,12 +18,14 @@ class EnvironmentTableSeeder extends Seeder
     {
         DB::table('environments')->delete();
 
-        Environment::create([
+        $environment = Environment::create([
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => 1,
             'name'            => 'Staging',
             'description'     => 'Staging',
         ]);
+
+        $environment->cabinets()->sync($environment->id);
 
         Environment::create([
             'targetable_type' => 'Fixhub\\Models\\Project',

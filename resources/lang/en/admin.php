@@ -17,6 +17,6 @@ return [
     'environments' => 'Environments',
     'dependencies' => 'Dependencies',
     'misc'         => 'Add-ons',
-    'deployment'   => 'Deployment settings',
+    'resources'    => 'Manage resources',
 
 ];

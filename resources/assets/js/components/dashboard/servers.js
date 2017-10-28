@@ -20,7 +20,7 @@
             });
 
             $.ajax({
-                url: '/servers/' + parseInt($('input[name="project_id"]').val()) + '/reorder',
+                url: '/servers/reorder',
                 method: 'POST',
                 data: {
                     servers: ids
@@ -50,7 +50,7 @@
             $('#server_port').val('22');
             $('#server_user').val('');
             $('#server_path').val('');
-            $('#server_environment_id').val($("#server_environment_id option:selected").val());
+            $('#server_targetable_id').val($("#server_targetable_id option:selected").val());
         }
 
         modal.find('.modal-title span').text(title);
@@ -105,13 +105,14 @@
         }
 
         server.save({
-            name:           $('#server_name').val(),
-            ip_address:     $('#server_address').val(),
-            enabled:        $('#server_enabled').is(':checked'),
-            port:           $('#server_port').val(),
-            user:           $('#server_user').val(),
-            path:           $('#server_path').val(),
-            environment_id: $('#server_environment_id').val()
+            name:            $('#server_name').val(),
+            ip_address:      $('#server_address').val(),
+            enabled:         $('#server_enabled').is(':checked'),
+            port:            $('#server_port').val(),
+            user:            $('#server_user').val(),
+            path:            $('#server_path').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   parseInt($('#server_targetable_id').val())
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -158,7 +159,7 @@
 
 
     Fixhub.Server = Backbone.Model.extend({
-        urlRoot: '/servers/' + parseInt($('input[name="project_id"]').val())
+        urlRoot: '/servers'
     });
 
     var Servers = Backbone.Collection.extend({
@@ -196,7 +197,8 @@
                 var server = Fixhub.Servers.get(parseInt(data.model.id));
 
                 if (server) {
-                    if(Fixhub.environment_id == data.model.environment_id) {
+                    // Fix me - targetable_type
+                    if(Fixhub.targetable_id == data.model.targetable_id) {
                         server.set(data.model);
                     } else {
                         Fixhub.Servers.remove(server);
@@ -205,7 +207,7 @@
             });
 
             Fixhub.listener.on('server:' + Fixhub.events.MODEL_CREATED, function (data) {
-                if (parseInt(data.model.environment_id) === parseInt(Fixhub.environment_id)) {
+                if (parseInt(data.model.targetable_id) === parseInt(Fixhub.targetable_id)) {
                     Fixhub.Servers.add(data.model);
                 }
             });
@@ -287,9 +289,9 @@
         edit: function() {
             $('#server_id').val(this.model.id);
             $('#server_name').val(this.model.get('name'));
-            $('#server_environment_id')
+            $('#server_targetable_id')
                 .select2(Fixhub.select2_options)
-                .val(this.model.get('environment_id'))
+                .val(this.model.get('targetable_id'))
                 .trigger('change');
             $('#server_enabled').prop('checked', (this.model.get('enabled') === true));
             $('#server_address').val(this.model.get('ip_address'));

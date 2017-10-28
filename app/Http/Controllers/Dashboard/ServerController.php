@@ -17,6 +17,8 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreServerRequest;
 use Fixhub\Models\Server;
 use Fixhub\Models\Project;
+use Fixhub\Models\Environment;
+use Fixhub\Models\Cabinet;
 
 /**
  * Server management controller.
@@ -31,7 +33,7 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function store(Project $project, StoreServerRequest $request)
+    public function store(StoreServerRequest $request)
     {
         $fields = $request->only(
             'name',
@@ -40,11 +42,22 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'environment_id'
+            'targetable_type',
+            'targetable_id'
         );
 
+        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_type = array_pull($fields, 'targetable_type');
+
+        if ($targetable_type == 'Fixhub\\Models\\Environment') {
+            $targetable = Environment::findOrFail($targetable_id);
+        } else {
+            $targetable = Cabinet::findOrFail($targetable_id);
+        }
+
         // Get the current highest server order
-        $max = Server::where('environment_id', $fields['environment_id'])
+        $max = Server::where('targetable_id', $targetable_id)
+                           ->where('targetable_type', $targetable_type)
                            ->orderBy('order', 'DESC')
                            ->first();
 
@@ -56,7 +69,7 @@ class ServerController extends Controller
         $fields['order'] = $order;
         $fields['output'] = null;
 
-        $server = Server::create($fields);
+        $server = $targetable->servers()->create($fields);
 
         return $server;
     }
@@ -70,7 +83,7 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function update(Project $project, Server $server, StoreServerRequest $request)
+    public function update(Server $server, StoreServerRequest $request)
     {
         $server->update($request->only(
             'name',
@@ -79,7 +92,7 @@ class ServerController extends Controller
             'ip_address',
             'port',
             'path',
-            'environment_id'
+            'targetable_id'
         ));
 
         return $server;
@@ -93,7 +106,7 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function test(Project $project, Server $server)
+    public function test(Server $server)
     {
         if (!$server->isTesting()) {
             $server->status = Server::TESTING;
@@ -115,7 +128,7 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function reorder(Project $project, Request $request)
+    public function reorder(Request $request)
     {
         $order = 0;
 
@@ -141,7 +154,7 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function destroy(Project $project, Server $server)
+    public function destroy(Server $server)
     {
         $server->forceDelete();
 

@@ -21,6 +21,7 @@ use Fixhub\Models\Project;
 use Fixhub\Models\Server;
 use Fixhub\Models\ServerLog;
 use Fixhub\Models\User;
+use Fixhub\Models\Environment;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
 use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -275,7 +276,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
                 $this->sendFilesForStep($step, $log);
 
-                $process = $this->buildScript($step, $server);
+                $process = $this->buildScript($step, $server, $log);
 
                 $failed    = false;
                 $cancelled = false;
@@ -366,7 +367,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function sendConfigFileFromString($release_dir, ServerLog $log)
     {
-        foreach ($log->server->environment->configFiles as $file) {
+        foreach ($log->environment->configFiles as $file) {
             $this->sendFileFromString($release_dir . '/' . $file->path, $file->content, $log);
         }
     }
@@ -374,10 +375,11 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Generates the actual bash commands to run on the server.
      *
-     * @param  DeployStep $step
-     * @param  Server     $server
+     * @param DeployStep $step
+     * @param Server     $server
+     * @param ServerLog  $log
      */
-    private function buildScript(DeployStep $step, Server $server)
+    private function buildScript(DeployStep $step, Server $server, ServerLog $log)
     {
         $tokens = $this->getTokenList($step, $server);
 
@@ -396,7 +398,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         }
 
         // Now get the full script
-        return $this->getScriptForStep($step, $server, $tokens)
+        return $this->getScriptForStep($step, $log, $tokens)
                     ->prependScript($exports)
                     ->setServer($server, $this->private_key, $user);
     }
@@ -425,10 +427,10 @@ class DeployProjectJob extends Job implements ShouldQueue
      * Gets the script which is used for the supplied step.
      *
      * @param DeployStep $step
-     * @param Server $server
-     * @param array $tokens
+     * @param ServerLog  $log
+     * @param array      $tokens
      */
-    private function getScriptForStep(DeployStep $step, Server $server, array $tokens = [])
+    private function getScriptForStep(DeployStep $step, ServerLog $log, array $tokens = [])
     {
         switch ($step->stage) {
             case Stage::DO_CLONE:
@@ -436,7 +438,7 @@ class DeployProjectJob extends Job implements ShouldQueue
             case Stage::DO_INSTALL:
                 // Write configuration file to release dir and symlink shared files.
                 $process = new Process('deploy.steps.InstallNewRelease', $tokens);
-                $process->prependScript($this->configurationFileCommands($server, $tokens['release_path']))
+                $process->prependScript($this->configurationFileCommands($log, $tokens['release_path']))
                         ->appendScript($this->sharedFileCommands($tokens['release_path'], $tokens['shared_path']));
 
                 return $process;
@@ -512,12 +514,12 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * create the command for sending uploaded files.
      *
-     * @param Server $server
+     * @param ServerLog $log
      * @param string $release_dir
      */
-    private function configurationFileCommands(Server $server, $release_dir)
+    private function configurationFileCommands(ServerLog $log, $release_dir)
     {
-        if (!$server->environment->configFiles->count()) {
+        if (!$log->environment->configFiles->count()) {
             return '';
         }
 
@@ -525,7 +527,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $script = '';
 
-        foreach ($server->environment->configFiles as $file) {
+        foreach ($log->environment->configFiles as $file) {
             $script .= $parser->parseFile('deploy.ConfigurationFile', [
                 'path' => $release_dir . '/' . $file->path,
             ]);

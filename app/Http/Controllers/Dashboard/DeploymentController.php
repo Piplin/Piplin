@@ -16,10 +16,11 @@ use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreDeploymentRequest;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
 use Fixhub\Bus\Jobs\DeployDraftJob;
-use Fixhub\Bus\Jobs\SetupDeploymentJob;
+use Fixhub\Bus\Jobs\CreateDeploymentJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
+use Fixhub\Models\Environment;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 
 /**
@@ -42,12 +43,16 @@ class DeploymentController extends Controller
         $envLocks = [];
         foreach ($deployment->steps as $step) {
             foreach ($step->logs as $log) {
-                if ($log->server && $log->server->environment) {
-                    if (!isset($envLocks[$step->id.'_'.$log->server->environment_id])) {
-                        $log->server->environment_name = $log->server->environment->name;
-                        $envLocks[$step->id.'_'.$log->server->environment_id] = true;
-                    } else {
-                        $log->server->environment_name = null;
+                $log->cabinet = false;
+                $log->environment_name = null;
+                if ($log->server && $log->environment) {
+                    if (!$log->server->targetable instanceof Environment) {
+                        $log->cabinet = true;
+                    }
+
+                    if (!isset($envLocks[$step->id.'_'.$log->environment_id])) {
+                        $log->environment_name = $log->environment->name;
+                        $envLocks[$step->id.'_'.$log->environment_id] = true;
                     }
                 }
 
@@ -120,20 +125,10 @@ class DeploymentController extends Controller
             }, $request->get('optional')));
         }
 
-        $optional = array_pull($fields, 'optional');
-        $environments = array_pull($fields, 'environments');
+        dispatch(new CreateDeploymentJob($project, $fields));
 
-        $deployment = Deployment::create($fields);
-
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
+        return redirect()->route('dashboard.projects')
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('deployments.submit_success')));
     }
 
     /**
@@ -164,25 +159,17 @@ class DeploymentController extends Controller
             'project_id'      => $previous->project_id,
             'branch'          => $previous->branch,
             'reason'          => trans('deployments.rollback_reason', [
-                    'reason'  => $request->get('reason'),
-                    'id'      => $previous_id,
-                    'commit'  => $previous->short_commit
+            'reason'          => $request->get('reason'),
+            'id'              => $previous_id,
+            'commit'          => $previous->short_commit,
+            'optional'        => $optional,
+            'environments'    => $previous->environments->pluck('id')->toArray(),
             ]),
         ];
 
-        $environments = $previous->environments->pluck('id')->toArray();
+        dispatch(new CreateDeploymentJob($previous->project, $fields));
 
-        $deployment = Deployment::create($fields);
-
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
+        return redirect()->route('dashboard');
     }
 
     /**

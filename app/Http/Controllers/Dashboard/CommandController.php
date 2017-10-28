@@ -153,7 +153,7 @@ class CommandController extends Controller
 
         $command->update($fields);
 
-        if ($environments) {
+        if ($environments !== null) {
             $command->environments()->sync($environments);
         }
 
