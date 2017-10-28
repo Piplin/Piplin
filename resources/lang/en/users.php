@@ -17,7 +17,7 @@ return [
     'password_confirm'  => 'Password Confirmation',
     'password_existing' => '(leave blank to leave unchanged)',
     'nickname'          => 'Nickname',
-    'create'            => 'Add a new user',
+    'create'            => 'Add User',
     'create_success'    => 'User created.',
     'edit'              => 'Edit a user',
     'edit_success'      => 'User updated.',

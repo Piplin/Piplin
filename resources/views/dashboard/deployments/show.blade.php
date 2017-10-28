@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="box box-solid">
+<div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">{{ trans('deployments.reason') }} :</h3>
         <span>{{ $deployment->reason }}</span>
@@ -31,7 +31,7 @@
 <div class="row">
     @foreach($deployment->steps as $index => $step)
     <div class="col-xs-12">
-        <div class="box deploy-step {{ $step->isCustom() ?: 'box-primary' }}">
+        <div class="box deploy-step">
             <div class="box-header">
                 <i class="fixhub {{ $step->icon }}"></i>
                 <h3 class="box-title">{{ $index+1 }}. <span>{{ $step->name }}</span> </h3>
