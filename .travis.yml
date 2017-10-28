@@ -45,10 +45,8 @@ install:
 before_script:
     - cp .env.example .env
     - sed -i 's/APP_ENV=production/APP_ENV=local/g' .env
-    - sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=pgsql/g' .env
-    - sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=postgres/g' .env
+    - make travis
     - php artisan key:generate --no-interaction
-    - psql -c 'create database fixhub;' -U postgres
     - php artisan migrate --seed --env="testing"
     - php vendor/bin/codecept build
     - make file-permission
