@@ -49,7 +49,7 @@ class User extends Authenticatable implements HasPresenter
      *
      * @var int
      */
-    const LEVEL_USER = 3;
+    const LEVEL_COLLABORATOR = 3;
 
     /**
      * The attributes that are mass assignable.
@@ -152,7 +152,7 @@ class User extends Authenticatable implements HasPresenter
      */
     public function getIsUserAttribute()
     {
-        return $this->level == self::LEVEL_USER;
+        return $this->level == self::LEVEL_COLLABORATOR;
     }
 
     /**
@@ -208,8 +208,8 @@ class User extends Authenticatable implements HasPresenter
             return trans('users.level.admin');
         } elseif ($this->level == User::LEVEL_MANAGER) {
             return trans('users.level.manager');
-        } elseif ($this->level == User::LEVEL_USER) {
-            return trans('users.level.user');
+        } elseif ($this->level == User::LEVEL_COLLABORATOR) {
+            return trans('users.level.collaborator');
         }
 
         return 'Unknown';

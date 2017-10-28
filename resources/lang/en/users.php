@@ -63,9 +63,9 @@ return [
     'black'             => 'Black',
     'role'              => 'Role',
     'level'             => [
-        'admin'   => 'Administrator',
-        'manager' => 'Manager',
-        'user'    => 'Developer',
+        'admin'        => 'Administrator',
+        'manager'      => 'Manager',
+        'collaborator' => 'Collaborator',
     ],
     'dashboard'         => [
         'title'       => 'Default dashboard',

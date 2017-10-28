@@ -36,9 +36,9 @@ class UserController extends Controller
             'users_raw' => $users,
             'users'     => $users->toJson(),
             'levels'    => [
-                User::LEVEL_USER     => trans('users.level.user'),
-                User::LEVEL_MANAGER  => trans('users.level.manager'),
-                User::LEVEL_ADMIN    => trans('users.level.admin'),
+                User::LEVEL_COLLABORATOR => trans('users.level.collaborator'),
+                User::LEVEL_MANAGER      => trans('users.level.manager'),
+                User::LEVEL_ADMIN        => trans('users.level.admin'),
             ],
         ]);
     }

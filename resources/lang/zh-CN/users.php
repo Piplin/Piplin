@@ -62,9 +62,9 @@ return [
     'black'             => '端砚黑',
     'role'              => '角色',
     'level'             => [
-        'admin'   => '超级管理员',
-        'manager' => '管理员',
-        'user'    => '研发工程师',
+        'admin'        => '超级管理员',
+        'manager'      => '管理员',
+        'collaborator' => '协作者',
     ],
     'dashboard'         => [
         'title'       => '控制台显示页',

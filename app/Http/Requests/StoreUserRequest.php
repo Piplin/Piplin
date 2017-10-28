@@ -28,7 +28,7 @@ class StoreUserRequest extends Request
     {
         $rules = [
             'name'     => 'required|max:255|unique:users,name',
-            'level'    => 'required|integer|min:' . User::LEVEL_ADMIN . '|max:' . User::LEVEL_USER,
+            'level'    => 'required|integer|min:' . User::LEVEL_ADMIN . '|max:' . User::LEVEL_COLLABORATOR,
             'nickname' => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',
