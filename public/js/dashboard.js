@@ -1599,7 +1599,7 @@
     $('#cabinet').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var modal = $(this);
-        var title = trans('cabinets.create');
+        var title = trans('cabinets.link');
 
         $('.btn-danger', modal).hide();
         $('.callout-danger', modal).hide();
@@ -1614,7 +1614,7 @@
         } else {
             $('#cabinet_ids').parent().parent().show();
             cabinet_select2.val('').trigger('change');
-            modal.find('.modal-title span').text(trans('cabinets.create'));
+            modal.find('.modal-title span').text(trans('cabinets.link'));
         }
 
         modal.find('.modal-title span').text(title);

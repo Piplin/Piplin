@@ -43,5 +43,6 @@ return [
     'link_settings'       => '设置关联',
     'link_success'        => '设置关联成功。',
     'link_deploy_reason'  => '由联动部署机制触发',
+    'cabinets'            => '机柜',
 
 ];
