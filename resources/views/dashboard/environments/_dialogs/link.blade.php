@@ -7,7 +7,7 @@
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="environment_link_id" name="id" />
-                <input type="hidden" name="environment_id" value="{{ $environment->id }}" />
+                <input type="hidden" name="environment_id" value="{{ $targetable->id }}" />
             <div class="modal-body">
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="link_types">{{ trans('environments.link_type') }}</label>
@@ -24,7 +24,7 @@
                     <div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($environments as $each)
-                            @if($each->id != $environment->id)
+                            @if($each->id != $targetable->id)
                             <li>
                                 <div class="checkbox">
                                     <label for="link_opposite_environment_{{ $each->id }}">
