@@ -13,6 +13,7 @@
         <meta name="socket_url" content="{{ config('fixhub.socket_url') }}" />
         <meta name="jwt" content="{{ Session::get('jwt') }}" />
         <meta name="locale" content="{{ $language }}" />
+        <meta name="user_id"  content="{{ $current_user->id }}" />  
     </head>
     <body class="hold-transition skin-{{ $theme }}">
         <div class="wrapper">

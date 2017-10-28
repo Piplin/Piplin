@@ -28,18 +28,18 @@ class CreateDeploymentJob extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
-    * @var Project
-    */
+     * @var Project
+     */
     public $project;
 
     /**
-    * @var array
-    */
+     * @var array
+     */
     private $fields;
 
     /**
