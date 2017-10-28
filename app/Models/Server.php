@@ -58,16 +58,6 @@ class Server extends Model
     ];
 
     /**
-     * Belongs to relationship.
-     *
-     * @return Environment
-     */
-    public function environment()
-    {
-        return $this->belongsTo(Environment::class);
-    }
-
-    /**
      * Has many relationship.
      *
      * @return ServerLog
