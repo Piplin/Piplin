@@ -120,7 +120,7 @@ class DeploymentController extends Controller
             }, $request->get('optional')));
         }
 
-        dispatch(new CreateDeploymentJob($project,$fields));
+        dispatch(new CreateDeploymentJob($project, $fields));
 
         return redirect()->route('projects', [
             'id' => $project->id,
