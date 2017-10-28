@@ -12,7 +12,7 @@
 return [
 
     'label'          => 'Variables',
-    'create'         => 'Add a new variable',
+    'create'         => 'Add Variable',
     'create_success' => 'Variable created.',
     'edit'           => 'Edit the variable',
     'edit_success'   => 'Variable updated.',

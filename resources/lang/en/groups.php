@@ -15,7 +15,7 @@ return [
     'name'             => 'Name',
     'name_placeholder' => 'Fixhub',
     'projects'         => 'Number of projects',
-    'create'           => 'Add a new group',
+    'create'           => 'Add Group',
     'create_success'   => 'Project group added.',
     'edit'             => 'Edit a group',
     'edit_success'     => 'Project group updated.',

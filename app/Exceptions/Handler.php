@@ -21,6 +21,7 @@ use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Whoops\Run as Whoops;
 
 /**
@@ -37,6 +38,7 @@ class Handler extends ExceptionHandler
         AuthenticationException::class,
         AuthorizationException::class,
         HttpException::class,
+        MethodNotAllowedHttpException::class,
         ModelNotFoundException::class,
         TokenMismatchException::class,
         ValidationException::class,
@@ -52,6 +54,7 @@ class Handler extends ExceptionHandler
         AuthorizationException::class,
         HttpResponseException::class,
         ModelNotFoundException::class,
+        MethodNotAllowedHttpException::class,
         ValidationException::class,
     ];
 

@@ -8,7 +8,7 @@ return [
     'title'          => 'Title',
     'url'            => 'URL',
     'description'    => 'Description',
-    'create'         => 'Create',
+    'create'         => 'Add Link',
     'create_success' => 'Link created.',
     'edit'           => 'Edit',
     'edit_success'   => 'Link updated.',

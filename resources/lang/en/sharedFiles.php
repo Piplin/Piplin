@@ -13,7 +13,7 @@ return [
 
     'label'          => 'Shared Files',
     'tab_label'      => 'Shared Files',
-    'create'         => 'Add a new file or folder',
+    'create'         => 'Add File or Folder',
     'create_success' => 'Shared file created.',
     'edit'           => 'Edit the file or folder',
     'edit_success'   => 'Shared file updated.',

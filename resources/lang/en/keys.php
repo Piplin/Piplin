@@ -7,7 +7,7 @@ return [
     'none'              => 'There are currently no SSH keys setup',
     'name'              => 'Name',
     'fingerprint'       => 'Fingerprint',
-    'create'            => 'Add a new SSH key',
+    'create'            => 'Add SSH key',
     'create_success'    => 'SSH key created.',
     'edit'              => 'Edit the SSH key',
     'edit_success'      => 'SSH key updated.',

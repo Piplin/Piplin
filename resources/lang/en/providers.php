@@ -8,7 +8,7 @@ return [
     'icon'           => 'Icon',
     'description'    => 'Description',
     'login_button'   => 'Login button',
-    'create'         => 'Create a new provider',
+    'create'         => 'Add Provider',
     'create_success' => 'Provider created.',
     'edit'           => 'Edit the provider',
     'edit_success'   => 'Provider updated.',

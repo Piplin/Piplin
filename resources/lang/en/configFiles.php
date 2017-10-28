@@ -12,7 +12,7 @@
 return [
 
     'label'          => 'Configuration Files',
-    'create'         => 'Add a new file',
+    'create'         => 'Add Config File',
     'create_success' => 'Configuration file created.',
     'edit'           => 'Edit the file',
     'edit_success'   => 'Configuration file updated.',

@@ -16,7 +16,7 @@
                     <th>{{ trans('deployments.environments') }}</th>
                     <th>{{ trans('deployments.started_by') }}</th>
                     <th>{{ trans('deployments.deployer') }}</th>
-                    <th>{{ trans('deployments.committer') }}</th>
+                    <!--<th>{{ trans('deployments.committer') }}</th>-->
                     <th>{{ trans('deployments.commit') }}</th>
                     <th>{{ trans('app.status') }}</th>
                     <th class="text-right">{{ trans('app.actions') }}</th>
@@ -26,7 +26,7 @@
                 @foreach ($deployments as $deployment)
                 <tr id="deployment_{{ $deployment->id }}">
                     <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->finished_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></td>
-                    <td>{{ $deployment->environment_names }}</td>
+                    <td class="small">{{ $deployment->environment_names }}</td>
                     <td>
                         {{ $deployment->is_webhook ? trans('deployments.webhook') : trans('deployments.manually') }}
                         @if (!empty($deployment->reason))
@@ -40,7 +40,7 @@
                             {{ $deployment->deployer_name }}
                         @endif
                     </td>
-                    <td class="committer">{{ $deployment->committer_name }}</td>
+                    <!--<td class="committer">{{ $deployment->committer_name }}</td>-->
                     <td class="commit">
                         @if ($deployment->commit_url)
                         <a href="{{ $deployment->commit_url }}" target="_blank">{{ $deployment->short_commit_hash }}</a>

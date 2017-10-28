@@ -49,7 +49,7 @@ return [
     'activate'             => 'Activate New Release',
     'purge'                => 'Purge Old Releases',
     'warning'              => 'The command could not be saved, please check the form below.',
-    'create'               => 'Add a new command',
+    'create'               => 'Add Command',
     'create_success'       => 'Command created.',
     'edit'                 => 'Edit a command',
     'edit_success'         => 'Command updated.',

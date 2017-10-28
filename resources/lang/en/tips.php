@@ -8,7 +8,7 @@ return [
     'body'           => 'Body',
     'status'         => 'Status',
     'enabled'        => 'Enabled',
-    'create'         => 'Create a new tip',
+    'create'         => 'Add Tip',
     'create_success' => 'Tip created.',
     'edit'           => 'Edit the tip',
     'edit_success'   => 'Tip created.',

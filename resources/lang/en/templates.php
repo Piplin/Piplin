@@ -18,7 +18,7 @@ return [
     'custom'         => 'Custom',
     'example'        => 'Laravel 5 Application',
     'name'           => 'Name',
-    'create'         => 'Add a new template',
+    'create'         => 'Add Template',
     'create_success' => 'Template created.',
     'edit'           => 'Edit the template',
     'edit_success'   => 'Template updated.',

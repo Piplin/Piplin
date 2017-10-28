@@ -12,7 +12,7 @@
 return [
 
     'label'               => 'Environments',
-    'create'              => 'Add a new environment',
+    'create'              => 'Add Environment',
     'create_success'      => 'Environment created.',
     'edit'                => 'Edit the environment',
     'edit_success'        => 'Environment updated.',

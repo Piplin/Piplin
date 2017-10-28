@@ -39,7 +39,7 @@ return [
     'apply'             => 'Apply for a deployment',
     'apply_choose'      => 'Choose a project',
     'apply_intro'       => 'Please choose a project to apply for a deployment.',
-    'create'            => 'Add a new project',
+    'create'            => 'Add Project',
     'create_success'    => 'Project added.',
     'edit'              => 'Edit a project',
     'edit_success'      => 'Project updated.',
