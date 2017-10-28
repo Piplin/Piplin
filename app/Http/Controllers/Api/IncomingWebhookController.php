@@ -13,7 +13,7 @@ namespace Fixhub\Http\Controllers\Api;
 
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Bus\Jobs\AbortDeploymentJob;
-use Fixhub\Bus\Jobs\SetupDeploymentJob;
+use Fixhub\Bus\Jobs\CreateDeploymentJob;
 use Fixhub\Services\Webhooks\Beanstalkapp;
 use Fixhub\Services\Webhooks\Bitbucket;
 use Fixhub\Services\Webhooks\Custom;
@@ -72,7 +72,7 @@ class IncomingWebhookController extends Controller
             //if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
             if (is_array($payload)) {
                 $this->abortQueued($project->id);
-                $this->createDeployment($payload);
+                dispatch(new CreateDeploymentJob($project, $payload));
 
                 $success = true;
             }
@@ -193,24 +193,5 @@ class IncomingWebhookController extends Controller
                 $deployment->delete();
             }
         }
-    }
-
-    /**
-     * Creates a new instance of the server.
-     *
-     * @param  array $fields
-     * @return Model
-     */
-    private function createDeployment(array $fields)
-    {
-        $optional = array_pull($fields, 'optional');
-        $environments = array_pull($fields, 'environments');
-        $deployment = Deployment::create($fields);
-        dispatch(new SetupDeploymentJob(
-            $deployment,
-            $environments,
-            $optional
-        ));
-        return $deployment;
     }
 }
