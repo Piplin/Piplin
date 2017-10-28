@@ -56,5 +56,6 @@ else
 travis:
 
 	@sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=travis/g' .env
+	@sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=/g' .env
 	@mysql -e 'CREATE DATABASE fixhub;'
 endif
