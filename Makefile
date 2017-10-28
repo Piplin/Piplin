@@ -50,9 +50,11 @@ travis:
 else ifeq "$(DB)" "pgsql"
 travis:
 	@sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=pgsql/g' .env
-	@sed -i 's/DB_USERNAME=travis/DB_USERNAME=postgres/g' .env
+	@sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=postgres/g' .env
 	@psql -c 'CREATE DATABASE fixhub;' -U postgres;
 else
 travis:
+
+	@sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=travis/g' .env
 	@mysql -e 'CREATE DATABASE fixhub;'
 endif
