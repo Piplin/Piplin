@@ -51,10 +51,10 @@ Route::group([
         ]);
 
         // Environment Cabinets
-        Route::post('cabinets/{targetable}', [
+        Route::post('cabinets/{environment}', [
             'uses' => 'CabinetController@store',
         ]);
-        Route::delete('cabinets/{targetable}/{cabinet}', [
+        Route::delete('cabinets/{environment}/{cabinet}', [
             'uses' => 'CabinetController@destroy',
         ]);
 
