@@ -205,7 +205,6 @@ class SetupDeploymentJob extends Job
         ]);
 
         foreach ($command->environments as $environment) {
-
             if ($this->deployment->environments()->find($environment->id) === null) {
                 continue;
             }
@@ -241,8 +240,8 @@ class SetupDeploymentJob extends Job
      *
      * @return void
      */
-    private function createServerLog(Environment $environment, $step) {
-
+    private function createServerLog(Environment $environment, $step)
+    {
         foreach ($environment->cabinets->pluck('servers')->flatten() as $server) {
             if (!$server->enabled) {
                 continue;
