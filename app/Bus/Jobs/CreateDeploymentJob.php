@@ -24,7 +24,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\Queue;
 
 /**
- * Tests if a server can successfully be SSHed into.
+ * Create deployment job.
  */
 class CreateDeploymentJob extends Job implements ShouldQueue
 {
@@ -45,7 +45,8 @@ class CreateDeploymentJob extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @param Server $server
+     * @param Project $project
+     * @param array $fields
      *
      * @return TestServerConnectionJob
      */

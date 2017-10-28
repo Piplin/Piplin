@@ -43,6 +43,13 @@ class CabinetController extends Controller
         ]);
     }
 
+    /**
+     * The details of an individual cabinet.
+     *
+     * @param Cabinet $cabinet
+     *
+     * @return View
+     */
     public function show(Cabinet $cabinet)
     {
         $cabinets = Cabinet::all();

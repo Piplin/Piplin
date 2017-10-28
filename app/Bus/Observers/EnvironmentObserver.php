@@ -21,7 +21,7 @@ class EnvironmentObserver
     /**
      * Called when the model is deleting.
      *
-     * @param Hook $hook
+     * @param Environment $environment
      */
     public function deleting(Environment $environment)
     {

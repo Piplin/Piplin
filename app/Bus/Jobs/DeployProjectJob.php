@@ -375,8 +375,9 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Generates the actual bash commands to run on the server.
      *
-     * @param  DeployStep $step
-     * @param  Server     $server
+     * @param DeployStep $step
+     * @param Server     $server
+     * @param ServerLog  $log
      */
     private function buildScript(DeployStep $step, Server $server, ServerLog $log)
     {
@@ -426,8 +427,8 @@ class DeployProjectJob extends Job implements ShouldQueue
      * Gets the script which is used for the supplied step.
      *
      * @param DeployStep $step
-     * @param Server $server
-     * @param array $tokens
+     * @param ServerLog  $log
+     * @param array      $tokens
      */
     private function getScriptForStep(DeployStep $step, ServerLog $log, array $tokens = [])
     {
