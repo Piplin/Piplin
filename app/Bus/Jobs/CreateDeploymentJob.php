@@ -11,17 +11,14 @@
 
 namespace Fixhub\Bus\Jobs;
 
-use Fixhub\Models\Server;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Cabinet;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Project;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\Queue;
+use Fixhub\Models\Deployment;
+use Fixhub\Models\Project;
+use Fixhub\Services\Scripts\Runner as Process;
 
 /**
  * Create deployment job.
@@ -40,6 +37,9 @@ class CreateDeploymentJob extends Job implements ShouldQueue
     */
     public $project;
 
+    /**
+    * @var array
+    */
     private $fields;
 
     /**
@@ -48,7 +48,7 @@ class CreateDeploymentJob extends Job implements ShouldQueue
      * @param Project $project
      * @param array $fields
      *
-     * @return TestServerConnectionJob
+     * @return CreateDeploymentJob
      */
     public function __construct(Project $project, array $fields = [])
     {

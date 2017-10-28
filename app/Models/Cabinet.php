@@ -87,7 +87,7 @@ class Cabinet extends Model
      */
     public function getServerCountAttribute()
     {
-        return 3;
+        return $this->servers->count();
     }
 
     /**
@@ -98,9 +98,9 @@ class Cabinet extends Model
     public function getServerNamesAttribute()
     {
         $servers = [];
-        $servers[] = '1. name1' . ' : 127.0.0.1';
-        $servers[] = '2. name2' . ' : 127.0.0.2';
-        $servers[] = '3. name3' . ' : 127.0.0.3';
+        foreach ($this->servers as $key => $server) {
+            $servers[] = ($key+1) . '. ' . $server->name . ' : ' .$server->ip_address;
+        }
 
         if (count($servers)) {
             return implode("<br />", $servers);
