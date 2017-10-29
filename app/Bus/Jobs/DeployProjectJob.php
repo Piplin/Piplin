@@ -130,6 +130,8 @@ class DeployProjectJob extends Job implements ShouldQueue
                 $this->deployment->status = Deployment::ABORTED;
             }
 
+            $this->deployment->output = $error->getMessage();
+
             $this->cancelPendingSteps($this->deployment->steps);
 
             if (isset($step)) {
