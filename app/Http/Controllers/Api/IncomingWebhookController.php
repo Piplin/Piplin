@@ -58,6 +58,7 @@ class IncomingWebhookController extends Controller
      *
      * @param  Request  $request
      * @param  string   $hash
+     *
      * @return Response
      */
     public function webhook(Request $request, $hash)
@@ -89,6 +90,7 @@ class IncomingWebhookController extends Controller
      *
      * @param  Request $request
      * @param  Project $project
+     *
      * @return mixed   Either an array of parameters for the deployment config, or false if it is invalid.
      */
     private function parseWebhookRequest(Request $request, Project $project)
@@ -111,6 +113,7 @@ class IncomingWebhookController extends Controller
      * @param  mixed   $payload
      * @param  Request $request
      * @param  Project $project
+     *
      * @return mixed   Either an array of the complete deployment config, or false if it is invalid.
      */
     private function appendProjectSettings($payload, Request $request, Project $project)
@@ -174,6 +177,7 @@ class IncomingWebhookController extends Controller
      * Gets all pending and running deployments for a project and aborts them.
      *
      * @param  int  $project_id
+     *
      * @return void
      */
     private function abortQueued($project_id)

@@ -5,8 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title"><i class="fixhub fixhub-deploy"></i> {{ trans('deployments.label') }}</h4>
             </div>
-            <form class="form-horizontal" role="form" method="post" action="{{ route('deployments.create', ['id' => $project->id]) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            <form class="form-horizontal" role="form">
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <div class="modal-body">
 
@@ -14,7 +13,7 @@
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('deployments.warning') }}
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="command_environments">{{ trans('deployments.environments') }}</label>
+                        <label class="col-sm-3 control-label" for="environments">{{ trans('deployments.environments') }}</label>
 						<div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($environments as $each)
@@ -120,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('projects.deploy') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('projects.deploy') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

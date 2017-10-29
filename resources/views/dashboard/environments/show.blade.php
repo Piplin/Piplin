@@ -32,7 +32,7 @@
     @endif
     @include('dashboard.projects._dialogs.public_key')
     @include('dashboard.projects._dialogs.deploy')
-    @include('dashboard.projects._dialogs.redeploy')
+    @include('dashboard.projects._dialogs.rollback')
 @stop
 
 
