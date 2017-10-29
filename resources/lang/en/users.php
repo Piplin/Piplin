@@ -26,6 +26,7 @@ return [
     'manage'            => 'Manage users',
     'profile'           => 'Profile',
     'update_profile'    => 'Update Profile',
+    'profile_success'   => 'Profile updated successfull.',
     'basic'             => 'Basic',
     'change_password'   => 'Change Password',
     'settings'          => 'Settings',

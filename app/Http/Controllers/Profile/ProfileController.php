@@ -98,7 +98,8 @@ class ProfileController extends Controller
 
         Auth::user()->update($fields);
 
-        return redirect()->to('/');
+        return redirect()->to(route('profile'))
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
     }
 
     /**
@@ -116,7 +117,8 @@ class ProfileController extends Controller
             'dashboard'
         ));
 
-        return redirect()->to('/');
+        return redirect()->to(route('profile', ['tab' => 'settings']))
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
     }
 
     /**
@@ -168,7 +170,8 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        return redirect()->to('/');
+        return redirect()->to(route('profile', ['tab' => 'email']))
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));;
     }
 
     /**
@@ -282,6 +285,7 @@ class ProfileController extends Controller
         $user->google2fa_secret = $secret;
         $user->save();
 
-        return redirect()->to('/');
+        return redirect()->to(route('profile', ['tab' => '2fa']))
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));;
     }
 }

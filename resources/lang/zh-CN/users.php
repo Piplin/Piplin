@@ -26,6 +26,7 @@ return [
     'manage'            => '用户管理',
     'profile'           => '个人资料',
     'update_profile'    => '个人资料设置',
+    'profile_success'   => '个人资料更新成功。',
     'basic'             => '基本信息',
     'change_password'   => '修改密码',
     'settings'          => '界面设置',
