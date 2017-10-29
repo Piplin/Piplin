@@ -120,7 +120,7 @@ $ php artisan config:clear
 
 ```shell
 $ git fetch --all
-$ git checkout 0.3.0
+$ git checkout 0.4.0
  ```
 
 二. 更新依赖
