@@ -171,7 +171,8 @@ class ProfileController extends Controller
         }
 
         return redirect()->to(route('profile', ['tab' => 'email']))
-            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));;
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
+        ;
     }
 
     /**
@@ -286,6 +287,7 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->to(route('profile', ['tab' => '2fa']))
-            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));;
+            ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
+        ;
     }
 }
