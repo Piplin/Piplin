@@ -24,9 +24,9 @@ class CreateDeploymentsTable extends Migration
     {
         Schema::create('deployments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('committer');
+            $table->string('committer')->nullable();
             $table->string('committer_email')->default('none@example.com');
-            $table->string('commit');
+            $table->string('commit')->nullable();
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id')->nullable()->default(null);
             $table->tinyInteger('status')->default(Deployment::PENDING);
