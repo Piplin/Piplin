@@ -55,7 +55,7 @@ return [
     'build_status'      => 'Build Status',
     'deploy_project'    => 'Deploy the project',
     'deploy'            => 'Deploy',
-    'redeploy'          => 'Redeploy',
+    'rollback'          => 'Rollback',
     'finished'          => 'Finished',
     'pending'           => 'Pending',
     'deploying'         => 'Deploying',

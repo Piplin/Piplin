@@ -55,7 +55,7 @@
                     <td>
                         <div class="btn-group pull-right">
                             @if ($deployment->isSuccessful())
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#redeploy" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('deployments.rollback') }}"><i class="fixhub fixhub-rollback"></i></button>
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('deployments.rollback') }}"><i class="fixhub fixhub-rollback"></i></button>
                             @endif
                             @if ($deployment->isDraft())
                                 <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $deployment->id }}" class="btn btn-info btn-draft"><i class="fixhub fixhub-check"></i></button>

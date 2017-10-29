@@ -54,7 +54,7 @@ return [
     'build_status'      => '构建状态',
     'deploy_project'    => '开始上线',
     'deploy'            => '开始上线',
-    'redeploy'          => '重新上线',
+    'rollback'          => '回滚',
     'finished'          => '已完成',
     'pending'           => '等待中',
     'deploying'         => '正在上线',

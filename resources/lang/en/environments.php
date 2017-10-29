@@ -43,6 +43,6 @@ return [
     'link_settings'       => 'Link settings',
     'link_success'        => 'Environment links updated.',
     'link_deploy_reason'  => 'Triggered by environment link.',
-
     'cabinets'            => 'Cabinets',
+
 ];

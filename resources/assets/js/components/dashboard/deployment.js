@@ -65,8 +65,58 @@
         });
     });
 
-    Fixhub.Deploy = Backbone.Model.extend({
-        urlRoot: '/deployments'
+    $('#rollback').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var deployment = button.data('deployment-id');
+        var modal = $(this);
+
+        $('input[name="deployment_id"]', modal).val(deployment);
+        $('#deployment_reason', modal).val('');
+        $('.deployment-command', modal).prop('checked', false);
+    });
+
+    $('#rollback button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var reason = $('#deployment_reason', dialog).val();
+
+        var optional = [];
+        $('.deployment-command:checked', dialog).each(function() {
+            optional.push($(this).val());
+        });
+
+        $.ajax({
+            url: '/deployment/' + $('input[name="deployment_id"]', dialog).val() + '/rollback',
+            method: 'POST',
+            data: {
+                reason: reason,
+                optional: optional
+            }
+        }).fail(function (response){
+            $('.callout-danger', dialog).show();
+            var errors = response.responseJSON;
+
+            $('.has-error', dialog).removeClass('has-error');
+            $('.label-danger', dialog).remove();
+            icon.removeClass().addClass('fixhub fixhub-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+
+            icon.removeClass().addClass('fixhub fixhub-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+
+            Fixhub.toast(trans('deployments.create_success'));
+        });
     });
 
     $('#deploy_draft').on('show.bs.modal', function(event) {
@@ -77,36 +127,6 @@
         var modal = $(this);
 
          $('form', modal).prop('action', '/deployment/' + deployment + '/deploy-draft');
-    });
-
-    $('#redeploy').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget);
-
-        var deployment = button.data('deployment-id');
-
-        var tmp = button.data('optional-commands') + '';
-        var commands = tmp.split(',');
-
-        if (tmp.length > 0) {
-            commands = $.map(commands, function(value) {
-                return parseInt(value, 10);
-            });
-        } else {
-            commands = [];
-        }
-
-        var modal = $(this);
-
-        $('form', modal).prop('action', '/deployment/' + deployment + '/rollback');
-
-        $('input:checkbox', modal).each(function (index, element) {
-            var input = $(element);
-
-            input.prop('checked', false);
-            if ($.inArray(parseInt(input.val(), 10), commands) != -1) {
-                input.prop('checked', true);
-            }
-        });
     });
 
     $('.btn-cancel').on('click', function (event) {
@@ -194,6 +214,10 @@
             .replace(/<error>/g, '<span class="text-red">')
             .replace(/<info>/g, '<span class="text-default">');
     }
+
+    Fixhub.Deploy = Backbone.Model.extend({
+        urlRoot: '/deployments'
+    });
 
     Fixhub.ServerLog = Backbone.Model.extend({
         urlRoot: '/status'
