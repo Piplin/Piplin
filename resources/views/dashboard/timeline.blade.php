@@ -14,6 +14,11 @@
                 <span class="time"><i class="fixhub fixhub-clock"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->started_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></span>
                 <h4 class="timeline-header"><i class="fixhub fixhub-{{ $deployment->is_webhook ? 'hook text-navy' : 'user text-gray' }}" title="{{ $deployment->deployer_name }}"></i> <a href="{{ route('deployments', ['id' => $deployment->id]) }}">{{ trans('dashboard.deployment_number', ['id' => $deployment->id]) }}</a> 
                 <span class="small">[{{ $deployment->environment_names }}]</span>
+                @if ($deployment->isDraft())
+                <span>
+                    <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $deployment->id }}" class="btn btn-xs btn-info btn-draft"><i class="fixhub fixhub-check"></i></button>
+                </span>
+                @endif
                 </h4>
                 @if (!empty($deployment->formatted_reason))
                 <div class="timeline-body">
@@ -36,4 +41,6 @@
     @endforeach
 </ul>
 {!! $deployments_raw->render() !!}
+
+@include('dashboard.projects._dialogs.deploy_draft')
 @endif

@@ -98,7 +98,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     public function handle()
     {
         $this->deployment->started_at = Carbon::now();
-        $this->deployment->status     = Deployment::DEPLOYING;
+        $this->deployment->status = Deployment::DEPLOYING;
         $this->deployment->save();
 
         $this->project->status = Project::DEPLOYING;
@@ -120,10 +120,10 @@ class DeployProjectJob extends Job implements ShouldQueue
                 $this->runStep($step);
             }
 
-            $this->deployment->status          = Deployment::COMPLETED;
+            $this->deployment->status = Deployment::COMPLETED;
             $this->project->status = Project::FINISHED;
         } catch (\Exception $error) {
-            $this->deployment->status          = Deployment::FAILED;
+            $this->deployment->status = Deployment::FAILED;
             $this->project->status = Project::FAILED;
 
             if ($error->getMessage() === 'Cancelled') {
@@ -137,7 +137,7 @@ class DeployProjectJob extends Job implements ShouldQueue
                 if ($step->stage <= Stage::DO_ACTIVATE) {
                     $this->cleanupDeployment();
                 } else {
-                    $this->deployment->status          = Deployment::COMPLETED_WITH_ERRORS;
+                    $this->deployment->status = Deployment::COMPLETED_WITH_ERRORS;
                     $this->project->status = Project::FINISHED;
                 }
             }

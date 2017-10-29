@@ -176,7 +176,7 @@ class DeploymentController extends Controller
         dispatch(new CreateDeploymentJob($previous->project, $fields));
 
         return [
-            'success' => false,
+            'success' => true,
         ];
     }
 
@@ -195,9 +195,9 @@ class DeploymentController extends Controller
             dispatch(new DeployDraftJob($deployment));
         }
 
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
+        return [
+            'success' => true,
+        ];
     }
 
     /**

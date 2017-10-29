@@ -115,7 +115,7 @@
             $('button.close', dialog).show();
             dialog.find('input').removeAttr('disabled');
 
-            Fixhub.toast(trans('deployments.create_success'));
+            Fixhub.toast(trans('deployments.submit_success'));
         });
     });
 
@@ -126,7 +126,33 @@
 
         var modal = $(this);
 
-         $('form', modal).prop('action', '/deployment/' + deployment + '/deploy-draft');
+        $('input[name="deployment_id"]', modal).val(deployment);
+
+        //$('form', modal).prop('action', '/deployment/' + deployment + '/deploy-draft');
+    });
+
+    $('#deploy_draft button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        $.ajax({
+            url: '/deployment/' + $('input[name="deployment_id"]', dialog).val() + '/deploy-draft',
+            method: 'POST'
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+
+            icon.removeClass().addClass('fixhub fixhub-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+
+            Fixhub.toast(trans('deployments.submit_success'));
+        });
     });
 
     $('.btn-cancel').on('click', function (event) {
