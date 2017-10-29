@@ -4,7 +4,7 @@
     </div>
 
     <!-- /.box-header -->
-    <div class="box-body">
+    <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-striped">
                 @foreach($envs as $env)
@@ -17,5 +17,5 @@
         </div>
         <!-- /.table-responsive -->
     </div>
-    <!-- /.box-body -->
+    <!-- /.panel-body -->
 </div>

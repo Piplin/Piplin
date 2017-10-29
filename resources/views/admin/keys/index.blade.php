@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="box-body" id="no_keys">
+<div class="panel-body" id="no_keys">
     <p>{{ trans('keys.none') }}</p>
 </div>
 
-<div class="box-body table-responsive" id="key_list">
+<div class="panel-body table-responsive" id="key_list">
     <table class="table table-striped">
         <thead>
             <tr>

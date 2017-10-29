@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="box-body">
+<div class="panel-body">
     <div class="col-md-6">
         @include('admin.dashboard.environments')
     </div>

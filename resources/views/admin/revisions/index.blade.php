@@ -2,12 +2,12 @@
 
 @section('admin-content')
     @if (!count($revisions))
-    <div class="box-body">
+    <div class="panel-body">
         <p>{{ trans('revisions.none') }}</p>
     </div>
     @else
 
-    <div class="box-body table-responsive">
+    <div class="panel-body table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>

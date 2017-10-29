@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
-<div class="box-body table-responsive" id="user_list">
+<div class="panel-body table-responsive" id="user_list">
     <table class="table table-striped">
         <thead>
             <tr>
