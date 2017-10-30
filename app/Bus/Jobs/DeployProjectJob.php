@@ -90,7 +90,6 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
         $this->executor = new SeriesExecutor($this->deployment, $this->private_key, $this->cache_key, $this->release_archive);
-
     }
 
     /**
