@@ -40,14 +40,22 @@ class ParallelExecutor extends Executor
         foreach($steps as $step)
         {
             foreach($step->logs as $log) {
-                $taskHosts[$log->id] = [$log, $step];
+                $taskHosts[$log->id] = $log;
             }
         }
-        foreach($taskHosts as $item) {
-            $host = $item[0];
-            $task = $item[1];
+
+        foreach($steps as $step) {
+            $this->runTask($taskHosts, $step);
+        }
+    }
+
+    public function runTask($hosts, $task)
+    {
+        $processes = [];
+
+        foreach ($hosts as $host) {
             $process = $this->buildScript($task, $host);
-            $processes[] = $process;
+            $processes[$host->id] = $process;
         }
 
         $this->startProcesses($processes);
