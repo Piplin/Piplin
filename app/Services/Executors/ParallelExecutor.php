@@ -11,11 +11,12 @@
 
 namespace Fixhub\Services\Executors;
 
-interface ExecutorInterface
+/**
+ * Class to handle parallel tasks.
+ */
+class ParallelExecutor implements ExecutorInterface
 {
-    /**
-     * @param ServerLog[] $logs
-     * @param Command[]   $commands
-     */
-    public function run($logs, $commands);
+    public function run($tasks) {
+        //
+    }
 }
