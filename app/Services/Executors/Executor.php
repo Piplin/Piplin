@@ -62,7 +62,6 @@ abstract class Executor
      */
     protected function buildScript(DeployStep $step, ServerLog $log)
     {
-
         $tokens = $this->getTokenList($step, $log->server);
 
         // Generate the export
@@ -85,7 +84,7 @@ abstract class Executor
                     ->setServer($log->server, $this->private_key, $user);
     }
 
-        /**
+    /**
      * Gets the script which is used for the supplied step.
      *
      * @param DeployStep $step

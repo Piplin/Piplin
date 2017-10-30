@@ -16,7 +16,8 @@ namespace Fixhub\Services\Executors;
  */
 class ParallelExecutor implements ExecutorInterface
 {
-    public function run($tasks) {
+    public function run($tasks)
+    {
         //
     }
 }

@@ -28,8 +28,9 @@ use Illuminate\Support\Facades\Cache;
  */
 class SeriesExecutor extends Executor
 {
-    public function run($tasks) {
-        foreach($tasks as $task) {
+    public function run($tasks)
+    {
+        foreach ($tasks as $task) {
             foreach ($task->logs as $log) {
                 $log->status     = ServerLog::RUNNING;
                 $log->started_at =  Carbon::now();
