@@ -31,31 +31,29 @@ class SeriesExecutor extends Executor
     public function run($tasks)
     {
         foreach ($tasks as $task) {
-            foreach ($task->logs as $log) {
-                $log->status     = ServerLog::RUNNING;
-                $log->started_at =  Carbon::now();
-                $log->save();
+            foreach ($task->logs as $host) {
+                $host->status     = ServerLog::RUNNING;
+                $host->started_at =  Carbon::now();
+                $host->save();
 
                 try {
-                    $server = $log->server;
+                    $this->sendFilesForStep($task, $host);
 
-                    $this->sendFilesForStep($task, $log);
-
-                    $process = $this->buildScript($task, $log);
+                    $process = $this->buildScript($task, $host);
 
                     $failed    = false;
                     $cancelled = false;
 
                     $output = '';
-                    $process->run(function ($type, $output_line) use (&$output, &$log, $process, $task) {
+                    $process->run(function ($type, $output_line) use (&$output, &$host, $process, $task) {
                         if ($type === \Symfony\Component\Process\Process::ERR) {
                             $output .= $this->logError($output_line);
                         } else {
                             $output .= $this->logSuccess($output_line);
                         }
 
-                        $log->output = $output;
-                        $log->save();
+                        $host->output = $output;
+                        $host->save();
 
                         // If there is a cache key, kill the process but leave the key
                         if ($task->stage <= Stage::DO_ACTIVATE && Cache::has($this->cache_key)) {
@@ -68,27 +66,27 @@ class SeriesExecutor extends Executor
                     if (!$process->isSuccessful()) {
                         $failed = true;
                     }
-                    $log->output = $output;
+                    $host->output = $output;
                 } catch (\Exception $e) {
-                    $log->output .= $this->logError('[' . $server->ip_address . ']: ' . $e->getMessage());
+                    $host->output .= $this->logError('[' . $host->server->ip_address . ']: ' . $e->getMessage());
                     $failed = true;
                 }
 
-                $log->status = ($failed ? ServerLog::FAILED : ServerLog::COMPLETED);
+                $host->status = ($failed ? ServerLog::FAILED : ServerLog::COMPLETED);
 
                 // Check if there is a cache key and if so abort
                 if (Cache::pull($this->cache_key) !== null) {
                     // Only allow aborting if the release has not yet been activated
                     if ($task->stage <= Stage::DO_ACTIVATE) {
-                        $log->status = ServerLog::CANCELLED;
+                        $host->status = ServerLog::CANCELLED;
 
                         $cancelled = true;
                         $failed    = false;
                     }
                 }
 
-                $log->finished_at =  Carbon::now();
-                $log->save();
+                $host->finished_at =  Carbon::now();
+                $host->save();
 
                 // Throw an exception to prevent any more tasks running
                 if ($failed) {

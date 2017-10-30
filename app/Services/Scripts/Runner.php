@@ -62,6 +62,11 @@ class Runner
         return $this;
     }
 
+    public function isRunning()
+    {
+        return $this->process->isRunning();
+    }
+
     /**
      * Append commands to the end of the script.
      *

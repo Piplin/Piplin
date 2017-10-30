@@ -30,6 +30,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use Fixhub\Services\Executors\ParallelExecutor;
 use Fixhub\Services\Executors\SeriesExecutor;
 
 /**
@@ -89,7 +90,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         file_put_contents($this->private_key, $this->project->key->private_key);
         $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
-        $this->executor = new SeriesExecutor($this->deployment, $this->private_key, $this->cache_key, $this->release_archive);
+        $this->executor = new ParallelExecutor($this->deployment, $this->private_key, $this->cache_key, $this->release_archive);
     }
 
     /**
