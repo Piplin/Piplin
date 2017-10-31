@@ -34,17 +34,17 @@ class ParallelExecutor extends Executor
     {
         $processes = [];
 
-        $callback = $callback ?: function () {};
+        $callback = $callback ?: function () {
+        };
 
         $taskHosts = [];
-        foreach($steps as $step)
-        {
-            foreach($step->logs as $log) {
+        foreach ($steps as $step) {
+            foreach ($step->logs as $log) {
                 $taskHosts[$log->id] = $log;
             }
         }
 
-        foreach($steps as $step) {
+        foreach ($steps as $step) {
             $this->runTask($taskHosts, $step);
         }
     }
@@ -76,8 +76,8 @@ class ParallelExecutor extends Executor
     protected function startProcesses(array $processes)
     {
         foreach ($processes as $process) {
-            $process->run(function ($type, $output_line){
-                //$ret = 
+            $process->run(function ($type, $output_line) {
+                //$ret =
             });
         }
     }
