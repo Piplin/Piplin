@@ -53,7 +53,7 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $appends = ['cabinet_count', 'cabinet_names', 'server_count', 'server_names'];
+    protected $appends = ['cabinet_count', 'cabinet_names', 'server_count', 'server_names', 'link_count', 'link_names'];
 
     /**
      * Revision creations enabled.
@@ -140,6 +140,40 @@ class Environment extends Model
     public function oppositePivot()
     {
         return $this->oppositeEnvironments()->withPivot('link_type');
+    }
+
+    /**
+     * Define a accessor for the count of links.
+     *
+     * @return int
+     */
+    public function getLinkCountAttribute()
+    {
+        return $this->oppositeEnvironments->count();
+    }
+
+    /**
+     * Gets the readable list of links.
+     *
+     * @return string
+     */
+    public function getLinkNamesAttribute()
+    {
+        $links = [];
+        foreach ($this->oppositePivot as $key => $link) {
+            if ($link->pivot->link_type == EnvironmentLink::AUTOMATIC) {
+                $link_type = trans('environments.link_auto');
+            } else {
+                $link_type = trans('environments.link_manual');
+            }
+            $links[] = ($key+1) . '. ' . $link->name. ' - '. $link_type;
+        }
+
+        if (count($links)) {
+            return implode("<br />", $links);
+        }
+
+        return trans('app.none');
     }
 
     /**
