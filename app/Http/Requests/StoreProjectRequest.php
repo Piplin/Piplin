@@ -28,7 +28,7 @@ class StoreProjectRequest extends Request
         $rules = [
             'name'               => 'required|max:255',
             'branch'             => 'required|max:255',
-            'group_id'           => 'nullable|integer|exists:project_groups,id',
+            'targetable_id'      => 'nullable|integer',
             'key_id'             => 'required|integer|exists:keys,id',
             'builds_to_keep'     => 'required|integer|min:1|max:20',
             'template_id'        => 'nullable|integer|exists:deploy_templates,id',

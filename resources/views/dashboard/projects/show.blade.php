@@ -71,7 +71,7 @@
 							<tr>
 								<td>{{ trans('projects.group') }}</td>
 								<td class="text-right">
-									{{ $project->group ? $project->group->name : null }}
+									{{ $project->group_name }}
 								</td>
 							</tr>
 							<tr>

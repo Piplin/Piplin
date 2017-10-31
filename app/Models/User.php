@@ -119,7 +119,7 @@ class User extends Authenticatable implements HasPresenter
     /**
      * Belongs to many relationship.
      *
-     * @return Server
+     * @return Project
      */
     
     public function projects()

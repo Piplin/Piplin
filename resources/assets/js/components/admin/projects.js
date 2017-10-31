@@ -36,8 +36,8 @@
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_group_id').select2(Fixhub.select2_options)
-                                    .val($("#project_group_id option:selected").val())
+            $('#project_targetable_id').select2(Fixhub.select2_options)
+                                    .val($("#project_targetable_id option:selected").val())
                                     .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
             $('#project_builds_to_keep').val(10);
@@ -100,8 +100,8 @@
         project.save({
             name:               $('#project_name').val(),
             repository:         $('#project_repository').val(),
-            branch:             $('#project_branch').val(),
-            group_id:           $('#project_group_id').val(),
+            branch:             $('#project_branch').val(), 
+            targetable_id:      $('#project_targetable_id').val(),
             key_id:             $('#project_key_id').val(),
             builds_to_keep:     $('#project_builds_to_keep').val(),
             url:                $('#project_url').val(),
@@ -183,7 +183,7 @@
                 var project = Fixhub.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    if(Fixhub.group_id == undefined || Fixhub.group_id == data.model.group_id) {
+                    if(Fixhub.group_id == undefined || Fixhub.group_id == data.model.targetable_id) {
                         project.set(data.model);
                     } else {
                         Fixhub.Projects.remove(project);
@@ -258,9 +258,8 @@
             $('#project_name').val(this.model.get('name'));
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
-            //$('#project_group_id').val(this.model.get('group_id'));
-            $('#project_group_id').select2(Fixhub.select2_options)
-                                    .val(this.model.get('group_id'))
+            $('#project_targetable_id').select2(Fixhub.select2_options)
+                                    .val(this.model.get('targetable_id'))
                                     .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));

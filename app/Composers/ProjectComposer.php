@@ -36,18 +36,18 @@ class ProjectComposer
         $projects_by_group = [];
 
         foreach ($projects as $project) {
-            if (!$project->group) {
+            if (!$project->targetable) {
                 $projects_by_group[0]['group'] = trans('projects.ungrouped');
                 $projects_by_group[0]['projects'][] = $project;
                 continue;
             }
-            if (!isset($projects_by_group[$project->group->id])) {
-                $projects_by_group[$project->group->id]['group'] = $project->group->name;
-                $projects_by_group[$project->group->id]['order'] = $project->group->order;
-                $projects_by_group[$project->group->id]['projects'] = [];
+            if (!isset($projects_by_group[$project->targetable->id])) {
+                $projects_by_group[$project->targetable->id]['group'] = $project->targetable->name;
+                $projects_by_group[$project->targetable->id]['order'] = $project->targetable->order;
+                $projects_by_group[$project->targetable->id]['projects'] = [];
             }
 
-            $projects_by_group[$project->group->id]['projects'][] = $project;
+            $projects_by_group[$project->targetable->id]['projects'][] = $project;
         }
 
         usort($projects_by_group, function ($a, $b) {
