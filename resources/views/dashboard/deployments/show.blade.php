@@ -74,7 +74,7 @@
 @push('templates')
     <script type="text/template" id="log-template">
         <td><%- environment_name %></td>
-        <td><%- server.name %> <% if (cabinet) { %><i class="fixhub fixhub-cabinet"></i><% } %></td>
+        <td><%- server.name %>(<%- server.ip_address %>) <% if (cabinet) { %><i class="fixhub fixhub-cabinet"></i><% } %></td>
         <td>
              <span class="text-<%- label_class %>"><i class="status fixhub fixhub-<%- icon_css %>"></i> <span><%- label %></span></span>
         </td>
