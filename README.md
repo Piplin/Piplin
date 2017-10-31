@@ -15,12 +15,15 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
 * 直接从Git仓库克隆项目代码并进行打包、安装
+* 可灵活配置自定义部署步骤
 * 支持项目的多环境部署(可自行建立开发、测试、预发布和生产等多个环境)
+* 支持联动部署，比如：开发环境部署成功后可自动触发测试环境启动部署
+* 服务管理支持机柜功能，机柜可与多个部署环境绑定
+* 支持项目克隆与模板功能
+* 支持项目成员，项目可添加个多个成员
 * 通过Websocket实现项目部署状态的实时跟踪
-* 可灵活配置自定义部署命令
 * 支持Gitlab、Github、Gogs、Gitee(Oschina)等代码托管平台进行集成
-* 上线单申请、审核流程
-* 可通过Slack、邮件和自定义的webhook对部署结果进行通知
+* 支持钉钉机器人、Slack、邮件和自定义Webhook的服务集成
 
 ## 使用到的技术
 
@@ -50,12 +53,16 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## 安装环境要求
 
+Fixhub目前只支持类Unix操作系统，为了能运行Fixhub，您还需要安装一些基础软件。
+
+- Web服务器: **Nginx**, **Apache** (with mod_rewrite)，or **Lighttpd**
 - [PHP](http://www.php.net) 7.0.0+或更高(不再支持PHP7以下版本)
-- 数据库, 推荐使用[MySQL](https://www.mysql.com) 或 [PostgreSQL](http://www.postgresql.org)。 当然[SQLite](https://www.sqlite.org)也可以运行。
+- 数据库: 推荐使用[MySQL](https://www.mysql.com) 或 [PostgreSQL](http://www.postgresql.org)。 当然[SQLite](https://www.sqlite.org)也可以运行。
 - [Composer](https://getcomposer.org)
 - [Redis](http://redis.io)
 - [Node.js](https://nodejs.org/)
 - [队列系统](http://laravel.com/docs/5.5/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
+- [Rsync](https://rsync.samba.org/) 如无特殊情况，一般系统都会自带rsync
 
 ### 可选项
 
@@ -163,6 +170,7 @@ npm run prod
 - [Laravel](http://laravel.com)
 - [Bootstrap](https://github.com/twbs/bootstrap)
 - [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
+- [Envoy](https://laravel.com/docs/5.5/envoy)
 - [Forge](https://forge.laravel.com/)
 - [Deployer](https://github.com/REBELinBLUE/deployer)
 - [socket.io](https://github.com/socketio/socket.io)
