@@ -13,6 +13,7 @@ namespace Fixhub\Services\Update;
 
 use Httpful\Request;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Httpful\Exception\ConnectionErrorException;
 
 /**
  * A class to get the latest release tag for Github.
@@ -48,15 +49,19 @@ class LatestRelease implements LatestReleaseInterface
         $cache_for = self::CACHE_TIME_IN_HOURS * 60;
 
         $release = $this->cache->remember('fixhub_latest_version', $cache_for, function () {
-            $request = Request::get($this->github_url)
-                              ->expectsJson()
-                              ->withAccept('application/vnd.github.v3+json');
+            try {
+                $request = Request::get($this->github_url)
+                                  ->expectsJson()
+                                  ->withAccept('application/vnd.github.v3+json');
 
-            if (config('fixhub.github_oauth_token')) {
-                $request->withAuthorization('token ' . config('fixhub.github_oauth_token'));
+                if (config('fixhub.github_oauth_token')) {
+                    $request->withAuthorization('token ' . config('fixhub.github_oauth_token'));
+                }
+
+                $response = $request->send();
+            } catch (ConnectionErrorException $e) {
+                return false;
             }
-
-            $response = $request->send();
 
             if ($response->hasErrors()) {
                 return false;
