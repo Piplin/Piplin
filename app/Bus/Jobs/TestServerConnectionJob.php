@@ -66,6 +66,13 @@ class TestServerConnectionJob extends Job implements ShouldQueue
             $private_key = $this->server->targetable->targetable->key->private_key;
         }
 
+        if (empty($private_key)) {
+            $this->server->status = Server::FAILED;
+            $this->server->output = trans('keys.ssh_key_empty');
+            $this->server->save();
+            return;
+        }
+
         $key = tempnam(storage_path('app/'), 'sshkey');
         file_put_contents($key, $private_key);
 

@@ -24,5 +24,6 @@ return [
                            'for each user you wish to run commands as.',
     'git_keys'          => 'The key will also need to be added to the <strong>Deploy Keys</strong> ' .
                            'for you repository unless you are using a public/unautheticated URL.',
+    'ssh_key_empty'     => 'SSH key can\'t be empty.',
 
 ];
