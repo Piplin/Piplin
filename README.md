@@ -89,6 +89,8 @@ $ composer install -o --no-dev
 $ npm install --production
 ```
 
+> 安装过程如出现卡顿，请尝试更换npm镜像: `npm config set registry http://registry.npm.taobao.org/`
+
 四. 确保storage、bootstrap/cache和public/upload目录可写。
 
 ```shell
