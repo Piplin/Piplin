@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of Fixhub.
- *
- * Copyright (C) 2016 Fixhub.org
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 return [
 
     /*
@@ -19,6 +10,8 @@ return [
     | This option controls the default broadcaster that will be used by the
     | framework when an event needs to be broadcast. You may set this to
     | any of the connections defined in the "connections" array below.
+    |
+    | Supported: "pusher", "redis", "log", "null"
     |
     */
 
@@ -38,22 +31,26 @@ return [
     'connections' => [
 
         'pusher' => [
-            'driver'  => 'pusher',
-            'key'     => env('PUSHER_KEY'),
-            'secret'  => env('PUSHER_SECRET'),
-            'app_id'  => env('PUSHER_APP_ID'),
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 //
             ],
         ],
 
         'redis' => [
-            'driver'     => 'redis',
+            'driver' => 'redis',
             'connection' => 'default',
         ],
 
         'log' => [
             'driver' => 'log',
+        ],
+
+        'null' => [
+            'driver' => 'null',
         ],
 
     ],
