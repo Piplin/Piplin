@@ -4,13 +4,6 @@
         <a href="/" class="navbar-brand">{{ $app_name }}</a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li>
-                    @if($dashboard == 'projects')
-                    <a href="{{ route('dashboard.deployments') }}"><i class="fixhub fixhub-clock"></i> {{ trans('users.dashboard.deployments') }}</a>
-                    @else
-                    <a href="{{ route('dashboard.projects') }}"><i class="fixhub fixhub-project"></i> {{ trans('users.dashboard.projects') }}</a>
-                    @endif
-                </li>
                 @if($current_user->is_admin)
                 <li {!! set_active('admin*') !!}>
                     <a href="/admin">
@@ -66,25 +59,24 @@
                         <li class="footer"><a href="javascript:void(0);">{{ trans('app.close') }}</a></li>
                     </ul>
                 </li>
-                <li {!! set_active('profile', ['dropdown', 'user', 'user-menu']) !!}>
+                <li {!! set_active('profile', ['dropdown', 'user-menu']) !!}>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ $current_user->avatar_url }}" class="user-image" />
-                        <span class="hidden-xs">{{ $current_user->name }}</span>
+                        <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="user-header">
-                            <img src="{{ $current_user->avatar_url }}" class="img-circle" />
-                            <p>{{ $current_user->name }} - {{ $current_user->nickname }}</p>
-                            <p>{{ $current_user->role_name }}
+                        <li class="dropdown-header">{{ trans('users.login_as', ['name' => $current_user->name]) }}</li>
+                        <li class="divider"></li>
+                        <li><a href="{{ route('profile') }}"><i class="fixhub fixhub-user"></i> {{ trans('users.profile') }}</a></li>
+                        <li>
+                        @if($dashboard == 'projects')
+                        <a href="{{ route('dashboard.deployments') }}"><i class="fixhub fixhub-clock"></i> {{ trans('users.dashboard.deployments') }}</a>
+                        @else
+                        <a href="{{ route('dashboard.projects') }}"><i class="fixhub fixhub-project"></i> {{ trans('users.dashboard.projects') }}</a>
+                        @endif
                         </li>
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="{{ route('profile') }}" class="btn btn-default btn-flat">{{ trans('users.profile') }}</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="{{ route('auth.logout') }}" class="btn btn-default btn-flat">{{ trans('app.signout') }}</a>
-                            </div>
-                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{{ route('auth.logout') }}"><i class="fixhub fixhub-logout"></i> {{ trans('app.signout') }}</a></li>
                     </ul>
                 </li>
             </ul>
