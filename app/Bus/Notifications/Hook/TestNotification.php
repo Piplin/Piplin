@@ -62,6 +62,8 @@ class TestNotification extends Notification
      */
     public function toDingtalk(Hook $notification)
     {
+        $atMobiles = !empty($notification->config->at_mobiles) ? explode(',', $notification->config->at_mobiles) : [];
+
         return (new WebhookMessage())
             ->data([
                 'msgtype' => 'text',
@@ -69,7 +71,8 @@ class TestNotification extends Notification
                     'content' => trans('hooks.test_message', ['app_url' => config('app.url')]),
                 ],
                 'at' => [
-                    'isAtAll' => !!$notification->config->is_at_all,
+                    'atMobiles' => $atMobiles,
+                    'isAtAll'   => !!$notification->config->is_at_all,
                 ],
             ])
             ->header('Content-Type', 'application/json;charset=utf-8')
