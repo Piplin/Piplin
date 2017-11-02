@@ -69,9 +69,7 @@ class IncomingWebhookController extends Controller
         if ($project->environments->count() > 0) {
             $payload = $this->parseWebhookRequest($request, $project);
 
-            // Todo: Need improvement.
-            //if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
-            if (is_array($payload)) {
+            if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
                 $this->abortQueued($project->id);
                 dispatch(new CreateDeploymentJob($project, $payload));
 
