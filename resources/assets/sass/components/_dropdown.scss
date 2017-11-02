@@ -181,7 +181,6 @@
     @include border-top-radius(0);
     padding: 1px 0 0 0;
     border-top-width: 0;
-    width: 280px;
 
     &,
     > .user-body {
@@ -329,6 +328,10 @@
       position: absolute;
       right: 0;
       left: auto;
+      > .dropdown-header {
+        font-size: 14px;
+        padding: 5px 20px 0 20px;
+      }
     }
   }
 }
@@ -344,6 +347,10 @@
         left: auto;
         border: 1px solid #ddd;
         background: #fff;
+        > .dropdown-header {
+          font-size: 14px;
+          padding: 5px 20px 0 20px;
+        }
       }
     }
   }

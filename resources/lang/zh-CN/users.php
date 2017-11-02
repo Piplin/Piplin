@@ -62,6 +62,7 @@ return [
     'white'             => '珍珠白',
     'black'             => '端砚黑',
     'role'              => '角色',
+    'login_as'          => ':name',
     'level'             => [
         'admin'        => '超级管理员',
         'manager'      => '管理员',
