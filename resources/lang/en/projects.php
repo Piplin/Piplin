@@ -15,7 +15,7 @@ return [
     'warning'           => 'The project could not be saved, please check the form below.',
     'none'              => 'There are currently no projects setup',
     'name'              => 'Name',
-    'name_placeholder'  => 'My awesome webapp',
+    'name_placeholder'  => 'My Project',
     'group'             => 'Group',
     'ungrouped'         => 'Ungrouped',
     'key'               => 'SSH Key',

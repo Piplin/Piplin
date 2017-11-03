@@ -20,10 +20,10 @@ return [
     'ssh_key_info'      => 'If you have a specific private key you wish to use you can paste it here. The key must ' .
                            'not have a passphrase.',
     'ssh_key_example'   => 'An SSH key will be generated automatically if you do not enter one, this is recommended.',
-    'server_keys'       => 'This key must be added to the server\'s <code>~/.ssh/authorized_keys</code> ' .
-                           'for each user you wish to run commands as.',
+    'server_keys'       => 'This key <b>must</b> be added to the server\'s <code>~/.ssh/authorized_keys</code> ' .
+                           'for <b>each</b> user you want to run commands as.',
     'git_keys'          => 'The key will also need to be added to the <strong>Deploy Keys</strong> ' .
-                           'for you repository unless you are using a public/unautheticated URL.',
+                           'for your repository unless you are using a public/unautheticated URL.',
     'ssh_key_empty'     => 'SSH key can\'t be empty.',
 
 ];

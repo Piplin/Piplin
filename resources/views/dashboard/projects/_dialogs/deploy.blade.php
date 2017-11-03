@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-deploy"></i> {{ trans('deployments.label') }}</h4>
+                <h4 class="modal-title"><i class="fixhub fixhub-deploy"></i> {{ trans('projects.deploy_project') }}</h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />

@@ -14,7 +14,7 @@ return [
     'manage'         => 'Manage templates',
     'label'          => 'Deployment Templates',
     'none'           => 'There are currently no deployment templates setup',
-    'type'           => 'Deployment type',
+    'type'           => 'Type',
     'custom'         => 'Custom',
     'example'        => 'Laravel 5 Application',
     'name'           => 'Name',
