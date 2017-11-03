@@ -17,26 +17,22 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.details') }}</a></li>
                             <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
-                            <li><a href="#project_build" data-toggle="tab">{{ trans('projects.build_options') }}</a></li>
                         </ul>
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="project_details">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_name">{{ trans('projects.name') }}</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_group_id">{{ trans('projects.group') }}</label>
-                                    <div class="col-sm-9">
-                                    <select id="project_group_id" name="group_id" class="form-control">
-                                        <option value="">{{ trans('projects.ungrouped') }}</option>
-                                        @foreach($groups as $item)
+                                    <div class="col-sm-3">
+                                         <select id="project_group_id" name="group_id" class="form-control">
+                                            <option value="">{{ trans('projects.ungrouped') }}</option>
+                                            @foreach($groups as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
                                     </div>
                                 </div>
                                 @if (count($templates) > 0)
@@ -52,7 +48,23 @@
                                     </div>
                                 </div>
                                 @endif
-								<div class="form-group">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.key') }}</label>
+                                    <div class="col-sm-9">
+                                    <select id="project_key_id" name="key_id" class="select2 form-control">
+                                        @foreach($keys as $key)
+                                            <option value="{{ $key->id }}">{{ $key->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="project_builds_to_keep">{{ trans('projects.builds') }}</label>
+                                    <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="builds_to_keep" min="1" max="20" id="project_builds_to_keep" placeholder="10" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_url">{{ trans('projects.url') }}</label>
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="url" id="project_url" placeholder="http://www.example.com" />
@@ -80,32 +92,6 @@
                                             <input type="checkbox" value="1" name="allow_other_branch" id="project_allow_other_branch" />
                                             {{ trans('projects.change_branch') }}
                                         </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane" id="project_build">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.key') }}</label>
-                                    <div class="col-sm-9">
-                                    <select id="project_key_id" name="key_id" class="select2 form-control">
-                                        @foreach($keys as $key)
-                                            <option value="{{ $key->id }}">{{ $key->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_builds_to_keep">{{ trans('projects.builds') }}</label>
-                                    <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="builds_to_keep" min="1" max="20" id="project_builds_to_keep" placeholder="10" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_build_url">{{ trans('projects.image') }} <i class="fixhub fixhub-help" data-toggle="tooltip" data-placement="right" title="{{ trans('projects.ci_image') }}"></i>
-									</label>
-                                    <div class="col-sm-9">
-										<input type="text" class="form-control" name="build_url" id="project_build_url" placeholder="http://ci.example.com/status.png?project=1" />
                                     </div>
                                 </div>
                             </div>

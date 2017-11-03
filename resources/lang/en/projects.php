@@ -23,7 +23,6 @@ return [
     'repository_path'   => 'Repository URL',
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
-    'others'            => 'Others',
     'clone'             => 'Clone',
     'clone_name'        => 'Name',
     'clone_type'        => 'Type',
