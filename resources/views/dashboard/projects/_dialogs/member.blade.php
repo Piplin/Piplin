@@ -8,7 +8,9 @@
             <form class="form-horizontal" role="form">
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
                 <div class="modal-body">
-
+                    <div class="alert alert-warning">
+                        {{ trans('members.help') }}
+                    </div>
                     <div class="callout callout-danger">
                         <i class="fixhub fixhub-warning"></i> {{ trans('members.warning') }}
                     </div>

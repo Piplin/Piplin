@@ -1,9 +1,9 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            
+             @if($project->can('manage'))
             <button type="button" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="fixhub fixhub-plus"></span> {{ trans('servers.create') }}</button>
-            
+            @endif
         </div>
         <h3 class="box-title">{{ trans('environments.servers') }}</h3>
     </div>
@@ -63,8 +63,10 @@
                     <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-show" title="{{ trans('deployments.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="fixhub fixhub-copy"></i></button>
                 <% } %>
                 <button <% if (status === "{{trans('servers.testing')}}") { %>disabled<% } %> type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}"><i class="fixhub fixhub-ping"></i></button>
+                     @if($project->can('manage'))
                     <button type="button" class="btn btn-default btn-edit" title="{{ trans('servers.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><i class="fixhub fixhub-edit"></i></button>
                     <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                    @endif
             </div>
         </td>
     </script>

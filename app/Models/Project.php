@@ -156,11 +156,10 @@ class Project extends Model implements HasPresenter
             $user = Auth::user();
         }
 
-        /*
+        $roleCheck = true;
         if ($name == 'manage') {
-            return $user->is_admin;
+            $roleCheck = $user->is_manager;
         }
-        */
 
         static $isExists = null;
 
@@ -168,7 +167,7 @@ class Project extends Model implements HasPresenter
             $isExists = $this->members()->find($user->id) != null;
         }
 
-        return $user->is_admin || $isExists;
+        return $user->is_admin || ($roleCheck && $isExists);
     }
 
     /**

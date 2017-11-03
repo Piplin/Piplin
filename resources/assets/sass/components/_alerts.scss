@@ -37,8 +37,9 @@
 }
 
 .alert-warning {
-  @extend .bg-yellow;
-  border-color: darken($yellow, 5%);
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
 }
 
 .alert-info {
