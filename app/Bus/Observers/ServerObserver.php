@@ -19,6 +19,18 @@ use Fixhub\Models\Server;
 class ServerObserver
 {
     /**
+     * Called when the model is updating.
+     *
+     * @param Server $server
+     */
+    public function updating(Server $server)
+    {
+        if ($server->isDirty('ip_address')) {
+            $server->status = Server::UNTESTED;
+        }
+    }
+
+    /**
      * Called when the model is saved.
      *
      * @param Server $server

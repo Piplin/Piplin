@@ -158,6 +158,7 @@ abstract class DeploymentFinishedNotification extends Notification
         $text = "#### ". $subject . "\n"
                  . $content
                  . "##### [". trans('hooks.deployment_details') ."](".$deployment_url.")\n\n";
+        $atMobiles = !empty($notification->config->at_mobiles) ? explode(',', $notification->config->at_mobiles) : [];
 
         return (new WebhookMessage())
             ->data([
@@ -167,7 +168,8 @@ abstract class DeploymentFinishedNotification extends Notification
                     'text'  => $text,
                 ],
                 'at' => [
-                    'isAtAll' => !!$notification->config->is_at_all,
+                    'atMobiles' => $atMobiles,
+                    'isAtAll'   => !!$notification->config->is_at_all,
                 ],
             ])->header('Content-Type', 'application/json;charset=utf-8');
     }

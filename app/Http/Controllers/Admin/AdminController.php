@@ -27,27 +27,27 @@ class AdminController extends Controller
     {
         $title = trans('admin.home');
         $envs = [
-            ['name' => 'Fixhub version',    'value' => APP_VERSION],
-            ['name' => 'PHP version',       'value' => PHP_VERSION],
-            ['name' => 'Laravel version',   'value' => app()->version()],
-            ['name' => 'CGI',               'value' => php_sapi_name()],
-            ['name' => 'Server',            'value' => $_SERVER['SERVER_SOFTWARE']],
+            ['name' => 'Fixhub',         'value' => APP_VERSION],
+            ['name' => 'PHP',            'value' => PHP_VERSION],
+            ['name' => 'Laravel',        'value' => app()->version()],
+            ['name' => 'CGI',            'value' => php_sapi_name()],
+            ['name' => 'Server',         'value' => $_SERVER['SERVER_SOFTWARE']],
 
-            ['name' => 'Database',          'value' => config('database.default')],
-            ['name' => 'Cache driver',      'value' => config('cache.default')],
-            ['name' => 'Session driver',    'value' => config('session.driver')],
-            ['name' => 'Queue driver',      'value' => config('queue.default')],
+            ['name' => 'Database',       'value' => config('database.default')],
+            ['name' => 'Cache driver',   'value' => config('cache.default')],
+            ['name' => 'Session driver', 'value' => config('session.driver')],
+            ['name' => 'Queue driver',   'value' => config('queue.default')],
 
-            ['name' => 'Timezone',          'value' => config('app.timezone')],
-            ['name' => 'Locale',            'value' => config('app.locale')],
-            ['name' => 'Env',               'value' => config('app.env')],
-            ['name' => 'URL',               'value' => config('app.url')],
-            ['name' => 'Socket URL',        'value' => config('fixhub.socket_url')],
-            ['name' => 'Socket port',       'value' => env('SOCKET_PORT', 6001)],
-            ['name' => 'Mail driver',       'value' => env('MAIL_DRIVER', 'log')],
-            ['name' => 'Debug',             'value' => config('app.debug') ? 'true' : 'false'],
-            ['name' => 'Log',               'value' => config('app.log')],
-            ['name' => 'Log level',         'value' => config('app.log_level')],
+            ['name' => 'Timezone',       'value' => config('app.timezone')],
+            ['name' => 'Locale',         'value' => config('app.locale')],
+            ['name' => 'Env',            'value' => config('app.env')],
+            ['name' => 'URL',            'value' => config('app.url')],
+            ['name' => 'Socket URL',     'value' => config('fixhub.socket_url')],
+            ['name' => 'Socket port',    'value' => env('SOCKET_PORT', 6001)],
+            ['name' => 'Mail driver',    'value' => env('MAIL_DRIVER', 'log')],
+            ['name' => 'Debug',          'value' => config('app.debug') ? 'true' : 'false'],
+            ['name' => 'Log',            'value' => config('app.log')],
+            ['name' => 'Log level',      'value' => config('app.log_level')],
         ];
 
         $json = file_get_contents(base_path('composer.json'));

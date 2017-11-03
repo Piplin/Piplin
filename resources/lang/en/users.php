@@ -63,6 +63,7 @@ return [
     'white'             => 'White',
     'black'             => 'Black',
     'role'              => 'Role',
+    'login_as'          => 'Signed in as :name',
     'level'             => [
         'admin'        => 'Administrator',
         'manager'      => 'Manager',
