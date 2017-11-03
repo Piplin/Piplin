@@ -41,7 +41,7 @@ return [
         'app'           => ['yes', 'no', 'never'],
         'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'approving', 'approving_empty', 'deployment_number'],
         'deployments'   => ['create_success', 'completed', 'completed_with_errors', 'pending',
-                            'deploying', 'running', 'cancelled', 'failed', 'draft', 'submit_success'],
+                            'deploying', 'running', 'cancelled', 'failed', 'draft', 'submit_success', 'view_details'],
         'variables'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'environments'  => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'link_auto', 'link_manual', 'link_success'],
         'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],

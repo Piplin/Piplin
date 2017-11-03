@@ -71,6 +71,6 @@ return [
     'second'                => ':time second|:time seconds',
     'deploy_failure'        => 'Problem with the deployment',
     'submit_success'        => 'New Deployment Submitted',
-    'create_success'        => 'Deployment created.',
+    'create_success'        => 'Deployment created, click here for details.',
 
 ];
