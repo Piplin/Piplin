@@ -32,7 +32,7 @@
 </div>
 @include('dashboard.projects._dialogs.public_key')
 
-<div class="modal fade" id="show_log">
+<div class="modal fade" id="show_log" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

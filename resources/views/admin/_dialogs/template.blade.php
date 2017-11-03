@@ -1,4 +1,4 @@
-<div class="modal fade" id="template">
+<div class="modal fade" id="template" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

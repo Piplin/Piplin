@@ -1,4 +1,4 @@
-<div class="modal fade" id="configfile">
+<div class="modal fade" id="configfile" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="view-configfile">
+<div class="modal fade" id="view-configfile" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

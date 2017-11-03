@@ -1,4 +1,4 @@
-<div class="modal fade" id="project">
+<div class="modal fade" id="project" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,7 +110,7 @@
 </div>
 
 
-<div class="modal fade" id="project-clone">
+<div class="modal fade" id="project-clone" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

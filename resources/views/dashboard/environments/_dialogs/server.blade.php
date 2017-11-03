@@ -1,4 +1,4 @@
-<div class="modal fade" id="server">
+<div class="modal fade" id="server" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

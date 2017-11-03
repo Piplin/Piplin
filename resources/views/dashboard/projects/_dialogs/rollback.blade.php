@@ -1,4 +1,4 @@
-<div class="modal modal-default fade" id="rollback">
+<div class="modal modal-default fade" id="rollback" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
