@@ -40,7 +40,7 @@
                         </ol>
                       </div>
                         @yield('right-buttons')
-                        @if(Request::is('/'))
+                        @if($current_user->is_admin and Request::is('/'))
                             @include('dashboard._partials.update')
                         @endif
                         <div class="alert alert-danger" id="socket_offline">
