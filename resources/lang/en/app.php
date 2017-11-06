@@ -25,7 +25,6 @@ return [
     'links'             => 'Usefull links',
     'created'           => 'Created',
     'edit'              => 'Edit',
-    'settings'          => 'Settings',
     'confirm'           => 'Confirm',
     'confirm_title'     => 'Confirm your action',
     'confirm_text'      => 'Are you sure you want to do this?',

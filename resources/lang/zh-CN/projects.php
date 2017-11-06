@@ -42,6 +42,7 @@ return [
     'edit'              => '编辑',
     'edit_success'      => '项目信息更新成功。',
     'delete_success'    => '该项目已被成功删除。',
+    'settings'          => '项目设置',
     'url'               => 'URL',
     'details'           => '项目详情',
     'deployments'       => '上线统计',

@@ -32,7 +32,7 @@ class ProjectComposer
     {
         $user = $view->current_user ?: Auth::user();
 
-        $projects = $user->is_admin ? Project::all() : array_merge($user->authorized_projects->toArray(), $user->personal_projects->toArray());
+        $projects = $user->is_admin ? Project::all() : $user->authorized_projects->concat($user->personal_projects);;
 
         $projects_by_group = [];
 

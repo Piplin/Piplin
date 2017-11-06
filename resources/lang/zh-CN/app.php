@@ -25,7 +25,6 @@ return [
     'links'             => '友情链接',
     'created'           => '创建于',
     'edit'              => '编辑',
-    'settings'          => '设置',
     'confirm'           => '确认',
     'confirm_title'     => '操作确认',
     'confirm_text'      => '你确定要执行该操作么?',

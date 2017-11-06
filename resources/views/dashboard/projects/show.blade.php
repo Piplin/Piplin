@@ -150,10 +150,9 @@
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('deploy'))
-            <a class="btn btn-lg btn-danger btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('app.settings') }}</a>
+        <a class="btn btn-lg btn-default btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('projects.settings') }}</a>
         @endif
         @if($project->can('deploy'))
-        <button type="button" class="btn btn-lg btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="fixhub fixhub-key"></span> {{ trans('keys.ssh_key') }}</button>
         <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
         @endif
     </div>
