@@ -13,7 +13,6 @@ namespace Fixhub\Bus\Jobs;
 
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Fixhub\Models\Key;
 use Fixhub\Services\Scripts\Runner as Process;
 use RuntimeException;
 
@@ -25,18 +24,18 @@ class GenerateKeyJob extends Job
     use Dispatchable, SerializesModels;
 
     /**
-     * @var Key
+     * @var Mixed
      */
-    private $key;
+    private $target;
 
     /**
      * Create a new job instance.
      *
-     * @param Key $key
+     * @param Mixed $target
      */
-    public function __construct(Key $key)
+    public function __construct($target)
     {
-        $this->key = $key;
+        $this->target = $target;
     }
 
     /**
@@ -44,9 +43,9 @@ class GenerateKeyJob extends Job
      */
     public function handle()
     {
-        if (empty($this->key->private_key)) {
+        if (empty($this->target->private_key)) {
             $this->generateSSHKey();
-        } elseif (empty($this->key->public_key)) {
+        } elseif (empty($this->target->public_key)) {
             $this->regeneratePublicKey();
         }
     }
@@ -70,8 +69,8 @@ class GenerateKeyJob extends Job
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        $this->key->private_key = file_get_contents($key_file);
-        $this->key->public_key  = file_get_contents($key_file . '.pub');
+        $this->target->private_key = file_get_contents($key_file);
+        $this->target->public_key  = file_get_contents($key_file . '.pub');
 
         unlink($key_file);
         unlink($key_file . '.pub');
@@ -85,7 +84,7 @@ class GenerateKeyJob extends Job
     private function regeneratePublicKey()
     {
         $key_file = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($key_file, $this->key->private_key);
+        file_put_contents($key_file, $this->target->private_key);
 
         $process = new Process('tools.RegeneratePublicSSHKey', [
             'key_file' => $key_file,
@@ -96,7 +95,7 @@ class GenerateKeyJob extends Job
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        $this->key->public_key  = file_get_contents($key_file . '.pub');
+        $this->target->public_key  = file_get_contents($key_file . '.pub');
 
         unlink($key_file);
         unlink($key_file . '.pub');

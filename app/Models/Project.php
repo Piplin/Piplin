@@ -162,13 +162,12 @@ class Project extends Model implements HasPresenter
             $roleCheck = $user->is_manager;
         }
 
-        static $isExists = null;
-
-        if (is_null($isExists)) {
-            $isExists = $this->members()->find($user->id) != null;
+        static $isMember = null;
+        if (is_null($isMember)) {
+            $isMember = ($this->targetable instanceof User && $this->targetable->id == $user->id) || $this->members()->find($user->id) != null;
         }
 
-        return $user->is_admin || ($roleCheck && $isExists);
+        return $user->is_admin || ($roleCheck && $isMember);
     }
 
     /**
@@ -229,6 +228,24 @@ class Project extends Model implements HasPresenter
         }
 
         return false;
+    }
+
+    public function getPublicKeyContentAttribute()
+    {
+        if (!$this->key) {
+            return $this->public_key;
+        } else {
+            return $this->key->public_key;
+        }
+    }
+
+    public function getPrivateKeyContentAttribute()
+    {
+        if (!$this->key) {
+            return $this->private_key;
+        } else {
+            return $this->key->private_key;
+        }
     }
 
     /**

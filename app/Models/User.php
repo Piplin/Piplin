@@ -121,11 +121,13 @@ class User extends Authenticatable implements HasPresenter
      *
      * @return Project
      */
-    
     public function projects()
     {
+        /*
         return $this->belongsToMany(Project::class)
                     ->orderBy('id', 'ASC');
+        */
+        return $this->morphMany(Project::class, 'targetable');
     }
 
     /**

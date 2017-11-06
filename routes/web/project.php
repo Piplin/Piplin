@@ -19,6 +19,11 @@ Route::group([
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
 
+        Route::post('projects', [
+            'as'   => 'projects.create',
+            'uses' => 'ProjectController@create',
+        ]);
+
         // Deployment
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',

@@ -1,4 +1,4 @@
-<div class="modal fade" id="project-create" tabindex="-1">
+<div class="modal fade" id="project_create" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="project_branch">{{ trans('projects.branch') }}</label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control" name="branch" id="project_branch"  placeholder="master" />
+                        <input type="text" class="form-control" name="branch" value="master" id="project_branch"  placeholder="master" />
                         </div>
                     </div>
                     <div class="form-group">

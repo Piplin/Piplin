@@ -103,7 +103,7 @@ class ProjectController extends Controller
         $group_id = array_pull($fields, 'targetable_id');
 
         if ($group_id && $group = Group::find($group_id)) {
-            $group->projects()->create($fields);
+            $project = $group->projects()->create($fields);
         } else {
             $project = Project::create($fields);
         }

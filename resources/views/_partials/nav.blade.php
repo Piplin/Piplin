@@ -65,7 +65,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#" data-toggle="modal" data-target="#project-create"><i class="fixhub fixhub-project"></i> {{ trans('projects.create') }}</a>
+                            <a href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-project"></i> {{ trans('projects.create') }}</a>
                         </li>
                     </ul>
                 </li>
