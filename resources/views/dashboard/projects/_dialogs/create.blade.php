@@ -8,41 +8,39 @@
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="project_id" name="id" />
                 <div class="modal-body">
-
                     <div class="callout callout-danger">
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('projects.warning') }}
                     </div>
-
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#project_details" data-toggle="tab">{{ trans('projects.details') }}</a></li>
-                            <li><a href="#project_repo" data-toggle="tab">{{ trans('projects.repository') }}</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div class="tab-pane" id="project_repo">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }}</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_branch">{{ trans('projects.branch') }}</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="branch" id="project_branch"  placeholder="master" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{ trans('projects.options') }}</label>
-                                    <div class="col-sm-9 checkbox">
-                                        <label for="project_allow_other_branch">
-                                            <input type="checkbox" value="1" name="allow_other_branch" id="project_allow_other_branch" />
-                                            {{ trans('projects.change_branch') }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="project_name">{{ trans('projects.name') }}</label>
+                        <div class="col-sm-3">
+                            <select id="project_targetable_id" name="targetable_id" class="form-control">
+                            <option value="">{{ $current_user->name }}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }}</label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="project_branch">{{ trans('projects.branch') }}</label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" name="branch" id="project_branch"  placeholder="master" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">{{ trans('projects.options') }}</label>
+                        <div class="col-sm-9 checkbox">
+                            <label for="project_allow_other_branch">
+                                <input type="checkbox" value="1" name="allow_other_branch" id="project_allow_other_branch" />
+                                {{ trans('projects.change_branch') }}
+                            </label>
                         </div>
                     </div>
                 </div>
