@@ -45,7 +45,7 @@ class Project extends Model implements HasPresenter
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
                          'hooks', 'commands','targetable', 'key', 'deployments', 'sharedFiles',
-                         'configFiles', 'last_mirrored',
+                         'configFiles', 'last_mirrored', 'private_key',
                          ];
 
     /**

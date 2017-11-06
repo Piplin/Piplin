@@ -10,13 +10,11 @@
  */
 
 Route::any('autocomplete/users', [
-    'as'         => 'autocomplete.users',
-    'middleware' => 'api',
-    'uses'       => 'Api\AutocompleteController@users',
+    'as'   => 'autocomplete.users',
+    'uses' => 'Api\AutocompleteController@users',
 ]);
 
 Route::any('autocomplete/cabinets', [
-    'as'         => 'autocomplete.cabinets',
-    'middleware' => 'api',
-    'uses'       => 'Api\AutocompleteController@cabinets',
+    'as'   => 'autocomplete.cabinets',
+    'uses' => 'Api\AutocompleteController@cabinets',
 ]);

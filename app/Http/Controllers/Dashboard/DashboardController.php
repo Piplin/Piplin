@@ -90,7 +90,10 @@ class DashboardController extends Controller
         $deployments = Deployment::whereNotNull('started_at');
 
         if (!$user->is_admin) {
-            $projectIds = $user->projects->pluck('id')->toArray();
+            $foo = $user->authorized_projects->pluck('id')->toArray();
+
+            $projectIds = array_merge($user->personal_projects->pluck('id')->toArray(), $foo);
+
             $deployments = $deployments->whereIn('project_id', $projectIds);
         }
 

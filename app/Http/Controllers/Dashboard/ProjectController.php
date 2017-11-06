@@ -89,15 +89,34 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
-            'targetable_id',
             'allow_other_branch'
         );
 
         $skeleton = null;
 
-        $project = Auth::user()->projects()->create($fields);
+        $project = Auth::user()->personal_projects()->create($fields);
 
         dispatch(new SetupSkeletonJob($project, $skeleton));
+
+        return $project;
+    }
+
+    /**
+     * Update the specified project in storage.
+     *
+     * @param Project             $project
+     * @param StoreProjectRequest $request
+     *
+     * @return Response
+     */
+    public function update(Project $project, StoreProjectRequest $request)
+    {
+        $project->update($request->only(
+            'name',
+            'repository',
+            'branch',
+            'allow_other_branch'
+        ));
 
         return $project;
     }

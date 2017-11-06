@@ -1,7 +1,33 @@
 (function ($) {
 
     $('#project_create').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
         var modal = $(this);
+        var title = trans('projects.create');
+
+        var project_id = button.data('project-id');
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('projects.edit');
+            $.ajax({
+                type: 'POST',
+                url: '/api/projects',
+                data: {
+                    project_id: project_id
+                }
+            }).done(function (data) {
+
+                Fixhub.Projects.reset(data);
+
+                $('#project_id').val(data.id);
+                $('#project_name').val(data.name);
+                $('#project_repository').val(data.repository);
+                $('#project_branch').val(data.branch);
+                $('#project_allow_other_branch').prop('checked', (data.allow_other_branch === true));
+            });
+        }
+
+        modal.find('.modal-title span').text(title);
         $('.callout-danger', modal).hide();
     });
 
@@ -38,9 +64,13 @@
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('projects.create_success'), '', 'success').on('click', function(){
-                    window.location.href = '/projects/' + response.id;
-                });
+                Fixhub.Projects.reset(response);
+                var msg = trans('projects.edit_success');
+                if (!project_id) {
+                     msg = trans('projects.create_success');
+                }
+                Fixhub.toast(msg, '', 'success');
+                window.location.href = '/projects/' + response.id;
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -74,6 +104,12 @@
     Fixhub.Project = Backbone.Model.extend({
         urlRoot: '/projects'
     });
+
+    var Projects = Backbone.Collection.extend({
+        model: Fixhub.Project
+    });
+
+    Fixhub.Projects = new Projects();
 
     $('#deploy').on('show.bs.modal', function (event) {
         var modal = $(this);

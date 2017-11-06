@@ -18,10 +18,13 @@ Route::group([
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
-
         Route::post('projects', [
             'as'   => 'projects.create',
             'uses' => 'ProjectController@create',
+        ]);
+        Route::put('projects/{project}', [
+            'as'   => 'projects.update',
+            'uses' => 'ProjectController@update',
         ]);
 
         // Deployment
