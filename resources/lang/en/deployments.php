@@ -53,11 +53,11 @@ return [
     'failed'                => 'Failed',
     'running'               => 'Running',
     'cancelled'             => 'Cancelled',
-    'reason'                => 'Reason for deployment',
+    'reason'                => 'Reason',
     'source'                => 'Source',
-    'default'               => 'The default branch (:branch)',
-    'different_branch'      => 'A different branch',
-    'tag'                   => 'A tag',
+    'default'               => 'Default Branch (:branch)',
+    'different_branch'      => 'A Different Branch',
+    'tag'                   => 'Tag',
     'branch'                => 'Branch',
     'environments'          => 'Environments',
     'warning'               => 'The deployment could not be started, please make sure you have entered all required values.',
@@ -71,6 +71,6 @@ return [
     'second'                => ':time second|:time seconds',
     'deploy_failure'        => 'Problem with the deployment',
     'submit_success'        => 'New Deployment Submitted',
-    'create_success'        => 'Deployment created.',
+    'create_success'        => 'Deployment created, click here for details.',
 
 ];

@@ -80,7 +80,9 @@
         var userId = parseInt($('meta[name="user_id"]').attr('content'));
 
         if (data.model.user_id == userId) {
-            window.location.href = '/deployment/' + data.model.id;
+            Fixhub.toast(trans('deployments.create_success'), '', 'info').on('click', function(){
+                window.location.href = '/deployment/' + data.model.id;
+            });
         }
     });
 

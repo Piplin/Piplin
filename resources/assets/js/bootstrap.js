@@ -208,11 +208,15 @@
         }
 
         if (caller == 'error') {
-            toastr.error(content, title);
+            return toastr.error(content, title);
         } else if(caller == 'warning') {
-            toastr.warning(content, title);
+            return toastr.warning(content, title);
+        } else if(caller == 'info') {
+            toastr.options.closeButton = false;
+            toastr.options.progressBar = false;
+            return toastr.info(content, title);
         } else {
-            toastr.success(content, title);
+            return toastr.success(content, title);
         }
     };
 

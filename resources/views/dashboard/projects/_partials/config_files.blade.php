@@ -36,13 +36,13 @@
         <td><%- path %></td>
         <td><%- environment_names %></td>
         <td>
-            @if($project->can('manage'))
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-view" title="{{ trans('configFiles.view') }}" data-toggle="modal" data-backdrop="static" data-target="#view-configfile"><i class="fixhub fixhub-preview"></i></button>
+                @if($project->can('manage'))
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="fixhub fixhub-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                @endif
             </div>
-            @endif
         </td>
     </script>
 @endpush

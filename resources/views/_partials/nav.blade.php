@@ -59,6 +59,16 @@
                         <li class="footer"><a href="javascript:void(0);">{{ trans('app.close') }}</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fixhub fixhub-plus"></i>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#project-create"><i class="fixhub fixhub-project"></i> {{ trans('projects.create') }}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li {!! set_active('profile', ['dropdown', 'user-menu']) !!}>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ $current_user->avatar_url }}" class="user-image" />
@@ -102,3 +112,5 @@
         </li>
     </script>
 @endpush
+
+@include('dashboard.projects._dialogs.create')

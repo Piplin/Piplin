@@ -81,6 +81,10 @@ Route::group([
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
         ]);
+        Route::get('projects/{project}/commands/{step}', [
+            'as'   => 'commands.step',
+            'uses' => 'CommandController@index',
+        ]);
         Route::post('commands/reorder', [
             'as'   => 'commands.reorder',
             'uses' => 'CommandController@reorder',
@@ -88,6 +92,10 @@ Route::group([
         Route::post('environments/reorder', [
             'as'    => 'environments.reorder',
             'uses'  => 'EnvironmentController@reorder',
+        ]);
+        Route::get('projects/{project}/environments/{environment}/{tab?}', [
+            'as'   => 'environments.show',
+            'uses' => 'EnvironmentController@show',
         ]);
 
         // In both of template & project
@@ -149,10 +157,6 @@ Route::group([
                 ]);
 
                 // Environment
-                Route::get('projects/{project}/environments/{environment}/{tab?}', [
-                    'as'   => 'environments.show',
-                    'uses' => 'EnvironmentController@show',
-                ]);
                 Route::put('environments/{environment}', [
                     'uses' => 'EnvironmentController@update',
                 ]);
@@ -174,10 +178,6 @@ Route::group([
                 ]);
                 Route::delete('commands/{command}', [
                     'uses' => 'CommandController@destroy',
-                ]);
-                Route::get('projects/{project}/commands/{step}', [
-                    'as'   => 'commands.step',
-                    'uses' => 'CommandController@index',
                 ]);
 
                 // SharedFile

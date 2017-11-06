@@ -95,3 +95,7 @@
 .form-group-sm .form-control + .form-control-feedback.fa {
   line-height: $input-height-small;
 }
+
+.form-horizontal .control-label {
+  position: static;
+}

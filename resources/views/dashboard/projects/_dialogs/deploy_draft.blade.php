@@ -1,4 +1,4 @@
-<div class="modal modal-default fade" id="deploy_draft">
+<div class="modal modal-default fade" id="deploy_draft" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

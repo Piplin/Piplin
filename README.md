@@ -10,8 +10,6 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## Fixhub能做什么？
 
-**注意** Fixhub仍处于并将长期处于初级阶段，下面的部分特性可能还没有100%完成。
-
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
 * 直接从Git仓库克隆项目代码并进行打包、安装
@@ -129,7 +127,7 @@ $ php artisan config:clear
 
 ```shell
 $ git fetch --all
-$ git checkout 0.4.0
+$ git checkout 0.4.1
  ```
 
 二. 更新依赖

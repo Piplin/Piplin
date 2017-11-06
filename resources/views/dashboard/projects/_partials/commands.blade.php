@@ -13,9 +13,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ trans('commands.step') }}</th>
+                    <th>{{ trans('commands.stage') }}</th>
                     <th>{{ trans('commands.before') }}</th>
-                    <th>{{ trans('commands.current') }}</th>
+                    <th>{{ trans('commands.action') }}</th>
                     <th>{{ trans('commands.after') }}</th>
                 </tr>
             </thead>

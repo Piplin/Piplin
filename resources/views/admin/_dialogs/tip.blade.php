@@ -1,4 +1,4 @@
-<div class="modal fade" id="tip">
+<div class="modal fade" id="tip" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="show_tip">
+<div class="modal fade" id="show_tip" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

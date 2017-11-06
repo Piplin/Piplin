@@ -68,6 +68,6 @@ return [
     'second'                => ':time 秒|:time 秒',
     'deploy_failure'        => '部署失败',
     'submit_success'        => '部署任务已提交。',
-    'create_success'        => '上线已创建成功。',
+    'create_success'        => '上线单已创建成功，点击查看详情。',
 
 ];
