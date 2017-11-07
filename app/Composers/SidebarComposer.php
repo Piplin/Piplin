@@ -27,7 +27,7 @@ class SidebarComposer
     const CACHE_MINUTES = 10;
 
     /**
-     * Generates the pending and deploying projects for the view.
+     * Generates sidebar data for the view.
      *
      * @param  \Illuminate\Contracts\View\View $view
      * @return void

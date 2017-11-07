@@ -58,7 +58,7 @@ class UpdateGitMirrorJob extends Job
     public function handle()
     {
         $private_key = tempnam(storage_path('app/'), 'sshkey');
-        file_put_contents($private_key, $this->project->key->private_key);
+        file_put_contents($private_key, $this->project->private_key_content);
 
         $wrapper = with(new ScriptParser)->parseFile('tools.SSHWrapperScript', [
             'private_key' => $private_key,

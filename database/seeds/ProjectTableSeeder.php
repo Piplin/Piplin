@@ -19,14 +19,15 @@ class ProjectTableSeeder extends Seeder
         DB::table('projects')->delete();
 
         Project::create([
-            'name'        => 'Fixhub',
-            'hash'        => str_random(60),
-            'repository'  => 'https://github.com/fixhub/fixhub.git',
-            'url'         => 'http://fixhub.org',
-            'group_id'    => 1,
-            'key_id'      => 1,
-            'last_run'    => null,
-            'build_url'   => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
+            'name'            => 'Fixhub',
+            'hash'            => str_random(60),
+            'repository'      => 'https://github.com/fixhub/fixhub.git',
+            'url'             => 'http://fixhub.org',
+            'targetable_type' => 'Fixhub\\Models\\ProjectGroup',
+            'targetable_id'   => 1,
+            'key_id'          => 1,
+            'last_run'        => null,
+            'build_url'       => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
         ]);
     }
 }

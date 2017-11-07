@@ -48,11 +48,7 @@ class DashboardController extends Controller
      */
     public function deployments()
     {
-        $data = $this->buildTimelineData();
-        return view('dashboard.index', [
-            'latest'          => $data[0],
-            'deployments_raw' => $data[1],
-        ]);
+        return view('dashboard.index');
     }
 
     /**
@@ -62,7 +58,7 @@ class DashboardController extends Controller
      */
     public function projects()
     {
-        return view('dashboard.projects', []);
+        return view('dashboard.projects');
     }
 
     /**
@@ -72,43 +68,7 @@ class DashboardController extends Controller
      */
     public function timeline()
     {
-        $data = $this->buildTimelineData();
-        return view('dashboard.timeline', [
-            'latest'          => $data[0],
-            'deployments_raw' => $data[1],
-        ]);
-    }
-
-    /**
-     * Builds the data for the timline.
-     *
-     * @return array
-     */
-    private function buildTimelineData()
-    {
-        $user = Auth::user();
-        $deployments = Deployment::whereNotNull('started_at');
-
-        if (!$user->is_admin) {
-            $projectIds = $user->projects->pluck('id')->toArray();
-            $deployments = $deployments->whereIn('project_id', $projectIds);
-        }
-
-        $deployments = $deployments->orderBy('started_at', 'DESC')
-                           ->paginate(10);
-
-        $deploys_by_date = [];
-        foreach ($deployments as $deployment) {
-            $date = $deployment->started_at->format('Y-m-d');
-
-            if (!isset($deploys_by_date[$date])) {
-                $deploys_by_date[$date] = [];
-            }
-
-            $deploys_by_date[$date][] = $deployment;
-        }
-
-        return [$deploys_by_date, $deployments];
+        return view('dashboard.timeline');
     }
 
     /**

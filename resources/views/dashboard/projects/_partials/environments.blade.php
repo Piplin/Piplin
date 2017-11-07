@@ -1,6 +1,9 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
+            @if($project->can('deploy'))
+            <button type="button" class="btn btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="fixhub fixhub-key"></span> {{ trans('keys.ssh_key') }}</button> 
+            @endif
             @if($project->can('manage'))
             <button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="fixhub fixhub-plus"></i> {{ trans('environments.create') }}</button>
             @endif

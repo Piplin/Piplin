@@ -13,6 +13,7 @@ namespace Fixhub\Models;
 
 use Fixhub\Models\Traits\BroadcastChanges;
 use Fixhub\Models\Traits\SetupRelations;
+use Fixhub\Models\Traits\HasTargetable;
 use Fixhub\Presenters\ProjectPresenter;
 use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Project extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, SetupRelations, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, SetupRelations, HasTargetable, RevisionableTrait;
 
     const FINISHED     = 0;
     const PENDING      = 1;
@@ -43,8 +44,8 @@ class Project extends Model implements HasPresenter
      * @var array
      */
     protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'hooks', 'commands','group', 'key', 'deployments', 'sharedFiles',
-                         'configFiles', 'last_mirrored',
+                         'hooks', 'commands','targetable', 'key', 'deployments', 'sharedFiles',
+                         'configFiles', 'last_mirrored', 'private_key',
                          ];
 
     /**
@@ -52,7 +53,7 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'group_id', 'key_id',
+    protected $fillable = ['name', 'repository', 'branch', 'targetable_type', 'targetable_id', 'key_id',
                            'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
                            ];
 
@@ -161,13 +162,13 @@ class Project extends Model implements HasPresenter
             $roleCheck = $user->is_manager;
         }
 
-        static $isExists = null;
-
-        if (is_null($isExists)) {
-            $isExists = $this->members()->find($user->id) != null;
+        static $isMember = null;
+        if (is_null($isMember)) {
+            $isMember = ($this->targetable instanceof User && $this->targetable->id == $user->id)
+                        || $this->members()->find($user->id) != null;
         }
 
-        return $user->is_admin || ($roleCheck && $isExists);
+        return $user->is_admin || ($roleCheck && $isMember);
     }
 
     /**
@@ -231,13 +232,41 @@ class Project extends Model implements HasPresenter
     }
 
     /**
-     * Define a accessor for the group name.
+     * Define an accessor for the public key content.
      *
-     * @return int
+     * @return string
+     */
+    public function getPublicKeyContentAttribute()
+    {
+        if (!$this->key) {
+            return $this->public_key;
+        } else {
+            return $this->key->public_key;
+        }
+    }
+
+    /**
+     * Define an accessor for the private key content.
+     *
+     * @return string
+     */
+    public function getPrivateKeyContentAttribute()
+    {
+        if (!$this->key) {
+            return $this->private_key;
+        } else {
+            return $this->key->private_key;
+        }
+    }
+
+    /**
+     * Define an accessor for the group name.
+     *
+     * @return string
      */
     public function getGroupNameAttribute()
     {
-        return $this->group ? $this->group->name : null;
+        return $this->targetable ? $this->targetable->name : null;
     }
 
     /**
@@ -248,16 +277,6 @@ class Project extends Model implements HasPresenter
     public function getWebhookUrlAttribute()
     {
         return route('webhook.deploy', $this->hash);
-    }
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Group
-     */
-    public function group()
-    {
-        return $this->belongsTo(ProjectGroup::class, 'group_id', 'id');
     }
 
     /**

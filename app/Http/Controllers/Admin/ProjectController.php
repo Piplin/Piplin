@@ -37,6 +37,8 @@ class ProjectController extends Controller
         $projects = Project::orderBy('name')
                     ->paginate(config('fixhub.items_per_page', 10));
 
+
+
         $keys = Key::orderBy('name')
                     ->get();
 
@@ -82,7 +84,7 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
-            'group_id',
+            'targetable_id',
             'key_id',
             'builds_to_keep',
             'url',
@@ -98,7 +100,13 @@ class ProjectController extends Controller
 
         $skeleton = DeployTemplate::find($template_id);
 
-        $project = Project::create($fields);
+        $group_id = array_pull($fields, 'targetable_id');
+
+        if ($group_id && $group = Group::find($group_id)) {
+            $project = $group->projects()->create($fields);
+        } else {
+            $project = Project::create($fields);
+        }
         
         dispatch(new SetupSkeletonJob($project, $skeleton));
 
@@ -123,7 +131,8 @@ class ProjectController extends Controller
         }
 
         if ($type == 'project') {
-            $fields['group_id'] = $skeleton->group_id;
+            $fields['targetable_type'] = $skeleton->targetable_type;
+            $fields['targetable_id'] = $skeleton->targetable_id;
             $fields['key_id'] = $skeleton->key_id;
             $fields['repository'] = $skeleton->repository;
             $target = Project::create($fields);
@@ -152,7 +161,7 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
-            'group_id',
+            'targetable_id',
             'builds_to_keep',
             'url',
             'build_url',

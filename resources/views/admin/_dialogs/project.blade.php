@@ -24,9 +24,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_name">{{ trans('projects.name') }}</label>
                                     <div class="col-sm-3">
-                                         <select id="project_group_id" name="group_id" class="form-control">
-                                            <option value="">{{ trans('projects.ungrouped') }}</option>
-                                            @foreach($groups as $item)
+                                        <select id="project_targetable_id" name="targetable_id" class="form-control">
+                                        <option value="">{{ trans('projects.ungrouped') }}</option>
+                                        @foreach($groups as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>

@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
 use Fixhub\Models\Project;
+use Fixhub\Http\Requests\StoreProjectRequest;
+use Fixhub\Bus\Jobs\SetupSkeletonJob;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -72,5 +74,50 @@ class ProjectController extends Controller
         }
 
         return view('dashboard.projects.show', $data);
+    }
+
+    /**
+     * Store a newly created project in storage.
+     *
+     * @param  StoreProjectRequest $request
+     *
+     * @return Response
+     */
+    public function create(StoreProjectRequest $request)
+    {
+        $fields = $request->only(
+            'name',
+            'repository',
+            'branch',
+            'allow_other_branch'
+        );
+
+        $skeleton = null;
+
+        $project = Auth::user()->personal_projects()->create($fields);
+
+        dispatch(new SetupSkeletonJob($project, $skeleton));
+
+        return $project;
+    }
+
+    /**
+     * Update the specified project in storage.
+     *
+     * @param Project             $project
+     * @param StoreProjectRequest $request
+     *
+     * @return Response
+     */
+    public function update(Project $project, StoreProjectRequest $request)
+    {
+        $project->update($request->only(
+            'name',
+            'repository',
+            'branch',
+            'allow_other_branch'
+        ));
+
+        return $project;
     }
 }

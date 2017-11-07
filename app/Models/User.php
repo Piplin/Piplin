@@ -116,16 +116,26 @@ class User extends Authenticatable implements HasPresenter
         return $this->email_token;
     }
 
+
     /**
      * Belongs to many relationship.
      *
-     * @return Server
+     * @return Project
      */
-    
-    public function projects()
+    public function authorizedProjects()
     {
         return $this->belongsToMany(Project::class)
                     ->orderBy('id', 'ASC');
+    }
+
+    /**
+     * Has many relationship.
+     *
+     * @return Project
+     */
+    public function personalProjects()
+    {
+        return $this->morphMany(Project::class, 'targetable');
     }
 
     /**
@@ -138,7 +148,7 @@ class User extends Authenticatable implements HasPresenter
      */
     public function can($name, $arg = null)
     {
-        if ($name == 'project.create') {
+        if ($name == 'projects.create') {
             return $this->is_admin || $this->is_manager;
         }
 
