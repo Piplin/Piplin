@@ -25,6 +25,7 @@ class TimelineComposer
      * Sets the timeline data into view variables.
      *
      * @param  \Illuminate\Contracts\View\View $view
+     *
      * @return void
      */
     public function compose(View $view)
@@ -37,6 +38,8 @@ class TimelineComposer
 
     /**
      * Builds the data for the timline.
+     *
+     * @param  \Illuminate\Contracts\View\View $view
      *
      * @return array
      */
