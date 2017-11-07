@@ -61,7 +61,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
 
         // Fix me please
         if ($this->server->targetable instanceof Cabinet) {
-            $private_key = $this->server->targetable->key->private_key;
+            $private_key = $this->server->targetable->private_key_content;
         } else {
             $private_key = $this->server->targetable->targetable->private_key_content;
         }

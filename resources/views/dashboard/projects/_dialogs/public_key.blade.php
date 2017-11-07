@@ -10,7 +10,7 @@
                     <p>{!! trans('keys.server_keys') !!}</p>
                 </div>
 
-                <div id="log"><pre>{{ isset($project) && $project->public_key_content ? $project->public_key_content : 'loading' }}</pre></div>
+                <div id="log"><pre>{{ isset($project) && $project->public_key_content ? $project->public_key_content : $targetable->public_key_content }}</pre></div>
 
                 <div class="alert alert-default">
                      <p>{!! trans('keys.git_keys') !!}</p>

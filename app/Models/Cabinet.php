@@ -81,6 +81,26 @@ class Cabinet extends Model
     }
 
     /**
+     * Define an accessor for the public key content.
+     *
+     * @return string
+     */
+    public function getPublicKeyContentAttribute()
+    {
+        return $this->key->public_key;
+    }
+
+    /**
+     * Define an accessor for the private key content.
+     *
+     * @return string
+     */
+    public function getPrivateKeyContentAttribute()
+    {
+        return $this->key->private_key;
+    }
+
+    /**
      * Define a accessor for the count of projects.
      *
      * @return int
