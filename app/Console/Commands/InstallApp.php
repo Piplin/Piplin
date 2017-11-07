@@ -291,14 +291,14 @@ class InstallApp extends Command
             $drivers = $this->getDatabaseDrivers();
 
             // Should we just skip this step if only one driver is available?
-            $type = $this->choice('Type', $drivers, (int)array_search('mysql', $drivers, true));
+            $type = $this->choice('Database Driver', $drivers, (int)array_search('mysql', $drivers, true));
 
             $database['type'] = $type;
 
             Config::set('database.default', $type);
 
             if ($type !== 'sqlite') {
-                $host = $this->ask('Host', '127.0.0.1');
+                $host = $this->ask('Database Host', '127.0.0.1');
                 $name = $this->ask('Database', 'fixhub');
                 $user = $this->ask('Username', 'fixhub');
                 $pass = $this->secret('Password');

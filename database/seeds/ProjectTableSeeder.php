@@ -18,7 +18,7 @@ class ProjectTableSeeder extends Seeder
     {
         DB::table('projects')->delete();
 
-        Project::create([
+        $project = Project::create([
             'name'            => 'Fixhub',
             'hash'            => str_random(60),
             'repository'      => 'https://github.com/fixhub/fixhub.git',
@@ -29,5 +29,7 @@ class ProjectTableSeeder extends Seeder
             'last_run'        => null,
             'build_url'       => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
         ]);
+
+        $project->members()->attach([1]);
     }
 }
