@@ -94,7 +94,7 @@ class ProjectController extends Controller
 
         $skeleton = null;
 
-        $project = Auth::user()->personal_projects()->create($fields);
+        $project = Auth::user()->personalProjects()->create($fields);
 
         dispatch(new SetupSkeletonJob($project, $skeleton));
 
