@@ -59,7 +59,7 @@
                         <li class="footer"><a href="javascript:void(0);">{{ trans('app.close') }}</a></li>
                     </ul>
                 </li>
-                @if($current_user->can('projects.create'))
+                @if(!$in_admin and $current_user->can('projects.create'))
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fixhub fixhub-plus"></i>
                         <b class="caret"></b>
@@ -115,4 +115,6 @@
     </script>
 @endpush
 
-@include('dashboard.projects._dialogs.create')
+@if(!$in_admin)
+    @include('dashboard.projects._dialogs.create')
+@endif
