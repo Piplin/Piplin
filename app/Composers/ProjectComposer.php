@@ -31,10 +31,7 @@ class ProjectComposer
     public function compose(View $view)
     {
         $user = $view->current_user ?: Auth::user();
-
-        $projects = $user->is_admin ? Project::all() : $user->authorized_projects->concat($user->personal_projects);
-        ;
-
+        $projects = $user->authorized_projects->merge($user->personal_projects);
         $projects_by_group = [];
 
         foreach ($projects as $project) {
