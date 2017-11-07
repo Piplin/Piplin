@@ -87,16 +87,14 @@ class DashboardController extends Controller
     private function buildTimelineData()
     {
         $user = Auth::user();
-        $deployments = Deployment::whereNotNull('started_at');
 
-        if (!$user->is_admin) {
-            $projectIds = array_merge($user->personal_projects->pluck('id')->toArray(), $user->authorized_projects->pluck('id')->toArray());
+        $personalProjectIds = $user->personalProjects->pluck('id')->toArray();
+        $projectIds = array_merge($personalProjectIds, $user->authorizedProjects->pluck('id')->toArray());
 
-            $deployments = $deployments->whereIn('project_id', $projectIds);
-        }
-
-        $deployments = $deployments->orderBy('started_at', 'DESC')
-                           ->paginate(10);
+        $deployments = Deployment::whereNotNull('started_at')
+                        ->whereIn('project_id', $projectIds)
+                        ->orderBy('started_at', 'DESC')
+                        ->paginate(10);
 
         $deploys_by_date = [];
         foreach ($deployments as $deployment) {

@@ -164,7 +164,8 @@ class Project extends Model implements HasPresenter
 
         static $isMember = null;
         if (is_null($isMember)) {
-            $isMember = ($this->targetable instanceof User && $this->targetable->id == $user->id) || $this->members()->find($user->id) != null;
+            $isMember = ($this->targetable instanceof User && $this->targetable->id == $user->id)
+                        || $this->members()->find($user->id) != null;
         }
 
         return $user->is_admin || ($roleCheck && $isMember);
@@ -230,6 +231,11 @@ class Project extends Model implements HasPresenter
         return false;
     }
 
+    /**
+     * Define an accessor for the public key content.
+     *
+     * @return string
+     */
     public function getPublicKeyContentAttribute()
     {
         if (!$this->key) {
@@ -239,6 +245,11 @@ class Project extends Model implements HasPresenter
         }
     }
 
+    /**
+     * Define an accessor for the private key content.
+     *
+     * @return string
+     */
     public function getPrivateKeyContentAttribute()
     {
         if (!$this->key) {
@@ -249,9 +260,9 @@ class Project extends Model implements HasPresenter
     }
 
     /**
-     * Define a accessor for the group name.
+     * Define an accessor for the group name.
      *
-     * @return int
+     * @return string
      */
     public function getGroupNameAttribute()
     {

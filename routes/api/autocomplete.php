@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-Route::any('autocomplete/users', [
+Route::any('api/autocomplete/users', [
     'as'   => 'autocomplete.users',
     'uses' => 'Api\AutocompleteController@users',
 ]);
 
-Route::any('autocomplete/cabinets', [
+Route::any('api/autocomplete/cabinets', [
     'as'   => 'autocomplete.cabinets',
     'uses' => 'Api\AutocompleteController@cabinets',
 ]);

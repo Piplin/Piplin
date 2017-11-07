@@ -122,7 +122,7 @@ class User extends Authenticatable implements HasPresenter
      *
      * @return Project
      */
-    public function authorized_projects()
+    public function authorizedProjects()
     {
         return $this->belongsToMany(Project::class)
                     ->orderBy('id', 'ASC');
@@ -133,7 +133,7 @@ class User extends Authenticatable implements HasPresenter
      *
      * @return Project
      */
-    public function personal_projects()
+    public function personalProjects()
     {
         return $this->morphMany(Project::class, 'targetable');
     }

@@ -21,6 +21,13 @@ use Fixhub\Models\Project;
  */
 class ProjectController extends Controller
 {
+    /**
+     * The details of an individual project.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function show(Request $request)
     {
         $project_id = $request->get('project_id');

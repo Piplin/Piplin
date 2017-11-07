@@ -1047,7 +1047,7 @@
         minimumInputLength: 1,
         width: '100%',
         ajax: {
-            url: "/autocomplete/users",
+            url: "/api/autocomplete/users",
             dataType: 'json',
             delay: 250,
             data: function (params) {
