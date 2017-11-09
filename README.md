@@ -81,6 +81,8 @@ $ cp .env.example .env
 $ php artisan app:install
 ```
 
+Fixhub安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
+
 七. 清除配置缓存
 
 ```shell
@@ -89,11 +91,22 @@ $ php artisan config:clear
 
 八. 将你的服务器根目录指向 `public/`, 请查看 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
-九. 启动web socket，配置相关计划任务.
+> 注意: `examples/` 提供的仅仅是范例，请根据实际情况进行相关配置调整。
 
-1、 通过`supervisor`管理Fixhub后台服务，请看 [examples/supervisor.conf](examples/supervisor.conf)
+九. 后台进程配置
 
-2、 不通过`supervisor`管理Fixhub后台服务，你需要手动启动websocket服务。在Fixhub根目录执行`node socket.js` (目录监听6001端口)。手动设置计划任务请看 [examples/crontab](examples/crontab).
+Fixhub通过`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)
+
+配置计划任务请看 [examples/crontab](examples/crontab).
+
+> 注意: 请根据实际情况进行相关配置调整。
+
+十. 访问fixhub
+
+完成安装后，请通过浏览器访问安装过程中设置的应用网址。
+
+我有Fixhub，你有故事吗？请开始你的表演。
+
 
 ### 升级
 
