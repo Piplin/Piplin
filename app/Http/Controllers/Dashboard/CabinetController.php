@@ -51,7 +51,6 @@ class CabinetController extends Controller
      */
     public function test(Environment $server, Cabinet $cabinet)
     {
-
     }
 
     /**

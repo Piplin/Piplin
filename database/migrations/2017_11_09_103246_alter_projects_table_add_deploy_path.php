@@ -33,7 +33,7 @@ class AlterProjectsTableAddDeployPath extends Migration
                     continue;
                 }
 
-                if(!$project->deploy_path) {
+                if (!$project->deploy_path) {
                     $project->deploy_path = $server->path;
                     $project->save();
                 }
