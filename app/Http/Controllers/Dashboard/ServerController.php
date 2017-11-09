@@ -40,7 +40,6 @@ class ServerController extends Controller
             'user',
             'ip_address',
             'port',
-            'path',
             'targetable_type',
             'targetable_id'
         );
@@ -89,7 +88,6 @@ class ServerController extends Controller
             'user',
             'ip_address',
             'port',
-            'path',
             'targetable_id'
         ));
 

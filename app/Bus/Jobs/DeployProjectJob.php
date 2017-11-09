@@ -234,13 +234,10 @@ class DeployProjectJob extends Job implements ShouldQueue
                 continue;
             }
 
-            // Fix me please
-            $deploy_path = $this->project->clean_deploy_path ?: $server->clean_path;
-
             $process = new Process('deploy.CleanupFailedRelease', [
-                'project_path'   => $deploy_path,
-                'release_path'   => $deploy_path . '/releases/' . $this->deployment->release_id,
-                'remote_archive' => $deploy_path . '/' . $this->release_archive,
+                'project_path'   => $this->project->clean_deploy_path,
+                'release_path'   => $this->project->clean_deploy_path . '/releases/' . $this->deployment->release_id,
+                'remote_archive' => $this->project->clean_deploy_path . '/' . $this->release_archive,
             ]);
 
             $process->setServer($server, $this->private_key)
@@ -353,10 +350,8 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function sendFilesForStep(DeployStep $step, ServerLog $log)
     {
-        // Fix me please
-        $deploy_path = $this->project->clean_deploy_path ?: $log->server->clean_path;
-        $latest_release_dir = $deploy_path . '/releases/' . $this->deployment->release_id;
-        $remote_archive     = $deploy_path . '/' . $this->release_archive;
+        $latest_release_dir = $this->project->clean_deploy_path . '/releases/' . $this->deployment->release_id;
+        $remote_archive     = $this->project->clean_deploy_path . '/' . $this->release_archive;
         $local_archive      = storage_path('app/' . $this->release_archive);
 
         if ($step->stage === Stage::DO_CLONE) {
@@ -597,13 +592,10 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function getTokenList(DeployStep $step, Server $server)
     {
-        // Fix me please
-        $deploy_path = $this->project->clean_deploy_path ?: $server->clean_path;
-
-        $releases_dir       = $deploy_path . '/releases';
-        $latest_release_dir = $releases_dir . '/' . $this->deployment->release_id;
-        $release_shared_dir = $deploy_path . '/shared';
-        $remote_archive     = $deploy_path . '/' . $this->release_archive;
+        $releases_dir       = $this->project->clean_deploy_path . '/releases';
+        $latest_release_dir = $this->project->clean_deploy_path . '/' . $this->deployment->release_id;
+        $release_shared_dir = $this->project->clean_deploy_path . '/shared';
+        $remote_archive     = $this->project->clean_deploy_path . '/' . $this->release_archive;
 
         // Set the fixhub tags
         $deployer_email = '';
@@ -618,7 +610,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         $tokens = [
             'release'         => $this->deployment->release_id,
             'release_path'    => $latest_release_dir,
-            'project_path'    => $deploy_path,
+            'project_path'    => $this->project->clean_deploy_path,
             'branch'          => $this->deployment->branch,
             'sha'             => $this->deployment->commit,
             'short_sha'       => $this->deployment->short_commit,

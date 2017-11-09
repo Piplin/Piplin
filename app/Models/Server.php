@@ -53,7 +53,6 @@ class Server extends Model
         'ip_address',
         'targetable_id',
         'targetable_type',
-        'path',
         'status',
         'output',
         'port',
@@ -106,18 +105,6 @@ class Server extends Model
     }
 
     /**
-     * Define a mutator for the path, if it has changed or has
-     * not previously been set also set the status to untested.
-     *
-     * @param  string $value
-     * @return void
-     */
-    public function setPathAttribute($value)
-    {
-        $this->setAttributeStatusUntested('path', $value);
-    }
-
-    /**
      * Define a mutator for the IP Address, if it has changed or
      * has not previously been set also set the status to untested.
      *
@@ -155,15 +142,5 @@ class Server extends Model
         }
 
         $this->attributes[$attribute] = $value;
-    }
-
-    /**
-     * The server path without a trailing slash.
-     *
-     * @return string
-     */
-    public function getCleanPathAttribute()
-    {
-        return preg_replace('#/$#', '', $this->path);
     }
 }
