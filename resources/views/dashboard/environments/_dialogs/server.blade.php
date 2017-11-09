@@ -51,7 +51,7 @@
                         <label class="col-sm-3 control-label" for="server_path">{{ trans('servers.path') }}
                         <i class="fixhub fixhub-help text-gray" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="server_path" name="path" placeholder="/var/www/project" />
+                            <input type="text" disabled="disabled" class="form-control" id="server_path" name="path" placeholder="/var/www/project" />
                         </div>
                     </div>
                     <div class="form-group">
