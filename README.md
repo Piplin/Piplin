@@ -23,32 +23,6 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 * 支持Gitlab、Github、Gogs、Gitee(Oschina)等代码托管平台进行集成
 * 支持钉钉机器人、Slack、邮件和自定义Webhook的服务集成
 
-## 使用到的技术
-
-- [x] Laravel
-- [x] Bootstrap
-- [x] ionicons
-- [x] Node.js
-- [x] Beanstalkd
-- [x] Redis
-- [x] Memcached
-- [x] JWT-Auth
-- [x] Socket.io
-- [x] Supervisor
-
-## 开发使用到的技术
-
-- [x] Webpack
-- [x] Sass
-- [x] Codception
-- [x] PHP CodeSniffer
-- [x] PHP Docblock Checker
-- [x] PHP CS Fixer
-- [x] Travis-ci
-- [x] Style-CI
-- [x] Gitlab-Ci
-
-
 ## 安装环境要求
 
 Fixhub目前只支持类Unix操作系统，为了能运行Fixhub，您还需要安装一些基础软件。
@@ -127,7 +101,7 @@ $ php artisan config:clear
 
 ```shell
 $ git fetch --all
-$ git checkout 0.4.1
+$ git checkout 0.4.2
  ```
 
 二. 更新依赖
@@ -150,6 +124,31 @@ $ php artisan app:update
 - **密码:** `fixhub`
 
 > 注意：系统每5分钟会自动重置一次密码，该账号没有权限访问管理功能.
+
+## 使用到的技术
+
+- [x] Laravel
+- [x] Bootstrap
+- [x] ionicons
+- [x] Node.js
+- [x] Beanstalkd
+- [x] Redis
+- [x] Memcached
+- [x] JWT-Auth
+- [x] Socket.io
+- [x] Supervisor
+
+## 开发使用到的技术
+
+- [x] Webpack
+- [x] Sass
+- [x] Codception
+- [x] PHP CodeSniffer
+- [x] PHP Docblock Checker
+- [x] PHP CS Fixer
+- [x] Travis-ci
+- [x] Style-CI
+- [x] Gitlab-Ci
 
 ## 开发相关
 
