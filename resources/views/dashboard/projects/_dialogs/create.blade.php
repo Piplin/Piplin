@@ -29,6 +29,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" name="deploy_path" id="project_deploy_path"  placeholder="/var/www/app" />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label" for="project_branch">{{ trans('projects.branch') }}</label>
                         <div class="col-sm-9">
                         <input type="text" class="form-control" name="branch" value="master" id="project_branch"  placeholder="master" />

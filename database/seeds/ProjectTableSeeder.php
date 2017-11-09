@@ -25,6 +25,7 @@ class ProjectTableSeeder extends Seeder
             'url'             => 'http://fixhub.org',
             'targetable_type' => 'Fixhub\\Models\\ProjectGroup',
             'targetable_id'   => 1,
+            'deploy_path'     => '/var/www/web',
             'key_id'          => 1,
             'last_run'        => null,
             'build_url'       => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',

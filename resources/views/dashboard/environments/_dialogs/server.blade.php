@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="server_address">{{ trans('servers.host') }} <i class="fixhub fixhub-help text-gray" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.host_help') !!}"></i></label>
+                        <label class="col-sm-3 control-label" for="server_address">{{ trans('servers.host') }} <i class="fixhub fixhub-help text-gray" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="server_address" name="ip_address" placeholder="192.168.0.1" />
                         </div>

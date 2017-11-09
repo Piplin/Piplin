@@ -31,7 +31,7 @@ return [
     'environment'    => '部署环境',
     'test'           => '测试该服务器是否连通',
     'path'           => '部署目录',
-    'example'        => 'Fixhub部署时会在该路径内创建 <code>releases</code> 目录。同时会建立 <code>current</code> 软链到最新版本。<br />假设该项值被设置为 <code>/data/www/app</code>，那么Web服务的主目录可能要设为<code>/data/www/app/current/public</code>。',
+    'example'        => '当执行部署时，Fixhub会在远程服务器的部署路径内自动创建一个名为 <code>releases</code> 的目录。同时会建立 <code>current</code> 软链到最新版本。<br />假设该项值被设置为 <code>/data/www/app</code>，那么Web服务的主目录可能要设为<code>/data/www/app/current/public</code>。',
     'warning'        => '服务器信息未被保存成功，请确认相关信息是否有误。',
     'successful'     => '成功',
     'testing'        => '测试中',

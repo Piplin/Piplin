@@ -59,6 +59,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="deploy_path" id="project_deploy_path" placeholder="/var/www/app" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_builds_to_keep">{{ trans('projects.builds') }}</label>
                                     <div class="col-sm-9">
                                     <input type="number" class="form-control" name="builds_to_keep" min="1" max="20" id="project_builds_to_keep" placeholder="10" />

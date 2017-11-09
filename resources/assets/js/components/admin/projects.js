@@ -40,6 +40,7 @@
                                     .val($("#project_targetable_id option:selected").val())
                                     .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
+            $('#project_deploy_path').val('');
             $('#project_builds_to_keep').val(10);
             $('#project_url').val('');
             $('#project_build_url').val('');
@@ -103,6 +104,7 @@
             branch:             $('#project_branch').val(), 
             targetable_id:      $('#project_targetable_id').val(),
             key_id:             $('#project_key_id').val(),
+            deploy_path:        $('#project_deploy_path').val(),
             builds_to_keep:     $('#project_builds_to_keep').val(),
             url:                $('#project_url').val(),
             build_url:          $('#project_build_url').val(),
@@ -262,6 +264,7 @@
                                     .val(this.model.get('targetable_id'))
                                     .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));
+            $('#project_deploy_path').val(this.model.get('deploy_path'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));
             $('#project_url').val(this.model.get('url'));
             $('#project_build_url').val(this.model.get('build_url'));

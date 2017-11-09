@@ -21,6 +21,7 @@ return [
     'key'               => 'SSH Key',
     'repository'        => 'Repository',
     'repository_path'   => 'Repository URL',
+    'deploy_path'       => 'Deploy Path',
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
     'clone'             => 'Clone',

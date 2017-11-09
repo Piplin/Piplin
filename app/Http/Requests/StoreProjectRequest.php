@@ -40,7 +40,8 @@ class StoreProjectRequest extends Request
         // On editing remove the template_id rule
         if ($this->get('id')) {
             unset($rules['template_id']);
-            $rules['repository'] = 'required';
+            $rules['repository'] =  'required';
+            $rules['deploy_path'] = 'required';
         }
 
         return $rules;
