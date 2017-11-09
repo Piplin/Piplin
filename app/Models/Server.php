@@ -56,7 +56,7 @@ class Server extends Model
         'status',
         'output',
         'port',
-        'order', 
+        'order',
     ];
 
     /**
