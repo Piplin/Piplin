@@ -135,15 +135,18 @@ $ php artisan app:update
 ## 使用到的技术
 
 - [x] Laravel
-- [x] Bootstrap
-- [x] ionicons
-- [x] Node.js
+- [x] Supervisord
 - [x] Beanstalkd
 - [x] Redis
 - [x] Memcached
+- [x] Bootstrap
+- [x] ionicons
+- [x] Node.js
 - [x] JWT-Auth
 - [x] Socket.io
-- [x] Supervisor
+- [x] jQuery
+- [x] underscore
+- [x] ioredis
 
 ## 开发使用到的技术
 
