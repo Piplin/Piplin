@@ -194,8 +194,6 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->deployment->committer       = trim($committer);
         $this->deployment->committer_email = trim($email);
 
-        //$process = new Process('git symbolic-ref --short -q HEAD');
-
         if (!$this->deployment->user_id && !$this->deployment->source) {
             $user = User::where('email', $this->deployment->committer_email)->first();
 
@@ -593,9 +591,9 @@ class DeployProjectJob extends Job implements ShouldQueue
     private function getTokenList(DeployStep $step, Server $server)
     {
         $releases_dir       = $this->project->clean_deploy_path . '/releases';
-        $latest_release_dir = $this->project->clean_deploy_path . '/' . $this->deployment->release_id;
         $release_shared_dir = $this->project->clean_deploy_path . '/shared';
         $remote_archive     = $this->project->clean_deploy_path . '/' . $this->release_archive;
+        $latest_release_dir = $releases_dir . '/' . $this->deployment->release_id;
 
         // Set the fixhub tags
         $deployer_email = '';
