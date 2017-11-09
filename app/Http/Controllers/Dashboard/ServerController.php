@@ -28,7 +28,6 @@ class ServerController extends Controller
     /**
      * Store a newly created server in storage.
      *
-     * @param Project $project
      * @param StoreServerRequest $request
      *
      * @return Response
@@ -77,7 +76,6 @@ class ServerController extends Controller
     /**
      * Update the specified server in storage.
      *
-     * @param Project $project
      * @param Server $server
      * @param StoreServerRequest $request
      *
@@ -101,7 +99,6 @@ class ServerController extends Controller
     /**
      * Queues a connection test for the specified server.
      *
-     * @param Project $project
      * @param Server $server
      *
      * @return Response
