@@ -66,7 +66,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         } else {
             $private_key = $this->server->targetable->targetable->private_key_content;
             if ($this->server->targetable->targetable->clean_deploy_path) {
-                 $deploy_path = $this->server->targetable->targetable->clean_deploy_path;
+                $deploy_path = $this->server->targetable->targetable->clean_deploy_path;
             }
         }
 
