@@ -83,9 +83,9 @@ $ php artisan app:install
 
 > Fixhub安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
-七. 将你的服务器根目录指向 `public/`, 请查看 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+七. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
-> 注意: `examples/` 提供的仅仅是范例，请根据实际情况进行相关配置调整。
+> 注意: `examples/` 提供的仅仅是范例，并不能保证直接拷贝就能使用，需要根据实际情况进行相关配置调整。
 
 八. 后台进程管理
 
