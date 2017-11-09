@@ -86,6 +86,7 @@ class ProjectController extends Controller
             'branch',
             'targetable_id',
             'key_id',
+            'deploy_path',
             'builds_to_keep',
             'url',
             'build_url',
@@ -134,6 +135,7 @@ class ProjectController extends Controller
             $fields['targetable_type'] = $skeleton->targetable_type;
             $fields['targetable_id'] = $skeleton->targetable_id;
             $fields['key_id'] = $skeleton->key_id;
+            $fields['deploy_path'] = $skeleton->deploy_path;
             $fields['repository'] = $skeleton->repository;
             $target = Project::create($fields);
         } else {
@@ -162,6 +164,7 @@ class ProjectController extends Controller
             'repository',
             'branch',
             'targetable_id',
+            'deploy_path',
             'builds_to_keep',
             'url',
             'build_url',

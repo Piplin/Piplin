@@ -23,6 +23,7 @@
                 $('#project_name').val(data.name);
                 $('#project_repository').val(data.repository);
                 $('#project_branch').val(data.branch);
+                $('#project_deploy_path').val(data.deploy_path);
                 $('#project_allow_other_branch').prop('checked', (data.allow_other_branch === true));
             });
         }
@@ -53,6 +54,7 @@
             repository:         $('#project_repository').val(),
             branch:             $('#project_branch').val(), 
             targetable_id:      $('#project_targetable_id').val(),
+            deploy_path:        $('#project_deploy_path').val(),
             allow_other_branch: $('#project_allow_other_branch').is(':checked')
         }, {
             wait: true,

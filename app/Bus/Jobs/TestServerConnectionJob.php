@@ -55,15 +55,21 @@ class TestServerConnectionJob extends Job implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->server->targetable instanceof Cabinet) {
+            $this->server->status = Server::SUCCESSFUL;
+            $this->server->output = null;
+            $this->server->save();
+            return;
+        }
+
         $this->server->status = Server::TESTING;
         $this->server->output = null;
         $this->server->save();
 
-        // Fix me please
-        if ($this->server->targetable instanceof Cabinet) {
-            $private_key = $this->server->targetable->private_key_content;
-        } else {
-            $private_key = $this->server->targetable->targetable->private_key_content;
+        $deploy_path = '/tmp';
+        $private_key = $this->server->targetable->targetable->private_key_content;
+        if ($this->server->targetable->targetable->clean_deploy_path) {
+            $deploy_path = $this->server->targetable->targetable->clean_deploy_path;
         }
 
         if (empty($private_key)) {
@@ -78,7 +84,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
 
         try {
             $process = new Process('TestServerConnection', [
-                'project_path'   => $this->server->clean_path,
+                'project_path'   => $deploy_path,
                 'test_file'      => time() . '_testing_fixhub.txt',
                 'test_directory' => time() . '_testing_fixhub_dir',
             ]);

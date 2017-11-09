@@ -6,7 +6,7 @@
         minimumInputLength: 1,
         width: '100%',
         ajax: {
-            url: "/autocomplete/cabinets",
+            url: "/api/autocomplete/cabinets",
             dataType: 'json',
             delay: 250,
             data: function (params) {

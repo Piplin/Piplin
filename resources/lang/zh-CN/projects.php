@@ -21,6 +21,7 @@ return [
     'key'               => '部署秘钥',
     'repository'        => '代码仓库',
     'repository_path'   => '仓库路径',
+    'deploy_path'       => '部署路径',
     'builds'            => '保留版本',
     'build_options'     => '部署选项',
     'clone'             => '克隆',

@@ -43,33 +43,63 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'hooks', 'commands','targetable', 'key', 'deployments', 'sharedFiles',
-                         'configFiles', 'last_mirrored', 'private_key',
-                         ];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+        'hash',
+        'hooks',
+        'commands',
+        'targetable',
+        'key',
+        'deployments',
+        'sharedFiles',
+        'configFiles',
+        'last_mirrored',
+        'private_key',
+    ];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'targetable_type', 'targetable_id', 'key_id',
-                           'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
-                           ];
+    protected $fillable = [
+        'name',
+        'repository',
+        'branch',
+        'targetable_type',
+        'targetable_id',
+        'key_id',
+        'deploy_path',
+        'builds_to_keep',
+        'url',
+        'build_url',
+        'allow_other_branch',
+    ];
 
     /**
      * The fields which should be treated as Carbon instances.
      *
      * @var array
      */
-    protected $dates = ['last_run', 'last_mirrored'];
+    protected $dates = [
+        'last_run',
+        'last_mirrored'
+    ];
 
     /**
      * Additional attributes to include in the JSON representation.
      *
      * @var array
      */
-    protected $appends = ['group_name', 'webhook_url', 'repository_path', 'repository_url', 'branch_url'];
+    protected $appends = [
+        'group_name',
+        'webhook_url',
+        'repository_path',
+        'repository_url',
+        'branch_url'
+    ];
 
     /**
      * The attributes that should be casted to native types.
@@ -169,6 +199,16 @@ class Project extends Model implements HasPresenter
         }
 
         return $user->is_admin || ($roleCheck && $isMember);
+    }
+
+    /**
+     * The deploy path without a trailing slash.
+     *
+     * @return string
+     */
+    public function getCleanDeployPathAttribute()
+    {
+        return preg_replace('#/$#', '', $this->deploy_path);
     }
 
     /**

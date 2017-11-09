@@ -49,7 +49,6 @@
             $('#server_address').val('');
             $('#server_port').val('22');
             $('#server_user').val('');
-            $('#server_path').val('');
             $('#server_targetable_id').val($("#server_targetable_id option:selected").val());
         }
 
@@ -110,7 +109,6 @@
             enabled:         $('#server_enabled').is(':checked'),
             port:            $('#server_port').val(),
             user:            $('#server_user').val(),
-            path:            $('#server_path').val(),
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   parseInt($('#server_targetable_id').val())
         }, {
@@ -297,7 +295,6 @@
             $('#server_address').val(this.model.get('ip_address'));
             $('#server_port').val(this.model.get('port'));
             $('#server_user').val(this.model.get('user'));
-            $('#server_path').val(this.model.get('path'));
         },
         showLog: function() {
             var data = this.model.toJSON();
