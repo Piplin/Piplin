@@ -25,20 +25,20 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## 安装环境要求
 
-Fixhub目前只支持类Unix操作系统，为了能运行Fixhub，您还需要安装一些基础软件。
+Fixhub目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为了能运行Fixhub，您还需要安装一些基础软件。
 
 - Web服务器: **Nginx**, **Apache** (with mod_rewrite)，or **Lighttpd**
-- [PHP](http://www.php.net) 7.0.0+或更高(不再支持PHP7以下版本)
-- 数据库: 推荐使用[MySQL](https://www.mysql.com) 或 [PostgreSQL](http://www.postgresql.org)。 当然[SQLite](https://www.sqlite.org)也可以运行。
+- [PHP](http://www.php.net) 7.0+
+- 数据库: 推荐使用[MySQL](https://www.mysql.com) 或 [PostgreSQL](http://www.postgresql.org)。 [SQLite](https://www.sqlite.org)也可运行。
 - [Composer](https://getcomposer.org)
 - [Redis](http://redis.io)
 - [Node.js](https://nodejs.org/)
 - [队列系统](http://laravel.com/docs/5.5/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
+- [Supservisord](http://www.supervisord.org/), Fixhub使用Supervisord进行后台进程管理。
 - [Rsync](https://rsync.samba.org/) 如无特殊情况，一般系统都会自带rsync
 
 ### 可选项
 
-- 为了确保队列监听、websocket等后台服务的正常运行，推荐使用[Supervisor](http://supervisord.org)
 - 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.5/cache).
 
 ## 安装手册
@@ -81,29 +81,23 @@ $ cp .env.example .env
 $ php artisan app:install
 ```
 
-Fixhub安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
+> Fixhub安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
-七. 清除配置缓存
-
-```shell
-$ php artisan config:clear
-```
-
-八. 将你的服务器根目录指向 `public/`, 请查看 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+七. 将你的服务器根目录指向 `public/`, 请查看 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
 > 注意: `examples/` 提供的仅仅是范例，请根据实际情况进行相关配置调整。
 
-九. 后台进程配置
+八. 后台进程管理
 
-Fixhub通过`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)
+配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)
 
-配置计划任务请看 [examples/crontab](examples/crontab).
+计划任务相关的设置请看 [examples/crontab](examples/crontab).
 
 > 注意: 请根据实际情况进行相关配置调整。
 
-十. 访问fixhub
+九. 访问Fixhub
 
-完成安装后，请通过浏览器访问安装过程中设置的应用网址。
+恭喜！您已完成Fixhub的安装。请通过浏览器访问安装过程中设置的应用网址。
 
 我有Fixhub，你有故事吗？请开始你的表演。
 
