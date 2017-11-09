@@ -34,15 +34,31 @@ class Server extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'pivot', 'environment'];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'pivot',
+        'environment',
+    ];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'user', 'enabled', 'ip_address','targetable_id', 'targetable_type',
-                           'path', 'status', 'output', 'port', 'order', ];
+    protected $fillable = [
+        'name',
+        'user',
+        'enabled',
+        'ip_address',
+        'targetable_id',
+        'targetable_type',
+        'path',
+        'status',
+        'output',
+        'port',
+        'order', 
+    ];
 
     /**
      * The attributes that should be casted to native types.
