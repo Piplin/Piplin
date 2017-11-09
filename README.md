@@ -55,7 +55,7 @@ $ git clone https://github.com/fixhub/fixhub.git
 $ composer install -o --no-dev
 ```
 
-三. 安装socket.io
+三. 安装socket.io依赖环境
 
 ```shell
 $ npm install --production
@@ -89,11 +89,9 @@ $ php artisan app:install
 
 八. 后台进程管理
 
-配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)
+配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)，根据实际情况进行相关配置调整。
 
 计划任务相关的设置请看 [examples/crontab](examples/crontab).
-
-> 注意: 请根据实际情况进行相关配置调整。
 
 九. 访问Fixhub
 
