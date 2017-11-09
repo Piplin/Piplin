@@ -53,7 +53,6 @@
             name:               $('#project_name').val(),
             repository:         $('#project_repository').val(),
             branch:             $('#project_branch').val(), 
-            targetable_id:      $('#project_targetable_id').val(),
             deploy_path:        $('#project_deploy_path').val(),
             allow_other_branch: $('#project_allow_other_branch').is(':checked')
         }, {

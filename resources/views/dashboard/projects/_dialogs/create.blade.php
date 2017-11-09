@@ -13,12 +13,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="project_name">{{ trans('projects.name') }}</label>
-                        <div class="col-sm-3">
-                            <select id="project_targetable_id" name="targetable_id" class="form-control">
-                            <option value="">{{ $current_user->name }}</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
                         </div>
                     </div>
@@ -29,7 +24,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('servers.example') !!}"></i></label>
+                        <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('projects.deploy_path_help') !!}"></i></label>
                         <div class="col-sm-9">
                         <input type="text" class="form-control" name="deploy_path" id="project_deploy_path"  placeholder="/var/www/app" />
                         </div>

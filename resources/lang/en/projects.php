@@ -22,6 +22,7 @@ return [
     'repository'        => 'Repository',
     'repository_path'   => 'Repository URL',
     'deploy_path'       => 'Deploy Path',
+    'deploy_path_help'  => 'When you deploy, Fixhub will create a <code>releases</code> directory within this path. A <code>current</code> symlink will also be created that links to each new release.</p><p>So, if your project path is <code>/data/www/app</code>, your web server\'s root probably should be set to <code>/data/www/app/current/public</code>.',
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
     'clone'             => 'Clone',

@@ -69,9 +69,9 @@
 					<table class="table table-relaxed">
 						<tbody>
 							<tr>
-								<td>{{ trans('projects.group') }}</td>
-								<td class="text-right">
-									{{ $project->group_name }}
+								<td>{{ trans('projects.deploy_path') }}</td>
+								<td class="text-right small">
+									{{ $project->clean_deploy_path }}
 								</td>
 							</tr>
 							<tr>

@@ -22,6 +22,7 @@ return [
     'repository'        => '代码仓库',
     'repository_path'   => '仓库路径',
     'deploy_path'       => '部署路径',
+    'deploy_path_help'  => '当执行部署时，Fixhub会在远程服务器的部署路径内自动创建一个名为 <code>releases</code> 的目录。同时会建立 <code>current</code> 软链到最新版本。<br />假设该项值被设置为 <code>/data/www/app</code>，那么Web服务的主目录可能要设为<code>/data/www/app/current/public</code>。',
     'builds'            => '保留版本',
     'build_options'     => '部署选项',
     'clone'             => '克隆',

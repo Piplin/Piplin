@@ -89,6 +89,7 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
+            'deploy_path',
             'allow_other_branch'
         );
 
@@ -115,6 +116,7 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
+            'deploy_path',
             'allow_other_branch'
         ));
 
