@@ -54,7 +54,8 @@ class GetCommitDetailsJob
     {
         $this->project = $project;
         $this->commit = $commit;
-        $this->callback = $callback ?: function () {};
+        $this->callback = $callback ?: function () {
+        };
     }
 
     /**
