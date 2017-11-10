@@ -25,7 +25,6 @@ use Fixhub\Models\Server;
 use Fixhub\Models\ServerLog;
 use Fixhub\Models\User;
 use Fixhub\Models\Environment;
-use Fixhub\Services\Scripts\Parser as ScriptParser;
 use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
