@@ -121,7 +121,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         try {
             $this->dispatch(new UpdateGitMirrorJob($this->project));
 
-            $this->dispatch(new GetCommitDetailsJob($this->project, $commit, function($gitInfo) {
+            $this->dispatch(new GetCommitDetailsJob($this->project, $commit, function ($gitInfo) {
                 $this->updateRepoInfo($gitInfo);
             }));
 
