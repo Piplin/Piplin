@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
+@include('admin._partials.update')
 <div class="row">
     <div class="col-md-3 sub-sidebar">
         @include('admin._partials.sub-sidebar')

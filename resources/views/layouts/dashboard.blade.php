@@ -40,9 +40,6 @@
                         </ol>
                       </div>
                         @yield('right-buttons')
-                        @if($current_user->is_admin and Request::is('/'))
-                            @include('dashboard._partials.update')
-                        @endif
                         <div class="alert alert-danger" id="socket_offline">
                             <h4><i class="icon fixhub fixhub-warning"></i> {{ trans('app.socket_error') }}</h4>
                             {!! trans('app.socket_error_info') !!}

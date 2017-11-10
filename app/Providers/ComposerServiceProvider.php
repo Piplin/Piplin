@@ -21,7 +21,7 @@ use Fixhub\Composers\ProjectComposer;
 use Fixhub\Composers\SidebarComposer;
 use Fixhub\Composers\ThemeComposer;
 use Fixhub\Composers\TimelineComposer;
-use Fixhub\Composers\VersionComposer;
+use Fixhub\Composers\UpdateComposer;
 use Fixhub\Composers\OAuthComposer;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\ServiceProvider;
@@ -47,7 +47,7 @@ class ComposerServiceProvider extends ServiceProvider
         ProjectComposer::class     => ['dashboard._partials.sidebar', 'dashboard.projects'],
         ThemeComposer::class       => ['layouts.dashboard', 'profile.index'],
         TimelineComposer::class    => ['dashboard.timeline'],
-        VersionComposer::class     => ['dashboard._partials.update'],
+        UpdateComposer::class      => ['admin._partials.update'],
         OAuthComposer::class       => ['auth.login'],
     ];
 
