@@ -64,7 +64,7 @@ return [
     'example'              => '例如:',
     'optional_description' => '设置为可选步骤',
     'default_description'  => '默认选中',
-    'services'             => 'Fixhub支持的服务',
+    'services'             => 'Fixhub支持的服务 : Github, Gitlab, Gogs, BitBucket, Gitee &amp; Coding等',
     'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .
                               '注意：在请求中包含 &quot;<em>update_only</em>&quot; 和 &quot;<em>commands</em>&quot; 参数 ' .
                               ', 其他所有参数将被忽略.',
