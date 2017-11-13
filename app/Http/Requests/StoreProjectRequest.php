@@ -32,6 +32,7 @@ class StoreProjectRequest extends Request
             'key_id'             => 'nullable|integer|exists:keys,id',
             'builds_to_keep'     => 'nullable|integer|min:1|max:20',
             'template_id'        => 'nullable|integer|exists:deploy_templates,id',
+            'deploy_path'        => 'required',
             'url'                => 'url|nullable',
             'build_url'          => 'url|nullable',
             'allow_other_branch' => 'boolean'
@@ -41,7 +42,6 @@ class StoreProjectRequest extends Request
         if ($this->get('id')) {
             unset($rules['template_id']);
             $rules['repository'] =  'required';
-            $rules['deploy_path'] = 'required';
         }
 
         return $rules;
