@@ -15,7 +15,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
 use Fixhub\Bus\Jobs\GenerateKeyJob;
 use Fixhub\Bus\Jobs\PurgeProjectJob;
-use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
+use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
 use Fixhub\Models\Project;
 
 /**
