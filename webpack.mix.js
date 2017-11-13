@@ -19,6 +19,7 @@ const paths = {
     'ace'              : `${node_path}/ace-min-noconflict`,
     'backbone'         : `${node_path}/backbone`,
     'bootstrap_sass'   : `${node_path}/bootstrap-sass`,
+    'clipboard'        : `${node_path}/clipboard`,
     'cropper'          : `${node_path}/cropper`,
     'ionicons'         : `${node_path}/ionicons`,
     'jquery'           : `${node_path}/jquery`,
@@ -63,6 +64,7 @@ mix
         `${paths.localization}/resources/js/config.js`,
         `${paths.localization}/resources/js/localization.js`,
         `${paths.toastr}/build/toastr.min.js`,
+        `${paths.clipboard}/dist/clipboard.min.js`,
         `${paths.cropper}/dist/cropper.min.js`,
         `${paths.livestamp}/livestamp.js`
     ], `${dist_path}/js/vendor.js`)
