@@ -12,7 +12,7 @@
 namespace Fixhub\Console\Commands;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
+use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
 use Fixhub\Models\Project;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
