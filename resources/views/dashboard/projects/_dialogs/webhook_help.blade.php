@@ -55,7 +55,7 @@
 
                 <hr />
 
-                <h5><strong>{{ trans('commands.services') }} - Github,  Gitlab, Bitbucket &amp; Beanstalk</strong></h5>
+                <h5><strong>{{ trans('commands.services') }}</strong></h5>
                 <p>{!! trans('commands.services_description') !!}</p>
             </div>
             <div class="modal-footer">
