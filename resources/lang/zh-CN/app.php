@@ -36,6 +36,7 @@ return [
     'save'              => '保存',
     'close'             => '关闭',
     'cancel'            => '取消',
+    'copied'            => '已复制',
     'never'             => '从未',
     'none'              => '无',
     'yes'               => '是',

@@ -173,7 +173,7 @@
         }).fail(function (response) {
 
         }).done(function (data) {
-            $('#webhook').fadeIn(interval).html(data.url);
+            $('#webhook').fadeIn(interval).val(data.url);
         }).always(function () {
             icon.removeClass('fixhub-spin');
             target.removeAttr('disabled');
