@@ -45,7 +45,7 @@ $sidebar-width: 0;
 //Boxed layout maximum width
 $boxed-layout-max-width: 1024px;
 //When the logo should go to the top of the screen
-$screen-header-collapse: $screen-xs-max;
+$screen-header-collapse: 768px !default;
 
 //Link colors (Aka: <a> tags)
 $link-color: $light-blue;
@@ -103,6 +103,7 @@ $progress-bar-xs-border-radius: 1px;
 //FORMS
 //--------------------------------------------------------
 $input-radius: 4px;
+$input-color: #000;
 
 //BUTTONS
 //--------------------------------------------------------
