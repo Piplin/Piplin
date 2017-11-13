@@ -127,7 +127,7 @@ body {
   .content-wrapper,
   .right-side {
     padding-top: 50px;
-    @media (max-width: $screen-header-collapse) {
+    @media (max-width: $screen-xs-max) {
       padding-top: 100px;
     }
   }

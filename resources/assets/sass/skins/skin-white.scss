@@ -43,7 +43,7 @@
       color: $black;
     }
 
-    @media (min-width: $screen-header-collapse) {
+    @media (min-width: $screen-xs-max) {
         .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
         margin-left: 0;
       }

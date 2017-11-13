@@ -18,7 +18,7 @@
   $transition-rule: $transition-speed $transition-fn,
   width $transition-speed $transition-fn;
   @include transition-transform($transition-rule);
-  @media (max-width: $screen-header-collapse) {
+  @media (max-width: $screen-xs-max) {
     padding-top: 100px;
   }
   @media (max-width: $screen-xs-max) {

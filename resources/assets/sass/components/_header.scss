@@ -51,7 +51,7 @@
     }
   }
   .navbar-right {
-    @media (max-width: $screen-header-collapse) {
+    @media (max-width: $screen-xs-max) {
       float: none;
       .navbar-collapse & {
         margin: 7.5px -15px;
@@ -229,7 +229,7 @@
 }
 
 // Collapse header
-@media (max-width: $screen-header-collapse) {
+@media (max-width: $screen-xs-max) {
   .main-header {
     position: relative;
     .logo,
