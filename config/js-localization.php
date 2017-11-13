@@ -38,7 +38,7 @@ return [
     */
 
     'messages' => [
-        'app'           => ['yes', 'no', 'never'],
+        'app'           => ['yes', 'no', 'never', 'copied'],
         'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'approving', 'approving_empty', 'deployment_number'],
         'deployments'   => ['create_success', 'completed', 'completed_with_errors', 'pending',
                             'deploying', 'running', 'cancelled', 'failed', 'draft', 'submit_success'],

@@ -73,6 +73,11 @@
 
     $(".select2").select2(Fixhub.select2_options);
 
+    //Clipboard
+    new Clipboard('.clipboard').on('success', function(e){
+        Fixhub.toast(trans('app.copied'));
+    });
+
     // Socket.io
     Fixhub.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
         query: 'jwt=' + $('meta[name="jwt"]').attr('content')
