@@ -255,7 +255,7 @@
         show: function() {
             var data = this.model.toJSON();
 
-            $('#log pre').html(data.public_key);
+            $('#key_log pre').html(data.public_key);
         },
         trash: function() {
             var target = $('#model_id');

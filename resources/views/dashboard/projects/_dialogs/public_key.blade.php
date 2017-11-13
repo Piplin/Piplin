@@ -10,7 +10,7 @@
                     <p>{!! trans('keys.server_keys') !!}</p>
                 </div>
 
-                <div id="log"><pre>@if(isset($project)){{ $project->public_key_content }}@elseif(isset($targetable)){{ $targetable->public_key_content }}@endif</pre></div>
+                <div id="key_log"><pre>@if(isset($project)){{ $project->public_key_content }}@elseif(isset($targetable)){{ $targetable->public_key_content }}@endif</pre></div>
 
                 <div class="alert alert-default">
                      <p>{!! trans('keys.git_keys') !!}</p>
