@@ -163,6 +163,7 @@ class Project extends Model implements HasPresenter
             $info['reference'] = $matches[4];
         } elseif (preg_match('#^https?#', $this->repository)) {
             $data = parse_url($this->repository);
+            $data['path'] = isset($data['path']) ? $data['path'] : '';
 
             $info['user']      = isset($data['user']) ? $data['user'] : '';
             $info['domain']    = $data['host'];
