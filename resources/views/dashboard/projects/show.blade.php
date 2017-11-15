@@ -75,13 +75,13 @@
 								</td>
 							</tr>
 							<tr>
-								<td>{{ trans('projects.deployed') }}</td>
-								<td class="text-right"><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr></td>
+								<td>{{ trans('projects.key') }}</td>
+								<td class="text-right"><a href="#" title="{{ trans('keys.view_ssh_key') }}" class="label label-warning" data-toggle="modal" data-target="#show_key">{{ trans('keys.ssh_key') }}</a></td>
 							</tr>
 							<tr>
 								<td>{{ trans('projects.deploy_status') }}</td>
 								<td class="text-right">
-                                    <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
+                                    <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
 								</td>
 							</tr>
 						</tbody>
