@@ -80,7 +80,7 @@
 
                             <div class="tab-pane" id="project_repo">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }}</label>
+                                    <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('keys.git_keys') !!}"></i></label>
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />
                                     </div>

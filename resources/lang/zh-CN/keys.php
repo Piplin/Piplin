@@ -20,7 +20,7 @@ return [
     'ssh_key_info'      => '想要用指定的私钥，请将其内容拷贝至此。(私钥本身不要设置密码)',
     'ssh_key_example'   => '私钥内容为空，系统将自动创建(推荐)',
     'server_keys'       => '目标服务器需要添加部署公钥方可执行部署任务。请将公钥拷贝到服务器部署用户目录的<code>$HOME/.ssh/authorized_keys</code>文件中。项目部署公钥如下：',
-    'git_keys'          => '如果与项目关联的Git仓库需要身份验证，请将公钥添加到Git仓库的<strong>Deploy Keys</strong>里。',
+    'git_keys'          => '如果与项目关联的Git仓库需要身份验证，请将部署公钥添加到Git仓库的<strong>Deploy Keys</strong>里。',
     'ssh_key_empty'     => '秘钥内容不能为空。',
 
 ];
