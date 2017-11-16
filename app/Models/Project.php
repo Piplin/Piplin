@@ -241,7 +241,8 @@ class Project extends Model implements HasPresenter
         $info = $this->accessDetails();
 
         if (isset($info['domain']) && isset($info['reference'])) {
-            return 'http://' . $info['domain'] . '/' . $info['reference'];
+            $port = isset($info['port']) ? ':' . $info['port'] : '';
+            return 'http://' . $info['domain'] . $port . '/' . $info['reference'];
         }
 
         return false;
