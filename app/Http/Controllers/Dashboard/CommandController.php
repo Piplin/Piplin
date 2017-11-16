@@ -194,7 +194,7 @@ class CommandController extends Controller
      */
     public function destroy(Command $command)
     {
-        $command->forceDelete();
+        $command->delete();
 
         return [
             'success' => true,
