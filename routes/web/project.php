@@ -121,7 +121,6 @@ Route::group([
 
         Route::group(['middleware' => 'project.acl:manage',
             ], function () {
-
                 Route::put('projects/{project}', [
                     'as'   => 'projects.update',
                     'uses' => 'ProjectController@update',
@@ -206,5 +205,5 @@ Route::group([
                 Route::delete('config-files/{config_file}', [
                     'uses' => 'ConfigFileController@destroy',
                 ]);
-        });
+            });
     });
