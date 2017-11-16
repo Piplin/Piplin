@@ -44,6 +44,7 @@ return [
     'create_success'    => 'Project added.',
     'edit'              => 'Update Poject',
     'edit_success'      => 'Project updated.',
+    'delete'            => 'Delete project',
     'delete_success'    => 'The project has beean deleted!',
     'settings'          => 'Settings',
     'url'               => 'URL',

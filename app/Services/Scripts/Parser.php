@@ -51,7 +51,7 @@ class Parser
             return $this->parseString(file_get_contents($template), $tokens);
         }
 
-        throw new \RuntimeException('DeployTemplate ' . $template . ' does not exist');
+        throw new \RuntimeException('Script file ' . $template . ' does not exist');
     }
 
     /**

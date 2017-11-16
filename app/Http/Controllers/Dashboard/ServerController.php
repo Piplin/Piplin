@@ -118,7 +118,6 @@ class ServerController extends Controller
     /**
      * Re-generates the order for the supplied servers.
      *
-     * @param Project $project
      * @param Request $request
      *
      * @return Response
@@ -144,7 +143,6 @@ class ServerController extends Controller
     /**
      * Remove the specified server from storage.
      *
-     * @param Project $project
      * @param Server $server
      *
      * @return Response

@@ -149,8 +149,17 @@
 @if($project->can('deploy'))
 @section('right-buttons')
     <div class="pull-right">
-        @if($project->can('deploy'))
-        <a class="btn btn-lg btn-default btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('projects.settings') }}</a>
+        @if($project->can('manage'))
+        <div class="btn-group">
+          <button type="button" class="btn btn-lg btn-default" data-toggle="dropdown" aria-expanded="false"><i class="fixhub fixhub-more"></i>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('projects.settings') }}</a></li>
+            <li><a class="project-delete" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><span class="text-danger"><i class="fixhub fixhub-delete"></i> {{ trans('projects.delete') }}</span></a></li>
+          </ul>
+        </div>
         @endif
         @if($project->can('deploy'))
         <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
