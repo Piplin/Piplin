@@ -38,9 +38,7 @@
                     <tbody>
                         <tr>
                             <td>{{ trans('projects.today') }}</td>
-                            <td class="text-right">
-                                {{ number_format($today) }}
-                            </td>
+                            <td class="text-right">{{ number_format($today) }}</td>
                         </tr>
                         <tr>
                             <td>{{ trans('projects.last_week') }}</td>
@@ -48,11 +46,7 @@
                         </tr>
                         <tr>
                             <td>{{ trans('projects.latest_duration') }}</td>
-                            <td class="text-right">
-                                @if(isset($deployments))
-                                {{ (count($deployments) == 0 OR !$deployments[0]->finished_at) ? trans('app.not_applicable') : $deployments[0]->readable_runtime }}
-                                @endif
-                            </td>
+                            <td class="text-right">{{ number_format($all_count) }}</td>
                         </tr>
                     </tbody>
                 </table>

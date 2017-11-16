@@ -43,6 +43,7 @@ class ProjectSummaryComposer
     {
         $view->with('today', $this->getBetweenDates($view->project->id, $this->now, $this->now));
         $view->with('last_week', $this->getLastWeekCount($view->project->id));
+        $view->with('all_count', $this->getAllCount($view->project->id));
     }
 
     /**
@@ -58,6 +59,19 @@ class ProjectSummaryComposer
         $yesterday = Carbon::now()->yesterday();
 
         return $this->getBetweenDates($project_id, $lastWeek, $yesterday);
+    }
+
+    /**
+     * Gets the number of times a project has been deployed.
+     *
+     * @param int $project_id
+     *
+     * @return int
+     */
+    private function getAllCount($project_id)
+    {
+        return Deployment::where('project_id', $project_id)
+                            ->count();
     }
 
     /**
