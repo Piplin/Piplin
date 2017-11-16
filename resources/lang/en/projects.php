@@ -52,7 +52,7 @@ return [
     'deployments'       => 'Deployments',
     'today'             => 'Today',
     'last_week'         => 'Last Week',
-    'latest_duration'   => 'Latest Duration',
+    'total_count'       => 'Total',
     'health'            => 'Health Check',
     'deploy_status'     => 'Deploy Status',
     'build_status'      => 'Build Status',

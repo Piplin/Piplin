@@ -45,8 +45,8 @@
                             <td class="text-right">{{ number_format($last_week) }}</td>
                         </tr>
                         <tr>
-                            <td>{{ trans('projects.latest_duration') }}</td>
-                            <td class="text-right">{{ number_format($all_count) }}</td>
+                            <td>{{ trans('projects.total_count') }}</td>
+                            <td class="text-right">{{ number_format($total_count) }}</td>
                         </tr>
                     </tbody>
                 </table>

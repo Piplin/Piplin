@@ -43,7 +43,7 @@ class ProjectSummaryComposer
     {
         $view->with('today', $this->getBetweenDates($view->project->id, $this->now, $this->now));
         $view->with('last_week', $this->getLastWeekCount($view->project->id));
-        $view->with('all_count', $this->getAllCount($view->project->id));
+        $view->with('total_count', $this->getTotalCount($view->project->id));
     }
 
     /**
@@ -68,7 +68,7 @@ class ProjectSummaryComposer
      *
      * @return int
      */
-    private function getAllCount($project_id)
+    private function getTotalCount($project_id)
     {
         return Deployment::where('project_id', $project_id)
                             ->count();

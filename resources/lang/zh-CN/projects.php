@@ -51,7 +51,7 @@ return [
     'deployments'       => '上线统计',
     'today'             => '今日上线次数',
     'last_week'         => '上周上线次数',
-    'latest_duration'   => '上次上线耗时',
+    'total_count'       => '总共上线次数',
     'health'            => '项目状态',
     'deploy_status'     => '部署状态',
     'build_status'      => '构建状态',
