@@ -32,7 +32,6 @@ class Cabinet extends Model
         'name',
         'description',
         'order',
-        'key_id',
     ];
 
     /**
@@ -71,16 +70,6 @@ class Cabinet extends Model
      * @var boolean
      */
     protected $revisionCreationsEnabled = true;
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Key
-     */
-    public function key()
-    {
-        return $this->belongsTo(Key::class, 'key_id', 'id');
-    }
 
     /**
      * Has many relationship.
