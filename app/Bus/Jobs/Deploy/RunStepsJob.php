@@ -222,12 +222,17 @@ class RunStepsJob extends Job
         $tokens = $this->getTokenList($step, $server);
 
         // Generate the export
-        $exports = '';
+        $prepend = '';
         foreach ($this->project->variables as $variable) {
             $key   = $variable->name;
             $value = $variable->value;
 
-            $exports .= "export {$key}={$value}" . PHP_EOL;
+            $prepend .= "export {$key}={$value}" . PHP_EOL;
+        }
+
+        // Make release_path as your current path
+        if ($step->stage > Stage::DO_INSTALL) {
+            $prepend .= "cd ". $tokens['release_path'] . PHP_EOL;
         }
 
         $user = $server->user;
@@ -237,7 +242,7 @@ class RunStepsJob extends Job
 
         // Now get the full script
         return $this->getScriptForStep($step, $log, $tokens)
-                    ->prependScript($exports)
+                    ->prependScript($prepend)
                     ->setServer($server, $this->private_key, $user);
     }
 
