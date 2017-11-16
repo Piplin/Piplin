@@ -322,6 +322,15 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Get the plan associated with the project.
+     *
+     */
+    public function plan()
+    {
+        return $this->hasOne(Plan::class);
+    }
+
+    /**
      * Belongs to many relationship.
      *
      * @return Server

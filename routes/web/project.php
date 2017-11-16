@@ -23,6 +23,12 @@ Route::group([
             'uses' => 'ProjectController@create',
         ]);
 
+        // Plan
+        Route::get('plan/{plan}', [
+            'as'   => 'plans',
+            'uses' => 'PlanController@show',
+        ]);
+
         // Deployment
         Route::get('deployment/{deployment}', [
             'as'   => 'deployments',
