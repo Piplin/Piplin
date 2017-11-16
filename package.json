@@ -12,7 +12,7 @@
     "dependencies": {
         "dotenv": "^4.0.0",
         "ioredis": "^3.2.1",
-        "jsonwebtoken": "^8.0.1",
+        "jsonwebtoken": "^7.4.3",
         "parseuri": "^0.0.5",
         "socket.io": "^2.0.4",
         "socket.io-client": "^2.0.3"
