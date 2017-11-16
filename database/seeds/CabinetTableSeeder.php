@@ -21,7 +21,6 @@ class CabinetTableSeeder extends Seeder
         Cabinet::create([
             'name'        => 'Database',
             'description' => 'Database Servers',
-            'key_id'      => 1,
         ]);
     }
 }
