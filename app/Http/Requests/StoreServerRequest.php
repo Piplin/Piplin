@@ -29,7 +29,6 @@ class StoreServerRequest extends Request
             'name'            => 'required|max:255',
             'user'            => 'required|max:255',
             'ip_address'      => 'required|host',
-            'path'            => 'required',
             'enabled'         => 'boolean',
             'targetable_id'   => 'required|integer',
             'targetable_type' => 'required|string',

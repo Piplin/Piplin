@@ -14,7 +14,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\UpdateGitMirrorJob;
+use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;

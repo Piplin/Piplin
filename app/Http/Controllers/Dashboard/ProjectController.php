@@ -89,6 +89,7 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
+            'deploy_path',
             'allow_other_branch'
         );
 
@@ -115,9 +116,26 @@ class ProjectController extends Controller
             'name',
             'repository',
             'branch',
+            'deploy_path',
             'allow_other_branch'
         ));
 
         return $project;
+    }
+
+    /**
+     * Remove the specified project from storage.
+     *
+     * @param Project $project
+     *
+     * @return Response
+     */
+    public function destroy(Project $project)
+    {
+        $project->forceDelete();
+
+        return [
+            'success' => true,
+        ];
     }
 }

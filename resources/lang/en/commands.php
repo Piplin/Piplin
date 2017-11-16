@@ -45,9 +45,13 @@ return [
     'after'                => 'After',
     'configure'            => 'Configure',
     'clone'                => 'Clone New Release',
+    'clone_help'           => 'Create a new release directory and extract the archive.',
     'install'              => 'Install Dependencies',
+    'install_help'         => 'Switch back to the new release directory.',
     'activate'             => 'Activate New Release',
+    'activate_help'        => 'A <code>current</code> symlink will be created that links to the new release directory.',
     'purge'                => 'Purge Old Releases',
+    'purge_help'           => 'Purge old releases.',
     'warning'              => 'The command could not be saved, please check the form below.',
     'create'               => 'Add Command',
     'create_success'       => 'Command created.',
@@ -65,7 +69,7 @@ return [
     'example'              => 'e.g.',
     'optional_description' => 'Ask at deploy time whether or not the include this step',
     'default_description'  => 'Include this step unless explicitly disabled (e.g. checkbox on by default)',
-    'services'             => 'Supported services',
+    'services'             => 'Supported services : Github, Gitlab, Gogs, BitBucket, Gitee &amp; Coding',
     'services_description' => 'You can use the webhook with these services and the relevant details will be gathered from the data ' .
                               'they send across. The &quot;<em>update_only</em>&quot; and &quot;<em>commands</em>&quot; parameters ' .
                               'may be included in the query string, all other fields are ignored.',

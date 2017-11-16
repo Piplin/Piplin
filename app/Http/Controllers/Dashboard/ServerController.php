@@ -28,7 +28,6 @@ class ServerController extends Controller
     /**
      * Store a newly created server in storage.
      *
-     * @param Project $project
      * @param StoreServerRequest $request
      *
      * @return Response
@@ -41,7 +40,6 @@ class ServerController extends Controller
             'user',
             'ip_address',
             'port',
-            'path',
             'targetable_type',
             'targetable_id'
         );
@@ -77,7 +75,6 @@ class ServerController extends Controller
     /**
      * Update the specified server in storage.
      *
-     * @param Project $project
      * @param Server $server
      * @param StoreServerRequest $request
      *
@@ -91,7 +88,6 @@ class ServerController extends Controller
             'user',
             'ip_address',
             'port',
-            'path',
             'targetable_id'
         ));
 
@@ -101,7 +97,6 @@ class ServerController extends Controller
     /**
      * Queues a connection test for the specified server.
      *
-     * @param Project $project
      * @param Server $server
      *
      * @return Response
@@ -123,7 +118,6 @@ class ServerController extends Controller
     /**
      * Re-generates the order for the supplied servers.
      *
-     * @param Project $project
      * @param Request $request
      *
      * @return Response
@@ -149,7 +143,6 @@ class ServerController extends Controller
     /**
      * Remove the specified server from storage.
      *
-     * @param Project $project
      * @param Server $server
      *
      * @return Response

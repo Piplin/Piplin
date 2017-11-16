@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Fixhub\Bus\Jobs\Repository;
 
 use Carbon\Carbon;
 use Fixhub\Bus\Jobs\UpdateGitReferencesJob;
+use Fixhub\Bus\Jobs\Job;
 use Fixhub\Models\Project;
 use Fixhub\Services\Scripts\Parser as ScriptParser;
 use Fixhub\Services\Scripts\Runner as Process;
@@ -29,7 +30,7 @@ class UpdateGitMirrorJob extends Job
     use SerializesModels, DispatchesJobs;
 
     /**
-    * @var Deployment
+    * @var int
     */
     public $timeout = 0;
 

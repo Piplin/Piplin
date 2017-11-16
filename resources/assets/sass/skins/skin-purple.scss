@@ -14,7 +14,7 @@
           background-color: darken($purple, 5%);
         }
       }
-      @media (max-width: $screen-header-collapse) {
+      @media (max-width: $screen-xs-max) {
         .dropdown-menu {
           li {
             &.divider {
@@ -37,7 +37,7 @@
       color: #fff;
     }
 
-    @media (min-width: $screen-header-collapse) {
+    @media (min-width: $screen-xs-max) {
         .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
         margin-left: 0;
       }

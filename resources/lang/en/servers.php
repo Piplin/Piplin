@@ -30,8 +30,6 @@ return [
     'updated_at'     => 'Updated at',
     'environment'    => 'Environment',
     'test'           => 'Test the server connection',
-    'path'           => 'Project Path',
-    'example'        => 'When you deploy, Fixhub will create a <code>releases</code> directory within this path. A <code>current</code> symlink will also be created that links to each new release.</p><p>So, if your project path is <code>/data/www/app</code>, your web server\'s root probably should be set to <code>/data/www/app/current/public</code>.',
     'warning'        => 'The server could not be saved, please check the form below.',
     'successful'     => 'Successful',
     'testing'        => 'Connecting',

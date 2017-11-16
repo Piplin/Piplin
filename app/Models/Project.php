@@ -43,33 +43,63 @@ class Project extends Model implements HasPresenter
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'updated_at', 'hash',
-                         'hooks', 'commands','targetable', 'key', 'deployments', 'sharedFiles',
-                         'configFiles', 'last_mirrored', 'private_key',
-                         ];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+        'hash',
+        'hooks',
+        'commands',
+        'targetable',
+        'key',
+        'deployments',
+        'sharedFiles',
+        'configFiles',
+        'last_mirrored',
+        'private_key',
+    ];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'repository', 'branch', 'targetable_type', 'targetable_id', 'key_id',
-                           'builds_to_keep', 'url', 'build_url', 'allow_other_branch',
-                           ];
+    protected $fillable = [
+        'name',
+        'repository',
+        'branch',
+        'targetable_type',
+        'targetable_id',
+        'key_id',
+        'deploy_path',
+        'builds_to_keep',
+        'url',
+        'build_url',
+        'allow_other_branch',
+    ];
 
     /**
      * The fields which should be treated as Carbon instances.
      *
      * @var array
      */
-    protected $dates = ['last_run', 'last_mirrored'];
+    protected $dates = [
+        'last_run',
+        'last_mirrored'
+    ];
 
     /**
      * Additional attributes to include in the JSON representation.
      *
      * @var array
      */
-    protected $appends = ['group_name', 'webhook_url', 'repository_path', 'repository_url', 'branch_url'];
+    protected $appends = [
+        'group_name',
+        'webhook_url',
+        'repository_path',
+        'repository_url',
+        'branch_url'
+    ];
 
     /**
      * The attributes that should be casted to native types.
@@ -133,6 +163,7 @@ class Project extends Model implements HasPresenter
             $info['reference'] = $matches[4];
         } elseif (preg_match('#^https?#', $this->repository)) {
             $data = parse_url($this->repository);
+            $data['path'] = isset($data['path']) ? $data['path'] : '';
 
             $info['user']      = isset($data['user']) ? $data['user'] : '';
             $info['domain']    = $data['host'];
@@ -172,6 +203,16 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * The deploy path without a trailing slash.
+     *
+     * @return string
+     */
+    public function getCleanDeployPathAttribute()
+    {
+        return preg_replace('#/$#', '', $this->deploy_path);
+    }
+
+    /**
      * Gets the repository path.
      *
      * @return string|false
@@ -200,7 +241,8 @@ class Project extends Model implements HasPresenter
         $info = $this->accessDetails();
 
         if (isset($info['domain']) && isset($info['reference'])) {
-            return 'http://' . $info['domain'] . '/' . $info['reference'];
+            $port = isset($info['port']) ? ':' . $info['port'] : '';
+            return 'http://' . $info['domain'] . $port . '/' . $info['reference'];
         }
 
         return false;

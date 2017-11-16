@@ -22,10 +22,6 @@ Route::group([
             'as'   => 'projects.create',
             'uses' => 'ProjectController@create',
         ]);
-        Route::put('projects/{project}', [
-            'as'   => 'projects.update',
-            'uses' => 'ProjectController@update',
-        ]);
 
         // Deployment
         Route::get('deployment/{deployment}', [
@@ -125,9 +121,15 @@ Route::group([
 
         Route::group(['middleware' => 'project.acl:manage',
             ], function () {
-                $actions = [
-                    'only' => ['store', 'update', 'destroy'],
-                ];
+                Route::put('projects/{project}', [
+                    'as'   => 'projects.update',
+                    'uses' => 'ProjectController@update',
+                ]);
+
+                Route::delete('projects/{project}', [
+                    'as'   => 'projects.destroy',
+                    'uses' => 'ProjectController@destroy',
+                ]);
 
                 // Webhook
                 Route::get('webhook/{project}/refresh', [

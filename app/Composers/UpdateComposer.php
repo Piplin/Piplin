@@ -15,9 +15,9 @@ use Fixhub\Services\Update\LatestReleaseInterface;
 use Illuminate\Contracts\View\View;
 
 /**
- * View composer for the update bar.
+ * Update composer for the update bar.
  */
-class VersionComposer
+class UpdateComposer
 {
     private $release;
 

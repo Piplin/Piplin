@@ -5,13 +5,12 @@
  *   License: Open source - MIT
  *           Please visit http://opensource.org/licenses/MIT for more information
 !*/
-
+@import "variables";
 @import "modules/_bootstrap.scss";
 @import "modules/_icons-mapping.scss";
 
 // //MISC
 // //----
-@import "variables";
 @import "core";
 @import "mixins";
 @import "miscellaneous";

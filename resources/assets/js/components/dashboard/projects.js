@@ -23,6 +23,7 @@
                 $('#project_name').val(data.name);
                 $('#project_repository').val(data.repository);
                 $('#project_branch').val(data.branch);
+                $('#project_deploy_path').val(data.deploy_path);
                 $('#project_allow_other_branch').prop('checked', (data.allow_other_branch === true));
             });
         }
@@ -52,7 +53,7 @@
             name:               $('#project_name').val(),
             repository:         $('#project_repository').val(),
             branch:             $('#project_branch').val(), 
-            targetable_id:      $('#project_targetable_id').val(),
+            deploy_path:        $('#project_deploy_path').val(),
             allow_other_branch: $('#project_allow_other_branch').is(':checked')
         }, {
             wait: true,
@@ -99,6 +100,61 @@
             }
         });
 
+    });
+
+    $('#model-trash').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('projects.delete');
+
+        var project_id = button.data('project-id');
+
+        if (button.hasClass('project-delete')) {
+            var target = $('#model_id');
+            target.val(project_id);
+            target.parents('.modal').removeClass().addClass('modal fade project-trash');
+            $.ajax({
+                type: 'POST',
+                url: '/api/projects',
+                data: {
+                    project_id: project_id
+                }
+            }).done(function (data) {
+                Fixhub.Projects.reset(data);
+            });
+        }
+    });
+
+    $('body').delegate('.project-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var project = Fixhub.Projects.get($('#model_id').val());
+
+        project.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('fixhub fixhub-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Fixhub.toast(trans('projects.delete_success'));
+                window.location.href = '/';
+            },
+            error: function() {
+                icon.removeClass().addClass('fixhub fixhub-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
     });
 
     Fixhub.Project = Backbone.Model.extend({
@@ -172,7 +228,7 @@
         }).fail(function (response) {
 
         }).done(function (data) {
-            $('#webhook').fadeIn(interval).html(data.url);
+            $('#webhook').fadeIn(interval).val(data.url);
         }).always(function () {
             icon.removeClass('fixhub-spin');
             target.removeAttr('disabled');

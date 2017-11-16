@@ -28,14 +28,22 @@ class Cabinet extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'order', 'key_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'order',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'deleted_at', 'updated_at'];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that should be casted to native types.
@@ -51,7 +59,10 @@ class Cabinet extends Model
      *
      * @var array
      */
-    protected $appends = ['server_count', 'server_names'];
+    protected $appends = [
+        'server_count',
+        'server_names',
+    ];
 
     /**
      * Revision creations enabled.
@@ -59,16 +70,6 @@ class Cabinet extends Model
      * @var boolean
      */
     protected $revisionCreationsEnabled = true;
-
-    /**
-     * Belongs to relationship.
-     *
-     * @return Key
-     */
-    public function key()
-    {
-        return $this->belongsTo(Key::class, 'key_id', 'id');
-    }
 
     /**
      * Has many relationship.

@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-flush">
                 <div class="panel-heading">
                     <h4>{{ trans('projects.deployments') }}</h4>
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="panel panel-flush">
                 <div class="panel-heading">
                     <h4>{{ trans('projects.details') }}</h4>
@@ -69,19 +69,19 @@
 					<table class="table table-relaxed">
 						<tbody>
 							<tr>
-								<td>{{ trans('projects.group') }}</td>
-								<td class="text-right">
-									{{ $project->group_name }}
+								<td>{{ trans('projects.deploy_path') }}</td>
+								<td class="text-right small">
+									{{ $project->clean_deploy_path }}
 								</td>
 							</tr>
 							<tr>
-								<td>{{ trans('projects.deployed') }}</td>
-								<td class="text-right"><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr></td>
+								<td>{{ trans('projects.key') }}</td>
+								<td class="text-right"><a href="#" title="{{ trans('keys.view_ssh_key') }}" class="label label-warning" data-toggle="modal" data-target="#show_key">{{ trans('keys.ssh_key') }}</a></td>
 							</tr>
 							<tr>
 								<td>{{ trans('projects.deploy_status') }}</td>
 								<td class="text-right">
-                                    <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span>
+                                    <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
 								</td>
 							</tr>
 						</tbody>
@@ -149,8 +149,17 @@
 @if($project->can('deploy'))
 @section('right-buttons')
     <div class="pull-right">
-        @if($project->can('deploy'))
-        <a class="btn btn-lg btn-default btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('projects.settings') }}</a>
+        @if($project->can('manage'))
+        <div class="btn-group">
+          <button type="button" class="btn btn-lg btn-default" data-toggle="dropdown" aria-expanded="false"><i class="fixhub fixhub-more"></i>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="fixhub fixhub-setting"></i> {{ trans('projects.settings') }}</a></li>
+            <li><a class="project-delete" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><span class="text-danger"><i class="fixhub fixhub-delete"></i> {{ trans('projects.delete') }}</span></a></li>
+          </ul>
+        </div>
         @endif
         @if($project->can('deploy'))
         <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
