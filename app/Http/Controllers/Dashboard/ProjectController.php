@@ -122,4 +122,20 @@ class ProjectController extends Controller
 
         return $project;
     }
+
+    /**
+     * Remove the specified project from storage.
+     *
+     * @param Project $project
+     *
+     * @return Response
+     */
+    public function destroy(Project $project)
+    {
+        $project->forceDelete();
+
+        return [
+            'success' => true,
+        ];
+    }
 }
