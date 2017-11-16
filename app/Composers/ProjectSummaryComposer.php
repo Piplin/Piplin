@@ -45,7 +45,7 @@ class ProjectSummaryComposer
         $view->with('last_week', $this->getLastWeekCount($view->project->id));
     }
 
-        /**
+    /**
      * Gets the number of times a project has been deployed in the last week.
      *
      * @param  int $project_id
