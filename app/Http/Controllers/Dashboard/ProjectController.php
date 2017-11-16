@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Models\Command;
+use Fixhub\Models\Deployment;
 use Fixhub\Models\Project;
 use Fixhub\Http\Requests\StoreProjectRequest;
 use Fixhub\Bus\Jobs\SetupSkeletonJob;
@@ -44,6 +45,7 @@ class ProjectController extends Controller
             'targetable_type' => 'Fixhub\\Models\\Project',
             'targetable_id'   => $project->id,
             'optional'        => $optional,
+            'deployments'     => $this->getLatest($project->id),
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
@@ -137,5 +139,21 @@ class ProjectController extends Controller
         return [
             'success' => true,
         ];
+    }
+
+    /**
+     * Gets the latest deployments for a project.
+     *
+     * @param  int   $project_id
+     * @param  int   $paginate
+     * @return array
+     */
+    private function getLatest($project_id, $paginate = 15)
+    {
+        return Deployment::where('project_id', $project_id)
+                           ->with('user', 'project')
+                           ->whereNotNull('started_at')
+                           ->orderBy('started_at', 'DESC')
+                           ->paginate($paginate);
     }
 }

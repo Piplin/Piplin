@@ -17,9 +17,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * The composer for the deployment.
+ * The composer for the project summary.
  */
-class DeploymentComposer
+class ProjectSummaryComposer
 {
     private $now;
 
@@ -43,26 +43,9 @@ class DeploymentComposer
     {
         $view->with('today', $this->getBetweenDates($view->project->id, $this->now, $this->now));
         $view->with('last_week', $this->getLastWeekCount($view->project->id));
-        $view->with('deployments', $this->getLatest($view->project->id));
     }
 
-    /**
-     * Gets the latest deployments for a project.
-     *
-     * @param  int   $project_id
-     * @param  int   $paginate
-     * @return array
-     */
-    private function getLatest($project_id, $paginate = 15)
-    {
-        return Deployment::where('project_id', $project_id)
-                           ->with('user', 'project')
-                           ->whereNotNull('started_at')
-                           ->orderBy('started_at', 'DESC')
-                           ->paginate($paginate);
-    }
-
-    /**
+        /**
      * Gets the number of times a project has been deployed in the last week.
      *
      * @param  int $project_id

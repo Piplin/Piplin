@@ -33,7 +33,8 @@ class PlanController extends Controller
     public function show(Plan $plan, $tab = '')
     {
         $data = [
-            'plan' => $plan,
+            'plan'    => $plan,
+            'project' => $plan->project,
         ];
 
         return view('dashboard.plans.show', $data);

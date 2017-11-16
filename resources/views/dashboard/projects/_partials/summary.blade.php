@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-flush">
+            <div class="panel-heading">
+                <h4>{{ trans('projects.repository') }}</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-relaxed">
+                    <tbody>
+                        <tr>
+                            <td>{{ trans('projects.repository_path') }}</td>
+                            <td class="text-right">
+                                <i class="fixhub {{ $project->type_icon }}"></i> <a href="{{ $project->repository_url }}" target="_blank">{{ $project->repository_path }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.branch') }}</td>
+                            <td class="text-right"><a href="{{ $project->branch_url?:'#' }}"><span class="label label-default">{{ $project->branch }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.change_branch') }}</td>
+                            <td class="text-right">
+                                {{ $project->allow_other_branch ? trans('app.yes') : trans('app.no') }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-flush">
+            <div class="panel-heading">
+                <h4>{{ trans('projects.deployments') }}</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-relaxed">
+                    <tbody>
+                        <tr>
+                            <td>{{ trans('projects.today') }}</td>
+                            <td class="text-right">
+                                {{ number_format($today) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.last_week') }}</td>
+                            <td class="text-right">{{ number_format($last_week) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.latest_duration') }}</td>
+                            <td class="text-right">
+                                @if(isset($deployments))
+                                {{ (count($deployments) == 0 OR !$deployments[0]->finished_at) ? trans('app.not_applicable') : $deployments[0]->readable_runtime }}
+                                @endif
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-flush">
+            <div class="panel-heading">
+                <h4>{{ trans('projects.details') }}</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-relaxed">
+                    <tbody>
+                        <tr>
+                            <td>{{ trans('projects.deploy_path') }}</td>
+                            <td class="text-right small">
+                                {{ $project->clean_deploy_path }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.key') }}</td>
+                            <td class="text-right"><a href="#" title="{{ trans('keys.view_ssh_key') }}" class="label label-warning" data-toggle="modal" data-target="#show_key">{{ trans('keys.ssh_key') }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('projects.deploy_status') }}</td>
+                            <td class="text-right">
+                                <span class="text-{{$project->css_class}}"><i class="fixhub fixhub-{{ $project->icon }}"></i> {{ $project->readable_status }}</span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
