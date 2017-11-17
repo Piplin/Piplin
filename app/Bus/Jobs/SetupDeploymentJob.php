@@ -17,6 +17,7 @@ use Fixhub\Models\Command as Stage;
 use Fixhub\Models\Deployment;
 use Fixhub\Models\Environment;
 use Fixhub\Models\DeployStep;
+use Fixhub\Models\Plan;
 use Fixhub\Models\Project;
 use Fixhub\Models\ServerLog;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -72,11 +73,26 @@ class SetupDeploymentJob extends Job
      */
     public function handle()
     {
-        $this->setDeploymentEnvironments();
+        if ($this->deployment->targetable && $this->deployment->targetable instanceof Plan) {
+            $stakes = [
+                Stage::DO_PREPARE => null,
+                Stage::DO_BUILD   => null,
+                Stage::DO_TEST    => null,
+                Stage::DO_RESULT  => null,
+            ];
+            $hooks = $this->buildCommandList($this->deployment->targetable, $stakes);
+        } else {
+            $this->setDeploymentEnvironments();
+            $stakes = [
+                Stage::DO_CLONE    => null,
+                Stage::DO_INSTALL  => null,
+                Stage::DO_ACTIVATE => null,
+                Stage::DO_PURGE    => null,
+            ];
+            $hooks = $this->buildCommandList($this->project, $stakes);
+        }
 
         $this->setDeploymentStatus();
-
-        $hooks = $this->buildCommandList();
 
         foreach (array_keys($hooks) as $stage) {
             $before = $stage - 1;
@@ -124,16 +140,11 @@ class SetupDeploymentJob extends Job
      *
      * @return array
      */
-    private function buildCommandList()
+    private function buildCommandList($targetable, $stakes)
     {
-        $hooks = [
-            Stage::DO_CLONE    => null,
-            Stage::DO_INSTALL  => null,
-            Stage::DO_ACTIVATE => null,
-            Stage::DO_PURGE    => null,
-        ];
+        $hooks = $stakes;
 
-        foreach ($this->project->commands()->orderBy('order', 'asc')->get() as $command) {
+        foreach ($targetable->commands()->orderBy('order', 'asc')->get() as $command) {
             $action = $command->step - 1;
             $when   = ($command->step % 3 === 0 ? 'after' : 'before');
             if ($when === 'before') {

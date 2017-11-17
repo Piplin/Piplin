@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(['start', 'test', 'build', 'finish'] as $index => $stage)
+                @foreach(['prepare', 'build', 'test', 'result'] as $index => $stage)
                 <tr>
                     <td>{{ $index+1 }}</td>
                     <td>{{ $plan->{'before_'.$stage} }}</td>

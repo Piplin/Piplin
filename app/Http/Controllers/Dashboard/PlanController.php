@@ -33,11 +33,14 @@ class PlanController extends Controller
     public function show(Plan $plan, $tab = '')
     {
         $data = [
-            'plan'     => $plan,
-            'project'  => $plan->project,
-            'branches' => [],
-            'tags'     => [],
-            'optional' => [],
+            'plan'            => $plan,
+            'project'         => $plan->project,
+            'targetable_type' => 'Fixhub\\Models\\Plan',
+            'targetable_id'   => $plan->id,
+            'environments'    => [],
+            'branches'        => [],
+            'tags'            => [],
+            'optional'        => [],
         ];
 
         return view('dashboard.plans.show', $data);

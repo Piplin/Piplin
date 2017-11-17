@@ -41,25 +41,22 @@ class CommandController extends Controller
             'activate' => Command::DO_ACTIVATE,
             'purge'    => Command::DO_PURGE,
             // Build
-            'start'    => Command::DO_CREATE,
-            'test'     => Command::DO_TEST,
+            'prepare'  => Command::DO_PREPARE,
             'build'    => Command::DO_BUILD,
-            'finish'   => Command::DO_FINISH,
+            'test'     => Command::DO_TEST,
+            'result'   => Command::DO_RESULT,
         ];
 
         if ($target instanceof DeployTemplate) {
-            $targetable_type = 'Fixhub\\Models\\DeployTemplate';
             $breadcrumb = [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
                 ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
             ];
         } elseif ($target instanceof Plan) {
-            $targetable_type = 'Fixhub\\Models\\Plan';
             $breadcrumb = [
                 ['url' => route('plans', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
             ];
         } else {
-            $targetable_type = 'Fixhub\\Models\\Project';
             $breadcrumb = [
                 ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
             ];
@@ -70,7 +67,7 @@ class CommandController extends Controller
             'title'           => trans('commands.' . strtolower($action)),
             'subtitle'        => $target->name,
             'project'         => $target,
-            'targetable_type' => $targetable_type,
+            'targetable_type' => get_class($target),
             'targetable_id'   => $target->id,
             'action'          => $types[$action],
             'commands'        => $this->getForDeployStep($target, $types[$action]),

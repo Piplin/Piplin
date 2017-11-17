@@ -14,6 +14,7 @@ namespace Fixhub\Models;
 use Fixhub\Models\Traits\BroadcastChanges;
 use Fixhub\Presenters\RuntimeInterface;
 use Fixhub\Presenters\DeploymentPresenter;
+use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +26,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class Deployment extends Model implements HasPresenter, RuntimeInterface
 {
-    use SoftDeletes, BroadcastChanges, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, HasTargetable, RevisionableTrait;
 
     const DRAFT                 = -1;
     const COMPLETED             = 0;
@@ -58,8 +59,20 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['reason', 'branch', 'project_id', 'user_id', 'status', 'source', 'build_url',
-                           'commit', 'committer_email', 'committer', ];
+    protected $fillable = [
+        'reason',
+        'branch',
+        'project_id',
+        'targetable_type',
+        'targetable_id',
+        'user_id',
+        'status',
+        'source',
+        'build_url',
+        'commit',
+        'committer_email',
+        'committer',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -379,14 +379,16 @@
         });
 
         deployment.save({
-            environments: environment_ids,
-            project_id: $('input[name="project_id"]').val(),
-            reason: $('#deployment_reason').val(),
-            source: $('input[name="source"]:checked').val(),
-            source_branch: $('#deployment_branch').val(),
-            source_tag: $('#deployment_tag').val(),
-            source_commit: $('#deployment_commit').val(),
-            optional: optional
+            environments:    environment_ids,
+            project_id:      $('input[name="project_id"]').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            reason:          $('#deployment_reason').val(),
+            source:          $('input[name="source"]:checked').val(),
+            source_branch:   $('#deployment_branch').val(),
+            source_tag:      $('#deployment_tag').val(),
+            source_commit:   $('#deployment_commit').val(),
+            optional:        optional
         }, {
             wait: true,
             success: function(model, response, options) {

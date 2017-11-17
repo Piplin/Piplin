@@ -40,18 +40,18 @@ class Command extends Model implements HasPresenter
     const AFTER_PURGE     = 12;
 
     // For build
-    const BEFORE_CREATE   = 31;
-    const DO_CREATE       = 32;
-    const AFTER_CREATE    = 33;
-    const BEFORE_TEST     = 34;
-    const DO_TEST         = 35;
-    const AFTER_TEST      = 36;
-    const BEFORE_BUILD    = 37;
-    const DO_BUILD        = 38;
-    const AFTER_BUILD     = 39;
-    const BEFORE_FINISH   = 40;
-    const DO_FINISH       = 41;
-    const AFTER_FINISH    = 42;
+    const BEFORE_PREPARE = 31;
+    const DO_PREPARE     = 32;
+    const AFTER_PREPARE  = 33;
+    const BEFORE_BUILD   = 34;
+    const DO_BUILD       = 35;
+    const AFTER_BUILD    = 36;
+    const BEFORE_TEST    = 37;
+    const DO_TEST        = 38;
+    const AFTER_TEST     = 39;
+    const BEFORE_RESULT  = 40;
+    const DO_RESULT      = 41;
+    const AFTER_RESULT   = 42;
 
     /**
      * The attributes excluded from the model's JSON form.

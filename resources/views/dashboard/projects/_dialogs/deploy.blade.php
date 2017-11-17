@@ -7,11 +7,14 @@
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" name="project_id" value="{{ $project->id }}" />
+                <input type="hidden" name="targetable_type" value="{{ $targetable_type }}" />
+                <input type="hidden" name="targetable_id" value="{{ $targetable_id }}" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('deployments.warning') }}
                     </div>
+                    @if (count($branches))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="environments">{{ trans('deployments.environments') }}</label>
 						<div class="col-sm-9">
@@ -28,6 +31,7 @@
                         </ul>
 						</div>
                     </div>
+                    @endif
                     @if ($project->allow_other_branch && (count($branches) || count($tags)))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="deployment_source">{{ trans('deployments.source') }}</label>

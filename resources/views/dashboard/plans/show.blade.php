@@ -19,13 +19,13 @@
             </div>
         </div>
     </div>
-    @include('dashboard.plans._dialogs.build')
+    @include('dashboard.projects._dialogs.deploy')
 @stop
 
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('build'))
-        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#build" type="button" class="btn btn-lg btn-info" title="{{ trans('plans.build') }}"><span class="fixhub fixhub-build"></span> {{ trans('plans.build') }}</button>
+        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-info" title="{{ trans('plans.build') }}"><span class="fixhub fixhub-build"></span> {{ trans('plans.build') }}</button>
         @endif
     </div>
 @stop

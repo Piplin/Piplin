@@ -26,7 +26,7 @@ class StoreDeploymentRequest extends Request
     public function rules()
     {
         return [
-            'environments' => 'required',
+            //'environments' => 'required',
         ];
     }
 }

@@ -96,19 +96,24 @@ class DeploymentController extends Controller
 
         $this->authorize('deploy', $project);
 
+        $fields = [
+            'reason'          => $request->get('reason'),
+            'project_id'      => $project->id,
+            'targetable_type' => $request->get('targetable_type'),
+            'targetable_id'   => $request->get('targetable_id'),
+            'project_id'      => $project->id,
+            'environments'    => $request->get('environments'),
+            'branch'          => $project->branch,
+            'optional'        => [],
+        ];
+
+        /*
         if ($project->environments->count() === 0) {
             return [
                 'success' => false,
             ];
         }
-
-        $fields = [
-            'reason'         => $request->get('reason'),
-            'project_id'     => $project->id,
-            'environments'   => $request->get('environments'),
-            'branch'         => $project->branch,
-            'optional'       => [],
-        ];
+        */
 
         // If allow other branches is set, check for post data
         if ($project->allow_other_branch) {

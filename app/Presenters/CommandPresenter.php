@@ -109,47 +109,25 @@ class CommandPresenter extends BasePresenter
     }
 
     /**
-     * Gets the readable list of before create commands.
+     * Gets the readable list of before prepare commands.
      *
      * @return string
      * @see self::commandNames()
      */
-    public function before_start()
+    public function before_prepare()
     {
-        return $this->commandNames(Command::BEFORE_CREATE);
+        return $this->commandNames(Command::BEFORE_PREPARE);
     }
 
     /**
-     * Gets the readable list of after create commands.
+     * Gets the readable list of after prepare commands.
      *
      * @return string
      * @see self::commandNames()
      */
-    public function after_start()
+    public function after_prepare()
     {
-        return $this->commandNames(Command::AFTER_CREATE);
-    }
-
-    /**
-     * Gets the readable list of before test commands.
-     *
-     * @return string
-     * @see self::commandNames()
-     */
-    public function before_test()
-    {
-        return $this->commandNames(Command::BEFORE_TEST);
-    }
-
-    /**
-     * Gets the readable list of after test commands.
-     *
-     * @return string
-     * @see self::commandNames()
-     */
-    public function after_test()
-    {
-        return $this->commandNames(Command::AFTER_TEST);
+        return $this->commandNames(Command::AFTER_PREPARE);
     }
 
     /**
@@ -175,25 +153,47 @@ class CommandPresenter extends BasePresenter
     }
 
     /**
-     * Gets the readable list of before finish commands.
+     * Gets the readable list of before test commands.
      *
      * @return string
      * @see self::commandNames()
      */
-    public function before_finish()
+    public function before_test()
     {
-        return $this->commandNames(Command::BEFORE_FINISH);
+        return $this->commandNames(Command::BEFORE_TEST);
     }
 
     /**
-     * Gets the readable list of after finish commands.
+     * Gets the readable list of after test commands.
      *
      * @return string
      * @see self::commandNames()
      */
-    public function after_finish()
+    public function after_test()
     {
-        return $this->commandNames(Command::AFTER_FINISH);
+        return $this->commandNames(Command::AFTER_TEST);
+    }
+
+    /**
+     * Gets the readable list of before result commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_result()
+    {
+        return $this->commandNames(Command::BEFORE_RESULT);
+    }
+
+    /**
+     * Gets the readable list of after result commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_result()
+    {
+        return $this->commandNames(Command::AFTER_RESULT);
     }
 
     /**
