@@ -81,6 +81,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
 
         $key = tempnam(storage_path('app/'), 'sshkey');
         file_put_contents($key, $private_key);
+        chmod($key, 0600);
 
         try {
             $process = new Process('TestServerConnection', [

@@ -49,6 +49,8 @@ class GetCommitDetailsJob
      * Create a new job instance.
      *
      * @param Project $project
+     * @param string  $commit
+     * @param Closure $callback
      */
     public function __construct(Project $project, $commit, Closure $callback = null)
     {

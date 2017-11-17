@@ -64,11 +64,6 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * @var string
      */
-    private $cache_key;
-
-    /**
-     * @var string
-     */
     private $release_archive;
 
     /**
@@ -80,7 +75,6 @@ class DeployProjectJob extends Job implements ShouldQueue
     {
         $this->deployment = $deployment;
         $this->project = $deployment->project;
-        $this->cache_key  = AbortDeploymentJob::CACHE_KEY_PREFIX . $deployment->id;
     }
 
     /**
@@ -108,6 +102,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $this->private_key = tempnam(storage_path('app/'), 'sshkey');
         file_put_contents($this->private_key, $this->project->private_key_content);
+        chmod($this->private_key, 0600);
 
         $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
@@ -175,12 +170,13 @@ class DeployProjectJob extends Job implements ShouldQueue
     }
 
     /**
-     * Clones the repository locally to get the latest log entry and updates
-     * the deployment model.
+     * Gets the latest log entry and updates.
+     *
+     * @param string $gitInfo
      */
-    private function updateRepoInfo($git_info)
+    private function updateRepoInfo($gitInfo)
     {
-        list($commit, $committer, $email) = explode("\x09", $git_info);
+        list($commit, $committer, $email) = explode("\x09", $gitInfo);
 
         $this->deployment->commit          = $commit;
         $this->deployment->committer       = trim($committer);

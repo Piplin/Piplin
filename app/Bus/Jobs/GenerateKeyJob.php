@@ -58,7 +58,6 @@ class GenerateKeyJob extends Job
     private function generateSSHKey()
     {
         $key_file = tempnam(storage_path('app/'), 'sshkey');
-        unlink($key_file);
 
         $process = new Process('tools.GenerateSSHKey', [
             'key_file' => $key_file,

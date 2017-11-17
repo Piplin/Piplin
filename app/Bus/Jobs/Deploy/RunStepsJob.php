@@ -73,6 +73,8 @@ class RunStepsJob extends Job
      * Create a new job instance.
      *
      * @param Deployment $deployment
+     * @param string     $private_key
+     * @param string     $release_archive
      *
      * @return void
      */
