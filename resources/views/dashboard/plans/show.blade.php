@@ -8,6 +8,7 @@
                 <ul class="nav nav-tabs">
                     <li><a href="">Builds</a></li>
                     <li class="active"><a href="">Stages</a></li>
+                    <li><a href="">Agents</a></li>
                     <li><a href="">Artifact definitions</a></li>
                 </ul>
                 <div class="tab-content">
