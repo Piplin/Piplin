@@ -95,6 +95,11 @@ Route::group([
             'as'   => 'commands.step',
             'uses' => 'CommandController@index',
         ]);
+        Route::get('plans/{plan}/commands/{step}', [
+            'as'   => 'builds.step',
+            'uses' => 'CommandController@index',
+        ]);
+
         Route::post('commands/reorder', [
             'as'   => 'commands.reorder',
             'uses' => 'CommandController@reorder',

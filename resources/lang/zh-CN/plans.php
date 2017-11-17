@@ -13,5 +13,6 @@ return [
     'warning'          => '信息保存失败。',
     'name'             => '名称',
     'name_placeholder' => '构建计划名称',
+    'build'            => '开始构建',
 
 ];

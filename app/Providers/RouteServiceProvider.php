@@ -15,6 +15,7 @@ use Fixhub\Models\ServerLog;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
+use Fixhub\Models\Plan;
 use Fixhub\Models\Project;
 use Fixhub\Models\ProjectGroup;
 use Fixhub\Models\DeployTemplate;
@@ -60,6 +61,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::model('group', ProjectGroup::class);
         Route::model('project', Project::class);
+        Route::model('plan', Plan::class);
         Route::model('deployment', Deployment::class);
         Route::model('hook', Hook::class);
         Route::model('server', Server::class);

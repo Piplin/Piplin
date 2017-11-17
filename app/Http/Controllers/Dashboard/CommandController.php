@@ -17,6 +17,7 @@ use DB;
 use Fixhub\Http\Controllers\Controller;
 use Fixhub\Http\Requests\StoreCommandRequest;
 use Fixhub\Models\Command;
+use Fixhub\Models\Plan;
 use Fixhub\Models\Project;
 use Fixhub\Models\DeployTemplate;
 
@@ -39,6 +40,11 @@ class CommandController extends Controller
             'install'  => Command::DO_INSTALL,
             'activate' => Command::DO_ACTIVATE,
             'purge'    => Command::DO_PURGE,
+            // Build
+            'start'    => Command::DO_CREATE,
+            'test'     => Command::DO_TEST,
+            'build'    => Command::DO_BUILD,
+            'finish'   => Command::DO_FINISH,
         ];
 
         if ($target instanceof DeployTemplate) {
@@ -46,6 +52,11 @@ class CommandController extends Controller
             $breadcrumb = [
                 ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
                 ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
+            ];
+        } elseif ($target instanceof Plan) {
+            $targetable_type = 'Fixhub\\Models\\Plan';
+            $breadcrumb = [
+                ['url' => route('plans', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
             ];
         } else {
             $targetable_type = 'Fixhub\\Models\\Project';
@@ -211,7 +222,7 @@ class CommandController extends Controller
     protected function getForDeployStep($target, $step)
     {
         return $target->commands()
-                ->with(['environments'])
+                //->with(['environments'])
                 ->whereIn('step', [$step - 1, $step + 1])
                 ->orderBy('order', 'asc')
                     ->get()->toJson(); // Because CommandPresenter toJson() is not working in the view

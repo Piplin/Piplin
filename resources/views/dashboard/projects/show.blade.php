@@ -74,7 +74,7 @@
         </div>
         @endif
         @if($project->plan)
-        <a href="{{ route('plans', ['id' => $project->plan->id]) }}" class="btn btn-lg btn-primary"><i class="fixhub fixhub-template"></i> {{ trans('plans.label') }}</a>
+        <a href="{{ route('plans', ['id' => $project->plan->id]) }}" class="btn btn-lg btn-primary"><i class="fixhub fixhub-build"></i> {{ trans('plans.label') }}</a>
         @endif
         @if($project->can('deploy'))
         <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>

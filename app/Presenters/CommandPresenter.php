@@ -109,6 +109,94 @@ class CommandPresenter extends BasePresenter
     }
 
     /**
+     * Gets the readable list of before create commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_start()
+    {
+        return $this->commandNames(Command::BEFORE_CREATE);
+    }
+
+    /**
+     * Gets the readable list of after create commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_start()
+    {
+        return $this->commandNames(Command::AFTER_CREATE);
+    }
+
+    /**
+     * Gets the readable list of before test commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_test()
+    {
+        return $this->commandNames(Command::BEFORE_TEST);
+    }
+
+    /**
+     * Gets the readable list of after test commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_test()
+    {
+        return $this->commandNames(Command::AFTER_TEST);
+    }
+
+    /**
+     * Gets the readable list of before build commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_build()
+    {
+        return $this->commandNames(Command::BEFORE_BUILD);
+    }
+
+    /**
+     * Gets the readable list of after activate commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_build()
+    {
+        return $this->commandNames(Command::AFTER_BUILD);
+    }
+
+    /**
+     * Gets the readable list of before finish commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_finish()
+    {
+        return $this->commandNames(Command::BEFORE_FINISH);
+    }
+
+    /**
+     * Gets the readable list of after finish commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_finish()
+    {
+        return $this->commandNames(Command::AFTER_FINISH);
+    }
+
+    /**
      * Gets the readable list of commands.
      *
      * @param  int    $stage

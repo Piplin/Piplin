@@ -11,7 +11,6 @@
 
 namespace Fixhub\Presenters;
 
-use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Fixhub\Models\Project;
 

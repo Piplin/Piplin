@@ -13,10 +13,19 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
-                        @include('dashboard.plans._partials.stages')
+                        @include('dashboard.plans._partials.commands')
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    @include('dashboard.plans._dialogs.build')
+@stop
+
+@section('right-buttons')
+    <div class="pull-right">
+        @if($project->can('build'))
+        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#build" type="button" class="btn btn-lg btn-info" title="{{ trans('plans.build') }}"><span class="fixhub fixhub-build"></span> {{ trans('plans.build') }}</button>
+        @endif
     </div>
 @stop

@@ -32,7 +32,8 @@ class StoreCommandRequest extends Request
             'script'     => 'required',
             'optional'   => 'boolean',
             'default_on' => 'boolean',
-            'step'       => 'required|integer|min:' . Command::BEFORE_CLONE . '|max:' . Command::AFTER_PURGE,
+            'step'       => 'required|integer',
+            //'step'       => 'required|integer|min:' . Command::BEFORE_CLONE . '|max:' . Command::AFTER_PURGE,
         ];
 
         // On edit we don't require the step

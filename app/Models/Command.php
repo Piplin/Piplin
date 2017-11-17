@@ -25,6 +25,7 @@ class Command extends Model implements HasPresenter
 {
     use SoftDeletes, BroadcastChanges, HasTargetable;
 
+    // For deploy
     const BEFORE_CLONE    = 1;
     const DO_CLONE        = 2;
     const AFTER_CLONE     = 3;
@@ -37,6 +38,20 @@ class Command extends Model implements HasPresenter
     const BEFORE_PURGE    = 10;
     const DO_PURGE        = 11;
     const AFTER_PURGE     = 12;
+
+    // For build
+    const BEFORE_CREATE   = 31;
+    const DO_CREATE       = 32;
+    const AFTER_CREATE    = 33;
+    const BEFORE_TEST     = 34;
+    const DO_TEST         = 35;
+    const AFTER_TEST      = 36;
+    const BEFORE_BUILD    = 37;
+    const DO_BUILD        = 38;
+    const AFTER_BUILD     = 39;
+    const BEFORE_FINISH   = 40;
+    const DO_FINISH       = 41;
+    const AFTER_FINISH    = 42;
 
     /**
      * The attributes excluded from the model's JSON form.
