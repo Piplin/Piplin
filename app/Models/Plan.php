@@ -35,6 +35,11 @@ class Plan extends Model implements HasPresenter
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * Checks ability for specified plan.
+     *
+     * @return bool
+     */
     public function can()
     {
         return true;
