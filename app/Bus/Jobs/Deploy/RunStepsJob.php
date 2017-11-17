@@ -196,6 +196,8 @@ class RunStepsJob extends Job
             $this->sendFile($local_archive, $remote_archive, $log);
         } elseif ($step->stage === Stage::DO_INSTALL) {
             $this->sendConfigFileFromString($latest_release_dir, $log);
+        } elseif ($step->stage === Stage::DO_PURGE) {
+            $this->fetchFile($latest_release_dir.'/../*.tar.gz', storage_path('app/artifacts/'), $log);
         }
     }
 
@@ -275,6 +277,47 @@ class RunStepsJob extends Job
 
         // Custom step
         return new Process($step->command->script, $tokens, Process::DIRECT_INPUT);
+    }
+
+    /**
+     * Fetchs a remote file from server.
+     *
+     * @param  string           $local_file
+     * @param  string           $remote_file
+     * @param  ServerLog        $log
+     * @throws RuntimeException
+     */
+    private function fetchFile($remote_file, $local_file, ServerLog $log)
+    {
+        $process = new Process('deploy.FetchFileFromServer', [
+            'port'        => $log->server->port,
+            'private_key' => $this->private_key,
+            'local_file'  => $local_file,
+            'remote_file' => $remote_file,
+            'username'    => $log->server->user,
+            'ip_address'  => $log->server->ip_address,
+        ]);
+
+        $output = '';
+        $process->run(function ($type, $output_line) use (&$output, &$log) {
+            if ($type === \Symfony\Component\Process\Process::ERR) {
+                $output .= $this->logError($output_line);
+            } else {
+                // Switching sent/received around
+                $output_line = str_replace('received', 'xxx', $output_line);
+                $output_line = str_replace('sent', 'received', $output_line);
+                $output_line = str_replace('xxx', 'sent', $output_line);
+
+                $output .= $this->logSuccess($output_line);
+            }
+
+            $log->output = $output;
+            $log->save();
+        });
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
     }
 
     /**
