@@ -42,18 +42,6 @@ class CabinetController extends Controller
     }
 
     /**
-     * Queues a connection test for the specified server.
-     *
-     * @param Environment $environment
-     * @param Cabinet $cabinet
-     *
-     * @return Response
-     */
-    public function test(Environment $server, Cabinet $cabinet)
-    {
-    }
-
-    /**
      * Remove the specified cabinet from environment.
      *
      * @param Environment $environment

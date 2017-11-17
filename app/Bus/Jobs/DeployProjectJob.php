@@ -170,12 +170,13 @@ class DeployProjectJob extends Job implements ShouldQueue
     }
 
     /**
-     * Clones the repository locally to get the latest log entry and updates
-     * the deployment model.
+     * Gets the latest log entry and updates.
+     *
+     * @param string $gitInfo
      */
-    private function updateRepoInfo($git_info)
+    private function updateRepoInfo($gitInfo)
     {
-        list($commit, $committer, $email) = explode("\x09", $git_info);
+        list($commit, $committer, $email) = explode("\x09", $gitInfo);
 
         $this->deployment->commit          = $commit;
         $this->deployment->committer       = trim($committer);
