@@ -34,6 +34,14 @@ class DeployStepPresenter extends BasePresenter
             return trans('commands.activate');
         } elseif ($this->wrappedObject->stage === Command::DO_PURGE) {
             return trans('commands.purge');
+        } elseif ($this->wrappedObject->stage === Command::DO_PREPARE) {
+            return trans('commands.prepare');
+        } elseif ($this->wrappedObject->stage === Command::DO_BUILD) {
+            return trans('commands.build');
+        } elseif ($this->wrappedObject->stage === Command::DO_TEST) {
+            return trans('commands.test');
+        } elseif ($this->wrappedObject->stage === Command::DO_RESULT) {
+            return trans('commands.result');
         }
 
         return trans('commands.clone');

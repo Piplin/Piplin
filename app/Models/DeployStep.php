@@ -73,6 +73,11 @@ class DeployStep extends Model implements HasPresenter
             Command::DO_INSTALL,
             Command::DO_ACTIVATE,
             Command::DO_PURGE,
+            // Build
+            Command::DO_PREPARE,
+            Command::DO_BUILD,
+            Command::DO_TEST,
+            Command::DO_RESULT,
         ], true));
     }
 

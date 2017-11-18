@@ -197,7 +197,9 @@ class RunStepsJob extends Job
         } elseif ($step->stage === Stage::DO_INSTALL) {
             $this->sendConfigFileFromString($latest_release_dir, $log);
         } elseif ($step->stage === Stage::DO_PURGE) {
-            $this->fetchFile($latest_release_dir.'/../*.tar.gz', storage_path('app/artifacts/'), $log);
+            //$this->fetchFile($latest_release_dir.'/../*.tar.gz', storage_path('app/artifacts/'), $log);
+        } elseif ($step->stage === Stage::DO_PREPARE) {
+            $this->sendFile($local_archive, $remote_archive, $log);
         }
     }
 
@@ -235,7 +237,7 @@ class RunStepsJob extends Job
         }
 
         // Make release_path as your current path
-        if ($step->stage > Stage::DO_INSTALL) {
+        if ($step->stage > Stage::DO_INSTALL && $step->stage < Stage::BEFORE_PREPARE) {
             $prepend .= "cd ". $tokens['release_path'] . PHP_EOL;
         }
 
@@ -273,6 +275,16 @@ class RunStepsJob extends Job
                 return new Process('deploy.steps.ActivateNewRelease', $tokens);
             case Stage::DO_PURGE:
                 return new Process('deploy.steps.PurgeOldReleases', $tokens);
+
+            //Build
+            case Stage::DO_PREPARE:
+                return new Process('build.steps.Prepare', $tokens);
+            case Stage::DO_BUILD:
+                return new Process('build.steps.Build', $tokens);
+            case Stage::DO_TEST:
+                return new Process('build.steps.test', $tokens);
+            case Stage::DO_RESULT:
+                return new Process('build.steps.result', $tokens);
         }
 
         // Custom step

@@ -81,6 +81,8 @@ class SetupDeploymentJob extends Job
                 Stage::DO_RESULT  => null,
             ];
             $hooks = $this->buildCommandList($this->deployment->targetable, $stakes);
+            $commandStep = 'createBuildCommandStep';
+            $runStep = 'createBuildStep';
         } else {
             $this->setDeploymentEnvironments();
             $stakes = [
@@ -90,6 +92,8 @@ class SetupDeploymentJob extends Job
                 Stage::DO_PURGE    => null,
             ];
             $hooks = $this->buildCommandList($this->project, $stakes);
+            $commandStep = 'createCommandStep';
+            $runStep = 'createDeployStep';
         }
 
         $this->setDeploymentStatus();
@@ -100,15 +104,15 @@ class SetupDeploymentJob extends Job
 
             if (isset($hooks[$stage]['before'])) {
                 foreach ($hooks[$stage]['before'] as $hook) {
-                    $this->createCommandStep($before, $hook);
+                    $this->{$commandStep}($before, $hook);
                 }
             }
 
-            $this->createDeployStep($stage);
+            $this->{$runStep}($stage);
 
             if (isset($hooks[$stage]['after'])) {
                 foreach ($hooks[$stage]['after'] as $hook) {
-                    $this->createCommandStep($after, $hook);
+                    $this->{$commandStep}($after, $hook);
                 }
             }
         }
@@ -194,6 +198,37 @@ class SetupDeploymentJob extends Job
         $this->deployment->save();
 
         $this->deployment->project->save();
+    }
+
+    private function createBuildCommandStep($stage, Stage $command)
+    {
+        $step = DeployStep::create([
+            'stage'         => $stage,
+            'deployment_id' => $this->deployment->id,
+            'command_id'    => $command->id,
+        ]);
+
+        $this->createBuildServerlog($this->deployment->targetable, $step);
+    }
+
+    private function createBuildStep($stage)
+    {
+        $step = DeployStep::create([
+            'stage'         => $stage,
+            'deployment_id' => $this->deployment->id,
+        ]);
+
+        $this->createBuildServerlog($this->deployment->targetable, $step);
+    }
+
+    private function createBuildServerlog($plan, $step)
+    {
+        foreach ($plan->servers->where('enabled', true) as $server) {
+            ServerLog::create([
+                'server_id'      => $server->id,
+                'deploy_step_id' => $step->id,
+            ]);
+        }
     }
 
     /**
