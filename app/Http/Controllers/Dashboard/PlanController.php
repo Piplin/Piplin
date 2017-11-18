@@ -32,13 +32,15 @@ class PlanController extends Controller
      */
     public function show(Plan $plan, $tab = '')
     {
+        $project = $plan->project;
         $data = [
             'plan'            => $plan,
-            'project'         => $plan->project,
+            'project'         => $project,
             'targetable_type' => 'Fixhub\\Models\\Plan',
             'targetable_id'   => $plan->id,
-            'branches'        => [],
-            'tags'            => [],
+            'tags'            => $project->tags()->reverse(),
+            'branches'        => $project->branches(),
+            'environments'    => [],
             'optional'        => [],
             'tab'             => $tab,
             'servers'         => $plan->servers,

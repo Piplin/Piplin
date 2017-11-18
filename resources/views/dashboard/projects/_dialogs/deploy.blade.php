@@ -14,7 +14,7 @@
                     <div class="callout callout-danger">
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('deployments.warning') }}
                     </div>
-                    @if (count($branches))
+                    @if (count($environments))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="environments">{{ trans('deployments.environments') }}</label>
 						<div class="col-sm-9">
