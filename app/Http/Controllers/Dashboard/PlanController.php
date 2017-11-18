@@ -14,6 +14,7 @@ namespace Fixhub\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Fixhub\Http\Controllers\Controller;
+use Fixhub\Models\Deployment;
 use Fixhub\Models\Plan;
 use Fixhub\Models\Project;
 
@@ -42,10 +43,28 @@ class PlanController extends Controller
             'branches'        => $project->branches(),
             'environments'    => [],
             'optional'        => [],
+            'deployments'     => $this->getLatest($plan),
             'tab'             => $tab,
             'servers'         => $plan->servers,
         ];
 
         return view('dashboard.plans.show', $data);
+    }
+
+    /**
+     * Gets the latest deployments for a project.
+     *
+     * @param  Plan  $plan
+     * @param  int   $paginate
+     * @return array
+     */
+    private function getLatest(Plan $plan, $paginate = 15)
+    {
+        return Deployment::where('targetable_type', get_class($plan))
+                           ->where('targetable_id', $plan->id)
+                           ->with('user')
+                           ->whereNotNull('started_at')
+                           ->orderBy('started_at', 'DESC')
+                           ->paginate($paginate);
     }
 }

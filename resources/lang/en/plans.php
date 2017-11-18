@@ -16,5 +16,6 @@ return [
     'build'            => 'Build',
     'commands'         => 'Build Commands',
     'agents'           => 'Build Agents',
+    'builds'           => 'Builds',
 
 ];

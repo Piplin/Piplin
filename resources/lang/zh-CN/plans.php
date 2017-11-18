@@ -16,5 +16,6 @@ return [
     'build'            => '开始构建',
     'commands'         => '构建步骤',
     'agents'           => '构建服务器',
+    'builds'           => '构建记录',
 
 ];

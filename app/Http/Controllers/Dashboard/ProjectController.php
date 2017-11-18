@@ -45,7 +45,7 @@ class ProjectController extends Controller
             'targetable_type' => get_class($project),
             'targetable_id'   => $project->id,
             'optional'        => $optional,
-            'deployments'     => $this->getLatest($project->id),
+            'deployments'     => $this->getLatest($project),
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
@@ -144,14 +144,15 @@ class ProjectController extends Controller
     /**
      * Gets the latest deployments for a project.
      *
-     * @param  int   $project_id
-     * @param  int   $paginate
+     * @param  Project $project
+     * @param  int     $paginate
      * @return array
      */
-    private function getLatest($project_id, $paginate = 15)
+    private function getLatest(Project $project, $paginate = 15)
     {
-        return Deployment::where('project_id', $project_id)
-                           ->with('user', 'project')
+        return Deployment::where('targetable_type', get_class($project))
+                           ->where('targetable_id', $project->id)
+                           ->with('user')
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')
                            ->paginate($paginate);
