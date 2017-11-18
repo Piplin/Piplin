@@ -38,7 +38,7 @@
             $('i', status_bar).attr('class', 'fixhub fixhub-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         } else {
-            var toast_title = trans('dashboard.deployment_number', {
+            var toast_title = trans('deployments.deploy_title', {
                 'id': data.model.id
             });
 

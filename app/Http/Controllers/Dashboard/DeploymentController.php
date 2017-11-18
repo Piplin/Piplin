@@ -66,7 +66,7 @@ class DeploymentController extends Controller
         }
 
         $data = [
-            'title'      => trans('deployments.deployment_number', ['id' => $deployment->id]),
+            'title'      => $deployment->title,
             'deployment' => $deployment,
             'output'     => json_encode($output), // PresentableInterface does not correctly json encode the models
         ];

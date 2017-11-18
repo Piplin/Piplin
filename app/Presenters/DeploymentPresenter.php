@@ -13,6 +13,7 @@ namespace Fixhub\Presenters;
 
 use Fixhub\Models\Command;
 use Fixhub\Models\Deployment;
+use Fixhub\Models\Plan;
 use Fixhub\Presenters\Traits\RuntimePresenter;
 use McCool\LaravelAutoPresenter\BasePresenter;
 

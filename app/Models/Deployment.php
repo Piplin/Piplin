@@ -390,6 +390,21 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
+     * Gets the deployment title.
+     *
+     * @return string
+     */
+    public function getTitleAttribute()
+    {
+        if ($this->targetable instanceof Plan) {
+            $title = 'deployments.build_title';
+        } else {
+            $title = 'deployments.deploy_title';
+        }
+
+        return trans($title, ['id' => $this->id]);
+    }
+    /**
      * Get the presenter class.
      *
      * @return string

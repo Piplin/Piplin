@@ -28,7 +28,6 @@ return [
     'status'            => '状态',
     'site'              => '查看站点',
     'view'              => '查看上线详情',
-    'deployment_number' => '上线单 #:id',
     'started'           => '启动于',
 
 ];
