@@ -14,6 +14,8 @@ namespace Fixhub\Bus\Jobs;
 use Fixhub\Models\Server;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Cabinet;
+use Fixhub\Models\Project;
+use Fixhub\Models\Plan;
 use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -27,14 +29,19 @@ class TestServerConnectionJob extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 10;
 
     /**
-    * @var Server
-    */
+     * @var Server
+     */
     public $server;
+
+    /**
+     * @var Project
+     */
+    public $project;
 
     /**
      * Create a new command instance.
@@ -46,6 +53,11 @@ class TestServerConnectionJob extends Job implements ShouldQueue
     public function __construct(Server $server)
     {
         $this->server = $server;
+        if ($this->server->targetable instanceof Environment) {
+            $this->project = $this->server->targetable->targetable;
+        } elseif ($this->server->targetable instanceof Plan) {
+            $this->project = $this->server->targetable->project;
+        }
     }
 
     /**
@@ -67,9 +79,9 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         $this->server->save();
 
         $deploy_path = '/tmp';
-        $private_key = $this->server->targetable->targetable->private_key_content;
-        if ($this->server->targetable->targetable->clean_deploy_path) {
-            $deploy_path = $this->server->targetable->targetable->clean_deploy_path;
+        $private_key = $this->project->private_key_content;
+        if ($this->project->clean_deploy_path) {
+            $deploy_path = $this->project->clean_deploy_path;
         }
 
         if (empty($private_key)) {

@@ -30,7 +30,7 @@ class StoreServerRequest extends Request
             'user'            => 'required|max:255',
             'ip_address'      => 'required|host',
             'enabled'         => 'boolean',
-            'targetable_id'   => 'required|integer',
+            'targetable_id'   => 'required',
             'targetable_type' => 'required|string',
         ];
     }

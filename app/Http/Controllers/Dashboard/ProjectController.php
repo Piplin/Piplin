@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
         $data = [
             'project'         => $project,
-            'targetable_type' => 'Fixhub\\Models\\Project',
+            'targetable_type' => get_class($project),
             'targetable_id'   => $project->id,
             'optional'        => $optional,
             'deployments'     => $this->getLatest($project->id),

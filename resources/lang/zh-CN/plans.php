@@ -14,5 +14,7 @@ return [
     'name'             => '名称',
     'name_placeholder' => '构建计划名称',
     'build'            => '开始构建',
+    'commands'         => '构建步骤',
+    'agents'           => '构建服务器',
 
 ];

@@ -55,6 +55,16 @@ class Plan extends Model implements HasPresenter
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return Server
+     */
+    public function servers()
+    {
+        return $this->morphMany(Server::class, 'targetable');
+    }
+
+    /**
      * Get the presenter class.
      *
      * @return string

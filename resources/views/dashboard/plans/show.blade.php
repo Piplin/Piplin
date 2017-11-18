@@ -7,19 +7,28 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li><a href="">Builds</a></li>
-                    <li class="active"><a href="">Stages</a></li>
-                    <li><a href="">Agents</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'commands']) }}"><span class="fixhub fixhub-command"></span> {{ trans('plans.commands') }}</a></li>
+                    <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'agents']) }}"><span class="fixhub fixhub-server"></span> {{ trans('plans.agents') }}</a></li>
                     <li><a href="">Artifact definitions</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
-                        @include('dashboard.plans._partials.commands')
+                        @if($tab == 'commands')
+                            @include('dashboard.plans._partials.commands')
+                        @elseif($tab == 'agents')
+                            @include('dashboard.environments._partials.servers')
+                        @else
+
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
     @include('dashboard.projects._dialogs.deploy')
+    @if($tab == 'agents')
+        @include('dashboard.environments._dialogs.server')
+    @endif
 @stop
 
 @section('right-buttons')
@@ -29,3 +38,13 @@
         @endif
     </div>
 @stop
+
+@push('javascript')
+    <script type="text/javascript">
+        @if($tab == 'agents')
+            new Fixhub.ServersTab();
+            Fixhub.Servers.add({!! $servers->toJson() !!});
+        @endif
+        Fixhub.targetable_id = {{ $plan->id }};
+    </script>
+@endpush

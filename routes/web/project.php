@@ -24,7 +24,7 @@ Route::group([
         ]);
 
         // Plan
-        Route::get('plan/{plan}', [
+        Route::get('plan/{plan}/{tab?}', [
             'as'   => 'plans',
             'uses' => 'PlanController@show',
         ]);

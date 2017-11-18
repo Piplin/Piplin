@@ -37,10 +37,11 @@ class PlanController extends Controller
             'project'         => $plan->project,
             'targetable_type' => 'Fixhub\\Models\\Plan',
             'targetable_id'   => $plan->id,
-            'environments'    => [],
             'branches'        => [],
             'tags'            => [],
             'optional'        => [],
+            'tab'             => $tab,
+            'servers'         => $plan->servers,
         ];
 
         return view('dashboard.plans.show', $data);

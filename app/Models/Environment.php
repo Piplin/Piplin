@@ -69,7 +69,6 @@ class Environment extends Model
      */
     public function servers()
     {
-        //return $this->hasMany(Server::class, 'environment_id', 'id');
         return $this->morphMany(Server::class, 'targetable');
     }
 

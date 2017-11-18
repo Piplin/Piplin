@@ -19,6 +19,7 @@ use Fixhub\Models\Server;
 use Fixhub\Models\Project;
 use Fixhub\Models\Environment;
 use Fixhub\Models\Cabinet;
+use Fixhub\Models\Plan;
 
 /**
  * Server management controller.
@@ -49,6 +50,8 @@ class ServerController extends Controller
 
         if ($targetable_type == 'Fixhub\\Models\\Environment') {
             $targetable = Environment::findOrFail($targetable_id);
+        } elseif ($targetable_type == 'Fixhub\\Models\\Plan') {
+            $targetable = Plan::findOrFail($targetable_id);
         } else {
             $targetable = Cabinet::findOrFail($targetable_id);
         }
