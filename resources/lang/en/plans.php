@@ -17,5 +17,6 @@ return [
     'commands'         => 'Build Commands',
     'agents'           => 'Build Agents',
     'builds'           => 'Builds',
+    'artifact_definitions' => 'Artifact definitions',
 
 ];

@@ -17,5 +17,6 @@ return [
     'commands'         => '构建步骤',
     'agents'           => '构建服务器',
     'builds'           => '构建记录',
+    'artifact_definitions' => '制品定义',
 
 ];

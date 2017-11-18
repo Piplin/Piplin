@@ -9,7 +9,7 @@
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id]) }}"><span class="fixhub fixhub-clock"></span> {{ trans('plans.builds') }}</a></li>
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'commands']) }}"><span class="fixhub fixhub-command"></span> {{ trans('plans.commands') }}</a></li>
                     <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'agents']) }}"><span class="fixhub fixhub-server"></span> {{ trans('plans.agents') }}</a></li>
-                    <li><a href="">Artifact definitions</a></li>
+                    <li><a href="">{{ trans('plans.artifact_definitions') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
