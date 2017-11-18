@@ -13,7 +13,7 @@
                     <div class="callout callout-danger">
                         <i class="icon fixhub fixhub-warning"></i> {{ trans('servers.warning') }}
                     </div>
-                    @if(isset($environments))
+                    @if(isset($environments) and count($environments))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="server_targetable_id">{{ trans('servers.environment') }}</label>
                         <div class="col-sm-9">
@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="server_targetable_id">{{ trans('plans.label') }}</label>
                         <div class="col-sm-9">
-                            <select id="server_targetable_id" name="targetable_id" class="form-control select2">
+                            <select id="server_targetable_id" disabled="disabled" name="targetable_id" class="form-control select2">
                                
                                     <option value="{{ $plan->id }}" selected="true">{{ $plan->name }}</option>
                             </select>
