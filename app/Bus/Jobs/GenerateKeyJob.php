@@ -65,6 +65,7 @@ class GenerateKeyJob extends Job
         $process->run();
 
         if (!$process->isSuccessful()) {
+            unlink($key_file);
             throw new \RuntimeException($process->getErrorOutput());
         }
 
