@@ -16,7 +16,7 @@ use Piplin\Models\ProjectTemplate;
 /**
  * Event observer for ProjectTemplate model.
  */
-class ProjectTemplateObserver
+class DeployTemplateObserver
 {
     /**
      * Called when the model is deleting.
