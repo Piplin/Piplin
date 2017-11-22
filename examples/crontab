@@ -1,1 +1,1 @@
-* * * * * root php /var/www/fixhub/artisan schedule:run >> /dev/null 2>&1
+* * * * * root php /var/www/piplin/artisan schedule:run >> /dev/null 2>&1

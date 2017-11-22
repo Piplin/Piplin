@@ -1,49 +1,49 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Providers;
+namespace Piplin\Providers;
 
-use Fixhub\Bus\Events\DeployFinishedEvent;
-use Fixhub\Bus\Events\EmailChangeRequestedEvent;
-use Fixhub\Bus\Events\JsonWebTokenExpiredEvent;
-use Fixhub\Bus\Events\UserWasCreatedEvent;
-use Fixhub\Bus\Listeners\ClearJwtListener;
-use Fixhub\Bus\Listeners\CreateJwtListener;
-use Fixhub\Bus\Listeners\EmailChangeConfirmationListener;
-use Fixhub\Bus\Listeners\NotifyDeployListener;
-use Fixhub\Bus\Listeners\SendSignupEmailListener;
-use Fixhub\Bus\Listeners\DeployLinkedEnvironmentListner;
-use Fixhub\Models\Command;
-use Fixhub\Models\ConfigFile;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Hook;
-use Fixhub\Models\Key;
-use Fixhub\Models\Project;
-use Fixhub\Models\Server;
-use Fixhub\Models\ServerLog;
-use Fixhub\Bus\Observers\CommandObserver;
-use Fixhub\Bus\Observers\ConfigFileObserver;
-use Fixhub\Bus\Observers\DeploymentObserver;
-use Fixhub\Bus\Observers\DeployTemplateObserver;
-use Fixhub\Bus\Observers\EnvironmentObserver;
-use Fixhub\Bus\Observers\HookObserver;
-use Fixhub\Bus\Observers\KeyObserver;
-use Fixhub\Bus\Observers\ProjectObserver;
-use Fixhub\Bus\Observers\ServerObserver;
-use Fixhub\Bus\Observers\ServerLogObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Piplin\Bus\Events\TaskFinishedEvent;
+use Piplin\Bus\Events\EmailChangeRequestedEvent;
+use Piplin\Bus\Events\JsonWebTokenExpiredEvent;
+use Piplin\Bus\Events\UserWasCreatedEvent;
+use Piplin\Bus\Listeners\ClearJwtListener;
+use Piplin\Bus\Listeners\CreateJwtListener;
+use Piplin\Bus\Listeners\DeployLinkedEnvironmentListner;
+use Piplin\Bus\Listeners\EmailChangeConfirmationListener;
+use Piplin\Bus\Listeners\NotifyDeployListener;
+use Piplin\Bus\Listeners\SendSignupEmailListener;
+use Piplin\Bus\Observers\CommandObserver;
+use Piplin\Bus\Observers\ConfigFileObserver;
+use Piplin\Bus\Observers\TaskObserver;
+use Piplin\Bus\Observers\DeployTemplateObserver;
+use Piplin\Bus\Observers\EnvironmentObserver;
+use Piplin\Bus\Observers\HookObserver;
+use Piplin\Bus\Observers\KeyObserver;
+use Piplin\Bus\Observers\ProjectObserver;
+use Piplin\Bus\Observers\ServerLogObserver;
+use Piplin\Bus\Observers\ServerObserver;
+use Piplin\Models\Command;
+use Piplin\Models\ConfigFile;
+use Piplin\Models\Task;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Environment;
+use Piplin\Models\Hook;
+use Piplin\Models\Key;
+use Piplin\Models\Project;
+use Piplin\Models\Server;
+use Piplin\Models\ServerLog;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
 /**
@@ -57,7 +57,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        DeployFinishedEvent::class       => [
+        TaskFinishedEvent::class       => [
             DeployLinkedEnvironmentListner::class,
             NotifyDeployListener::class,
         ],
@@ -80,7 +80,7 @@ class EventServiceProvider extends ServiceProvider
 
         Command::observe(CommandObserver::class);
         ConfigFile::observe(ConfigFileObserver::class);
-        Deployment::observe(DeploymentObserver::class);
+        Task::observe(TaskObserver::class);
         DeployTemplate::observe(DeployTemplateObserver::class);
         Environment::observe(EnvironmentObserver::class);
         Key::observe(KeyObserver::class);

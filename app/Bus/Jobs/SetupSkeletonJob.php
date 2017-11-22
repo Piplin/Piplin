@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
-use Fixhub\Models\Command;
-use Fixhub\Models\Project;
-use Fixhub\Models\ConfigFile;
-use Fixhub\Models\SharedFile;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\Variable;
+use Piplin\Models\Command;
+use Piplin\Models\ConfigFile;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Project;
+use Piplin\Models\SharedFile;
+use Piplin\Models\Variable;
 
 /**
  * A class to handle cloning between template and project.
@@ -24,13 +24,13 @@ use Fixhub\Models\Variable;
 class SetupSkeletonJob extends Job
 {
     /**
-    * @var mixed
-    */
+     * @var mixed
+     */
     private $target;
 
     /**
-    * @var mixed
-    */
+     * @var mixed
+     */
     private $skeleton;
 
     /**
@@ -43,7 +43,7 @@ class SetupSkeletonJob extends Job
      */
     public function __construct($target, $skeleton)
     {
-        $this->target  = $target;
+        $this->target   = $target;
         $this->skeleton = $skeleton;
     }
 

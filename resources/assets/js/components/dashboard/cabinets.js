@@ -69,11 +69,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var cabinet = Fixhub.Cabinets.get($('#model_id').val());
+        var cabinet = Piplin.Cabinets.get($('#model_id').val());
 
         cabinet.destroy({
             wait: true,
@@ -81,14 +81,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('cabinets.delete_success'));
+                Piplin.toast(trans('cabinets.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -100,16 +100,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var cabinet_id = $('#cabinet_id').val();
 
         if (cabinet_id) {
-            var cabinet = Fixhub.Cabinets.get(cabinet_id);
+            var cabinet = Piplin.Cabinets.get(cabinet_id);
         } else {
-            var cabinet = new Fixhub.Cabinet();
+            var cabinet = new Piplin.Cabinet();
         }
 
         var data = {
@@ -123,16 +123,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('cabinets.edit_success');
                 if (!cabinet_id) {
-                    Fixhub.Cabinets.add(response);
+                    Piplin.Cabinets.add(response);
                     msg = trans('cabinets.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -154,24 +154,24 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Cabinet = Backbone.Model.extend({
+    Piplin.Cabinet = Backbone.Model.extend({
         urlRoot: '/cabinets/' + parseInt($('input[name="environment_id"]').val())
     });
 
     var Cabinets = Backbone.Collection.extend({
-        model: Fixhub.Cabinet
+        model: Piplin.Cabinet
     });
 
-    Fixhub.Cabinets = new Cabinets();
+    Piplin.Cabinets = new Cabinets();
 
-    Fixhub.CabinetsTab = Backbone.View.extend({
+    Piplin.CabinetsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -182,29 +182,29 @@
             $('#no_cabinets').show();
             $('#cabinet_list').hide();
 
-            this.listenTo(Fixhub.Cabinets, 'add', this.addOne);
-            this.listenTo(Fixhub.Cabinets, 'reset', this.addAll);
-            this.listenTo(Fixhub.Cabinets, 'remove', this.addAll);
-            this.listenTo(Fixhub.Cabinets, 'all', this.render);
+            this.listenTo(Piplin.Cabinets, 'add', this.addOne);
+            this.listenTo(Piplin.Cabinets, 'reset', this.addAll);
+            this.listenTo(Piplin.Cabinets, 'remove', this.addAll);
+            this.listenTo(Piplin.Cabinets, 'all', this.render);
 
-            Fixhub.listener.on('cabinet:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var cabinet = Fixhub.Cabinets.get(parseInt(data.model.id));
+            Piplin.listener.on('cabinet:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var cabinet = Piplin.Cabinets.get(parseInt(data.model.id));
 
                 if (cabinet) {
                     cabinet.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('cabinet:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var cabinet = Fixhub.Cabinets.get(parseInt(data.model.id));
+            Piplin.listener.on('cabinet:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var cabinet = Piplin.Cabinets.get(parseInt(data.model.id));
 
                 if (cabinet) {
-                    Fixhub.Cabinets.remove(cabinet);
+                    Piplin.Cabinets.remove(cabinet);
                 }
             });
         },
         render: function () {
-            if (Fixhub.Cabinets.length) {
+            if (Piplin.Cabinets.length) {
                 $('#no_cabinets').hide();
                 $('#cabinet_list').show();
             } else {
@@ -213,7 +213,7 @@
             }
         },
         addOne: function (cabinet) {
-            var view = new Fixhub.CabinetView({
+            var view = new Piplin.CabinetView({
                 model: cabinet
             });
 
@@ -223,11 +223,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Cabinets.each(this.addOne, this);
+            Piplin.Cabinets.each(this.addOne, this);
         }
     });
 
-    Fixhub.CabinetView = Backbone.View.extend({
+    Piplin.CabinetView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-delete': 'trash'

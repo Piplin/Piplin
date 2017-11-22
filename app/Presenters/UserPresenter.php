@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Presenters;
+namespace Piplin\Presenters;
 
-use McCool\LaravelAutoPresenter\BasePresenter;
 use Creativeorange\Gravatar\Gravatar;
+use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
  * The view presenter for a user class.
@@ -42,6 +42,6 @@ class UserPresenter extends BasePresenter
             return url($this->getWrappedObject()->avatar);
         }
 
-        return config('fixhub.gravatar') ? $this->gravatar->get($this->getWrappedObject()->email) : '/img/noavatar.png';
+        return config('piplin.gravatar') ? $this->gravatar->get($this->getWrappedObject()->email) : '/img/noavatar.png';
     }
 }

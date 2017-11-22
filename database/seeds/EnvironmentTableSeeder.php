@@ -1,16 +1,16 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Environment;
 use Illuminate\Database\Seeder;
+use Piplin\Models\Environment;
 
 class EnvironmentTableSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class EnvironmentTableSeeder extends Seeder
         DB::table('environments')->delete();
 
         $environment = Environment::create([
-            'targetable_type' => 'Fixhub\\Models\\Project',
+            'targetable_type' => 'Piplin\\Models\\Project',
             'targetable_id'   => 1,
             'name'            => 'Staging',
             'description'     => 'Staging',
@@ -28,7 +28,7 @@ class EnvironmentTableSeeder extends Seeder
         $environment->cabinets()->sync($environment->id);
 
         Environment::create([
-            'targetable_type' => 'Fixhub\\Models\\Project',
+            'targetable_type' => 'Piplin\\Models\\Project',
             'targetable_id'   => 1,
             'name'            => 'QA',
             'default_on'      => false,
@@ -36,14 +36,14 @@ class EnvironmentTableSeeder extends Seeder
         ]);
 
         Environment::create([
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => 1,
             'name'            => 'Staging',
             'description'     => 'Staging',
         ]);
 
         Environment::create([
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => 1,
             'name'            => 'QA',
             'default_on'      => false,
@@ -51,7 +51,7 @@ class EnvironmentTableSeeder extends Seeder
         ]);
 
         Environment::create([
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => 1,
             'name'            => 'Production',
             'description'     => 'Production',

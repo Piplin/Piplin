@@ -1,142 +1,146 @@
 
-.fixhub { display: inline-block; font-family: "Ionicons"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; text-rendering: auto; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.piplin { display: inline-block; font-family: "Ionicons"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; text-rendering: auto; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-.fixhub-success:before { content: "\f121"; }
+.piplin-success:before { content: "\f121"; }
 
-.fixhub-group:before { content: "\f3ef"; }
+.piplin-group:before { content: "\f3ef"; }
 
-.fixhub-project:before { content: "\f4dc"; }
+.piplin-project:before { content: "\f4dc"; }
 
-.fixhub-template:before { content: "\f471"; }
+.piplin-template:before { content: "\f471"; }
 
-.fixhub-environment:before { content: "\f22e"; }
+.piplin-environment:before { content: "\f22e"; }
 
-.fixhub-server:before { content: "\f228"; }
+.piplin-server:before { content: "\f228"; }
 
-.fixhub-cabinet:before { content: "\f3c9"; }
+.piplin-cabinet:before { content: "\f3c9"; }
 
-.fixhub-provider:before { content: "\f35c"; }
+.piplin-provider:before { content: "\f35c"; }
 
-.fixhub-key:before { content: "\f296"; }
+.piplin-key:before { content: "\f296"; }
 
-.fixhub-tip:before { content: "\f451"; }
+.piplin-tip:before { content: "\f451"; }
 
-.fixhub-link:before { content: "\f1fe"; }
+.piplin-link:before { content: "\f1fe"; }
 
-.fixhub-variable:before { content: "\f353"; }
+.piplin-variable:before { content: "\f353"; }
 
-.fixhub-command:before { content: "\f271"; }
+.piplin-command:before { content: "\f271"; }
 
-.fixhub-config-file:before { content: "\f12f"; }
+.piplin-config-file:before { content: "\f12f"; }
 
-.fixhub-shared-file:before { content: "\f434"; }
+.piplin-shared-file:before { content: "\f434"; }
 
-.fixhub-hook:before { content: "\f30b"; }
+.piplin-hook:before { content: "\f30b"; }
 
 .ion-commit:before { content: "\f33f"; }
 
-.fixhub-deploy:before { content: "\f40b"; }
+.piplin-deploy:before { content: "\f40b"; }
 
-.fixhub-build:before { content: "\f102"; }
+.piplin-build:before { content: "\f102"; }
 
-.fixhub-admin:before { content: "\f2ba"; }
+.piplin-admin:before { content: "\f2ba"; }
 
-.fixhub-log:before { content: "\f493"; }
+.piplin-log:before { content: "\f493"; }
 
-//
-
-.fixhub-load:before { content: "\f29a"; }
-
-.fixhub-save:before { content: "\f2c3"; }
-
-.fixhub-user:before { content: "\f47e"; }
-
-.fixhub-users:before { content: "\f212"; }
-
-.fixhub-warning:before { content: "\f101"; }
-
-.fixhub-help:before { content: "\f143"; }
-
-.fixhub-clock:before { content: "\f402"; }
-
-.fixhub-plus:before { content: "\f217"; }
-
-.fixhub-drag:before { content: "\f130"; }
-
-.fixhub-chatbox:before { content: "\f3f9"; }
-
-.fixhub-edit:before { content: "\f12c"; }
-
-.fixhub-delete:before { content: "\f252"; }
-
-.fixhub-check:before { content: "\f121"; }
-
-.fixhub-close:before { content: "\f129"; }
-
-.fixhub-cancel:before { content: "\f306"; }
-
-.fixhub-go:before { content: "\f10b"; }
-
-.fixhub-rollback:before { content: "\f265"; }
-
-.fixhub-refresh:before { content: "\f21c"; }
-
-.fixhub-left:before { content: "\f108"; }
-
-.fixhub-right:before { content: "\f10b"; }
-
-.fixhub-up:before { content: "\f10e"; }
-
-.fixhub-down:before { content: "\f105"; }
-
-.fixhub-copy:before { content: "\f41b"; }
-
-.fixhub-email:before { content: "\f132"; }
-
-.fixhub-cube:before { content: "\f318"; }
-
-.fixhub-bell:before { content: "\f39b"; }
-
-.fixhub-home:before { content: "\f448"; }
-
-.fixhub-addon:before { content: "\f2a0"; }
-
-.fixhub-disabled:before { content: "\f3a9"; }
-
-.fixhub-ping:before { content: "\f268"; }
-
-.fixhub-code:before { content: "\f271"; }
-
-.fixhub-preview:before { content: "\f133"; }
-
-.fixhub-leave:before { content: "\f385"; }
-
-.fixhub-checkbox:before { content: "\f373"; }
-
-.fixhub-checkbox-blank:before { content: "\f372"; }
-
-.fixhub-lock:before { content: "\f200"; }
-
-.fixhub-circle:before { content: "\f21b"; }
-
-.fixhub-setting:before { content: "\f13d"; }
-
-.fixhub-image:before { content: "\f147"; }
-
-.fixhub-pin:before { content: "\f2a6"; }
-
-.fixhub-logout:before { content: "\f29f"; }
-
-.fixhub-info:before { content: "\f44c"; }
-
-.fixhub-more:before { content: "\f20b"; }
+.piplin-pattern:before { content: "\f2e9"; }
 
 //
-.fixhub-github:before { content: "\f233"; }
-.fixhub-gitlab:before { content: "\f430"; }
-.fixhub-bitbucket:before { content: "\f2ae"; }
-.fixhub-amazon:before { content: "\f4d8"; }
-.fixhub-slack:before { content: "\f219"; }
+
+.piplin-load:before { content: "\f29a"; }
+
+.piplin-save:before { content: "\f2c3"; }
+
+.piplin-user:before { content: "\f47e"; }
+
+.piplin-users:before { content: "\f212"; }
+
+.piplin-warning:before { content: "\f101"; }
+
+.piplin-help:before { content: "\f143"; }
+
+.piplin-clock:before { content: "\f402"; }
+
+.piplin-plus:before { content: "\f217"; }
+
+.piplin-drag:before { content: "\f130"; }
+
+.piplin-chatbox:before { content: "\f3f9"; }
+
+.piplin-edit:before { content: "\f12c"; }
+
+.piplin-delete:before { content: "\f252"; }
+
+.piplin-check:before { content: "\f121"; }
+
+.piplin-close:before { content: "\f129"; }
+
+.piplin-cancel:before { content: "\f306"; }
+
+.piplin-go:before { content: "\f10b"; }
+
+.piplin-rollback:before { content: "\f265"; }
+
+.piplin-refresh:before { content: "\f21c"; }
+
+.piplin-left:before { content: "\f108"; }
+
+.piplin-right:before { content: "\f10b"; }
+
+.piplin-up:before { content: "\f10e"; }
+
+.piplin-down:before { content: "\f105"; }
+
+.piplin-copy:before { content: "\f41b"; }
+
+.piplin-email:before { content: "\f132"; }
+
+.piplin-cube:before { content: "\f318"; }
+
+.piplin-bell:before { content: "\f39b"; }
+
+.piplin-dashboard:before { content: "\f4b0"; }
+
+.piplin-home:before { content: "\f448"; }
+
+.piplin-addon:before { content: "\f2a0"; }
+
+.piplin-disabled:before { content: "\f3a9"; }
+
+.piplin-ping:before { content: "\f268"; }
+
+.piplin-code:before { content: "\f271"; }
+
+.piplin-preview:before { content: "\f133"; }
+
+.piplin-leave:before { content: "\f385"; }
+
+.piplin-checkbox:before { content: "\f373"; }
+
+.piplin-checkbox-blank:before { content: "\f372"; }
+
+.piplin-lock:before { content: "\f200"; }
+
+.piplin-circle:before { content: "\f21b"; }
+
+.piplin-setting:before { content: "\f13d"; }
+
+.piplin-image:before { content: "\f147"; }
+
+.piplin-pin:before { content: "\f2a6"; }
+
+.piplin-logout:before { content: "\f29f"; }
+
+.piplin-info:before { content: "\f44c"; }
+
+.piplin-more:before { content: "\f20b"; }
+
+//
+.piplin-github:before { content: "\f233"; }
+.piplin-gitlab:before { content: "\f430"; }
+.piplin-bitbucket:before { content: "\f2ae"; }
+.piplin-amazon:before { content: "\f4d8"; }
+.piplin-slack:before { content: "\f219"; }
 
 
 

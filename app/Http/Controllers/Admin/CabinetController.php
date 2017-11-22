@@ -1,23 +1,23 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreCabinetRequest;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\Key;
-use Fixhub\Models\Project;
-use Fixhub\Models\Cabinet;
 use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreCabinetRequest;
+use Piplin\Models\Cabinet;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Key;
+use Piplin\Models\Project;
 
 /**
  * Cabinet management controller.
@@ -32,11 +32,12 @@ class CabinetController extends Controller
     public function index()
     {
         $cabinets = Cabinet::orderBy('order')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.cabinets.index', [
             'title'    => trans('cabinets.manage'),
             'cabinets' => $cabinets,
+            'current_child' => 'cabinets',
         ]);
     }
 
@@ -54,18 +55,18 @@ class CabinetController extends Controller
         return view('admin.cabinets.show', [
             'title'           => trans('cabinets.manage'),
             'servers_raw'     => $cabinet->servers,
-            'targetable_type' => 'Fixhub\\Models\\Cabinet',
+            'targetable_type' => 'Piplin\\Models\\Cabinet',
             'targetable_id'   => $cabinet->id,
             'targetable'      => $cabinet,
             'environments'    => $cabinets,
-            'servers'         => $cabinet->servers->toJson()
+            'servers'         => $cabinet->servers->toJson(),
         ]);
     }
 
     /**
      * Store a newly created cabinet in storage.
      *
-     * @param  StoreCabinetRequest $request
+     * @param StoreCabinetRequest $request
      *
      * @return Response
      */
@@ -80,7 +81,7 @@ class CabinetController extends Controller
     /**
      * Update the specified cabinet in storage.
      *
-     * @param Cabinet $cabinet
+     * @param Cabinet             $cabinet
      * @param StoreCabinetRequest $request
      *
      * @return Response

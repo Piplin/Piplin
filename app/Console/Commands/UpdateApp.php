@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Events\RestartSocketServerEvent;
-use Fixhub\Models\Deployment;
 use Illuminate\Support\Facades\App;
+use Piplin\Bus\Events\RestartSocketServerEvent;
+use Piplin\Models\Task;
 
 /**
  * A console command for updating the installation.
@@ -53,7 +53,7 @@ class UpdateApp extends InstallApp
     public function handle()
     {
         if (!$this->verifyInstalled() ||
-            $this->hasRunningDeployments() ||
+            $this->hasRunningTasks() ||
             $this->composerOutdated() ||
             !$this->checkRequirements()) {
             return -1;
@@ -163,14 +163,14 @@ class UpdateApp extends InstallApp
      *
      * @return bool
      */
-    protected function hasRunningDeployments()
+    protected function hasRunningTasks()
     {
-        $deploys = Deployment::whereIn('status', [Deployment::DEPLOYING, Deployment::PENDING])
+        $deploys = Task::whereIn('status', [Task::RUNNING, Task::PENDING])
                              ->count();
 
         if ($deploys > 0) {
             $this->block([
-                'Deployments in progress',
+                'Tasks in progress',
                 PHP_EOL,
                 'There are still running deployments, please wait for them to finish before updating.',
             ]);
@@ -203,7 +203,7 @@ class UpdateApp extends InstallApp
     }
 
     /**
-     * Ensures that Fixhub has actually been installed.
+     * Ensures that Piplin has actually been installed.
      *
      * @return bool
      */
@@ -211,7 +211,7 @@ class UpdateApp extends InstallApp
     {
         if (config('app.key') === false || config('app.key') === 'SomeRandomString') {
             $this->block([
-                'Fixhub has not been installed',
+                'Piplin has not been installed',
                 PHP_EOL,
                 'Please use "php artisan app:install" instead.',
             ]);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 return [
 
     'label'                            => '推送服务',
@@ -17,7 +26,7 @@ return [
     'edit_custom'                      => '编辑Webhook推送',
     'delete_success'                   => '该推送服务已被成功删除。',
     'none'                             => '该项目还没有设置任何推送',
-    'integration_help'                 => '通过集成第三方服务，Fixhub可实现对项目的部署状态进行实时推送。',
+    'integration_help'                 => '通过集成第三方服务，Piplin可实现对项目的部署状态进行实时推送。',
     'name'                             => '名称',
     'type'                             => '类型',
     'warning'                          => '推送服务无法保存，请检查表单信息',
@@ -39,7 +48,7 @@ return [
     'dingtalk'                         => '钉钉',
     'mail'                             => '邮件',
     'which'                            => '请选择推送服务:',
-    'test_subject'                     => 'Fixhub推送测试',
+    'test_subject'                     => 'Piplin推送测试',
     'test_message'                     => '恭喜，推送服务已生效 - 来自 :app_url',
     'enabled'                          => '是否启用?',
 

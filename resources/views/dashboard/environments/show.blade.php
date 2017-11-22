@@ -5,9 +5,9 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id]) }}"><span class="fixhub fixhub-server"></span> {{ trans('environments.servers') }}</a></li>
-                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="fixhub fixhub-clock"></span> {{ trans('deployments.label') }}</a></li>
-                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="fixhub fixhub-link"></span> {{ trans('environments.links') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id]) }}"><span class="piplin piplin-server"></span> {{ trans('environments.servers') }}</a></li>
+                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="piplin piplin-clock"></span> {{ trans('tasks.label') }}</a></li>
+                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="piplin piplin-link"></span> {{ trans('environments.links') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">
@@ -39,7 +39,7 @@
 @section('right-buttons')
 <div class="pull-right">
     @if($project->can('deploy'))
-    <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isDeploying() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isDeploying() OR !count($project->environments)) ? 'disabled' : '' }}><span class="fixhub fixhub-deploy"></span> {{ trans('projects.deploy') }}</button>
+    <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isRunning() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isRunning() OR !count($project->environments)) ? 'disabled' : '' }}><span class="piplin piplin-deploy"></span> {{ trans('projects.deploy') }}</button>
     @endif
 </div>
 @stop
@@ -48,18 +48,18 @@
     <script type="text/javascript">
 
         @if(empty($tab))
-            new Fixhub.ServersTab();
-            Fixhub.Servers.add({!! $servers->toJson() !!});
-            new Fixhub.CabinetsTab();
-            Fixhub.Cabinets.add({!! $cabinets !!});
+            new Piplin.ServersTab();
+            Piplin.Servers.add({!! $servers->toJson() !!});
+            new Piplin.CabinetsTab();
+            Piplin.Cabinets.add({!! $cabinets !!});
         @elseif($tab == 'links')
-            new Fixhub.EnvironmentLinksTab();
-            Fixhub.EnvironmentLinks.add({!! $environmentLinks->toJson() !!});
+            new Piplin.EnvironmentLinksTab();
+            Piplin.EnvironmentLinks.add({!! $environmentLinks->toJson() !!});
         @endif
 
 
-        Fixhub.project_id = {{ $project->id }};
-        Fixhub.targetable_id = {{ $targetable->id }};
+        Piplin.project_id = {{ $project->id }};
+        Piplin.targetable_id = {{ $targetable->id }};
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

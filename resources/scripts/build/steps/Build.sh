@@ -1,3 +1,3 @@
 # Build
 
-echo -e "Build {{ release_path }}"
+echo -e "Build {{ build_path }}"

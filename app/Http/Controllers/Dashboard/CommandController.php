@@ -1,25 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use DB;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreCommandRequest;
-use Fixhub\Models\Command;
-use Fixhub\Models\Plan;
-use Fixhub\Models\Project;
-use Fixhub\Models\DeployTemplate;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreCommandRequest;
+use Piplin\Models\Command;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Plan;
+use Piplin\Models\Project;
 
 /**
  * Controller for managing commands.
@@ -29,8 +29,8 @@ class CommandController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param  mixed $target
-     * @param  string  $action Either clone, install, activate or purge
+     * @param  mixed    $target
+     * @param  string   $action Either clone, install, activate or purge
      * @return Response
      */
     public function index($target, $action)
@@ -54,11 +54,13 @@ class CommandController extends Controller
             ];
         } elseif ($target instanceof Plan) {
             $breadcrumb = [
-                ['url' => route('plans', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
+                ['url' => route('projects', ['id' => $target->id]), 'label' => $target->project->name],
+                ['url' => route('plans', ['id' => $target->id, 'tab' => 'commands']), 'label' => trans('projects.build_plan')],
             ];
         } else {
             $breadcrumb = [
                 ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
+                ['url' => route('deployments', ['id' => $target->id, 'tab' => 'commands']), 'label' => trans('projects.deploy_plan')],
             ];
         }
 
@@ -66,11 +68,11 @@ class CommandController extends Controller
             'breadcrumb'      => $breadcrumb,
             'title'           => trans('commands.' . strtolower($action)),
             'subtitle'        => $target->name,
-            'project'         => $target,
+            'targetable'      => $target,
             'targetable_type' => get_class($target),
             'targetable_id'   => $target->id,
             'action'          => $types[$action],
-            'commands'        => $this->getForDeployStep($target, $types[$action]),
+            'commands'        => $this->getForTaskStep($target, $types[$action]),
         ]);
     }
 
@@ -91,16 +93,17 @@ class CommandController extends Controller
             'step',
             'optional',
             'default_on',
-            'environments'
+            'environments',
+            'patterns'
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
 
         // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
+        if ($targetable_type === 'Piplin\\Models\Project') {
             $this->authorize('manage', $target);
         }
 
@@ -122,14 +125,23 @@ class CommandController extends Controller
             unset($fields['environments']);
         }
 
+        $patterns = null;
+        if (isset($fields['patterns'])) {
+            $patterns = $fields['patterns'];
+            unset($fields['patterns']);
+        }
+
         $command = $target->commands()->create($fields);
-        //$command = Command::create($fields);
 
         if ($environments) {
             $command->environments()->sync($environments);
         }
-
         $command->environments; // Triggers the loading
+
+        if ($patterns) {
+            $command->patterns()->sync($patterns);
+        }
+        $command->patterns; // Triggers the loading
 
         return $command;
     }
@@ -137,8 +149,8 @@ class CommandController extends Controller
     /**
      * Update the specified command in storage.
      *
-     * @param  Command             $command
-     * @param  StoreCommandRequest $request
+     * @param Command             $command
+     * @param StoreCommandRequest $request
      *
      * @return Response
      */
@@ -150,7 +162,8 @@ class CommandController extends Controller
             'script',
             'optional',
             'default_on',
-            'environments'
+            'environments',
+            'patterns'
         );
 
         $environments = null;
@@ -159,13 +172,24 @@ class CommandController extends Controller
             unset($fields['environments']);
         }
 
+        $patterns = null;
+        if (isset($fields['patterns'])) {
+            $patterns = $fields['patterns'];
+            unset($fields['patterns']);
+        }
+
         $command->update($fields);
 
         if ($environments !== null) {
             $command->environments()->sync($environments);
         }
 
+        if ($patterns !== null) {
+            $command->patterns()->sync($patterns);
+        }
+
         $command->environments; // Triggers the loading
+        $command->patterns; // Triggers the loading
 
         return $command;
     }
@@ -197,7 +221,7 @@ class CommandController extends Controller
     /**
      * Remove the specified command from storage.
      *
-     * @param  Command $command
+     * @param  Command  $command
      * @return Response
      */
     public function destroy(Command $command)
@@ -213,13 +237,15 @@ class CommandController extends Controller
      * Get's the commands in a specific step.
      *
      * @param  Project|DeployTemplate $target
-     * @param  int              $step
+     * @param  int                    $step
      * @return Collection
      */
-    protected function getForDeployStep($target, $step)
+    protected function getForTaskStep($target, $step)
     {
+        $with = $target instanceof Plan ? ['patterns'] : ['environments'];
+
         return $target->commands()
-                //->with(['environments'])
+                ->with($with)
                 ->whereIn('step', [$step - 1, $step + 1])
                 ->orderBy('order', 'asc')
                     ->get()->toJson(); // Because CommandPresenter toJson() is not working in the view

@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Events;
+namespace Piplin\Bus\Events;
 
-use Fixhub\Models\ServerLog;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
+use Piplin\Models\ServerLog;
 
 /**
  * Event which fires when the server log status has changed.

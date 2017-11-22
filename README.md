@@ -1,14 +1,14 @@
-# Fixhub
+# Piplin
 
 [![StyleCI](https://styleci.io/repos/67609292/shield)](https://styleci.io/repos/67609292/)
-[![Build Status](https://travis-ci.org/Fixhub/Fixhub.svg?branch=master)](https://travis-ci.org/Fixhub/Fixhub)
+[![Build Status](https://travis-ci.org/Piplin/Piplin.svg?branch=master)](https://travis-ci.org/Piplin/Piplin)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源Web自动化部署系统。
+Piplin 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源Web自动化部署系统。
 
-![Screenshot](http://www.fixhub.org/fixhub.png)
+![Screenshot](http://www.piplin.org/piplin.png)
 
-## Fixhub能做什么？
+## Piplin能做什么？
 
 * 支持PHP、Python、JAVA、Ruby等项目的发布
 * 通过SSH将程序部署到多台服务器上
@@ -25,7 +25,7 @@ Fixhub 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源
 
 ## 安装环境要求
 
-Fixhub目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为了能运行Fixhub，您还需要安装一些基础软件。
+Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为了能运行Piplin，您还需要安装一些基础软件。
 
 - Web服务器: **Nginx**, **Apache** (with mod_rewrite)，or **Lighttpd**
 - [PHP](http://www.php.net) 7.0+
@@ -34,7 +34,7 @@ Fixhub目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 - [Redis](http://redis.io)
 - [Node.js](https://nodejs.org/)
 - [队列系统](http://laravel.com/docs/5.5/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
-- [Supservisord](http://www.supervisord.org/), Fixhub使用Supervisord进行后台进程管理。
+- [Supservisord](http://www.supervisord.org/), Piplin使用Supervisord进行后台进程管理。
 - [Rsync](https://rsync.samba.org/) 如无特殊情况，一般系统都会自带rsync
 
 ### 可选项
@@ -46,7 +46,7 @@ Fixhub目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 一. 克隆代码
 
 ```shell
-$ git clone https://github.com/fixhub/fixhub.git
+$ git clone https://github.com/piplin/piplin.git
 ```
 
 二. 安装依赖包
@@ -75,13 +75,13 @@ $ make file-permission
 $ cp .env.example .env
 ```
 
-六. 安装Fixhub
+六. 安装Piplin
 
 ```shell
 $ php artisan app:install
 ```
 
-> Fixhub安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
+> Piplin安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
 七. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
@@ -93,11 +93,11 @@ $ php artisan app:install
 
 计划任务相关的设置请看 [examples/crontab](examples/crontab).
 
-九. 访问Fixhub
+九. 访问Piplin
 
-恭喜！您已完成Fixhub的安装。请通过浏览器访问安装过程中设置的应用网址。
+恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
 
-我有Fixhub，你有故事吗？请开始你的表演。
+我有Piplin，你有故事吗？请开始你的表演。
 
 
 ### 升级
@@ -115,7 +115,7 @@ $ git checkout 0.4.3
 $ composer install -o --no-dev
 ```
 
-三. 执行Fixhub升级
+三. 执行Piplin升级
 
 ```shell
 $ php artisan app:update
@@ -123,10 +123,10 @@ $ php artisan app:update
 
 ## 系统演示
 
-体验Fixhub, 请访问 [Fixhub](http://fixhub.org):
+体验Piplin, 请访问 [Piplin](http://piplin.org):
 
-- **用户名:** fixhub 或 `fixhub@fixhub.org`
-- **密码:** `fixhub`
+- **用户名:** piplin 或 `piplin@piplin.org`
+- **密码:** `piplin`
 
 > 注意：系统每5分钟会自动重置一次密码，该账号没有权限访问管理功能.
 
@@ -160,7 +160,7 @@ $ php artisan app:update
 
 ## 开发相关
 
-Fixhub代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
+Piplin代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
 
 工具集：
 
@@ -185,4 +185,4 @@ npm run prod
 
 ## 软件授权协议
 
-Fixhub is licensed under [The MIT License (MIT)](LICENSE).
+Piplin is licensed under [The MIT License (MIT)](LICENSE).

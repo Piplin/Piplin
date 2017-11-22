@@ -1,3 +1,3 @@
 # Test
 
-echo -e "Test {{ release_path }}"
+echo -e "Test {{ build_path }}"

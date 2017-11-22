@@ -2,38 +2,39 @@
 
 @section('content')
     <div class="login-box">
-        <div class="login-logo text-success">
-            <img src="/img/logo.svg"><strong>{{ $app_name }}</strong>
+        <div class="login-logo text-primary">
+            <img src="/img/logo.png"><strong>{{ $app_name }}</strong>
+            <span class="pl-sign-version">{{ APP_VERSION }}</span>
         </div>
 
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>{{ trans('auth.oops') }}</strong> {{ trans('auth.problems') }}<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <div class="login-box-body">
             <p class="login-box-msg">{{ trans('auth.please_sign_in') }}</p>
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>{{ trans('auth.oops') }}</strong> {{ trans('auth.problems') }}<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('auth.login') }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="form-group has-feedback">
                     <input type="login" class="form-control" placeholder="{{ trans('auth.login') }}" name="login" value="{{ old('login') }}" required />
-                    <span class="fixhub fixhub-user form-control-feedback"></span>
+                    <span class="piplin piplin-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="{{ trans('auth.password') }}" name="password" required />
-                    <span class="fixhub fixhub-lock form-control-feedback"></span>
+                    <span class="piplin piplin-lock form-control-feedback"></span>
                 </div>
 
                 <div class="row">
@@ -56,7 +57,7 @@
             <div class="social-auth-links text-center">
               <p>- OR -</p>
               @foreach($providers as $provider)
-              <a href="{{ route('oauth.provider', ['provider' => $provider->slug]) }}" class="btn btn-block btn-social btn-{{$provider->slug}}"><i class="fixhub fixhub-cube"></i> {{ trans('auth.oauth_login', ['provider' => $provider->name]) }}</a>
+              <a href="{{ route('oauth.provider', ['provider' => $provider->slug]) }}" class="btn btn-block btn-social btn-{{$provider->slug}}"><i class="piplin piplin-cube"></i> {{ trans('auth.oauth_login', ['provider' => $provider->name]) }}</a>
               @endforeach
             </div>
             @endif

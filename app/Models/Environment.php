@@ -1,28 +1,27 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
-use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Models\Traits\HasTargetable;
 
 /**
  * Model for environment.
  */
 class Environment extends Model
 {
-    use SoftDeletes, BroadcastChanges, HasTargetable, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, HasTargetable;
 
     /**
      * The attributes that are mass assignable.
@@ -56,13 +55,6 @@ class Environment extends Model
     protected $appends = ['cabinet_count', 'cabinet_names', 'server_count', 'server_names', 'link_count', 'link_names'];
 
     /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
-
-    /**
      * Has many relationship.
      *
      * @return Server
@@ -87,10 +79,9 @@ class Environment extends Model
      *
      * @return Server
      */
-    
-    public function deployments()
+    public function tasks()
     {
-        return $this->belongsToMany(Deployment::class)
+        return $this->belongsToMany(Task::class)
                     ->orderBy('id', 'DESC');
     }
 
@@ -124,7 +115,7 @@ class Environment extends Model
     public function oppositeEnvironments()
     {
         return $this->belongsToMany(
-            Environment::class,
+            self::class,
             'environment_links',
             'environment_id',
             'opposite_environment_id'
@@ -160,16 +151,16 @@ class Environment extends Model
     {
         $links = [];
         foreach ($this->oppositePivot as $key => $link) {
-            if ($link->pivot->link_type == EnvironmentLink::AUTOMATIC) {
+            if ($link->pivot->link_type === EnvironmentLink::AUTOMATIC) {
                 $link_type = trans('environments.link_auto');
             } else {
                 $link_type = trans('environments.link_manual');
             }
-            $links[] = ($key+1) . '. ' . $link->name. ' - '. $link_type;
+            $links[] = ($key + 1) . '. ' . $link->name . ' - ' . $link_type;
         }
 
         if (count($links)) {
-            return implode("<br />", $links);
+            return implode('<br />', $links);
         }
 
         return trans('app.none');
@@ -194,11 +185,11 @@ class Environment extends Model
     {
         $cabinets = [];
         foreach ($this->cabinets as $key => $cabinet) {
-            $cabinets[] = ($key+1) . '. ' . $cabinet->name;
+            $cabinets[] = ($key + 1) . '. ' . $cabinet->name;
         }
 
         if (count($cabinets)) {
-            return implode("<br />", $cabinets);
+            return implode('<br />', $cabinets);
         }
 
         return trans('app.none');
@@ -223,11 +214,11 @@ class Environment extends Model
     {
         $servers = [];
         foreach ($this->servers as $key => $server) {
-            $servers[] = ($key+1) . '. ' . $server->name . ' : ' .$server->ip_address;
+            $servers[] = ($key + 1) . '. ' . $server->name . ' : ' . $server->ip_address;
         }
 
         if (count($servers)) {
-            return implode("<br />", $servers);
+            return implode('<br />', $servers);
         }
 
         return trans('app.none');

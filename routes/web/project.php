@@ -1,9 +1,9 @@
-<?php
+f<?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,41 +18,55 @@ Route::group([
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
+
         Route::post('projects', [
-            'as'   => 'projects.create',
-            'uses' => 'ProjectController@create',
+            'uses' => 'ProjectController@store',
         ]);
 
-        // Plan
+        // Build plan
         Route::get('plan/{plan}/{tab?}', [
             'as'   => 'plans',
             'uses' => 'PlanController@show',
         ]);
 
-        // Deployment
-        Route::get('deployment/{deployment}', [
+        // Deploy plan
+        Route::get('deployment/{project}/{tab?}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
         ]);
 
-        Route::post('deployments', [
-            'as'   => 'deployments.create',
-            'uses' => 'DeploymentController@create',
+        // Pattern
+        Route::post('patterns', [
+            'uses' => 'PatternController@store',
+        ]);
+        Route::put('patterns/{pattern}', [
+            'uses' => 'PatternController@update',
         ]);
 
-        Route::post('deployment/{deployment}/deploy-draft', [
-            'as'   => 'deployments.deploy-draft',
-            'uses' => 'DeploymentController@deployDraft',
+        // Task
+        Route::get('task/{task}', [
+            'as'   => 'tasks.show',
+            'uses' => 'TaskController@show',
         ]);
 
-        Route::post('deployment/{deployment}/rollback', [
-            'as'   => 'deployments.rollback',
-            'uses' => 'DeploymentController@rollback',
+        Route::post('tasks', [
+            'as'   => 'tasks.create',
+            'uses' => 'TaskController@create',
         ]);
 
-        Route::get('deployment/{deployment}/abort', [
-            'as'   => 'deployments.abort',
-            'uses' => 'DeploymentController@abort',
+        Route::post('task/{task}/deploy-draft', [
+            'as'   => 'tasks.deploy-draft',
+            'uses' => 'TaskController@deployDraft',
+        ]);
+
+        Route::post('task/{task}/rollback', [
+            'as'   => 'tasks.rollback',
+            'uses' => 'TaskController@rollback',
+        ]);
+
+        Route::get('task/{task}/abort', [
+            'as'   => 'tasks.abort',
+            'uses' => 'TaskController@abort',
         ]);
 
         // Environment Link
@@ -85,7 +99,6 @@ Route::group([
             'as'    => 'servers.test',
             'uses'  => 'ServerController@test',
         ]);
-
 
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
@@ -157,7 +170,6 @@ Route::group([
                 Route::delete('members/{project}/{user}', [
                     'uses' => 'MemberController@destroy',
                 ]);
-
 
                 // Hook
                 Route::post('hooks/{project}', [

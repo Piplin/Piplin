@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-plus"></i> <span>{{ trans('hooks.create') }}</span></h4>
+                <h4 class="modal-title"><i class="piplin piplin-plus"></i> <span>{{ trans('hooks.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="hook_id" name="id" />
@@ -11,21 +11,21 @@
                 <input type="hidden" name="type" id="hook_type" value="" />
                 <div class="modal-body">
                     <div class="callout callout-danger">
-                        <i class="icon fixhub fixhub-warning"></i> {{ trans('hooks.warning') }}
+                        <i class="icon piplin piplin-warning"></i> {{ trans('hooks.warning') }}
                     </div>
 
                     <div class="callout callout-warning">
-                        <h4><i class="icon fixhub fixhub-disabled"></i> {{ trans('hooks.not_configured_title') }}</h4>
+                        <h4><i class="icon piplin piplin-disabled"></i> {{ trans('hooks.not_configured_title') }}</h4>
                         {{ trans('hooks.not_configured') }}
                     </div>
 
                     <div id="hook-type">
                         <p>{{ trans('hooks.which') }}</p>
                         <div class="row text-center">
-                            <a class="btn btn-app bg-purple" data-type="slack"><i class="fixhub fixhub-slack"></i> {{ trans('hooks.slack') }}</a>
-                            <a class="btn btn-app bg-aqua" data-type="dingtalk"><i class="fixhub fixhub-pin"></i> {{ trans('hooks.dingtalk') }}</a>
-                            <a class="btn btn-app bg-orange" data-type="mail"><i class="fixhub fixhub-email"></i> {{ trans('hooks.mail') }}</a>
-                            <a class="btn btn-app bg-olive" data-type="custom"><i class="fixhub fixhub-edit"></i> {{ trans('hooks.custom') }}</a>
+                            <a class="btn btn-app bg-purple" data-type="slack"><i class="piplin piplin-slack"></i> {{ trans('hooks.slack') }}</a>
+                            <a class="btn btn-app bg-aqua" data-type="dingtalk"><i class="piplin piplin-pin"></i> {{ trans('hooks.dingtalk') }}</a>
+                            <a class="btn btn-app bg-orange" data-type="mail"><i class="piplin piplin-email"></i> {{ trans('hooks.mail') }}</a>
+                            <a class="btn btn-app bg-olive" data-type="custom"><i class="piplin piplin-edit"></i> {{ trans('hooks.custom') }}</a>
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="piplin piplin-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

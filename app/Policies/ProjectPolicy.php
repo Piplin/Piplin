@@ -1,14 +1,23 @@
 <?php
 
-namespace Fixhub\Policies;
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Piplin\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Fixhub\Models\Project;
-use Fixhub\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Piplin\Models\Project;
+use Piplin\Models\User;
 
 /**
- * Policy for projects
+ * Policy for projects.
  */
 class ProjectPolicy
 {
@@ -17,8 +26,8 @@ class ProjectPolicy
     /**
      * View permission.
      *
-     * @param User $user
-     * @param Project $project
+     * @param  User    $user
+     * @param  Project $project
      * @return bool
      */
     public function view(User $user, Project $project)
@@ -29,8 +38,8 @@ class ProjectPolicy
     /**
      * Deploy permission.
      *
-     * @param User $user
-     * @param Project $project
+     * @param  User    $user
+     * @param  Project $project
      * @return bool
      */
     public function deploy(User $user, Project $project)
@@ -41,8 +50,8 @@ class ProjectPolicy
     /**
      * Update permission.
      *
-     * @param User $user
-     * @param Project $project
+     * @param  User    $user
+     * @param  Project $project
      * @return bool
      */
     public function update(User $user, Project $project)
@@ -53,8 +62,8 @@ class ProjectPolicy
     /**
      * Manage permission.
      *
-     * @param User $user
-     * @param Project $project
+     * @param  User    $user
+     * @param  Project $project
      * @return bool
      */
     public function manage(User $user, Project $project)

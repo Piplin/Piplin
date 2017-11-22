@@ -5,10 +5,10 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li  {!! !in_array($tab, ['', 'commands']) ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id]) }}"><span class="fixhub fixhub-command"></span> {{ trans('commands.label') }}</a></li>
-                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'environments']) }}"><span class="fixhub fixhub-environment"></span> {{ trans('environments.label') }}</a></li>
-                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'config-files']) }}"><span class="fixhub fixhub-config-file"></span> {{ trans('configFiles.label') }}</a></li>
-                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'shared-files']) }}"><span class="fixhub fixhub-shared-file"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
+                    <li  {!! !in_array($tab, ['', 'commands']) ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id]) }}"><span class="piplin piplin-command"></span> {{ trans('commands.label') }}</a></li>
+                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'environments']) }}"><span class="piplin piplin-environment"></span> {{ trans('environments.label') }}</a></li>
+                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'config-files']) }}"><span class="piplin piplin-config-file"></span> {{ trans('configFiles.label') }}</a></li>
+                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('admin.templates.show', ['id' => $project->id, 'tab' => 'shared-files']) }}"><span class="piplin piplin-shared-file"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -41,22 +41,22 @@
 @push('javascript')
     <script type="text/javascript">
         @if($tab == 'environments')
-            new Fixhub.EnvironmentsTab();
-            Fixhub.Environments.add({!! $environments->toJson() !!});
+            new Piplin.EnvironmentsTab();
+            Piplin.Environments.add({!! $environments->toJson() !!});
         @elseif($tab == 'variables')
-            new Fixhub.VariablesTab();
-            Fixhub.Variables.add({!! $variables->toJson() !!});
+            new Piplin.VariablesTab();
+            Piplin.Variables.add({!! $variables->toJson() !!});
         @elseif($tab == 'config-files')
-            new Fixhub.ConfigFilesTab();
-            Fixhub.ConfigFiles.add({!! $configFiles->toJson() !!});
+            new Piplin.ConfigFilesTab();
+            Piplin.ConfigFiles.add({!! $configFiles->toJson() !!});
         @elseif($tab == 'shared-files')
-            new Fixhub.SharedFilesTab();
-            Fixhub.SharedFiles.add({!! $sharedFiles->toJson() !!});
+            new Piplin.SharedFilesTab();
+            Piplin.SharedFiles.add({!! $sharedFiles->toJson() !!});
         @else
-            new Fixhub.VariablesTab();
-            Fixhub.Variables.add({!! $variables->toJson() !!});
+            new Piplin.VariablesTab();
+            Piplin.Variables.add({!! $variables->toJson() !!});
         @endif
-        Fixhub.project_id = {{ $project->id }};
+        Piplin.project_id = {{ $project->id }};
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

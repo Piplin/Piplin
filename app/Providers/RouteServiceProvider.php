@@ -1,36 +1,37 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Providers;
+namespace Piplin\Providers;
 
-use Fixhub\Models\ServerLog;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
-use Fixhub\Models\Plan;
-use Fixhub\Models\Project;
-use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Hook;
-use Fixhub\Models\ConfigFile;
-use Fixhub\Models\SharedFile;
-use Fixhub\Models\Command;
-use Fixhub\Models\Variable;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Server;
-use Fixhub\Models\Provider;
-use Fixhub\Models\Link;
-use Fixhub\Models\Tip;
-use Fixhub\Models\User;
+use Illuminate\Support\Facades\Route;
+use Piplin\Models\Command;
+use Piplin\Models\ConfigFile;
+use Piplin\Models\Task;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Environment;
+use Piplin\Models\Hook;
+use Piplin\Models\Link;
+use Piplin\Models\Plan;
+use Piplin\Models\Project;
+use Piplin\Models\ProjectGroup;
+use Piplin\Models\Provider;
+use Piplin\Models\Server;
+use Piplin\Models\ServerLog;
+use Piplin\Models\SharedFile;
+use Piplin\Models\Tip;
+use Piplin\Models\User;
+use Piplin\Models\Variable;
+use Piplin\Models\Pattern;
 
 /**
  * The route service provider.
@@ -44,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Fixhub\Http\Controllers';
+    protected $namespace = 'Piplin\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -62,7 +63,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('group', ProjectGroup::class);
         Route::model('project', Project::class);
         Route::model('plan', Plan::class);
-        Route::model('deployment', Deployment::class);
+        Route::model('task', Task::class);
         Route::model('hook', Hook::class);
         Route::model('server', Server::class);
         Route::model('provider', Provider::class);
@@ -70,6 +71,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('link', Link::class);
         Route::model('tip', Tip::class);
         Route::model('user', User::class);
+        Route::model('pattern', Pattern::class);
 
         Route::model('environment', Environment::class);
         Route::model('command', Command::class);

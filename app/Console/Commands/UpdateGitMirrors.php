@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
-use Fixhub\Models\Project;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
+use Piplin\Models\Project;
 
 /**
  * Updates the mirrors for all git repositories.
@@ -32,7 +32,7 @@ class UpdateGitMirrors extends Command
      *
      * @var string
      */
-    protected $signature = 'fixhub:update-mirrors';
+    protected $signature = 'piplin:update-mirrors';
 
     /**
      * The console command description.

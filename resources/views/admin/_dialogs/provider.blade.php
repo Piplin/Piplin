@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-provider"></i> <span>{{ trans('providers.create') }}</span></h4>
+                <h4 class="modal-title"><i class="piplin piplin-provider"></i> <span>{{ trans('providers.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="provider_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon fixhub fixhub-warning"></i> {{ trans('providers.warning') }}
+                        <i class="icon piplin piplin-warning"></i> {{ trans('providers.warning') }}
                     </div>
 
                     <div class="form-group">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="piplin piplin-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

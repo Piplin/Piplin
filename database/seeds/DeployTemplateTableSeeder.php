@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Command;
-use Fixhub\Models\DeployTemplate;
 use Illuminate\Database\Seeder;
+use Piplin\Models\Command;
+use Piplin\Models\DeployTemplate;
 
 class DeployTemplateTableSeeder extends Seeder
 {
@@ -30,7 +30,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Composer',
             'script'          => 'composer install -o --no-dev',
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::AFTER_INSTALL,
@@ -39,7 +39,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Down',
             'script'          => 'php {{ release_path }}/artisan down',
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -48,7 +48,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Run Migrations',
             'script'          => 'php {{ release_path }}/artisan migrate --force',
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -57,7 +57,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Up',
             'script'          => 'php {{ release_path }}/artisan up',
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,

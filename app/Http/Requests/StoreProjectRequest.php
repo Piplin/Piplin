@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Requests;
+namespace Piplin\Http\Requests;
 
-use Fixhub\Http\Requests\Request;
+use Piplin\Http\Requests\Request;
 
 /**
  * Request for validating projects.
@@ -35,7 +35,7 @@ class StoreProjectRequest extends Request
             'deploy_path'        => 'required',
             'url'                => 'url|nullable',
             'build_url'          => 'url|nullable',
-            'allow_other_branch' => 'boolean'
+            'allow_other_branch' => 'boolean',
         ];
 
         // On editing remove the template_id rule

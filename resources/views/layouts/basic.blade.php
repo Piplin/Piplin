@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{{ $app_name }} | Fixhub - A web deployment system</title>
+        <title>{{ $app_name }} | Piplin - A continuous integration and delivery system</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 
         <!-- Style -->

@@ -41,7 +41,10 @@ $h1-h6-family: NotoSansHans-Regular,AvenirNext-Regular,arial,Hiragino Sans GB,"M
 //--------------------------------------------------------
 
 //Side bar and logo width
-$sidebar-width: 0;
+$sidebar-width: 100px;
+
+// Nav bar height
+$navbar-height: 50px;
 
 //Boxed layout maximum width
 $boxed-layout-max-width: 1024px;
@@ -51,14 +54,14 @@ $link-color: $light-blue;
 $link-hover-color: lighten($link-color, 15%);
 
 //Body background (Affects main content background only)
-$body-bg: #ecf0f5;
+$body-bg: #f3f3f4;
 
 //SIDEBAR SKINS
 //--------------------------------------------------------
 
 //Dark sidebar
-$sidebar-dark-bg: #ecf0f5;
-$sidebar-dark-hover-bg: darken($sidebar-dark-bg, 2%);
+$sidebar-dark-bg: #000;
+$sidebar-dark-hover-bg: lighten($sidebar-dark-bg, 20%);
 $sidebar-dark-color: lighten($sidebar-dark-bg, 60%);
 $sidebar-dark-hover-color: #fff;
 $sidebar-dark-submenu-bg: lighten($sidebar-dark-bg, 5%);
@@ -77,6 +80,10 @@ $sidebar-light-submenu-hover-color: #000;
 //CONTROL SIDEBAR
 //--------------------------------------------------------
 $control-sidebar-width: $sidebar-width;
+
+//Sub sidebar
+$sub-sidebar-bg: #fafbfc;
+$sub-sidebar-border-color: #e1e4e8;
 
 //BOXES
 //--------------------------------------------------------

@@ -1,28 +1,27 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\SetupRelations;
-use Fixhub\Presenters\DeployTemplatePresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\SetupRelations;
+use Piplin\Presenters\DeployTemplatePresenter;
 
 /**
  * Model for deploy templates.
  */
 class DeployTemplate extends Model implements HasPresenter
 {
-    use SetupRelations, RevisionableTrait;
+    use SetupRelations;
 
     /**
      * Fields to show in the JSON presentation.
@@ -30,7 +29,7 @@ class DeployTemplate extends Model implements HasPresenter
      * @var array
      */
     protected $visible = ['id', 'name', 'command_count', 'file_count',
-                          'config_count', 'variable_count', 'environment_count'];
+                          'config_count', 'variable_count', 'environment_count', ];
 
     /**
      * The attributes that are mass assignable.
@@ -56,17 +55,10 @@ class DeployTemplate extends Model implements HasPresenter
     ];
 
     /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
-
-    /**
      * Checks ability for specified project and user.
      *
      * @param string $name
-     * @param User $user
+     * @param User   $user
      *
      * @return bool
      */

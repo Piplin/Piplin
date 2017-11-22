@@ -1,24 +1,24 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Bus\Jobs\SetupSkeletonJob;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreProjectRequest;
-use Fixhub\Models\Key;
-use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\Project;
-use Fixhub\Models\DeployTemplate;
 use Illuminate\Http\Request;
+use Piplin\Bus\Jobs\SetupSkeletonJob;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProjectRequest;
+use Piplin\Models\DeployTemplate;
+use Piplin\Models\Key;
+use Piplin\Models\Project;
+use Piplin\Models\ProjectGroup;
 
 /**
  * The controller for managging projects.
@@ -35,9 +35,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projects = Project::orderBy('name')
-                    ->paginate(config('fixhub.items_per_page', 10));
-
-
+                    ->paginate(config('piplin.items_per_page', 10));
 
         $keys = Key::orderBy('name')
                     ->get();
@@ -56,6 +54,7 @@ class ProjectController extends Controller
             'groups'       => $groups,
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
+            'current_child' => 'projects',
         ]);
     }
 
@@ -74,7 +73,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created project in storage.
      *
-     * @param  StoreProjectRequest $request
+     * @param StoreProjectRequest $request
      *
      * @return Response
      */
@@ -108,7 +107,7 @@ class ProjectController extends Controller
         } else {
             $project = Project::create($fields);
         }
-        
+
         dispatch(new SetupSkeletonJob($project, $skeleton));
 
         return $project;
@@ -125,26 +124,26 @@ class ProjectController extends Controller
     public function clone(Project $skeleton, Request $request)
     {
         $fields = $request->only('name', 'type');
-        $type = array_pull($fields, 'type');
+        $type   = array_pull($fields, 'type');
 
         if (empty($fields['name'])) {
             $fields['name'] = $skeleton->name . '_Clone';
         }
 
-        if ($type == 'project') {
+        if ($type === 'project') {
             $fields['targetable_type'] = $skeleton->targetable_type;
-            $fields['targetable_id'] = $skeleton->targetable_id;
-            $fields['key_id'] = $skeleton->key_id;
-            $fields['deploy_path'] = $skeleton->deploy_path;
-            $fields['repository'] = $skeleton->repository;
-            $target = Project::create($fields);
+            $fields['targetable_id']   = $skeleton->targetable_id;
+            $fields['key_id']          = $skeleton->key_id;
+            $fields['deploy_path']     = $skeleton->deploy_path;
+            $fields['repository']      = $skeleton->repository;
+            $target                    = Project::create($fields);
         } else {
             $target = DeployTemplate::create($fields);
         }
 
         dispatch(new SetupSkeletonJob($target, $skeleton));
 
-        return redirect()->route($type == 'template' ? 'admin.templates.show' : 'projects', [
+        return redirect()->route($type === 'template' ? 'admin.templates.show' : 'projects', [
             'id' => $target->id,
         ]);
     }

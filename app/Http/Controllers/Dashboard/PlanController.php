@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Plan;
-use Fixhub\Models\Project;
+use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Models\Task;
+use Piplin\Models\Plan;
+use Piplin\Models\Project;
 
 /**
  * The controller of plans.
@@ -34,10 +34,10 @@ class PlanController extends Controller
     public function show(Plan $plan, $tab = '')
     {
         $project = $plan->project;
-        $data = [
+        $data    = [
             'plan'            => $plan,
             'project'         => $project,
-            'targetable_type' => 'Fixhub\\Models\\Plan',
+            'targetable_type' => get_class($plan),
             'targetable_id'   => $plan->id,
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
@@ -46,7 +46,22 @@ class PlanController extends Controller
             'deployments'     => $this->getLatest($plan),
             'tab'             => $tab,
             'servers'         => $plan->servers,
+            'patterns'        => $plan->patterns,
+            'breadcrumb'      => [
+                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+                ['url' => route('plans', ['id' => $plan->id]), 'label' => trans('plans.label')],
+            ],
         ];
+
+        if ($tab === 'commands') {
+            $data['title'] = trans('plans.commands');
+        } elseif ($tab === 'agents') {
+            $data['title'] = trans('plans.agents');
+        } elseif ($tab === 'patterns') {
+            $data['title'] = trans('patterns.label');
+        } else {
+            $data['title'] = trans('plans.builds');
+        }
 
         return view('dashboard.plans.show', $data);
     }
@@ -60,7 +75,7 @@ class PlanController extends Controller
      */
     private function getLatest(Plan $plan, $paginate = 15)
     {
-        return Deployment::where('targetable_type', get_class($plan))
+        return Task::where('targetable_type', get_class($plan))
                            ->where('targetable_id', $plan->id)
                            ->with('user')
                            ->whereNotNull('started_at')

@@ -58,7 +58,7 @@
             icon = 'edit';
         }
 
-        element.addClass('fixhub-' + icon);
+        element.addClass('piplin-' + icon);
 
         $('#hook .modal-footer').show();
         $('.hook-config').hide();
@@ -75,11 +75,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var hook = Fixhub.Hooks.get($('#model_id').val());
+        var hook = Piplin.Hooks.get($('#model_id').val());
 
         hook.destroy({
             wait: true,
@@ -87,14 +87,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('hooks.delete_success'));
+                Piplin.toast(trans('hooks.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -106,16 +106,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var hook_id = $('#hook_id').val();
 
         if (hook_id) {
-            var hook = Fixhub.Hooks.get(hook_id);
+            var hook = Piplin.Hooks.get(hook_id);
         } else {
-            var hook = new Fixhub.Hook();
+            var hook = new Piplin.Hook();
         }
 
         var data = {
@@ -140,16 +140,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('hooks.edit_success');
                 if (!hook_id) {
-                    Fixhub.Hooks.add(response);
+                    Piplin.Hooks.add(response);
                     msg = trans('hooks.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -171,24 +171,24 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Hook = Backbone.Model.extend({
+    Piplin.Hook = Backbone.Model.extend({
         urlRoot: '/hooks/' + parseInt($('input[name="project_id"]').val())
     });
 
     var Hooks = Backbone.Collection.extend({
-        model: Fixhub.Hook
+        model: Piplin.Hook
     });
 
-    Fixhub.Hooks = new Hooks();
+    Piplin.Hooks = new Hooks();
 
-    Fixhub.HooksTab = Backbone.View.extend({
+    Piplin.HooksTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -199,36 +199,36 @@
             $('#no_hooks').show();
             $('#hook_list').hide();
 
-            this.listenTo(Fixhub.Hooks, 'add', this.addOne);
-            this.listenTo(Fixhub.Hooks, 'reset', this.addAll);
-            this.listenTo(Fixhub.Hooks, 'remove', this.addAll);
-            this.listenTo(Fixhub.Hooks, 'all', this.render);
+            this.listenTo(Piplin.Hooks, 'add', this.addOne);
+            this.listenTo(Piplin.Hooks, 'reset', this.addAll);
+            this.listenTo(Piplin.Hooks, 'remove', this.addAll);
+            this.listenTo(Piplin.Hooks, 'all', this.render);
 
 
-            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var hook = Fixhub.Hooks.get(parseInt(data.model.id));
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var hook = Piplin.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {
                     hook.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_CREATED, function (data) {
-                if (parseInt(data.model.project_id) === parseInt(Fixhub.project_id)) {
-                    Fixhub.Hooks.add(data.model);
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_CREATED, function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Piplin.project_id)) {
+                    Piplin.Hooks.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('hook:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var hook = Fixhub.Hooks.get(parseInt(data.model.id));
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var hook = Piplin.Hooks.get(parseInt(data.model.id));
 
                 if (hook) {
-                    Fixhub.Hooks.remove(hook);
+                    Piplin.Hooks.remove(hook);
                 }
             });
         },
         render: function () {
-            if (Fixhub.Hooks.length) {
+            if (Piplin.Hooks.length) {
                 $('#no_hooks').hide();
                 $('#hook_list').show();
             } else {
@@ -237,7 +237,7 @@
             }
         },
         addOne: function (hook) {
-            var view = new Fixhub.HookView({
+            var view = new Piplin.HookView({
                 model: hook
             });
 
@@ -245,11 +245,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Hooks.each(this.addOne, this);
+            Piplin.Hooks.each(this.addOne, this);
         }
     });
 
-    Fixhub.HookView = Backbone.View.extend({
+    Piplin.HookView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

@@ -1,15 +1,15 @@
 (function ($) {
 
     //App setup
-    window.Fixhub = {};
+    window.Piplin = {};
 
-    Fixhub.project_id = Fixhub.project_id || null;
+    Piplin.project_id = Piplin.project_id || null;
 
-    Fixhub.statuses = {
+    Piplin.statuses = {
         // Project and Environment
         FINISHED:     0,
         PENDING:      1,
-        DEPLOYING:    2,
+        RUNNING:    2,
         FAILED:       3,
         NOT_DEPLOYED: 4,
 
@@ -17,7 +17,7 @@
         DEPLOYMENT_DRAFT:    -1,
         DEPLOYMENT_COMPLETED: 0,
         DEPLOYMENT_PENDING:   1,
-        DEPLOYMENT_DEPLOYING: 2,
+        DEPLOYMENT_RUNNING: 2,
         DEPLOYMENT_FAILED:    3,
         DEPLOYMENT_ERRORS:    4,
         DEPLOYMENT_CANCELLED: 5,
@@ -31,15 +31,15 @@
         SVRLOG_CANCELLED: 4
     };
 
-    Fixhub.events = {
+    Piplin.events = {
         // Common events
-        MODEL_CREATED: 'Fixhub\\Bus\\Events\\ModelCreatedEvent',
-        MODEL_CHANGED: 'Fixhub\\Bus\\Events\\ModelChangedEvent',
-        MODEL_TRASHED: 'Fixhub\\Bus\\Events\\ModelTrashedEvent',
+        MODEL_CREATED: 'Piplin\\Bus\\Events\\ModelCreatedEvent',
+        MODEL_CHANGED: 'Piplin\\Bus\\Events\\ModelChangedEvent',
+        MODEL_TRASHED: 'Piplin\\Bus\\Events\\ModelTrashedEvent',
 
         // Server log changed
-        SVRLOG_CHANGED: 'Fixhub\\Bus\\Events\\ServerLogChangedEvent',
-        OUTPUT_CHANGED: 'Fixhub\\Bus\\Events\\ServerOutputChangedEvent'
+        SVRLOG_CHANGED: 'Piplin\\Bus\\Events\\ServerLogChangedEvent',
+        OUTPUT_CHANGED: 'Piplin\\Bus\\Events\\ServerOutputChangedEvent'
 
     };
 
@@ -66,45 +66,45 @@
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    Fixhub.select2_options = {
+    Piplin.select2_options = {
         width: '100%',
         minimumResultsForSearch: Infinity
     };
 
-    $(".select2").select2(Fixhub.select2_options);
+    $(".select2").select2(Piplin.select2_options);
 
     //Clipboard
     new Clipboard('.clipboard').on('success', function(e){
-        Fixhub.toast(trans('app.copied'));
+        Piplin.toast(trans('app.copied'));
     });
 
     // Socket.io
-    Fixhub.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
+    Piplin.listener = io.connect($('meta[name="socket_url"]').attr('content'), {
         query: 'jwt=' + $('meta[name="jwt"]').attr('content')
     });
 
-    Fixhub.connection_error = false;
+    Piplin.connection_error = false;
 
-    Fixhub.listener.on('connect_error', function(error) {
-        if (!Fixhub.connection_error) {
+    Piplin.listener.on('connect_error', function(error) {
+        if (!Piplin.connection_error) {
             $('#socket_offline').show();
         }
 
-        Fixhub.connection_error = true;
+        Piplin.connection_error = true;
     });
 
-    Fixhub.listener.on('connect', function() {
+    Piplin.listener.on('connect', function() {
         $('#socket_offline').hide();
-        Fixhub.connection_error = false;
+        Piplin.connection_error = false;
     });
 
-    Fixhub.listener.on('reconnect', function() {
+    Piplin.listener.on('reconnect', function() {
         $('#socket_offline').hide();
-        Fixhub.connection_error = false;
+        Piplin.connection_error = false;
     });
 
     // Load livestamp
-    Fixhub.loadLivestamp = function () {
+    Piplin.loadLivestamp = function () {
         $('abbr.timeago').each(function () {
             var $el = $(this);
             $el.livestamp($el.data('timeago')).tooltip();
@@ -112,26 +112,26 @@
     };
 
     // Format the project status
-    Fixhub.formatProjectStatus = function (deploy_status) {
+    Piplin.formatProjectStatus = function (task_status) {
         var data = {};
 
         data.icon_class = 'help';
         data.label_class = 'default';
         data.label = trans('projects.not_deployed');
 
-        if (deploy_status === Fixhub.statuses.FINISHED) {
+        if (task_status === Piplin.statuses.FINISHED) {
             data.icon_class = 'check';
             data.label_class = 'success';
             data.label = trans('projects.finished');
-        } else if (deploy_status === Fixhub.statuses.DEPLOYING) {
-            data.icon_class = 'load fixhub-spin';
+        } else if (task_status === Piplin.statuses.RUNNING) {
+            data.icon_class = 'load piplin-spin';
             data.label_class = 'warning';
-            data.label = trans('projects.deploying');
-        } else if (deploy_status === Fixhub.statuses.FAILED) {
+            data.label = trans('projects.running');
+        } else if (task_status === Piplin.statuses.FAILED) {
             data.icon_class = 'close';
             data.label_class = 'danger';
             data.label = trans('projects.failed');
-        } else if (deploy_status === Fixhub.statuses.PENDING) {
+        } else if (task_status === Piplin.statuses.PENDING) {
             data.icon_class = 'clock';
             data.label_class = 'info';
             data.label = trans('projects.pending');
@@ -141,55 +141,55 @@
     };
 
     // Format the deployment status
-    Fixhub.formatDeploymentStatus = function (deploy_status) {
+    Piplin.formatDeploymentStatus = function (task_status) {
         var data = {};
 
         data.icon_class = 'clock';
         data.label_class = 'info';
-        data.label = trans('deployments.pending');
+        data.label = trans('tasks.pending');
         data.done = false;
         data.success = false;
 
-        if (deploy_status === Fixhub.statuses.DEPLOYMENT_COMPLETED) {
+        if (task_status === Piplin.statuses.DEPLOYMENT_COMPLETED) {
             data.icon_class = 'check';
             data.label_class = 'success';
-            data.label = trans('deployments.completed');
+            data.label = trans('tasks.completed');
             data.done = true;
             data.success = true;
-        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_DEPLOYING) {
-            data.icon_class = 'load fixhub-spin';
+        } else if (task_status === Piplin.statuses.DEPLOYMENT_RUNNING) {
+            data.icon_class = 'load piplin-spin';
             data.label_class = 'warning';
-            data.label = trans('deployments.running');
-        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_FAILED) {
+            data.label = trans('tasks.running');
+        } else if (task_status === Piplin.statuses.DEPLOYMENT_FAILED) {
             data.icon_class = 'close';
             data.label_class = 'danger';
-            data.label = trans('deployments.failed');
+            data.label = trans('tasks.failed');
             data.done = true;
-        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_ERRORS) {
+        } else if (task_status === Piplin.statuses.DEPLOYMENT_ERRORS) {
             data.icon_class = 'close';
             data.label_class = 'success';
-            data.label = trans('deployments.completed_with_errors');
+            data.label = trans('tasks.completed_with_errors');
             data.done = true;
             data.success = true;
-        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_CANCELLED) {
+        } else if (task_status === Piplin.statuses.DEPLOYMENT_CANCELLED) {
             data.icon_class = 'warning';
             data.label_class = 'danger';
-            data.label = trans('deployments.cancelled');
+            data.label = trans('tasks.cancelled');
             data.done = true;
-        } else if (deploy_status === Fixhub.statuses.DEPLOYMENT_DRAFT) {
+        } else if (task_status === Piplin.statuses.DEPLOYMENT_DRAFT) {
             data.icon_class = 'edit';
             data.label_class = 'danger';
-            data.label = trans('deployments.draft');
+            data.label = trans('tasks.draft');
         }
 
         return data;
     };
 
-    Fixhub.toast = function (content, title, caller) {
+    Piplin.toast = function (content, title, caller) {
         title = title || '';
         caller = caller || 'not_in_progress';
 
-        if (!Config.get('fixhub.toastr') && caller == 'not_in_progress') {
+        if (!Config.get('piplin.toastr') && caller == 'not_in_progress') {
             return;
         }
 

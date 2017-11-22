@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -40,16 +40,14 @@ return [
     'messages' => [
         'app'           => ['yes', 'no', 'never', 'copied'],
         'dashboard'     => ['pending', 'pending_empty', 'running', 'running_empty', 'approving', 'approving_empty', 'deployment_number'],
-        'deployments'   => ['create_success', 'completed', 'completed_with_errors', 'pending',
-                            'deploying', 'running', 'cancelled', 'failed', 'draft', 'submit_success'],
+        'tasks'         => ['create_success', 'completed', 'completed_with_errors', 'pending', 'running', 'cancelled', 'failed', 'draft', 'submit_success', 'build', 'deploy'],
         'variables'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'environments'  => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'link_auto', 'link_manual', 'link_success'],
-        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'deploying', 'failed', 'not_deployed'],
+        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'running', 'failed', 'not_deployed'],
         'commands'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'groups'        => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'keys'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
-        'links'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
-        'tips'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'patterns'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'users'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'templates'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'sharedFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
@@ -68,7 +66,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'config' => [
-        'app.debug',  'fixhub.toastr'
+        'app.debug',  'piplin.toastr',
     ],
 
     /*

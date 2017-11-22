@@ -1,25 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Profile;
+namespace Piplin\Http\Controllers\Profile;
 
-use Fixhub\Bus\Events\EmailChangeRequestedEvent;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreProfileRequest;
-use Fixhub\Http\Requests\StoreUserSettingsRequest;
-use Fixhub\Models\User;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Piplin\Bus\Events\EmailChangeRequestedEvent;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProfileRequest;
+use Piplin\Http\Requests\StoreUserSettingsRequest;
+use Piplin\Models\User;
 use PragmaRX\Google2FA\Contracts\Google2FA as Google2FA;
 
 /**
@@ -55,7 +55,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if (!in_array($tab, ['basic', 'settings', 'avatar', 'email', '2fa'])) {
+        if (!in_array($tab, ['basic', 'settings', 'avatar', 'email', '2fa'], true)) {
             $tab = 'basic';
         }
 
@@ -64,7 +64,7 @@ class ProfileController extends Controller
             $code = old('google_code', $user->google2fa_secret);
         }
 
-        $img = $this->google2fa->getQRCodeGoogleUrl('Fixhub', $user->email, $code);
+        $img = $this->google2fa->getQRCodeGoogleUrl('Piplin', $user->email, $code);
 
         return view('profile.index', [
             'tab'             => $tab ?: 'basic',
@@ -105,7 +105,7 @@ class ProfileController extends Controller
     /**
      * Update user's settings.
      *
-     * @param  StoreUserSettingsRequest $request
+     * @param StoreUserSettingsRequest $request
      *
      * @return Response
      */
@@ -172,7 +172,6 @@ class ProfileController extends Controller
 
         return redirect()->to(route('profile', ['tab' => 'email']))
             ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
-        ;
     }
 
     /**
@@ -288,6 +287,5 @@ class ProfileController extends Controller
 
         return redirect()->to(route('profile', ['tab' => '2fa']))
             ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('users.profile_success')));
-        ;
     }
 }

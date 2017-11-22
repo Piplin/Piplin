@@ -1,25 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Models\Command;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Project;
-use Fixhub\Http\Requests\StoreProjectRequest;
-use Fixhub\Bus\Jobs\SetupSkeletonJob;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Piplin\Bus\Jobs\SetupSkeletonJob;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProjectRequest;
+use Piplin\Models\Command;
+use Piplin\Models\Task;
+use Piplin\Models\Project;
 
 /**
  * The controller of projects.
@@ -30,7 +30,7 @@ class ProjectController extends Controller
      * The details of an individual project.
      *
      * @param Project $project
-     * @param string $tab
+     * @param string  $tab
      *
      * @return View
      */
@@ -49,29 +49,19 @@ class ProjectController extends Controller
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
-            'title'           => trans('deployments.label'),
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-            ]
+            ],
         ];
 
         $data['environments'] = $project->environments;
-        if ($tab == 'commands') {
-            $data['route'] = 'commands.step';
-            $data['variables'] = $project->variables;
-            $data['title'] = trans('commands.label');
-        } elseif ($tab == 'config-files') {
-            $data['configFiles'] = $project->configFiles;
-            $data['title'] = trans('configFiles.label');
-        } elseif ($tab == 'shared-files') {
-            $data['sharedFiles'] = $project->sharedFiles;
-            $data['title'] = trans('sharedFiles.tab_label');
-        } elseif ($tab == 'hooks') {
+        if ($tab === 'hooks') {
             $data['hooks'] = $project->hooks;
-        } elseif ($tab == 'members') {
-            $data['members'] = $project->members->toJson();
             $data['title'] = trans('hooks.label');
-        } elseif ($tab == 'environments') {
+        } elseif ($tab === 'members') {
+            $data['members'] = $project->members->toJson();
+            $data['title']   = trans('hooks.label');
+        } elseif ($tab === 'environments') {
             $data['title'] = trans('environments.label');
         }
 
@@ -81,11 +71,11 @@ class ProjectController extends Controller
     /**
      * Store a newly created project in storage.
      *
-     * @param  StoreProjectRequest $request
+     * @param StoreProjectRequest $request
      *
      * @return Response
      */
-    public function create(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request)
     {
         $fields = $request->only(
             'name',
@@ -150,8 +140,7 @@ class ProjectController extends Controller
      */
     private function getLatest(Project $project, $paginate = 15)
     {
-        return Deployment::where('targetable_type', get_class($project))
-                           ->where('targetable_id', $project->id)
+        return Task::where('project_id', $project->id)
                            ->with('user')
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')

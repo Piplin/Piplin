@@ -1,27 +1,26 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Cabinet model.
  */
 class Cabinet extends Model
 {
-    use SoftDeletes, BroadcastChanges, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges;
 
     /**
      * The attributes that are mass assignable.
@@ -63,13 +62,6 @@ class Cabinet extends Model
         'server_count',
         'server_names',
     ];
-
-    /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
 
     /**
      * Has many relationship.
@@ -120,11 +112,11 @@ class Cabinet extends Model
     {
         $servers = [];
         foreach ($this->servers as $key => $server) {
-            $servers[] = ($key+1) . '. ' . $server->name . ' : ' .$server->ip_address;
+            $servers[] = ($key + 1) . '. ' . $server->name . ' : ' . $server->ip_address;
         }
 
         if (count($servers)) {
-            return implode("<br />", $servers);
+            return implode('<br />', $servers);
         }
 
         return trans('app.none');

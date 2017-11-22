@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models\Traits;
+namespace Piplin\Models\Traits;
 
-use Fixhub\Bus\Events\ModelChangedEvent;
-use Fixhub\Bus\Events\ModelCreatedEvent;
-use Fixhub\Bus\Events\ModelTrashedEvent;
+use Piplin\Bus\Events\ModelChangedEvent;
+use Piplin\Bus\Events\ModelCreatedEvent;
+use Piplin\Bus\Events\ModelTrashedEvent;
 
 /**
  * A trait to broadcast model changes.

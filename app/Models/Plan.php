@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
-use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use Fixhub\Presenters\PlanPresenter;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Models\Traits\HasTargetable;
+use Piplin\Presenters\PlanPresenter;
 
 /**
  * Plan model.
@@ -62,6 +62,17 @@ class Plan extends Model implements HasPresenter
     public function servers()
     {
         return $this->morphMany(Server::class, 'targetable');
+    }
+
+    /**
+     * Has many relationship.
+     *
+     * @return Hook
+     */
+    public function patterns()
+    {
+        return $this->hasMany(Pattern::class)
+                    ->orderBy('name');
     }
 
     /**

@@ -1,14 +1,13 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__ . '/../')
@@ -27,17 +26,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    Fixhub\Http\Kernel::class
+    Piplin\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    Fixhub\Console\Kernel::class
+    Piplin\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Fixhub\Exceptions\Handler::class
+    Piplin\Exceptions\Handler::class
 );
 
 /*

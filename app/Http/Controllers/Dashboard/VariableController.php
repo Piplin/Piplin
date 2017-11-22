@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreVariableRequest;
-use Fixhub\Models\Variable;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreVariableRequest;
+use Piplin\Models\Variable;
 
 /**
  * Variable management controller.
@@ -36,12 +36,12 @@ class VariableController extends Controller
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
 
         // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
+        if ($targetable_type === 'Piplin\\Models\Project') {
             $this->authorize('manage', $target);
         }
 
@@ -51,8 +51,8 @@ class VariableController extends Controller
     /**
      * Update the specified variable in storage.
      *
-     * @param  Variable $variable
-     * @param  StoreVariableRequest $request
+     * @param Variable             $variable
+     * @param StoreVariableRequest $request
      *
      * @return Response
      */

@@ -1,23 +1,16 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    @if($current_user->isAdmin)
-      @include('dashboard._partials.shortcut')
-    @endif
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
           <div class="box box-default">
               <div class="box-header">
-                  <h3 class="box-title"><i class="fixhub fixhub-clock"></i> {{ trans_choice('dashboard.latest', 2) }}</h3>
+                  <h3 class="box-title"><i class="piplin piplin-clock"></i> {{ trans_choice('dashboard.latest', 2) }}</h3>
               </div>
               <div class="box-body" id="timeline">
                   @include('dashboard.timeline')
               </div>
           </div>
       </div>
-      <div class="col-md-4">
-        @include('dashboard._partials.sidebar')
-      </div>
     </div>
-  </div>
 @stop

@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Events;
+namespace Piplin\Bus\Events;
 
-use Fixhub\Models\User;
 use Illuminate\Queue\SerializesModels;
+use Piplin\Models\User;
 
 /**
  * Event for user request to change the login email.
@@ -22,8 +22,8 @@ class EmailChangeRequestedEvent extends Event
     use SerializesModels;
 
     /**
-    * @var User
-    */
+     * @var User
+     */
     public $user;
 
     /**

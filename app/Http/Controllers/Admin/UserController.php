@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Bus\Events\UserWasCreatedEvent;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreUserRequest;
-use Fixhub\Models\User;
+use Piplin\Bus\Events\UserWasCreatedEvent;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreUserRequest;
+use Piplin\Models\User;
 
 /**
  * User management controller.
@@ -29,7 +29,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'desc')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.users.index', [
             'title'     => trans('users.manage'),
@@ -40,6 +40,7 @@ class UserController extends Controller
                 User::LEVEL_MANAGER      => trans('users.level.manager'),
                 User::LEVEL_ADMIN        => trans('users.level.admin'),
             ],
+            'current_child' => 'users',
         ]);
     }
 

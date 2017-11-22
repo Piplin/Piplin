@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreEnvironmentCabinetRequest;
 use Illuminate\Http\Request;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Cabinet;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreEnvironmentCabinetRequest;
+use Piplin\Models\Cabinet;
+use Piplin\Models\Environment;
 
 /**
  * Environment cabinets management controller.
@@ -25,7 +25,7 @@ class CabinetController extends Controller
     /**
      * Store a newly created notification in storage.
      *
-     * @param Environment $environment
+     * @param Environment                    $environment
      * @param StoreEnvironmentCabinetRequest $request
      *
      * @return Response
@@ -45,7 +45,7 @@ class CabinetController extends Controller
      * Remove the specified cabinet from environment.
      *
      * @param Environment $environment
-     * @param Cabinet $cabinet
+     * @param Cabinet     $cabinet
      *
      * @return Response
      */

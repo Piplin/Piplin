@@ -25,7 +25,7 @@
 
 @section('right-buttons')
     <div class="pull-right">
-        <button type="button" class="btn btn-primary" title="{{ trans('users.create') }}" data-toggle="modal" data-target="#user"><span class="fixhub fixhub-plus"></span> {{ trans('users.create') }}</button>
+        <button type="button" class="btn btn-primary" title="{{ trans('users.create') }}" data-toggle="modal" data-target="#user"><span class="piplin piplin-plus"></span> {{ trans('users.create') }}</button>
     </div>
 @stop
 
@@ -33,8 +33,8 @@
     <script type="text/javascript">
         var users = {!! $users !!};
 
-        new Fixhub.UsersTab();
-        Fixhub.Users.add(users.data);
+        new Piplin.UsersTab();
+        Piplin.Users.add(users.data);
     </script>
 @endpush
 
@@ -47,8 +47,8 @@
         <td><%- created %></td>
         <td>
             <div class="btn-group pull-right">
-                <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#user" data-user-id="<%- id %>"><i class="fixhub fixhub-edit"></i></button>
-                <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash" data-user-id="<%- id %>"><i class="fixhub fixhub-delete"></i></button>
+                <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#user" data-user-id="<%- id %>"><i class="piplin piplin-edit"></i></button>
+                <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash" data-user-id="<%- id %>"><i class="piplin piplin-delete"></i></button>
             </div>
         </td>
     </script>

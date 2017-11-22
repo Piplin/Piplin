@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Providers;
+namespace Piplin\Providers;
 
-use Fixhub\Services\Update\LatestRelease;
-use Fixhub\Services\Update\LatestReleaseInterface;
 use Illuminate\Support\ServiceProvider;
+use Piplin\Services\Update\LatestRelease;
+use Piplin\Services\Update\LatestReleaseInterface;
 
 /**
  * Service provider to register the LatestRelease class as a singleton.
@@ -42,12 +42,12 @@ class UpdateServiceProvider extends ServiceProvider
     {
         $this->app->bind(LatestReleaseInterface::class, LatestRelease::class);
 
-        $this->app->singleton('fixhub.update-check', function ($app) {
+        $this->app->singleton('piplin.update-check', function ($app) {
             $cache = $app['cache.store'];
 
             return new LatestRelease($cache);
         });
 
-        $this->app->alias('fixhub.update-check', LatestReleaseInterface::class);
+        $this->app->alias('piplin.update-check', LatestReleaseInterface::class);
     }
 }

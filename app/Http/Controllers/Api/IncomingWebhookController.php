@@ -1,29 +1,29 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Api;
+namespace Piplin\Http\Controllers\Api;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Bus\Jobs\AbortDeploymentJob;
-use Fixhub\Bus\Jobs\CreateDeploymentJob;
-use Fixhub\Services\Webhooks\Beanstalkapp;
-use Fixhub\Services\Webhooks\Bitbucket;
-use Fixhub\Services\Webhooks\Custom;
-use Fixhub\Services\Webhooks\Github;
-use Fixhub\Services\Webhooks\Gitlab;
-use Fixhub\Services\Webhooks\Gogs;
-use Fixhub\Services\Webhooks\Oschina;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Project;
 use Illuminate\Http\Request;
+use Piplin\Bus\Jobs\AbortTaskJob;
+use Piplin\Bus\Jobs\CreateTaskJob;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Models\Task;
+use Piplin\Models\Project;
+use Piplin\Services\Webhooks\Beanstalkapp;
+use Piplin\Services\Webhooks\Bitbucket;
+use Piplin\Services\Webhooks\Custom;
+use Piplin\Services\Webhooks\Github;
+use Piplin\Services\Webhooks\Gitlab;
+use Piplin\Services\Webhooks\Gogs;
+use Piplin\Services\Webhooks\Oschina;
 
 /**
  * The deployment incoming-webhook controller.
@@ -56,8 +56,8 @@ class IncomingWebhookController extends Controller
     /**
      * Handles incoming requests to trigger deploy.
      *
-     * @param  Request  $request
-     * @param  string   $hash
+     * @param Request $request
+     * @param string  $hash
      *
      * @return Response
      */
@@ -69,9 +69,9 @@ class IncomingWebhookController extends Controller
         if ($project->environments->count() > 0) {
             $payload = $this->parseWebhookRequest($request, $project);
 
-            if (is_array($payload) && ($project->allow_other_branch || $project->branch == $payload['branch'])) {
+            if (is_array($payload) && ($project->allow_other_branch || $project->branch === $payload['branch'])) {
                 $this->abortQueued($project->id);
-                dispatch(new CreateDeploymentJob($project, $payload));
+                dispatch(new CreateTaskJob($project, $payload));
 
                 $success = true;
             }
@@ -86,10 +86,10 @@ class IncomingWebhookController extends Controller
      * Goes through the various webhook integrations as checks if the request is for them and parses it.
      * Then adds the various additional details required to trigger a deployment.
      *
-     * @param  Request $request
-     * @param  Project $project
+     * @param Request $request
+     * @param Project $project
      *
-     * @return mixed   Either an array of parameters for the deployment config, or false if it is invalid.
+     * @return mixed Either an array of parameters for the deployment config, or false if it is invalid.
      */
     private function parseWebhookRequest(Request $request, Project $project)
     {
@@ -108,11 +108,11 @@ class IncomingWebhookController extends Controller
      * Takes the data returned from the webhook request and then adds projects own data, such as project ID
      * and runs any checks such as checks the branch is allowed to be deployed.
      *
-     * @param  mixed   $payload
-     * @param  Request $request
-     * @param  Project $project
+     * @param mixed   $payload
+     * @param Request $request
+     * @param Project $project
      *
-     * @return mixed   Either an array of the complete deployment config, or false if it is invalid.
+     * @return mixed Either an array of the complete deployment config, or false if it is invalid.
      */
     private function appendProjectSettings($payload, Request $request, Project $project)
     {
@@ -157,8 +157,8 @@ class IncomingWebhookController extends Controller
 
         // Check if the request has an update_only query string and if so check the branch matches
         if ($request->has('update_only') && $request->get('update_only') !== false) {
-            $deployment = Deployment::where('project_id', $project->id)
-                           ->where('status', Deployment::COMPLETED)
+            $deployment = Task::where('project_id', $project->id)
+                           ->where('status', Task::COMPLETED)
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')
                            ->first();
@@ -174,22 +174,22 @@ class IncomingWebhookController extends Controller
     /**
      * Gets all pending and running deployments for a project and aborts them.
      *
-     * @param  int  $project_id
+     * @param int $project_id
      *
      * @return void
      */
     private function abortQueued($project_id)
     {
-        $deployments = Deployment::where('project_id', $project_id)
-                                   ->whereIn('status', [Deployment::DEPLOYING, Deployment::PENDING])
+        $deployments = Task::where('project_id', $project_id)
+                                   ->whereIn('status', [Task::RUNNING, Task::PENDING])
                                    ->orderBy('started_at', 'DESC')
                                    ->get();
 
         foreach ($deployments as $deployment) {
-            $deployment->status = Deployment::ABORTING;
+            $deployment->status = Task::ABORTING;
             $deployment->save();
 
-            dispatch(new AbortDeploymentJob($deployment));
+            dispatch(new AbortTaskJob($deployment));
 
             if ($deployment->is_webhook) {
                 $deployment->delete();

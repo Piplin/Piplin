@@ -1,19 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Presenters;
+namespace Piplin\Presenters;
 
-use Fixhub\Models\Deployment;
-use Fixhub\Presenters\Traits\RuntimePresenter;
 use McCool\LaravelAutoPresenter\BasePresenter;
+use Piplin\Presenters\Traits\RuntimePresenter;
 
 /**
  * The view presenter for a server class.

@@ -1,22 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\Project;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use Piplin\Http\Controllers\Controller;
 
 /**
  * The dashboard controller.
@@ -33,20 +30,20 @@ class DashboardController extends Controller
         $dashboard = Auth::user()->dashboard;
 
         if (empty($dashboard)) {
-            $dashboard = config('fixhub.dashboard');
+            $dashboard = config('piplin.dashboard');
         }
 
-        $method = $dashboard == 'deployments' ? 'deployments' : 'projects';
-        
+        $method = $dashboard === 'projects' ? 'projects' : 'tasks';
+
         return $this->{$method}();
     }
 
     /**
-     * Returns the deployments.
+     * Returns the tasks.
      *
      * @return View
      */
-    public function deployments()
+    public function tasks()
     {
         return view('dashboard.index');
     }
@@ -58,7 +55,8 @@ class DashboardController extends Controller
      */
     public function projects()
     {
-        return view('dashboard.projects');
+        return view('dashboard.projects')
+                    ->with('title', trans('users.dashboard.projects'));
     }
 
     /**
@@ -69,24 +67,5 @@ class DashboardController extends Controller
     public function timeline()
     {
         return view('dashboard.timeline');
-    }
-
-    /**
-     * Generates an XML file for CCTray.
-     *
-     * @return Response
-     */
-    public function cctray()
-    {
-        $projects = Project::orderBy('name')
-                    ->get();
-
-        foreach ($projects as $project) {
-            $project->latest_deployment = $project->deployments->first();
-        }
-
-        return Response::view('dashboard.cctray', [
-            'projects' => $projects,
-        ])->header('Content-Type', 'application/xml');
     }
 }

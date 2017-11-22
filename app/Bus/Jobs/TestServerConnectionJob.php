@@ -1,25 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
-use Fixhub\Models\Server;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Cabinet;
-use Fixhub\Models\Project;
-use Fixhub\Models\Plan;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Piplin\Models\Cabinet;
+use Piplin\Models\Environment;
+use Piplin\Models\Plan;
+use Piplin\Models\Project;
+use Piplin\Models\Server;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * Tests if a server can successfully be SSHed into.
@@ -71,6 +71,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
             $this->server->status = Server::SUCCESSFUL;
             $this->server->output = null;
             $this->server->save();
+
             return;
         }
 
@@ -88,6 +89,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
             $this->server->status = Server::FAILED;
             $this->server->output = trans('keys.ssh_key_empty');
             $this->server->save();
+
             return;
         }
 
@@ -98,8 +100,8 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         try {
             $process = new Process('TestServerConnection', [
                 'project_path'   => $deploy_path,
-                'test_file'      => time() . '_testing_fixhub.txt',
-                'test_directory' => time() . '_testing_fixhub_dir',
+                'test_file'      => time() . '_testing_piplin.txt',
+                'test_directory' => time() . '_testing_piplin_dir',
             ]);
 
             $process->setServer($this->server, $key)

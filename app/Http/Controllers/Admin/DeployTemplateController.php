@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreDeployTemplateRequest;
-use Fixhub\Models\DeployTemplate;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreDeployTemplateRequest;
+use Piplin\Models\DeployTemplate;
 
 /**
  * Controller for managing deployment template.
@@ -28,20 +28,21 @@ class DeployTemplateController extends Controller
     public function index()
     {
         $templates = DeployTemplate::orderBy('name')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.templates.index', [
             'title'         => trans('templates.manage'),
             'templates_raw' => $templates,
             'templates'     => $templates->toJson(), //toJson() is not working in the view
+            'current_child' => 'templates',
         ]);
     }
 
     /**
      * Show the template configuration.
      *
-     * @param DeployTemplate $template
-     * @param string $tab
+     * @param  DeployTemplate $template
+     * @param  string         $tab
      * @return Response
      */
     public function show(DeployTemplate $template, $tab = '')
@@ -55,7 +56,7 @@ class DeployTemplateController extends Controller
             'configFiles'     => $template->configFiles,
             'variables'       => $template->variables,
             'environments'    => $template->environments,
-            'targetable_type' => 'Fixhub\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
             'targetable_id'   => $template->id,
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
@@ -79,7 +80,7 @@ class DeployTemplateController extends Controller
     /**
      * Update the specified template in storage.
      *
-     * @param  DeployTemplate $template
+     * @param  DeployTemplate             $template
      * @param  StoreDeployTemplateRequest $request
      * @return Response
      */

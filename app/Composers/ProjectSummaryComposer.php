@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
 use Carbon\Carbon;
-use Fixhub\Models\Deployment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Piplin\Models\Task;
 
 /**
  * The composer for the project summary.
@@ -70,7 +70,7 @@ class ProjectSummaryComposer
      */
     private function getTotalCount($project_id)
     {
-        return Deployment::where('project_id', $project_id)
+        return Task::where('project_id', $project_id)
                             ->count();
     }
 
@@ -84,7 +84,7 @@ class ProjectSummaryComposer
      */
     private function getBetweenDates($project_id, Carbon $startDate, Carbon $endDate)
     {
-        return Deployment::where('project_id', $project_id)
+        return Task::where('project_id', $project_id)
                            ->where('started_at', '>=', $startDate->format('Y-m-d') . ' 00:00:00')
                            ->where('started_at', '<=', $endDate->format('Y-m-d') . ' 23:59:59')
                            ->count();

@@ -1,37 +1,37 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Events\DeployFinishedEvent;
-use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
-use Fixhub\Bus\Jobs\Repository\CreateArchiveJob;
-use Fixhub\Bus\Jobs\Repository\GetCommitDetailsJob;
-use Fixhub\Bus\Jobs\Deploy\RunStepsJob;
-use Fixhub\Models\Command as Stage;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\DeployStep;
-use Fixhub\Models\Project;
-use Fixhub\Models\Server;
-use Fixhub\Models\ServerLog;
-use Fixhub\Models\User;
-use Fixhub\Models\Environment;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use Piplin\Bus\Events\TaskFinishedEvent;
+use Piplin\Bus\Jobs\Deploy\RunStepsJob;
+use Piplin\Bus\Jobs\Repository\CreateArchiveJob;
+use Piplin\Bus\Jobs\Repository\GetCommitDetailsJob;
+use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
+use Piplin\Models\Command as Stage;
+use Piplin\Models\Task;
+use Piplin\Models\TaskStep;
+use Piplin\Models\Environment;
+use Piplin\Models\Project;
+use Piplin\Models\Server;
+use Piplin\Models\ServerLog;
+use Piplin\Models\User;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * Deploys an actual project.
@@ -46,7 +46,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     public $timeout = 0;
 
     /**
-     * @var Deployment
+     * @var Task
      */
     private $deployment;
 
@@ -58,7 +58,6 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * @var string
      */
-
     private $private_key;
 
     /**
@@ -69,23 +68,23 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @param  Deployment    $deployment
+     * @param Task $deployment
      */
-    public function __construct(Deployment $deployment)
+    public function __construct(Task $deployment)
     {
         $this->deployment = $deployment;
-        $this->project = $deployment->project;
+        $this->project    = $deployment->project;
     }
 
     /**
      * Overwrite the queue method to push to a different queue.
      *
-     * @param  Queue         $queue
-     * @param  DeployProjectJob $command
+     * @param Queue            $queue
+     * @param DeployProjectJob $command
      */
     public function queue(Queue $queue, $command)
     {
-        $queue->pushOn('fixhub-high', $command);
+        $queue->pushOn('piplin-high', $command);
     }
 
     /**
@@ -94,10 +93,10 @@ class DeployProjectJob extends Job implements ShouldQueue
     public function handle()
     {
         $this->deployment->started_at = Carbon::now();
-        $this->deployment->status = Deployment::DEPLOYING;
+        $this->deployment->status     = Task::RUNNING;
         $this->deployment->save();
 
-        $this->project->status = Project::DEPLOYING;
+        $this->project->status = Project::RUNNING;
         $this->project->save();
 
         $this->private_key = tempnam(storage_path('app/'), 'sshkey');
@@ -106,7 +105,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
         $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
 
-        if ($this->deployment->commit === Deployment::LOADING) {
+        if ($this->deployment->commit === Task::LOADING) {
             $commit = $this->deployment->branch;
         } else {
             $commit = $this->deployment->commit;
@@ -123,14 +122,14 @@ class DeployProjectJob extends Job implements ShouldQueue
 
             $this->dispatch(new RunStepsJob($this->deployment, $this->private_key, $this->release_archive));
 
-            $this->deployment->status = Deployment::COMPLETED;
-            $this->project->status = Project::FINISHED;
+            $this->deployment->status = Task::COMPLETED;
+            $this->project->status    = Project::FINISHED;
         } catch (\Exception $error) {
-            $this->deployment->status = Deployment::FAILED;
-            $this->project->status = Project::FAILED;
+            $this->deployment->status = Task::FAILED;
+            $this->project->status    = Project::FAILED;
 
             if ($error->getMessage() === 'Cancelled') {
-                $this->deployment->status = Deployment::ABORTED;
+                $this->deployment->status = Task::ABORTED;
             }
 
             $this->deployment->output = $error->getMessage();
@@ -142,13 +141,13 @@ class DeployProjectJob extends Job implements ShouldQueue
                 if ($step->stage <= Stage::DO_ACTIVATE) {
                     $this->cleanupDeployment();
                 } else {
-                    $this->deployment->status = Deployment::COMPLETED_WITH_ERRORS;
-                    $this->project->status = Project::FINISHED;
+                    $this->deployment->status = Task::COMPLETED_WITH_ERRORS;
+                    $this->project->status    = Project::FINISHED;
                 }
             }
         }
 
-        if ($this->deployment->status !== Deployment::ABORTED) {
+        if ($this->deployment->status !== Task::ABORTED) {
             $this->deployment->finished_at =  Carbon::now();
         }
 
@@ -160,7 +159,7 @@ class DeployProjectJob extends Job implements ShouldQueue
         $this->updateEnvironmentsInfo();
 
         // Notify user or others the deployment has been finished
-        event(new DeployFinishedEvent($this->deployment));
+        event(new TaskFinishedEvent($this->deployment));
 
         unlink($this->private_key);
 
@@ -236,7 +235,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     {
         foreach ($this->deployment->environments as $environment) {
             $environment->last_run = $this->project->last_run;
-            $environment->status = $this->project->status;
+            $environment->status   = $this->project->status;
             $environment->save();
         }
     }

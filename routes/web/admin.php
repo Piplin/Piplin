@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -52,7 +52,7 @@ Route::group([
     ]);
 
     Route::resource('users', 'UserController', [
-        'only' => ['index', 'store', 'update', 'destroy'],
+        'only'  => ['index', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.users.index',
             'store'   => 'admin.users.store',
@@ -62,7 +62,7 @@ Route::group([
     ]);
 
     Route::resource('keys', 'KeyController', [
-        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'only'  => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
             'create'  => 'admin.keys.create',
             'index'   => 'admin.keys.index',
@@ -76,23 +76,8 @@ Route::group([
         'uses'  => 'KeyController@reorder',
     ]);
 
-    Route::resource('links', 'LinkController', [
-        'only' => ['create', 'index', 'store', 'update', 'destroy'],
-        'names' => [
-            'create'  => 'admin.links.create',
-            'index'   => 'admin.links.index',
-            'store'   => 'admin.links.store',
-            'update'  => 'admin.links.update',
-            'destroy' => 'admin.links.destroy',
-        ],
-    ]);
-    Route::post('links/reorder', [
-        'as'    => 'admin.links.reorder',
-        'uses'  => 'LinkController@reorder',
-    ]);
-
     Route::resource('providers', 'ProviderController', [
-        'only' => ['create', 'index', 'store', 'update', 'destroy'],
+        'only'  => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
             'create'  => 'admin.providers.create',
             'index'   => 'admin.providers.index',
@@ -106,19 +91,8 @@ Route::group([
         'uses'  => 'LinkController@reorder',
     ]);
 
-    Route::resource('tips', 'TipController', [
-        'only' => ['create', 'index', 'store', 'update', 'destroy'],
-        'names' => [
-            'create'  => 'admin.tips.create',
-            'index'   => 'admin.tips.index',
-            'store'   => 'admin.tips.store',
-            'update'  => 'admin.tips.update',
-            'destroy' => 'admin.tips.destroy',
-        ],
-    ]);
-
     Route::resource('groups', 'ProjectGroupController', [
-        'only' => ['index', 'create', 'store', 'update', 'destroy'],
+        'only'  => ['index', 'create', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.groups.index',
             'create'  => 'admin.groups.create',
@@ -134,7 +108,7 @@ Route::group([
     ]);
 
     Route::resource('cabinets', 'CabinetController', [
-        'only' => ['index', 'show', 'store', 'update', 'destroy'],
+        'only'  => ['index', 'show', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.cabinets.index',
             'show'    => 'admin.cabinets.show',
@@ -147,12 +121,5 @@ Route::group([
     Route::post('cabinets/reorder', [
         'as'    => 'admin.cabinets.reorder',
         'uses'  => 'CabinetController@reorder',
-    ]);
-
-    Route::resource('revisions', 'RevisionController', [
-        'only' => ['index'],
-        'names' => [
-            'index'   => 'admin.revisions.index',
-        ],
     ]);
 });

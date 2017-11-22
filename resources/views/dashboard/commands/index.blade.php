@@ -11,15 +11,15 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new Fixhub.CommandsTab();
-        Fixhub.Commands.add({!! $commands !!});
+        new Piplin.CommandsTab();
+        Piplin.Commands.add({!! $commands !!});
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
 
 @push('templates')
     <script type="text/template" id="command-template">
-        <td data-command-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span> <%- name %></td>
+        <td data-command-id="<%- id %>"><span class="drag-handle"><i class="piplin piplin-drag"></i></span> <%- name %></td>
         <td>
             <%= user ? user : '{{ trans('commands.default') }}' %>
         </td>
@@ -32,10 +32,8 @@
         </td>
         <td>
             <div class="btn-group pull-right">
-                @if($project->can('manage'))
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('commands.edit') }}" data-toggle="modal" data-target="#command"><i class="fixhub fixhub-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('commands.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
-                @endif
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('commands.edit') }}" data-toggle="modal" data-target="#command"><i class="piplin piplin-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('commands.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
             </div>
         </td>
     </script>

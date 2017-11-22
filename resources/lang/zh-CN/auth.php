@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,7 @@
 
 return [
 
-    'please_sign_in'        => '登录Fixhub账号',
+    'please_sign_in'        => '登录Piplin账号',
     'please_enter_code'     => '请输入你的验证码.',
     'sign_in'               => '登录',
     'forgotten'             => '忘记密码',

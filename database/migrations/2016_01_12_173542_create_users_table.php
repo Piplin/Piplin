@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Piplin\Models\User;
 
 class CreateUsersTable extends Migration
 {
@@ -44,10 +44,10 @@ class CreateUsersTable extends Migration
         });
 
         User::create([
-            'name'           => 'fixhub',
-            'nickname'       => 'Fixhub',
-            'email'          => 'fixhub@fixhub.org',
-            'password'       => bcrypt('fixhub'),
+            'name'           => 'piplin',
+            'nickname'       => 'Piplin',
+            'email'          => 'piplin@piplin.com',
+            'password'       => bcrypt('piplin'),
             'remember_token' => str_random(10),
             'level'          => User::LEVEL_ADMIN,
             'avatar'         => '/img/noavatar.png',

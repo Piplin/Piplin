@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\Queue;
@@ -35,11 +35,11 @@ abstract class Job
     /**
      * Overwrite the queue method to push to a different queue.
      *
-     * @param  Queue $queue
-     * @param  Job   $command
+     * @param Queue $queue
+     * @param Job   $command
      */
     public function queue(Queue $queue, $command)
     {
-        $queue->pushOn('fixhub-low', $command);
+        $queue->pushOn('piplin-low', $command);
     }
 }

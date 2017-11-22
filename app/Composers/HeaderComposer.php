@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
 use Auth;
-use Fixhub\Models\Deployment;
 use Illuminate\Contracts\View\View;
+use Piplin\Models\Task;
 
 /**
  * View composer for the header bar.
@@ -21,24 +21,24 @@ use Illuminate\Contracts\View\View;
 class HeaderComposer
 {
     /**
-     * Generates the pending and deploying projects for the view.
+     * Generates the pending and running projects for the view.
      *
      * @param  \Illuminate\Contracts\View\View $view
      * @return void
      */
     public function compose(View $view)
     {
-        $pending = $this->getPending();
+        $pending       = $this->getPending();
         $pending_count = count($pending);
         $view->with('pending', $pending);
         $view->with('pending_count', $pending_count);
 
-        $deploying = $this->getRunning();
-        $deploying_count = count($deploying);
-        $view->with('deploying', $deploying);
-        $view->with('deploying_count', $deploying_count);
+        $running       = $this->getRunning();
+        $running_count = count($running);
+        $view->with('running', $running);
+        $view->with('running_count', $running_count);
 
-        $view->with('todo_count', $pending_count + $deploying_count);
+        $view->with('todo_count', $pending_count + $running_count);
     }
 
     /**
@@ -48,7 +48,7 @@ class HeaderComposer
      */
     private function getPending()
     {
-        return $this->getStatus(Deployment::PENDING);
+        return $this->getStatus(Task::PENDING);
     }
 
     /**
@@ -58,7 +58,7 @@ class HeaderComposer
      */
     private function getRunning()
     {
-        return $this->getStatus(Deployment::DEPLOYING);
+        return $this->getStatus(Task::RUNNING);
     }
 
     /**
@@ -69,7 +69,7 @@ class HeaderComposer
      */
     private function getStatus($status)
     {
-        return Deployment::whereNotNull('started_at')
+        return Task::whereNotNull('started_at')
                            ->whereIn('status', is_array($status) ? $status : [$status])
                            ->orderBy('started_at', 'DESC')
                            ->get();

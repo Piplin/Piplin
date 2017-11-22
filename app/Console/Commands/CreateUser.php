@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
-use Fixhub\Bus\Events\UserWasCreatedEvent;
-use Fixhub\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Piplin\Bus\Events\UserWasCreatedEvent;
+use Piplin\Models\User;
 use RuntimeException;
 
 /**
@@ -27,7 +27,7 @@ class CreateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'fixhub:create-user
+    protected $signature = 'piplin:create-user
                             {name : The name for the user}
                             {email : The email address for the user}
                             {password? : The password for the user, one will be generated if not supplied}

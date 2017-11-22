@@ -51,11 +51,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var group = Fixhub.Groups.get($('#model_id').val());
+        var group = Piplin.Groups.get($('#model_id').val());
 
         group.destroy({
             wait: true,
@@ -63,14 +63,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('groups.delete_success'));
+                Piplin.toast(trans('groups.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -82,16 +82,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var group_id = $('#group_id').val();
 
         if (group_id) {
-            var group = Fixhub.Groups.get(group_id);
+            var group = Piplin.Groups.get(group_id);
         } else {
-            var group = new Fixhub.Group();
+            var group = new Piplin.Group();
         }
 
         group.save({
@@ -102,16 +102,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('groups.edit_success');
                 if (!group_id) {
-                    Fixhub.Groups.add(response);
+                    Piplin.Groups.add(response);
                     msg = trans('groups.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -133,14 +133,14 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Group = Backbone.Model.extend({
+    Piplin.Group = Backbone.Model.extend({
         urlRoot: '/admin/groups',
         initialize: function() {
 
@@ -148,12 +148,12 @@
     });
 
     var Groups = Backbone.Collection.extend({
-        model: Fixhub.Group
+        model: Piplin.Group
     });
 
-    Fixhub.Groups = new Groups();
+    Piplin.Groups = new Groups();
 
-    Fixhub.GroupsTab = Backbone.View.extend({
+    Piplin.GroupsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -164,41 +164,41 @@
             $('#group_list').hide();
             $('#no_groups').show();
 
-            this.listenTo(Fixhub.Groups, 'add', this.addOne);
-            this.listenTo(Fixhub.Groups, 'reset', this.addAll);
-            this.listenTo(Fixhub.Groups, 'remove', this.addAll);
-            this.listenTo(Fixhub.Groups, 'all', this.render);
+            this.listenTo(Piplin.Groups, 'add', this.addOne);
+            this.listenTo(Piplin.Groups, 'reset', this.addAll);
+            this.listenTo(Piplin.Groups, 'remove', this.addAll);
+            this.listenTo(Piplin.Groups, 'all', this.render);
 
-            Fixhub.listener.on('group:' + Fixhub.events.MODEL_CHANGED, function (data) {
+            Piplin.listener.on('group:' + Piplin.events.MODEL_CHANGED, function (data) {
                 $('#group_' + data.model.id).html(data.model.name);
 
-                var group = Fixhub.Groups.get(parseInt(data.model.id));
+                var group = Piplin.Groups.get(parseInt(data.model.id));
 
                 if (group) {
                     group.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('group:' + Fixhub.events.MODEL_CREATED, function (data) {
-                Fixhub.Groups.add(data.model);
+            Piplin.listener.on('group:' + Piplin.events.MODEL_CREATED, function (data) {
+                Piplin.Groups.add(data.model);
             });
 
-            Fixhub.listener.on('group:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var group = Fixhub.Groups.get(parseInt(data.model.id));
+            Piplin.listener.on('group:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var group = Piplin.Groups.get(parseInt(data.model.id));
 
                 if (group) {
-                    Fixhub.Groups.remove(group);
+                    Piplin.Groups.remove(group);
                 }
 
                 $('#group_' + data.model.id).parent('li').remove();
 
-                if (parseInt(data.model.id) === parseInt(Fixhub.group_id)) {
+                if (parseInt(data.model.id) === parseInt(Piplin.group_id)) {
                     window.location.href = '/';
                 }
             });
         },
         render: function () {
-            if (Fixhub.Groups.length) {
+            if (Piplin.Groups.length) {
                 $('#no_groups').hide();
                 $('#group_list').show();
             } else {
@@ -208,7 +208,7 @@
         },
         addOne: function (group) {
 
-            var view = new Fixhub.GroupView({
+            var view = new Piplin.GroupView({
                 model: group
             });
 
@@ -216,11 +216,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Groups.each(this.addOne, this);
+            Piplin.Groups.each(this.addOne, this);
         }
     });
 
-    Fixhub.GroupView = Backbone.View.extend({
+    Piplin.GroupView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

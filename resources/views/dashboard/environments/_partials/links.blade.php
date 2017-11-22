@@ -2,7 +2,7 @@
     <div class="box-header">
         <div class="pull-right">
             @if($project->can('manage'))
-            <button type="button" class="btn btn-primary btn-edit" title="{{ trans('environments.link_settings') }}" data-toggle="modal" data-backdrop="static" data-target="#link"><span class="fixhub fixhub-setting"></span> {{ trans('environments.link_settings') }}</button>
+            <button type="button" class="btn btn-primary btn-edit" title="{{ trans('environments.link_settings') }}" data-toggle="modal" data-backdrop="static" data-target="#link"><span class="piplin piplin-setting"></span> {{ trans('environments.link_settings') }}</button>
             @endif
         </div>
         <h3 class="box-title">{{ trans('environments.links') }}</h3>

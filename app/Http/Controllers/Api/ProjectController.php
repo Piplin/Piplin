@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Api;
+namespace Piplin\Http\Controllers\Api;
 
-use Fixhub\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Fixhub\Models\Project;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Models\Project;
 
 /**
  * The project controller.
