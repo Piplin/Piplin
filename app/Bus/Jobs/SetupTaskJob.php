@@ -142,6 +142,9 @@ class SetupTaskJob extends Job
     /**
      * Builds up a list of commands to run before/after each stage.
      *
+     * @param mixed $targetable
+     * @param array $stakes
+     *
      * @return array
      */
     private function buildCommandList($targetable, $stakes)
@@ -200,6 +203,14 @@ class SetupTaskJob extends Job
         $this->task->project->save();
     }
 
+    /**
+     * Create an instance of TaskStep and a ServerLog entry for each server assigned to the command.
+     *
+     * @param int   $stage
+     * @param Stage $command
+     *
+     * @return void
+     */
     private function createBuildCommandStep($stage, Stage $command)
     {
         $step = TaskStep::create([
@@ -211,6 +222,13 @@ class SetupTaskJob extends Job
         $this->createBuildServerlog($this->task->targetable, $step);
     }
 
+    /**
+     * Create an instance of TaskStep and a ServerLog entry for each server which can have code deployed.
+     *
+     * @param int $stage
+     *
+     * @return void
+     */
     private function createBuildStep($stage)
     {
         $step = TaskStep::create([
@@ -221,6 +239,14 @@ class SetupTaskJob extends Job
         $this->createBuildServerlog($this->task->targetable, $step);
     }
 
+    /**
+     * Create server logs.
+     *
+     * @param Environment $environment
+     * @param inet        $step
+     *
+     * @return void
+     */
     private function createBuildServerlog($plan, $step)
     {
         foreach ($plan->servers->where('enabled', true) as $server) {

@@ -24,7 +24,7 @@ class PatternController extends Controller
     /**
      * Store a newly created file in storage.
      *
-     * @param  StoreSharedFileRequest $request
+     * @param  StorePatternRequest $request
      * @return Response
      */
     public function store(StorePatternRequest $request)
