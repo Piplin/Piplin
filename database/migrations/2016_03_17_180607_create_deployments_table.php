@@ -11,7 +11,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Piplin\Models\Deployment;
+use Piplin\Models\Task;
 
 class CreateDeploymentsTable extends Migration
 {
@@ -29,7 +29,7 @@ class CreateDeploymentsTable extends Migration
             $table->string('commit')->nullable();
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id')->nullable()->default(null);
-            $table->tinyInteger('status')->default(Deployment::PENDING);
+            $table->tinyInteger('status')->default(Task::PENDING);
             $table->boolean('is_webhook')->default(false);
             $table->string('branch')->default('master');
             $table->text('reason')->nullable();

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CabinetTableSeeder::class);
         $this->call(EnvironmentTableSeeder::class);
         $this->call(ServerTableSeeder::class);
-        $this->call(DeploymentTableSeeder::class);
+        $this->call(TaskTableSeeder::class);
         $this->call(CommandTableSeeder::class);
         $this->call(DeployTemplateTableSeeder::class);
         $this->call(VariableTableSeeder::class);
