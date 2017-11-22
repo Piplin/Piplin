@@ -48,7 +48,7 @@ class CreateConverter extends Migration
     private function convert($items)
     {
         foreach ($items as $item) {
-            if(Str::endsWith($item->targetable_type, 'Template')) {
+            if (Str::endsWith($item->targetable_type, 'Template')) {
                 $item->targetable_type = ProjectTemplate::class;
             } elseif (Str::endsWith($item->targetable_type, 'Plan')) {
                 $item->targetable_type = Plan::class;
