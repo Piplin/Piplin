@@ -2179,7 +2179,7 @@ trait ApiTesterActions
      * $I->callArtisan('command:name', ['parameter' => 'value']);
      * ?>
      * ```
-     
+
      * @param string $command
      * @param array  $parameters
      * @see \Codeception\Module\Laravel5::callArtisan()
