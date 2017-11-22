@@ -290,7 +290,7 @@ class Deployment extends Model implements HasPresenter, RuntimeInterface
      */
     public function getCommitUrlAttribute()
     {
-        if ($this->commit !== self::LOADING) {
+        if ($this->commit !== self::LOADING && $this->project) {
             $info = $this->project->accessDetails();
             if (isset($info['domain']) && isset($info['reference'])) {
                 $path = 'commit';
