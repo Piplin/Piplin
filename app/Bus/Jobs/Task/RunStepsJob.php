@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Piplin\Bus\Jobs\Deploy;
+namespace Piplin\Bus\Jobs\Task;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;

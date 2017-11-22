@@ -19,7 +19,7 @@ use Illuminate\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Piplin\Bus\Events\TaskFinishedEvent;
-use Piplin\Bus\Jobs\Deploy\RunStepsJob;
+use Piplin\Bus\Jobs\Task\RunStepsJob;
 use Piplin\Bus\Jobs\Repository\CreateArchiveJob;
 use Piplin\Bus\Jobs\Repository\GetCommitDetailsJob;
 use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
