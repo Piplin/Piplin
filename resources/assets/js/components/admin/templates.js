@@ -142,7 +142,7 @@
             this.listenTo(Piplin.Templates, 'remove', this.addAll);
             this.listenTo(Piplin.Templates, 'all', this.render);
 
-            Piplin.listener.on('template:' + Piplin.events.MODEL_CHANGED, function (data) {
+            Piplin.listener.on('projecttemplate:' + Piplin.events.MODEL_CHANGED, function (data) {
                 var template = Piplin.Templates.get(parseInt(data.model.id));
 
                 if (template) {
@@ -150,11 +150,11 @@
                 }
             });
 
-            Piplin.listener.on('template:' + Piplin.events.MODEL_CREATED, function (data) {
+            Piplin.listener.on('projecttemplate:' + Piplin.events.MODEL_CREATED, function (data) {
                 Piplin.Templates.add(data.model);
             });
 
-            Piplin.listener.on('template:' + Piplin.events.MODEL_TRASHED, function (data) {
+            Piplin.listener.on('projecttemplate:' + Piplin.events.MODEL_TRASHED, function (data) {
                 var template = Piplin.Templates.get(parseInt(data.model.id));
 
                 if (template) {

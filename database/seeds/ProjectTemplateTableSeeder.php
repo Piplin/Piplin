@@ -17,7 +17,7 @@ class ProjectTemplateTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('deploy_templates')->delete();
+        DB::table('project_templates')->delete();
 
         $laravel = ProjectTemplate::create([
             'name' => 'Laravel',
