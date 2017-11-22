@@ -49,18 +49,36 @@ class CommandController extends Controller
 
         if ($target instanceof DeployTemplate) {
             $breadcrumb = [
-                ['url' => route('admin.templates.index'), 'label' => trans('templates.label')],
-                ['url' => route('admin.templates.show', ['templates' => $target->id]), 'label' => $target->name],
+                [
+                    'url' => route('admin.templates.index'),
+                    'label' => trans('templates.label')
+                ],
+                [
+                    'url' => route('admin.templates.show', ['templates' => $target->id]),
+                    'label' => $target->name
+                ],
             ];
         } elseif ($target instanceof Plan) {
             $breadcrumb = [
-                ['url' => route('projects', ['id' => $target->id]), 'label' => $target->project->name],
-                ['url' => route('plans', ['id' => $target->id, 'tab' => 'commands']), 'label' => trans('projects.build_plan')],
+                [
+                    'url' => route('projects', ['id' => $target->id]),
+                    'label' => $target->project->name
+                ],
+                [
+                    'url' => route('plans', ['id' => $target->id, 'tab' => 'commands']),
+                    'label' => trans('projects.build_plan')
+                ],
             ];
         } else {
             $breadcrumb = [
-                ['url' => route('projects', ['id' => $target->id, 'tab' => 'commands']), 'label' => $target->name],
-                ['url' => route('deployments', ['id' => $target->id, 'tab' => 'commands']), 'label' => trans('projects.deploy_plan')],
+                [
+                    'url' => route('projects', ['id' => $target->id, 'tab' => 'commands']),
+                    'label' => $target->name
+                ],
+                [
+                 'url'   => route('deployments', ['id' => $target->id, 'tab' => 'commands']),
+                 'label' => trans('projects.deploy_plan')
+                ],
             ];
         }
 
