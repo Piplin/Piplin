@@ -14,7 +14,7 @@ Route::group([
         'namespace'  => 'Dashboard',
     ], function () {
         // Project
-        Route::get('projects/{project}/{tab?}', [
+        Route::get('project/{project}/{tab?}', [
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
@@ -24,9 +24,9 @@ Route::group([
         ]);
 
         // Build plan
-        Route::get('plan/{plan}/{tab?}', [
-            'as'   => 'plans',
-            'uses' => 'PlanController@show',
+        Route::get('build/{plan}/{tab?}', [
+            'as'   => 'builds',
+            'uses' => 'BuildController@show',
         ]);
 
         // Deploy plan

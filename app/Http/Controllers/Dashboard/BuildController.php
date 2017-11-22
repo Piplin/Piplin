@@ -19,9 +19,9 @@ use Piplin\Models\Plan;
 use Piplin\Models\Project;
 
 /**
- * The controller of plans.
+ * The controller of build plans.
  */
-class PlanController extends Controller
+class BuildController extends Controller
 {
     /**
      * The details of an individual plan.
@@ -49,7 +49,7 @@ class PlanController extends Controller
             'patterns'        => $plan->patterns,
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-                ['url' => route('plans', ['id' => $plan->id]), 'label' => trans('plans.label')],
+                ['url' => route('builds', ['id' => $plan->id]), 'label' => trans('plans.label')],
             ],
         ];
 
@@ -63,7 +63,7 @@ class PlanController extends Controller
             $data['title'] = trans('plans.builds');
         }
 
-        return view('dashboard.plans.show', $data);
+        return view('dashboard.builds.show', $data);
     }
 
     /**

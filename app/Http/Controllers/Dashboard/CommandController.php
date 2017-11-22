@@ -65,7 +65,7 @@ class CommandController extends Controller
                     'label' => $target->project->name
                 ],
                 [
-                    'url' => route('plans', ['id' => $target->id, 'tab' => 'commands']),
+                    'url' => route('builds', ['id' => $target->id, 'tab' => 'commands']),
                     'label' => trans('projects.build_plan')
                 ],
             ];

@@ -22,7 +22,7 @@ use Piplin\Models\Task;
 use Piplin\Models\Project;
 
 /**
- * The controller of projects.
+ * The controller of deploy plans.
  */
 class DeploymentController extends Controller
 {

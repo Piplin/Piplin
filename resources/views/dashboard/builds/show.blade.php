@@ -5,19 +5,19 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('plans.builds') }}</a></li>
-                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('plans.commands') }}</a></li>
-                    <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'agents']) }}"><span class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
-                    <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a href="{{ route('plans',['id'=>$plan->id, 'tab'=>'patterns']) }}"><span class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$plan->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('plans.builds') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$plan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('plans.commands') }}</a></li>
+                    <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$plan->id, 'tab'=>'agents']) }}"><span class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
+                    <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$plan->id, 'tab'=>'patterns']) }}"><span class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
                         @if($tab == 'commands')
-                            @include('dashboard.plans._partials.commands')
+                            @include('dashboard.builds._partials.commands')
                         @elseif($tab == 'agents')
                             @include('dashboard.environments._partials.servers')
                         @elseif($tab == 'patterns')
-                            @include('dashboard.plans._partials.patterns')
+                            @include('dashboard.builds._partials.patterns')
                         @else
                             @include('dashboard.projects._partials.tasks')
                         @endif
@@ -30,7 +30,7 @@
     @if($tab == 'agents')
         @include('dashboard.environments._dialogs.server')
     @elseif($tab == 'patterns')
-        @include('dashboard.plans._dialogs.pattern')
+        @include('dashboard.builds._dialogs.pattern')
     @endif
 @stop
 
