@@ -6,7 +6,7 @@
 
 Piplin 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源Web自动化部署系统。
 
-![Screenshot](http://www.piplin.org/piplin.png)
+![Screenshot](http://www.piplin.com/piplin.png)
 
 ## Piplin能做什么？
 
@@ -123,9 +123,9 @@ $ php artisan app:update
 
 ## 系统演示
 
-体验Piplin, 请访问 [Piplin](http://piplin.org):
+体验Piplin, 请访问 [Piplin](http://piplin.com):
 
-- **用户名:** piplin 或 `piplin@piplin.org`
+- **用户名:** piplin 或 `piplin@piplin.com`
 - **密码:** `piplin`
 
 > 注意：系统每5分钟会自动重置一次密码，该账号没有权限访问管理功能.
