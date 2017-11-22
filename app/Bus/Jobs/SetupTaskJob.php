@@ -242,8 +242,8 @@ class SetupTaskJob extends Job
     /**
      * Create server logs.
      *
-     * @param Environment $environment
-     * @param inet        $step
+     * @param Plan $plan
+     * @param inet $step
      *
      * @return void
      */
