@@ -169,7 +169,7 @@
             this.listenTo(Piplin.Groups, 'remove', this.addAll);
             this.listenTo(Piplin.Groups, 'all', this.render);
 
-            Piplin.listener.on('group:' + Piplin.events.MODEL_CHANGED, function (data) {
+            Piplin.listener.on('projectgroup:' + Piplin.events.MODEL_CHANGED, function (data) {
                 $('#group_' + data.model.id).html(data.model.name);
 
                 var group = Piplin.Groups.get(parseInt(data.model.id));
@@ -179,11 +179,11 @@
                 }
             });
 
-            Piplin.listener.on('group:' + Piplin.events.MODEL_CREATED, function (data) {
+            Piplin.listener.on('projectgroup:' + Piplin.events.MODEL_CREATED, function (data) {
                 Piplin.Groups.add(data.model);
             });
 
-            Piplin.listener.on('group:' + Piplin.events.MODEL_TRASHED, function (data) {
+            Piplin.listener.on('projectgroup:' + Piplin.events.MODEL_TRASHED, function (data) {
                 var group = Piplin.Groups.get(parseInt(data.model.id));
 
                 if (group) {

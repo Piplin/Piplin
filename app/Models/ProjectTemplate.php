@@ -14,6 +14,7 @@ namespace Piplin\Models;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Piplin\Models\Traits\SetupRelations;
+use Piplin\Models\Traits\BroadcastChanges;
 use Piplin\Presenters\ProjectTemplatePresenter;
 
 /**
@@ -21,7 +22,7 @@ use Piplin\Presenters\ProjectTemplatePresenter;
  */
 class ProjectTemplate extends Model implements HasPresenter
 {
-    use SetupRelations;
+    use SetupRelations, BroadcastChanges;
 
     /**
      * Fields to show in the JSON presentation.
