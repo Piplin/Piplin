@@ -14,12 +14,12 @@ namespace Piplin\Models;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Piplin\Models\Traits\SetupRelations;
-use Piplin\Presenters\DeployTemplatePresenter;
+use Piplin\Presenters\ProjectTemplatePresenter;
 
 /**
- * Model for deploy templates.
+ * Model for project templates.
  */
-class DeployTemplate extends Model implements HasPresenter
+class ProjectTemplate extends Model implements HasPresenter
 {
     use SetupRelations;
 
@@ -129,6 +129,6 @@ class DeployTemplate extends Model implements HasPresenter
      */
     public function getPresenterClass()
     {
-        return DeployTemplatePresenter::class;
+        return ProjectTemplatePresenter::class;
     }
 }

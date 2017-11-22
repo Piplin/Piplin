@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreCabinetRequest;
 use Piplin\Models\Cabinet;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Key;
 use Piplin\Models\Project;
 

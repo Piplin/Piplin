@@ -11,19 +11,19 @@
 
 namespace Piplin\Bus\Observers;
 
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 
 /**
- * Event observer for DeployTemplate model.
+ * Event observer for ProjectTemplate model.
  */
-class DeployTemplateObserver
+class ProjectTemplateObserver
 {
     /**
      * Called when the model is deleting.
      *
-     * @param DeployTemplate $template
+     * @param ProjectTemplate $template
      */
-    public function deleting(DeployTemplate $template)
+    public function deleting(ProjectTemplate $template)
     {
         $template->variables()->forceDelete();
         $template->sharedFiles()->forceDelete();

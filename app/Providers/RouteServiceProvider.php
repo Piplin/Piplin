@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
 use Piplin\Models\Task;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Environment;
 use Piplin\Models\Hook;
 use Piplin\Models\Link;
@@ -67,7 +67,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('hook', Hook::class);
         Route::model('server', Server::class);
         Route::model('provider', Provider::class);
-        Route::model('template', DeployTemplate::class);
+        Route::model('template', ProjectTemplate::class);
         Route::model('link', Link::class);
         Route::model('tip', Tip::class);
         Route::model('user', User::class);

@@ -36,14 +36,14 @@ class EnvironmentTableSeeder extends Seeder
         ]);
 
         Environment::create([
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => 1,
             'name'            => 'Staging',
             'description'     => 'Staging',
         ]);
 
         Environment::create([
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => 1,
             'name'            => 'QA',
             'default_on'      => false,
@@ -51,7 +51,7 @@ class EnvironmentTableSeeder extends Seeder
         ]);
 
         Environment::create([
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => 1,
             'name'            => 'Production',
             'description'     => 'Production',

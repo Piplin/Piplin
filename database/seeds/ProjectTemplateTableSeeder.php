@@ -11,26 +11,26 @@
 
 use Illuminate\Database\Seeder;
 use Piplin\Models\Command;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 
-class DeployTemplateTableSeeder extends Seeder
+class ProjectTemplateTableSeeder extends Seeder
 {
     public function run()
     {
         DB::table('deploy_templates')->delete();
 
-        $laravel = DeployTemplate::create([
+        $laravel = ProjectTemplate::create([
             'name' => 'Laravel',
         ]);
 
-        DeployTemplate::create([
+        ProjectTemplate::create([
             'name' => 'Wordpress',
         ]);
 
         Command::create([
             'name'            => 'Composer',
             'script'          => 'composer install -o --no-dev',
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::AFTER_INSTALL,
@@ -39,7 +39,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Down',
             'script'          => 'php {{ release_path }}/artisan down',
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -48,7 +48,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Run Migrations',
             'script'          => 'php {{ release_path }}/artisan migrate --force',
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,
@@ -57,7 +57,7 @@ class DeployTemplateTableSeeder extends Seeder
         Command::create([
             'name'            => 'Up',
             'script'          => 'php {{ release_path }}/artisan up',
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $laravel->id,
             'user'            => '',
             'step'            => Command::BEFORE_ACTIVATE,

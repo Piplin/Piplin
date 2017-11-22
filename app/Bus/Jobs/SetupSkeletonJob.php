@@ -13,7 +13,7 @@ namespace Piplin\Bus\Jobs;
 
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\SharedFile;
 use Piplin\Models\Variable;
@@ -58,7 +58,7 @@ class SetupSkeletonJob extends Job
             return;
         }
 
-        if (!$this->skeleton instanceof DeployTemplate && !$this->skeleton instanceof Project) {
+        if (!$this->skeleton instanceof ProjectTemplate && !$this->skeleton instanceof Project) {
             return;
         }
 

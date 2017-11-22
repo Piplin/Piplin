@@ -16,7 +16,7 @@ use Piplin\Http\Requests\Request;
 /**
  * Request for validating deploytemplates.
  */
-class StoreDeployTemplateRequest extends Request
+class StoreProjectTemplateRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

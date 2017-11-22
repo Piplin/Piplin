@@ -21,7 +21,7 @@ Route::group([
         ],
     ]);
 
-    Route::resource('templates', 'DeployTemplateController', [
+    Route::resource('templates', 'ProjectTemplateController', [
         'only'  => ['index', 'store', 'update', 'destroy'],
         'names' => [
             'index'   => 'admin.templates.index',
@@ -33,7 +33,7 @@ Route::group([
 
     Route::get('templates/{template}/{tab?}', [
         'as'   => 'admin.templates.show',
-        'uses' => 'DeployTemplateController@show',
+        'uses' => 'ProjectTemplateController@show',
     ]);
 
     Route::resource('projects', 'ProjectController', [

@@ -12,13 +12,13 @@
 namespace Piplin\Http\Controllers\Admin;
 
 use Piplin\Http\Controllers\Controller;
-use Piplin\Http\Requests\StoreDeployTemplateRequest;
-use Piplin\Models\DeployTemplate;
+use Piplin\Http\Requests\StoreProjectTemplateRequest;
+use Piplin\Models\ProjectTemplate;
 
 /**
  * Controller for managing deployment template.
  */
-class DeployTemplateController extends Controller
+class ProjectTemplateController extends Controller
 {
     /**
      * Shows all templates.
@@ -27,7 +27,7 @@ class DeployTemplateController extends Controller
      */
     public function index()
     {
-        $templates = DeployTemplate::orderBy('name')
+        $templates = ProjectTemplate::orderBy('name')
                     ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.templates.index', [
@@ -41,11 +41,11 @@ class DeployTemplateController extends Controller
     /**
      * Show the template configuration.
      *
-     * @param  DeployTemplate $template
+     * @param  ProjectTemplate $template
      * @param  string         $tab
      * @return Response
      */
-    public function show(DeployTemplate $template, $tab = '')
+    public function show(ProjectTemplate $template, $tab = '')
     {
         return view('admin.templates.show', [
             'breadcrumb' => [
@@ -56,7 +56,7 @@ class DeployTemplateController extends Controller
             'configFiles'     => $template->configFiles,
             'variables'       => $template->variables,
             'environments'    => $template->environments,
-            'targetable_type' => 'Piplin\\Models\\DeployTemplate',
+            'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $template->id,
             'project'         => $template,
             'route'           => 'admin.templates.commands.step',
@@ -67,12 +67,12 @@ class DeployTemplateController extends Controller
     /**
      * Store a newly created template in storage.
      *
-     * @param  StoreDeployTemplateRequest $request
+     * @param  StoreProjectTemplateRequest $request
      * @return Response
      */
-    public function store(StoreDeployTemplateRequest $request)
+    public function store(StoreProjectTemplateRequest $request)
     {
-        return DeployTemplate::create($request->only(
+        return ProjectTemplate::create($request->only(
             'name'
         ));
     }
@@ -80,11 +80,11 @@ class DeployTemplateController extends Controller
     /**
      * Update the specified template in storage.
      *
-     * @param  DeployTemplate             $template
-     * @param  StoreDeployTemplateRequest $request
+     * @param  ProjectTemplate             $template
+     * @param  StoreProjectTemplateRequest $request
      * @return Response
      */
-    public function update(DeployTemplate $template, StoreDeployTemplateRequest $request)
+    public function update(ProjectTemplate $template, StoreProjectTemplateRequest $request)
     {
         $template->update($request->only(
             'name'
@@ -96,10 +96,10 @@ class DeployTemplateController extends Controller
     /**
      * Remove the specified template from storage.
      *
-     * @param  DeployTemplate $template
+     * @param  ProjectTemplate $template
      * @return Response
      */
-    public function destroy(DeployTemplate $template)
+    public function destroy(ProjectTemplate $template)
     {
         $template->forceDelete();
 

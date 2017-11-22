@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreCommandRequest;
 use Piplin\Models\Command;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Plan;
 use Piplin\Models\Project;
 
@@ -47,7 +47,7 @@ class CommandController extends Controller
             'result'   => Command::DO_RESULT,
         ];
 
-        if ($target instanceof DeployTemplate) {
+        if ($target instanceof ProjectTemplate) {
             $breadcrumb = [
                 [
                     'url' => route('admin.templates.index'),
@@ -254,7 +254,7 @@ class CommandController extends Controller
     /**
      * Get's the commands in a specific step.
      *
-     * @param  Project|DeployTemplate $target
+     * @param  Project|ProjectTemplate $target
      * @param  int                    $step
      * @return Collection
      */

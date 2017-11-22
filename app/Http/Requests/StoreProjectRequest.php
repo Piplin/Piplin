@@ -31,7 +31,7 @@ class StoreProjectRequest extends Request
             'targetable_id'      => 'nullable|integer',
             'key_id'             => 'nullable|integer|exists:keys,id',
             'builds_to_keep'     => 'nullable|integer|min:1|max:20',
-            'template_id'        => 'nullable|integer|exists:deploy_templates,id',
+            'template_id'        => 'nullable|integer|exists:project_templates,id',
             'deploy_path'        => 'required',
             'url'                => 'url|nullable',
             'build_url'          => 'url|nullable',

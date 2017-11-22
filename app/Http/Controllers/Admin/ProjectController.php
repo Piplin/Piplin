@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Piplin\Bus\Jobs\SetupSkeletonJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectRequest;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Key;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;
@@ -43,7 +43,7 @@ class ProjectController extends Controller
         $groups = ProjectGroup::orderBy('order')
                     ->get();
 
-        $templates = DeployTemplate::orderBy('name')
+        $templates = ProjectTemplate::orderBy('name')
                     ->get();
 
         return view('admin.projects.index', [
@@ -98,7 +98,7 @@ class ProjectController extends Controller
             $template_id = array_pull($fields, 'template_id');
         }
 
-        $skeleton = DeployTemplate::find($template_id);
+        $skeleton = ProjectTemplate::find($template_id);
 
         $group_id = array_pull($fields, 'targetable_id');
 
@@ -138,7 +138,7 @@ class ProjectController extends Controller
             $fields['repository']      = $skeleton->repository;
             $target                    = Project::create($fields);
         } else {
-            $target = DeployTemplate::create($fields);
+            $target = ProjectTemplate::create($fields);
         }
 
         dispatch(new SetupSkeletonJob($target, $skeleton));

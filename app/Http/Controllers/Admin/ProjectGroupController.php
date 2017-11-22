@@ -14,7 +14,7 @@ namespace Piplin\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectGroupRequest;
-use Piplin\Models\DeployTemplate;
+use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Key;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;

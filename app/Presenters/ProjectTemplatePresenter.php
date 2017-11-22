@@ -17,7 +17,7 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 /**
  * The view presenter for a deploy template class.
  */
-class DeployTemplatePresenter extends CommandPresenter
+class ProjectTemplatePresenter extends CommandPresenter
 {
     //
 }
