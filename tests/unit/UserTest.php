@@ -30,8 +30,8 @@ class UserTest extends \Codeception\TestCase\Test
 
     public function testRegister()
     {
-        $name     = 'phecho';
-        $email    = 'phecho@piplin.org';
+        $name     = 'test';
+        $email    = 'test@piplin.com';
         $password = 'password';
 
         User::create(['name' => $name, 'email' => $email, 'password' => $password]);
@@ -44,6 +44,6 @@ class UserTest extends \Codeception\TestCase\Test
         // access model
         $user = User::where('name', 'piplin')->first();
 
-        $this->assertEquals('piplin@piplin.org', $user->email);
+        $this->assertEquals('piplin@piplin.com', $user->email);
     }
 }
