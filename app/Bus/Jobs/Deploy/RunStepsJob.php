@@ -541,7 +541,7 @@ class RunStepsJob extends Job
             ]);
 
             if ($this->isBuild === true) {
-                 $tokens = array_merge($tokens, [
+                $tokens = array_merge($tokens, [
                     'builds_path'  => $builds_dir,
                 ]);
             } else {

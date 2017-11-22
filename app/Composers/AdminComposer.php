@@ -108,7 +108,6 @@ class AdminComposer
                 ],
             ],
         ];
-
     }
 
     /**
@@ -141,18 +140,17 @@ class AdminComposer
 
         // Deployment collection
         if (in_array($name, ['admin.templates.index', 'admin.templates.show'], true)) {
-           $current_menu = 'resources';
+            $current_menu = 'resources';
         } elseif ($name === 'admin.keys.index') {
             $current_menu = 'resources';
         } elseif (in_array($name, ['admin.cabinets.index', 'admin.cabinets.show'], true)) {
-           $current_menu = 'resources';
+            $current_menu = 'resources';
         }
 
         Vshare::share([
             'sub_menu' => $this->getSubMenu(),
             'current_menu' => $current_menu,
         ]);
-
     }
 
     /**

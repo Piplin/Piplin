@@ -13,7 +13,6 @@ class CreatePatternsTable extends Migration
      */
     public function up()
     {
-
         Schema::create('patterns', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
