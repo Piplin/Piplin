@@ -11,17 +11,17 @@
 
 return [
 
-    'label'        => 'Artifact patterns',
-    'create'           => 'Create Pattern',
-    'create_success'   => 'Pattern created.',
-    'edit'             => 'Edit the pattern',
-    'edit_success'     => 'Pattern updated.',
-    'delete_success'   => 'The pattern has been deleted.',
-    'none'             => 'The plan does not currently have any artifact patterns setup',
-    'name'             => 'Name',
-    'copy_pattern'     => 'Copy pattern',
-    'warning'          => 'The pattern could not be saved, please check the form below.',
-    'name_placeholder' => 'Export tar package',
-    'example'          => 'Specify the name of the artifact(s) you want to keep. e.g. **/*.tar.gz',
+    'label'            => '出品规则',
+    'create'           => '新建规则',
+    'create_success'   => '规则创建成功.',
+    'edit'             => '编辑规则',
+    'edit_success'     => '规则更新成功.',
+    'delete_success'   => '该出品规则已被成功删除.',
+    'none'             => '该构建计划还没有设置出品规则。',
+    'name'             => '名称',
+    'copy_pattern'     => '复制规则',
+    'warning'          => '信息保存失败。',
+    'name_placeholder' => '导出tar包',
+    'example'          => '指定你想要导出文件的规则. 如： **/*.tar.gz',
 
 ];

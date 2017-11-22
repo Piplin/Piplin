@@ -18,7 +18,7 @@ use Piplin\Models\Command as Stage;
 use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
 use Piplin\Models\Environment;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 use Piplin\Models\ServerLog;
 
@@ -73,7 +73,7 @@ class SetupTaskJob extends Job
      */
     public function handle()
     {
-        if ($this->task->targetable && $this->task->targetable instanceof Plan) {
+        if ($this->task->targetable && $this->task->targetable instanceof BuildPlan) {
             $stakes = [
                 Stage::DO_PREPARE => null,
                 Stage::DO_BUILD   => null,
@@ -242,14 +242,14 @@ class SetupTaskJob extends Job
     /**
      * Create server logs.
      *
-     * @param Plan $plan
+     * @param BuildPlan $plan
      * @param inet $step
      *
      * @return void
      */
-    private function createBuildServerlog($plan, $step)
+    private function createBuildServerlog($buildPlan, $step)
     {
-        foreach ($plan->servers->where('enabled', true) as $server) {
+        foreach ($buildPlan->servers->where('enabled', true) as $server) {
             ServerLog::create([
                 'server_id'      => $server->id,
                 'task_step_id' => $step->id,

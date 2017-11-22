@@ -21,7 +21,7 @@ use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Environment;
 use Piplin\Models\Hook;
 use Piplin\Models\Link;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;
 use Piplin\Models\Provider;
@@ -62,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::model('group', ProjectGroup::class);
         Route::model('project', Project::class);
-        Route::model('plan', Plan::class);
+        Route::model('build', BuildPlan::class);
         Route::model('task', Task::class);
         Route::model('hook', Hook::class);
         Route::model('server', Server::class);

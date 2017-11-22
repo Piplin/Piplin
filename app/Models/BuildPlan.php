@@ -16,12 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Piplin\Models\Traits\BroadcastChanges;
 use Piplin\Models\Traits\HasTargetable;
-use Piplin\Presenters\PlanPresenter;
+use Piplin\Presenters\BuildPlanPresenter;
 
 /**
  * Plan model.
  */
-class Plan extends Model implements HasPresenter
+class BuildPlan extends Model implements HasPresenter
 {
     use SoftDeletes, BroadcastChanges, HasTargetable;
 
@@ -82,6 +82,6 @@ class Plan extends Model implements HasPresenter
      */
     public function getPresenterClass()
     {
-        return PlanPresenter::class;
+        return BuildPlanPresenter::class;
     }
 }

@@ -1,5 +1,5 @@
 @if (!count($latest))
-    <p>{{ trans('dashboard.no_deployments') }}</p>
+    <p>{{ trans('dashboard.no_tasks') }}</p>
 @else
 <ul class="timeline">
     @foreach ($latest as $date => $tasks)

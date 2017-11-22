@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Models\Task;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 
 /**
@@ -26,30 +26,30 @@ class BuildController extends Controller
     /**
      * The details of an individual plan.
      *
-     * @param Plan   $plan
-     * @param string $tab
+     * @param BuildPlan $buildPlan
+     * @param string    f$tab
      *
      * @return View
      */
-    public function show(Plan $plan, $tab = '')
+    public function show(BuildPlan $buildPlan, $tab = '')
     {
-        $project = $plan->project;
+        $project = $buildPlan->project;
         $data    = [
-            'plan'            => $plan,
+            'plan'            => $buildPlan,
             'project'         => $project,
-            'targetable_type' => get_class($plan),
-            'targetable_id'   => $plan->id,
+            'targetable_type' => get_class($buildPlan),
+            'targetable_id'   => $buildPlan->id,
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'environments'    => [],
             'optional'        => [],
-            'deployments'     => $this->getLatest($plan),
+            'deployments'     => $this->getLatest($buildPlan),
             'tab'             => $tab,
-            'servers'         => $plan->servers,
-            'patterns'        => $plan->patterns,
+            'servers'         => $buildPlan->servers,
+            'patterns'        => $buildPlan->patterns,
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-                ['url' => route('builds', ['id' => $plan->id]), 'label' => trans('plans.label')],
+                ['url' => route('builds', ['id' => $buildPlan->id]), 'label' => trans('plans.label')],
             ],
         ];
 
@@ -69,14 +69,14 @@ class BuildController extends Controller
     /**
      * Gets the latest deployments for a project.
      *
-     * @param  Plan  $plan
-     * @param  int   $paginate
+     * @param  BuildPlan  $buildPlan
+     * @param  int        $paginate
      * @return array
      */
-    private function getLatest(Plan $plan, $paginate = 15)
+    private function getLatest(BuildPlan $buildPlan, $paginate = 15)
     {
-        return Task::where('targetable_type', get_class($plan))
-                           ->where('targetable_id', $plan->id)
+        return Task::where('targetable_type', get_class($buildPlan))
+                           ->where('targetable_id', $buildPlan->id)
                            ->with('user')
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')

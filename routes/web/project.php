@@ -24,7 +24,7 @@ Route::group([
         ]);
 
         // Build plan
-        Route::get('build/{plan}/{tab?}', [
+        Route::get('build/{build}/{tab?}', [
             'as'   => 'builds',
             'uses' => 'BuildController@show',
         ]);

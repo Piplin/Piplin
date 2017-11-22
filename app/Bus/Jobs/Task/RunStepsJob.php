@@ -24,7 +24,7 @@ use Piplin\Models\Command as Stage;
 use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
 use Piplin\Models\Environment;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 use Piplin\Models\Server;
 use Piplin\Models\ServerLog;
@@ -91,7 +91,7 @@ class RunStepsJob extends Job
         $this->private_key     = $private_key;
         $this->cache_key       = AbortTaskJob::CACHE_KEY_PREFIX . $task->id;
         $this->release_archive = $release_archive;
-        if ($this->task->targetable && $this->task->targetable instanceof Plan) {
+        if ($this->task->targetable && $this->task->targetable instanceof BuildPlan) {
             $this->isBuild = true;
         } else {
             $this->isBuild = false;

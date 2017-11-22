@@ -37,7 +37,7 @@
                         <div class="panel-collapse collapse" id="tokens">
                             <ul class="list-unstyled">
                                 <li><code>@{{ project_path }}</code> - {{ trans('commands.project_path') }}, {{ trans('commands.example') }} <span class="label label-default">/var/www</span></li>
-                                @if($targetable_type == 'Piplin\\Models\\Plan')
+                                @if($targetable_type == 'Piplin\\Models\\BuildPlan')
                                 <li><code>@{{ build }}</code> - {{ trans('commands.release_id') }}, {{ trans('commands.example') }} <span class="label label-default">{{ date('YmdHis') }}</span></li>
                                 <li><code>@{{ build_path }}</code> - {{ trans('commands.release_path') }}, {{ trans('commands.example') }} <span class="label label-default">/var/www/builds/{{ date('YmdHis') }}</span></li>
                                 @else

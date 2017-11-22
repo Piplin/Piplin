@@ -312,7 +312,7 @@ class Project extends Model implements HasPresenter
      */
     public function plan()
     {
-        return $this->hasOne(Plan::class);
+        return $this->hasOne(BuildPlan::class);
     }
 
     /**

@@ -8,7 +8,7 @@ use Piplin\Models\Environment;
 use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\Variable;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
 use Piplin\Models\SharedFile;
@@ -51,7 +51,7 @@ class CreateConverter extends Migration
             if (Str::endsWith($item->targetable_type, 'Template')) {
                 $item->targetable_type = ProjectTemplate::class;
             } elseif (Str::endsWith($item->targetable_type, 'Plan')) {
-                $item->targetable_type = Plan::class;
+                $item->targetable_type = BuildPlan::class;
             } elseif (Str::endsWith($item->targetable_type, 'ProjectGroup')) {
                 $item->targetable_type = ProjectGroup::class;
             } elseif (Str::endsWith($item->targetable_type, 'User')) {

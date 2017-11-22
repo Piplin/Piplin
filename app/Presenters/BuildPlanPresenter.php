@@ -12,12 +12,11 @@
 namespace Piplin\Presenters;
 
 use McCool\LaravelAutoPresenter\BasePresenter;
-use Piplin\Models\Plan;
 
 /**
- * The view presenter for a plan class.
+ * The view presenter for a build plan class.
  */
-class PlanPresenter extends CommandPresenter
+class BuildPlanPresenter extends CommandPresenter
 {
     //
 }

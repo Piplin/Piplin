@@ -17,7 +17,7 @@ use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreServerRequest;
 use Piplin\Models\Cabinet;
 use Piplin\Models\Environment;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 use Piplin\Models\Server;
 
@@ -48,10 +48,10 @@ class ServerController extends Controller
         $targetable_id   = array_pull($fields, 'targetable_id');
         $targetable_type = array_pull($fields, 'targetable_type');
 
-        if ($targetable_type === 'Piplin\\Models\\Environment') {
+        if ($targetable_type === Environment::class) {
             $targetable = Environment::findOrFail($targetable_id);
-        } elseif ($targetable_type === 'Piplin\\Models\\Plan') {
-            $targetable = Plan::findOrFail($targetable_id);
+        } elseif ($targetable_type === BuildPlan::class) {
+            $targetable = BuildPlan::findOrFail($targetable_id);
         } else {
             $targetable = Cabinet::findOrFail($targetable_id);
         }

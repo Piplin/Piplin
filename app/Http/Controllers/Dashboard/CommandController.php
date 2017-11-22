@@ -18,7 +18,7 @@ use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreCommandRequest;
 use Piplin\Models\Command;
 use Piplin\Models\ProjectTemplate;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 
 /**
@@ -58,7 +58,7 @@ class CommandController extends Controller
                     'label' => $target->name
                 ],
             ];
-        } elseif ($target instanceof Plan) {
+        } elseif ($target instanceof BuildPlan) {
             $breadcrumb = [
                 [
                     'url' => route('projects', ['id' => $target->id]),

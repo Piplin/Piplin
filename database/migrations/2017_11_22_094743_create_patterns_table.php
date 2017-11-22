@@ -17,10 +17,10 @@ class CreatePatternsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('copy_pattern');
-            $table->unsignedInteger('plan_id');
+            $table->unsignedInteger('build_plan_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('plan_id')->references('id')->on('plans');
+            $table->foreign('build_plan_id')->references('id')->on('build_plans');
         });
 
         Schema::create('command_pattern', function (Blueprint $table) {

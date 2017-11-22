@@ -14,7 +14,7 @@ namespace Piplin\Http\Controllers\Dashboard;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StorePatternRequest;
 use Piplin\Models\Pattern;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 
 /**
  * Controller for patterns.
@@ -35,7 +35,7 @@ class PatternController extends Controller
             'plan_id'
         );
 
-        $plan = Plan::findOrFail($fields['plan_id']);
+        $plan = BuildPlan::findOrFail($fields['plan_id']);
 
         $this->authorize('manage', $plan->project);
 

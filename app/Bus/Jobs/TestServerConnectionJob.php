@@ -16,7 +16,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Piplin\Models\Cabinet;
 use Piplin\Models\Environment;
-use Piplin\Models\Plan;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 use Piplin\Models\Server;
 use Piplin\Services\Scripts\Runner as Process;
@@ -55,7 +55,7 @@ class TestServerConnectionJob extends Job implements ShouldQueue
         $this->server = $server;
         if ($this->server->targetable instanceof Environment) {
             $this->project = $this->server->targetable->targetable;
-        } elseif ($this->server->targetable instanceof Plan) {
+        } elseif ($this->server->targetable instanceof BuildPlan) {
             $this->project = $this->server->targetable->project;
         }
     }

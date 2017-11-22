@@ -14,7 +14,6 @@ namespace Piplin\Presenters;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Piplin\Models\Command;
 use Piplin\Models\Task;
-use Piplin\Models\Plan;
 use Piplin\Presenters\Traits\RuntimePresenter;
 
 /**
