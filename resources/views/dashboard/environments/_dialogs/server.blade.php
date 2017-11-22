@@ -30,7 +30,7 @@
                         <div class="col-sm-9">
                             <select id="server_targetable_id" disabled="disabled" name="targetable_id" class="form-control select2">
                                
-                                    <option value="{{ $plan->id }}" selected="true">{{ $plan->name }}</option>
+                                    <option value="{{ $buildPlan->id }}" selected="true">{{ $buildPlan->name }}</option>
                             </select>
                         </div>
                     </div>

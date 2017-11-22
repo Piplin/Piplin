@@ -7,7 +7,7 @@
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="pattern_id" name="id" />
-                <input type="hidden" name="plan_id" value="{{ $targetable_id }}" />
+                <input type="hidden" name="build_plan_id" value="{{ $targetable_id }}" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">

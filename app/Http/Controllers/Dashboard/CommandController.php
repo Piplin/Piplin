@@ -260,7 +260,7 @@ class CommandController extends Controller
      */
     protected function getForTaskStep($target, $step)
     {
-        $with = $target instanceof Plan ? ['patterns'] : ['environments'];
+        $with = $target instanceof BuildPlan ? ['patterns'] : ['environments'];
 
         return $target->commands()
                 ->with($with)

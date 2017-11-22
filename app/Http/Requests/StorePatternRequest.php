@@ -26,9 +26,9 @@ class StorePatternRequest extends Request
     public function rules()
     {
         return [
-            'name'         => 'required',
-            'copy_pattern' => 'required',
-            'plan_id'      => 'required|integer|exists:plans,id',
+            'name'          => 'required',
+            'copy_pattern'  => 'required',
+            'build_plan_id' => 'required|integer|exists:build_plans,id',
         ];
     }
 }

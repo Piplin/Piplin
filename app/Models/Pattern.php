@@ -27,7 +27,7 @@ class Pattern extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'copy_pattern', 'plan_id'];
+    protected $fillable = ['name', 'copy_pattern', 'build_plan_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -41,8 +41,8 @@ class Pattern extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function plan()
+    public function buildPlan()
     {
-        return $this->belongsTo(Plan::class);
+        return $this->belongsTo(BuildPlan::class);
     }
 }

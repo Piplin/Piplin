@@ -71,9 +71,9 @@
         }
 
         pattern.save({
-            name:         $('#name').val(),
-            copy_pattern: $('#copy_pattern').val(),
-            plan_id:      $('input[name="plan_id"]').val()
+            name:          $('#name').val(),
+            copy_pattern:  $('#copy_pattern').val(),
+            build_plan_id: $('input[name="build_plan_id"]').val()
         }, {
             wait: true,
             success: function(model, response, options) {
@@ -154,8 +154,8 @@
             });
 
             Piplin.listener.on('pattern:' + Piplin.events.MODEL_CREATED, function (data) {
-                var plan_id = $('input[name="plan_id"]').val();
-                if (parseInt(data.model.plan_id) === parseInt(plan_id)) {
+                var build_plan_id = $('input[name="build_plan_id"]').val();
+                if (parseInt(data.model.build_plan_id) === parseInt(build_plan_id)) {
                     Piplin.Patterns.add(data.model);
                 }
             });

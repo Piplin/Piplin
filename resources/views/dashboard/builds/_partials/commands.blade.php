@@ -16,9 +16,9 @@
                 @foreach(['prepare', 'build', 'test', 'result'] as $index => $stage)
                 <tr>
                     <td>{{ $index+1 }}</td>
-                    <td>{{ $plan->{'before_'.$stage} }}</td>
-                    <td><a href="{{ route('builds.step', ['id' => $plan->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
-                    <td>{{ $plan->{'after_'.$stage} }}</td>
+                    <td>{{ $buildPlan->{'before_'.$stage} }}</td>
+                    <td><a href="{{ route('builds.step', ['id' => $buildPlan->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
+                    <td>{{ $buildPlan->{'after_'.$stage} }}</td>
                 </tr>
                 @endforeach
             </tbody>

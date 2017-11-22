@@ -32,12 +32,12 @@ class PatternController extends Controller
         $fields = $request->only(
             'name',
             'copy_pattern',
-            'plan_id'
+            'build_plan_id'
         );
 
-        $plan = BuildPlan::findOrFail($fields['plan_id']);
+        $buildPlan = BuildPlan::findOrFail($fields['build_plan_id']);
 
-        $this->authorize('manage', $plan->project);
+        $this->authorize('manage', $buildPlan->project);
 
         $pattern = Pattern::create($fields);
 

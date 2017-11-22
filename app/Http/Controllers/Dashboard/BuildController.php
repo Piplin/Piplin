@@ -35,7 +35,7 @@ class BuildController extends Controller
     {
         $project = $buildPlan->project;
         $data    = [
-            'plan'            => $buildPlan,
+            'buildPlan'       => $buildPlan,
             'project'         => $project,
             'targetable_type' => get_class($buildPlan),
             'targetable_id'   => $buildPlan->id,

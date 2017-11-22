@@ -16,12 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Piplin\Models\Traits\BroadcastChanges;
 use Piplin\Models\Traits\HasTargetable;
-use Piplin\Presenters\BuildPlanPresenter;
+use Piplin\Presenters\DeployPlanPresenter;
 
 /**
- * Plan model.
+ * Deploy plan model.
  */
-class BuildPlan extends Model implements HasPresenter
+class DeployPlan extends Model implements HasPresenter
 {
     use SoftDeletes, BroadcastChanges, HasTargetable;
 
@@ -46,43 +46,12 @@ class BuildPlan extends Model implements HasPresenter
     }
 
     /**
-     * Has many relationship.
-     *
-     * @return Command
-     */
-    public function commands()
-    {
-        return $this->morphMany(Command::class, 'targetable')->orderBy('order', 'ASC');
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return Server
-     */
-    public function servers()
-    {
-        return $this->morphMany(Server::class, 'targetable');
-    }
-
-    /**
-     * Has many relationship.
-     *
-     * @return Hook
-     */
-    public function patterns()
-    {
-        return $this->hasMany(Pattern::class)
-                    ->orderBy('name');
-    }
-
-    /**
      * Get the presenter class.
      *
      * @return string
      */
     public function getPresenterClass()
     {
-        return BuildPlanPresenter::class;
+        return DeployPlanPresenter::class;
     }
 }

@@ -308,11 +308,19 @@ class Project extends Model implements HasPresenter
     }
 
     /**
-     * Get the plan associated with the project.
+     * Get the build plan associated with the project.
      */
-    public function plan()
+    public function buildPlan()
     {
         return $this->hasOne(BuildPlan::class);
+    }
+
+    /**
+     * Get the build plan associated with the project.
+     */
+    public function deployPlan()
+    {
+        return $this->hasOne(DeployPlan::class);
     }
 
     /**
