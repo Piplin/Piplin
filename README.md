@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Piplin/Piplin.svg?branch=master)](https://travis-ci.org/Piplin/Piplin)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Piplin 是一款基于PHP [Laravel 5.5](http://laravel.com)框架开发的开源Web自动化部署系统。
+Piplin 是一款免费、开源的持续集成系统，可应用于软件的自动化构建、测试和部署相关的各种任务场景。
 
 ![Screenshot](http://www.piplin.com/piplin.png)
 
