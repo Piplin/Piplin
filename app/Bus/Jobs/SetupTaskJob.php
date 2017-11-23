@@ -89,7 +89,7 @@ class SetupTaskJob extends Job
             ];
             $commandStep = 'createBuildCommandStep';
             $runStep     = 'createBuildStep';
-        // Deploy task
+            // Deploy task
         } else {
             $this->setDeploymentEnvironments();
             $stakes = [
