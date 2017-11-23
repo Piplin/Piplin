@@ -41,11 +41,12 @@
                 <section class="content" id="app">
                     @yield('content')
                 </section>
+                @include('_partials.footer')
             </div>
             </div>
             </div>
             @include('dashboard._partials.trash_dialog')
-            @include('_partials.footer')
+        
         </div>
 
         <script src="{{ cdn('js/vendor.js') }}"></script>

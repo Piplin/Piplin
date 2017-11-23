@@ -114,10 +114,10 @@ body {
 
 .main-footer {
   background: $body-bg;
-  padding: 15px;
+  padding: 15px 20px;
   color: #444;
   border-top: 1px solid $gray;
-  margin-left: $sidebar-width;
+  text-align: center;
 }
 
 /* Fixed layout */
