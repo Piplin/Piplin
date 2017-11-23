@@ -13,15 +13,15 @@
         FAILED:       3,
         NOT_DEPLOYED: 4,
 
-        // Deployment status
-        DEPLOYMENT_DRAFT:    -1,
-        DEPLOYMENT_COMPLETED: 0,
-        DEPLOYMENT_PENDING:   1,
-        DEPLOYMENT_RUNNING: 2,
-        DEPLOYMENT_FAILED:    3,
-        DEPLOYMENT_ERRORS:    4,
-        DEPLOYMENT_CANCELLED: 5,
-        DEPLOYMENT_ABORTED:   6,
+        // Task status
+        TASK_DRAFT:    -1,
+        TASK_COMPLETED: 0,
+        TASK_PENDING:   1,
+        TASK_RUNNING: 2,
+        TASK_FAILED:    3,
+        TASK_ERRORS:    4,
+        TASK_CANCELLED: 5,
+        TASK_ABORTED:   6,
 
         // Server log status
         SVRLOG_COMPLETED: 0,
@@ -150,33 +150,33 @@
         data.done = false;
         data.success = false;
 
-        if (task_status === Piplin.statuses.DEPLOYMENT_COMPLETED) {
+        if (task_status === Piplin.statuses.TASK_COMPLETED) {
             data.icon_class = 'check';
             data.label_class = 'success';
             data.label = trans('tasks.completed');
             data.done = true;
             data.success = true;
-        } else if (task_status === Piplin.statuses.DEPLOYMENT_RUNNING) {
+        } else if (task_status === Piplin.statuses.TASK_RUNNING) {
             data.icon_class = 'load piplin-spin';
             data.label_class = 'warning';
             data.label = trans('tasks.running');
-        } else if (task_status === Piplin.statuses.DEPLOYMENT_FAILED) {
+        } else if (task_status === Piplin.statuses.TASK_FAILED) {
             data.icon_class = 'close';
             data.label_class = 'danger';
             data.label = trans('tasks.failed');
             data.done = true;
-        } else if (task_status === Piplin.statuses.DEPLOYMENT_ERRORS) {
+        } else if (task_status === Piplin.statuses.TASK_ERRORS) {
             data.icon_class = 'close';
             data.label_class = 'success';
             data.label = trans('tasks.completed_with_errors');
             data.done = true;
             data.success = true;
-        } else if (task_status === Piplin.statuses.DEPLOYMENT_CANCELLED) {
+        } else if (task_status === Piplin.statuses.TASK_CANCELLED) {
             data.icon_class = 'warning';
             data.label_class = 'danger';
             data.label = trans('tasks.cancelled');
             data.done = true;
-        } else if (task_status === Piplin.statuses.DEPLOYMENT_DRAFT) {
+        } else if (task_status === Piplin.statuses.TASK_DRAFT) {
             data.icon_class = 'edit';
             data.label_class = 'danger';
             data.label = trans('tasks.draft');

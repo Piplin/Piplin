@@ -42,11 +42,11 @@
                 'id': data.model.id
             });
 
-            if (data.model.status === Piplin.statuses.DEPLOYMENT_COMPLETED) {
+            if (data.model.status === Piplin.statuses.TASK_COMPLETED) {
                 Piplin.toast(toast_title + ' - ' + trans('tasks.completed'), data.model.project_name, 'success');
-            } else if (data.model.status === Piplin.statuses.DEPLOYMENT_FAILED) {
+            } else if (data.model.status === Piplin.statuses.TASK_FAILED) {
                 Piplin.toast(toast_title + ' - ' + trans('tasks.failed'), data.model.project_name, 'error');
-            } else if (data.model.status === Piplin.statuses.DEPLOYMENT_ERRORS) {
+            } else if (data.model.status === Piplin.statuses.TASK_ERRORS) {
                 Piplin.toast(toast_title + ' - ' + trans('tasks.completed_with_errors'), data.model.project_name, 'warning');
             } // FIXME: Add cancelled
         }
@@ -105,7 +105,7 @@
         var template = _.template($('#task-list-template').html());
         var html = template(data.model);
 
-        if (data.model.status === Piplin.statuses.DEPLOYMENT_RUNNING) {
+        if (data.model.status === Piplin.statuses.TASK_RUNNING) {
             $('.running_menu').append(html);
         }
 

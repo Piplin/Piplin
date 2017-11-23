@@ -51,6 +51,13 @@
     }
   }
 
+  .badge {
+      position: absolute;
+      float: right;
+      right: 0;
+      top: 10px;
+  }
+
   .user-menu {
     position: fixed;
     bottom: 0;
