@@ -27,7 +27,7 @@ class BuildController extends Controller
      * The details of an individual plan.
      *
      * @param BuildPlan $buildPlan
-     * @param string    f$tab
+     * @param string    $tab
      *
      * @return View
      */

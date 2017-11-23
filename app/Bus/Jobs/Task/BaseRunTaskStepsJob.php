@@ -33,6 +33,9 @@ use Piplin\Services\Scripts\Parser as ScriptParser;
 use Piplin\Services\Scripts\Runner as Process;
 use Illuminate\Bus\Queueable;
 
+/**
+ * Abstract class of run task steps.
+ */
 abstract class BaseRunTaskStepsJob
 {
     /*

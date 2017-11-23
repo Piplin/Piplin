@@ -250,12 +250,12 @@ class SetupTaskJob extends Job
     /**
      * Create server logs.
      *
-     * @param BuildPlan $plan
-     * @param inet $step
+     * @param BuildPlan $buildPlan
+     * @param inet      $step
      *
      * @return void
      */
-    private function createBuildServerlog($buildPlan, $step)
+    private function createBuildServerlog(BuildPlan $buildPlan, $step)
     {
         foreach ($buildPlan->servers->where('enabled', true) as $server) {
             ServerLog::create([

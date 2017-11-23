@@ -29,7 +29,7 @@ class EnvironmentController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param DeployPlan     $project
+     * @param DeployPlan  $deployPlan
      * @param Environment $environment
      * @param string      $tab
      *
