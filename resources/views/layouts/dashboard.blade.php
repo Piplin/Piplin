@@ -15,7 +15,7 @@
         <meta name="locale" content="{{ $language }}" />
         <meta name="user_id"  content="{{ $current_user->id }}" />  
     </head>
-    <body class="hold-transition skin-{{ $theme }} {{ isset($sub_menu) ? 'has-sub-sidebar' : null }}">
+    <body class="hold-transition skin-default {{ isset($sub_menu) ? 'has-sub-sidebar' : null }}">
         <div class="wrapper">
             @include('_partials.sidebar')
             @if(isset($sub_menu))
