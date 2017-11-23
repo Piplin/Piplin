@@ -32,6 +32,7 @@ class RenameDeploymentsTable extends Migration
             $table->dropForeign('deploy_steps_deployment_id_foreign');
             $table->dropForeign('deploy_steps_command_id_foreign');
         });
+
         Schema::rename('deploy_steps', 'task_steps');
 
 
@@ -47,7 +48,28 @@ class RenameDeploymentsTable extends Migration
         {
             $table->dropForeign('server_logs_deploy_step_id_foreign');
             $table->renameColumn('deploy_step_id', 'task_step_id');
+            $table->foreign('task_step_id')->references('id')->on('task_steps');
         });
+
+        // Add foreign
+        Schema::table('tasks', function($table)
+        {
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
+        }
+
+        // Add foreign
+        Schema::table('environment_task', function($table)
+        {
+            $table->foreign('environment_id')->references('id')->on('environments');
+            $table->foreign('task_id')->references('id')->on('tasks');
+        }
+
+        Schema::table('task_steps', function($table)
+        {
+             $table->foreign('task_id')->references('id')->on('tasks');
+             $table->foreign('command_id')->references('id')->on('commands');
+        }
     }
 
     /**
