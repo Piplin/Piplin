@@ -30,7 +30,7 @@ Route::group([
         ]);
 
         // Deploy plan
-        Route::get('deploy-plan/{project}/{tab?}', [
+        Route::get('deploy-plan/{deployment}/{tab?}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
         ]);
@@ -121,7 +121,7 @@ Route::group([
             'as'    => 'environments.reorder',
             'uses'  => 'EnvironmentController@reorder',
         ]);
-        Route::get('projects/{project}/environments/{environment}/{tab?}', [
+        Route::get('deploy-plan/{deployment}/environments/{environment}/{tab?}', [
             'as'   => 'environments.show',
             'uses' => 'EnvironmentController@show',
         ]);

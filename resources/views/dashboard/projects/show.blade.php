@@ -56,8 +56,8 @@
         @if($project->buildPlan)
         <a href="{{ route('builds', ['id' => $project->buildPlan->id]) }}" class="btn btn-lg btn-success"><i class="piplin piplin-build"></i> {{ trans('projects.build_plan') }}</a>
         @endif
-        @if($project->can('deploy'))
-        <a href="{{ route('deployments', ['id' => $project->id]) }}" class="btn btn-lg btn-info"><i class="piplin piplin-deploy"></i> {{ trans('projects.deploy_plan') }}</a>
+        @if($project->deployPlan)
+        <a href="{{ route('deployments', ['id' => $project->deployPlan->id]) }}" class="btn btn-lg btn-info"><i class="piplin piplin-deploy"></i> {{ trans('projects.deploy_plan') }}</a>
         @endif
     </div>
 @stop

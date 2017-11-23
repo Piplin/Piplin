@@ -5,14 +5,14 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id]) }}"><span class="piplin piplin-server"></span> {{ trans('environments.servers') }}</a></li>
-                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="piplin piplin-clock"></span> {{ trans('tasks.label') }}</a></li>
-                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $project->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="piplin piplin-link"></span> {{ trans('environments.links') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id]) }}"><span class="piplin piplin-server"></span> {{ trans('environments.servers') }}</a></li>
+                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="piplin piplin-clock"></span> {{ trans('tasks.label') }}</a></li>
+                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="piplin piplin-link"></span> {{ trans('environments.links') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">
                 @if($tab == 'deployments')
-                    @include('dashboard.projects._partials.deployments')
+                    @include('dashboard.projects._partials.tasks')
                 @elseif($tab == 'links')
                     @include('dashboard.environments._partials.links')
                 @else
@@ -31,7 +31,7 @@
         @include('dashboard.environments._dialogs.link')
     @endif
     @include('dashboard.projects._dialogs.public_key')
-    @include('dashboard.projects._dialogs.deploy')
+    @include('dashboard.projects._dialogs.task')
     @include('dashboard.projects._dialogs.rollback')
 @stop
 

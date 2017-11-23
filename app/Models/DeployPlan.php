@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 use Piplin\Models\Traits\BroadcastChanges;
 use Piplin\Models\Traits\HasTargetable;
+use Piplin\Models\Traits\SetupRelations;
 use Piplin\Presenters\DeployPlanPresenter;
 
 /**
@@ -23,7 +24,7 @@ use Piplin\Presenters\DeployPlanPresenter;
  */
 class DeployPlan extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, HasTargetable;
+    use SoftDeletes, BroadcastChanges, SetupRelations, HasTargetable;
 
     /**
      * The attributes that are mass assignable.

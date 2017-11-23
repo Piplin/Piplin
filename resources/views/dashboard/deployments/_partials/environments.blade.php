@@ -38,8 +38,8 @@
 @push('templates')
     <script type="text/template" id="environment-template">
         <td data-environment-id="<%- id %>"><span class="drag-handle"><i class="piplin piplin-drag"></i></span>
-        @if (Route::currentRouteName() == 'projects')
-        <a href="/projects/{{ $project->id }}/environments/<%- id %>" title="<%- description %>"><%- name %></a>
+        @if (Route::currentRouteName() == 'deployments')
+        <a href="/deploy-plan/{{ $targetable_id }}/environments/<%- id %>" title="<%- description %>"><%- name %></a>
         @else
         <%- name %>
         @endif

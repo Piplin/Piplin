@@ -18,6 +18,7 @@ use Piplin\Bus\Jobs\SetupSkeletonJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectRequest;
 use Piplin\Models\Command;
+use Piplin\Models\DeployPlan;
 use Piplin\Models\Task;
 use Piplin\Models\Project;
 
@@ -29,21 +30,24 @@ class DeploymentController extends Controller
     /**
      * The details of an individual project.
      *
-     * @param Project $project
+     * @param DeployPlan $deployPlan
      * @param string  $tab
      *
      * @return View
      */
-    public function show(Project $project, $tab = '')
+    public function show(DeployPlan $deployPlan, $tab = '')
     {
+        $project = $deployPlan->project;
+
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
         });
 
         $data = [
             'project'         => $project,
-            'targetable_type' => get_class($project),
-            'targetable_id'   => $project->id,
+            'deployPlan'      => $deployPlan,
+            'targetable_type' => get_class($deployPlan),
+            'targetable_id'   => $deployPlan->id,
             'optional'        => $optional,
             'deployments'     => $this->getLatest($project),
             'tags'            => $project->tags()->reverse(),
@@ -56,22 +60,17 @@ class DeploymentController extends Controller
             ],
         ];
 
-        $data['environments'] = $project->environments;
+        $data['environments'] = $deployPlan->environments;
         if ($tab === 'commands') {
             $data['route']     = 'commands.step';
-            $data['variables'] = $project->variables;
+            $data['variables'] = $deployPlan->variables;
             $data['title']     = trans('commands.label');
         } elseif ($tab === 'config-files') {
-            $data['configFiles'] = $project->configFiles;
+            $data['configFiles'] = $deployPlan->configFiles;
             $data['title']       = trans('configFiles.label');
         } elseif ($tab === 'shared-files') {
-            $data['sharedFiles'] = $project->sharedFiles;
+            $data['sharedFiles'] = $deployPlan->sharedFiles;
             $data['title']       = trans('sharedFiles.tab_label');
-        } elseif ($tab === 'hooks') {
-            $data['hooks'] = $project->hooks;
-        } elseif ($tab === 'members') {
-            $data['members'] = $project->members->toJson();
-            $data['title']   = trans('hooks.label');
         } elseif ($tab === 'environments') {
             $data['title'] = trans('environments.label');
         }

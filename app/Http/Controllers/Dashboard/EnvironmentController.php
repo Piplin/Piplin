@@ -19,6 +19,7 @@ use Piplin\Models\Environment;
 use Piplin\Models\EnvironmentLink;
 use Piplin\Models\Link;
 use Piplin\Models\Project;
+use Piplin\Models\DeployPlan;
 
 /**
  * Environment management controller.
@@ -28,15 +29,15 @@ class EnvironmentController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param Project     $project
+     * @param DeployPlan     $project
      * @param Environment $environment
      * @param string      $tab
      *
      * @return Response
      */
-    public function show(Project $project, Environment $environment, $tab = '')
+    public function show(DeployPlan $deployPlan, Environment $environment, $tab = '')
     {
-        $targetable_type = 'Piplin\\Models\\Environment';
+        $project = $deployPlan->project;
 
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
@@ -49,9 +50,10 @@ class EnvironmentController extends Controller
             'title'           => $environment->name,
             'breadcrumb'      => $breadcrumb,
             'project'         => $project,
-            'targetable_type' => $targetable_type,
+            'deployPlan'      => $deployPlan,
+            'targetable_type' => get_class($environment),
             'targetable_id'   => $environment->id,
-            'environments'    => $project->environments,
+            'environments'    => $deployPlan->environments,
             'targetable'      => $environment,
             'branches'        => $project->branches(),
             'tags'            => $project->tags()->reverse(),
@@ -110,11 +112,6 @@ class EnvironmentController extends Controller
         }
 
         $target = $targetable_type::findOrFail($targetable_id);
-
-        // In project
-        if ($targetable_type === 'Piplin\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
 
         $environment = $target->environments()->create($fields);
 
