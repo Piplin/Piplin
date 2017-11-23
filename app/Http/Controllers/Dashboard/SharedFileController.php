@@ -40,11 +40,6 @@ class SharedFileController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
-        // In project
-        if ($targetable_type === 'Piplin\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
-
         return $target->sharedFiles()->create($fields);
     }
 

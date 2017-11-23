@@ -6,7 +6,7 @@
         @include('dashboard.commands._partials.list', [ 'step' => 'after', 'action' => $action + 1 ])
     </div>
 
-    @include('dashboard.projects._dialogs.command')
+    @include('dashboard.commands._dialogs.command')
 @stop
 
 @push('javascript')

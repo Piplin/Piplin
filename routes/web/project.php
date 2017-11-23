@@ -104,7 +104,7 @@ Route::group([
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
         ]);
-        Route::get('projects/{project}/commands/{step}', [
+        Route::get('deploy-plan/{deployment}/commands/{step}', [
             'as'   => 'commands.step',
             'uses' => 'CommandController@index',
         ]);

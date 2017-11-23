@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ $index+1 }}</td>
                     <td>{{ $project->{'before_'.$stage} }}</td>
-                    <td><a href="{{ route($route, ['id' => $project->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
+                    <td><a href="{{ route($route, ['id' => $deployPlan->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
                     <td>{{ $project->{'after_'.$stage} }}</td>
                 </tr>
                 @endforeach
