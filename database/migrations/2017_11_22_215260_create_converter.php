@@ -17,6 +17,7 @@ use Piplin\Models\Cabinet;
 use Piplin\Models\Server;
 use Piplin\Models\BuildPlan;
 use Piplin\Models\DeployPlan;
+use Piplin\Models\Task;
 
 class CreateConverter extends Migration
 {
@@ -47,6 +48,15 @@ class CreateConverter extends Migration
 
         $projects = Project::withTrashed()->get();
         $this->convert($projects);
+
+        $tasks = Task::withTrashed()->get();
+        foreach ($tasks as $task) {
+            $project = Project::find($task->project_id);
+            $deployPlan = DeployPlan::where('project_id', $project->id)->first();
+            $task->targetable_type = DeployPlan::class;
+            $task->targetable_id = $deployPlan->id;
+            $task->save();
+        }
     }
 
     private function convert($items)
