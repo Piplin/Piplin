@@ -100,7 +100,6 @@ class RunDeployTaskStepsJob extends BaseRunTaskStepsJob
 
                     $log->output = $output;
                 }
-
             } catch (\Exception $e) {
                 $log->output .= $this->logError('[' . $server->ip_address . ']: ' . $e->getMessage());
                 $failed = true;
