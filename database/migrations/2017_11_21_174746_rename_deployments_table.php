@@ -33,6 +33,21 @@ class RenameDeploymentsTable extends Migration
             $table->dropForeign('deploy_steps_command_id_foreign');
         });
         Schema::rename('deploy_steps', 'task_steps');
+
+
+        Schema::table('environment_task', function (Blueprint $table) {
+            $table->renameColumn('deployment_id', 'task_id');
+        });
+
+        Schema::table('task_steps', function (Blueprint $table) {
+            $table->renameColumn('deployment_id', 'task_id');
+        });
+
+        Schema::table('server_logs', function($table)
+        {
+            $table->dropForeign('server_logs_deploy_step_id_foreign');
+            $table->renameColumn('deploy_step_id', 'task_step_id');
+        });
     }
 
     /**
