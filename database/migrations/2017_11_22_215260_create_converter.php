@@ -67,8 +67,11 @@ class CreateConverter extends Migration
             }
             $item->save();
 
-            if ($item->project) {
-                $project = $item->project;
+            if ($item->targetable_type && $item->targetable_typ Project::class) {
+                $project = Project::find($item->targetable_id);
+                if (!$project) {
+                    continue;
+                }
                 if (!$project->deployPlan) {
                     $deployPlan = DeployPlan::create([
                         'name'       => $project->name,
