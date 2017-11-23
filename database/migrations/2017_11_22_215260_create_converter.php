@@ -8,7 +8,6 @@ use Piplin\Models\Environment;
 use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\Variable;
-use Piplin\Models\BuildPlan;
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
 use Piplin\Models\SharedFile;
@@ -70,24 +69,15 @@ class CreateConverter extends Migration
 
             if ($item->project) {
                 $project = $item->project;
-                if (!$project->buildPlan) {
-                    $buildPlan = BuildPlan::create([
-                        'name'       => $project->name,
-                        'project_id' => $project->id,
-                    ]);
-                    $item->targetable_type = BuildPlan::class;
-                    $item->targetable_id = $buildPlan->id;
-                    $item->save();
-                }
                 if (!$project->deployPlan) {
                     $deployPlan = DeployPlan::create([
                         'name'       => $project->name,
                         'project_id' => $project->id,
                     ]);
-                    $item->targetable_type = DeployPlan::class;
-                    $item->targetable_id = $deployPlan->id;
-                    $item->save();
                 }
+                $item->targetable_type = DeployPlan::class;
+                $item->targetable_id = $project->deployPlan->id;
+                $item->save();
             }
         }
     }
