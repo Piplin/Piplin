@@ -48,7 +48,7 @@
 @push('templates')
 <script type="text/template" id="project-template">
     <td><%- id %></td>
-    <td><a href="/projects/<%- id %>"><% if (group_name) { %><%- group_name %>/<% } %><%- name %></a></td>
+    <td><a href="/project/<%- id %>"><% if (group_name) { %><%- group_name %>/<% } %><%- name %></a></td>
     <td><%- repository_path %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
@@ -65,9 +65,5 @@
             <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
         </div>
     </td>
-</script>
-
-<script type="text/template" id="project-sidebar-template">
-    <li><a href="/projects/<%- id %>" id="sidebar_project_<%- id %>"><%- name %></a></li>
 </script>
 @endpush
