@@ -24,13 +24,13 @@ Route::group([
         ]);
 
         // Build plan
-        Route::get('build/{build}/{tab?}', [
+        Route::get('build-plan/{build}/{tab?}', [
             'as'   => 'builds',
             'uses' => 'BuildController@show',
         ]);
 
         // Deploy plan
-        Route::get('deployment/{project}/{tab?}', [
+        Route::get('deploy-plan/{project}/{tab?}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
         ]);
@@ -108,7 +108,7 @@ Route::group([
             'as'   => 'commands.step',
             'uses' => 'CommandController@index',
         ]);
-        Route::get('plans/{plan}/commands/{step}', [
+        Route::get('builds/{build}/commands/{step}', [
             'as'   => 'builds.step',
             'uses' => 'CommandController@index',
         ]);

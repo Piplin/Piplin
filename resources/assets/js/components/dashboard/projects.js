@@ -71,7 +71,7 @@
                      msg = trans('projects.create_success');
                 }
                 Piplin.toast(msg, '', 'success');
-                window.location.href = '/projects/' + response.id;
+                window.location.href = '/project/' + response.id;
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();

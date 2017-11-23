@@ -17,6 +17,8 @@ use Piplin\Bus\Jobs\GenerateKeyJob;
 use Piplin\Bus\Jobs\PurgeProjectJob;
 use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
 use Piplin\Models\Project;
+use Piplin\Models\BuildPlan;
+use Piplin\Models\DeployPlan;
 
 /**
  * Event observer for Project model.
@@ -38,6 +40,28 @@ class ProjectObserver
 
         if (!$project->key_id) {
             $this->dispatch(new GenerateKeyJob($project));
+        }
+    }
+
+    /**
+     * Called when the model is saved.
+     *
+     * @param Project $project
+     */
+    public function saved(Project $project)
+    {
+        if (!$project->buildPlan) {
+            BuildPlan::create([
+                'name'       => $project->name,
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if (!$project->deployPlan) {
+            DeployPlan::create([
+                'name'       => $project->name,
+                'project_id' => $project->id,
+            ]);
         }
     }
 

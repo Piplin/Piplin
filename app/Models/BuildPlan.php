@@ -26,6 +26,16 @@ class BuildPlan extends Model implements HasPresenter
     use SoftDeletes, BroadcastChanges, HasTargetable;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'project_id',
+    ];
+
+    /**
      * Belongs to relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
