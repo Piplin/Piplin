@@ -35,74 +35,9 @@ use Piplin\Services\Scripts\Runner as Process;
 /**
  * Run steps of the deployment.
  */
-class RunStepsJob extends Job
+class RunDeployTaskStepsJob extends BaseRunTaskStepsJob
 {
     use SerializesModels, DispatchesJobs;
-
-    /**
-     * @var int
-     */
-    public $timeout = 0;
-
-    /**
-     * @var Task
-     */
-    private $task;
-
-    /**
-     * @var mixed
-     */
-    private $plan;
-
-    /**
-     * @var Project
-     */
-    private $project;
-
-    /**
-     * @var string
-     */
-    private $cache_key;
-
-    /**
-     * @var string
-     */
-    private $private_key;
-
-    /**
-     * @var string
-     */
-    private $release_archive;
-
-    /**
-     *
-     * @var bool
-     */
-    private $isBuild;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param Task   $task
-     * @param string $private_key
-     * @param string $release_archive
-     *
-     * @return void
-     */
-    public function __construct(Task $task, $private_key, $release_archive)
-    {
-        $this->task            = $task;
-        $this->plan            = $task->targetable;
-        $this->project         = $task->project;
-        $this->private_key     = $private_key;
-        $this->cache_key       = AbortTaskJob::CACHE_KEY_PREFIX . $task->id;
-        $this->release_archive = $release_archive;
-        if ($this->plan instanceof BuildPlan) {
-            $this->isBuild = true;
-        } else {
-            $this->isBuild = false;
-        }
-    }
 
     /**
      * Execute the job.
@@ -166,7 +101,6 @@ class RunStepsJob extends Job
                     $log->output = $output;
                 }
 
-                $this->fetchFilesForStep($step, $log);
             } catch (\Exception $e) {
                 $log->output .= $this->logError('[' . $server->ip_address . ']: ' . $e->getMessage());
                 $failed = true;
@@ -211,34 +145,10 @@ class RunStepsJob extends Job
         $latest_release_dir = $this->project->clean_deploy_path . '/releases/' . $this->task->release_id;
         $remote_archive     = $this->project->clean_deploy_path . '/' . $this->release_archive;
         $local_archive      = storage_path('app/' . $this->release_archive);
-        if (in_array($step->stage, [Stage::DO_CLONE, Stage::DO_PREPARE])) {
+        if ($step->stage === Stage::DO_CLONE) {
             $this->sendFile($local_archive, $remote_archive, $log);
         } elseif ($step->stage === Stage::DO_INSTALL) {
             $this->sendConfigFileFromString($latest_release_dir, $log);
-        }
-    }
-
-    /**
-     * Fetchs the files from the remote agent.
-     *
-     * @param TaskStep $step
-     * @param ServerLog  $log
-     */
-    private function fetchFilesForStep(TaskStep $step, ServerLog $log)
-    {
-        // Only custom steps have patterns.
-        if ($step->stage < Stage::DO_PREPARE || !$step->isCustom()) {
-            return;
-        }
-
-        $latest_build_dir = $this->project->clean_deploy_path . '/builds/' . $this->task->release_id;
-
-        foreach ($step->command->patterns as $pattern) {
-            if (!$pattern || !$pattern->copy_pattern) {
-                continue;
-            }
-
-            $this->fetchFile($latest_build_dir.'/'. $pattern->copy_pattern, storage_path('app/artifacts/'), $log);
         }
     }
 
@@ -266,8 +176,8 @@ class RunStepsJob extends Job
     {
         $tokens = $this->getTokenList($step, $server);
 
-        // Generate the export
         $prepend = '';
+        // Generate the export
         foreach ($this->plan->variables as $variable) {
             $key   = $variable->name;
             $value = $variable->value;
@@ -276,10 +186,8 @@ class RunStepsJob extends Job
         }
 
         // Make release_path as your current path
-        if ($step->stage > Stage::DO_INSTALL && $step->stage < Stage::BEFORE_PREPARE) {
+        if ($step->stage > Stage::DO_INSTALL) {
             $prepend .= 'cd ' . $tokens['release_path'] . PHP_EOL;
-        } elseif ($step->stage > Stage::DO_BUILD) {
-            $prepend .= 'cd ' . $tokens['build_path'] . PHP_EOL;
         }
 
         $user = $server->user;
@@ -316,92 +224,10 @@ class RunStepsJob extends Job
                 return new Process('deploy.steps.ActivateNewRelease', $tokens);
             case Stage::DO_PURGE:
                 return new Process('deploy.steps.PurgeOldReleases', $tokens);
-
-            //Build
-            case Stage::DO_PREPARE:
-                return new Process('build.steps.Prepare', $tokens);
-            case Stage::DO_BUILD:
-                return new Process('build.steps.Build', $tokens);
-            case Stage::DO_TEST:
-                return new Process('build.steps.test', $tokens);
-            case Stage::DO_RESULT:
-                return new Process('build.steps.result', $tokens);
         }
 
         // Custom step
         return new Process($step->command->script, $tokens, Process::DIRECT_INPUT);
-    }
-
-    /**
-     * Fetchs a remote file from server.
-     *
-     * @param  string           $local_file
-     * @param  string           $remote_file
-     * @param  ServerLog        $log
-     * @throws RuntimeException
-     */
-    private function fetchFile($remote_file, $local_file, ServerLog $log)
-    {
-        $process = new Process('deploy.FetchFileFromServer', [
-            'port'        => $log->server->port,
-            'private_key' => $this->private_key,
-            'local_file'  => $local_file,
-            'remote_file' => $remote_file,
-            'username'    => $log->server->user,
-            'ip_address'  => $log->server->ip_address,
-        ]);
-
-        $output = '';
-        $process->run(function ($type, $output_line) use (&$output, &$log) {
-            if ($type === \Symfony\Component\Process\Process::ERR) {
-                $output .= $this->logError($output_line);
-            } else {
-                $output .= $this->logSuccess($output_line);
-            }
-
-            $log->output = $output;
-            $log->save();
-        });
-
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
-    }
-
-    /**
-     * Sends a file to a remote server.
-     *
-     * @param  string           $local_file
-     * @param  string           $remote_file
-     * @param  ServerLog        $log
-     * @throws RuntimeException
-     */
-    private function sendFile($local_file, $remote_file, ServerLog $log)
-    {
-        $process = new Process('deploy.SendFileToServer', [
-            'port'        => $log->server->port,
-            'private_key' => $this->private_key,
-            'local_file'  => $local_file,
-            'remote_file' => $remote_file,
-            'username'    => $log->server->user,
-            'ip_address'  => $log->server->ip_address,
-        ]);
-
-        $output = '';
-        $process->run(function ($type, $output_line) use (&$output, &$log) {
-            if ($type === \Symfony\Component\Process\Process::ERR) {
-                $output .= $this->logError($output_line);
-            } else {
-                $output .= $this->logSuccess($output_line);
-            }
-
-            $log->output = $output;
-            $log->save();
-        });
-
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
     }
 
     /**
@@ -491,92 +317,5 @@ class RunStepsJob extends Job
         }
 
         return PHP_EOL . $script;
-    }
-
-    /**
-     * Generates the list of tokens for the scripts.
-     *
-     * @param TaskStep $step
-     * @param Server     $server
-     */
-    private function getTokenList(TaskStep $step, Server $server)
-    {
-        $project_path = $this->project->clean_deploy_path;
-
-        $releases_dir       = $project_path . '/releases';
-        $builds_dir         = $project_path . '/builds';
-        $release_shared_dir = $project_path . '/shared';
-        $remote_archive     = $project_path . '/' . $this->release_archive;
-
-        $tokens = [
-            'project_path'    => $project_path,
-            'branch'          => $this->task->branch,
-            'sha'             => $this->task->commit,
-            'short_sha'       => $this->task->short_commit,
-            'committer_email' => $this->task->committer_email,
-            'committer_name'  => $this->task->committer,
-        ];
-
-        if ($this->isBuild === true) {
-            $tokens = array_merge($tokens, [
-                'build'         => $this->task->release_id,
-                'build_path'    => $builds_dir . '/' . $this->task->release_id,
-            ]);
-        } else {
-            $deployer_email = '';
-            $deployer_name  = 'webhook';
-            if ($this->task->user) {
-                $deployer_name  = $this->task->user->name;
-                $deployer_email = $this->task->user->email;
-            } elseif ($this->task->is_webhook && !empty($this->task->source)) {
-                $deployer_name = $this->task->source;
-            }
-
-            $tokens = array_merge($tokens, [
-                'release'         => $this->task->release_id,
-                'release_path'    => $releases_dir . '/' . $this->task->release_id,
-                'deployer_email'  => $deployer_email,
-                'deployer_name'   => $deployer_name,
-            ]);
-        }
-
-        if (!$step->isCustom()) {
-            $tokens = array_merge($tokens, [
-                'remote_archive' => $remote_archive,
-                'builds_to_keep' => $this->project->builds_to_keep + 1,
-            ]);
-
-            if ($this->isBuild === true) {
-                $tokens = array_merge($tokens, [
-                    'builds_path'  => $builds_dir,
-                ]);
-            } else {
-                $tokens = array_merge($tokens, [
-                    'shared_path'   => $release_shared_dir,
-                    'releases_path' => $releases_dir,
-                ]);
-            }
-        }
-
-        return $tokens;
-    }
-
-    /**
-     * Generates an error string to log to the DB.
-     *
-     * @param string $message
-     */
-    private function logError($message)
-    {
-        return '<error>' . $message . '</error>';
-    }
-    /**
-     * Generates an general output string to log to the DB.
-     *
-     * @param string $message
-     */
-    private function logSuccess($message)
-    {
-        return '<info>' . $message . '</info>';
     }
 }

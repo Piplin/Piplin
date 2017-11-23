@@ -19,10 +19,12 @@ use Illuminate\Queue\Queue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Piplin\Bus\Events\TaskFinishedEvent;
-use Piplin\Bus\Jobs\Task\RunStepsJob;
+use Piplin\Bus\Jobs\Task\RunDeployTaskStepsJob;
+use Piplin\Bus\Jobs\Task\RunBuildTaskStepsJob;
 use Piplin\Bus\Jobs\Repository\CreateArchiveJob;
 use Piplin\Bus\Jobs\Repository\GetCommitDetailsJob;
 use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Command as Stage;
 use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
@@ -72,7 +74,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     public function __construct(Task $task)
     {
-        $this->task = $task;
+        $this->task    = $task;
         $this->project = $task->targetable->project;
     }
 
@@ -120,7 +122,11 @@ class DeployProjectJob extends Job implements ShouldQueue
 
             $this->dispatch(new CreateArchiveJob($this->project, $this->task->commit, $this->release_archive));
 
-            $this->dispatch(new RunStepsJob($this->task, $this->private_key, $this->release_archive));
+            $runTaskStepsClass = RunDeployTaskStepsJob::class;
+            if ($this->task->targetable instanceof BuildPlan) {
+                $runTaskStepsClass = RunBuildTaskStepsJob::class;
+            }
+            $this->dispatch(new $runTaskStepsClass($this->task, $this->private_key, $this->release_archive));
 
             $this->task->status = Task::COMPLETED;
             $this->project->status    = Project::FINISHED;

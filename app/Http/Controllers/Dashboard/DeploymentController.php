@@ -49,7 +49,7 @@ class DeploymentController extends Controller
             'targetable_type' => get_class($deployPlan),
             'targetable_id'   => $deployPlan->id,
             'optional'        => $optional,
-            'deployments'     => $this->getLatest($project),
+            'deployments'     => $this->getLatest($deployPlan),
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
@@ -79,79 +79,16 @@ class DeploymentController extends Controller
     }
 
     /**
-     * Store a newly created project in storage.
-     *
-     * @param StoreProjectRequest $request
-     *
-     * @return Response
-     */
-    public function create(StoreProjectRequest $request)
-    {
-        $fields = $request->only(
-            'name',
-            'repository',
-            'branch',
-            'deploy_path',
-            'allow_other_branch'
-        );
-
-        $skeleton = null;
-
-        $project = Auth::user()->personalProjects()->create($fields);
-
-        dispatch(new SetupSkeletonJob($project, $skeleton));
-
-        return $project;
-    }
-
-    /**
-     * Update the specified project in storage.
-     *
-     * @param Project             $project
-     * @param StoreProjectRequest $request
-     *
-     * @return Response
-     */
-    public function update(Project $project, StoreProjectRequest $request)
-    {
-        $project->update($request->only(
-            'name',
-            'repository',
-            'branch',
-            'deploy_path',
-            'allow_other_branch'
-        ));
-
-        return $project;
-    }
-
-    /**
-     * Remove the specified project from storage.
-     *
-     * @param Project $project
-     *
-     * @return Response
-     */
-    public function destroy(Project $project)
-    {
-        $project->forceDelete();
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    /**
      * Gets the latest deployments for a project.
      *
-     * @param  Project $project
-     * @param  int     $paginate
+     * @param  DeployPlan $deployPlan
+     * @param  int        $paginate
      * @return array
      */
-    private function getLatest(Project $project, $paginate = 15)
+    private function getLatest(DeployPlan $deployPlan, $paginate = 15)
     {
-        return Task::where('targetable_type', get_class($project))
-                           ->where('targetable_id', $project->id)
+        return Task::where('targetable_type', get_class($deployPlan))
+                           ->where('targetable_id', $deployPlan->id)
                            ->with('user')
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')
