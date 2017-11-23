@@ -43,6 +43,9 @@ class CreateConverter extends Migration
 
         $servers = Server::withTrashed()->get();
         $this->convert($servers);
+
+        $projects = Project::withTrashed()->get();
+        $this->convert($projects);
     }
 
     private function convert($items)
@@ -50,8 +53,6 @@ class CreateConverter extends Migration
         foreach ($items as $item) {
             if (Str::endsWith($item->targetable_type, 'Template')) {
                 $item->targetable_type = ProjectTemplate::class;
-            } elseif (Str::endsWith($item->targetable_type, 'Plan')) {
-                $item->targetable_type = BuildPlan::class;
             } elseif (Str::endsWith($item->targetable_type, 'ProjectGroup')) {
                 $item->targetable_type = ProjectGroup::class;
             } elseif (Str::endsWith($item->targetable_type, 'User')) {
