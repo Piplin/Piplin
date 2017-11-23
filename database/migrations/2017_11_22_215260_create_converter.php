@@ -16,6 +16,8 @@ use Piplin\Models\ProjectGroup;
 use Piplin\Models\User;
 use Piplin\Models\Cabinet;
 use Piplin\Models\Server;
+use Piplin\Models\BuildPlan;
+use Piplin\Models\DeployPlan;
 
 class CreateConverter extends Migration
 {
@@ -65,6 +67,28 @@ class CreateConverter extends Migration
                 $item->targetable_type = Project::class;
             }
             $item->save();
+
+            if ($item->project) {
+                $project = $item->project;
+                if (!$project->buildPlan) {
+                    $buildPlan = BuildPlan::create([
+                        'name'       => $project->name,
+                        'project_id' => $project->id,
+                    ]);
+                    $item->targetable_type = BuildPlan::class;
+                    $item->targetable_id = $buildPlan->id;
+                    $item->save();
+                }
+                if (!$project->deployPlan) {
+                    $deployPlan = DeployPlan::create([
+                        'name'       => $project->name,
+                        'project_id' => $project->id,
+                    ]);
+                    $item->targetable_type = DeployPlan::class;
+                    $item->targetable_id = $deployPlan->id;
+                    $item->save();
+                }
+            }
         }
     }
 
