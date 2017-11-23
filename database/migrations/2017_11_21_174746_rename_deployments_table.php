@@ -13,22 +13,19 @@ class RenameDeploymentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('deployments', function($table)
-        {
+        Schema::table('deployments', function ($table) {
             $table->dropForeign('deployments_project_id_foreign');
             $table->dropForeign('deployments_user_id_foreign');
         });
         Schema::rename('deployments', 'tasks');
 
-        Schema::table('deployment_environment', function($table)
-        {
+        Schema::table('deployment_environment', function ($table) {
             $table->dropForeign('deployment_environment_deployment_id_foreign');
             $table->dropForeign('deployment_environment_environment_id_foreign');
         });
         Schema::rename('deployment_environment', 'environment_task');
 
-        Schema::table('deploy_steps', function($table)
-        {
+        Schema::table('deploy_steps', function ($table) {
             $table->dropForeign('deploy_steps_deployment_id_foreign');
             $table->dropForeign('deploy_steps_command_id_foreign');
         });
@@ -44,31 +41,27 @@ class RenameDeploymentsTable extends Migration
             $table->renameColumn('deployment_id', 'task_id');
         });
 
-        Schema::table('server_logs', function($table)
-        {
+        Schema::table('server_logs', function ($table) {
             $table->dropForeign('server_logs_deploy_step_id_foreign');
             $table->renameColumn('deploy_step_id', 'task_step_id');
             $table->foreign('task_step_id')->references('id')->on('task_steps');
         });
 
         // Add foreign
-        Schema::table('tasks', function($table)
-        {
+        Schema::table('tasks', function ($table) {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('user_id')->references('id')->on('users');
         });
 
         // Add foreign
-        Schema::table('environment_task', function($table)
-        {
+        Schema::table('environment_task', function ($table) {
             $table->foreign('environment_id')->references('id')->on('environments');
             $table->foreign('task_id')->references('id')->on('tasks');
         });
 
-        Schema::table('task_steps', function($table)
-        {
-             $table->foreign('task_id')->references('id')->on('tasks');
-             $table->foreign('command_id')->references('id')->on('commands');
+        Schema::table('task_steps', function ($table) {
+            $table->foreign('task_id')->references('id')->on('tasks');
+            $table->foreign('command_id')->references('id')->on('commands');
         });
     }
 
