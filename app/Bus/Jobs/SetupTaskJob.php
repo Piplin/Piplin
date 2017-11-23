@@ -35,6 +35,11 @@ class SetupTaskJob extends Job
     private $project;
 
     /**
+     * @var mixed
+     */
+    private $plan;
+
+    /**
      * @var Task
      */
     private $task;
@@ -60,10 +65,11 @@ class SetupTaskJob extends Job
      */
     public function __construct(Task $task, array $environmentIds = [], array $optional = [])
     {
-        $this->task     = $task;
+        $this->task           = $task;
         $this->environmentIds = $environmentIds;
         $this->optional       = $optional;
-        $this->project        = $task->project;
+        $this->plan           = $task->targetable;
+        $this->project        = $this->plan->project;
     }
 
     /**
@@ -73,16 +79,17 @@ class SetupTaskJob extends Job
      */
     public function handle()
     {
-        if ($this->task->targetable && $this->task->targetable instanceof BuildPlan) {
+        // Build task
+        if ($this->plan && $this->plan instanceof BuildPlan) {
             $stakes = [
                 Stage::DO_PREPARE => null,
                 Stage::DO_BUILD   => null,
                 Stage::DO_TEST    => null,
                 Stage::DO_RESULT  => null,
             ];
-            $hooks       = $this->buildCommandList($this->task->targetable, $stakes);
             $commandStep = 'createBuildCommandStep';
             $runStep     = 'createBuildStep';
+        // Deploy task
         } else {
             $this->setDeploymentEnvironments();
             $stakes = [
@@ -91,10 +98,11 @@ class SetupTaskJob extends Job
                 Stage::DO_ACTIVATE => null,
                 Stage::DO_PURGE    => null,
             ];
-            $hooks       = $this->buildCommandList($this->project, $stakes);
             $commandStep = 'createCommandStep';
             $runStep     = 'createTaskStep';
         }
+
+        $hooks = $this->buildCommandList($this->plan, $stakes);
 
         $this->setDeploymentStatus();
 
@@ -130,7 +138,7 @@ class SetupTaskJob extends Job
     private function setDeploymentEnvironments()
     {
         if (!$this->environmentIds) {
-            $this->environmentIds = $this->project->environments
+            $this->environmentIds = $this->plan->environments
                     ->where('default_on', true)
                     ->pluck('id')->toArray();
         }
@@ -214,9 +222,9 @@ class SetupTaskJob extends Job
     private function createBuildCommandStep($stage, Stage $command)
     {
         $step = TaskStep::create([
-            'stage'         => $stage,
-            'task_id' => $this->task->id,
-            'command_id'    => $command->id,
+            'stage'      => $stage,
+            'task_id'    => $this->task->id,
+            'command_id' => $command->id,
         ]);
 
         $this->createBuildServerlog($this->task->targetable, $step);
@@ -232,11 +240,11 @@ class SetupTaskJob extends Job
     private function createBuildStep($stage)
     {
         $step = TaskStep::create([
-            'stage'         => $stage,
+            'stage'   => $stage,
             'task_id' => $this->task->id,
         ]);
 
-        $this->createBuildServerlog($this->task->targetable, $step);
+        $this->createBuildServerlog($this->plan, $step);
     }
 
     /**
@@ -292,7 +300,7 @@ class SetupTaskJob extends Job
     private function createTaskStep($stage)
     {
         $step = TaskStep::create([
-            'stage'         => $stage,
+            'stage'   => $stage,
             'task_id' => $this->task->id,
         ]);
 

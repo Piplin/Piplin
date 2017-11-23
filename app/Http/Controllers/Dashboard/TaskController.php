@@ -90,7 +90,7 @@ class TaskController extends Controller
      *
      * @return Response
      */
-    public function create(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request)
     {
         $project = Project::findOrFail($request->get('project_id'));
 

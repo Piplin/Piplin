@@ -39,7 +39,7 @@ class DeploymentController extends Controller
     {
         $project = $deployPlan->project;
 
-        $optional = $project->commands->filter(function (Command $command) {
+        $optional = $deployPlan->commands->filter(function (Command $command) {
             return $command->optional;
         });
 

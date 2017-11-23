@@ -48,7 +48,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * @var Task
      */
-    private $deployment;
+    private $task;
 
     /**
      * @var Project
@@ -68,12 +68,12 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Create a new command instance.
      *
-     * @param Task $deployment
+     * @param Task $task
      */
-    public function __construct(Task $deployment)
+    public function __construct(Task $task)
     {
-        $this->deployment = $deployment;
-        $this->project    = $deployment->project;
+        $this->task = $task;
+        $this->project = $task->targetable->project;
     }
 
     /**
@@ -92,9 +92,9 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->deployment->started_at = Carbon::now();
-        $this->deployment->status     = Task::RUNNING;
-        $this->deployment->save();
+        $this->task->started_at = Carbon::now();
+        $this->task->status     = Task::RUNNING;
+        $this->task->save();
 
         $this->project->status = Project::RUNNING;
         $this->project->save();
@@ -103,12 +103,12 @@ class DeployProjectJob extends Job implements ShouldQueue
         file_put_contents($this->private_key, $this->project->private_key_content);
         chmod($this->private_key, 0600);
 
-        $this->release_archive = $this->project->id . '_' . $this->deployment->release_id . '.tar.gz';
+        $this->release_archive = $this->project->id . '_' . $this->task->release_id . '.tar.gz';
 
-        if ($this->deployment->commit === Task::LOADING) {
-            $commit = $this->deployment->branch;
+        if ($this->task->commit === Task::LOADING) {
+            $commit = $this->task->branch;
         } else {
-            $commit = $this->deployment->commit;
+            $commit = $this->task->commit;
         }
 
         try {
@@ -118,48 +118,48 @@ class DeployProjectJob extends Job implements ShouldQueue
                 $this->updateRepoInfo($gitInfo);
             }));
 
-            $this->dispatch(new CreateArchiveJob($this->project, $this->deployment->commit, $this->release_archive));
+            $this->dispatch(new CreateArchiveJob($this->project, $this->task->commit, $this->release_archive));
 
-            $this->dispatch(new RunStepsJob($this->deployment, $this->private_key, $this->release_archive));
+            $this->dispatch(new RunStepsJob($this->task, $this->private_key, $this->release_archive));
 
-            $this->deployment->status = Task::COMPLETED;
+            $this->task->status = Task::COMPLETED;
             $this->project->status    = Project::FINISHED;
         } catch (\Exception $error) {
-            $this->deployment->status = Task::FAILED;
+            $this->task->status = Task::FAILED;
             $this->project->status    = Project::FAILED;
 
             if ($error->getMessage() === 'Cancelled') {
-                $this->deployment->status = Task::ABORTED;
+                $this->task->status = Task::ABORTED;
             }
 
-            $this->deployment->output = $error->getMessage();
+            $this->task->output = $error->getMessage();
 
-            $this->cancelPendingSteps($this->deployment->steps);
+            $this->cancelPendingSteps($this->task->steps);
 
             if (isset($step)) {
                 // Cleanup the release if it has not been activated
                 if ($step->stage <= Stage::DO_ACTIVATE) {
                     $this->cleanupDeployment();
                 } else {
-                    $this->deployment->status = Task::COMPLETED_WITH_ERRORS;
+                    $this->task->status = Task::COMPLETED_WITH_ERRORS;
                     $this->project->status    = Project::FINISHED;
                 }
             }
         }
 
-        if ($this->deployment->status !== Task::ABORTED) {
-            $this->deployment->finished_at =  Carbon::now();
+        if ($this->task->status !== Task::ABORTED) {
+            $this->task->finished_at =  Carbon::now();
         }
 
-        $this->deployment->save();
+        $this->task->save();
 
-        $this->project->last_run = $this->deployment->finished_at;
+        $this->project->last_run = $this->task->finished_at;
         $this->project->save();
 
         $this->updateEnvironmentsInfo();
 
         // Notify user or others the deployment has been finished
-        event(new TaskFinishedEvent($this->deployment));
+        event(new TaskFinishedEvent($this->task));
 
         unlink($this->private_key);
 
@@ -177,15 +177,15 @@ class DeployProjectJob extends Job implements ShouldQueue
     {
         list($commit, $committer, $email) = explode("\x09", $gitInfo);
 
-        $this->deployment->commit          = $commit;
-        $this->deployment->committer       = trim($committer);
-        $this->deployment->committer_email = trim($email);
+        $this->task->commit          = $commit;
+        $this->task->committer       = trim($committer);
+        $this->task->committer_email = trim($email);
 
-        if (!$this->deployment->user_id && !$this->deployment->source) {
-            $user = User::where('email', $this->deployment->committer_email)->first();
+        if (!$this->task->user_id && !$this->task->source) {
+            $user = User::where('email', $this->task->committer_email)->first();
 
             if ($user) {
-                $this->deployment->user_id = $user->id;
+                $this->task->user_id = $user->id;
             }
         }
     }
@@ -195,7 +195,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function cleanupDeployment()
     {
-        $servers = $this->deployment->environments->pluck('servers')->flatten();
+        $servers = $this->task->environments->pluck('servers')->flatten();
 
         foreach ($servers as $server) {
             if (!$server->enabled) {
@@ -204,7 +204,7 @@ class DeployProjectJob extends Job implements ShouldQueue
 
             $process = new Process('deploy.CleanupFailedRelease', [
                 'project_path'   => $this->project->clean_deploy_path,
-                'release_path'   => $this->project->clean_deploy_path . '/releases/' . $this->deployment->release_id,
+                'release_path'   => $this->project->clean_deploy_path . '/releases/' . $this->task->release_id,
                 'remote_archive' => $this->project->clean_deploy_path . '/' . $this->release_archive,
             ]);
 
@@ -218,7 +218,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function cancelPendingSteps()
     {
-        foreach ($this->deployment->steps as $step) {
+        foreach ($this->task->steps as $step) {
             foreach ($step->logs as $log) {
                 if ($log->status === ServerLog::PENDING) {
                     $log->status = ServerLog::CANCELLED;
@@ -233,7 +233,7 @@ class DeployProjectJob extends Job implements ShouldQueue
      */
     private function updateEnvironmentsInfo()
     {
-        foreach ($this->deployment->environments as $environment) {
+        foreach ($this->task->environments as $environment) {
             $environment->last_run = $this->project->last_run;
             $environment->status   = $this->project->status;
             $environment->save();

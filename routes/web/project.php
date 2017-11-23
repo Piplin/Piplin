@@ -51,7 +51,7 @@ Route::group([
 
         Route::post('tasks', [
             'as'   => 'tasks.create',
-            'uses' => 'TaskController@create',
+            'uses' => 'TaskController@store',
         ]);
 
         Route::post('task/{task}/deploy-draft', [

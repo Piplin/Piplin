@@ -54,7 +54,8 @@ class TestServerConnectionJob extends Job implements ShouldQueue
     {
         $this->server = $server;
         if ($this->server->targetable instanceof Environment) {
-            $this->project = $this->server->targetable->targetable;
+            $deployPlan = $this->server->targetable->targetable;
+            $this->project = $deployPlan->project;
         } elseif ($this->server->targetable instanceof BuildPlan) {
             $this->project = $this->server->targetable->project;
         }

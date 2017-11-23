@@ -50,6 +50,11 @@ class RunStepsJob extends Job
     private $task;
 
     /**
+     * @var mixed
+     */
+    private $plan;
+
+    /**
      * @var Project
      */
     private $project;
@@ -87,11 +92,12 @@ class RunStepsJob extends Job
     public function __construct(Task $task, $private_key, $release_archive)
     {
         $this->task            = $task;
+        $this->plan            = $task->targetable;
         $this->project         = $task->project;
         $this->private_key     = $private_key;
         $this->cache_key       = AbortTaskJob::CACHE_KEY_PREFIX . $task->id;
         $this->release_archive = $release_archive;
-        if ($this->task->targetable && $this->task->targetable instanceof BuildPlan) {
+        if ($this->plan instanceof BuildPlan) {
             $this->isBuild = true;
         } else {
             $this->isBuild = false;
@@ -262,7 +268,7 @@ class RunStepsJob extends Job
 
         // Generate the export
         $prepend = '';
-        foreach ($this->project->variables as $variable) {
+        foreach ($this->plan->variables as $variable) {
             $key   = $variable->name;
             $value = $variable->value;
 
@@ -449,7 +455,7 @@ class RunStepsJob extends Job
      */
     private function sharedFileCommands($release_dir, $shared_dir)
     {
-        if (!$this->project->sharedFiles->count()) {
+        if (!$this->plan->sharedFiles->count()) {
             return '';
         }
 
@@ -457,7 +463,7 @@ class RunStepsJob extends Job
 
         $script = '';
 
-        foreach ($this->project->sharedFiles as $filecfg) {
+        foreach ($this->plan->sharedFiles as $filecfg) {
             $pathinfo = pathinfo($filecfg->file);
             $template = 'File';
 

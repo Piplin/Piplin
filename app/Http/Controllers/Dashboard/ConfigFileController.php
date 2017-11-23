@@ -43,11 +43,6 @@ class ConfigFileController extends Controller
 
         $target = $targetable_type::findOrFail($targetable_id);
 
-        // In project
-        if ($targetable_type === 'Piplin\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
-
         $environments = null;
         if (isset($fields['environments'])) {
             $environments = $fields['environments'];
