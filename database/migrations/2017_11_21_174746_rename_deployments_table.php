@@ -56,20 +56,20 @@ class RenameDeploymentsTable extends Migration
         {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('user_id')->references('id')->on('users');
-        }
+        });
 
         // Add foreign
         Schema::table('environment_task', function($table)
         {
             $table->foreign('environment_id')->references('id')->on('environments');
             $table->foreign('task_id')->references('id')->on('tasks');
-        }
+        });
 
         Schema::table('task_steps', function($table)
         {
              $table->foreign('task_id')->references('id')->on('tasks');
              $table->foreign('command_id')->references('id')->on('commands');
-        }
+        });
     }
 
     /**
