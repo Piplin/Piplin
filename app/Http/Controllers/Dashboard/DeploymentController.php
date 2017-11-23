@@ -56,7 +56,7 @@ class DeploymentController extends Controller
             'title'           => trans('tasks.label'),
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-                ['url' => route('deployments', ['id' => $project->id]), 'label' => trans('projects.deploy_plan')],
+                ['url' => route('deployments', ['id' => $deployPlan->id]), 'label' => trans('projects.deploy_plan')],
             ],
         ];
 
