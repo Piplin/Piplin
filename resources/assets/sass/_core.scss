@@ -99,9 +99,17 @@ body {
 
 .content-wrapper,
 .right-side {
+  top: 0;
+  position: relative;
   min-height: calc(100vh - 0px);
   background-color: $body-bg;
   z-index: 800;
+}
+
+.has-sub-sidebar {
+  .content-wrapper {
+    margin-left: 23%;
+  }
 }
 
 .main-footer {

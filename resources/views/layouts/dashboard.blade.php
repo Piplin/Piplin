@@ -15,20 +15,17 @@
         <meta name="locale" content="{{ $language }}" />
         <meta name="user_id"  content="{{ $current_user->id }}" />  
     </head>
-    <body class="hold-transition skin-{{ $theme }}">
+    <body class="hold-transition skin-{{ $theme }} {{ isset($sub_menu) ? 'has-sub-sidebar' : null }}">
         <div class="wrapper">
             @include('_partials.sidebar')
+            @if(isset($sub_menu))
+                @include('_partials.sub-sidebar')
+            @endif
             <div class="content-wrapper">
                 <div class="row">
 
-                @if(isset($sub_menu))
-                <div class="col-md-2">
-                    @include('_partials.sub-sidebar')
-                </div>
-                <div class="col-md-10">
-                @else
                 <div class="col-md-12">
-                @endif
+
                 <!-- @include('_partials.nav') -->
                 @include('_partials.errors')
                 <section class="content-header">
