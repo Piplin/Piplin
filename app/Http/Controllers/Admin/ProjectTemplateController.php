@@ -16,7 +16,7 @@ use Piplin\Http\Requests\StoreProjectTemplateRequest;
 use Piplin\Models\ProjectTemplate;
 
 /**
- * Controller for managing deployment template.
+ * Controller for managing project template.
  */
 class ProjectTemplateController extends Controller
 {
@@ -58,7 +58,7 @@ class ProjectTemplateController extends Controller
             'environments'    => $template->environments,
             'targetable_type' => 'Piplin\\Models\\ProjectTemplate',
             'targetable_id'   => $template->id,
-            'project'         => $template,
+            'targetable'      => $template,
             'route'           => 'admin.templates.commands.step',
             'tab'             => $tab,
         ]);

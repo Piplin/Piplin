@@ -33,4 +33,6 @@
     </div>
 </div>
 
+@if(!$in_admin)
 @include('dashboard.projects._dialogs.webhook_help')
+@endif

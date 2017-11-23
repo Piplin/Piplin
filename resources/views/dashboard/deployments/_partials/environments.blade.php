@@ -1,12 +1,7 @@
 <div class="box">
     <div class="box-header">
         <div class="pull-right">
-            @if($project->can('deploy'))
-            <button type="button" class="btn btn-default" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><span class="piplin piplin-key"></span> {{ trans('keys.ssh_key') }}</button> 
-            @endif
-            @if($project->can('manage'))
             <button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="piplin piplin-plus"></i> {{ trans('environments.create') }}</button>
-            @endif
         </div>
         <h3 class="box-title">{{ trans('environments.label') }}</h3>
     </div>
@@ -50,12 +45,10 @@
         <td><%- last_run %></td>
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td>
-            @if($project->can('manage'))
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('environments.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="piplin piplin-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('environments.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
             </div>
-            @endif
         </td>
     </script>
 @endpush
