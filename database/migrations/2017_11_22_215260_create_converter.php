@@ -67,7 +67,7 @@ class CreateConverter extends Migration
             }
             $item->save();
 
-            if ($item->targetable_type && $item->targetable_typ == Project::class) {
+            if ($item->targetable_type && $item->targetable_type == Project::class) {
                 $project = Project::find($item->targetable_id);
                 if (!$project) {
                     continue;
