@@ -114,14 +114,13 @@
     position: fixed;
     bottom: 0;
     width: $sidebar-width;
-    text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
     color: $white;
-    font-size: 12px;
+    text-align: center;
     z-index: 999;
     .user-menu {
-      text-align: center;
+      font-size: 12px;
       padding: 10px 10px;
       color: $white;
       margin-bottom: 10px;
