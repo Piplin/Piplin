@@ -275,7 +275,7 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
     private function saveArtifacts(&$output_line, $local_path, $log)
     {
         preg_match_all("/Receiving (.*)/", $output_line, $matches);
-        foreach($matches[1] as $file) {
+        foreach ($matches[1] as $file) {
             $file = trim($file);
             $filePath = storage_path($local_path . $file);
             if (!file_exists($filePath)) {
