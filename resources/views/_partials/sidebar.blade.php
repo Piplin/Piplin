@@ -7,14 +7,12 @@
             </a>
         </div>
         <ul class="sidebar-menu">
-            <!--
             <li {!! set_active('/') !!}>
                 <a href="/">
                     <i class="piplin piplin-dashboard"></i>
                     <strong>{{ trans('dashboard.title') }}</strong>
                 </a>
             </li>
-        -->
             <li {!! set_active('tasks') !!}>
                 <a href="{{ route('dashboard.tasks') }}"><i class="piplin piplin-clock"></i>
                     <strong>{{ trans('dashboard.tasks') }}</strong>

@@ -1,13 +1,9 @@
 {
-    "/css/app.css": "/css/app.css",
-    "/js/vendor.js": "/js/vendor.js",
-    "/js/ace.js": "/js/ace.js",
-    "/js/admin.js": "/js/admin.js",
-    "/js/dashboard.js": "/js/dashboard.js",
-    "/js/app.js": "/js/app.js",
-    "/css/vendor.css": "/css/vendor.css",
-    "/0.2281598d2a6956df0287.hot-update.js": "/0.2281598d2a6956df0287.hot-update.js",
-    "/0.acce841e0f71d32688e6.hot-update.js": "/0.acce841e0f71d32688e6.hot-update.js",
-    "/0.c3a91ab17838aeaa01dd.hot-update.js": "/0.c3a91ab17838aeaa01dd.hot-update.js",
-    "/0.69ec12af9103aea5ebb7.hot-update.js": "/0.69ec12af9103aea5ebb7.hot-update.js"
+    "/css/app.css": "/css/app.css?id=664ebd380e5faee7b2d4",
+    "/js/vendor.js": "/js/vendor.js?id=2184232f1940201487c2",
+    "/js/ace.js": "/js/ace.js?id=3a807fd390d64ee1d359",
+    "/js/admin.js": "/js/admin.js?id=47a2394c9e0e29252c82",
+    "/js/dashboard.js": "/js/dashboard.js?id=9890547500261ec044dc",
+    "/js/app.js": "/js/app.js?id=c4a56c011b73cca881bd",
+    "/css/vendor.css": "/css/vendor.css?id=87779c782996e1fa5a44"
 }
