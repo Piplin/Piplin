@@ -42,6 +42,9 @@
                     @yield('content')
                 </section>
                 @include('_partials.footer')
+                @if(!$in_admin)
+                    @include('dashboard.projects._dialogs.create')
+                @endif
             </div>
             </div>
             </div>

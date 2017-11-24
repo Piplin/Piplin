@@ -39,7 +39,7 @@ return [
     'apply'             => '申请上线',
     'apply_choose'      => '选择项目',
     'apply_intro'       => '申请一旦被逐级审核通过，将由运维执行上线操作。',
-    'create'            => '新增项目',
+    'create'            => '创建项目',
     'create_success'    => '项目创建成功。',
     'edit'              => '编辑',
     'edit_success'      => '项目信息更新成功。',

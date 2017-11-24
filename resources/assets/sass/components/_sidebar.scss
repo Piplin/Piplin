@@ -50,6 +50,24 @@
       font-weight: bold;
     }
   }
+
+  .small {
+    a { 
+      .piplin {
+        font-size: 24px !important;
+        width: 24px;
+      }
+    }
+  }
+
+  .badge {
+    position: absolute;
+    float: right;
+    right: 0;
+    top: 10px;
+    margin-top: 3px;
+    margin-right: 5px;
+  }
   // Sidebar menu
   .sidebar-menu {
     list-style: none;
@@ -70,14 +88,6 @@
           width: 36px;
           font-size: 36px;
         }
-      }
-      .badge {
-        position: absolute;
-        float: right;
-        right: 0;
-        top: 10px;
-        margin-top: 3px;
-        margin-right: 5px;
       }
     }
     li.header {
@@ -100,7 +110,7 @@
       }
     }
   }
-  .user-menu {
+  .bottom-menu {
     position: fixed;
     bottom: 0;
     width: $sidebar-width;

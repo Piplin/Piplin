@@ -19,23 +19,25 @@
                 </a>
                 <label class="todo_count badge bg-gray"><i class="piplin piplin-bell"></i> <span></span></label>
             </li>
-
-            <li {!! set_active('projects*') !!}>
-                <a href="{{ route('dashboard.projects') }}"><i class="piplin piplin-project"></i>
-                    <strong>{{ trans('dashboard.projects') }}</strong>
-                </a>
-            </li>
-
-            @if($current_user->is_admin)
-            <li {!! set_active('admin*') !!}>
-                <a href="/admin">
-                    <i class="piplin piplin-setting"></i>
-                    <strong>{{ trans('admin.title') }}</strong>
+            @if(!$in_admin)
+            <li class="small">
+                <a href="#" data-toggle="modal" data-target="#project_create"><i class="piplin piplin-plus"></i>
+                    <strong>{{ trans('projects.create') }}</strong>
                 </a>
             </li>
             @endif
         </ul>
-        <div class="user-menu">
+        <div class="bottom-menu">
+            @if($current_user->is_admin)
+            <ul class="sidebar-menu">
+                <li {!! set_active('admin*') !!}>
+                    <a href="/admin">
+                        <i class="piplin piplin-setting"></i>
+                        <strong>{{ trans('admin.title') }}</strong>
+                    </a>
+                </li>
+            </ul>
+            @endif
             <div class="profile">
             <a href="{{ route('profile') }}">
                 <img src="{{ $current_user->avatar_url }}" />

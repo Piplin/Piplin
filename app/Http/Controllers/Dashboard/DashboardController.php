@@ -33,7 +33,8 @@ class DashboardController extends Controller
             $dashboard = config('piplin.dashboard');
         }
 
-        $method = $dashboard === 'projects' ? 'projects' : 'tasks';
+        //$method = $dashboard === 'projects' ? 'projects' : 'tasks';
+        $method = 'projects';
 
         return $this->{$method}();
     }
