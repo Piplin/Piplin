@@ -35,7 +35,7 @@ class Project extends Model implements HasPresenter
     const PENDING      = 1;
     const RUNNING    = 2;
     const FAILED       = 3;
-    const NOT_DEPLOYED = 4;
+    const NOT_RUNNED = 4;
 
     /**
      * The attributes excluded from the model's JSON form.

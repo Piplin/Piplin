@@ -11,7 +11,7 @@
 
 return [
 
-    'label'                => '部署步骤',
+    'label'                => '任务步骤',
     'deploy_webhook'       => '第三方服务以POST方式调用该链接，Piplin会自动触发部署工作。',
     'webhook_help'         => 'Webhook 帮助',
     'webhook_example'      => '以HTTP POST方式调用该URL, Piplin会获取最近提交的代码，并自动触发部署工作。',
@@ -28,7 +28,7 @@ return [
     'generate_webhook'     => '重新生成一个webhook链接 (注意: 旧链接将失效)',
     'stage'                => '步骤',
     'action'               => '执行任务',
-    'before'               => '前置任务',
+    'before'               => '前置',
     'name'                 => '名称',
     'run_as'               => '运行用户',
     'migrations'           => '数据迁移',
@@ -42,7 +42,7 @@ return [
     'release_path'         => '发布路径',
     'branch'               => '部署分支',
     'project_path'         => '项目路径',
-    'after'                => '后置任务',
+    'after'                => '后置',
     'configure'            => '配置',
     'clone'                => '创建新版本',
     'clone_help'           => '在远程服务器创建新版本发布目录，并解压安装包。',
@@ -68,7 +68,7 @@ return [
     'deployer_email'       => '上线发起者邮箱',
     'committer_name'       => '代码最后提交者',
     'committer_email'      => '代码最后提交者邮箱',
-    'none'                 => '还没有配置安装命令',
+    'none'                 => '还没有配置命令',
     'optional'             => '是否可选?',
     'example'              => '例如:',
     'optional_description' => '设置为可选步骤',

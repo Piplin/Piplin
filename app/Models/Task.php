@@ -379,7 +379,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
      */
     public function getTitleAttribute()
     {
-        if ($this->targetable instanceof Plan) {
+        if ($this->targetable instanceof BuildPlan) {
             $title = 'tasks.build_title';
         } else {
             $title = 'tasks.deploy_title';

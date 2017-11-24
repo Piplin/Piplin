@@ -7,17 +7,17 @@
 
     Piplin.statuses = {
         // Project and Environment
-        FINISHED:     0,
-        PENDING:      1,
+        FINISHED:   0,
+        PENDING:    1,
         RUNNING:    2,
-        FAILED:       3,
-        NOT_DEPLOYED: 4,
+        FAILED:     3,
+        NOT_RUNNED: 4,
 
         // Task status
         TASK_DRAFT:    -1,
         TASK_COMPLETED: 0,
         TASK_PENDING:   1,
-        TASK_RUNNING: 2,
+        TASK_RUNNING:   2,
         TASK_FAILED:    3,
         TASK_ERRORS:    4,
         TASK_CANCELLED: 5,

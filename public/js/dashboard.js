@@ -1,3 +1,4027 @@
-!function(e){e(".command-list table").sortable({containerSelector:"table",itemPath:"> tbody",itemSelector:"tr",placeholder:'<tr class="placeholder"/>',delay:500,onDrop:function(t,i,n){n(t,i);var a=[];e("tbody tr td:first-child",i.el[0]).each(function(t,i){a.push(e(i).data("command-id"))}),e.ajax({url:"/commands/reorder",method:"POST",data:{commands:a}})}});var t;e("#command").on("hidden.bs.modal",function(e){t.destroy()}),e("#command").on("show.bs.modal",function(i){var n=e(i.relatedTarget),a=e(this),s=trans("commands.create");t=ace.edit("command_script"),t.getSession().setMode("ace/mode/sh"),e(".btn-danger",a).hide(),e(".callout-danger",a).hide(),e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.hasClass("btn-edit")?(s=trans("commands.edit"),e(".btn-danger",a).show()):(e("#command_id").val(""),e("#command_step").val(n.data("step")),e("#command_name").val(""),t.setValue(""),t.gotoLine(1),e("#command_user").val(""),e("#command_optional").prop("checked",!1),e("#command_default_on").prop("checked",!1),e("#command_default_on_row").addClass("hide"),e(".command-environment").prop("checked",!0),e(".command-pattern").prop("checked",!0)),a.find(".modal-title span").text(s)}),e("body").delegate(".command-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Commands.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("commands.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#command_optional").on("change",function(t){e("#command_default_on_row").addClass("hide"),!0===e(this).is(":checked")&&e("#command_default_on_row").removeClass("hide")}),e("#command button.btn-save").off("click").on("click",function(i){var n=e(i.currentTarget),a=n.find("i"),s=n.parents(".modal");a.removeClass().addClass("piplin piplin-load piplin-spin"),s.find(":input").attr("disabled","disabled"),e("button.close",s).hide();var l=e("#command_id").val();if(l)var o=Piplin.Commands.get(l);else var o=new Piplin.Command;var r=[];e(".command-environment:checked").each(function(){r.push(e(this).val())});var d=[];e(".command-pattern:checked").each(function(){d.push(e(this).val())}),o.save({name:e("#command_name").val(),script:t.getValue(),user:e("#command_user").val(),step:e("#command_step").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val(),environments:r,patterns:d,optional:e("#command_optional").is(":checked"),default_on:e("#command_default_on").is(":checked")},{wait:!0,success:function(i,n,o){s.modal("hide"),e(".callout-danger",s).hide(),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find(":input").removeAttr("disabled");var r=trans("commands.edit_success");l||(Piplin.Commands.add(n),r=trans("commands.create_success")),t.setValue(""),t.gotoLine(1),Piplin.toast(r)},error:function(t,i,n){e(".callout-danger",s).show();var l=i.responseJSON;e(".has-error",s).removeClass("has-error"),e(".label-danger",s).remove(),e("form input",s).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find(":input").removeAttr("disabled")}})}),Piplin.Command=Backbone.Model.extend({urlRoot:"/commands",defaults:function(){return{order:Piplin.Commands.nextOrder()}},isAfter:function(){return parseInt(this.get("step"))%3==0}});var i=Backbone.Collection.extend({model:Piplin.Command,comparator:"order",nextOrder:function(){return this.length?this.last().get("order")+1:1}});Piplin.Commands=new i,Piplin.CommandsTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$beforeList=e("#commands-before .command-list tbody"),this.$afterList=e("#commands-after .command-list tbody"),e(".no-commands").show(),e(".command-list").hide(),this.listenTo(Piplin.Commands,"add",this.addOne),this.listenTo(Piplin.Commands,"reset",this.addAll),this.listenTo(Piplin.Commands,"remove",this.addAll),this.listenTo(Piplin.Commands,"all",this.render),Piplin.listener.on("command:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Commands.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("command:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&(parseInt(t.model.step)+1!==parseInt(Piplin.command_action)&&parseInt(t.model.step)-1!==parseInt(Piplin.command_action)||Piplin.Commands.add(t.model))}),Piplin.listener.on("command:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Commands.get(parseInt(e.model.id));t&&Piplin.Commands.remove(t)})},render:function(){void 0!==Piplin.Commands.find(function(e){return!e.isAfter()})?(e("#commands-before .no-commands").hide(),e("#commands-before .command-list").show()):(e("#commands-before .no-commands").show(),e("#commands-before .command-list").hide()),void 0!==Piplin.Commands.find(function(e){return e.isAfter()})?(e("#commands-after .no-commands").hide(),e("#commands-after .command-list").show()):(e("#commands-after .no-commands").show(),e("#commands-after .command-list").hide())},addOne:function(t){var i=new Piplin.CommandView({model:t});t.isAfter()?(this.$afterList.append(i.render().el),e("tr",this.$afterList).length<2?e(".drag-handle",this.$afterList).hide():e(".drag-handle",this.$afterList).show()):(this.$beforeList.append(i.render().el),e("tr",this.$beforeList).length<2?e(".drag-handle",this.$beforeList).hide():e(".drag-handle",this.$beforeList).show())},addAll:function(){this.$beforeList.html(""),this.$afterList.html(""),Piplin.Commands.each(this.addOne,this)}}),Piplin.CommandView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#command-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},edit:function(){e("#command_id").val(this.model.id),e("#command_step").val(this.model.get("step")),e("#command_name").val(this.model.get("name")),e("#command_script").text(this.model.get("script")),e("#command_user").val(this.model.get("user")),e("#command_optional").prop("checked",!0===this.model.get("optional")),e("#command_default_on").prop("checked",!0===this.model.get("default_on")),e("#command_default_on_row").addClass("hide"),!0===this.model.get("optional")&&e("#command_default_on_row").removeClass("hide"),e(".command-environment").prop("checked",!1),e(this.model.get("environments")).each(function(t,i){e("#command_environment_"+i.id).prop("checked",!0)}),e(".command-pattern").prop("checked",!1),e(this.model.get("patterns")).each(function(t,i){e("#command_pattern_"+i.id).prop("checked",!0)})},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade command-trash")}})}(jQuery),function(e){function t(t,a){n||(n=!0,e.ajax({type:"GET",url:"/log/"+a}).done(function(e){var n=i(e.output?e.output:""),a=!1;t.scrollTop()+t.innerHeight()>=t.get(0).scrollHeight&&(a=!0),t.html(n),a&&t.scrollTop(t.get(0).scrollHeight)}).always(function(){n=!1}))}function i(e){return e.replace(/<\/error>/g,"</span>").replace(/<\/info>/g,"</span>").replace(/<error>/g,'<span class="text-red">').replace(/<info>/g,'<span class="text-default">')}e("#task").on("show.bs.modal",function(t){var i=e(this);e(".callout-danger",i).hide();var n=e('input[name="targetable_type"]').val();if(new RegExp("Plan$").test(n)){var a=trans("tasks.build");i.find(".modal-title span").text(a),i.find(".modal-title i").removeClass().addClass("piplin piplin-build"),i.find("button.btn-save span").text(a)}}),e(".task-source:radio").on("change",function(t){var i=e(t.currentTarget);e("div.task-source-container").hide(),"branch"===i.val()?e("#task_branch").parent("div").show():"tag"===i.val()?e("#task_tag").parent("div").show():"commit"===i.val()&&e("#task_commit").parent("div").show()}),e("#task button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=new Piplin.Deploy,l=[];e(".task-environment:checked").each(function(){l.push(e(this).val())});var o=[];e(".task-command:checked").each(function(){o.push(e(this).val())}),s.save({environments:l,project_id:e('input[name="project_id"]').val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val(),reason:e("#task_reason").val(),source:e('input[name="source"]:checked').val(),source_branch:e("#task_branch").val(),source_tag:e("#task_tag").val(),source_commit:e("#task_commit").val(),optional:o},{wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var l=trans("tasks.submit_success");Piplin.toast(l)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;if(e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),void 0!==l.environments){e(".task-environment").parents("div.form-group").addClass("has-error")}n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#rollback").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=i.data("task-id"),a=e(this);e('input[name="task_id"]',a).val(n),e("#task_reason",a).val(""),e(".task-command",a).prop("checked",!1)}),e("#rollback button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#task_reason",a).val(),l=[];e(".task-command:checked",a).each(function(){l.push(e(this).val())}),e.ajax({url:"/task/"+e('input[name="task_id"]',a).val()+"/rollback",method:"POST",data:{reason:s,optional:l}}).fail(function(t){e(".callout-danger",a).show();t.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}).done(function(t){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("tasks.submit_success"))})}),e("#task_draft").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=i.data("task-id"),a=e(this);e('input[name="task_id"]',a).val(n)}),e("#task_draft button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),e.ajax({url:"/task/"+e('input[name="task_id"]',a).val()+"/task-draft",method:"POST"}).done(function(t){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("tasks.submit_success"))})}),e(".btn-cancel").on("click",function(t){var i=e(t.currentTarget),n=i.data("task-id");e("form#abort_"+n).trigger("submit")});var n=!1;e("#log").on("show.bs.modal",function(a){var s=e(a.relatedTarget),l=s.attr("id").replace("log_",""),o=e("h3 span",s.parents(".box")).text(),r=e(this),d=e("pre",r),p=e("#loading",r);d.hide(),p.show(),e("#action",r).text(o),d.text(""),n=!0,e.ajax({type:"GET",url:"/log/"+l}).done(function(e){var n=i(e.output?e.output:"");d.html(n),d.show(),p.hide(),Piplin.listener.on("serverlog-"+l+":"+Piplin.events.OUTPUT_CHANGED,function(e){e.log_id===parseInt(l)&&t(d,e.log_id)})}).always(function(){n=!1})}),e("#log").on("hide.bs.modal",function(){n=!1}),Piplin.Deploy=Backbone.Model.extend({urlRoot:"/tasks"}),Piplin.ServerLog=Backbone.Model.extend({urlRoot:"/status"});var a=Backbone.Collection.extend({model:Piplin.ServerLog});Piplin.Deployment=new a,Piplin.DeploymentView=Backbone.View.extend({el:"#app",$containers:[],events:{},initialize:function(){var t=this;e(".task-step tbody").each(function(i,n){t.$containers.push({step:parseInt(e(n).attr("id").replace("step_","")),element:n})}),this.listenTo(Piplin.Deployment,"add",this.addOne),this.listenTo(Piplin.Deployment,"reset",this.addAll),this.listenTo(Piplin.Deployment,"remove",this.addAll),this.listenTo(Piplin.Deployment,"all",this.render),Piplin.listener.on("serverlog:"+Piplin.events.SVRLOG_CHANGED,function(e){var t=Piplin.Deployment.get(e.log_id);t&&t.set({status:e.status,output:e.output,runtime:e.runtime,started_at:!!e.started_at&&e.started_at,finished_at:!!e.finished_at&&e.finished_at})}),Piplin.listener.on("task:"+Piplin.events.MODEL_CHANGED,function(t){if(parseInt(t.model.project_id)===parseInt(Piplin.project_id)){var i=e("#task_status_bar"),n=Piplin.formatDeploymentStatus(parseInt(t.model.status));i.attr("class","text-"+n.label_class),e("i",i).attr("class","piplin piplin-"+n.icon_class),e("span",i).text(n.label),t.model.run_failure?(e("#task_status").find("p").text(t.model.output),e("#task_status").removeClass("hide").show()):e("#task_status").hide()}})},addOne:function(t){var i=new Piplin.LogView({model:t}),n=_.find(this.$containers,function(e){return parseInt(e.step)===parseInt(t.get("task_step_id"))});e(n.element).append(i.render().el)},addAll:function(){e(this.$containers).each(function(e,t){t.html("")}),Piplin.Commands.each(this.addOne,this)}}),Piplin.LogView=Backbone.View.extend({tagName:"tr",events:{},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#log-template").html())},render:function(){var e=this.model.toJSON(),t=parseInt(this.model.get("status"));return e.label_class="info",e.icon_css="clock",e.label=trans("tasks.pending"),t===Piplin.statuses.SVRLOG_COMPLETED?(e.label_class="success",e.icon_css="check",e.label=trans("tasks.completed")):t===Piplin.statuses.SVRLOG_RUNNING?(e.label_class="warning",e.icon_css="load piplin-spin",e.label=trans("tasks.running")):t===Piplin.statuses.SVRLOG_FAILED?(e.label_class="danger",e.icon_css="close",e.label=trans("tasks.failed")):t===Piplin.statuses.SVRLOG_CANCELLED&&(e.label_class="danger",e.icon_css="close",e.label=trans("tasks.cancelled")),e.formatted_start_time=!!e.started_at&&moment(e.started_at).format("HH:mm:ss"),e.formatted_end_time=!!e.finished_at&&moment(e.finished_at).format("HH:mm:ss"),this.$el.removeClass().addClass("bg-"+e.label_class).html(this.template(e)),this}})}(jQuery),function(e){function t(t,i){e("#hook .modal-title span").text(trans("hooks."+i+"_"+t));var n=e("#hook .modal-title i").removeClass().addClass("ion"),a="edit";"slack"===t?a="slack":"dingtalk"===t?a="pin":"mail"===t?a="email":"custom"===t&&(a="edit"),n.addClass("piplin-"+a),e("#hook .modal-footer").show(),e(".hook-config").hide(),e("#hook-type").hide(),e("#hook-name").show(),e("#hook-triggers").show(),e(".hook-enabled").show(),e("#hook-config-"+t).show(),e("#hook_type").val(t)}e("#hook").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this);e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".callout-warning",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?e(".btn-danger",n).show():(e("#hook_id").val(""),e("#hook_name").val(""),e("#hook_type").val(""),e("#hook :input[id^=hook_config]").val(""),e("#hook .hook-config input[type=checkbox]").prop("checked",!0),e("#hook .hook-enabled input[type=checkbox]").prop("checked",!0),e("#hook .modal-footer").hide(),e(".hook-config").hide(),e(".hook-enabled").hide(),e("#hook-type").show(),n.find(".modal-title span").text(trans("hooks.create")))}),e("#hook #hook-type a.btn-app").on("click",function(i){var n=e(i.currentTarget),a=e("#hook");if(n.attr("disabled"))return void e(".callout-warning",a).show();e(".callout-warning",a).hide(),t(n.data("type"),"create")}),e("body").delegate(".hook-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Hooks.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("hooks.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#hook button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#hook_id").val();if(s)var l=Piplin.Hooks.get(s);else var l=new Piplin.Hook;var o={config:null,name:e("#hook_name").val(),type:e("#hook_type").val(),project_id:parseInt(e('input[name="project_id"]').val()),enabled:e("#hook_enabled").is(":checked"),on_deployment_success:e("#hook_on_deployment_success").is(":checked"),on_deployment_failure:e("#hook_on_deployment_failure").is(":checked")};e("#hook #hook-config-"+o.type+" :input[id^=hook_config]").each(function(t,i){var n=e(i).attr("name");o[n]=e(i).val()}),l.save(o,{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("hooks.edit_success");s||(Piplin.Hooks.add(i),o=trans("hooks.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent();a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Hook=Backbone.Model.extend({urlRoot:"/hooks/"+parseInt(e('input[name="project_id"]').val())});var i=Backbone.Collection.extend({model:Piplin.Hook});Piplin.Hooks=new i,Piplin.HooksTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#hook_list tbody"),e("#no_hooks").show(),e("#hook_list").hide(),this.listenTo(Piplin.Hooks,"add",this.addOne),this.listenTo(Piplin.Hooks,"reset",this.addAll),this.listenTo(Piplin.Hooks,"remove",this.addAll),this.listenTo(Piplin.Hooks,"all",this.render),Piplin.listener.on("hook:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Hooks.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("hook:"+Piplin.events.MODEL_CREATED,function(e){parseInt(e.model.project_id)===parseInt(Piplin.project_id)&&Piplin.Hooks.add(e.model)}),Piplin.listener.on("hook:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Hooks.get(parseInt(e.model.id));t&&Piplin.Hooks.remove(t)})},render:function(){Piplin.Hooks.length?(e("#no_hooks").hide(),e("#hook_list").show()):(e("#no_hooks").show(),e("#hook_list").hide())},addOne:function(e){var t=new Piplin.HookView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.Hooks.each(this.addOne,this)}}),Piplin.HookView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#hook-template").html())},render:function(){var e=this.model.toJSON();return e.icon="edit",e.label=trans("hooks.custom"),"custom"!==this.model.get("type")&&(e.label=trans("hooks."+this.model.get("type"))),"slack"===this.model.get("type")?e.icon="slack":"dingtalk"===this.model.get("type")?e.icon="pin":"mail"===this.model.get("type")&&(e.icon="email"),this.$el.html(this.template(e)),this},edit:function(){var i=this.model.get("type");e.each(this.model.get("config"),function(t,n){e("#hook-config-"+i+" #hook_config_"+t).val(n)}),e("#hook_id").val(this.model.id),e("#hook_name").val(this.model.get("name")),e("#hook_type").val(i),e("#hook_enabled").prop("checked",!0===this.model.get("enabled")),e("#hook_on_deployment_success").prop("checked",!0===this.model.get("on_deployment_success")),e("#hook_on_deployment_failure").prop("checked",!0===this.model.get("on_deployment_failure")),t(this.model.get("type"),"edit")},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade hook-trash")}})}(jQuery),function(e){var t={placeholder:trans("members.search"),minimumInputLength:1,width:"100%",ajax:{url:"/api/autocomplete/users",dataType:"json",delay:250,data:function(e){return{q:e.term}},processResults:function(t){return{results:e.map(t,function(e){return{id:e.id,text:e.name}})}},cache:!0}},i=e(".project-members").select2(t);e("#member").on("show.bs.modal",function(t){var n=e(t.relatedTarget),a=e(this),s=trans("members.create");e(".btn-danger",a).hide(),e(".callout-danger",a).hide(),e(".callout-warning",a).hide(),e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.hasClass("btn-edit")?(s=trans("members.edit"),e("#user_ids").parent().parent().hide(),e(".btn-danger",a).show()):(e("#user_ids").parent().parent().show(),i.val("").trigger("change"),a.find(".modal-title span").text(trans("members.create"))),a.find(".modal-title span").text(s)}),e("#member #member-type a.btn-app").on("click",function(t){var i=e(t.currentTarget),n=e("#member");if(i.attr("disabled"))return void e(".callout-warning",n).show();e(".callout-warning",n).hide()}),e("body").delegate(".member-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Members.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("members.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#member button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#member_id").val();if(s)var l=Piplin.Members.get(s);else var l=new Piplin.Member;var o={user_ids:e("#user_ids").val(),project_id:parseInt(e('input[name="project_id"]').val())};l.save(o,{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("members.edit_success");s||(Piplin.Members.add(i),o=trans("members.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form select",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent();a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Member=Backbone.Model.extend({urlRoot:"/members/"+parseInt(e('input[name="project_id"]').val())});var n=Backbone.Collection.extend({model:Piplin.Member});Piplin.Members=new n,Piplin.MembersTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#member_list tbody"),e("#no_members").show(),e("#member_list").hide(),this.listenTo(Piplin.Members,"add",this.addOne),this.listenTo(Piplin.Members,"reset",this.addAll),this.listenTo(Piplin.Members,"remove",this.addAll),this.listenTo(Piplin.Members,"all",this.render),Piplin.listener.on("member:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Members.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("member:"+Piplin.events.MODEL_CREATED,function(e){parseInt(e.model.project_id)===parseInt(Piplin.project_id)&&Piplin.Members.add(e.model)}),Piplin.listener.on("member:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Members.get(parseInt(e.model.id));t&&Piplin.Members.remove(t)})},render:function(){Piplin.Members.length?(e("#no_members").hide(),e("#member_list").show()):(e("#no_members").show(),e("#member_list").hide())},addOne:function(e){var t=new Piplin.MemberView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.Members.each(this.addOne,this)}}),Piplin.MemberView=Backbone.View.extend({tagName:"tr",events:{"click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#member-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade member-trash")}})}(jQuery),function(e){e("#project_create").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("projects.create"),s=i.data("project-id");i.hasClass("btn-edit")&&(a=trans("projects.edit"),e.ajax({type:"POST",url:"/api/projects",data:{project_id:s}}).done(function(t){Piplin.Projects.reset(t),e("#project_id").val(t.id),e("#project_name").val(t.name),e("#project_repository").val(t.repository),e("#project_branch").val(t.branch),e("#project_deploy_path").val(t.deploy_path),e("#project_allow_other_branch").prop("checked",!0===t.allow_other_branch)})),n.find(".modal-title span").text(a),e(".callout-danger",n).hide()}),e("#project_create button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#project_id").val();if(s)var l=Piplin.Projects.get(s);else var l=new Piplin.Project;l.save({name:e("#project_name").val(),repository:e("#project_repository").val(),branch:e("#project_branch").val(),deploy_path:e("#project_deploy_path").val(),allow_other_branch:e("#project_allow_other_branch").is(":checked")},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.Projects.reset(i);var o=trans("projects.edit_success");s||(o=trans("projects.create_success")),Piplin.toast(o,"","success"),window.location.href="/project/"+i.id},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form :input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#model-trash").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=(e(this),trans("projects.delete"),i.data("project-id"));if(i.hasClass("project-delete")){var a=e("#model_id");a.val(n),a.parents(".modal").removeClass().addClass("modal fade project-trash"),e.ajax({type:"POST",url:"/api/projects",data:{project_id:n}}).done(function(e){Piplin.Projects.reset(e)})}}),e("body").delegate(".project-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Projects.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("projects.delete_success")),window.location.href="/"},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Project=Backbone.Model.extend({urlRoot:"/projects"});var t=Backbone.Collection.extend({model:Piplin.Project});Piplin.Projects=new t,e("#new_webhook").on("click",function(t){var i=e(t.currentTarget),n=i.data("project-id"),a=e("i",i);e(".piplin-spin",i).length>0||(i.attr("disabled","disabled"),a.addClass("piplin-spin"),e("#webhook").fadeOut(3e3),e.ajax({type:"GET",url:"/webhook/"+n+"/refresh"}).fail(function(e){}).done(function(t){e("#webhook").fadeIn(3e3).val(t.url)}).always(function(){a.removeClass("piplin-spin"),i.removeAttr("disabled")}))})}(jQuery),function(e){e("#pattern").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("patterns.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?(a=trans("patterns.edit"),e(".btn-danger",n).show()):(e("#pattern_id").val(""),e("#name").val(""),e("#copy_pattern").val("")),n.find(".modal-title span").text(a)}),e("body").delegate(".pattern-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Patterns.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("patterns.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#pattern button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#pattern_id").val();if(s)var l=Piplin.Patterns.get(s);else var l=new Piplin.Pattern;l.save({name:e("#name").val(),copy_pattern:e("#copy_pattern").val(),build_plan_id:e('input[name="build_plan_id"]').val()},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("patterns.edit_success");s||(Piplin.Patterns.add(i),trans("patterns.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i)
-;var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Pattern=Backbone.Model.extend({urlRoot:"/patterns"});var t=Backbone.Collection.extend({model:Piplin.Pattern});Piplin.Patterns=new t,Piplin.PatternsTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#pattern_list tbody"),e("#no_patterns").show(),e("#pattern_list").hide(),this.listenTo(Piplin.Patterns,"add",this.addOne),this.listenTo(Piplin.Patterns,"reset",this.addAll),this.listenTo(Piplin.Patterns,"remove",this.addAll),this.listenTo(Piplin.Patterns,"all",this.render),Piplin.listener.on("pattern:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Patterns.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("pattern:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="build_plan_id"]').val();parseInt(t.model.build_plan_id)===parseInt(i)&&Piplin.Patterns.add(t.model)}),Piplin.listener.on("pattern:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Patterns.get(parseInt(e.model.id));t&&Piplin.Patterns.remove(t)})},render:function(){Piplin.Patterns.length?(e("#no_patterns").hide(),e("#pattern_list").show()):(e("#no_patterns").show(),e("#pattern_list").hide())},addOne:function(e){var t=new Piplin.PatternView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.Patterns.each(this.addOne,this)}}),Piplin.PatternView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#pattern-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},edit:function(){e("#pattern_id").val(this.model.id),e("#name").val(this.model.get("name")),e("#copy_pattern").val(this.model.get("copy_pattern"))},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade pattern-trash")}})}(jQuery),function(e){if(0!==e("#upload").length){e("#skin").on("change",function(){e("body").removeClass(),e("body").addClass("skin-"+e(this).find(":selected").val())}),e("#two-factor-auth").on("change",function(){var t=e(".auth-code");e(this).is(":checked")?t.removeClass("hide"):t.addClass("hide")}),e("#request-change-email").on("click",function(){var t=e(this).parents(".box");t.children(".overlay").removeClass("hide"),e.post("/profile/email",function(e){"success"==e&&(t.children(".overlay").addClass("hide"),t.find(".help-block").removeClass("hide"))})});var t={};e(".avatar>img").cropper({aspectRatio:1,preview:".avatar-preview",crop:function(e){t.dataX=Math.round(e.x),t.dataY=Math.round(e.y),t.dataHeight=Math.round(e.height),t.dataWidth=Math.round(e.width),t.dataRotate=Math.round(e.rotate)},built:function(){e("#upload-overlay").addClass("hide")}});new Uploader({trigger:"#upload",name:"file",action:"/profile/upload",accept:"image/*",data:{_token:e('meta[name="token"]').attr("content")},multiple:!1,change:function(){e("#upload-overlay").removeClass("hide"),this.submit()},error:function(t){t.responseJSON.file?alert(t.responseJSON.file.join("")):t.responseJSON.error&&alert(t.responseJSON.error.message),e("#upload-overlay").addClass("hide")},success:function(i){"success"===i.message&&(e(".avatar>img").cropper("replace",i.image),t.path=i.path,e(".current-avatar-preview").addClass("hide"),e(".avatar-preview").removeClass("hide"),e("#save-avatar").removeClass("hide"))}});e("#save-avatar").on("click",function(){e("#upload-overlay").removeClass("hide"),e(".avatar-message .alert").addClass("hide"),e.post("/profile/avatar",t).success(function(t){e("#upload-overlay").addClass("hide"),t.image?(e(".avatar-message .alert.alert-success").removeClass("hide"),e("#use-gravatar").removeClass("hide")):e(".avatar-message .alert.alert-danger").removeClass("hide")})}),e("#use-gravatar").on("click",function(){e("#upload-overlay").removeClass("hide"),e(".avatar-message .alert").addClass("hide"),e.post("/profile/gravatar").success(function(t){e("#upload-overlay").addClass("hide"),e(".avatar-message .alert.alert-success").removeClass("hide"),e(".avatar-preview").addClass("hide"),e(".current-avatar-preview").removeClass("hide"),e(".current-avatar-preview").attr("src",t.image),e("#use-gravatar").addClass("hide"),e("#avatar-save-buttons button").addClass("hide")})})}}(jQuery),function(e){e("#link").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("links.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?(a=trans("links.edit"),e(".btn-danger",n).show(),e(".link-environment").prop("checked",!1),Piplin.EnvironmentLinks.each(function(t){e("#link_opposite_environment_"+t.id).prop("checked",!0)})):e(".link-environment").prop("checked",!0),n.find(".modal-title span").text(a)}),e("#link button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=new Piplin.EnvironmentLink,l=[];e(".link-environment:checked").each(function(){l.push(e(this).val())});e(".opposite-environments").fadeOut(3e3),s.save({environment_id:e('input[name="environment_id"]').val(),link_type:e("#link_type").val(),environments:l},{wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.EnvironmentLinks.reset(i),Piplin.toast(trans("environments.link_success"))},error:function(t,i,s){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.EnvironmentLink=Backbone.Model.extend({urlRoot:"/environment-links"});var t=Backbone.Collection.extend({model:Piplin.EnvironmentLink});Piplin.EnvironmentLinks=new t,Piplin.EnvironmentLinksTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#link_list tbody"),e("#no_links").show(),e("#link_list").hide(),this.listenTo(Piplin.EnvironmentLinks,"add",this.addOne),this.listenTo(Piplin.EnvironmentLinks,"reset",this.addAll),this.listenTo(Piplin.EnvironmentLinks,"remove",this.addAll),this.listenTo(Piplin.EnvironmentLinks,"all",this.render)},render:function(){Piplin.EnvironmentLinks.length?(e("#no_links").hide(),e("#link_list").show()):(e("#no_links").show(),e("#link_list").hide())},addOne:function(e){var t=new Piplin.EnvironmentLinkView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.EnvironmentLinks.each(this.addOne,this)}}),Piplin.EnvironmentLinkView=Backbone.View.extend({tagName:"tr",initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#link-template").html())},render:function(){var e=this.model.toJSON(),t=parseInt(e.pivot.link_type);return e.link_type=1==t?trans("environments.link_auto"):trans("environments.link_manual"),this.$el.html(this.template(e)),this}})}(jQuery),function(e){var t={placeholder:trans("cabinets.search"),minimumInputLength:1,width:"100%",ajax:{url:"/api/autocomplete/cabinets",dataType:"json",delay:250,data:function(e){return{q:e.term}},processResults:function(t){return{results:e.map(t,function(e){return{id:e.id,text:e.name}})}},cache:!0}},i=e(".environment-cabinets").select2(t);e("#cabinet").on("show.bs.modal",function(t){var n=e(t.relatedTarget),a=e(this),s=trans("cabinets.link");e(".btn-danger",a).hide(),e(".callout-danger",a).hide(),e(".callout-warning",a).hide(),e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.hasClass("btn-edit")?(s=trans("cabinets.edit"),e("#cabinet_ids").parent().parent().hide(),e(".btn-danger",a).show()):(e("#cabinet_ids").parent().parent().show(),i.val("").trigger("change"),a.find(".modal-title span").text(trans("cabinets.link"))),a.find(".modal-title span").text(s)}),e("#cabinet #cabinet-type a.btn-app").on("click",function(t){var i=e(t.currentTarget),n=e("#cabinet");if(i.attr("disabled"))return void e(".callout-warning",n).show();e(".callout-warning",n).hide()}),e("body").delegate(".cabinet-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Cabinets.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("cabinets.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#cabinet button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#cabinet_id").val();if(s)var l=Piplin.Cabinets.get(s);else var l=new Piplin.Cabinet;var o={cabinet_ids:e("#cabinet_ids").val(),environment_id:parseInt(e('input[name="environment_id"]').val())};l.save(o,{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("cabinets.edit_success");s||(Piplin.Cabinets.add(i),o=trans("cabinets.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form select",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent();a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Cabinet=Backbone.Model.extend({urlRoot:"/cabinets/"+parseInt(e('input[name="environment_id"]').val())});var n=Backbone.Collection.extend({model:Piplin.Cabinet});Piplin.Cabinets=new n,Piplin.CabinetsTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#cabinet_list tbody"),e("#no_cabinets").show(),e("#cabinet_list").hide(),this.listenTo(Piplin.Cabinets,"add",this.addOne),this.listenTo(Piplin.Cabinets,"reset",this.addAll),this.listenTo(Piplin.Cabinets,"remove",this.addAll),this.listenTo(Piplin.Cabinets,"all",this.render),Piplin.listener.on("cabinet:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Cabinets.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("cabinet:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Cabinets.get(parseInt(e.model.id));t&&Piplin.Cabinets.remove(t)})},render:function(){Piplin.Cabinets.length?(e("#no_cabinets").hide(),e("#cabinet_list").show()):(e("#no_cabinets").show(),e("#cabinet_list").hide())},addOne:function(t){var i=new Piplin.CabinetView({model:t});this.$list.append(i.render().el),e(".server-names",this.$list).tooltip()},addAll:function(){this.$list.html(""),Piplin.Cabinets.each(this.addOne,this)}}),Piplin.CabinetView=Backbone.View.extend({tagName:"tr",events:{"click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#cabinet-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade cabinet-trash")}})}(jQuery),function(e){e(".command-list table").sortable({containerSelector:"table",itemPath:"> tbody",itemSelector:"tr",placeholder:'<tr class="placeholder"/>',delay:500,onDrop:function(t,i,n){n(t,i);var a=[];e("tbody tr td:first-child",i.el[0]).each(function(t,i){a.push(e(i).data("command-id"))}),e.ajax({url:"/commands/reorder",method:"POST",data:{commands:a}})}});var t;e("#command").on("hidden.bs.modal",function(e){t.destroy()}),e("#command").on("show.bs.modal",function(i){var n=e(i.relatedTarget),a=e(this),s=trans("commands.create");t=ace.edit("command_script"),t.getSession().setMode("ace/mode/sh"),e(".btn-danger",a).hide(),e(".callout-danger",a).hide(),e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.hasClass("btn-edit")?(s=trans("commands.edit"),e(".btn-danger",a).show()):(e("#command_id").val(""),e("#command_step").val(n.data("step")),e("#command_name").val(""),t.setValue(""),t.gotoLine(1),e("#command_user").val(""),e("#command_optional").prop("checked",!1),e("#command_default_on").prop("checked",!1),e("#command_default_on_row").addClass("hide"),e(".command-environment").prop("checked",!0),e(".command-pattern").prop("checked",!0)),a.find(".modal-title span").text(s)}),e("body").delegate(".command-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Commands.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("commands.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#command_optional").on("change",function(t){e("#command_default_on_row").addClass("hide"),!0===e(this).is(":checked")&&e("#command_default_on_row").removeClass("hide")}),e("#command button.btn-save").off("click").on("click",function(i){var n=e(i.currentTarget),a=n.find("i"),s=n.parents(".modal");a.removeClass().addClass("piplin piplin-load piplin-spin"),s.find(":input").attr("disabled","disabled"),e("button.close",s).hide();var l=e("#command_id").val();if(l)var o=Piplin.Commands.get(l);else var o=new Piplin.Command;var r=[];e(".command-environment:checked").each(function(){r.push(e(this).val())});var d=[];e(".command-pattern:checked").each(function(){d.push(e(this).val())}),o.save({name:e("#command_name").val(),script:t.getValue(),user:e("#command_user").val(),step:e("#command_step").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val(),environments:r,patterns:d,optional:e("#command_optional").is(":checked"),default_on:e("#command_default_on").is(":checked")},{wait:!0,success:function(i,n,o){s.modal("hide"),e(".callout-danger",s).hide(),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find(":input").removeAttr("disabled");var r=trans("commands.edit_success");l||(Piplin.Commands.add(n),r=trans("commands.create_success")),t.setValue(""),t.gotoLine(1),Piplin.toast(r)},error:function(t,i,n){e(".callout-danger",s).show();var l=i.responseJSON;e(".has-error",s).removeClass("has-error"),e(".label-danger",s).remove(),e("form input",s).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find(":input").removeAttr("disabled")}})}),Piplin.Command=Backbone.Model.extend({urlRoot:"/commands",defaults:function(){return{order:Piplin.Commands.nextOrder()}},isAfter:function(){return parseInt(this.get("step"))%3==0}});var i=Backbone.Collection.extend({model:Piplin.Command,comparator:"order",nextOrder:function(){return this.length?this.last().get("order")+1:1}});Piplin.Commands=new i,Piplin.CommandsTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$beforeList=e("#commands-before .command-list tbody"),this.$afterList=e("#commands-after .command-list tbody"),e(".no-commands").show(),e(".command-list").hide(),this.listenTo(Piplin.Commands,"add",this.addOne),this.listenTo(Piplin.Commands,"reset",this.addAll),this.listenTo(Piplin.Commands,"remove",this.addAll),this.listenTo(Piplin.Commands,"all",this.render),Piplin.listener.on("command:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Commands.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("command:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&(parseInt(t.model.step)+1!==parseInt(Piplin.command_action)&&parseInt(t.model.step)-1!==parseInt(Piplin.command_action)||Piplin.Commands.add(t.model))}),Piplin.listener.on("command:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Commands.get(parseInt(e.model.id));t&&Piplin.Commands.remove(t)})},render:function(){void 0!==Piplin.Commands.find(function(e){return!e.isAfter()})?(e("#commands-before .no-commands").hide(),e("#commands-before .command-list").show()):(e("#commands-before .no-commands").show(),e("#commands-before .command-list").hide()),void 0!==Piplin.Commands.find(function(e){return e.isAfter()})?(e("#commands-after .no-commands").hide(),e("#commands-after .command-list").show()):(e("#commands-after .no-commands").show(),e("#commands-after .command-list").hide())},addOne:function(t){var i=new Piplin.CommandView({model:t});t.isAfter()?(this.$afterList.append(i.render().el),e("tr",this.$afterList).length<2?e(".drag-handle",this.$afterList).hide():e(".drag-handle",this.$afterList).show()):(this.$beforeList.append(i.render().el),e("tr",this.$beforeList).length<2?e(".drag-handle",this.$beforeList).hide():e(".drag-handle",this.$beforeList).show())},addAll:function(){this.$beforeList.html(""),this.$afterList.html(""),Piplin.Commands.each(this.addOne,this)}}),Piplin.CommandView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#command-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},edit:function(){e("#command_id").val(this.model.id),e("#command_step").val(this.model.get("step")),e("#command_name").val(this.model.get("name")),e("#command_script").text(this.model.get("script")),e("#command_user").val(this.model.get("user")),e("#command_optional").prop("checked",!0===this.model.get("optional")),e("#command_default_on").prop("checked",!0===this.model.get("default_on")),e("#command_default_on_row").addClass("hide"),!0===this.model.get("optional")&&e("#command_default_on_row").removeClass("hide"),e(".command-environment").prop("checked",!1),e(this.model.get("environments")).each(function(t,i){e("#command_environment_"+i.id).prop("checked",!0)}),e(".command-pattern").prop("checked",!1),e(this.model.get("patterns")).each(function(t,i){e("#command_pattern_"+i.id).prop("checked",!0)})},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade command-trash")}})}(jQuery),function(e){var t,i;e("#configfile, #view-configfile").on("hidden.bs.modal",function(e){t.destroy()}),e("#view-configfile").on("show.bs.modal",function(e){t=ace.edit("preview-content"),t.setReadOnly(!0),t.getSession().setUseWrapMode(!0);var n=i.substr(i.lastIndexOf(".")+1).toLowerCase();"php"===n||"ini"===n?t.getSession().setMode("ace/mode/"+n):"yml"===n&&t.getSession().setMode("ace/mode/yaml")}),e("#configfile").on("show.bs.modal",function(i){var n=e(i.relatedTarget),a=e(this),s=trans("configFiles.create");t=ace.edit("content");var l=e("#path").val(),o=l.substr(l.lastIndexOf(".")+1).toLowerCase();"php"===o||"ini"===o?t.getSession().setMode("ace/mode/"+o):"yml"===o&&t.getSession().setMode("ace/mode/yaml"),e(".btn-danger",a).hide(),e(".callout-danger",a).hide(),e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),n.hasClass("btn-edit")?(s=trans("configFiles.edit"),e(".btn-danger",a).show()):(e("#file_id").val(""),e("#name").val(""),e("#path").val(""),e(".configfile-environment").prop("checked",!0),t.setValue(""),t.gotoLine(1)),a.find(".modal-title span").text(s)}),e("body").delegate(".configfile-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.ConfigFiles.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("configFiles.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#configfile button.btn-save").on("click",function(i){var n=e(i.currentTarget),a=n.find("i"),s=n.parents(".modal");a.removeClass().addClass("piplin piplin-load piplin-spin"),s.find("input").attr("disabled","disabled"),e("button.close",s).hide();var l=e("#config_file_id").val();if(l)var o=Piplin.ConfigFiles.get(l);else var o=new Piplin.ConfigFile;var r=[];e(".configfile-environment:checked").each(function(){r.push(e(this).val())}),o.save({name:e("#name").val(),path:e("#path").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val(),environments:r,content:t.getValue()},{wait:!0,success:function(i,n,o){s.modal("hide"),e(".callout-danger",s).hide(),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find("input").removeAttr("disabled");var r=trans("configFiles.edit_success");l||(Piplin.ConfigFiles.add(n),trans("configFiles.create_success")),t.setValue(""),t.gotoLine(1),Piplin.toast(r)},error:function(t,i,n){e(".callout-danger",s).show();var l=i.responseJSON;e(".has-error",s).removeClass("has-error"),e(".label-danger",s).remove(),e("form input",s).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),a.removeClass().addClass("piplin piplin-save"),e("button.close",s).show(),s.find("input").removeAttr("disabled")}})}),Piplin.ConfigFile=Backbone.Model.extend({urlRoot:"/config-files"});var n=Backbone.Collection.extend({model:Piplin.ConfigFile});Piplin.ConfigFiles=new n,Piplin.ConfigFilesTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#configfile_list tbody"),e("#no_configfiles").show(),e("#configfile_list").hide(),this.listenTo(Piplin.ConfigFiles,"add",this.addOne),this.listenTo(Piplin.ConfigFiles,"reset",this.addAll),this.listenTo(Piplin.ConfigFiles,"remove",this.addAll),this.listenTo(Piplin.ConfigFiles,"all",this.render),Piplin.listener.on("configfile:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.ConfigFiles.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("configfile:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&Piplin.ConfigFiles.add(t.model)}),Piplin.listener.on("configfile:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.ConfigFiles.get(parseInt(e.model.id));t&&Piplin.ConfigFiles.remove(t)})},render:function(){Piplin.ConfigFiles.length?(e("#no_configfiles").hide(),e("#configfile_list").show()):(e("#no_configfiles").show(),e("#configfile_list").hide())},addOne:function(e){var t=new Piplin.ConfigFileView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.ConfigFiles.each(this.addOne,this)}}),Piplin.ConfigFileView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash","click .btn-view":"view"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#configfiles-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},view:function(){i=this.model.get("path"),e("#preview-content").text(this.model.get("content"))},edit:function(){e("#config_file_id").val(this.model.id),e("#name").val(this.model.get("name")),e("#path").val(this.model.get("path")),e("#content").text(this.model.get("content")),e(".configfile-environment").prop("checked",!1),e(this.model.get("environments")).each(function(t,i){e("#configfile_environment_"+i.id).prop("checked",!0)})},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade configfile-trash")}})}(jQuery),function(e){e("#environment_list table").sortable({containerSelector:"table",itemPath:"> tbody",itemSelector:"tr",placeholder:'<tr class="placeholder"/>',delay:500,onDrop:function(t,i,n){n(t,i);var a=[];e("tbody tr td:first-child",i.el[0]).each(function(t,i){a.push(e(i).data("environment-id"))}),e.ajax({url:"/environments/reorder",method:"POST",data:{environments:a}})}}),e("#environment").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("environments.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),e("#add-environment-command",n).hide(),i.hasClass("btn-edit")?(a=trans("environments.edit"),e(".btn-danger",n).show()):(e("#environment_id").val(""),e("#environment_name").val(""),e("#environment_description").val(""),e("#environment_default_on").prop("checked",!0),e("#add-environment-command",n).show()),n.find(".modal-title span").text(a)}),e("body").delegate(".environment-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Environments.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("environments.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#environment button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#environment_id").val();if(s)var l=Piplin.Environments.get(s);else var l=new Piplin.Environment;l.save({name:e("#environment_name").val(),description:e("#environment_description").val(),default_on:e("#environment_default_on").is(":checked"),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val(),add_commands:e("#environment_commands").is(":checked")},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("environments.edit_success");s||(Piplin.Environments.add(i),o=trans("environments.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Environment=Backbone.Model.extend({urlRoot:"/environments",initialize:function(){}});var t=Backbone.Collection.extend({model:Piplin.Environment});Piplin.Environments=new t,Piplin.EnvironmentsTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#environment_list tbody"),e("#no_environments").show(),e("#environment_list").hide(),this.listenTo(Piplin.Environments,"add",this.addOne),this.listenTo(Piplin.Environments,"reset",this.addAll),this.listenTo(Piplin.Environments,"remove",this.addAll),this.listenTo(Piplin.Environments,"all",this.render),Piplin.listener.on("environment:"+Piplin.events.MODEL_CHANGED,function(t){e("#environment_"+t.model.id).html(t.model.name);var i=Piplin.Environments.get(parseInt(t.model.id));i&&i.set(t.model)}),Piplin.listener.on("environment:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&Piplin.Environments.add(t.model)}),Piplin.listener.on("environment:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Environments.get(parseInt(e.model.id));t&&Piplin.Environments.remove(t)})},render:function(){Piplin.Environments.length?(e("#no_environments").hide(),e("#environment_list").show()):(e("#no_environments").show(),e("#environment_list").hide())},addOne:function(t){var i=new Piplin.EnvironmentView({model:t});this.$list.append(i.render().el),e(".server-names",this.$list).tooltip(),Piplin.Environments.length<2?e(".drag-handle",this.$list).hide():e(".drag-handle",this.$list).show()},addAll:function(){this.$list.html(""),Piplin.Environments.each(this.addOne,this)}}),Piplin.EnvironmentView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#environment-template").html())},render:function(){var t=this.model.toJSON(),i=Piplin.formatProjectStatus(parseInt(this.model.get("status")));return t=e.extend(t,i),t.last_run=null!=t.last_run?moment(t.last_run).fromNow():trans("app.never"),this.$el.html(this.template(t)),this},edit:function(){e("#environment_id").val(this.model.id),e("#environment_name").val(this.model.get("name")),e("#environment_description").val(this.model.get("description")),e("#environment_default_on").prop("checked",!0===this.model.get("default_on"))},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade environment-trash")}})}(jQuery),function(e){e("#sharedfile").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("sharedFiles.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?(a=trans("sharedFiles.edit"),e(".btn-danger",n).show()):(e("#sharedfile_id").val(""),e("#name").val(""),e("#file").val("")),n.find(".modal-title span").text(a)}),e("body").delegate(".sharedfile-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.SharedFiles.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),
-n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("sharedFiles.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#sharedfile button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#sharedfile_id").val();if(s)var l=Piplin.SharedFiles.get(s);else var l=new Piplin.SharedFile;l.save({name:e("#name").val(),file:e("#file").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val()},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("sharedFiles.edit_success");s||(Piplin.SharedFiles.add(i),trans("sharedFiles.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.SharedFile=Backbone.Model.extend({urlRoot:"/shared-files"});var t=Backbone.Collection.extend({model:Piplin.SharedFile});Piplin.SharedFiles=new t,Piplin.SharedFilesTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#sharedfile_list tbody"),e("#no_sharedfiles").show(),e("#sharedfile_list").hide(),this.listenTo(Piplin.SharedFiles,"add",this.addOne),this.listenTo(Piplin.SharedFiles,"reset",this.addAll),this.listenTo(Piplin.SharedFiles,"remove",this.addAll),this.listenTo(Piplin.SharedFiles,"all",this.render),Piplin.listener.on("sharedfile:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.SharedFiles.get(parseInt(e.model.id));t&&t.set(e.model)}),Piplin.listener.on("sharedfile:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&Piplin.SharedFiles.add(t.model)}),Piplin.listener.on("sharedfile:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.SharedFiles.get(parseInt(e.model.id));t&&Piplin.SharedFiles.remove(t)})},render:function(){Piplin.SharedFiles.length?(e("#no_sharedfiles").hide(),e("#sharedfile_list").show()):(e("#no_sharedfiles").show(),e("#sharedfile_list").hide())},addOne:function(e){var t=new Piplin.SharedFileView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.SharedFiles.each(this.addOne,this)}}),Piplin.SharedFileView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#sharedfile-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},edit:function(){e("#sharedfile_id").val(this.model.id),e("#name").val(this.model.get("name")),e("#file").val(this.model.get("file"))},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade sharedfile-trash")}})}(jQuery),function(e){e("#variable").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("variables.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?(a=trans("variables.edit"),e(".btn-danger",n).show()):(e("#variable_id").val(""),e("#variable_name").val(""),e("#variable_value").val("")),n.find(".modal-title span").text(a)}),e("body").delegate(".variable-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Variables.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("variables.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#variable button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#variable_id").val();if(s)var l=Piplin.Variables.get(s);else var l=new Piplin.Variable;l.save({name:e("#variable_name").val(),value:e("#variable_value").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:e('input[name="targetable_id"]').val()},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("variables.edit_success");s||(Piplin.Variables.add(i),o=trans("variables.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Variable=Backbone.Model.extend({urlRoot:"/variables",initialize:function(){}});var t=Backbone.Collection.extend({model:Piplin.Variable});Piplin.Variables=new t,Piplin.VariablesTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#variable_list tbody"),e("#no_variables").show(),e("#variable_list").hide(),this.listenTo(Piplin.Variables,"add",this.addOne),this.listenTo(Piplin.Variables,"reset",this.addAll),this.listenTo(Piplin.Variables,"remove",this.addAll),this.listenTo(Piplin.Variables,"all",this.render),Piplin.listener.on("variable:"+Piplin.events.MODEL_CHANGED,function(t){e("#variable_"+t.model.id).html(t.model.name);var i=Piplin.Variables.get(parseInt(t.model.id));i&&i.set(t.model)}),Piplin.listener.on("variable:"+Piplin.events.MODEL_CREATED,function(t){var i=e('input[name="targetable_type"]').val(),n=e('input[name="targetable_id"]').val();i==t.model.targetable_type&&parseInt(t.model.targetable_id)===parseInt(n)&&Piplin.Variables.add(t.model)}),Piplin.listener.on("variable:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Variables.get(parseInt(e.model.id));t&&Piplin.Variables.remove(t)})},render:function(){Piplin.Variables.length?(e("#no_variables").hide(),e("#variable_list").show()):(e("#no_variables").show(),e("#variable_list").hide())},addOne:function(e){var t=new Piplin.VariableView({model:e});this.$list.append(t.render().el)},addAll:function(){this.$list.html(""),Piplin.Variables.each(this.addOne,this)}}),Piplin.VariableView=Backbone.View.extend({tagName:"tr",events:{"click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#variable-template").html())},render:function(){var e=this.model.toJSON();return this.$el.html(this.template(e)),this},edit:function(){e("#variable_id").val(this.model.id),e("#variable_name").val(this.model.get("name")),e("#variable_value").val(this.model.get("value"))},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade variable-trash")}})}(jQuery),function(e){e("#server_list table").sortable({containerSelector:"table",itemPath:"> tbody",itemSelector:"tr",placeholder:'<tr class="placeholder"/>',delay:500,onDrop:function(t,i,n){n(t,i);var a=[];e("tbody tr td:first-child",i.el[0]).each(function(t,i){a.push(e(i).data("server-id"))}),e.ajax({url:"/servers/reorder",method:"POST",data:{servers:a}})}}),e("#server").on("show.bs.modal",function(t){var i=e(t.relatedTarget),n=e(this),a=trans("servers.create");e(".btn-danger",n).hide(),e(".callout-danger",n).hide(),e(".has-error",n).removeClass("has-error"),e(".label-danger",n).remove(),i.hasClass("btn-edit")?(a=trans("servers.edit"),e(".btn-danger",n).show()):(e("#server_id").val(""),e("#server_name").val(""),e("#server_enabled").prop("checked",!0),e("#server_address").val(""),e("#server_port").val("22"),e("#server_user").val(""),e("#server_targetable_id").val(e("#server_targetable_id option:selected").val())),n.find(".modal-title span").text(a)}),e("body").delegate(".server-trash button.btn-delete","click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide(),Piplin.Servers.get(e("#model_id").val()).destroy({wait:!0,success:function(t,i,s){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled"),Piplin.toast(trans("servers.delete_success"))},error:function(){n.removeClass().addClass("piplin piplin-delete"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),e("#server button.btn-save").on("click",function(t){var i=e(t.currentTarget),n=i.find("i"),a=i.parents(".modal");n.removeClass().addClass("piplin piplin-load piplin-spin"),a.find("input").attr("disabled","disabled"),e("button.close",a).hide();var s=e("#server_id").val();if(s)var l=Piplin.Servers.get(s);else var l=new Piplin.Server;l.save({name:e("#server_name").val(),ip_address:e("#server_address").val(),enabled:e("#server_enabled").is(":checked"),port:e("#server_port").val(),user:e("#server_user").val(),targetable_type:e('input[name="targetable_type"]').val(),targetable_id:parseInt(e("#server_targetable_id").val())},{wait:!0,success:function(t,i,l){a.modal("hide"),e(".callout-danger",a).hide(),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled");var o=trans("servers.edit_success");s||(Piplin.Servers.add(i),o=trans("servers.create_success")),Piplin.toast(o)},error:function(t,i,s){e(".callout-danger",a).show();var l=i.responseJSON;e(".has-error",a).removeClass("has-error"),e(".label-danger",a).remove(),e("form input",a).each(function(t,i){i=e(i);var n=i.attr("name");if(void 0!==l[n]){var a=i.parent("div");a.addClass("has-error"),a.append(e("<span>").attr("class","label label-danger").text(l[n]))}}),n.removeClass().addClass("piplin piplin-save"),e("button.close",a).show(),a.find("input").removeAttr("disabled")}})}),Piplin.Server=Backbone.Model.extend({urlRoot:"/servers"});var t=Backbone.Collection.extend({model:Piplin.Server,comparator:function(e,t){return e.get("name")>t.get("name")?-1:e.get("name")<t.get("name")?1:0}});Piplin.Servers=new t,Piplin.ServersTab=Backbone.View.extend({el:"#app",events:{},initialize:function(){this.$list=e("#server_list tbody"),e("#no_servers").show(),e("#server_list").hide(),this.listenTo(Piplin.Servers,"add",this.addOne),this.listenTo(Piplin.Servers,"reset",this.addAll),this.listenTo(Piplin.Servers,"remove",this.addAll),this.listenTo(Piplin.Servers,"all",this.render),Piplin.listener.on("server:"+Piplin.events.MODEL_CHANGED,function(e){var t=Piplin.Servers.get(parseInt(e.model.id));t&&(Piplin.targetable_id==e.model.targetable_id?t.set(e.model):Piplin.Servers.remove(t))}),Piplin.listener.on("server:"+Piplin.events.MODEL_CREATED,function(e){parseInt(e.model.targetable_id)===parseInt(Piplin.targetable_id)&&Piplin.Servers.add(e.model)}),Piplin.listener.on("server:"+Piplin.events.MODEL_TRASHED,function(e){var t=Piplin.Servers.get(parseInt(e.model.id));t&&Piplin.Servers.remove(t)})},render:function(){Piplin.Servers.length?(e("#no_servers").hide(),e("#server_list").show()):(e("#no_servers").show(),e("#server_list").hide())},addOne:function(t){var i=new Piplin.ServerView({model:t});this.$list.append(i.render().el),Piplin.Servers.length<2?e(".drag-handle",this.$list).hide():e(".drag-handle",this.$list).show()},addAll:function(){this.$list.html(""),Piplin.Servers.each(this.addOne,this)}}),Piplin.ServerView=Backbone.View.extend({tagName:"tr",events:{"click .btn-test":"testConnection","click .btn-show":"showLog","click .btn-edit":"edit","click .btn-delete":"trash"},initialize:function(){this.listenTo(this.model,"change",this.render),this.listenTo(this.model,"destroy",this.remove),this.template=_.template(e("#server-template").html())},render:function(){var e=this.model.toJSON();return e.status_css="orange",e.icon_css="circle",e.status=trans("servers.untested"),0===parseInt(this.model.get("status"))?(e.status_css="success",e.status=trans("servers.successful")):3===parseInt(this.model.get("status"))?(e.status_css="purple",e.icon_css="load piplin-spin",e.status=trans("servers.testing")):2===parseInt(this.model.get("status"))&&(e.status_css="danger",e.status=trans("servers.failed")),this.$el.html(this.template(e)),this},edit:function(){e("#server_id").val(this.model.id),e("#server_name").val(this.model.get("name")),e("#server_targetable_id").select2(Piplin.select2_options).val(this.model.get("targetable_id")).trigger("change"),e("#server_enabled").prop("checked",!0===this.model.get("enabled")),e("#server_address").val(this.model.get("ip_address")),e("#server_port").val(this.model.get("port")),e("#server_user").val(this.model.get("user"))},showLog:function(){var t=this.model.toJSON();e("#log pre").html(t.output)},trash:function(){var t=e("#model_id");t.val(this.model.id),t.parents(".modal").removeClass().addClass("modal fade server-trash")},testConnection:function(){if(3!==parseInt(this.model.get("status"))){this.model.set({status:3});var t=this;e.ajax({type:"GET",url:this.model.urlRoot+"/"+this.model.id+"/test"}).fail(function(e){t.model.set({status:2})})}}})}(jQuery);
+(function ($) {
+
+    $('.command-list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('command-id'));
+            });
+
+            $.ajax({
+                url: '/commands/reorder',
+                method: 'POST',
+                data: {
+                    commands: ids
+                }
+            });
+        }
+    });
+
+    var editor;
+
+    $('#command').on('hidden.bs.modal', function (event) {
+        editor.destroy();
+    });
+
+    $('#command').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('commands.create');
+
+        editor = ace.edit('command_script');
+        editor.getSession().setMode('ace/mode/sh');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('commands.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#command_id').val('');
+            $('#command_step').val(button.data('step'));
+            $('#command_name').val('');
+            editor.setValue('');
+            editor.gotoLine(1);
+            $('#command_user').val('');
+            $('#command_optional').prop('checked', false);
+            $('#command_default_on').prop('checked', false);
+            $('#command_default_on_row').addClass('hide');
+
+            $('.command-environment').prop('checked', true);
+            $('.command-pattern').prop('checked', true);
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.command-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var command = Piplin.Commands.get($('#model_id').val());
+
+        command.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('commands.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#command_optional').on('change', function (event) {
+        $('#command_default_on_row').addClass('hide');
+        if ($(this).is(':checked') === true) {
+            $('#command_default_on_row').removeClass('hide');
+        }
+    });
+
+    //If no `off`, the code below will be executed twice.
+    $('#command button.btn-save').off('click').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find(':input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var command_id = $('#command_id').val();
+        if (command_id) {
+            var command = Piplin.Commands.get(command_id);
+        } else {
+            var command = new Piplin.Command();
+        }
+
+        var environment_ids = [];
+        $('.command-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        var pattern_ids = [];
+        $('.command-pattern:checked').each(function() {
+            pattern_ids.push($(this).val());
+        });
+
+        command.save({
+            name:            $('#command_name').val(),
+            script:          editor.getValue(),
+            user:            $('#command_user').val(),
+            step:            $('#command_step').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            environments:    environment_ids,
+            patterns:        pattern_ids,
+            optional:        $('#command_optional').is(':checked'),
+            default_on:      $('#command_default_on').is(':checked')
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find(':input').removeAttr('disabled');
+
+                var msg = trans('commands.edit_success');
+                if (!command_id) {
+                    Piplin.Commands.add(response);
+                    msg = trans('commands.create_success');
+                }
+
+                editor.setValue('');
+                editor.gotoLine(1);
+
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find(':input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Command = Backbone.Model.extend({
+        urlRoot: '/commands',
+        defaults: function() {
+            return {
+                order: Piplin.Commands.nextOrder()
+            };
+        },
+        isAfter: function() {
+            return (parseInt(this.get('step')) % 3 === 0);
+        }
+    });
+
+    var Commands = Backbone.Collection.extend({
+        model: Piplin.Command,
+        comparator: 'order',
+        nextOrder: function() {
+            if (!this.length) {
+                return 1;
+            }
+
+            return this.last().get('order') + 1;
+        }
+    });
+
+    Piplin.Commands = new Commands();
+
+    Piplin.CommandsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$beforeList = $('#commands-before .command-list tbody');
+            this.$afterList = $('#commands-after .command-list tbody');
+
+            $('.no-commands').show();
+            $('.command-list').hide();
+
+            this.listenTo(Piplin.Commands, 'add', this.addOne);
+            this.listenTo(Piplin.Commands, 'reset', this.addAll);
+            this.listenTo(Piplin.Commands, 'remove', this.addAll);
+            this.listenTo(Piplin.Commands, 'all', this.render);
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
+
+                if (command) {
+                    command.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                //if (data.model.targetable_type == Piplin.targetable_type && parseInt(data.model.targetable_id) === parseInt(Piplin.targetable_id)) {
+
+                    // Make sure the command is for this action (clone, install, activate, purge)
+                    if (parseInt(data.model.step) + 1 === parseInt(Piplin.command_action) || parseInt(data.model.step) - 1 === parseInt(Piplin.command_action)) {
+                        Piplin.Commands.add(data.model);
+                    }
+                }
+            });
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
+
+                if (command) {
+                    Piplin.Commands.remove(command);
+                }
+            });
+        },
+        render: function () {
+            var before = Piplin.Commands.find(function(model) {
+                return !model.isAfter();
+            });
+
+            if (typeof before !== 'undefined') {
+                $('#commands-before .no-commands').hide();
+                $('#commands-before .command-list').show();
+            } else {
+                $('#commands-before .no-commands').show();
+                $('#commands-before .command-list').hide();
+            }
+
+            var after = Piplin.Commands.find(function(model) {
+                return model.isAfter();
+            });
+
+            if (typeof after !== 'undefined') {
+                $('#commands-after .no-commands').hide();
+                $('#commands-after .command-list').show();
+            } else {
+                $('#commands-after .no-commands').show();
+                $('#commands-after .command-list').hide();
+            }
+        },
+        addOne: function (command) {
+            var view = new Piplin.CommandView({
+                model: command
+            });
+
+            if (command.isAfter()) {
+                this.$afterList.append(view.render().el);
+                if ($('tr', this.$afterList).length < 2) {
+                    $('.drag-handle', this.$afterList).hide();
+                } else {
+                    $('.drag-handle', this.$afterList).show();
+                }
+            } else {
+                this.$beforeList.append(view.render().el);
+                if ($('tr', this.$beforeList).length < 2) {
+                    $('.drag-handle', this.$beforeList).hide();
+                } else {
+                    $('.drag-handle', this.$beforeList).show();
+                }
+            }
+        },
+        addAll: function () {
+            this.$beforeList.html('');
+            this.$afterList.html('');
+            Piplin.Commands.each(this.addOne, this);
+        }
+    });
+
+    Piplin.CommandView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#command-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#command_id').val(this.model.id);
+            $('#command_step').val(this.model.get('step'));
+            $('#command_name').val(this.model.get('name'));
+            $('#command_script').text(this.model.get('script'));
+            $('#command_user').val(this.model.get('user'));
+            $('#command_optional').prop('checked', (this.model.get('optional') === true));
+            $('#command_default_on').prop('checked', (this.model.get('default_on') === true));
+
+            $('#command_default_on_row').addClass('hide');
+            if (this.model.get('optional') === true) {
+                $('#command_default_on_row').removeClass('hide');
+            }
+
+            $('.command-environment').prop('checked', false);
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#command_environment_' + environment.id).prop('checked', true);
+            });
+
+            $('.command-pattern').prop('checked', false);
+            $(this.model.get('patterns')).each(function (index, pattern) {
+                $('#command_pattern_' + pattern.id).prop('checked', true);
+            });
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade command-trash');
+        }
+    });
+})(jQuery);
+
+(function ($) {
+
+    $('#task').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $('.callout-danger', modal).hide();
+        var targetable_type = $('input[name="targetable_type"]').val();
+
+        if (new RegExp("Plan$").test(targetable_type)) {
+            var title = trans('tasks.build');
+            modal.find('.modal-title span').text(title);
+            modal.find('.modal-title i').removeClass().addClass('piplin piplin-build');
+            modal.find('button.btn-save span').text(title);
+        }
+    });
+
+    $('.task-source:radio').on('change', function (event) {
+        var target = $(event.currentTarget);
+
+        $('div.task-source-container').hide();
+        if (target.val() === 'branch') {
+            $('#task_branch').parent('div').show();
+        } else if (target.val() === 'tag') {
+            $('#task_tag').parent('div').show();
+        } else if (target.val() === 'commit') {
+            $('#task_commit').parent('div').show();
+        }
+    });
+
+    $('#task button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var deployment = new Piplin.Deploy();
+
+        var environment_ids = [];
+
+        $('.task-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        var optional = [];
+        $('.task-command:checked').each(function() {
+            optional.push($(this).val());
+        });
+
+        deployment.save({
+            environments:    environment_ids,
+            project_id:      $('input[name="project_id"]').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            reason:          $('#task_reason').val(),
+            source:          $('input[name="source"]:checked').val(),
+            source_branch:   $('#task_branch').val(),
+            source_tag:      $('#task_tag').val(),
+            source_commit:   $('#task_commit').val(),
+            optional:        optional
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('tasks.submit_success');
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                if (typeof errors['environments'] !== 'undefined') {
+                    var element = $('.task-environment');
+                    var parent = element.parents('div.form-group');
+                    parent.addClass('has-error');
+                }
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#rollback').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var task   = button.data('task-id');
+        var modal  = $(this);
+
+        $('input[name="task_id"]', modal).val(task);
+        $('#task_reason', modal).val('');
+        $('.task-command', modal).prop('checked', false);
+    });
+
+    $('#rollback button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var reason = $('#task_reason', dialog).val();
+
+        var optional = [];
+        $('.task-command:checked', dialog).each(function() {
+            optional.push($(this).val());
+        });
+
+        $.ajax({
+            url: '/task/' + $('input[name="task_id"]', dialog).val() + '/rollback',
+            method: 'POST',
+            data: {
+                reason: reason,
+                optional: optional
+            }
+        }).fail(function (response){
+            $('.callout-danger', dialog).show();
+            var errors = response.responseJSON;
+
+            $('.has-error', dialog).removeClass('has-error');
+            $('.label-danger', dialog).remove();
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+
+            Piplin.toast(trans('tasks.submit_success'));
+        });
+    });
+
+    $('#task_draft').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+
+        var task = button.data('task-id');
+
+        var modal = $(this);
+
+        $('input[name="task_id"]', modal).val(task);
+
+        //$('form', modal).prop('action', '/task/' + task + '/task-draft');
+    });
+
+    $('#task_draft button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        $.ajax({
+            url: '/task/' + $('input[name="task_id"]', dialog).val() + '/task-draft',
+            method: 'POST'
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+            dialog.find('input').removeAttr('disabled');
+
+            Piplin.toast(trans('tasks.submit_success'));
+        });
+    });
+
+    $('.btn-cancel').on('click', function (event) {
+        var button = $(event.currentTarget);
+        var task = button.data('task-id');
+
+        $('form#abort_' + task).trigger('submit');
+    });
+
+    var fetchingLog = false;
+    $('#log').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var log_id = button.attr('id').replace('log_', '');
+
+        var step = $('h3 span', button.parents('.box')).text();
+        var modal = $(this);
+        var log = $('pre', modal);
+        var loader = $('#loading', modal);
+
+        log.hide();
+        loader.show();
+
+        $('#action', modal).text(step);
+        log.text('');
+
+        fetchingLog = true;
+
+        $.ajax({
+            type: 'GET',
+            url: '/log/' + log_id
+        }).done(function (data) {
+            var output = parseOutput(data.output ? data.output : '');
+
+            log.html(output);
+
+            log.show();
+            loader.hide();
+
+            Piplin.listener.on('serverlog-' + log_id + ':' + Piplin.events.OUTPUT_CHANGED, function (data) {
+                if (data.log_id === parseInt(log_id)) {
+                  fetchLog(log, data.log_id);
+                }
+            });
+        }).always(function() {
+            fetchingLog = false;
+        });
+    });
+
+    $('#log').on('hide.bs.modal', function () {
+        fetchingLog = false;
+    });
+
+    function fetchLog(element, log_id) {
+        if (fetchingLog) {
+            return;
+        }
+
+        fetchingLog = true;
+
+        $.ajax({
+            type: 'GET',
+            url: '/log/' + log_id
+        }).done(function (data) {
+            var output = parseOutput(data.output ? data.output : '');
+            var atBottom = false;
+
+            if (element.scrollTop() + element.innerHeight() >= element.get(0).scrollHeight) {
+                atBottom = true;
+            }
+
+            element.html(output);
+
+            if (atBottom) {
+                element.scrollTop(element.get(0).scrollHeight);
+            }
+        }).always(function() {
+            fetchingLog = false;
+        });
+    }
+
+
+    function parseOutput(output) {
+        return output.replace(/<\/error>/g, '</span>')
+            .replace(/<\/info>/g, '</span>')
+            .replace(/<error>/g, '<span class="text-red">')
+            .replace(/<info>/g, '<span class="text-default">');
+    }
+
+    Piplin.Deploy = Backbone.Model.extend({
+        urlRoot: '/tasks'
+    });
+
+    Piplin.ServerLog = Backbone.Model.extend({
+        urlRoot: '/status'
+    });
+
+    var Deployment = Backbone.Collection.extend({
+        model: Piplin.ServerLog
+    });
+
+    Piplin.Deployment = new Deployment();
+
+    Piplin.DeploymentView = Backbone.View.extend({
+        el: '#app',
+        $containers: [],
+        events: {
+
+        },
+        initialize: function() {
+            var that = this;
+            $('.task-step tbody').each(function(index, element) {
+                that.$containers.push({
+                    step: parseInt($(element).attr('id').replace('step_', '')),
+                    element: element
+                })
+            });
+
+            this.listenTo(Piplin.Deployment, 'add', this.addOne);
+            this.listenTo(Piplin.Deployment, 'reset', this.addAll);
+            this.listenTo(Piplin.Deployment, 'remove', this.addAll);
+            this.listenTo(Piplin.Deployment, 'all', this.render);
+
+            Piplin.listener.on('serverlog:' + Piplin.events.SVRLOG_CHANGED, function (data) {
+                var deployment = Piplin.Deployment.get(data.log_id);
+
+                if (deployment) {
+                    deployment.set({
+                        status: data.status,
+                        output: data.output,
+                        runtime: data.runtime,
+                        started_at: data.started_at ? data.started_at : false,
+                        finished_at: data.finished_at ? data.finished_at : false
+                    });
+                }
+            });
+
+            Piplin.listener.on('task:' + Piplin.events.MODEL_CHANGED, function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Piplin.project_id)) {
+                    var status_bar = $('#task_status_bar');
+                    var status_data = Piplin.formatDeploymentStatus(parseInt(data.model.status));
+                    
+                    status_bar.attr('class', 'text-' + status_data.label_class);
+                    $('i', status_bar).attr('class', 'piplin piplin-' + status_data.icon_class);
+                    $('span', status_bar).text(status_data.label);
+
+                    if (data.model.run_failure) {
+                        $('#task_status').find('p').text(data.model.output);
+                        $('#task_status').removeClass('hide').show();
+                    } else {
+                        $('#task_status').hide();
+                    }
+                }
+            });
+
+        },
+        addOne: function (step) {
+            var view = new Piplin.LogView({
+                model: step
+            });
+
+            var found = _.find(this.$containers, function(element) {
+                return parseInt(element.step) === parseInt(step.get('task_step_id'));
+            });
+
+            $(found.element).append(view.render().el);
+
+        },
+        addAll: function () {
+            $(this.$containers).each(function (index, element) {
+                element.html('');
+            });
+
+            Piplin.Commands.each(this.addOne, this);
+        }
+    });
+
+    Piplin.LogView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            //'click .btn-log': 'showLog',
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#log-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+            var task_status = parseInt(this.model.get('status'));
+
+            data.label_class = 'info';
+            data.icon_css = 'clock';
+            data.label = trans('tasks.pending');
+
+            if (task_status === Piplin.statuses.SVRLOG_COMPLETED) {
+                data.label_class = 'success';
+                data.icon_css = 'check';
+                data.label = trans('tasks.completed');
+            } else if (task_status === Piplin.statuses.SVRLOG_RUNNING) {
+                data.label_class = 'warning';
+                data.icon_css = 'load piplin-spin';
+                data.label = trans('tasks.running');
+            } else if (task_status === Piplin.statuses.SVRLOG_FAILED) {
+                data.label_class = 'danger';
+                data.icon_css = 'close';
+                data.label = trans('tasks.failed');
+             } else if (task_status === Piplin.statuses.SVRLOG_CANCELLED) {
+                data.label_class = 'danger';
+                data.icon_css = 'close';
+                data.label = trans('tasks.cancelled');
+            }
+
+            data.formatted_start_time = data.started_at ? moment(data.started_at).format('HH:mm:ss') : false;
+            data.formatted_end_time   = data.finished_at ? moment(data.finished_at).format('HH:mm:ss') : false;
+
+            this.$el.removeClass().addClass('bg-' + data.label_class).html(this.template(data));
+
+            return this;
+        }
+    });
+})(jQuery);
+(function ($) {
+
+    $('#hook').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.callout-warning', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            $('.btn-danger', modal).show();
+        } else {
+            $('#hook_id').val('');
+            $('#hook_name').val('');
+            $('#hook_type').val('');
+            $('#hook :input[id^=hook_config]').val('');
+            $('#hook .hook-config input[type=checkbox]').prop('checked', true);
+            $('#hook .hook-enabled input[type=checkbox]').prop('checked', true);
+            $('#hook .modal-footer').hide();
+            $('.hook-config').hide();
+            $('.hook-enabled').hide();
+            $('#hook-type').show();
+            modal.find('.modal-title span').text(trans('hooks.create'));
+        }
+    });
+
+    $('#hook #hook-type a.btn-app').on('click', function(event) {
+        var button = $(event.currentTarget);
+        var modal = $('#hook');
+
+        if (button.attr('disabled')) {
+            $('.callout-warning', modal).show();
+            return;
+        }
+
+        $('.callout-warning', modal).hide();
+
+        var type = button.data('type');
+        setTitleWithIcon(type, 'create');
+    });
+
+    function setTitleWithIcon(type, action) {
+        $('#hook .modal-title span').text(trans('hooks.' + action + '_' + type));
+
+        var element = $('#hook .modal-title i').removeClass().addClass('ion');
+        var icon = 'edit';
+
+        if (type === 'slack') {
+            icon = 'slack';
+        } else if (type === 'dingtalk') {
+            icon = 'pin';
+        } else if (type === 'mail') {
+            icon = 'email';
+        } else if (type === 'custom') {
+            icon = 'edit';
+        }
+
+        element.addClass('piplin-' + icon);
+
+        $('#hook .modal-footer').show();
+        $('.hook-config').hide();
+        $('#hook-type').hide();
+        $('#hook-name').show();
+        $('#hook-triggers').show();
+        $('.hook-enabled').show();
+        $('#hook-config-' + type).show();
+        $('#hook_type').val(type);
+    }
+
+    $('body').delegate('.hook-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var hook = Piplin.Hooks.get($('#model_id').val());
+
+        hook.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('hooks.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#hook button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var hook_id = $('#hook_id').val();
+
+        if (hook_id) {
+            var hook = Piplin.Hooks.get(hook_id);
+        } else {
+            var hook = new Piplin.Hook();
+        }
+
+        var data = {
+          config:                     null,
+          name:                       $('#hook_name').val(),
+          type:                       $('#hook_type').val(),
+          project_id:                 parseInt($('input[name="project_id"]').val()),
+          enabled:                    $('#hook_enabled').is(':checked'),
+          on_deployment_success:      $('#hook_on_deployment_success').is(':checked'),
+          on_deployment_failure:      $('#hook_on_deployment_failure').is(':checked')
+        };
+
+        $('#hook #hook-config-' + data.type + ' :input[id^=hook_config]').each(function(key, field) {
+            var name = $(field).attr('name');
+
+            data[name] = $(field).val();
+        });
+
+        hook.save(data, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('hooks.edit_success');
+                if (!hook_id) {
+                    Piplin.Hooks.add(response);
+                    msg = trans('hooks.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent();
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Hook = Backbone.Model.extend({
+        urlRoot: '/hooks/' + parseInt($('input[name="project_id"]').val())
+    });
+
+    var Hooks = Backbone.Collection.extend({
+        model: Piplin.Hook
+    });
+
+    Piplin.Hooks = new Hooks();
+
+    Piplin.HooksTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#hook_list tbody');
+
+            $('#no_hooks').show();
+            $('#hook_list').hide();
+
+            this.listenTo(Piplin.Hooks, 'add', this.addOne);
+            this.listenTo(Piplin.Hooks, 'reset', this.addAll);
+            this.listenTo(Piplin.Hooks, 'remove', this.addAll);
+            this.listenTo(Piplin.Hooks, 'all', this.render);
+
+
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var hook = Piplin.Hooks.get(parseInt(data.model.id));
+
+                if (hook) {
+                    hook.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_CREATED, function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Piplin.project_id)) {
+                    Piplin.Hooks.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('hook:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var hook = Piplin.Hooks.get(parseInt(data.model.id));
+
+                if (hook) {
+                    Piplin.Hooks.remove(hook);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Hooks.length) {
+                $('#no_hooks').hide();
+                $('#hook_list').show();
+            } else {
+                $('#no_hooks').show();
+                $('#hook_list').hide();
+            }
+        },
+        addOne: function (hook) {
+            var view = new Piplin.HookView({
+                model: hook
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Hooks.each(this.addOne, this);
+        }
+    });
+
+    Piplin.HookView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#hook-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            data.icon = 'edit';
+            data.label = trans('hooks.custom');
+
+            if (this.model.get('type') !== 'custom') {
+                data.label = trans('hooks.' + this.model.get('type'));
+            }
+
+            if (this.model.get('type') === 'slack') {
+                data.icon = 'slack';
+            } else if (this.model.get('type') === 'dingtalk') {
+                data.icon = 'pin';
+            } else if (this.model.get('type') === 'mail') {
+                data.icon = 'email';
+            }
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            var type = this.model.get('type');
+
+            $.each(this.model.get('config'), function(field, value) {
+                $('#hook-config-' + type + ' #hook_config_' + field).val(value);
+            });
+
+            $('#hook_id').val(this.model.id);
+            $('#hook_name').val(this.model.get('name'));
+            $('#hook_type').val(type);
+            $('#hook_enabled').prop('checked', (this.model.get('enabled') === true));
+            $('#hook_on_deployment_success').prop('checked', (this.model.get('on_deployment_success') === true));
+            $('#hook_on_deployment_failure').prop('checked', (this.model.get('on_deployment_failure') === true));
+
+            setTitleWithIcon(this.model.get('type'), 'edit');
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade hook-trash');
+        }
+    });
+})(jQuery);
+(function ($) {
+
+    // test
+    var settings =  {
+        placeholder: trans('members.search'),
+        minimumInputLength: 1,
+        width: '100%',
+        ajax: {
+            url: "/api/autocomplete/users",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term // search term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return {id: obj.id, text: obj.name};
+                    })
+                };
+            },
+            cache: true
+        }
+    };
+
+    var member_select2 = $('.project-members').select2(settings);
+
+    // end
+    $('#member').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('members.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.callout-warning', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('members.edit');
+            $('#user_ids').parent().parent().hide();
+            $('.btn-danger', modal).show();
+        } else {
+            $('#user_ids').parent().parent().show();
+            member_select2.val('').trigger('change');
+            modal.find('.modal-title span').text(trans('members.create'));
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('#member #member-type a.btn-app').on('click', function(event) {
+        var button = $(event.currentTarget);
+        var modal = $('#member');
+
+        if (button.attr('disabled')) {
+            $('.callout-warning', modal).show();
+            return;
+        }
+
+        $('.callout-warning', modal).hide();
+    });
+
+    $('body').delegate('.member-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var member = Piplin.Members.get($('#model_id').val());
+
+        member.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('members.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#member button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var member_id = $('#member_id').val();
+
+        if (member_id) {
+            var member = Piplin.Members.get(member_id);
+        } else {
+            var member = new Piplin.Member();
+        }
+
+        var data = {
+          user_ids:    $('#user_ids').val(),
+          project_id: parseInt($('input[name="project_id"]').val())
+        };
+
+        member.save(data, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('members.edit_success');
+                if (!member_id) {
+                    Piplin.Members.add(response);
+                    msg = trans('members.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form select', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent();
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Member = Backbone.Model.extend({
+        urlRoot: '/members/' + parseInt($('input[name="project_id"]').val())
+    });
+
+    var Members = Backbone.Collection.extend({
+        model: Piplin.Member
+    });
+
+    Piplin.Members = new Members();
+
+    Piplin.MembersTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#member_list tbody');
+
+            $('#no_members').show();
+            $('#member_list').hide();
+
+            this.listenTo(Piplin.Members, 'add', this.addOne);
+            this.listenTo(Piplin.Members, 'reset', this.addAll);
+            this.listenTo(Piplin.Members, 'remove', this.addAll);
+            this.listenTo(Piplin.Members, 'all', this.render);
+
+            Piplin.listener.on('member:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var member = Piplin.Members.get(parseInt(data.model.id));
+
+                if (member) {
+                    member.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('member:' + Piplin.events.MODEL_CREATED, function (data) {
+                if (parseInt(data.model.project_id) === parseInt(Piplin.project_id)) {
+                    Piplin.Members.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('member:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var member = Piplin.Members.get(parseInt(data.model.id));
+
+                if (member) {
+                    Piplin.Members.remove(member);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Members.length) {
+                $('#no_members').hide();
+                $('#member_list').show();
+            } else {
+                $('#no_members').show();
+                $('#member_list').hide();
+            }
+        },
+        addOne: function (member) {
+            var view = new Piplin.MemberView({
+                model: member
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Members.each(this.addOne, this);
+        }
+    });
+
+    Piplin.MemberView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#member-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade member-trash');
+        }
+    });
+})(jQuery);
+(function ($) {
+
+    $('#project_create').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('projects.create');
+
+        var project_id = button.data('project-id');
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('projects.edit');
+            $.ajax({
+                type: 'POST',
+                url: '/api/projects',
+                data: {
+                    project_id: project_id
+                }
+            }).done(function (data) {
+
+                Piplin.Projects.reset(data);
+
+                $('#project_id').val(data.id);
+                $('#project_name').val(data.name);
+                $('#project_repository').val(data.repository);
+                $('#project_branch').val(data.branch);
+                $('#project_deploy_path').val(data.deploy_path);
+                $('#project_allow_other_branch').prop('checked', (data.allow_other_branch === true));
+            });
+        }
+
+        modal.find('.modal-title span').text(title);
+        $('.callout-danger', modal).hide();
+    });
+
+    $('#project_create button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var project_id = $('#project_id').val();
+
+        if (project_id) {
+            var project = Piplin.Projects.get(project_id);
+        } else {
+            var project = new Piplin.Project();
+        }
+
+        project.save({
+            name:               $('#project_name').val(),
+            repository:         $('#project_repository').val(),
+            branch:             $('#project_branch').val(), 
+            deploy_path:        $('#project_deploy_path').val(),
+            allow_other_branch: $('#project_allow_other_branch').is(':checked')
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.Projects.reset(response);
+                var msg = trans('projects.edit_success');
+                if (!project_id) {
+                     msg = trans('projects.create_success');
+                }
+                Piplin.toast(msg, '', 'success');
+                window.location.href = '/project/' + response.id;
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form :input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+
+    });
+
+    $('#model-trash').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('projects.delete');
+
+        var project_id = button.data('project-id');
+
+        if (button.hasClass('project-delete')) {
+            var target = $('#model_id');
+            target.val(project_id);
+            target.parents('.modal').removeClass().addClass('modal fade project-trash');
+            $.ajax({
+                type: 'POST',
+                url: '/api/projects',
+                data: {
+                    project_id: project_id
+                }
+            }).done(function (data) {
+                Piplin.Projects.reset(data);
+            });
+        }
+    });
+
+    $('body').delegate('.project-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var project = Piplin.Projects.get($('#model_id').val());
+
+        project.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('projects.delete_success'));
+                window.location.href = '/';
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Project = Backbone.Model.extend({
+        urlRoot: '/projects'
+    });
+
+    var Projects = Backbone.Collection.extend({
+        model: Piplin.Project
+    });
+
+    Piplin.Projects = new Projects();
+
+    $('#new_webhook').on('click', function(event) {
+        var target = $(event.currentTarget);
+        var project_id = target.data('project-id');
+        var icon = $('i', target);
+        var interval = 3000;
+
+        if ($('.piplin-spin', target).length > 0) {
+            return;
+        }
+
+        target.attr('disabled', 'disabled');
+
+        icon.addClass('piplin-spin');
+        $('#webhook').fadeOut(interval);
+
+        $.ajax({
+            type: 'GET',
+            url: '/webhook/' + project_id + '/refresh'
+        }).fail(function (response) {
+
+        }).done(function (data) {
+            $('#webhook').fadeIn(interval).val(data.url);
+        }).always(function () {
+            icon.removeClass('piplin-spin');
+            target.removeAttr('disabled');
+        });
+    });
+})(jQuery);
+
+(function ($) {
+
+    $('#pattern').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('patterns.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('patterns.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#pattern_id').val('');
+            $('#name').val('');
+            $('#copy_pattern').val('');
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.pattern-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var pattern = Piplin.Patterns.get($('#model_id').val());
+
+        pattern.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('patterns.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#pattern button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var pattern_id = $('#pattern_id').val();
+
+        if (pattern_id) {
+            var pattern = Piplin.Patterns.get(pattern_id);
+        } else {
+            var pattern = new Piplin.Pattern();
+        }
+
+        pattern.save({
+            name:          $('#name').val(),
+            copy_pattern:  $('#copy_pattern').val(),
+            build_plan_id: $('input[name="build_plan_id"]').val()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('patterns.edit_success');
+                if (!pattern_id) {
+                    Piplin.Patterns.add(response);
+                    trans('patterns.create_success');
+                }
+
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Pattern = Backbone.Model.extend({
+        urlRoot: '/patterns'
+    });
+
+    var Patterns = Backbone.Collection.extend({
+        model: Piplin.Pattern
+    });
+
+    Piplin.Patterns = new Patterns();
+
+    Piplin.PatternsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#pattern_list tbody');
+
+            $('#no_patterns').show();
+            $('#pattern_list').hide();
+
+            this.listenTo(Piplin.Patterns, 'add', this.addOne);
+            this.listenTo(Piplin.Patterns, 'reset', this.addAll);
+            this.listenTo(Piplin.Patterns, 'remove', this.addAll);
+            this.listenTo(Piplin.Patterns, 'all', this.render);
+
+            Piplin.listener.on('pattern:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var share = Piplin.Patterns.get(parseInt(data.model.id));
+
+                if (share) {
+                    share.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('pattern:' + Piplin.events.MODEL_CREATED, function (data) {
+                var build_plan_id = $('input[name="build_plan_id"]').val();
+                if (parseInt(data.model.build_plan_id) === parseInt(build_plan_id)) {
+                    Piplin.Patterns.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('pattern:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var share = Piplin.Patterns.get(parseInt(data.model.id));
+
+                if (share) {
+                    Piplin.Patterns.remove(share);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Patterns.length) {
+                $('#no_patterns').hide();
+                $('#pattern_list').show();
+            } else {
+                $('#no_patterns').show();
+                $('#pattern_list').hide();
+            }
+        },
+        addOne: function (pattern) {
+
+            var view = new Piplin.PatternView({
+                model: pattern
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Patterns.each(this.addOne, this);
+        }
+    });
+
+    Piplin.PatternView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#pattern-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#pattern_id').val(this.model.id);
+            $('#name').val(this.model.get('name'));
+            $('#copy_pattern').val(this.model.get('copy_pattern'));
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade pattern-trash');
+        }
+    });
+
+})(jQuery);
+
+(function ($) {
+
+    // Stop the uploader causing errors on pages it shouldn't be used
+    if ($('#upload').length === 0) {
+        return;
+    }
+
+    $('#skin').on('change', function() {
+        $('body').removeClass();
+        $("body").addClass('skin-' + $(this).find(':selected').val());
+    });
+
+    $('#two-factor-auth').on('change', function () {
+
+        var container = $('.auth-code');
+
+        if ($(this).is(':checked')) {
+            container.removeClass('hide');
+        } else {
+            container.addClass('hide');
+        }
+    });
+
+    $('#request-change-email').on('click', function() {
+        var box = $(this).parents('.box');
+        box.children('.overlay').removeClass('hide');
+        $.post('/profile/email', function(res) {
+            if (res == 'success') {
+                box.children('.overlay').addClass('hide');
+                box.find('.help-block').removeClass('hide');
+            }
+        });
+    });
+
+    var cropperData = {};
+    $('.avatar>img').cropper({
+        aspectRatio: 1 / 1,
+        preview: '.avatar-preview',
+        crop: function(data) {
+            cropperData.dataX = Math.round(data.x);
+            cropperData.dataY = Math.round(data.y);
+            cropperData.dataHeight = Math.round(data.height);
+            cropperData.dataWidth = Math.round(data.width);
+            cropperData.dataRotate = Math.round(data.rotate);
+        },
+        built: function() {
+            $('#upload-overlay').addClass('hide');
+        }
+    });
+
+    var uploader = new Uploader({
+        trigger: '#upload',
+        name: 'file',
+        action: '/profile/upload',
+        accept: 'image/*',
+        data: {
+            '_token': $('meta[name="token"]').attr('content')
+        },
+        multiple: false,
+        change: function(){
+            $('#upload-overlay').removeClass('hide');
+            this.submit();
+        },
+        error: function(file) {
+            if (file.responseJSON.file) {
+                alert(file.responseJSON.file.join(''));
+            } else if (file.responseJSON.error) {
+                alert(file.responseJSON.error.message);
+            }
+
+            $('#upload-overlay').addClass('hide');
+        },
+        success: function(response) {
+            if( response.message === 'success') {
+                $('.avatar>img').cropper('replace', response.image);
+                cropperData.path = response.path;
+
+                $('.current-avatar-preview').addClass('hide');
+                $('.avatar-preview').removeClass('hide');
+                $('#save-avatar').removeClass('hide');
+            }
+        }
+    });
+
+    $('#save-avatar').on('click', function(){
+        $('#upload-overlay').removeClass('hide');
+        $('.avatar-message .alert').addClass('hide');
+        $.post('/profile/avatar', cropperData).success(function(resp) {
+            $('#upload-overlay').addClass('hide');
+            if (resp.image) {
+                $('.avatar-message .alert.alert-success').removeClass('hide');
+                $('#use-gravatar').removeClass('hide');
+            } else {
+                $('.avatar-message .alert.alert-danger').removeClass('hide');
+            }
+        });
+    });
+
+    $('#use-gravatar').on('click', function () {
+
+        $('#upload-overlay').removeClass('hide');
+        $('.avatar-message .alert').addClass('hide');
+
+        $.post('/profile/gravatar').success(function(resp) {
+
+            $('#upload-overlay').addClass('hide');
+
+            // if (resp.image) {
+                $('.avatar-message .alert.alert-success').removeClass('hide');
+                $('.avatar-preview').addClass('hide');
+                $('.current-avatar-preview').removeClass('hide');
+                $('.current-avatar-preview').attr('src', resp.image);
+                $('#use-gravatar').addClass('hide');
+                $('#avatar-save-buttons button').addClass('hide');
+            // } else {
+            //     $('.avatar-preview').addClass('hide');
+            //     $('#use-gravatar').removeClass('hide');
+            // }
+        });
+    });
+})(jQuery);
+
+(function ($) {
+
+    var AUTOMATIC = 1;
+    var MANUAL = 2;
+
+    $('#link').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('links.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('links.edit');
+            $('.btn-danger', modal).show();
+            $('.link-environment').prop('checked', false);
+            Piplin.EnvironmentLinks.each(function (environment){
+                $('#link_opposite_environment_' + environment.id).prop('checked', true);
+            });
+        } else {
+            //$('#link_id').val('');
+            $('.link-environment').prop('checked', true);
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('#link button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+
+        var environment_link = new Piplin.EnvironmentLink();
+
+        var environment_ids = [];
+
+        $('.link-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        //console.log(environment_link);
+        //console.log(environment_ids);
+
+        var interval = 3000;
+        $('.opposite-environments').fadeOut(interval);
+
+        environment_link.save({
+            environment_id:   $('input[name="environment_id"]').val(),
+            link_type:        $('#link_type').val(),
+            environments:   environment_ids
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.EnvironmentLinks.reset(response);
+
+                //Piplin.EnvironmentLinks.add(response);
+
+                /*
+                var str = [];
+                $.each(response, function(index, content) {
+                    str.push(content.name)
+                });
+
+                $('.opposite-environments').fadeIn(interval).html(str.join(','));
+                */
+                //Piplin.EnvironmentLinks.reset();
+                //Piplin.EnvironmentLinks.add(response);
+
+                Piplin.toast(trans('environments.link_success'));
+            },
+            error: function(model, response, options) {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+
+    });
+
+    Piplin.EnvironmentLink = Backbone.Model.extend({
+        urlRoot: '/environment-links'
+    });
+
+    var EnvironmentLinks = Backbone.Collection.extend({
+        model: Piplin.EnvironmentLink
+    });
+
+    Piplin.EnvironmentLinks = new EnvironmentLinks();
+
+    Piplin.EnvironmentLinksTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#link_list tbody');
+
+            $('#no_links').show();
+            $('#link_list').hide();
+
+            this.listenTo(Piplin.EnvironmentLinks, 'add', this.addOne);
+            this.listenTo(Piplin.EnvironmentLinks, 'reset', this.addAll);
+            this.listenTo(Piplin.EnvironmentLinks, 'remove', this.addAll);
+            this.listenTo(Piplin.EnvironmentLinks, 'all', this.render);
+        },
+        render: function () {
+            if (Piplin.EnvironmentLinks.length) {
+                $('#no_links').hide();
+                $('#link_list').show();
+            } else {
+                $('#no_links').show();
+                $('#link_list').hide();
+            }
+        },
+        addOne: function (link) {
+
+            var view = new Piplin.EnvironmentLinkView({
+                model: link
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.EnvironmentLinks.each(this.addOne, this);
+        }
+    });
+
+    Piplin.EnvironmentLinkView = Backbone.View.extend({
+        tagName:  'tr',
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+            this.template = _.template($('#link-template').html());
+        },
+        render: function () {
+             var data = this.model.toJSON();
+
+             var link_type = parseInt(data.pivot.link_type);
+
+             if (link_type == AUTOMATIC) {
+                data.link_type = trans('environments.link_auto');
+             } else {
+                data.link_type = trans('environments.link_manual');
+             }
+
+             this.$el.html(this.template(data));
+
+            return this;
+        }
+    });
+
+
+})(jQuery);
+(function ($) {
+
+    // test
+    var settings =  {
+        placeholder: trans('cabinets.search'),
+        minimumInputLength: 1,
+        width: '100%',
+        ajax: {
+            url: "/api/autocomplete/cabinets",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term // search term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return {id: obj.id, text: obj.name};
+                    })
+                };
+            },
+            cache: true
+        }
+    };
+
+    var cabinet_select2 = $('.environment-cabinets').select2(settings);
+
+    // end
+    $('#cabinet').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('cabinets.link');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.callout-warning', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('cabinets.edit');
+            $('#cabinet_ids').parent().parent().hide();
+            $('.btn-danger', modal).show();
+        } else {
+            $('#cabinet_ids').parent().parent().show();
+            cabinet_select2.val('').trigger('change');
+            modal.find('.modal-title span').text(trans('cabinets.link'));
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('#cabinet #cabinet-type a.btn-app').on('click', function(event) {
+        var button = $(event.currentTarget);
+        var modal = $('#cabinet');
+
+        if (button.attr('disabled')) {
+            $('.callout-warning', modal).show();
+            return;
+        }
+
+        $('.callout-warning', modal).hide();
+    });
+
+    $('body').delegate('.cabinet-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var cabinet = Piplin.Cabinets.get($('#model_id').val());
+
+        cabinet.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('cabinets.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#cabinet button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var cabinet_id = $('#cabinet_id').val();
+
+        if (cabinet_id) {
+            var cabinet = Piplin.Cabinets.get(cabinet_id);
+        } else {
+            var cabinet = new Piplin.Cabinet();
+        }
+
+        var data = {
+          cabinet_ids:    $('#cabinet_ids').val(),
+          environment_id: parseInt($('input[name="environment_id"]').val())
+        };
+
+        cabinet.save(data, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('cabinets.edit_success');
+                if (!cabinet_id) {
+                    Piplin.Cabinets.add(response);
+                    msg = trans('cabinets.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form select', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent();
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Cabinet = Backbone.Model.extend({
+        urlRoot: '/cabinets/' + parseInt($('input[name="environment_id"]').val())
+    });
+
+    var Cabinets = Backbone.Collection.extend({
+        model: Piplin.Cabinet
+    });
+
+    Piplin.Cabinets = new Cabinets();
+
+    Piplin.CabinetsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#cabinet_list tbody');
+
+            $('#no_cabinets').show();
+            $('#cabinet_list').hide();
+
+            this.listenTo(Piplin.Cabinets, 'add', this.addOne);
+            this.listenTo(Piplin.Cabinets, 'reset', this.addAll);
+            this.listenTo(Piplin.Cabinets, 'remove', this.addAll);
+            this.listenTo(Piplin.Cabinets, 'all', this.render);
+
+            Piplin.listener.on('cabinet:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var cabinet = Piplin.Cabinets.get(parseInt(data.model.id));
+
+                if (cabinet) {
+                    cabinet.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('cabinet:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var cabinet = Piplin.Cabinets.get(parseInt(data.model.id));
+
+                if (cabinet) {
+                    Piplin.Cabinets.remove(cabinet);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Cabinets.length) {
+                $('#no_cabinets').hide();
+                $('#cabinet_list').show();
+            } else {
+                $('#no_cabinets').show();
+                $('#cabinet_list').hide();
+            }
+        },
+        addOne: function (cabinet) {
+            var view = new Piplin.CabinetView({
+                model: cabinet
+            });
+
+            this.$list.append(view.render().el);
+
+            $('.server-names', this.$list).tooltip();
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Cabinets.each(this.addOne, this);
+        }
+    });
+
+    Piplin.CabinetView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#cabinet-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade cabinet-trash');
+        }
+    });
+})(jQuery);
+(function ($) {
+
+    $('.command-list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('command-id'));
+            });
+
+            $.ajax({
+                url: '/commands/reorder',
+                method: 'POST',
+                data: {
+                    commands: ids
+                }
+            });
+        }
+    });
+
+    var editor;
+
+    $('#command').on('hidden.bs.modal', function (event) {
+        editor.destroy();
+    });
+
+    $('#command').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('commands.create');
+
+        editor = ace.edit('command_script');
+        editor.getSession().setMode('ace/mode/sh');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('commands.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#command_id').val('');
+            $('#command_step').val(button.data('step'));
+            $('#command_name').val('');
+            editor.setValue('');
+            editor.gotoLine(1);
+            $('#command_user').val('');
+            $('#command_optional').prop('checked', false);
+            $('#command_default_on').prop('checked', false);
+            $('#command_default_on_row').addClass('hide');
+
+            $('.command-environment').prop('checked', true);
+            $('.command-pattern').prop('checked', true);
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.command-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var command = Piplin.Commands.get($('#model_id').val());
+
+        command.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('commands.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#command_optional').on('change', function (event) {
+        $('#command_default_on_row').addClass('hide');
+        if ($(this).is(':checked') === true) {
+            $('#command_default_on_row').removeClass('hide');
+        }
+    });
+
+    //If no `off`, the code below will be executed twice.
+    $('#command button.btn-save').off('click').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find(':input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var command_id = $('#command_id').val();
+        if (command_id) {
+            var command = Piplin.Commands.get(command_id);
+        } else {
+            var command = new Piplin.Command();
+        }
+
+        var environment_ids = [];
+        $('.command-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        var pattern_ids = [];
+        $('.command-pattern:checked').each(function() {
+            pattern_ids.push($(this).val());
+        });
+
+        command.save({
+            name:            $('#command_name').val(),
+            script:          editor.getValue(),
+            user:            $('#command_user').val(),
+            step:            $('#command_step').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            environments:    environment_ids,
+            patterns:        pattern_ids,
+            optional:        $('#command_optional').is(':checked'),
+            default_on:      $('#command_default_on').is(':checked')
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find(':input').removeAttr('disabled');
+
+                var msg = trans('commands.edit_success');
+                if (!command_id) {
+                    Piplin.Commands.add(response);
+                    msg = trans('commands.create_success');
+                }
+
+                editor.setValue('');
+                editor.gotoLine(1);
+
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find(':input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Command = Backbone.Model.extend({
+        urlRoot: '/commands',
+        defaults: function() {
+            return {
+                order: Piplin.Commands.nextOrder()
+            };
+        },
+        isAfter: function() {
+            return (parseInt(this.get('step')) % 3 === 0);
+        }
+    });
+
+    var Commands = Backbone.Collection.extend({
+        model: Piplin.Command,
+        comparator: 'order',
+        nextOrder: function() {
+            if (!this.length) {
+                return 1;
+            }
+
+            return this.last().get('order') + 1;
+        }
+    });
+
+    Piplin.Commands = new Commands();
+
+    Piplin.CommandsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$beforeList = $('#commands-before .command-list tbody');
+            this.$afterList = $('#commands-after .command-list tbody');
+
+            $('.no-commands').show();
+            $('.command-list').hide();
+
+            this.listenTo(Piplin.Commands, 'add', this.addOne);
+            this.listenTo(Piplin.Commands, 'reset', this.addAll);
+            this.listenTo(Piplin.Commands, 'remove', this.addAll);
+            this.listenTo(Piplin.Commands, 'all', this.render);
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
+
+                if (command) {
+                    command.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                //if (data.model.targetable_type == Piplin.targetable_type && parseInt(data.model.targetable_id) === parseInt(Piplin.targetable_id)) {
+
+                    // Make sure the command is for this action (clone, install, activate, purge)
+                    if (parseInt(data.model.step) + 1 === parseInt(Piplin.command_action) || parseInt(data.model.step) - 1 === parseInt(Piplin.command_action)) {
+                        Piplin.Commands.add(data.model);
+                    }
+                }
+            });
+
+            Piplin.listener.on('command:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
+
+                if (command) {
+                    Piplin.Commands.remove(command);
+                }
+            });
+        },
+        render: function () {
+            var before = Piplin.Commands.find(function(model) {
+                return !model.isAfter();
+            });
+
+            if (typeof before !== 'undefined') {
+                $('#commands-before .no-commands').hide();
+                $('#commands-before .command-list').show();
+            } else {
+                $('#commands-before .no-commands').show();
+                $('#commands-before .command-list').hide();
+            }
+
+            var after = Piplin.Commands.find(function(model) {
+                return model.isAfter();
+            });
+
+            if (typeof after !== 'undefined') {
+                $('#commands-after .no-commands').hide();
+                $('#commands-after .command-list').show();
+            } else {
+                $('#commands-after .no-commands').show();
+                $('#commands-after .command-list').hide();
+            }
+        },
+        addOne: function (command) {
+            var view = new Piplin.CommandView({
+                model: command
+            });
+
+            if (command.isAfter()) {
+                this.$afterList.append(view.render().el);
+                if ($('tr', this.$afterList).length < 2) {
+                    $('.drag-handle', this.$afterList).hide();
+                } else {
+                    $('.drag-handle', this.$afterList).show();
+                }
+            } else {
+                this.$beforeList.append(view.render().el);
+                if ($('tr', this.$beforeList).length < 2) {
+                    $('.drag-handle', this.$beforeList).hide();
+                } else {
+                    $('.drag-handle', this.$beforeList).show();
+                }
+            }
+        },
+        addAll: function () {
+            this.$beforeList.html('');
+            this.$afterList.html('');
+            Piplin.Commands.each(this.addOne, this);
+        }
+    });
+
+    Piplin.CommandView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#command-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#command_id').val(this.model.id);
+            $('#command_step').val(this.model.get('step'));
+            $('#command_name').val(this.model.get('name'));
+            $('#command_script').text(this.model.get('script'));
+            $('#command_user').val(this.model.get('user'));
+            $('#command_optional').prop('checked', (this.model.get('optional') === true));
+            $('#command_default_on').prop('checked', (this.model.get('default_on') === true));
+
+            $('#command_default_on_row').addClass('hide');
+            if (this.model.get('optional') === true) {
+                $('#command_default_on_row').removeClass('hide');
+            }
+
+            $('.command-environment').prop('checked', false);
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#command_environment_' + environment.id).prop('checked', true);
+            });
+
+            $('.command-pattern').prop('checked', false);
+            $(this.model.get('patterns')).each(function (index, pattern) {
+                $('#command_pattern_' + pattern.id).prop('checked', true);
+            });
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade command-trash');
+        }
+    });
+})(jQuery);
+
+(function ($) {
+
+    var editor;
+    var previewfile;
+
+    $('#configfile, #view-configfile').on('hidden.bs.modal', function (event) {
+        editor.destroy();
+    });
+
+    $('#view-configfile').on('show.bs.modal', function (event) {
+        editor = ace.edit('preview-content');
+        editor.setReadOnly(true);
+        editor.getSession().setUseWrapMode(true);
+
+        var extension = previewfile.substr(previewfile.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension === 'php' || extension === 'ini') {
+            editor.getSession().setMode('ace/mode/' + extension);
+        } else if (extension === 'yml') {
+            editor.getSession().setMode('ace/mode/yaml');
+        }
+    });
+
+    $('#configfile').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('configFiles.create');
+
+        editor = ace.edit('content');
+
+        var filename = $('#path').val();
+        var extension = filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
+
+        if (extension === 'php' || extension === 'ini') {
+            editor.getSession().setMode('ace/mode/' + extension);
+        } else if (extension === 'yml') {
+            editor.getSession().setMode('ace/mode/yaml');
+        }
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('configFiles.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#file_id').val('');
+            $('#name').val('');
+            $('#path').val('');
+            $('.configfile-environment').prop('checked', true);
+            editor.setValue('');
+            editor.gotoLine(1);
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.configfile-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var file = Piplin.ConfigFiles.get($('#model_id').val());
+
+        file.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('configFiles.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#configfile button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var config_file_id = $('#config_file_id').val();
+
+        if (config_file_id) {
+            var file = Piplin.ConfigFiles.get(config_file_id);
+        } else {
+            var file = new Piplin.ConfigFile();
+        }
+
+        var environment_ids = [];
+
+        $('.configfile-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+
+        file.save({
+            name:            $('#name').val(),
+            path:            $('#path').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            environments:    environment_ids,
+            content:         editor.getValue()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('configFiles.edit_success');
+                if (!config_file_id) {
+                    Piplin.ConfigFiles.add(response);
+                    trans('configFiles.create_success');
+                }
+
+                editor.setValue('');
+                editor.gotoLine(1);
+
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.ConfigFile = Backbone.Model.extend({
+        urlRoot: '/config-files'
+    });
+
+    var ConfigFiles = Backbone.Collection.extend({
+        model: Piplin.ConfigFile
+    });
+
+    Piplin.ConfigFiles = new ConfigFiles();
+
+    Piplin.ConfigFilesTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#configfile_list tbody');
+
+            $('#no_configfiles').show();
+            $('#configfile_list').hide();
+
+            this.listenTo(Piplin.ConfigFiles, 'add', this.addOne);
+            this.listenTo(Piplin.ConfigFiles, 'reset', this.addAll);
+            this.listenTo(Piplin.ConfigFiles, 'remove', this.addAll);
+            this.listenTo(Piplin.ConfigFiles, 'all', this.render);
+
+            Piplin.listener.on('configfile:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var file = Piplin.ConfigFiles.get(parseInt(data.model.id));
+
+                if (file) {
+                    file.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('configfile:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                    Piplin.ConfigFiles.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('configfile:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var file = Piplin.ConfigFiles.get(parseInt(data.model.id));
+
+                if (file) {
+                    Piplin.ConfigFiles.remove(file);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.ConfigFiles.length) {
+                $('#no_configfiles').hide();
+                $('#configfile_list').show();
+            } else {
+                $('#no_configfiles').show();
+                $('#configfile_list').hide();
+            }
+        },
+        addOne: function (file) {
+
+            var view = new Piplin.ConfigFileView({
+                model: file
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.ConfigFiles.each(this.addOne, this);
+        }
+    });
+
+    Piplin.ConfigFileView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash',
+            'click .btn-view': 'view'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#configfiles-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        view: function() {
+            previewfile = this.model.get('path');
+            $('#preview-content').text(this.model.get('content'));
+        },
+        edit: function() {
+            $('#config_file_id').val(this.model.id);
+            $('#name').val(this.model.get('name'));
+            $('#path').val(this.model.get('path'));
+            $('#content').text(this.model.get('content'));
+
+            $('.configfile-environment').prop('checked', false);
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#configfile_environment_' + environment.id).prop('checked', true);
+            });
+        },
+        trash: function () {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade configfile-trash');
+        }
+    });
+
+})(jQuery);
+
+(function ($) {
+
+    //Fix me please
+    var FINISHED   = 0;
+    var PENDING    = 1;
+    var RUNNING    = 2;
+    var FAILED     = 3;
+    var NOT_RUNNED = 4;
+
+    $('#environment_list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('environment-id'));
+            });
+
+            $.ajax({
+                url: '/environments/reorder',
+                method: 'POST',
+                data: {
+                    environments: ids
+                }
+            });
+        }
+    });
+
+    $('#environment').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('environments.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+        $('#add-environment-command', modal).hide();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('environments.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#environment_id').val('');
+            $('#environment_name').val('');
+            $('#environment_description').val('');
+            $('#environment_default_on').prop('checked', true);
+            $('#add-environment-command', modal).show();
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.environment-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var environment = Piplin.Environments.get($('#model_id').val());
+
+        environment.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('environments.delete_success'));
+            },
+            error: function() {
+               icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#environment button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var environment_id = $('#environment_id').val();
+
+        if (environment_id) {
+            var environment = Piplin.Environments.get(environment_id);
+        } else {
+            var environment = new Piplin.Environment();
+        }
+
+        environment.save({
+            name:            $('#environment_name').val(),
+            description:     $('#environment_description').val(),
+            default_on:      $('#environment_default_on').is(':checked'),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val(),
+            add_commands:    $('#environment_commands').is(':checked')
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('environments.edit_success');
+                if (!environment_id) {
+                    Piplin.Environments.add(response);
+                    msg = trans('environments.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Environment = Backbone.Model.extend({
+        urlRoot: '/environments',
+        initialize: function() {
+
+        }
+    });
+
+    var Environments = Backbone.Collection.extend({
+        model: Piplin.Environment
+    });
+
+    Piplin.Environments = new Environments();
+
+    Piplin.EnvironmentsTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#environment_list tbody');
+
+            $('#no_environments').show();
+            $('#environment_list').hide();
+
+            this.listenTo(Piplin.Environments, 'add', this.addOne);
+            this.listenTo(Piplin.Environments, 'reset', this.addAll);
+            this.listenTo(Piplin.Environments, 'remove', this.addAll);
+            this.listenTo(Piplin.Environments, 'all', this.render);
+
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_CHANGED, function (data) {
+                $('#environment_' + data.model.id).html(data.model.name);
+
+                var environment = Piplin.Environments.get(parseInt(data.model.id));
+
+                if (environment) {
+                    environment.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                    Piplin.Environments.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var environment = Piplin.Environments.get(parseInt(data.model.id));
+
+                if (environment) {
+                    Piplin.Environments.remove(environment);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Environments.length) {
+                $('#no_environments').hide();
+                $('#environment_list').show();
+            } else {
+                $('#no_environments').show();
+                $('#environment_list').hide();
+            }
+        },
+        addOne: function (environment) {
+
+            var view = new Piplin.EnvironmentView({
+                model: environment
+            });
+
+            this.$list.append(view.render().el);
+
+            $('.server-names', this.$list).tooltip();
+            
+            if (Piplin.Environments.length < 2) {
+                $('.drag-handle', this.$list).hide();
+            } else {
+                $('.drag-handle', this.$list).show();
+            }
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Environments.each(this.addOne, this);
+        }
+    });
+
+    Piplin.EnvironmentView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#environment-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            var parse_data = Piplin.formatProjectStatus(parseInt(this.model.get('status')));
+            data = $.extend(data, parse_data);
+
+            data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#environment_id').val(this.model.id);
+            $('#environment_name').val(this.model.get('name'));
+            $('#environment_description').val(this.model.get('description'));
+            $('#environment_default_on').prop('checked', (this.model.get('default_on') === true));
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade environment-trash');
+        }
+    });
+})(jQuery);
+
+(function ($) {
+
+    $('#sharedfile').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('sharedFiles.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('sharedFiles.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#sharedfile_id').val('');
+            $('#name').val('');
+            $('#file').val('');
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.sharedfile-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var file = Piplin.SharedFiles.get($('#model_id').val());
+
+        file.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('sharedFiles.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#sharedfile button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var file_id = $('#sharedfile_id').val();
+
+        if (file_id) {
+            var file = Piplin.SharedFiles.get(file_id);
+        } else {
+            var file = new Piplin.SharedFile();
+        }
+
+        file.save({
+            name:            $('#name').val(),
+            file:            $('#file').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('sharedFiles.edit_success');
+                if (!file_id) {
+                    Piplin.SharedFiles.add(response);
+                    trans('sharedFiles.create_success');
+                }
+
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.SharedFile = Backbone.Model.extend({
+        urlRoot: '/shared-files'
+    });
+
+    var SharedFiles = Backbone.Collection.extend({
+        model: Piplin.SharedFile
+    });
+
+    Piplin.SharedFiles = new SharedFiles();
+
+    Piplin.SharedFilesTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#sharedfile_list tbody');
+
+            $('#no_sharedfiles').show();
+            $('#sharedfile_list').hide();
+
+            this.listenTo(Piplin.SharedFiles, 'add', this.addOne);
+            this.listenTo(Piplin.SharedFiles, 'reset', this.addAll);
+            this.listenTo(Piplin.SharedFiles, 'remove', this.addAll);
+            this.listenTo(Piplin.SharedFiles, 'all', this.render);
+
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var share = Piplin.SharedFiles.get(parseInt(data.model.id));
+
+                if (share) {
+                    share.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                    Piplin.SharedFiles.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var share = Piplin.SharedFiles.get(parseInt(data.model.id));
+
+                if (share) {
+                    Piplin.SharedFiles.remove(share);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.SharedFiles.length) {
+                $('#no_sharedfiles').hide();
+                $('#sharedfile_list').show();
+            } else {
+                $('#no_sharedfiles').show();
+                $('#sharedfile_list').hide();
+            }
+        },
+        addOne: function (file) {
+
+            var view = new Piplin.SharedFileView({
+                model: file
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.SharedFiles.each(this.addOne, this);
+        }
+    });
+
+    Piplin.SharedFileView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#sharedfile-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#sharedfile_id').val(this.model.id);
+            $('#name').val(this.model.get('name'));
+            $('#file').val(this.model.get('file'));
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade sharedfile-trash');
+        }
+    });
+
+})(jQuery);
+
+(function ($) {
+
+    $('#variable').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('variables.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('variables.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#variable_id').val('');
+            $('#variable_name').val('');
+            $('#variable_value').val('');
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.variable-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var variable = Piplin.Variables.get($('#model_id').val());
+
+        variable.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('variables.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#variable button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var variable_id = $('#variable_id').val();
+
+        if (variable_id) {
+            var variable = Piplin.Variables.get(variable_id);
+        } else {
+            var variable = new Piplin.Variable();
+        }
+
+        variable.save({
+            name:            $('#variable_name').val(),
+            value:           $('#variable_value').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   $('input[name="targetable_id"]').val()
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('variables.edit_success');
+                if (!variable_id) {
+                    Piplin.Variables.add(response);
+                    msg = trans('variables.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    Piplin.Variable = Backbone.Model.extend({
+        urlRoot: '/variables',
+        initialize: function() {
+
+        }
+    });
+
+    var Variables = Backbone.Collection.extend({
+        model: Piplin.Variable
+    });
+
+    Piplin.Variables = new Variables();
+
+    Piplin.VariablesTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#variable_list tbody');
+
+            $('#no_variables').show();
+            $('#variable_list').hide();
+
+            this.listenTo(Piplin.Variables, 'add', this.addOne);
+            this.listenTo(Piplin.Variables, 'reset', this.addAll);
+            this.listenTo(Piplin.Variables, 'remove', this.addAll);
+            this.listenTo(Piplin.Variables, 'all', this.render);
+
+            Piplin.listener.on('variable:' + Piplin.events.MODEL_CHANGED, function (data) {
+                $('#variable_' + data.model.id).html(data.model.name);
+
+                var variable = Piplin.Variables.get(parseInt(data.model.id));
+
+                if (variable) {
+                    variable.set(data.model);
+                }
+            });
+
+            Piplin.listener.on('variable:' + Piplin.events.MODEL_CREATED, function (data) {
+                var targetable_type = $('input[name="targetable_type"]').val();
+                var targetable_id = $('input[name="targetable_id"]').val();
+                if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
+                    Piplin.Variables.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('variable:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var variable = Piplin.Variables.get(parseInt(data.model.id));
+
+                if (variable) {
+                    Piplin.Variables.remove(variable);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Variables.length) {
+                $('#no_variables').hide();
+                $('#variable_list').show();
+            } else {
+                $('#no_variables').show();
+                $('#variable_list').hide();
+            }
+        },
+        addOne: function (variable) {
+
+            var view = new Piplin.VariableView({
+                model: variable
+            });
+
+            this.$list.append(view.render().el);
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Variables.each(this.addOne, this);
+        }
+    });
+
+    Piplin.VariableView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#variable-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#variable_id').val(this.model.id);
+            $('#variable_name').val(this.model.get('name'));
+            $('#variable_value').val(this.model.get('value'));
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade variable-trash');
+        }
+    });
+})(jQuery);
+
+(function ($) {
+
+    var SUCCESSFUL = 0;
+    var UNTESTED   = 1;
+    var FAILED     = 2;
+    var TESTING    = 3;
+
+    $('#server_list table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 500,
+        onDrop: function (item, container, _super) {
+            _super(item, container);
+
+            var ids = [];
+            $('tbody tr td:first-child', container.el[0]).each(function (idx, element) {
+                ids.push($(element).data('server-id'));
+            });
+
+            $.ajax({
+                url: '/servers/reorder',
+                method: 'POST',
+                data: {
+                    servers: ids
+                }
+            });
+        }
+    });
+
+    $('#server').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('servers.create');
+
+        $('.btn-danger', modal).hide();
+        $('.callout-danger', modal).hide();
+        $('.has-error', modal).removeClass('has-error');
+        $('.label-danger', modal).remove();
+
+        if (button.hasClass('btn-edit')) {
+            title = trans('servers.edit');
+            $('.btn-danger', modal).show();
+        } else {
+            $('#server_id').val('');
+            $('#server_name').val('');
+            $('#server_enabled').prop('checked', true);
+            $('#server_address').val('');
+            $('#server_port').val('22');
+            $('#server_user').val('');
+            $('#server_targetable_id').val($("#server_targetable_id option:selected").val());
+        }
+
+        modal.find('.modal-title span').text(title);
+    });
+
+    $('body').delegate('.server-trash button.btn-delete','click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var server = Piplin.Servers.get($('#model_id').val());
+
+        server.destroy({
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                Piplin.toast(trans('servers.delete_success'));
+            },
+            error: function() {
+                icon.removeClass().addClass('piplin piplin-delete');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+    $('#server button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var server_id = $('#server_id').val();
+
+        if (server_id) {
+            var server = Piplin.Servers.get(server_id);
+        } else {
+            var server = new Piplin.Server();
+        }
+
+        server.save({
+            name:            $('#server_name').val(),
+            ip_address:      $('#server_address').val(),
+            enabled:         $('#server_enabled').is(':checked'),
+            port:            $('#server_port').val(),
+            user:            $('#server_user').val(),
+            targetable_type: $('input[name="targetable_type"]').val(),
+            targetable_id:   parseInt($('#server_targetable_id').val())
+        }, {
+            wait: true,
+            success: function(model, response, options) {
+                dialog.modal('hide');
+                $('.callout-danger', dialog).hide();
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+
+                var msg = trans('servers.edit_success');
+                if (!server_id) {
+                    Piplin.Servers.add(response);
+                    msg = trans('servers.create_success');
+                }
+                Piplin.toast(msg);
+            },
+            error: function(model, response, options) {
+                $('.callout-danger', dialog).show();
+
+                var errors = response.responseJSON;
+
+                $('.has-error', dialog).removeClass('has-error');
+                $('.label-danger', dialog).remove();
+
+                $('form input', dialog).each(function (index, element) {
+                    element = $(element);
+
+                    var name = element.attr('name');
+
+                    if (typeof errors[name] !== 'undefined') {
+                        var parent = element.parent('div');
+                        parent.addClass('has-error');
+                        parent.append($('<span>').attr('class', 'label label-danger').text(errors[name]));
+                    }
+                });
+
+                icon.removeClass().addClass('piplin piplin-save');
+                $('button.close', dialog).show();
+                dialog.find('input').removeAttr('disabled');
+            }
+        });
+    });
+
+
+    Piplin.Server = Backbone.Model.extend({
+        urlRoot: '/servers'
+    });
+
+    var Servers = Backbone.Collection.extend({
+        model: Piplin.Server,
+        comparator: function(serverA, serverB) {
+            if (serverA.get('name') > serverB.get('name')) {
+                return -1; // before
+            } else if (serverA.get('name') < serverB.get('name')) {
+                return 1; // after
+            }
+
+            return 0; // equal
+        }
+    });
+
+    Piplin.Servers = new Servers();
+
+    Piplin.ServersTab = Backbone.View.extend({
+        el: '#app',
+        events: {
+
+        },
+        initialize: function() {
+            this.$list = $('#server_list tbody');
+
+            $('#no_servers').show();
+            $('#server_list').hide();
+
+            this.listenTo(Piplin.Servers, 'add', this.addOne);
+            this.listenTo(Piplin.Servers, 'reset', this.addAll);
+            this.listenTo(Piplin.Servers, 'remove', this.addAll);
+            this.listenTo(Piplin.Servers, 'all', this.render);
+
+            Piplin.listener.on('server:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var server = Piplin.Servers.get(parseInt(data.model.id));
+
+                if (server) {
+                    // Fix me - targetable_type
+                    if(Piplin.targetable_id == data.model.targetable_id) {
+                        server.set(data.model);
+                    } else {
+                        Piplin.Servers.remove(server);
+                    }
+                }
+            });
+
+            Piplin.listener.on('server:' + Piplin.events.MODEL_CREATED, function (data) {
+                if (parseInt(data.model.targetable_id) === parseInt(Piplin.targetable_id)) {
+                    Piplin.Servers.add(data.model);
+                }
+            });
+
+            Piplin.listener.on('server:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var server = Piplin.Servers.get(parseInt(data.model.id));
+
+                if (server) {
+                    Piplin.Servers.remove(server);
+                }
+            });
+        },
+        render: function () {
+            if (Piplin.Servers.length) {
+                $('#no_servers').hide();
+                $('#server_list').show();
+            } else {
+                $('#no_servers').show();
+                $('#server_list').hide();
+            }
+        },
+        addOne: function (server) {
+
+            var view = new Piplin.ServerView({
+                model: server
+            });
+
+            this.$list.append(view.render().el);
+
+            if (Piplin.Servers.length < 2) {
+                $('.drag-handle', this.$list).hide();
+            } else {
+                $('.drag-handle', this.$list).show();
+            }
+        },
+        addAll: function () {
+            this.$list.html('');
+            Piplin.Servers.each(this.addOne, this);
+        }
+    });
+
+    Piplin.ServerView = Backbone.View.extend({
+        tagName:  'tr',
+        events: {
+            'click .btn-test': 'testConnection',
+            'click .btn-show': 'showLog',
+            'click .btn-edit': 'edit',
+            'click .btn-delete': 'trash'
+        },
+        initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'destroy', this.remove);
+
+            this.template = _.template($('#server-template').html());
+        },
+        render: function () {
+            var data = this.model.toJSON();
+
+            data.status_css = 'orange';
+            data.icon_css   = 'circle';
+            data.status     = trans('servers.untested');
+
+            if (parseInt(this.model.get('status')) === SUCCESSFUL) {
+                data.status_css = 'success';
+                data.status     = trans('servers.successful');
+            } else if (parseInt(this.model.get('status')) === TESTING) {
+                data.status_css = 'purple';
+                data.icon_css   = 'load piplin-spin';
+                data.status     = trans('servers.testing');
+            } else if (parseInt(this.model.get('status')) === FAILED) {
+                data.status_css = 'danger';
+                data.status     = trans('servers.failed');
+            }
+
+            this.$el.html(this.template(data));
+
+            return this;
+        },
+        edit: function() {
+            $('#server_id').val(this.model.id);
+            $('#server_name').val(this.model.get('name'));
+            $('#server_targetable_id')
+                .select2(Piplin.select2_options)
+                .val(this.model.get('targetable_id'))
+                .trigger('change');
+            $('#server_enabled').prop('checked', (this.model.get('enabled') === true));
+            $('#server_address').val(this.model.get('ip_address'));
+            $('#server_port').val(this.model.get('port'));
+            $('#server_user').val(this.model.get('user'));
+        },
+        showLog: function() {
+            var data = this.model.toJSON();
+
+            $('#log pre').html(data.output);
+        },
+        trash: function() {
+            var target = $('#model_id');
+            target.val(this.model.id);
+            target.parents('.modal').removeClass().addClass('modal fade server-trash');
+        },
+        testConnection: function() {
+            if (parseInt(this.model.get('status')) === TESTING) {
+                return;
+            }
+
+            this.model.set({
+                status: TESTING
+            });
+
+            var that = this;
+            $.ajax({
+                type: 'GET',
+                url: this.model.urlRoot + '/' + this.model.id + '/test'
+            }).fail(function (response) {
+                that.model.set({
+                    status: FAILED
+                });
+            });
+
+        }
+    });
+})(jQuery);

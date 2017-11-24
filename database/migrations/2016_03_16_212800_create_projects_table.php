@@ -35,7 +35,7 @@ class CreateProjectsTable extends Migration
             $table->string('url')->nullable();
             $table->string('build_url')->nullable();
             $table->boolean('allow_other_branch')->default(true);
-            $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);
+            $table->tinyInteger('status')->default(Project::NOT_RUNNED);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->dateTime('last_mirrored')->nullable()->default(null);
             $table->timestamps();

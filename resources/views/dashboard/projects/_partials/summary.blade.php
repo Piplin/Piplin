@@ -31,7 +31,7 @@
     <div class="col-md-3">
         <div class="panel panel-flush">
             <div class="panel-heading">
-                <h4>{{ trans('projects.deployments') }}</h4>
+                <h4>{{ trans('projects.tasks') }}</h4>
             </div>
             <div class="panel-body">
                 <table class="table table-relaxed">
