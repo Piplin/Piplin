@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Piplin\Models\Traits\BroadcastChanges;
 
 /**
- * Pattern model.
+ * Artifact model.
  */
-class Pattern extends Model
+class Artifact extends Model
 {
     use SoftDeletes, BroadcastChanges;
 
@@ -27,32 +27,53 @@ class Pattern extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'copy_pattern', 'build_plan_id'];
+    protected $fillable = [
+        'file_name',
+        'file_size',
+        'mime',
+        'task_id',
+        'server_log_id',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'            => 'integer',
+        'task_id'       => 'integer',
+        'server_log_id' => 'integer',
+    ];
 
     /**
      * Belongs to relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function buildPlan()
+    public function task()
     {
-        return $this->belongsTo(BuildPlan::class);
+        return $this->belongsTo(Task::class);
     }
 
     /**
-     * Belongs to many relationship.
+     * Belongs to relationship.
      *
-     * @return Command
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function commands()
+    public function log()
     {
-        return $this->belongsToMany(Command::class);
+        return $this->belongsTo(ServerLog::class);
     }
 }

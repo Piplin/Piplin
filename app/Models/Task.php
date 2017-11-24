@@ -175,6 +175,16 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return Artifact
+     */
+    public function artifacts()
+    {
+        return $this->hasMany(Artifact::class);
+    }
+
+    /**
      * Determines whether the deployment is draft.
      *
      * @return bool

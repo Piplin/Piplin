@@ -45,10 +45,10 @@
                 @if(!$in_admin)
                     @include('dashboard.projects._dialogs.create')
                 @endif
+                @include('dashboard._partials.trash_dialog')
             </div>
             </div>
             </div>
-            @include('dashboard._partials.trash_dialog')
         
         </div>
 

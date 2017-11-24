@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Cache;
 use Piplin\Bus\Jobs\AbortTaskJob;
 use Piplin\Bus\Jobs\Job;
 use Piplin\Bus\Jobs\UpdateGitReferencesJob;
+use Piplin\Models\Artifact;
 use Piplin\Models\Command as Stage;
 use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
@@ -164,13 +165,13 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
         }
 
         $latest_build_dir = $this->project->clean_deploy_path . '/builds/' . $this->task->release_id;
-
+        $local_path = 'app/artifacts/build-' . $this->task->id . '/';
         foreach ($step->command->patterns as $pattern) {
             if (!$pattern || !$pattern->copy_pattern) {
                 continue;
             }
 
-            $this->fetchFile($latest_build_dir.'/'. $pattern->copy_pattern, storage_path('app/artifacts/'), $log);
+            $this->fetchFile($latest_build_dir.'/'. $pattern->copy_pattern, $local_path, $log);
         }
     }
 
@@ -229,36 +230,65 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
     /**
      * Fetchs a remote file from server.
      *
-     * @param  string           $local_file
+     * @param  string           $local_path
      * @param  string           $remote_file
      * @param  ServerLog        $log
      * @throws RuntimeException
      */
-    private function fetchFile($remote_file, $local_file, ServerLog $log)
+    private function fetchFile($remote_file, $local_path, ServerLog $log)
     {
         $process = new Process('deploy.FetchFileFromServer', [
             'port'        => $log->server->port,
             'private_key' => $this->private_key,
-            'local_file'  => $local_file,
+            'local_file'  => storage_path($local_path),
             'remote_file' => $remote_file,
             'username'    => $log->server->user,
             'ip_address'  => $log->server->ip_address,
         ]);
+        $preLog = $log->output;
 
         $output = '';
-        $process->run(function ($type, $output_line) use (&$output, &$log) {
+        $process->run(function ($type, $output_line) use (&$output, &$log, $preLog, $local_path) {
             if ($type === \Symfony\Component\Process\Process::ERR) {
                 $output .= $this->logError($output_line);
             } else {
                 $output .= $this->logSuccess($output_line);
+                $this->saveArtifacts($output_line, $local_path, $log);
             }
 
-            $log->output = $output;
+            $log->output = $preLog . $output;
             $log->save();
         });
 
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
+        }
+    }
+
+    /**
+     * Saves the artifacts.
+     *
+     * @param string    $output_line
+     * @param string    $local_path
+     * @param ServerLog $log
+     */
+    private function saveArtifacts(&$output_line, $local_path, $log)
+    {
+        preg_match_all("/Receiving (.*)/", $output_line, $matches);
+        foreach($matches[1] as $file) {
+            $file = trim($file);
+            $filePath = storage_path($local_path . $file);
+            if (!file_exists($filePath)) {
+                continue;
+            }
+           
+            Artifact::create([
+                'file_name'     => $file,
+                'file_size'     => filesize($filePath),
+                'mime'          => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $filePath),
+                'task_id'       => $this->task->id,
+                'server_log_id' => $log->id,
+            ]);
         }
     }
 }

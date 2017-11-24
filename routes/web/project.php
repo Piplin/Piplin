@@ -42,6 +42,9 @@ Route::group([
         Route::put('patterns/{pattern}', [
             'uses' => 'PatternController@update',
         ]);
+        Route::delete('patterns/{pattern}', [
+            'uses' => 'PatternController@destroy',
+        ]);
 
         // Task
         Route::get('task/{task}', [

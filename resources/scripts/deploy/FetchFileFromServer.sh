@@ -10,3 +10,7 @@ rsync --verbose --compress --progress --out-format="Receiving %n" -e \
          -o PasswordAuthentication=no \
          -o IdentityFile={{ private_key }}" \
     {{ username }}@{{ ip_address }}:{{ remote_file }} {{ local_file }}
+
+echo -e 'Chmod {{ local_file }}'
+
+chmod -R 0755 {{ local_file }}

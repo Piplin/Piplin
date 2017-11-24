@@ -61,7 +61,7 @@ class CommandController extends Controller
         } elseif ($target instanceof BuildPlan) {
             $breadcrumb = [
                 [
-                    'url' => route('projects', ['id' => $target->id]),
+                    'url' => route('projects', ['id' => $target->project->id]),
                     'label' => $target->project->name
                 ],
                 [
@@ -72,8 +72,8 @@ class CommandController extends Controller
         } else {
             $breadcrumb = [
                 [
-                    'url' => route('projects', ['id' => $target->id, 'tab' => 'commands']),
-                    'label' => $target->name
+                    'url' => route('projects', ['id' => $target->project->id, 'tab' => 'commands']),
+                    'label' => $target->project->name
                 ],
                 [
                  'url'   => route('deployments', ['id' => $target->id, 'tab' => 'commands']),

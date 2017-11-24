@@ -6,6 +6,9 @@
         <h3 class="box-title">{{ trans('tasks.reason') }} :</h3>
         <span>{{ $task->reason }}</span>
     </div>
+    @foreach($task->artifacts as $artifact)
+    {{ $artifact->file_name }}
+    @endforeach
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 text-center">

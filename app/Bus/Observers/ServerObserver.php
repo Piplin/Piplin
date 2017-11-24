@@ -31,7 +31,7 @@ class ServerObserver
     }
 
     /**
-     * Called when the model is saved.
+     * Called when the model is deleting.
      *
      * @param Server $server
      */
