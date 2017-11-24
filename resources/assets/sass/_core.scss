@@ -75,7 +75,11 @@ body {
   margin $transition-speed $transition-fn;
   @include transition-transform($transition-rule);
   margin-left: $sidebar-width;
-  z-index: 820;
+  z-index: 1820;
+  top: 0;
+  position: relative;
+  min-height: calc(100vh - 0px);
+  background-color: $body-bg;
   //Top nav layout
   .layout-top-nav & {
     margin-left: 0;
@@ -95,15 +99,6 @@ body {
       @include translate($sidebar-width, 0);
     }
   }
-}
-
-.content-wrapper,
-.right-side {
-  top: 0;
-  position: relative;
-  min-height: calc(100vh - 0px);
-  background-color: $body-bg;
-  z-index: 800;
 }
 
 .has-sub-sidebar {
