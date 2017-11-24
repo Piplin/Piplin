@@ -38,12 +38,12 @@
                 </li>
             </ul>
             @endif
-            <div class="profile">
+            <div class="user-menu">
             <a href="{{ route('profile') }}">
                 <img src="{{ $current_user->avatar_url }}" />
                 <div>{{ $current_user->nickname ?: $current_user->name }}</div>
             </a>
-        </div>
+            </div>
             <a href="{{ route('auth.logout') }}" class="dropdown-toggle">
                 <i class="piplin piplin-logout"></i> {{ trans('app.signout') }}
             </a>
