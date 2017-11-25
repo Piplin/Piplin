@@ -4,17 +4,22 @@
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">{{ trans('tasks.reason') }} :</h3>
-        <span>{{ $task->reason }}</span>
+        <span>{{ $task->reason ?: trans('app.none') }}</span>
+        <span  id="task_status_bar" class="text-{{ $task->css_class }} pull-right"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span>
     </div>
-    @foreach($task->artifacts as $artifact)
-    {{ $artifact->file_name }}
-    @endforeach
     <div class="box-body">
+        @if(count($task->artifacts))
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button type="button" class="btn btn-lg btn-default"><span  id="task_status_bar" class="text-{{ $task->css_class }}"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span></button>
+                <ul>
+                @foreach($task->artifacts as $artifact)
+                    <li>{{ $artifact->file_name }}</li>
+                @endforeach
+                </ul>
+                <button class="btn btn-default"><span  id="task_status_bar" class="text-{{ $task->css_class }}"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span></button>
             </div>
         </div>
+        @endif
         <div class="row">
             <div class="col-xs-12">
                 <p><div class="callout callout-danger {{ $task->run_failure ? null : 'hide' }}" id="task_status">

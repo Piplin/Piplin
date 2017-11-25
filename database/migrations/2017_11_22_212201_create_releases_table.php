@@ -17,12 +17,14 @@ class CreateReleasesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('project_id');
+            $table->unsignedInteger('task_id');
             $table->unsignedInteger('internal_id')->default(1);
 
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('task_id')->references('id')->on('tasks');
         });
     }
 
