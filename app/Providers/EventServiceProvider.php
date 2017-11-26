@@ -33,6 +33,7 @@ use Piplin\Bus\Observers\HookObserver;
 use Piplin\Bus\Observers\KeyObserver;
 use Piplin\Bus\Observers\PatternObserver;
 use Piplin\Bus\Observers\ProjectObserver;
+use Piplin\Bus\Observers\ReleaseObserver;
 use Piplin\Bus\Observers\ServerLogObserver;
 use Piplin\Bus\Observers\ServerObserver;
 use Piplin\Models\Command;
@@ -44,6 +45,7 @@ use Piplin\Models\Environment;
 use Piplin\Models\Hook;
 use Piplin\Models\Key;
 use Piplin\Models\Project;
+use Piplin\Models\Release;
 use Piplin\Models\Server;
 use Piplin\Models\ServerLog;
 use SocialiteProviders\Manager\SocialiteWasCalled;
@@ -89,6 +91,7 @@ class EventServiceProvider extends ServiceProvider
         Hook::observe(HookObserver::class);
         Pattern::observe(PatternObserver::class);
         Project::observe(ProjectObserver::class);
+        Release::observe(ReleaseObserver::class);
         Server::observe(ServerObserver::class);
         ServerLog::observe(ServerLogObserver::class);
     }

@@ -6,6 +6,8 @@
                 <h4 class="modal-title"><i class="piplin piplin-release"></i> {{ trans('releases.create') }}</h4>
             </div>
             <form class="form-horizontal" role="form">
+                <input type="hidden" name="project_id" value="{{ $task->project_id }}" />
+                <input type="hidden" name="task_id" value="{{ $task->id }}" />
                 <div class="modal-body">
                     <div class="callout callout-danger">
                         <i class="icon piplin piplin-warning"></i> {{ trans('releases.warning') }}
@@ -13,7 +15,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="release_name">{{ trans('releases.name') }}</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="name" id="release_name" placeholder="{{ trans('releases.name_placeholder') }}" />
+                            <input type="text" class="form-control" name="name" id="release_name" placeholder="{{ trans('releases.name_placeholder') }}" value="{{ isset($release_name) ? $release_name : null }}" />
                         </div>
                     </div>
                 </div>

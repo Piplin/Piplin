@@ -23,6 +23,7 @@ use Piplin\Models\Command;
 use Piplin\Models\Task;
 use Piplin\Models\Environment;
 use Piplin\Models\Project;
+use Piplin\Models\Release;
 
 /**
  * The controller for showing the status of tasks.
@@ -78,6 +79,11 @@ class TaskController extends Controller
             ];
             $data['project']  = $project;
             $data['subtitle'] = '(' . $task->short_commit . ' - ' . $task->branch . ')';
+        }
+
+        if ($task->is_build) {
+            $max = Release::getMaxInternalId($project->id);
+            $data['release_name'] = 'Release-' . ($max + 1);
         }
 
         return view('dashboard.tasks.show', $data);

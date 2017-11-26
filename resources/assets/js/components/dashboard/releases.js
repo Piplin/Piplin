@@ -18,7 +18,9 @@
         console.log('create release');
 
         release.save({
-            name: $('#release_name').val()
+            project_id: $('input[name="project_id"]').val(),
+            task_id:    $('input[name="task_id"]').val(),
+            name:       $('#release_name').val()
         }, {
             wait: true,
             success: function(model, response, options) {

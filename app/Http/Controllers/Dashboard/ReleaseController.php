@@ -13,6 +13,7 @@ namespace Piplin\Http\Controllers\Dashboard;
 
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreReleaseRequest;
+use Piplin\Models\Release;
 
 /**
  * The controller of releases.
@@ -28,6 +29,14 @@ class ReleaseController extends Controller
      */
     public function store(StoreReleaseRequest $request)
     {
+        $fields = $request->only(
+            'name',
+            'project_id',
+            'task_id'
+        );
+
+        $release = Release::create($fields);
+
         return [
             'success' => true,
         ];
