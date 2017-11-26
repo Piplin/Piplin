@@ -60,6 +60,7 @@ return [
     'different_branch'      => 'A Different Branch',
     'tag'                   => 'Tag',
     'branch'                => 'Branch',
+    'release'               => 'Release',
     'environments'          => 'Environments',
     'warning'               => 'The task could not be started, please make sure you have entered all required values.',
     'describe_commit'       => 'Such as: 0c6b0d8',

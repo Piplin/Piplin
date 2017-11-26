@@ -32,18 +32,6 @@
 						</div>
                     </div>
                     @endif
-                    @if(count($releases))
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="task_release">{{ trans('releases.label') }}</label>
-                        <div class="col-sm-9">
-                            <select class="form-control task-release" name="release_id" id="task_release">
-                                @foreach ($releases as $release)
-                                    <option value="{{ $release->id }}">{{ $release->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    @endif
                     @if ($project->allow_other_branch && (count($branches) || count($tags)))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="task_source">{{ trans('tasks.source') }}</label>
@@ -80,7 +68,6 @@
 									<div class="radio">
 										<label for="task_source_tag">
 											<input type="radio" class="task-source" name="source" id="task_source_tag" value="tag" /> {{ trans('tasks.tag') }}
-
 											<div class="task-source-container">
 												<select class="form-control task-source" name="source_tag" id="task_tag">
 													@foreach ($tags as $tag)
@@ -92,17 +79,33 @@
 									</div>
 								</li>
 								@endif
-								<li>
-									<div class="radio">
-										<label for="task_source_commit">
-											<input type="radio" class="task-source" name="source" id="task_source_commit" value="commit" /> {{ trans('tasks.commit') }}
+                                <li>
+                                    <div class="radio">
+                                        <label for="task_source_commit">
+                                            <input type="radio" class="task-source" name="source" id="task_source_commit" value="commit" /> {{ trans('tasks.commit') }}
 
-											<div class="task-source-container">
-												<input class="form-control task-source" name="source_commit" id="task_commit" placeholder="{{ trans('tasks.describe_commit') }}">
-											</div>
-										</label>
-									</div>
-								</li>
+                                            <div class="task-source-container">
+                                                <input class="form-control task-source" name="source_commit" id="task_commit" placeholder="{{ trans('tasks.describe_commit') }}">
+                                            </div>
+                                        </label>
+                                    </div>
+                                </li>
+                                @if(isset($releases) && count($releases))
+                                <li>
+                                    <div class="radio">
+                                        <label for="task_source_release">
+                                            <input type="radio" class="task-source" name="source" id="task_source_release" value="release" /> {{ trans('tasks.release') }}
+                                            <div class="task-source-container">
+                                                <select class="form-control task-source" name="source_release" id="task_release">
+                                                    @foreach ($releases as $release)
+                                                        <option value="{{ $release->id }}">{{ $release->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </li>
+                                @endif
 							</ul>
 						</div>
                     </div>

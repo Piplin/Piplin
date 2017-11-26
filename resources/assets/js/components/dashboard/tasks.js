@@ -23,6 +23,8 @@
             $('#task_tag').parent('div').show();
         } else if (target.val() === 'commit') {
             $('#task_commit').parent('div').show();
+        } else if (target.val() === 'release') {
+            $('#task_release').parent('div').show();
         }
     });
 
