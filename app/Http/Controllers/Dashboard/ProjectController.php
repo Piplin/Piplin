@@ -46,8 +46,6 @@ class ProjectController extends Controller
             'targetable_id'   => $project->id,
             'optional'        => $optional,
             'deployments'     => $this->getLatest($project),
-            'tags'            => $project->tags()->reverse(),
-            'branches'        => $project->branches(),
             'tab'             => $tab,
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],

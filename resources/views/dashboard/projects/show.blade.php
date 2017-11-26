@@ -32,7 +32,6 @@
     @endif
 
     @include('dashboard.projects._dialogs.public_key')
-    @include('dashboard.projects._dialogs.task')
     @include('dashboard.projects._dialogs.rollback')
     @include('dashboard.projects._dialogs.task_draft')
     @include('dashboard.projects._dialogs.create')

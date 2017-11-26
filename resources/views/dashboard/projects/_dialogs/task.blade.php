@@ -32,6 +32,18 @@
 						</div>
                     </div>
                     @endif
+                    @if(count($releases))
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="task_release">{{ trans('releases.label') }}</label>
+                        <div class="col-sm-9">
+                            <select class="form-control task-release" name="release_id" id="task_release">
+                                @foreach ($releases as $release)
+                                    <option value="{{ $release->id }}">{{ $release->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    @endif
                     @if ($project->allow_other_branch && (count($branches) || count($tags)))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="task_source">{{ trans('tasks.source') }}</label>

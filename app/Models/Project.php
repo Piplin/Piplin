@@ -416,6 +416,17 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return Release
+     */
+    public function releases()
+    {
+        return $this->hasMany(Release::class)
+                    ->orderBy('id', 'DESC');
+    }
+
+    /**
      * Generate a friendly path for the mirror of the repository.
      * Use the repository rather than the project ID, so if a single
      * repo is used in multiple projects it is not duplicated.

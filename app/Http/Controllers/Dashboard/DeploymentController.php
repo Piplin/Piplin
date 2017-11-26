@@ -50,6 +50,7 @@ class DeploymentController extends Controller
             'targetable_id'   => $deployPlan->id,
             'optional'        => $optional,
             'deployments'     => $this->getLatest($deployPlan),
+            'releases'        => $project->releases,
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'tab'             => $tab,
