@@ -289,6 +289,11 @@ class Task extends Model implements HasPresenter, RuntimeInterface
         return $this->started_at->diffInSeconds($this->finished_at);
     }
 
+    /**
+     * Determines whether the task is build.
+     *
+     * @return bool
+     */
     public function getIsBuildAttribute()
     {
         return $this->targetable instanceof BuildPlan;

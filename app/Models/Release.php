@@ -37,7 +37,7 @@ class Release extends Model
      *
      * @param int   $projectId
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return int
      */
     public static function getMaxInternalId($projectId)
     {
