@@ -25,7 +25,7 @@ use Piplin\Models\Project;
 /**
  * The controller of deploy plans.
  */
-class TaskController extends Controller
+class DeploymentController extends Controller
 {
     /**
      * The details of an individual project.
