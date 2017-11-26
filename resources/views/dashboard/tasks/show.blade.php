@@ -72,8 +72,8 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new Piplin.DeploymentView();
-        Piplin.Deployment.add({!! $output !!});
+        new Piplin.TaskView();
+        Piplin.Task.add({!! $output !!});
 
         Piplin.project_id = {{ $task->project_id }};
     </script>

@@ -24,7 +24,7 @@ return [
     'project'     => 'Project',
     'environment' => 'Environment',
     'server'      => 'Server',
-    'deployment'  => 'Deployment',
+    'deployment'  => 'Task',
     'hook'        => 'Hook',
     'template'    => 'Deploy template',
     'user'        => 'User',

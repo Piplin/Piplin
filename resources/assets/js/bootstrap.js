@@ -141,7 +141,7 @@
     };
 
     // Format the deployment status
-    Piplin.formatDeploymentStatus = function (task_status) {
+    Piplin.formatTaskStatus = function (task_status) {
         var data = {};
 
         data.icon_class = 'clock';

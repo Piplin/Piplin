@@ -51,7 +51,7 @@ class ProjectSummaryComposer
      *
      * @param  int $project_id
      * @return int
-     * @see DeploymentRepository::getBetweenDates()
+     * @see TaskRepository::getBetweenDates()
      */
     private function getLastWeekCount($project_id)
     {

@@ -138,7 +138,7 @@ class AdminComposer
             $current_menu = 'projects';
         }
 
-        // Deployment collection
+        // Task collection
         if (in_array($name, ['admin.templates.index', 'admin.templates.show'], true)) {
             $current_menu = 'resources';
         } elseif ($name === 'admin.keys.index') {

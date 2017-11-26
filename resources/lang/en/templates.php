@@ -12,7 +12,7 @@
 return [
 
     'manage'         => 'Manage templates',
-    'label'          => 'Deployment Templates',
+    'label'          => 'Task Templates',
     'none'           => 'There are currently no deployment templates setup',
     'type'           => 'Type',
     'custom'         => 'Custom',

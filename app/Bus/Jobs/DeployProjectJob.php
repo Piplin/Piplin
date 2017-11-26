@@ -145,7 +145,7 @@ class DeployProjectJob extends Job implements ShouldQueue
             if (isset($step)) {
                 // Cleanup the release if it has not been activated
                 if ($step->stage <= Stage::DO_ACTIVATE) {
-                    $this->cleanupDeployment();
+                    $this->cleanupTask();
                 } else {
                     $this->task->status = Task::COMPLETED_WITH_ERRORS;
                     $this->project->status    = Project::FINISHED;
@@ -199,7 +199,7 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Remove left over artifacts from a failed deploy on each server.
      */
-    private function cleanupDeployment()
+    private function cleanupTask()
     {
         $servers = $this->task->environments->pluck('servers')->flatten();
 

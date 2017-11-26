@@ -68,7 +68,7 @@ class ClearStalledTask extends Command
             $this->call('down');
         }
 
-        $this->cleanupDeployments();
+        $this->cleanupTasks();
 
         // If we prompted the user to bring the app down, bring it back up
         if ($bring_back_up) {
@@ -82,7 +82,7 @@ class ClearStalledTask extends Command
      * @tpdp Maybe readd pending to the queue if possible?
      * @return void
      */
-    public function cleanupDeployments()
+    public function cleanupTasks()
     {
         // Mark any pending steps as cancelled
         ServerLog::where('status', '=', ServerLog::PENDING)

@@ -277,13 +277,13 @@
         urlRoot: '/status'
     });
 
-    var Deployment = Backbone.Collection.extend({
+    var Task = Backbone.Collection.extend({
         model: Piplin.ServerLog
     });
 
-    Piplin.Deployment = new Deployment();
+    Piplin.Task = new Task();
 
-    Piplin.DeploymentView = Backbone.View.extend({
+    Piplin.TaskView = Backbone.View.extend({
         el: '#app',
         $containers: [],
         events: {
@@ -298,13 +298,13 @@
                 })
             });
 
-            this.listenTo(Piplin.Deployment, 'add', this.addOne);
-            this.listenTo(Piplin.Deployment, 'reset', this.addAll);
-            this.listenTo(Piplin.Deployment, 'remove', this.addAll);
-            this.listenTo(Piplin.Deployment, 'all', this.render);
+            this.listenTo(Piplin.Task, 'add', this.addOne);
+            this.listenTo(Piplin.Task, 'reset', this.addAll);
+            this.listenTo(Piplin.Task, 'remove', this.addAll);
+            this.listenTo(Piplin.Task, 'all', this.render);
 
             Piplin.listener.on('serverlog:' + Piplin.events.SVRLOG_CHANGED, function (data) {
-                var deployment = Piplin.Deployment.get(data.log_id);
+                var deployment = Piplin.Task.get(data.log_id);
 
                 if (deployment) {
                     deployment.set({
@@ -320,7 +320,7 @@
             Piplin.listener.on('task:' + Piplin.events.MODEL_CHANGED, function (data) {
                 if (parseInt(data.model.project_id) === parseInt(Piplin.project_id)) {
                     var status_bar = $('#task_status_bar');
-                    var status_data = Piplin.formatDeploymentStatus(parseInt(data.model.status));
+                    var status_data = Piplin.formatTaskStatus(parseInt(data.model.status));
                     
                     status_bar.attr('class', 'text-' + status_data.label_class);
                     $('i', status_bar).attr('class', 'piplin piplin-' + status_data.icon_class);

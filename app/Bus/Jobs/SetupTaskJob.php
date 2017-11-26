@@ -91,7 +91,7 @@ class SetupTaskJob extends Job
             $runStep     = 'createBuildStep';
             // Deploy task
         } else {
-            $this->setDeploymentEnvironments();
+            $this->setTaskEnvironments();
             $stakes = [
                 Stage::DO_CLONE    => null,
                 Stage::DO_INSTALL  => null,
@@ -104,7 +104,7 @@ class SetupTaskJob extends Job
 
         $hooks = $this->buildCommandList($this->plan, $stakes);
 
-        $this->setDeploymentStatus();
+        $this->setTaskStatus();
 
         foreach (array_keys($hooks) as $stage) {
             $before = $stage - 1;
@@ -135,7 +135,7 @@ class SetupTaskJob extends Job
      *
      * @return void
      */
-    private function setDeploymentEnvironments()
+    private function setTaskEnvironments()
     {
         if (!$this->environmentIds) {
             $this->environmentIds = $this->plan->environments
@@ -190,7 +190,7 @@ class SetupTaskJob extends Job
      *
      * @return void
      */
-    private function setDeploymentStatus()
+    private function setTaskStatus()
     {
         if ($this->task->status !== Task::DRAFT) {
             $this->task->status          = Task::PENDING;

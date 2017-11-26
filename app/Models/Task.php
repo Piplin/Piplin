@@ -37,7 +37,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     const ABORTED               = 6;
     const LOADING               = 'Loading';
 
-    public static $currentDeployment = [];
+    public static $currentTask = [];
 
     /**
      * The attributes that are mass assignable.
@@ -261,15 +261,15 @@ class Task extends Model implements HasPresenter, RuntimeInterface
      */
     public function isCurrent()
     {
-        if (!isset(self::$currentDeployment[$this->project_id])) {
-            self::$currentDeployment[$this->project_id] = self::where('project_id', $this->project_id)
+        if (!isset(self::$currentTask[$this->project_id])) {
+            self::$currentTask[$this->project_id] = self::where('project_id', $this->project_id)
                                                               ->where('status', self::COMPLETED)
                                                               ->orderBy('id', 'desc')
                                                               ->first();
         }
 
-        if (isset(self::$currentDeployment[$this->project_id])) {
-            return (self::$currentDeployment[$this->project_id]->id === $this->id);
+        if (isset(self::$currentTask[$this->project_id])) {
+            return (self::$currentTask[$this->project_id]->id === $this->id);
         }
 
         return false;

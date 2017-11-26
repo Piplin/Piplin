@@ -23,7 +23,7 @@
 
             var status_bar = $('td.status span', task);
 
-            var status_data = Piplin.formatDeploymentStatus(parseInt(data.model.status));
+            var status_data = Piplin.formatTaskStatus(parseInt(data.model.status));
 
             if (status_data.done) {
                 $('button#deploy_project:disabled').removeAttr('disabled');

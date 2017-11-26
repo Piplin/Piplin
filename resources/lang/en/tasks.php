@@ -15,7 +15,7 @@ return [
     'label'                 => 'Tasks',
     'latest'                => 'Latest Tasks',
     'none'                  => 'There have not been any tasks yet.',
-    'deploy_title'          => 'Deployment #:id',
+    'deploy_title'          => 'Task #:id',
     'build_title'           => 'Build #:id',
     'started_by'            => 'Started by',
     'deployer'              => 'Deployer',
@@ -71,7 +71,7 @@ return [
     'minute'                => ':time minute|:time minutes',
     'second'                => ':time second|:time seconds',
     'run_failure'           => 'Problem with the task',
-    'submit_success'        => 'New Deployment Submitted',
-    'create_success'        => 'Deployment created, click here for details.',
+    'submit_success'        => 'New Task Submitted',
+    'create_success'        => 'Task created, click here for details.',
 
 ];
