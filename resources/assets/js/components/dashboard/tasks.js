@@ -5,7 +5,7 @@
         $('.callout-danger', modal).hide();
         var targetable_type = $('input[name="targetable_type"]').val();
 
-        if (new RegExp("Plan$").test(targetable_type)) {
+        if (new RegExp("BuildPlan$").test(targetable_type)) {
             var title = trans('tasks.build');
             modal.find('.modal-title span').text(title);
             modal.find('.modal-title i').removeClass().addClass('piplin piplin-build');
@@ -35,7 +35,7 @@
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var deployment = new Piplin.Deploy();
+        var task = new Piplin.Deploy();
 
         var environment_ids = [];
 
@@ -48,7 +48,7 @@
             optional.push($(this).val());
         });
 
-        deployment.save({
+        task.save({
             environments:    environment_ids,
             project_id:      $('input[name="project_id"]').val(),
             targetable_type: $('input[name="targetable_type"]').val(),

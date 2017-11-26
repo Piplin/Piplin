@@ -16,7 +16,7 @@
                     <li>{{ $artifact->file_name }}</li>
                 @endforeach
                 </ul>
-                <button class="btn btn-default"><span  id="task_status_bar" class="text-{{ $task->css_class }}"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span></button>
+                <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button>
             </div>
         </div>
         @endif
@@ -68,6 +68,7 @@
 </div>
 
 @include('dashboard.tasks.log')
+@include('dashboard.tasks.release')
 @stop
 
 @push('javascript')

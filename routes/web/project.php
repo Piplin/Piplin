@@ -57,6 +57,12 @@ Route::group([
             'uses' => 'TaskController@store',
         ]);
 
+        // Release
+        Route::post('releases', [
+            'as'   => 'releases.create',
+            'uses' => 'ReleaseController@store',
+        ]);
+
         Route::post('task/{task}/deploy-draft', [
             'as'   => 'tasks.deploy-draft',
             'uses' => 'TaskController@deployDraft',
