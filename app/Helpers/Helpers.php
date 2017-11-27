@@ -69,4 +69,3 @@ if (!function_exists('bytes')) {
         return round(pow(1024, $base - floor($base)), $precision).$suffixes[(int) floor($base)];
     }
 }
-
