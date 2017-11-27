@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="login-box">
-        <div class="login-logo text-primary">
-            <img src="/img/logo.png"><strong>{{ $app_name }}</strong>
+        <div class="login-logo">
+            <img src="/img/logo.png">
+            <strong>{{ $app_name }}</strong>
             <span class="pl-sign-version">{{ APP_VERSION }}</span>
         </div>
 

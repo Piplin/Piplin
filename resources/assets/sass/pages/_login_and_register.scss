@@ -18,6 +18,9 @@
     width: 56px;
     height: 56px;
   }
+  strong {
+    color: #666;
+  }
 }
 
 .login-page,
@@ -35,7 +38,7 @@
   }
   .pl-sign-version {
     bottom: 10px;
-    color: $black;
+    color: #999;
     right: 0;
     font-size: 11px;
   }
