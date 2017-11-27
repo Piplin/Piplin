@@ -59,7 +59,7 @@
         <td>
             <div class="btn-group pull-right">
                 <% if (output !== null) { %>
-                    <button type="button" {{ $current_user->is_admin ?: 'disabled="true"' }} class="btn btn-default btn-show" title="{{ trans('tasks.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="piplin piplin-copy"></i></button>
+                    <button type="button" class="btn btn-default btn-show" title="{{ trans('tasks.output') }}" id="log_<%- id %>" data-toggle="modal" data-backdrop="static" data-target="#show_log"><i class="piplin piplin-copy"></i></button>
                 <% } %>
                 <button <% if (status === "{{trans('servers.testing')}}") { %>disabled<% } %> type="button" class="btn btn-default btn-test" title="{{ trans('servers.test') }}"><i class="piplin piplin-ping"></i></button>
                      @if($in_admin or $project->can('manage'))
