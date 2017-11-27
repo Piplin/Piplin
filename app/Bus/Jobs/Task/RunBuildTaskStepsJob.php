@@ -173,6 +173,8 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
 
             $this->fetchFile($latest_build_dir.'/'. $pattern->copy_pattern, $local_path, $log);
         }
+
+        $this->saveArtifacts($local_path, $log);
     }
 
     /**
@@ -255,7 +257,6 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
                 $output .= $this->logError($output_line);
             } else {
                 $output .= $this->logSuccess($output_line);
-                $this->saveArtifacts($output_line, $local_path, $log);
             }
 
             $log->output = $preLog . $output;
@@ -274,9 +275,9 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
      * @param string    $local_path
      * @param ServerLog $log
      */
-    private function saveArtifacts(&$output_line, $local_path, $log)
+    private function saveArtifacts($local_path, $log)
     {
-        preg_match_all("/Receiving (.*)/", $output_line, $matches);
+        preg_match_all("/Receiving (.*)/", $log->output, $matches);
         foreach ($matches[1] as $file) {
             $file = trim($file);
             $filePath = storage_path($local_path . $file);
