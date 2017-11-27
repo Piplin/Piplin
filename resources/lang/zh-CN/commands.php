@@ -53,9 +53,13 @@ return [
     'purge'                => '清理旧版本',
     'purge_help'           => '清理旧版本。',
     'prepare'              => '准备构建',
+    'prepare_help'         => '准备构建',
     'build'                => '开始构建',
+    'build_help'           => '开始构建',
     'test'                 => '开始测试',
+    'test_help'            => '开始测试',
     'result'               => '构建结果',
+    'result_help'          => '构建结果',
     'warning'              => '保存失败，请检查表单信息。',
     'create'               => '新增',
     'create_success'       => '部署步骤创建成功。',
@@ -77,6 +81,6 @@ return [
     'services_description' => '一旦该 webhook 地址由上述服务调用, Piplin会根据对方所传数据触发部署工作。' .
                               '注意：在请求中包含 &quot;<em>update_only</em>&quot; 和 &quot;<em>commands</em>&quot; 参数 ' .
                               ', 其他所有参数将被忽略.',
-    'help'                 => '可在部署步骤中添加前置、后置任务，如：数据迁移，安装依赖软件包，单元测试等。',
+    'help'                 => '可在步骤中添加前置、后置任务，如：数据迁移，安装依赖软件包，单元测试等。',
 
 ];

@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">{{ trans('commands.label') }} <i class="text-gray piplin piplin-help" data-toggle="tooltip" data-placement="right" data-original-title="{{ trans('tasks.help') }}"></i></h3>
+        <h3 class="box-title">{{ trans('commands.label') }} <i class="text-gray piplin piplin-help" data-toggle="tooltip" data-placement="right" data-original-title="{{ trans('commands.help') }}"></i></h3>
     </div>
     <div class="box-body table-responsive">
         <table class="table table-striped">
