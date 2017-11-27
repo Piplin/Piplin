@@ -51,6 +51,7 @@
     </div>
     @endforeach
 @endif
+@include('dashboard.projects._dialogs.create')
 @stop
 
 @section('right-buttons')

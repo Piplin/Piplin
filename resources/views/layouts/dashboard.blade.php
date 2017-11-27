@@ -42,9 +42,6 @@
                     @yield('content')
                 </section>
                 @include('_partials.footer')
-                @if(!$in_admin)
-                    @include('dashboard.projects._dialogs.create')
-                @endif
                 @include('_partials.todo')
                 @include('dashboard._partials.trash_dialog')
             </div>

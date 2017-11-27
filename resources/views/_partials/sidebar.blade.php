@@ -13,12 +13,12 @@
                     <strong>{{ trans('dashboard.title') }}</strong>
                 </a>
             </li>
-            <li {!! set_active('tasks') !!}>
-                <a href="{{ route('dashboard.tasks') }}"><i class="piplin piplin-clock"></i>
-                    <strong>{{ trans('dashboard.tasks') }}</strong>
+            <li {!! set_active('activities') !!}>
+                <a href="{{ route('dashboard.activities') }}"><i class="piplin piplin-clock"></i>
+                    <strong>{{ trans('dashboard.activities') }}</strong>
                 </a>
             </li>
-            <li>
+            <li class="small">
                 <a href="#" data-toggle="modal" data-target="#todo">
                     <i class="piplin piplin-bell"></i>
                     <strong>{{ trans('dashboard.notifications') }}</strong>

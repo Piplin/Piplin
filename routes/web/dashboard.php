@@ -23,9 +23,9 @@ Route::group([
             'uses' => 'DashboardController@timeline',
         ]);
 
-        Route::get('tasks', [
-            'as'   => 'dashboard.tasks',
-            'uses' => 'DashboardController@tasks',
+        Route::get('activities', [
+            'as'   => 'dashboard.activities',
+            'uses' => 'DashboardController@activities',
         ]);
 
         Route::get('projects', [

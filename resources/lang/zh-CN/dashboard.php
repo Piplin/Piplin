@@ -24,12 +24,13 @@ return [
     'assignee_issues'   => '当前共有 :count 个工单指派给我|当前共有 :count 个工单指派给我',
     'projects'          => '我的项目',
     'tasks'             => '任务动态',
+    'activities'        => '我的动态',
+    'notifications'     => '我的通知',
     'no_projects'       => '尚无项目',
     'no_tasks'          => '还没有执行过任务。',
     'status'            => '状态',
     'site'              => '查看站点',
     'view'              => '查看上线详情',
     'started'           => '启动于',
-    'notifications'     => '系统通知',
 
 ];

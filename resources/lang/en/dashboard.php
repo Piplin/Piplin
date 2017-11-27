@@ -24,12 +24,13 @@ return [
     'assignee_issues'   => 'There are :count issue assigned to you|There are :count issues assigned to you',
     'projects'          => 'Projects',
     'tasks'             => 'Tasks',
+    'activities'        => 'Activities',
+    'notifications'     => 'Notice',
     'no_projects'       => 'You have not yet setup any projects',
     'no_tasks'          => 'There have not been any tasks yet.',
     'status'            => 'Status',
     'site'              => 'View the site',
     'view'              => 'View the task details',
     'started'           => 'Started at',
-    'notifications'     => 'Notice',
 
 ];

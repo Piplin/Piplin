@@ -44,9 +44,9 @@ class DashboardController extends Controller
      *
      * @return View
      */
-    public function tasks()
+    public function activities()
     {
-        return view('dashboard.index');
+        return view('dashboard.activities');
     }
 
     /**
