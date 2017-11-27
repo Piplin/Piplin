@@ -214,7 +214,9 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
     {
         switch ($step->stage) {
             case Stage::DO_PREPARE:
-                return new Process('build.steps.Prepare', $tokens);
+                $process = new Process('build.steps.Prepare', $tokens);
+                $process->appendScript($this->linkNewBuild($tokens));
+                return $process;
             case Stage::DO_BUILD:
                 return new Process('build.steps.Build', $tokens);
             case Stage::DO_TEST:
@@ -290,5 +292,21 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
                 'server_log_id' => $log->id,
             ]);
         }
+    }
+
+    /**
+     * Liknks the new build.
+     *
+     * @param array    $tokens
+     *
+     * @return string
+     */
+    private function linkNewBuild($tokens)
+    {
+        $parser = new ScriptParser;
+
+        $script = $parser->parseFile('build.LinkNewBuild', $tokens);
+
+        return PHP_EOL . $script;
     }
 }
