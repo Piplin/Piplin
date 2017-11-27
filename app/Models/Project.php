@@ -308,6 +308,26 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Define an accessor for the deploy webhook URL.
+     *
+     * @return string
+     */
+    public function getDeployWebhookAttribute()
+    {
+        return route('webhook.deploy', $this->hash);
+    }
+
+    /**
+     * Define an accessor for the build webhook URL.
+     *
+     * @return string
+     */
+    public function getBuildWebhookAttribute()
+    {
+        return route('webhook.build', $this->hash);
+    }
+
+    /**
      * Get the build plan associated with the project.
      */
     public function buildPlan()

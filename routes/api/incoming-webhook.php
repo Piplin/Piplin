@@ -13,3 +13,8 @@ Route::post('deploy/{hash}', [
     'as'   => 'webhook.deploy',
     'uses' => 'Api\IncomingWebhookController@webhook',
 ]);
+
+Route::post('build/{hash}', [
+    'as'   => 'webhook.build',
+    'uses' => 'Api\IncomingWebhookController@webhook',
+]);

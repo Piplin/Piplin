@@ -13,6 +13,7 @@ return [
 
     'label'                => 'Commands',
     'deploy_webhook'       => 'Incoming Webhooks are a simple way to trigger deployments from external sources. ',
+    'build_webhook'        => 'Incoming Webhooks are a simple way to trigger builds from external sources. ',
     'webhook_help'         => 'Incoming Webhook Help',
     'webhook_example'      => 'By making an HTTP POST request to this URL you will trigger a new deployment of the latest commit.',
     'webhook_fields'       => 'Optional POST fields',

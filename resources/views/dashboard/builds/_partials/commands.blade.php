@@ -1,3 +1,9 @@
+@if (Route::currentRouteName() == 'builds' && $current_user->is_admin)
+<div class="callout">
+    <h4>{{ trans('commands.build_webhook') }} <i class="piplin piplin-help text-gray" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
+    <input id="webhook" value="{{ $project->build_webhook }}"> <button class="clipboard btn-link" data-clipboard-target="#webhook"><i class="piplin piplin-copy"></i></button> <button class="btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="piplin piplin-refresh"></i></button>
+</div>
+@endif
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">{{ trans('commands.label') }} <i class="text-gray piplin piplin-help" data-toggle="tooltip" data-placement="right" data-original-title="{{ trans('commands.help') }}"></i></h3>

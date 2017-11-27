@@ -13,6 +13,7 @@ return [
 
     'label'                => '任务步骤',
     'deploy_webhook'       => '第三方服务以POST方式调用该链接，Piplin会自动触发部署工作。',
+    'build_webhook'        => '第三方服务以POST方式调用该链接，Piplin会自动触发构建工作。',
     'webhook_help'         => 'Webhook 帮助',
     'webhook_example'      => '以HTTP POST方式调用该URL, Piplin会获取最近提交的代码，并自动触发部署工作。',
     'webhook_fields'       => 'POST参数说明(可选参数)',

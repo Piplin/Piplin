@@ -1,7 +1,7 @@
-@if (Route::currentRouteName() == 'projects' && $current_user->is_admin)
+@if (Route::currentRouteName() == 'deployments' && $current_user->is_admin)
 <div class="callout">
     <h4>{{ trans('commands.deploy_webhook') }} <i class="piplin piplin-help text-gray" id="show_help" data-toggle="modal" data-backdrop="static" data-target="#help"></i></h4>
-    <input id="webhook" value="{{ $project->webhook_url }}"> <button class="clipboard btn-link" data-clipboard-target="#webhook"><i class="piplin piplin-copy"></i></button> <button class="btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="piplin piplin-refresh"></i></button>
+    <input id="webhook" value="{{ $project->deploy_webhook }}"> <button class="clipboard btn-link" data-clipboard-target="#webhook"><i class="piplin piplin-copy"></i></button> <button class="btn-link" id="new_webhook" title="{{ trans('commands.generate_webhook') }}" data-project-id="{{ $project->id }}"><i class="piplin piplin-refresh"></i></button>
 </div>
 @endif
 
