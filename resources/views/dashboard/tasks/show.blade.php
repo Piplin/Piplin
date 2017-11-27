@@ -9,13 +9,21 @@
     </div>
     <div class="box-body">
         @if(count($task->artifacts))
+        <h4>{{ trans('artifacts.label') }}</h4>
+        <table class="table">
+            <th>#</th>
+            <th>{{ trans('artifacts.file_name') }}</th>
+            <th>{{ trans('artifacts.file_size') }}</th>
+            @foreach($task->artifacts as $artifact)
+            <tr>
+                <td>{{ $artifact->id }}</td>
+                <td>{{ $artifact->file_name }}</td>
+                <td>{{ bytes($artifact->file_size) }}</td>
+            </tr>
+            @endforeach
+        </table>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <ul>
-                @foreach($task->artifacts as $artifact)
-                    <li>{{ $artifact->file_name }}</li>
-                @endforeach
-                </ul>
                 <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button>
             </div>
         </div>

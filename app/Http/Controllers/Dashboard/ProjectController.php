@@ -45,7 +45,7 @@ class ProjectController extends Controller
             'targetable_type' => get_class($project),
             'targetable_id'   => $project->id,
             'optional'        => $optional,
-            'deployments'     => $this->getLatest($project),
+            'tasks'           => $this->getLatest($project),
             'tab'             => $tab,
             'breadcrumb'      => [
                 ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],

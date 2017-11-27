@@ -51,3 +51,22 @@ if (!function_exists('cdn')) {
         return '//' . config('piplin.cdn') . ($path[0] !== '/' ? ('/' . $path) : $path);
     }
 }
+
+if (!function_exists('bytes')) {
+    /**
+     * Format a file size.
+     *
+     * @param int $size      Size in bytes
+     * @param int $precision Precision
+     *
+     * @return string
+     */
+    function bytes($size, $precision = 2)
+    {
+        $base = log($size) / log(1024);
+        $suffixes = ['B', 'K', 'M', 'G', 'T'];
+
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[(int) floor($base)];
+    }
+}
+

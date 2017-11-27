@@ -11,7 +11,7 @@
 
 return [
 
-    'label'        => 'Artifact patterns',
+    'label'            => 'Artifact patterns',
     'create'           => 'Create Pattern',
     'create_success'   => 'Pattern created.',
     'edit'             => 'Edit the pattern',

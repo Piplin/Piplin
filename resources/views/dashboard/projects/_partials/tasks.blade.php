@@ -3,7 +3,7 @@
         <h3 class="box-title">{{ trans('tasks.latest') }}</h3>
     </div>
 
-    @if (!count($deployments))
+    @if (!count($tasks))
     <div class="box-body">
         <p>{{ trans('tasks.none') }}</p>
     </div>
@@ -23,55 +23,55 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($deployments as $deployment)
-                <tr id="deployment_{{ $deployment->id }}">
-                    <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $deployment->finished_at }}" data-timeago="{{ $deployment->finished_at }}"></abbr></td>
-                    <td class="small">{{ $deployment->environment_names }}</td>
+                @foreach ($tasks as $task)
+                <tr id="task_{{ $task->id }}">
+                    <td>@if($task->is_build)<i class="piplin piplin-build"></i>@endif <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $task->finished_at }}" data-timeago="{{ $task->finished_at }}"></abbr></td>
+                    <td class="small">{{ $task->environment_names }}</td>
                     <td>
-                        {{ $deployment->is_webhook ? trans('tasks.webhook') : trans('tasks.manually') }}
-                        @if (!empty($deployment->reason))
-                            <i class="piplin piplin-chatbox task-reason" data-toggle="tooltip" data-placement="right" title="{{ $deployment->reason }}"></i>
+                        {{ $task->is_webhook ? trans('tasks.webhook') : trans('tasks.manually') }}
+                        @if (!empty($task->reason))
+                            <i class="piplin piplin-chatbox task-reason" data-toggle="tooltip" data-placement="right" title="{{ $task->reason }}"></i>
                         @endif
                     </td>
                     <td>
-                        @if ($deployment->build_url)
-                            <a href="{{ $deployment->build_url }}" target="_blank">{{ $deployment->deployer_name }}</a>
+                        @if ($task->build_url)
+                            <a href="{{ $task->build_url }}" target="_blank">{{ $task->deployer_name }}</a>
                         @else
-                            {{ $deployment->deployer_name }}
+                            {{ $task->deployer_name }}
                         @endif
                     </td>
-                    <!--<td class="committer">{{ $deployment->committer_name }}</td>-->
+                    <!--<td class="committer">{{ $task->committer_name }}</td>-->
                     <td class="commit">
-                        @if ($deployment->commit_url)
-                        <a href="{{ $deployment->commit_url }}" target="_blank">{{ $deployment->short_commit_hash }}</a>
+                        @if ($task->commit_url)
+                        <a href="{{ $task->commit_url }}" target="_blank">{{ $task->short_commit_hash }}</a>
                         @else
-                        {{ $deployment->short_commit_hash }}
+                        {{ $task->short_commit_hash }}
                         @endif
-                        ({{ $deployment->branch }})
+                        ({{ $task->branch }})
                     </td>
                     <td class="status">
-                        <span class="text-{{$deployment->css_class}}"><i class="piplin piplin-{{ $deployment->icon }}"></i> <span>{{ $deployment->readable_status }}</span></span>
+                        <span class="text-{{$task->css_class}}"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span>
                     </td>
                     <td>
                         <div class="btn-group pull-right">
-                            @if ($deployment->isSuccessful())
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $deployment->optional_commands_used }}" data-deployment-id="{{ $deployment->id }}" class="btn btn-default btn-rollback @if ($deployment->isCurrent()) hide @endif" title="{{ trans('tasks.rollback') }}"><i class="piplin piplin-rollback"></i></button>
+                            @if ($task->isSuccessful())
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $task->optional_commands_used }}" data-deployment-id="{{ $task->id }}" class="btn btn-default btn-rollback @if ($task->isCurrent()) hide @endif" title="{{ trans('tasks.rollback') }}"><i class="piplin piplin-rollback"></i></button>
                             @endif
-                            @if ($deployment->isDraft())
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $deployment->id }}" class="btn btn-info btn-draft"><i class="piplin piplin-check"></i></button>
+                            @if ($task->isDraft())
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $task->id }}" class="btn btn-info btn-draft"><i class="piplin piplin-check"></i></button>
                             @endif
 
-                            @if ($deployment->isPending() || $deployment->isRunning())
-                                <a href="{{ route('tasks.abort', ['id' => $deployment->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('tasks.cancel') }}"><i class="piplin piplin-cancel"></i></a>
+                            @if ($task->isPending() || $task->isRunning())
+                                <a href="{{ route('tasks.abort', ['id' => $task->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('tasks.cancel') }}"><i class="piplin piplin-cancel"></i></a>
                             @endif
-                            <a href="{{ route('tasks.show', ['id' => $deployment->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
+                            <a href="{{ route('tasks.show', ['id' => $task->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
                         </div>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        {!! $deployments->render() !!}
+        {!! $tasks->render() !!}
     </div>
 
     @endif
