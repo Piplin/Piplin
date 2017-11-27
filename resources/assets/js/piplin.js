@@ -5,7 +5,7 @@
     Piplin.listener.on('task:' + Piplin.events.MODEL_CHANGED, function (data) {
 
         // Update todo bar
-        updateTodoBar(data);
+        //updateTodoBar(data);
 
         if ($('#timeline').length > 0) {
             updateTimeline();
