@@ -17,7 +17,7 @@ use Piplin\Composers\AdminComposer;
 use Piplin\Composers\AppComposer;
 use Piplin\Composers\CurrentUserComposer;
 use Piplin\Composers\DashboardComposer;
-use Piplin\Composers\HeaderComposer;
+use Piplin\Composers\SidebarComposer;
 use Piplin\Composers\OAuthComposer;
 use Piplin\Composers\ProjectComposer;
 use Piplin\Composers\ProjectSummaryComposer;
@@ -41,7 +41,7 @@ class ComposerServiceProvider extends ServiceProvider
         AppComposer::class            => '*',
         CurrentUserComposer::class    => '*',
         DashboardComposer::class      => ['dashboard._partials.shortcut'],
-        HeaderComposer::class         => ['_partials.nav'],
+        SidebarComposer::class         => ['_partials.sidebar'],
         ProjectComposer::class        => ['dashboard._partials.sidebar', 'dashboard.projects'],
         ProjectSummaryComposer::class => ['dashboard.projects._partials.summary'],
         ThemeComposer::class          => ['layouts.dashboard', 'profile.index'],

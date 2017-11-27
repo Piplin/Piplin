@@ -12,11 +12,11 @@
                         <li class="header running_header"><i class="piplin piplin-load"></i> <span>{{ trans_choice('dashboard.running', $running_count, ['count' => $running_count]) }}</span></li>
                         <li>
                             <ul class="menu running_menu">
-                                @forelse ($running as $deployment)
-                                    <li class="todo_item" id="deployment_info_{{ $deployment->id }}">
-                                        <a href="{{ route('tasks.show', ['id' => $deployment->id]) }}">
-                                            <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
-                                            <p>{{ trans('tasks.branch') }}: {{ $deployment->branch }}</p>
+                                @forelse ($running as $task)
+                                    <li class="todo_item" id="task_info_{{ $task->id }}">
+                                        <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+                                            <h4>{{ $task->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $task->started_at->format('g:i:s A') }}</small></h4>
+                                            <p>{{ trans('tasks.branch') }}: {{ $task->branch }}</p>
                                         </a>
                                     </li>
                                 @empty
@@ -31,11 +31,11 @@
                         <li class="header pending_header"><i class="piplin piplin-clock"></i> <span>{{ trans_choice('dashboard.pending', $pending_count, ['count' => $pending_count]) }}</span></li>
                         <li>
                             <ul class="menu pending_menu">
-                                @forelse ($pending as $deployment)
-                                    <li class="todo_item" id="deployment_info_{{ $deployment->id }}">
-                                        <a href="{{ route('tasks.show', ['id' => $deployment->id]) }}">
-                                            <h4>{{ $deployment->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $deployment->started_at->format('g:i:s A') }}</small></h4>
-                                            <p>{{ trans('tasks.branch') }}: {{ $deployment->branch }}</p>
+                                @forelse ($pending as $task)
+                                    <li class="todo_item" id="task_info_{{ $task->id }}">
+                                        <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+                                            <h4>{{ $task->project->name }} <small class="pull-right">{{ trans('dashboard.started') }}: {{ $task->started_at->format('g:i:s A') }}</small></h4>
+                                            <p>{{ trans('tasks.branch') }}: {{ $task->branch }}</p>
                                         </a>
                                     </li>
                                 @empty
@@ -56,8 +56,8 @@
 </header>
 
 @push('templates')
-    <script type="text/template" id="deployment-list-template">
-        <li class="todo_item" id="deployment_info_<%- id %>">
+    <script type="text/template" id="task-list-template">
+        <li class="todo_item" id="task_info_<%- id %>">
             <a href="<%- url %>">
                 <h4><%- project_name %> <small class="pull-right">{{ trans('dashboard.started') }}: <%- time %></small></h4>
                 <p>{{ trans('tasks.branch') }}: <%- branch %></p>

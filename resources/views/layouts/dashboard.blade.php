@@ -27,7 +27,6 @@
 
                 <div class="col-md-12">
 
-                <!-- @include('_partials.nav') -->
                 @include('_partials.errors')
                 <section class="content-header">
                   <div class="content-title">
