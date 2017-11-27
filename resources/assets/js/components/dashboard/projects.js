@@ -170,8 +170,16 @@
     $('#new_webhook').on('click', function(event) {
         var target = $(event.currentTarget);
         var project_id = target.data('project-id');
+        var type = target.data('type');
         var icon = $('i', target);
         var interval = 3000;
+
+        var url = '/webhook/' + project_id + '/refresh';
+
+        if (type == 'build') {
+            url += '/build';
+        }
+
 
         if ($('.piplin-spin', target).length > 0) {
             return;
@@ -184,7 +192,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/webhook/' + project_id + '/refresh'
+            url: url
         }).fail(function (response) {
 
         }).done(function (data) {

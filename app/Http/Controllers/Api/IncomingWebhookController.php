@@ -61,16 +61,53 @@ class IncomingWebhookController extends Controller
      *
      * @return Response
      */
-    public function webhook(Request $request, $hash)
+    public function deploy(Request $request, $hash)
     {
         $project = Project::where('hash', $hash)->firstOrFail();
 
+        $deployPlan = $project->deployPlan;
+
         $success = false;
-        if ($project->environments->count() > 0) {
+        if ($deployPlan && $deployPlan->environments->count() > 0) {
             $payload = $this->parseWebhookRequest($request, $project);
 
             if (is_array($payload) && ($project->allow_other_branch || $project->branch === $payload['branch'])) {
                 $this->abortQueued($project->id);
+                $payload['targetalbe_type'] = get_class($deployPlan);
+                $paylaod['targetable_id'] = $deployPlan->id;
+                dispatch(new CreateTaskJob($project, $payload));
+
+                $success = true;
+            }
+        }
+
+        return [
+            'success' => $success,
+        ];
+    }
+
+    /**
+     * Handles incoming requests to trigger build.
+     *
+     * @param Request $request
+     * @param string  $hash
+     *
+     * @return Response
+     */
+    public function build(Request $request, $hash)
+    {
+        $project = Project::where('hash', $hash)->firstOrFail();
+
+        $buildPlan = $project->buildPlan;
+
+        $success = false;
+        if ($buildPlan && $buildPlan->servers->count() > 0) {
+            $payload = $this->parseWebhookRequest($request, $project);
+
+            if (is_array($payload) && ($project->allow_other_branch || $project->branch === $payload['branch'])) {
+                $this->abortQueued($project->id);
+                $payload['targetalbe_type'] = get_class($buildPlan);
+                $paylaod['targetable_id'] = $buildPlan->id;
                 dispatch(new CreateTaskJob($project, $payload));
 
                 $success = true;

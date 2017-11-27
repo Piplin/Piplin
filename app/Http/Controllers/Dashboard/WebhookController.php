@@ -23,16 +23,17 @@ class WebhookController extends Controller
      * Generates a new webhook URL.
      *
      * @param Project $project
+     * @param string  $type
      *
      * @return Response
      */
-    public function refresh(Project $project)
+    public function refresh(Project $project, $type = '')
     {
         $project->generateHash();
         $project->save();
 
         return [
-            'url' => route('webhook.deploy', $project->hash),
+            'url' => route($type == 'build' ? 'webhook.build' : 'webhook.deploy', $project->hash),
         ];
     }
 }
