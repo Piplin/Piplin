@@ -44,7 +44,7 @@ return [
     'draft_title'           => '部署草稿',
     'draft_warning'         => '你确定要部署该草稿吗？',
     'pending'               => '等待中',
-    'running'             => '运行中',
+    'running'               => '运行中',
     'completed'             => '完成',
     'completed_with_errors' => '完成(异常)',
     'aborted'               => '已中止',

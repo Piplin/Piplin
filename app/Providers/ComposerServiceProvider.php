@@ -41,7 +41,7 @@ class ComposerServiceProvider extends ServiceProvider
         AppComposer::class            => '*',
         CurrentUserComposer::class    => '*',
         DashboardComposer::class      => ['dashboard._partials.shortcut'],
-        SidebarComposer::class         => ['_partials.sidebar'],
+        SidebarComposer::class         => ['_partials.sidebar', '_partials.todo'],
         ProjectComposer::class        => ['dashboard._partials.sidebar', 'dashboard.projects'],
         ProjectSummaryComposer::class => ['dashboard.projects._partials.summary'],
         ThemeComposer::class          => ['layouts.dashboard', 'profile.index'],

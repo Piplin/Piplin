@@ -5,7 +5,7 @@
     Piplin.listener.on('task:' + Piplin.events.MODEL_CHANGED, function (data) {
 
         // Update todo bar
-        //updateTodoBar(data);
+        updateTodoBar(data);
 
         if ($('#timeline').length > 0) {
             updateTimeline();
@@ -109,40 +109,18 @@
             $('.running_menu').append(html);
         }
 
-        var running = $('.running_menu li.todo_item').length;
-        var pending = $('.pending_menu li.todo_item').length;
+        var running = $('.running_menu tr.item').length;
 
-        var todo_count = running+pending;
-
+        var todo_count = running;
     
         if(todo_count > 0) {
-            $('#todo_menu span.label').html(todo_count).addClass('label-success');
-            $('#todo_menu .dropdown-toggle i.ion').addClass('text-danger');
+            $('.todo_count').removeClass('hide').show();
+            $('.item_empty').hide();
         } else {
-            $('#todo_menu span.label').html('').removeClass('label-success');
-            $('#todo_menu .dropdown-toggle i.ion').removeClass('text-danger')
+            $('.todo_count').hide();
+            $('.item_empty').show();
         }
-
-        var empty_template = _.template($('#todo-item-empty-template').html());
-
-        if(running > 0) {
-            $('.running_header i').addClass('piplin-spin');
-            $('.running_menu li.item_empty').remove();
-        } else {
-            $('.running_header i').removeClass('piplin-spin');
-            $('.running_menu li.item_empty').remove();
-            $('.running_menu').append(empty_template({empty_text:trans('dashboard.running_empty')}));
-        }
-
-        var pending_label = Lang.choice('dashboard.pending', pending, {
-            'count': pending
-        });
-        var running_label = Lang.choice('dashboard.running', running, {
-            'count': running
-        });
-
-        $('.running_header span').text(running_label);
-        $('.pending_header span').text(pending_label);
+        $('.todo_count span').text(todo_count)
     }
 
 })(jQuery);

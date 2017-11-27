@@ -28,27 +28,11 @@ class SidebarComposer
      */
     public function compose(View $view)
     {
-        $pending       = $this->getPending();
-        $pending_count = count($pending);
-        $view->with('pending', $pending);
-        $view->with('pending_count', $pending_count);
-
         $running       = $this->getRunning();
         $running_count = count($running);
+
         $view->with('running', $running);
-        $view->with('running_count', $running_count);
-
-        $view->with('todo_count', $pending_count + $running_count);
-    }
-
-    /**
-     * Gets pending deployments.
-     *
-     * @return array
-     */
-    private function getPending()
-    {
-        return $this->getStatus(Task::PENDING);
+        $view->with('todo_count', $running_count);
     }
 
     /**
@@ -58,7 +42,7 @@ class SidebarComposer
      */
     private function getRunning()
     {
-        return $this->getStatus(Task::RUNNING);
+        return $this->getStatus([Task::PENDING, Task::RUNNING]);
     }
 
     /**

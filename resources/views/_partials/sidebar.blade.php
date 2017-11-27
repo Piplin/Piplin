@@ -17,15 +17,16 @@
                 <a href="{{ route('dashboard.tasks') }}"><i class="piplin piplin-clock"></i>
                     <strong>{{ trans('dashboard.tasks') }}</strong>
                 </a>
-                <label class="todo_count badge bg-{{ $todo_count > 0 ? 'green' : 'gray' }}"><i class="piplin piplin-bell"></i> <span>{{ $todo_count ?: null }}</span></label>
             </li>
-            @if(!$in_admin)
-            <li class="small">
-                <a href="#" data-toggle="modal" data-target="#project_create"><i class="piplin piplin-plus"></i>
-                    <strong>{{ trans('projects.create') }}</strong>
+            <li>
+                <a href="#" data-toggle="modal" data-target="#todo">
+                    <i class="piplin piplin-bell"></i>
+                    <strong>{{ trans('dashboard.notifications') }}</strong>
                 </a>
+                <label class="todo_count badge bg-green {{ $todo_count == 0 ? 'hide' : null }}">
+                        <span>{{ $todo_count }}</span>
+                </label>
             </li>
-            @endif
         </ul>
         <div class="bottom-menu">
             @if($current_user->is_admin)

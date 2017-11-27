@@ -30,5 +30,6 @@ return [
     'site'              => 'View the site',
     'view'              => 'View the task details',
     'started'           => 'Started at',
+    'notifications'     => 'Notice',
 
 ];
