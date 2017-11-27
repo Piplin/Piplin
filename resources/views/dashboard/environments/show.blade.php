@@ -35,15 +35,6 @@
     @include('dashboard.projects._dialogs.rollback')
 @stop
 
-
-@section('right-buttons')
-<div class="pull-right">
-    @if($project->can('deploy'))
-    <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#deploy" type="button" class="btn btn-lg btn-{{ ($project->isRunning() OR !count($project->environments)) ? 'danger' : 'info' }}" title="{{ trans('projects.deploy_project') }}" {{ ($project->isRunning() OR !count($project->environments)) ? 'disabled' : '' }}><span class="piplin piplin-deploy"></span> {{ trans('projects.deploy') }}</button>
-    @endif
-</div>
-@stop
-
 @push('javascript')
     <script type="text/javascript">
 
