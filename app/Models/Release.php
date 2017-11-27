@@ -63,6 +63,11 @@ class Release extends Model
         return $this->belongsTo(Task::class);
     }
 
+    /**
+     * Gets the readable list of artifacts.
+     *
+     * @return string
+     */
     public function getArtifactNamesAttribute()
     {
         return implode(' ', $this->task->artifacts->pluck('file_name')->toArray());
