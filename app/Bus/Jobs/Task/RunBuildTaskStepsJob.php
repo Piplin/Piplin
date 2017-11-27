@@ -218,9 +218,9 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
             case Stage::DO_BUILD:
                 return new Process('build.steps.Build', $tokens);
             case Stage::DO_TEST:
-                return new Process('build.steps.test', $tokens);
+                return new Process('build.steps.Test', $tokens);
             case Stage::DO_RESULT:
-                return new Process('build.steps.result', $tokens);
+                return new Process('build.steps.Result', $tokens);
         }
 
         // Custom step
