@@ -57,6 +57,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
         'commit',
         'committer_email',
         'committer',
+        'payload',
     ];
 
     /**
@@ -92,6 +93,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
         'user_id'        => 'integer',
         'status'         => 'integer',
         'is_webhook'     => 'boolean',
+        'payload'        => 'object',
     ];
 
     /**

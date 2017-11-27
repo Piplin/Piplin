@@ -62,4 +62,9 @@ class Release extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public function getArtifactNamesAttribute()
+    {
+        return implode(' ', $this->task->artifacts->pluck('file_name')->toArray());
+    }
 }

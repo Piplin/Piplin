@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Cache;
 use Piplin\Bus\Events\TaskFinishedEvent;
 use Piplin\Bus\Jobs\Task\RunDeployTaskStepsJob;
 use Piplin\Bus\Jobs\Task\RunBuildTaskStepsJob;
+use Piplin\Bus\Jobs\Release\CreateArtifactArchiveJob;
 use Piplin\Bus\Jobs\Repository\CreateArchiveJob;
 use Piplin\Bus\Jobs\Repository\GetCommitDetailsJob;
 use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
@@ -30,6 +31,7 @@ use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
 use Piplin\Models\Environment;
 use Piplin\Models\Project;
+use Piplin\Models\Release;
 use Piplin\Models\Server;
 use Piplin\Models\ServerLog;
 use Piplin\Models\User;
@@ -114,13 +116,19 @@ class DeployProjectJob extends Job implements ShouldQueue
         }
 
         try {
-            $this->dispatch(new UpdateGitMirrorJob($this->project));
+            if ($this->task->payload && $this->task->payload->source == 'release') {
+                $releaseId = $this->task->payload->source_release;
+                $release = Release::findOrFail($releaseId);
+                $this->dispatch(new CreateArtifactArchiveJob($this->task, $release, $this->release_archive));
+            } else {
+                $this->dispatch(new UpdateGitMirrorJob($this->project));
 
-            $this->dispatch(new GetCommitDetailsJob($this->project, $commit, function ($gitInfo) {
-                $this->updateRepoInfo($gitInfo);
-            }));
+                $this->dispatch(new GetCommitDetailsJob($this->project, $commit, function ($gitInfo) {
+                    $this->updateRepoInfo($gitInfo);
+                }));
 
-            $this->dispatch(new CreateArchiveJob($this->project, $this->task->commit, $this->release_archive));
+                $this->dispatch(new CreateArchiveJob($this->project, $this->task->commit, $this->release_archive));
+            }
 
             $runTaskStepsClass = RunDeployTaskStepsJob::class;
             if ($this->task->targetable instanceof BuildPlan) {

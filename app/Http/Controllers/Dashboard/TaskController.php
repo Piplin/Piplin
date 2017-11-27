@@ -107,7 +107,6 @@ class TaskController extends Controller
             'project_id'      => $project->id,
             'targetable_type' => $request->get('targetable_type'),
             'targetable_id'   => $request->get('targetable_id'),
-            'project_id'      => $project->id,
             'environments'    => $request->get('environments'),
             'branch'          => $project->branch,
             'optional'        => [],
@@ -140,6 +139,9 @@ class TaskController extends Controller
             }, $request->get('optional')));
         }
         $fields['user_id'] = Auth::user()->id;
+
+        //$fields['payload'] = $request->only('branch');
+        $fields['payload'] = $request->payloadOnly();
 
         dispatch(new CreateTaskJob($project, $fields));
 

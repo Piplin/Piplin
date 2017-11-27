@@ -29,4 +29,27 @@ class StoreTaskRequest extends Request
             //'environments' => 'required',
         ];
     }
+
+    /**
+     * Gets the input which are allowed in the request based on the type.
+     *
+     * @return array
+     */
+    public function payloadOnly()
+    {
+        return $this->only(array_keys($this->payloadRules()));
+    }
+
+    /**
+     * Gets the additional rules based on the type from the request.
+     *
+     * @return array
+     */
+    private function payloadRules()
+    {
+        return [
+            'source'                       => 'nullable',
+            'source_'.$this->get('source') => 'nullable',
+        ];
+    }
 }

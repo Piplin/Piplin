@@ -60,6 +60,7 @@
             source_branch:   $('#task_branch').val(),
             source_tag:      $('#task_tag').val(),
             source_commit:   $('#task_commit').val(),
+            source_release:  $('#task_release').val(),
             optional:        optional
         }, {
             wait: true,
