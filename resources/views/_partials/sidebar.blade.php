@@ -17,7 +17,7 @@
                 <a href="{{ route('dashboard.tasks') }}"><i class="piplin piplin-clock"></i>
                     <strong>{{ trans('dashboard.tasks') }}</strong>
                 </a>
-                <label class="todo_count badge bg-{{ $todo_count > 0 ? 'green' : 'gray' }}"><i class="piplin piplin-bell"></i> <span>{{ $todo_count }}</span></label>
+                <label class="todo_count badge bg-{{ $todo_count > 0 ? 'green' : 'gray' }}"><i class="piplin piplin-bell"></i> <span>{{ $todo_count ?: null }}</span></label>
             </li>
             @if(!$in_admin)
             <li class="small">
