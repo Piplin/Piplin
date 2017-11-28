@@ -17,7 +17,7 @@ return [
     'deploy_title'          => '部署任务 #:id',
     'build_title'           => '构建任务 #:id',
     'started_by'            => '触发来源',
-    'deployer'              => '上线者',
+    'author'                => '发起人',
     'committer'             => '代码提交',
     'commit'                => '提交版本',
     'manually'              => '手动执行',

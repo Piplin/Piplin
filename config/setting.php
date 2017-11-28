@@ -12,6 +12,6 @@
 return [
     'app_name'   => 'Piplin',
     'app_url'    => env('APP_URL', 'http://localhost'),
-    'app_about'  => 'A web deployment system.',
+    'app_about'  => 'An open source self-hosted continuous integration system.',
     'app_locale' => env('APP_LOCALE', 'en'),
 ];

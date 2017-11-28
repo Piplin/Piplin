@@ -15,7 +15,7 @@
                     <th>{{ trans('tasks.started') }}</th>
                     <th>{{ trans('tasks.environments') }}</th>
                     <th>{{ trans('tasks.started_by') }}</th>
-                    <th>{{ trans('tasks.deployer') }}</th>
+                    <th>{{ trans('tasks.author') }}</th>
                     <!--<th>{{ trans('tasks.committer') }}</th>-->
                     <th>{{ trans('tasks.commit') }}</th>
                     <th>{{ trans('app.status') }}</th>
@@ -35,9 +35,9 @@
                     </td>
                     <td>
                         @if ($task->build_url)
-                            <a href="{{ $task->build_url }}" target="_blank">{{ $task->deployer_name }}</a>
+                            <a href="{{ $task->build_url }}" target="_blank">{{ $task->author_name }}</a>
                         @else
-                            {{ $task->deployer_name }}
+                            {{ $task->author_name }}
                         @endif
                     </td>
                     <!--<td class="committer">{{ $task->committer_name }}</td>-->

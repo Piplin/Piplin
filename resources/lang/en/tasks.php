@@ -18,7 +18,7 @@ return [
     'deploy_title'          => 'Task #:id',
     'build_title'           => 'Build #:id',
     'started_by'            => 'Started by',
-    'deployer'              => 'Deployer',
+    'author'                => 'Author',
     'committer'             => 'Committer',
     'commit'                => 'Commit',
     'manually'              => 'Manually',

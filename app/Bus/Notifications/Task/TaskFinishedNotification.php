@@ -33,18 +33,18 @@ abstract class TaskFinishedNotification extends Notification
     /**
      * @var Task
      */
-    protected $deployment;
+    protected $task;
 
     /**
      * Create a new notification instance.
      *
-     * @param Project    $project
-     * @param Task $deployment
+     * @param Project $project
+     * @param Task    $task
      */
-    public function __construct(Project $project, Task $deployment)
+    public function __construct(Project $project, Task $task)
     {
         $this->project    = $project;
-        $this->deployment = $deployment;
+        $this->task = $task;
     }
 
     /**
@@ -62,14 +62,14 @@ abstract class TaskFinishedNotification extends Notification
 
         $table = [
             trans('hooks.project_name')    => $this->project->name,
-            trans('hooks.deployed_branch') => $this->deployment->branch,
-            trans('hooks.started_at')      => $this->deployment->started_at,
-            trans('hooks.finished_at')     => $this->deployment->finished_at,
-            trans('hooks.last_committer')  => $this->deployment->committer,
-            trans('hooks.last_commit')     => $this->deployment->short_commit,
+            trans('hooks.deployed_branch') => $this->task->branch,
+            trans('hooks.started_at')      => $this->task->started_at,
+            trans('hooks.finished_at')     => $this->task->finished_at,
+            trans('hooks.last_committer')  => $this->task->committer,
+            trans('hooks.last_commit')     => $this->task->short_commit,
         ];
 
-        $action = route('deployments', ['id' => $this->deployment->id]);
+        $action = route('tasks', ['id' => $this->task->id]);
 
         $email = (new MailMessage())
             ->view(['notifications.email', 'notifications.email-plain'], [
@@ -78,10 +78,10 @@ abstract class TaskFinishedNotification extends Notification
             ])
             ->subject(trans($subject))
             ->line($message)
-            ->action(trans('hooks.deployment_details'), $action);
+            ->action(trans('hooks.task_details'), $action);
 
-        if (!empty($this->deployment->reason)) {
-            $email->line(trans('hooks.deployment_reason', ['reason' => $this->deployment->reason]));
+        if (!empty($this->task->reason)) {
+            $email->line(trans('hooks.task_reason', ['reason' => $this->task->reason]));
         }
 
         return $email;
@@ -105,13 +105,13 @@ abstract class TaskFinishedNotification extends Notification
                 route('projects', ['id' => $this->project->id]),
                 $this->project->name
             ),
-            trans('hooks.commit') => $this->deployment->commit_url ? sprintf(
+            trans('hooks.commit') => $this->task->commit_url ? sprintf(
                 '<%s|%s>',
-                $this->deployment->commit_url,
-                $this->deployment->short_commit
-            ) : $this->deployment->short_commit,
-            trans('hooks.committer') => $this->deployment->committer,
-            trans('hooks.branch')    => $this->deployment->branch,
+                $this->task->commit_url,
+                $this->task->short_commit
+            ) : $this->task->short_commit,
+            trans('hooks.committer') => $this->task->committer,
+            trans('hooks.branch')    => $this->task->branch,
         ];
 
         return (new SlackMessage())
@@ -121,13 +121,13 @@ abstract class TaskFinishedNotification extends Notification
                 $attachment
                     ->content(sprintf($message, sprintf(
                         '<%s|#%u>',
-                        route('deployments', ['id' => $this->deployment->id]),
-                        $this->deployment->id
+                        route('tasks', ['id' => $this->task->id]),
+                        $this->task->id
                     )))
-                    ->fallback(sprintf($message, '#' . $this->deployment->id))
+                    ->fallback(sprintf($message, '#' . $this->task->id))
                     ->fields($fields)
                     ->footer(trans('app.name'))
-                    ->timestamp($this->deployment->finished_at);
+                    ->timestamp($this->task->finished_at);
             });
     }
 
@@ -142,13 +142,13 @@ abstract class TaskFinishedNotification extends Notification
     protected function buildDingtalkMessage($translation, Hook $notification)
     {
         $message = trans($translation);
-        $subject = sprintf($message, '#' . $this->deployment->id);
-        $commit  = $this->deployment->commit_url ? sprintf(
+        $subject = sprintf($message, '#' . $this->task->id);
+        $commit  = $this->task->commit_url ? sprintf(
             '[%s](%s)',
-            $this->deployment->short_commit,
-            $this->deployment->commit_url
-        ) : $this->deployment->short_commit;
-        $deployment_url = route('deployments', ['id' => $this->deployment->id]);
+            $this->task->short_commit,
+            $this->task->commit_url
+        ) : $this->task->short_commit;
+        $task_url = route('tasks', ['id' => $this->task->id]);
 
         $content = trans('hooks.project') . ': ' . sprintf(
             '[%s](%s)',
@@ -157,16 +157,16 @@ abstract class TaskFinishedNotification extends Notification
         ) . ' ';
         $content .= trans('hooks.commit') . ': ' . $commit . "\n\n";
 
-        $content .= trans('hooks.committer') . ':' . $this->deployment->committer . ' ';
-        $content .= trans('hooks.branch') . ':' . $this->deployment->branch . "\n\n";
+        $content .= trans('hooks.committer') . ':' . $this->task->committer . ' ';
+        $content .= trans('hooks.branch') . ':' . $this->task->branch . "\n\n";
 
-        if (!empty($this->deployment->reason)) {
-            $content .= '> ' . trans('hooks.deployment_reason', ['reason' => $this->deployment->reason]) . "\n\n";
+        if (!empty($this->task->reason)) {
+            $content .= '> ' . trans('hooks.task_reason', ['reason' => $this->task->reason]) . "\n\n";
         }
 
         $text = '#### ' . $subject . "\n"
                  . $content
-                 . '##### [' . trans('hooks.deployment_details') . '](' . $deployment_url . ")\n\n";
+                 . '##### [' . trans('hooks.task_details') . '](' . $task_url . ")\n\n";
         $atMobiles = !empty($notification->config->at_mobiles) ? explode(',', $notification->config->at_mobiles) : [];
 
         return (new WebhookMessage())
@@ -195,14 +195,14 @@ abstract class TaskFinishedNotification extends Notification
     {
         return (new WebhookMessage())
             ->data(array_merge(array_only(
-                $this->deployment->attributesToArray(),
+                $this->task->attributesToArray(),
                 ['id', 'branch', 'started_at', 'finished_at', 'commit', 'source', 'reason']
             ), [
-                'project'      => $this->deployment->project_name,
-                'committed_by' => $this->deployment->committer,
-                'started_by'   => $this->deployment->deployer_name,
-                'status'       => ($event === 'deployment_succeeded') ? 'success' : 'failure',
-                'url'          => route('deployments', ['id' => $this->deployment->id]),
+                'project'      => $this->task->project_name,
+                'committed_by' => $this->task->committer,
+                'started_by'   => $this->task->author_name,
+                'status'       => ($event === 'task_succeeded') ? 'success' : 'failure',
+                'url'          => route('tasks', ['id' => $this->task->id]),
             ]))
             ->header('X-Piplin-Project-Id', $notification->project_id)
             ->header('X-Piplin-Notification-Id', $notification->id)

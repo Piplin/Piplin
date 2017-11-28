@@ -43,8 +43,8 @@
                                 @else
                                 <li><code>@{{ release }}</code> - {{ trans('commands.release_id') }}, {{ trans('commands.example') }} <span class="label label-default">{{ date('YmdHis') }}</span></li>
                                 <li><code>@{{ release_path }}</code> - {{ trans('commands.release_path') }}, {{ trans('commands.example') }} <span class="label label-default">/var/www/releases/{{ date('YmdHis') }}</span></li>
-                                <li><code>@{{ deployer_email }}</code> - {{ trans('commands.deployer_email') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->email }}</span></li>
-                                <li><code>@{{ deployer_name }}</code> - {{ trans('commands.deployer_name') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->name }}</span></li>
+                                <li><code>@{{ author_email }}</code> - {{ trans('commands.author_email') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->email }}</span></li>
+                                <li><code>@{{ author_name }}</code> - {{ trans('commands.author_name') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->name }}</span></li>
                                 @endif
                                 <li><code>@{{ committer_email }}</code> - {{ trans('commands.committer_email') }}, {{ trans('commands.example') }} <span class="label label-default">piplin@piplin.com</span></li>
                                 <li><code>@{{ committer_name }}</code> - {{ trans('commands.committer_name') }}, {{ trans('commands.example') }} <span class="label label-default">Piplin</span></li>

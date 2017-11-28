@@ -12,7 +12,7 @@
             <i class="piplin piplin-{{ $task->icon }} text-{{ $task->timeline_css_class }}" title="{{ $task->readable_status }}"></i>
             <div class="timeline-item">
                 <span class="time"><i class="piplin piplin-clock"></i> <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $task->started_at }}" data-timeago="{{ $task->finished_at }}"></abbr></span>
-                <h4 class="timeline-header"><i class="piplin piplin-{{ $task->is_webhook ? 'hook text-navy' : 'user text-gray' }}" title="{{ $task->deployer_name }}"></i> <a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->title }}</a> 
+                <h4 class="timeline-header"><i class="piplin piplin-{{ $task->is_webhook ? 'hook text-navy' : 'user text-gray' }}" title="{{ $task->author_name }}"></i> <a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->title }}</a> 
                 <span class="small">[{{ $task->environment_names }}]</span>
                 @if ($task->isDraft())
                 <span>

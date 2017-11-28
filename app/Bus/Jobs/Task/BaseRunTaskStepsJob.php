@@ -193,20 +193,20 @@ abstract class BaseRunTaskStepsJob
                 'build_path'    => $builds_dir . '/' . $this->task->release_id,
             ]);
         } else {
-            $deployer_email = '';
-            $deployer_name  = 'webhook';
+            $author_email = '';
+            $author_name  = 'webhook';
             if ($this->task->user) {
-                $deployer_name  = $this->task->user->name;
-                $deployer_email = $this->task->user->email;
+                $author_name  = $this->task->user->name;
+                $author_email = $this->task->user->email;
             } elseif ($this->task->is_webhook && !empty($this->task->source)) {
-                $deployer_name = $this->task->source;
+                $author_name = $this->task->source;
             }
 
             $tokens = array_merge($tokens, [
                 'release'         => $this->task->release_id,
                 'release_path'    => $releases_dir . '/' . $this->task->release_id,
-                'deployer_email'  => $deployer_email,
-                'deployer_name'   => $deployer_name,
+                'author_email'  => $author_email,
+                'author_name'   => $author_name,
             ]);
         }
 

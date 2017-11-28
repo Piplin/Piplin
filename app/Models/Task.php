@@ -72,7 +72,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $appends = ['project_name', 'deployer_name', 'commit_url',
+    protected $appends = ['project_name', 'author_name', 'commit_url',
                           'short_commit', 'branch_url', 'run_failure', ];
 
     /**
@@ -359,11 +359,11 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Define a accessor for the piplin name.
+     * Define a accessor for the task author name.
      *
      * @return string
      */
-    public function getDeployerNameAttribute()
+    public function getAuthorNameAttribute()
     {
         if (!empty($this->user_id)) {
             return $this->user->name;

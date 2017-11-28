@@ -1,16 +1,16 @@
 {
     "name": "Piplin/Piplin",
-    "description": "A continuous integration and delivery system that combines automated builds, tests, and releases in a single workflow.",
+    "description": "Piplin is a self-hosted continuous integration and deployment system, intended to automatically build, test, and deploy your project over the web.",
     "minimum-stability": "stable",
     "type": "project",
-    "keywords": ["Piplin", "deployment"],
+    "keywords": ["piplin", "ci", "continuous integration"],
     "homepage": "http://piplin.com/",
     "license": "MIT",
     "authors": [
         {
-            "name": "Phecho",
-            "email": "phecho@phecho.com",
-            "homepage": "http://www.phecho.com",
+            "name": "lianguan",
+            "email": "127258@qq.com",
+            "homepage": "http://www.piplin.com",
             "role": "Developer"
         }
     ],
