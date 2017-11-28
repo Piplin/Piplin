@@ -4,7 +4,8 @@
 [![Build Status](https://travis-ci.org/Piplin/Piplin.svg?branch=master)](https://travis-ci.org/Piplin/Piplin)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Piplin 是一款免费、开源的持续集成系统，适用于软件的自动化构建、测试和部署相关的各种应用场景。
+Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪŋ/ 或 /ˈpaɪpˌlaɪn/)是一款免费、开源的持续集成系统，适用于软件的自动化构建、测试和部署相关的各种应用场景。
+
 
 ![Screenshot](http://www.piplin.com/piplin.png)
 
