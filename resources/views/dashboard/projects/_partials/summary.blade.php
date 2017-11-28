@@ -72,7 +72,7 @@
                             <td class="text-right"><a href="#" title="{{ trans('keys.view_ssh_key') }}" class="label label-warning" data-toggle="modal" data-target="#show_key">{{ trans('keys.ssh_key') }}</a></td>
                         </tr>
                         <tr>
-                            <td>{{ trans('projects.task_status') }}</td>
+                            <td>{{ trans('projects.status') }}</td>
                             <td class="text-right">
                                 <span class="text-{{$project->css_class}}"><i class="piplin piplin-{{ $project->icon }}"></i> {{ $project->readable_status }}</span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
                             </td>

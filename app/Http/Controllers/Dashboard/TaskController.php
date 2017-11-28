@@ -19,6 +19,7 @@ use Piplin\Bus\Jobs\CreateTaskJob;
 use Piplin\Bus\Jobs\DeployDraftJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreTaskRequest;
+use Piplin\Models\BuildPlan;
 use Piplin\Models\Command;
 use Piplin\Models\Task;
 use Piplin\Models\Environment;
@@ -45,17 +46,22 @@ class TaskController extends Controller
         $envLocks = [];
         foreach ($task->steps as $step) {
             foreach ($step->logs as $log) {
+                if (!$log->server) {
+                    continue;
+                }
                 $log->cabinet          = false;
                 $log->environment_name = null;
-                if ($log->server && $log->environment) {
+                if ($log->environment) {
                     if (!$log->server->targetable instanceof Environment) {
                         $log->cabinet = true;
                     }
 
                     if (!isset($envLocks[$step->id . '_' . $log->environment_id])) {
-                        $log->environment_name                            = $log->environment->name;
+                        $log->environment_name = $log->environment->name;
                         $envLocks[$step->id . '_' . $log->environment_id] = true;
                     }
+                } elseif ($log->server->targetable instanceof BuildPlan) {
+                    $log->environment_name = trans('plans.agent');
                 }
 
                 $log->runtime = ($log->runtime() === false ?

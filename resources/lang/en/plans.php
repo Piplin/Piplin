@@ -24,6 +24,7 @@ return [
     'name_placeholder'     => 'Plan name',
     'build'                => 'Build',
     'commands'             => 'Build Commands',
+    'agent'                => 'Build Agent',
     'agents'               => 'Build Agents',
     'builds'               => 'Builds',
 
