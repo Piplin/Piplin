@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Presenters\Traits;
+namespace Piplin\Presenters\Traits;
 
-use Fixhub\Presenters\RuntimeInterface;
+use Piplin\Presenters\RuntimeInterface;
 
 /**
  * View presenter for calculating the runtime in a readable format.
@@ -41,13 +41,13 @@ trait RuntimePresenter
         ];
 
         if ($seconds === 0) {
-            return trans_choice('deployments.second', 0, ['time' => 0]);
+            return trans_choice('tasks.second', 0, ['time' => 0]);
         }
 
         $readable = '';
         foreach ($units as $name => $divisor) {
             if ($quot = intval($seconds / $divisor)) {
-                $readable .= trans_choice('deployments.' . $name, $quot, ['time' => $quot]) . ', ';
+                $readable .= trans_choice('tasks.' . $name, $quot, ['time' => $quot]) . ', ';
                 $seconds -= $quot * $divisor;
             }
         }

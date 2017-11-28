@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Notifications\User;
+namespace Piplin\Bus\Notifications\User;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Fixhub\Models\User;
+use Piplin\Models\User;
 
 /**
  * Notification sent when changing email.
@@ -32,7 +32,7 @@ class ChangeEmailNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param string     $token
+     * @param string $token
      */
     public function __construct($token)
     {

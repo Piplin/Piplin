@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners;
+namespace Piplin\Bus\Listeners;
 
-use Fixhub\Bus\Events\DeployFinishedEvent;
-use Fixhub\Bus\Notifications\Deployment\DeploymentFailedNotification;
-use Fixhub\Bus\Notifications\Deployment\DeploymentSucceededNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
+use Piplin\Bus\Events\TaskFinishedEvent;
+use Piplin\Bus\Notifications\Task\TaskFailedNotification;
+use Piplin\Bus\Notifications\Task\TaskSucceededNotification;
 
 /**
  * When a deploy finished, notify the followed user.
@@ -28,27 +28,27 @@ class NotifyDeployListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  DeployFinishedEvent $event
+     * @param  TaskFinishedEvent $event
      * @return void
      */
-    public function handle(DeployFinishedEvent $event)
+    public function handle(TaskFinishedEvent $event)
     {
-        $project    = $event->deployment->project;
-        $deployment = $event->deployment;
+        $task    = $event->task;
+        $project = $event->task->project;
 
-        if ($deployment->isAborted()) {
+        if ($task->isAborted()) {
             return;
         }
 
-        $notification = DeploymentFailedNotification::class;
-        $event = 'deployment_failure';
-        if ($deployment->isSuccessful()) {
-            $notification = DeploymentSucceededNotification::class;
-            $event = 'deployment_success';
+        $notification = TaskFailedNotification::class;
+        $event        = 'deployment_failure';
+        if ($task->isSuccessful()) {
+            $notification = TaskSucceededNotification::class;
+            $event        = 'deployment_success';
         }
 
-        foreach ($project->hooks->where('enabled', true)->where('on_'. $event, true) as $hook) {
-            $hook->notify(new $notification($project, $deployment));
+        foreach ($project->hooks->where('enabled', true)->where('on_' . $event, true) as $hook) {
+            $hook->notify(new $notification($project, $task));
         }
     }
 }

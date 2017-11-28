@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,8 +21,8 @@ return [
     'key'               => '部署秘钥',
     'repository'        => '代码仓库',
     'repository_path'   => '仓库路径',
-    'deploy_path'       => '部署路径',
-    'deploy_path_help'  => '当执行部署时，Fixhub会在远程服务器的部署路径内自动创建一个名为 <code>releases</code> 的目录。同时会建立 <code>current</code> 软链到最新版本。<br />假设该项值被设置为 <code>/data/www/app</code>，那么Web服务的主目录可能要设为<code>/data/www/app/current/public</code>。',
+    'deploy_path'       => '项目路径',
+    'deploy_path_help'  => '当执行部署时，Piplin会在远程服务器的部署路径内自动创建一个名为 <code>releases</code> 的目录。同时会建立 <code>current</code> 软链到最新版本。<br />假设该项值被设置为 <code>/data/www/app</code>，那么Web服务的主目录可能要设为<code>/data/www/app/current/public</code>。',
     'builds'            => '保留版本',
     'build_options'     => '部署选项',
     'clone'             => '克隆',
@@ -39,7 +39,7 @@ return [
     'apply'             => '申请上线',
     'apply_choose'      => '选择项目',
     'apply_intro'       => '申请一旦被逐级审核通过，将由运维执行上线操作。',
-    'create'            => '新增项目',
+    'create'            => '创建项目',
     'create_success'    => '项目创建成功。',
     'edit'              => '编辑',
     'edit_success'      => '项目信息更新成功。',
@@ -48,23 +48,26 @@ return [
     'settings'          => '项目设置',
     'url'               => 'URL',
     'details'           => '项目详情',
-    'deployments'       => '上线统计',
-    'today'             => '今日上线次数',
-    'last_week'         => '上周上线次数',
-    'latest_duration'   => '上次上线耗时',
+    'tasks'             => '任务统计',
+    'today'             => '今日任务',
+    'last_week'         => '上周任务',
+    'total_count'       => '总共任务',
     'health'            => '项目状态',
-    'deploy_status'     => '部署状态',
+    'task_status'       => '任务状态',
     'build_status'      => '构建状态',
     'deploy_project'    => '开始上线',
     'deploy'            => '开始上线',
+    'deploy_plan'       => '部署计划',
+    'build_plan'        => '构建计划',
     'rollback'          => '回滚',
     'finished'          => '已完成',
     'pending'           => '等待中',
-    'deploying'         => '正在上线',
+    'running'           => '运行中',
     'failed'            => '失败',
     'not_deployed'      => '未上线',
     'options'           => '选项',
-    'change_branch'     => '允许上线其他分支?',
-    'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Fixhub自动生成。',
+    'change_branch'     => '允许运行其他分支?',
+    'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Piplin自动生成。',
+    'history'           => '历史记录',
 
 ];

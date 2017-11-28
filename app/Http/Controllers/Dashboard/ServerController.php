@@ -1,24 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Fixhub\Bus\Jobs\TestServerConnectionJob;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreServerRequest;
-use Fixhub\Models\Server;
-use Fixhub\Models\Project;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Cabinet;
+use Piplin\Bus\Jobs\TestServerConnectionJob;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreServerRequest;
+use Piplin\Models\Cabinet;
+use Piplin\Models\Environment;
+use Piplin\Models\BuildPlan;
+use Piplin\Models\Project;
+use Piplin\Models\Server;
 
 /**
  * Server management controller.
@@ -44,11 +45,13 @@ class ServerController extends Controller
             'targetable_id'
         );
 
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
         $targetable_type = array_pull($fields, 'targetable_type');
 
-        if ($targetable_type == 'Fixhub\\Models\\Environment') {
+        if ($targetable_type === Environment::class) {
             $targetable = Environment::findOrFail($targetable_id);
+        } elseif ($targetable_type === BuildPlan::class) {
+            $targetable = BuildPlan::findOrFail($targetable_id);
         } else {
             $targetable = Cabinet::findOrFail($targetable_id);
         }
@@ -64,7 +67,7 @@ class ServerController extends Controller
             $order = $max->order + 1;
         }
 
-        $fields['order'] = $order;
+        $fields['order']  = $order;
         $fields['output'] = null;
 
         $server = $targetable->servers()->create($fields);
@@ -75,7 +78,7 @@ class ServerController extends Controller
     /**
      * Update the specified server in storage.
      *
-     * @param Server $server
+     * @param Server             $server
      * @param StoreServerRequest $request
      *
      * @return Response

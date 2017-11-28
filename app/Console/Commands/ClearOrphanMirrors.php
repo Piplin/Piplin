@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
-use Fixhub\Models\Project;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Console\Command;
+use Piplin\Models\Project;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * Checks for and cleans up orphaned git mirrors.
@@ -25,7 +25,7 @@ class ClearOrphanMirrors extends Command
      *
      * @var string
      */
-    protected $signature = 'fixhub:purge-mirrors';
+    protected $signature = 'piplin:purge-mirrors';
 
     /**
      * The console command description.

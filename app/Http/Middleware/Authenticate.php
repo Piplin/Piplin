@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Middleware;
+namespace Piplin\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -30,7 +30,7 @@ class Authenticate extends AbstractMiddleware
     /**
      * Create a new filter instance.
      *
-     * @param  Guard $auth
+     * @param Guard $auth
      */
     public function __construct(Guard $auth)
     {
@@ -40,8 +40,8 @@ class Authenticate extends AbstractMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  Request $request
-     * @param  Closure $next
+     * @param Request $request
+     * @param Closure $next
      *
      * @return mixed
      */

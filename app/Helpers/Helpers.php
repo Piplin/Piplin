@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,8 +14,8 @@ if (!function_exists('set_active')) {
      * Set active class if request is in path.
      *
      * @param dynamic $patterns
-     * @param array $classes
-     * @param string $active
+     * @param array   $classes
+     * @param string  $active
      *
      * @return string
      */
@@ -25,27 +25,47 @@ if (!function_exists('set_active')) {
             $classes[] = $active;
         }
         $class = e(implode(' ', $classes));
+
         return empty($classes) ? '' : "class=\"{$class}\"";
     }
 }
 
 if (!function_exists('cdn')) {
     /**
-    * Creates CDN assets url
-    *
-    * @param string $path
-    * @param null $secure
-    * @return string
-    */
+     * Creates CDN assets url.
+     *
+     * @param  string $path
+     * @param  null   $secure
+     * @return string
+     */
     function cdn($path, $secure = null)
     {
-        if (!config('fixhub.cdn')) {
+        if (!config('piplin.cdn')) {
             return mix($path);
         }
         $path = trim($path, '/');
-        if (in_array(pathinfo($path, PATHINFO_EXTENSION), ['css', 'js'])) {
+        if (in_array(pathinfo($path, PATHINFO_EXTENSION), ['css', 'js'], true)) {
             $path = mix($path);
         }
-        return '//' . config('fixhub.cdn') . ($path[0] !== '/' ? ('/' . $path) : $path);
+
+        return '//' . config('piplin.cdn') . ($path[0] !== '/' ? ('/' . $path) : $path);
+    }
+}
+
+if (!function_exists('bytes')) {
+    /**
+     * Format a file size.
+     *
+     * @param int $size      Size in bytes
+     * @param int $precision Precision
+     *
+     * @return string
+     */
+    function bytes($size, $precision = 2)
+    {
+        $base = log($size) / log(1024);
+        $suffixes = ['B', 'K', 'M', 'G', 'T'];
+
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[(int) floor($base)];
     }
 }

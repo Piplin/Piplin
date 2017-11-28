@@ -1,10 +1,10 @@
 {
-    "name": "fixhub/fixhub",
-    "description": "A web deployment system based on the Laravel PHP Framework.",
+    "name": "Piplin/Piplin",
+    "description": "A continuous integration and delivery system that combines automated builds, tests, and releases in a single workflow.",
     "minimum-stability": "stable",
     "type": "project",
-    "keywords": ["fixhub", "deployment"],
-    "homepage": "http://fixhub.org/",
+    "keywords": ["Piplin", "deployment"],
+    "homepage": "http://piplin.com/",
     "license": "MIT",
     "authors": [
         {
@@ -15,9 +15,9 @@
         }
     ],
     "support": {
-        "email": "fixhub@fixhub.org",
-        "issues": "https://github.com/fixhub/fixhub/issues",
-        "source": "https://github.com/fixhub/fixhub"
+        "email": "piplin@piplin.com",
+        "issues": "https://github.com/Piplin/Piplin/issues",
+        "source": "https://github.com/Piplin/Piplin"
     },
     "require": {
         "php": ">=7.0.0",
@@ -37,7 +37,6 @@
         "fixhub/js-localization": "0.0.1",
         "fideloper/proxy": "~3.3",
         "socialiteproviders/gitlab": "^3.0",
-        "venturecraft/revisionable": "~1.28.0",
         "version/version": "^2.2"
     },
     "require-dev": {
@@ -63,12 +62,12 @@
             "app/Helpers/Helpers.php"
         ],
         "psr-4": {
-            "Fixhub\\": "app/"
+            "Piplin\\": "app/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Fixhub\\Test\\": "tests/"
+            "Piplin\\Test\\": "tests/"
         }
     },
     "scripts": {

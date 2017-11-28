@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreSharedFileRequest;
-use Fixhub\Models\SharedFile;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreSharedFileRequest;
+use Piplin\Models\SharedFile;
 
 /**
  * Controller for managing files.
@@ -36,14 +36,9 @@ class SharedFileController extends Controller
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
-
-        // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
 
         return $target->sharedFiles()->create($fields);
     }
@@ -51,8 +46,8 @@ class SharedFileController extends Controller
     /**
      * Update the specified file in storage.
      *
-     * @param  SharedFile $shared_file
-     * @param  StoreSharedFileRequest $request
+     * @param SharedFile             $shared_file
+     * @param StoreSharedFileRequest $request
      *
      * @return Response
      */
@@ -69,7 +64,7 @@ class SharedFileController extends Controller
     /**
      * Remove the specified file from storage.
      *
-     * @param  SharedFile $shared_file
+     * @param SharedFile $shared_file
      *
      * @return Response
      */

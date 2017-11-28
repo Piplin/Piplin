@@ -29,7 +29,7 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><i class="fixhub fixhub-plus"></i> {{ trans('projects.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('projects.create') }}" data-toggle="modal" data-target="#project"><i class="piplin piplin-plus"></i> {{ trans('projects.create') }}</button>
 </div>
 @stop
 
@@ -37,8 +37,8 @@
 <script type="text/javascript">
     var projects = {!! $projects !!}
 
-    new Fixhub.ProjectsTab();
-    Fixhub.Projects.add(projects.data);
+    new Piplin.ProjectsTab();
+    Piplin.Projects.add(projects.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif
@@ -48,7 +48,7 @@
 @push('templates')
 <script type="text/template" id="project-template">
     <td><%- id %></td>
-    <td><a href="/projects/<%- id %>"><% if (group_name) { %><%- group_name %>/<% } %><%- name %></a></td>
+    <td><a href="/project/<%- id %>"><% if (group_name) { %><%- group_name %>/<% } %><%- name %></a></td>
     <td><%- repository_path %></td>
     <td><span class="label label-default"><%- branch %></span></td>
     <td>
@@ -60,14 +60,10 @@
     </td>
     <td>
         <div class="btn-group pull-right">
-            <button class="btn btn-default btn-clone" title="{{ trans('projects.clone') }}" data-toggle="modal" data-target="#project-clone" data-project_id="<%- id %>"><i class="fixhub fixhub-copy"></i></button>
-            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#project"><i class="fixhub fixhub-edit"></i></button>
-            <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+            <button class="btn btn-default btn-clone" title="{{ trans('projects.clone') }}" data-toggle="modal" data-target="#project-clone" data-project_id="<%- id %>"><i class="piplin piplin-copy"></i></button>
+            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#project"><i class="piplin piplin-edit"></i></button>
+            <button class="btn btn-danger btn-trash" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
         </div>
     </td>
-</script>
-
-<script type="text/template" id="project-sidebar-template">
-    <li><a href="/projects/<%- id %>" id="sidebar_project_<%- id %>"><%- name %></a></li>
 </script>
 @endpush

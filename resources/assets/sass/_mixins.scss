@@ -114,13 +114,37 @@
     }
     //links
     > a {
-      border-left: 3px solid transparent;
+      strong {
+        display: block;
+        position: relative;
+        padding-top: 4px;
+        padding-bottom: 12px;
+        color: $sidebar-dark-color;
+      }
     }
     //Hover and active states
     &:hover > a, &.active > a {
       color: $sidebar-dark-hover-color;
-      background: $sidebar-dark-hover-bg;
-      border-left-color: $link-hover-border-color;
+      strong {
+        color: $sidebar-dark-hover-color;
+      }
+    }
+    &.active > a {
+      background: lighten($sidebar-dark-bg, 20%);
+      strong {
+        &:after {
+            display: block;
+            position: absolute;
+            right: -10px;
+            top: 8px;
+            overflow: hidden;
+            width: 10px;
+            height: 10px;
+            background: $body-bg;
+            content: "";
+            transform: rotate(45deg);
+        }
+      }
     }
     //First Level Submenu
     > .treeview-menu {

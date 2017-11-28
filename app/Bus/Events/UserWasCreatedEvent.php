@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Events;
+namespace Piplin\Bus\Events;
 
-use Fixhub\Models\User;
 use Illuminate\Queue\SerializesModels;
+use Piplin\Models\User;
 
 /**
  * Event which is fired when a user is created.

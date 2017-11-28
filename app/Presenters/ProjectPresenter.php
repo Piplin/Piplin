@@ -1,19 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Presenters;
+namespace Piplin\Presenters;
 
-use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
-use Fixhub\Models\Project;
+use Piplin\Models\Project;
 
 /**
  * The view presenter for a project class.
@@ -30,7 +29,7 @@ class ProjectPresenter extends CommandPresenter
     {
         if ($this->wrappedObject->status === Project::FINISHED || $this->wrappedObject->status === Project::FAILED) {
             return 'Sleeping';
-        } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
+        } elseif ($this->wrappedObject->status === Project::RUNNING) {
             return 'Building';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
             return 'Pending';
@@ -48,8 +47,8 @@ class ProjectPresenter extends CommandPresenter
     {
         if ($this->wrappedObject->status === Project::FINISHED) {
             return trans('projects.finished');
-        } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
-            return trans('projects.deploying');
+        } elseif ($this->wrappedObject->status === Project::RUNNING) {
+            return trans('projects.running');
         } elseif ($this->wrappedObject->status === Project::FAILED) {
             return trans('projects.failed');
         } elseif ($this->wrappedObject->status === Project::PENDING) {
@@ -68,8 +67,8 @@ class ProjectPresenter extends CommandPresenter
     {
         if ($this->wrappedObject->status === Project::FINISHED) {
             return 'check';
-        } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
-            return 'load fixhub-spin';
+        } elseif ($this->wrappedObject->status === Project::RUNNING) {
+            return 'load piplin-spin';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
             return 'close';
         } elseif ($this->wrappedObject->status === Project::PENDING) {
@@ -88,7 +87,7 @@ class ProjectPresenter extends CommandPresenter
     {
         if ($this->wrappedObject->status === Project::FINISHED) {
             return 'success';
-        } elseif ($this->wrappedObject->status === Project::DEPLOYING) {
+        } elseif ($this->wrappedObject->status === Project::RUNNING) {
             return 'warning';
         } elseif ($this->wrappedObject->status === Project::FAILED) {
             return 'danger';
@@ -110,16 +109,16 @@ class ProjectPresenter extends CommandPresenter
 
         if (isset($details['domain'])) {
             if (preg_match('/github\.com/', $details['domain'])) {
-                return 'fixhub-github';
+                return 'piplin-github';
             } elseif (preg_match('/gitlab\.com/', $details['domain'])) {
-                return 'fixhub-gitlab';
+                return 'piplin-gitlab';
             } elseif (preg_match('/bitbucket/', $details['domain'])) {
-                return 'fixhub-bitbucket';
+                return 'piplin-bitbucket';
             } elseif (preg_match('/amazonaws\.com/', $details['domain'])) {
-                return 'fixhub-amazon';
+                return 'piplin-amazon';
             }
         }
 
-        return 'fixhub-cube';
+        return 'piplin-cube';
     }
 }

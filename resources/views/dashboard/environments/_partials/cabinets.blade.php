@@ -3,7 +3,7 @@
         <h3 class="box-title">{{ trans('cabinets.label') }}</h3>
         <div class="pull-right">
             @if($project->can('manage'))
-            <button type="button" class="btn btn-primary" title="{{ trans('cabinets.link') }}" data-toggle="modal" data-target="#cabinet"><span class="fixhub fixhub-plus"></span> {{ trans('cabinets.link') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('cabinets.link') }}" data-toggle="modal" data-target="#cabinet"><span class="piplin piplin-plus"></span> {{ trans('cabinets.link') }}</button>
             @endif
         </div>
     </div>
@@ -33,13 +33,13 @@
 @push('templates')
     <script type="text/template" id="cabinet-template">
         <td><%- name %></td>
-        <td><%- server_count %> <i class="fixhub fixhub-server server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
+        <td><%- server_count %> <i class="piplin piplin-server server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="<%- server_names %>"></i></td>
         <td><%- description %></td>
         <td>{{ trans('cabinets.enabled') }}</td>
         <td class="text-right">
             @if($project->can('manage'))
             <div class="btn-group">
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('cabinets.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('cabinets.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
             </div>
             @endif
         </td>

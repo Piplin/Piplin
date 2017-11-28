@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ return [
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
     */
-    'name' => env('APP_NAME', 'Fixhub'),
+    'name' => env('APP_NAME', 'Piplin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://fixhub.app'),
+    'url' => env('APP_URL', 'http://piplin.app'),
 
     /*
     |--------------------------------------------------------------------------
@@ -187,15 +187,15 @@ return [
         /*
          * Application Service Providers...
          */
-        Fixhub\Providers\AppServiceProvider::class,
-        Fixhub\Providers\AuthServiceProvider::class,
-        Fixhub\Providers\ComposerServiceProvider::class,
-        Fixhub\Providers\EventServiceProvider::class,
-        Fixhub\Providers\LogServiceProvider::class,
-        Fixhub\Providers\RouteServiceProvider::class,
-        Fixhub\Providers\UpdateServiceProvider::class,
-        Fixhub\Providers\ValidationServiceProvider::class,
-        Fixhub\Providers\WhoopsServiceProvider::class,
+        Piplin\Providers\AppServiceProvider::class,
+        Piplin\Providers\AuthServiceProvider::class,
+        Piplin\Providers\ComposerServiceProvider::class,
+        Piplin\Providers\EventServiceProvider::class,
+        Piplin\Providers\LogServiceProvider::class,
+        Piplin\Providers\RouteServiceProvider::class,
+        Piplin\Providers\UpdateServiceProvider::class,
+        Piplin\Providers\ValidationServiceProvider::class,
+        Piplin\Providers\WhoopsServiceProvider::class,
 
     ],
 

@@ -1,22 +1,24 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Observers;
+namespace Piplin\Bus\Observers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
-use Fixhub\Bus\Jobs\GenerateKeyJob;
-use Fixhub\Bus\Jobs\PurgeProjectJob;
-use Fixhub\Bus\Jobs\Repository\UpdateGitMirrorJob;
-use Fixhub\Models\Project;
+use Piplin\Bus\Jobs\GenerateKeyJob;
+use Piplin\Bus\Jobs\PurgeProjectJob;
+use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
+use Piplin\Models\Project;
+use Piplin\Models\BuildPlan;
+use Piplin\Models\DeployPlan;
 
 /**
  * Event observer for Project model.
@@ -38,6 +40,28 @@ class ProjectObserver
 
         if (!$project->key_id) {
             $this->dispatch(new GenerateKeyJob($project));
+        }
+    }
+
+    /**
+     * Called when the model is saved.
+     *
+     * @param Project $project
+     */
+    public function saved(Project $project)
+    {
+        if (!$project->buildPlan) {
+            BuildPlan::create([
+                'name'       => $project->name,
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if (!$project->deployPlan) {
+            DeployPlan::create([
+                'name'       => $project->name,
+                'project_id' => $project->id,
+            ]);
         }
     }
 

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,10 +11,11 @@
 
 return [
 
-    'label'                => '部署步骤',
-    'deploy_webhook'       => '第三方服务以POST方式调用该链接，Fixhub会自动触发部署工作。',
+    'label'                => '任务步骤',
+    'deploy_webhook'       => '第三方服务以POST方式调用该链接，Piplin会自动触发部署工作。',
+    'build_webhook'        => '第三方服务以POST方式调用该链接，Piplin会自动触发构建工作。',
     'webhook_help'         => 'Webhook 帮助',
-    'webhook_example'      => '以HTTP POST方式调用该URL, Fixhub会获取最近提交的代码，并自动触发部署工作。',
+    'webhook_example'      => '以HTTP POST方式调用该URL, Piplin会获取最近提交的代码，并自动触发部署工作。',
     'webhook_fields'       => 'POST参数说明(可选参数)',
     'webhook_reason'       => '部署原因，尽可能简短地描述本次部署意图',
     'webhook_source'       => '触发该部署工作的来源 如： "CI Server"',
@@ -28,12 +29,13 @@ return [
     'generate_webhook'     => '重新生成一个webhook链接 (注意: 旧链接将失效)',
     'stage'                => '步骤',
     'action'               => '执行任务',
-    'before'               => '前置任务',
+    'before'               => '前置',
     'name'                 => '名称',
     'run_as'               => '运行用户',
     'migrations'           => '数据迁移',
     'bash'                 => 'Bash脚本',
     'environments'         => '部署环境',
+    'patterns'             => '复制模式',
     'servers'              => '服务器',
     'default'              => '跟随服务器',
     'options'              => 'Bash脚本中可使用的变量 (点击查看)',
@@ -41,7 +43,7 @@ return [
     'release_path'         => '发布路径',
     'branch'               => '部署分支',
     'project_path'         => '项目路径',
-    'after'                => '后置任务',
+    'after'                => '后置',
     'configure'            => '配置',
     'clone'                => '创建新版本',
     'clone_help'           => '在远程服务器创建新版本发布目录，并解压安装包。',
@@ -51,6 +53,14 @@ return [
     'activate_help'        => '创建一个名为<code>current</code>的软链，链接到新的发布目录。',
     'purge'                => '清理旧版本',
     'purge_help'           => '清理旧版本。',
+    'prepare'              => '准备构建',
+    'prepare_help'         => '准备构建',
+    'build'                => '开始构建',
+    'build_help'           => '开始构建',
+    'test'                 => '开始测试',
+    'test_help'            => '开始测试',
+    'result'               => '构建结果',
+    'result_help'          => '构建结果',
     'warning'              => '保存失败，请检查表单信息。',
     'create'               => '新增',
     'create_success'       => '部署步骤创建成功。',
@@ -63,15 +73,15 @@ return [
     'deployer_email'       => '上线发起者邮箱',
     'committer_name'       => '代码最后提交者',
     'committer_email'      => '代码最后提交者邮箱',
-    'none'                 => '还没有配置安装命令',
+    'none'                 => '还没有配置命令',
     'optional'             => '是否可选?',
     'example'              => '例如:',
     'optional_description' => '设置为可选步骤',
     'default_description'  => '默认选中',
-    'services'             => 'Fixhub支持的服务 : Github, Gitlab, Gogs, BitBucket, Gitee &amp; Coding等',
-    'services_description' => '一旦该 webhook 地址由上述服务调用, Fixhub会根据对方所传数据触发部署工作。' .
+    'services'             => 'Piplin支持的服务 : Github, Gitlab, Gogs, BitBucket, Gitee &amp; Coding等',
+    'services_description' => '一旦该 webhook 地址由上述服务调用, Piplin会根据对方所传数据触发部署工作。' .
                               '注意：在请求中包含 &quot;<em>update_only</em>&quot; 和 &quot;<em>commands</em>&quot; 参数 ' .
                               ', 其他所有参数将被忽略.',
-    'help'                 => '可在部署步骤中添加前置、后置任务，如：数据迁移，安装依赖软件包，单元测试等。',
+    'help'                 => '可在步骤中添加前置、后置任务，如：数据迁移，安装依赖软件包，单元测试等。',
 
 ];

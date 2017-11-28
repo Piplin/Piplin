@@ -1,19 +1,27 @@
 <?php
 
-namespace Fixhub\Models;
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-use Fixhub\Models\Traits\BroadcastChanges;
+namespace Piplin\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Fixhub\Services\Scripts\Runner as Process;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * SSH keys model.
  */
 class Key extends Model
 {
-    use SoftDeletes, BroadcastChanges, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges;
 
     /**
      * The attributes that are mass assignable.
@@ -37,20 +45,6 @@ class Key extends Model
     protected $appends = ['fingerprint'];
 
     /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
-
-    /**
-     * Revision ignore attributes.
-     *
-     * @var array
-     */
-    protected $dontKeepRevisionOf = ['private_key'];
-
-    /**
      * Has many relationship.
      *
      * @return Project
@@ -69,8 +63,9 @@ class Key extends Model
     public function getFingerprintAttribute()
     {
         $key    = preg_replace('/^(ssh-[dr]s[as]\s+)|(\s+.+)|\n/', '', trim($this->public_key));
-        $buffer = base64_decode($key);
+        $buffer = base64_decode($key, true);
         $hash   = md5($buffer);
+
         return preg_replace('/(.{2})(?=.)/', '$1:', $hash);
     }
 }

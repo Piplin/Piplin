@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,8 +35,8 @@ class EnvironmentLink extends Model
      */
     protected $casts = [
         'link_type'                 => 'integer',
-        'environment_id'          => 'integer',
-        'opposite_environment_id' => 'integer',
+        'environment_id'            => 'integer',
+        'opposite_environment_id'   => 'integer',
     ];
 
     /**

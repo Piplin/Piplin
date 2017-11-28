@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,39 +14,68 @@ Route::group([
         'namespace'  => 'Dashboard',
     ], function () {
         // Project
-        Route::get('projects/{project}/{tab?}', [
+        Route::get('project/{project}/{tab?}', [
             'as'   => 'projects',
             'uses' => 'ProjectController@show',
         ])->middleware('project.acl:view');
+
         Route::post('projects', [
-            'as'   => 'projects.create',
-            'uses' => 'ProjectController@create',
+            'uses' => 'ProjectController@store',
         ]);
 
-        // Deployment
-        Route::get('deployment/{deployment}', [
+        // Build plan
+        Route::get('build-plan/{build}/{tab?}', [
+            'as'   => 'builds',
+            'uses' => 'BuildController@show',
+        ]);
+
+        // Deploy plan
+        Route::get('deploy-plan/{deployment}/{tab?}', [
             'as'   => 'deployments',
             'uses' => 'DeploymentController@show',
         ]);
 
-        Route::post('deployments', [
-            'as'   => 'deployments.create',
-            'uses' => 'DeploymentController@create',
+        // Pattern
+        Route::post('patterns', [
+            'uses' => 'PatternController@store',
+        ]);
+        Route::put('patterns/{pattern}', [
+            'uses' => 'PatternController@update',
+        ]);
+        Route::delete('patterns/{pattern}', [
+            'uses' => 'PatternController@destroy',
         ]);
 
-        Route::post('deployment/{deployment}/deploy-draft', [
-            'as'   => 'deployments.deploy-draft',
-            'uses' => 'DeploymentController@deployDraft',
+        // Task
+        Route::get('task/{task}', [
+            'as'   => 'tasks.show',
+            'uses' => 'TaskController@show',
         ]);
 
-        Route::post('deployment/{deployment}/rollback', [
-            'as'   => 'deployments.rollback',
-            'uses' => 'DeploymentController@rollback',
+        Route::post('tasks', [
+            'as'   => 'tasks.create',
+            'uses' => 'TaskController@store',
         ]);
 
-        Route::get('deployment/{deployment}/abort', [
-            'as'   => 'deployments.abort',
-            'uses' => 'DeploymentController@abort',
+        // Release
+        Route::post('releases', [
+            'as'   => 'releases.create',
+            'uses' => 'ReleaseController@store',
+        ]);
+
+        Route::post('task/{task}/deploy-draft', [
+            'as'   => 'tasks.deploy-draft',
+            'uses' => 'TaskController@deployDraft',
+        ]);
+
+        Route::post('task/{task}/rollback', [
+            'as'   => 'tasks.rollback',
+            'uses' => 'TaskController@rollback',
+        ]);
+
+        Route::get('task/{task}/abort', [
+            'as'   => 'tasks.abort',
+            'uses' => 'TaskController@abort',
         ]);
 
         // Environment Link
@@ -80,15 +109,19 @@ Route::group([
             'uses'  => 'ServerController@test',
         ]);
 
-
         Route::get('log/{log}', [
             'as'   => 'server_log.show',
             'uses' => 'ServerLogController@show',
         ]);
-        Route::get('projects/{project}/commands/{step}', [
+        Route::get('deploy-plan/{deployment}/commands/{step}', [
             'as'   => 'commands.step',
             'uses' => 'CommandController@index',
         ]);
+        Route::get('builds/{build}/commands/{step}', [
+            'as'   => 'builds.step',
+            'uses' => 'CommandController@index',
+        ]);
+
         Route::post('commands/reorder', [
             'as'   => 'commands.reorder',
             'uses' => 'CommandController@reorder',
@@ -97,7 +130,7 @@ Route::group([
             'as'    => 'environments.reorder',
             'uses'  => 'EnvironmentController@reorder',
         ]);
-        Route::get('projects/{project}/environments/{environment}/{tab?}', [
+        Route::get('deploy-plan/{deployment}/environments/{environment}/{tab?}', [
             'as'   => 'environments.show',
             'uses' => 'EnvironmentController@show',
         ]);
@@ -132,7 +165,7 @@ Route::group([
                 ]);
 
                 // Webhook
-                Route::get('webhook/{project}/refresh', [
+                Route::get('webhook/{project}/refresh/{type?}', [
                     'middleware' => 'admin',
                     'as'         => 'webhook.refresh',
                     'uses'       => 'WebhookController@refresh',
@@ -146,7 +179,6 @@ Route::group([
                 Route::delete('members/{project}/{user}', [
                     'uses' => 'MemberController@destroy',
                 ]);
-
 
                 // Hook
                 Route::post('hooks/{project}', [

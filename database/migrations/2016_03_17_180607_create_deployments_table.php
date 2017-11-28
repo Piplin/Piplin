@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Deployment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Piplin\Models\Task;
 
 class CreateDeploymentsTable extends Migration
 {
@@ -29,7 +29,7 @@ class CreateDeploymentsTable extends Migration
             $table->string('commit')->nullable();
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id')->nullable()->default(null);
-            $table->tinyInteger('status')->default(Deployment::PENDING);
+            $table->tinyInteger('status')->default(Task::PENDING);
             $table->boolean('is_webhook')->default(false);
             $table->string('branch')->default('master');
             $table->text('reason')->nullable();

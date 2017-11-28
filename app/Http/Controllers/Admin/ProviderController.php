@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreProviderRequest;
-use Fixhub\Models\Provider;
 use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProviderRequest;
+use Piplin\Models\Provider;
 
 /**
  * Provider management controller.
@@ -43,19 +43,20 @@ class ProviderController extends Controller
     public function index(Request $request)
     {
         $providers = Provider::orderBy('order')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.providers.index', [
             'title'         => trans('providers.manage'),
             'providers_raw' => $providers,
             'providers'     => $providers->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'current_child' => 'providers',
         ]);
     }
 
     /**
      * Store a newly created provider in storage.
      *
-     * @param  StoreProviderRequest $request
+     * @param StoreProviderRequest $request
      *
      * @return Response
      */
@@ -92,7 +93,7 @@ class ProviderController extends Controller
     /**
      * Re-generates the order for the supplied providers.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Response
      */

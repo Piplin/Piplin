@@ -30,15 +30,15 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-primary" title="{{ trans('templates.create') }}" data-toggle="modal" data-target="#template"><span class="fixhub fixhub-plus"></span> {{ trans('templates.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('templates.create') }}" data-toggle="modal" data-target="#template"><span class="piplin piplin-plus"></span> {{ trans('templates.create') }}</button>
 </div>
 @stop
 
 @push('javascript')
 <script type="text/javascript">
     var templates = {!! $templates !!};
-    new Fixhub.TemplatesTab();
-    Fixhub.Templates.add(templates.data);
+    new Piplin.TemplatesTab();
+    Piplin.Templates.add(templates.data);
 </script>
 @endpush
 
@@ -52,8 +52,8 @@
     <td><%- config_count %></td>
     <td>
         <div class="btn-group pull-right">
-            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#template"><i class="fixhub fixhub-edit"></i></button>
-            <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#template"><i class="piplin piplin-edit"></i></button>
+            <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
         </div>
     </td>
 </script>

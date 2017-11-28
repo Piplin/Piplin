@@ -36,7 +36,7 @@
             $('#project_name').val('');
             $('#project_repository').val('');
             $('#project_branch').val('master');
-            $('#project_targetable_id').select2(Fixhub.select2_options)
+            $('#project_targetable_id').select2(Piplin.select2_options)
                                     .val($("#project_targetable_id option:selected").val())
                                     .trigger('change');
             $('#project_key_id').val($("#project_key_id option:first").val());
@@ -55,11 +55,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var project = Fixhub.Projects.get($('#model_id').val());
+        var project = Piplin.Projects.get($('#model_id').val());
 
         project.destroy({
             wait: true,
@@ -67,14 +67,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('projects.delete_success'));
+                Piplin.toast(trans('projects.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -86,16 +86,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var project_id = $('#project_id').val();
 
         if (project_id) {
-            var project = Fixhub.Projects.get(project_id);
+            var project = Piplin.Projects.get(project_id);
         } else {
-            var project = new Fixhub.Project();
+            var project = new Piplin.Project();
         }
 
         project.save({
@@ -116,16 +116,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('projects.edit_success');
                 if (!project_id) {
-                    Fixhub.Projects.add(response);
+                    Piplin.Projects.add(response);
                     msg = trans('projects.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -148,24 +148,24 @@
 
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Project = Backbone.Model.extend({
+    Piplin.Project = Backbone.Model.extend({
         urlRoot: '/admin/projects'
     });
 
     var Projects = Backbone.Collection.extend({
-        model: Fixhub.Project
+        model: Piplin.Project
     });
 
-    Fixhub.Projects = new Projects();
+    Piplin.Projects = new Projects();
 
-    Fixhub.ProjectsTab = Backbone.View.extend({
+    Piplin.ProjectsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -176,43 +176,43 @@
             $('#project_list').hide();
             $('#no_projects').show();
 
-            this.listenTo(Fixhub.Projects, 'add', this.addOne);
-            this.listenTo(Fixhub.Projects, 'reset', this.addAll);
-            this.listenTo(Fixhub.Projects, 'remove', this.addAll);
-            this.listenTo(Fixhub.Projects, 'all', this.render);
+            this.listenTo(Piplin.Projects, 'add', this.addOne);
+            this.listenTo(Piplin.Projects, 'reset', this.addAll);
+            this.listenTo(Piplin.Projects, 'remove', this.addAll);
+            this.listenTo(Piplin.Projects, 'all', this.render);
 
-            Fixhub.listener.on('project:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var project = Fixhub.Projects.get(parseInt(data.model.id));
+            Piplin.listener.on('project:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var project = Piplin.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    if(Fixhub.group_id == undefined || Fixhub.group_id == data.model.targetable_id) {
+                    if(Piplin.group_id == undefined || Piplin.group_id == data.model.targetable_id) {
                         project.set(data.model);
                     } else {
-                        Fixhub.Projects.remove(project);
+                        Piplin.Projects.remove(project);
                     }
                 }
             });
 
-            Fixhub.listener.on('project:' + Fixhub.events.MODEL_CREATED, function (data) {
-                Fixhub.Projects.add(data.model);
+            Piplin.listener.on('project:' + Piplin.events.MODEL_CREATED, function (data) {
+                Piplin.Projects.add(data.model);
             });
 
-            Fixhub.listener.on('project:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var project = Fixhub.Projects.get(parseInt(data.model.id));
+            Piplin.listener.on('project:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var project = Piplin.Projects.get(parseInt(data.model.id));
 
                 if (project) {
-                    Fixhub.Projects.remove(project);
+                    Piplin.Projects.remove(project);
                 }
 
                 $('#project_' + data.model.id).parent('li').remove();
 
-                if (parseInt(data.model.id) === parseInt(Fixhub.project_id)) {
+                if (parseInt(data.model.id) === parseInt(Piplin.project_id)) {
                     window.location.href = '/';
                 }
             });
         },
         render: function () {
-            if (Fixhub.Projects.length) {
+            if (Piplin.Projects.length) {
                 $('#no_projects').hide();
                 $('#project_list').show();
             } else {
@@ -221,7 +221,7 @@
             }
         },
         addOne: function (project) {
-            var view = new Fixhub.ProjectView({
+            var view = new Piplin.ProjectView({
                 model: project
             });
 
@@ -229,11 +229,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Projects.each(this.addOne, this);
+            Piplin.Projects.each(this.addOne, this);
         }
     });
 
-    Fixhub.ProjectView = Backbone.View.extend({
+    Piplin.ProjectView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit' : 'edit',
@@ -260,7 +260,7 @@
             $('#project_name').val(this.model.get('name'));
             $('#project_repository').val(this.model.get('repository'));
             $('#project_branch').val(this.model.get('branch'));
-            $('#project_targetable_id').select2(Fixhub.select2_options)
+            $('#project_targetable_id').select2(Piplin.select2_options)
                                     .val(this.model.get('targetable_id'))
                                     .trigger('change');
             $('#project_key_id').val(this.model.get('key_id'));

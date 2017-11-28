@@ -1,24 +1,25 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreEnvironmentRequest;
-use Fixhub\Models\Command;
-use Fixhub\Models\Environment;
-use Fixhub\Models\EnvironmentLink;
-use Fixhub\Models\Project;
-use Fixhub\Models\Link;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreEnvironmentRequest;
+use Piplin\Models\Command;
+use Piplin\Models\Environment;
+use Piplin\Models\EnvironmentLink;
+use Piplin\Models\Link;
+use Piplin\Models\Project;
+use Piplin\Models\DeployPlan;
 
 /**
  * Environment management controller.
@@ -28,15 +29,15 @@ class EnvironmentController extends Controller
     /**
      * Display a listing of before/after commands for the supplied stage.
      *
-     * @param Project $project
+     * @param DeployPlan  $deployPlan
      * @param Environment $environment
-     * @param string $tab
+     * @param string      $tab
      *
      * @return Response
      */
-    public function show(Project $project, Environment $environment, $tab = '')
+    public function show(DeployPlan $deployPlan, Environment $environment, $tab = '')
     {
-        $targetable_type = 'Fixhub\\Models\\Environment';
+        $project = $deployPlan->project;
 
         $optional = $project->commands->filter(function (Command $command) {
             return $command->optional;
@@ -49,9 +50,10 @@ class EnvironmentController extends Controller
             'title'           => $environment->name,
             'breadcrumb'      => $breadcrumb,
             'project'         => $project,
-            'targetable_type' => $targetable_type,
+            'deployPlan'      => $deployPlan,
+            'targetable_type' => get_class($environment),
             'targetable_id'   => $environment->id,
-            'environments'    => $project->environments,
+            'environments'    => $deployPlan->environments,
             'targetable'      => $environment,
             'branches'        => $project->branches(),
             'tags'            => $project->tags()->reverse(),
@@ -61,21 +63,21 @@ class EnvironmentController extends Controller
 
         $links = [
             [
-                'id' => EnvironmentLink::MANUAL,
+                'id'   => EnvironmentLink::MANUAL,
                 'name' => trans('environments.link_manual'),
             ],
             [
-                'id' => EnvironmentLink::AUTOMATIC,
+                'id'   => EnvironmentLink::AUTOMATIC,
                 'name' => trans('environments.link_auto'),
             ],
         ];
-        if ($tab == 'deployments') {
-            $data['deployments'] = $environment->deployments()->paginate(15);
-        } elseif ($tab == 'links') {
-            $data['links'] = $links;
+        if ($tab === 'deployments') {
+            $data['deployments'] = $environment->tasks()->paginate(15);
+        } elseif ($tab === 'links') {
+            $data['links']            = $links;
             $data['environmentLinks'] = $environment->oppositePivot;
         } else {
-            $data['servers'] = $environment->servers;
+            $data['servers']  = $environment->servers;
             $data['cabinets'] = $environment->cabinets->toJson();
         }
 
@@ -85,7 +87,7 @@ class EnvironmentController extends Controller
     /**
      * Store a newly created environment in storage.
      *
-     * @param  StoreEnvironmentRequest $request
+     * @param StoreEnvironmentRequest $request
      *
      * @return Response
      */
@@ -101,7 +103,7 @@ class EnvironmentController extends Controller
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $add_commands = false;
         if (isset($fields['add_commands'])) {
@@ -110,11 +112,6 @@ class EnvironmentController extends Controller
         }
 
         $target = $targetable_type::findOrFail($targetable_id);
-
-        // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
 
         $environment = $target->environments()->create($fields);
 
@@ -131,8 +128,8 @@ class EnvironmentController extends Controller
     /**
      * Update the specified environment in storage.
      *
-     * @param  Environment $environment
-     * @param  StoreEnvironmentRequest $request
+     * @param Environment             $environment
+     * @param StoreEnvironmentRequest $request
      *
      * @return Response
      */

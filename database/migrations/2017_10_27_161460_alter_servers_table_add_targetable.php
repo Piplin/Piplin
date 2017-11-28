@@ -1,9 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Illuminate\Database\Migrations\Migration;
-use Fixhub\Models\Server;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Piplin\Models\Server;
 
 class AlterServersTableAddTargetable extends Migration
 {
@@ -25,8 +34,8 @@ class AlterServersTableAddTargetable extends Migration
             $servers = Server::withTrashed()->get();
 
             foreach ($servers as $server) {
-                $server->targetable_id= $server->environment_id;
-                $server->targetable_type = 'Fixhub\\Models\\Environment';
+                $server->targetable_id = $server->environment_id;
+                $server->targetable_type = 'Piplin\\Models\\Environment';
                 $server->save();
             }
         });

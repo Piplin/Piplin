@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e47ebcc37dcd43163894bd6f59c978bf",
-    "content-hash": "dfc89d5936560dc3973645481f113695",
+    "hash": "4d4fba92d1b9945b775d19f9d3b1f982",
+    "content-hash": "6ade68e63615ebb62a08364547493164",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -656,16 +656,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.2",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c"
+                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/egulias/EmailValidator/bc31baa11ea2883e017f0a10d9722ef9d50eac1c.zip",
-                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "url": "https://files.phpcomposer.com/files/egulias/EmailValidator/1bec00a10039b823cc94eef4eddd47dcd3b2ca04.zip",
+                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04",
                 "shasum": ""
             },
             "require": {
@@ -674,8 +674,8 @@
             },
             "require-dev": {
                 "dominicsayers/isemail": "dev-master",
-                "phpunit/phpunit": "^4.8.0",
-                "satooshi/php-coveralls": "dev-master"
+                "phpunit/phpunit": "^4.8.35",
+                "satooshi/php-coveralls": "^1.0.1"
             },
             "suggest": {
                 "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
@@ -709,24 +709,27 @@
                 "validation",
                 "validator"
             ],
-            "time": "2017-01-30 22:07:36"
+            "time": "2017-11-15 23:40:40"
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.6.3",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "728952b90a333b5c6f77f06ea9422b94b585878d"
+                "reference": "fbe3fe878f4fe69048bb8a52783a09802004f548"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/erusev/parsedown/728952b90a333b5c6f77f06ea9422b94b585878d.zip",
-                "reference": "728952b90a333b5c6f77f06ea9422b94b585878d",
+                "url": "https://files.phpcomposer.com/files/erusev/parsedown/fbe3fe878f4fe69048bb8a52783a09802004f548.zip",
+                "reference": "fbe3fe878f4fe69048bb8a52783a09802004f548",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35"
             },
             "type": "library",
             "autoload": {
@@ -751,7 +754,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2017-05-14 14:47:48"
+            "time": "2017-11-14 20:44:03"
         },
         {
             "name": "fideloper/proxy",
@@ -1252,16 +1255,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.20",
+            "version": "v5.5.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ce0019d22a83b1b240330ea4115ae27a4d75d79c"
+                "reference": "6321069a75723d88103526903d3192f0b231544a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/laravel/framework/ce0019d22a83b1b240330ea4115ae27a4d75d79c.zip",
-                "reference": "ce0019d22a83b1b240330ea4115ae27a4d75d79c",
+                "url": "https://files.phpcomposer.com/files/laravel/framework/6321069a75723d88103526903d3192f0b231544a.zip",
+                "reference": "6321069a75723d88103526903d3192f0b231544a",
                 "shasum": ""
             },
             "require": {
@@ -1335,6 +1338,8 @@
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver and SES mail driver (~3.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.5).",
+                "ext-pcntl": "Required to use all features of the queue worker.",
+                "ext-posix": "Required to use all features of the queue worker.",
                 "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
                 "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers and the ping methods on schedules (~6.0).",
                 "laravel/tinker": "Required to use the tinker console command (~1.0).",
@@ -1379,7 +1384,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-11-07 14:24:50"
+            "time": "2017-11-14 15:08:13"
         },
         {
             "name": "laravel/socialite",
@@ -2457,16 +2462,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.14",
+            "version": "v0.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "91e53c16560bdb8b9592544bb38429ae00d6baee"
+                "reference": "b1d289c2cb03a2f8249912c53e96ced38f879926"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/bobthecow/psysh/91e53c16560bdb8b9592544bb38429ae00d6baee.zip",
-                "reference": "91e53c16560bdb8b9592544bb38429ae00d6baee",
+                "url": "https://files.phpcomposer.com/files/bobthecow/psysh/b1d289c2cb03a2f8249912c53e96ced38f879926.zip",
+                "reference": "b1d289c2cb03a2f8249912c53e96ced38f879926",
                 "shasum": ""
             },
             "require": {
@@ -2480,7 +2485,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~1.11",
                 "hoa/console": "~3.16|~1.14",
-                "phpunit/phpunit": "~4.4|~5.0",
+                "phpunit/phpunit": "^4.8.35|^5.4.3",
                 "symfony/finder": "~2.1|~3.0"
             },
             "suggest": {
@@ -2526,7 +2531,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-11-04 16:06:49"
+            "time": "2017-11-16 14:29:51"
         },
         {
             "name": "ramsey/uuid",
@@ -2804,16 +2809,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "099302cc53e57cbb7414fd9f3ace40e5e2767c0b"
+                "reference": "63cd7960a0a522c3537f6326706d7f3b8de65805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/console/099302cc53e57cbb7414fd9f3ace40e5e2767c0b.zip",
-                "reference": "099302cc53e57cbb7414fd9f3ace40e5e2767c0b",
+                "url": "https://files.phpcomposer.com/files/symfony/console/63cd7960a0a522c3537f6326706d7f3b8de65805.zip",
+                "reference": "63cd7960a0a522c3537f6326706d7f3b8de65805",
                 "shasum": ""
             },
             "require": {
@@ -2868,7 +2873,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-12 16:53:41"
+            "time": "2017-11-16 15:24:32"
         },
         {
             "name": "symfony/css-selector",
@@ -2925,7 +2930,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -2981,7 +2986,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3044,7 +3049,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -3093,7 +3098,7 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -3146,16 +3151,16 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "371ed63691c1ee8749613a6b48cf0e0cfa2b01e7"
+                "reference": "a2a942172b742217ab2ccd9399494af2aa17c766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/http-kernel/371ed63691c1ee8749613a6b48cf0e0cfa2b01e7.zip",
-                "reference": "371ed63691c1ee8749613a6b48cf0e0cfa2b01e7",
+                "url": "https://files.phpcomposer.com/files/symfony/http-kernel/a2a942172b742217ab2ccd9399494af2aa17c766.zip",
+                "reference": "a2a942172b742217ab2ccd9399494af2aa17c766",
                 "shasum": ""
             },
             "require": {
@@ -3228,7 +3233,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-13 19:37:21"
+            "time": "2017-11-16 18:14:43"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -3399,7 +3404,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -3448,7 +3453,7 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
@@ -3526,7 +3531,7 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -3591,7 +3596,7 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
@@ -3766,54 +3771,6 @@
                 "tymon"
             ],
             "time": "2017-06-07 21:32:02"
-        },
-        {
-            "name": "venturecraft/revisionable",
-            "version": "1.28.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/VentureCraft/revisionable.git",
-                "reference": "5a76d29b897d4864cef41c605e7e03258dd5d051"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/VentureCraft/revisionable/5a76d29b897d4864cef41c605e7e03258dd5d051.zip",
-                "reference": "5a76d29b897d4864cef41c605e7e03258dd5d051",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~4.0|~5.0|~5.1",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/migrations"
-                ],
-                "psr-0": {
-                    "Venturecraft\\Revisionable": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Duell",
-                    "email": "me@chrisduell.com"
-                }
-            ],
-            "description": "Keep a revision history for your models without thinking, created as a package for use with Laravel",
-            "homepage": "http://github.com/venturecraft/revisionable",
-            "keywords": [
-                "ardent",
-                "history",
-                "laravel",
-                "model",
-                "revision"
-            ],
-            "time": "2016-08-02 02:32:00"
         },
         {
             "name": "version/version",
@@ -4341,30 +4298,33 @@
         },
         {
             "name": "facebook/webdriver",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "eadb0b7a7c3e6578185197fd40158b08c3164c83"
+                "reference": "86b5ca2f67173c9d34340845dd690149c886a605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/facebook/php-webdriver/eadb0b7a7c3e6578185197fd40158b08c3164c83.zip",
-                "reference": "eadb0b7a7c3e6578185197fd40158b08c3164c83",
+                "url": "https://files.phpcomposer.com/files/facebook/php-webdriver/86b5ca2f67173c9d34340845dd690149c886a605.zip",
+                "reference": "86b5ca2f67173c9d34340845dd690149c886a605",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-zip": "*",
-                "php": "^5.5 || ~7.0",
-                "symfony/process": "^2.8 || ^3.1"
+                "php": "^5.6 || ~7.0",
+                "symfony/process": "^2.8 || ^3.1 || ^4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
+                "guzzle/guzzle": "^3.4.1",
+                "php-coveralls/php-coveralls": "^1.0.2",
                 "php-mock/php-mock-phpunit": "^1.1",
-                "phpunit/phpunit": "4.6.* || ~5.0",
-                "satooshi/php-coveralls": "^1.0",
-                "squizlabs/php_codesniffer": "^2.6"
+                "phpunit/phpunit": "^5.7",
+                "sebastian/environment": "^1.3.4 || ^2.0 || ^3.0",
+                "squizlabs/php_codesniffer": "^2.6",
+                "symfony/var-dumper": "^3.3 || ^4.0"
             },
             "type": "library",
             "extra": {
@@ -4389,20 +4349,20 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2017-04-28 14:54:49"
+            "time": "2017-11-15 11:08:09"
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.12",
+            "version": "2.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "a99f0b151846021ba7a73b4e3cba3ebc9f14f03e"
+                "reference": "9f640a4f129e57d3537887f840380109a4dd182b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/filp/whoops/a99f0b151846021ba7a73b4e3cba3ebc9f14f03e.zip",
-                "reference": "a99f0b151846021ba7a73b4e3cba3ebc9f14f03e",
+                "url": "https://files.phpcomposer.com/files/filp/whoops/9f640a4f129e57d3537887f840380109a4dd182b.zip",
+                "reference": "9f640a4f129e57d3537887f840380109a4dd182b",
                 "shasum": ""
             },
             "require": {
@@ -4411,7 +4371,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "^4.8 || ^5.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7",
                 "symfony/var-dumper": "^2.6 || ^3.0"
             },
             "suggest": {
@@ -4450,20 +4410,20 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2017-10-15 13:05:10"
+            "time": "2017-11-17 08:15:51"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.8.1",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "04f71e56e03ba2627e345e8c949c80dcef0e683e"
+                "reference": "b331701944cbe492e466d2b46b2880068803eb08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/FriendsOfPHP/PHP-CS-Fixer/04f71e56e03ba2627e345e8c949c80dcef0e683e.zip",
-                "reference": "04f71e56e03ba2627e345e8c949c80dcef0e683e",
+                "url": "https://files.phpcomposer.com/files/FriendsOfPHP/PHP-CS-Fixer/b331701944cbe492e466d2b46b2880068803eb08.zip",
+                "reference": "b331701944cbe492e466d2b46b2880068803eb08",
                 "shasum": ""
             },
             "require": {
@@ -4530,7 +4490,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2017-11-09 13:31:39"
+            "time": "2017-11-19 22:51:25"
         },
         {
             "name": "fzaninotto/faker",
@@ -6482,7 +6442,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -6539,7 +6499,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -6601,7 +6561,7 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
@@ -6727,7 +6687,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -6776,7 +6736,7 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -6944,7 +6904,7 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -6993,7 +6953,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",

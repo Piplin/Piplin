@@ -1,9 +1,0 @@
----
-- name: Install MySQL Server
-  apt: name=mysql-server={{mysql_version}}
-
-- name: Create database
-  mysql_db: name={{database_fixhub_name}}
-
-- name: Add MySQL user
-  mysql_user: name={{database_fixhub_user}} password={{database_fixhub_pwd}} priv={{database_fixhub_name}}.*:ALL,GRANT

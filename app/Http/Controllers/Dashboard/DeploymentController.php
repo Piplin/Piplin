@@ -1,225 +1,98 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreDeploymentRequest;
-use Fixhub\Bus\Jobs\AbortDeploymentJob;
-use Fixhub\Bus\Jobs\DeployDraftJob;
-use Fixhub\Bus\Jobs\CreateDeploymentJob;
-use Fixhub\Models\Command;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\Project;
-use Fixhub\Models\Environment;
-use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
+use Piplin\Bus\Jobs\SetupSkeletonJob;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProjectRequest;
+use Piplin\Models\Command;
+use Piplin\Models\DeployPlan;
+use Piplin\Models\Task;
+use Piplin\Models\Project;
 
 /**
- * The controller for showing the status of deployments.
+ * The controller of deploy plans.
  */
 class DeploymentController extends Controller
 {
     /**
-     * Show the deployment details.
+     * The details of an individual project.
      *
-     * @param Deployment $deployment
+     * @param DeployPlan $deployPlan
+     * @param string  $tab
      *
-     * @return Response
+     * @return View
      */
-    public function show(Deployment $deployment)
+    public function show(DeployPlan $deployPlan, $tab = '')
     {
-        $this->authorize('view', $deployment->project);
+        $project = $deployPlan->project;
 
-        $output = [];
-        $envLocks = [];
-        foreach ($deployment->steps as $step) {
-            foreach ($step->logs as $log) {
-                $log->cabinet = false;
-                $log->environment_name = null;
-                if ($log->server && $log->environment) {
-                    if (!$log->server->targetable instanceof Environment) {
-                        $log->cabinet = true;
-                    }
-
-                    if (!isset($envLocks[$step->id.'_'.$log->environment_id])) {
-                        $log->environment_name = $log->environment->name;
-                        $envLocks[$step->id.'_'.$log->environment_id] = true;
-                    }
-                }
-
-                $log->runtime = ($log->runtime() === false ?
-                        null : AutoPresenter::decorate($log)->readable_runtime);
-                $log->output  = ((is_null($log->output) || !strlen($log->output)) ? null : '');
-
-                $output[] = $log;
-            }
-        }
+        $optional = $deployPlan->commands->filter(function (Command $command) {
+            return $command->optional;
+        });
 
         $data = [
-            'title'      => trans('deployments.deployment_number', ['id' => $deployment->id]),
-            'deployment' => $deployment,
-            'output'     => json_encode($output), // PresentableInterface does not correctly json encode the models
+            'project'         => $project,
+            'deployPlan'      => $deployPlan,
+            'targetable_type' => get_class($deployPlan),
+            'targetable_id'   => $deployPlan->id,
+            'optional'        => $optional,
+            'tasks'           => $this->getLatest($deployPlan),
+            'releases'        => $project->releases,
+            'tags'            => $project->tags()->reverse(),
+            'branches'        => $project->branches(),
+            'tab'             => $tab,
+            'title'           => trans('tasks.label'),
+            'breadcrumb'      => [
+                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+                ['url' => route('deployments', ['id' => $deployPlan->id]), 'label' => trans('projects.deploy_plan')],
+            ],
         ];
 
-        $project = $deployment->project ?: null;
-        if ($project) {
-            $data['breadcrumb'] = [
-                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
-            ];
-            $data['project'] = $project;
-            $data['subtitle'] = '('.$deployment->short_commit . ' - ' . $deployment->branch.')';
+        $data['environments'] = $deployPlan->environments;
+        if ($tab === 'commands') {
+            $data['route']     = 'commands.step';
+            $data['variables'] = $deployPlan->variables;
+            $data['title']     = trans('commands.label');
+        } elseif ($tab === 'config-files') {
+            $data['configFiles'] = $deployPlan->configFiles;
+            $data['title']       = trans('configFiles.label');
+        } elseif ($tab === 'shared-files') {
+            $data['sharedFiles'] = $deployPlan->sharedFiles;
+            $data['title']       = trans('sharedFiles.tab_label');
+        } elseif ($tab === 'environments') {
+            $data['title'] = trans('environments.label');
         }
 
         return view('dashboard.deployments.show', $data);
     }
 
     /**
-     * Adds a deployment for the specified project to the queue.
+     * Gets the latest deployments for a project.
      *
-     * @param StoreDeploymentRequest $request
-     *
-     * @return Response
+     * @param  DeployPlan $deployPlan
+     * @param  int        $paginate
+     * @return array
      */
-    public function create(StoreDeploymentRequest $request)
+    private function getLatest(DeployPlan $deployPlan, $paginate = 15)
     {
-        $project = Project::findOrFail($request->get('project_id'));
-
-        $this->authorize('deploy', $project);
-
-        if ($project->environments->count() === 0) {
-            return [
-                'success' => false,
-            ];
-        }
-
-        $fields = [
-            'reason'         => $request->get('reason'),
-            'project_id'     => $project->id,
-            'environments'   => $request->get('environments'),
-            'branch'         => $project->branch,
-            'optional'       => [],
-        ];
-
-        // If allow other branches is set, check for post data
-        if ($project->allow_other_branch) {
-            if ($request->has('source') && $request->has('source_' . $request->get('source'))) {
-                $fields['branch'] = $request->get('source_' . $request->get('source'));
-
-                if ($request->get('source') == 'commit') {
-                    $fields['commit'] = $fields['branch'];
-                    $fields['branch'] = $project->branch;
-                }
-            }
-        }
-
-        // Get the optional commands and typecast to integers
-        if ($request->has('optional') && is_array($request->get('optional'))) {
-            $fields['optional'] = array_filter(array_map(function ($value) {
-                return filter_var($value, FILTER_VALIDATE_INT);
-            }, $request->get('optional')));
-        }
-        $fields['user_id'] = Auth::user()->id;
-
-        dispatch(new CreateDeploymentJob($project, $fields));
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    /**
-     * Loads a previous deployment and then creates a new deployment based on it.
-     *
-     * @param Request $request
-     * @param Deployment $previous
-     *
-     * @return Response
-     */
-    public function rollback(Request $request, Deployment $previous)
-    {
-        $this->authorize('deploy', $previous->project);
-
-        $optional = [];
-        // Get the optional commands and typecast to integers
-        if ($request->has('optional') && is_array($request->get('optional'))) {
-            $optional = array_filter(array_map(function ($value) {
-                return filter_var($value, FILTER_VALIDATE_INT);
-            }, $request->get('optional')));
-        }
-
-        $fields = [
-            'committer'       => $previous->committer,
-            'committer_email' => $previous->committer_email,
-            'commit'          => $previous->commit,
-            'project_id'      => $previous->project_id,
-            'branch'          => $previous->branch,
-            'reason'          => trans('deployments.rollback_reason', [
-                                    'reason'          => $request->get('reason'),
-                                    'id'              => $previous->id,
-                                    'commit'          => $previous->short_commit]),
-            'optional'        => $optional,
-            'environments'    => $previous->environments->pluck('id')->toArray(),
-        ];
-
-        $fields['user_id'] = Auth::user()->id;
-
-        dispatch(new CreateDeploymentJob($previous->project, $fields));
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    /**
-     * Execute the deployment from draft.
-     *
-     * @param Deployment $deployment
-     *
-     * @return Response
-     */
-    public function deployDraft(Deployment $deployment)
-    {
-        $this->authorize('deploy', $deployment->project);
-
-        if ($deployment->isDraft()) {
-            dispatch(new DeployDraftJob($deployment));
-        }
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    /**
-     * Abort a deployment.
-     *
-     * @param Deployment $deployment
-     *
-     * @return Response
-     */
-    public function abort(Deployment $deployment)
-    {
-        $this->authorize('deploy', $deployment->project);
-
-        if (!$deployment->isAborting()) {
-            $deployment->status = Deployment::ABORTING;
-            $deployment->save();
-
-            dispatch(new AbortDeploymentJob($deployment));
-        }
-
-        return redirect()->route('deployments', [
-            'id' => $deployment->id,
-        ]);
+        return Task::where('targetable_type', get_class($deployPlan))
+                           ->where('targetable_id', $deployPlan->id)
+                           ->with('user')
+                           ->whereNotNull('started_at')
+                           ->orderBy('started_at', 'DESC')
+                           ->paginate($paginate);
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\User;
+use Piplin\Models\User;
 
 class UserTest extends \Codeception\TestCase\Test
 {
@@ -30,9 +30,9 @@ class UserTest extends \Codeception\TestCase\Test
 
     public function testRegister()
     {
-        $name = 'phecho';
-        $email = 'phecho@fixhub.org';
-        $password ='password';
+        $name     = 'test';
+        $email    = 'test@piplin.com';
+        $password = 'password';
 
         User::create(['name' => $name, 'email' => $email, 'password' => $password]);
 
@@ -42,8 +42,8 @@ class UserTest extends \Codeception\TestCase\Test
     public function testIfModelReturnsAdminUserEmail()
     {
         // access model
-        $user = User::where('name', 'fixhub')->first();
+        $user = User::where('name', 'piplin')->first();
 
-        $this->assertEquals('fixhub@fixhub.org', $user->email);
+        $this->assertEquals('piplin@piplin.com', $user->email);
     }
 }

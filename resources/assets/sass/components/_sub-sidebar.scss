@@ -1,0 +1,12 @@
+.sub-sidebar {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    width: 18%; 
+    overflow: hidden;
+    margin-left: 100px;
+    background-color: $sub-sidebar-bg;
+    border-right: 1px solid $sub-sidebar-border-color; 
+    min-height: calc(100vh - 0px);
+}

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,6 +23,6 @@ return [
     'file'           => '路径',
     'warning'        => '保存失败，请检查相关表单信息.',
     'cache'          => '缓存目录',
-    'example'        => '目录路径, 例如： \'/app/storage/\' 或 \'/app/config/fixhub.php\'. 目录必须以斜线\'/\'结尾。',
+    'example'        => '目录路径, 例如： \'/app/storage/\' 或 \'/app/config/piplin.php\'. 目录必须以斜线\'/\'结尾。',
 
 ];

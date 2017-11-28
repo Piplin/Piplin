@@ -1,9 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Illuminate\Database\Migrations\Migration;
-use Fixhub\Models\Project;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Piplin\Models\Project;
 
 class AlterProjectsTableAddTargetable extends Migration
 {
@@ -24,8 +33,8 @@ class AlterProjectsTableAddTargetable extends Migration
             $projects = Project::withTrashed()->get();
 
             foreach ($projects as $project) {
-                $project->targetable_id= $project->group_id;
-                $project->targetable_type = 'Fixhub\\Models\\ProjectGroup';
+                $project->targetable_id = $project->group_id;
+                $project->targetable_type = 'Piplin\\Models\\ProjectGroup';
                 $project->save();
             }
         });

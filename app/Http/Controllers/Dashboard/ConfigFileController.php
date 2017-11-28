@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreConfigFileRequest;
-use Fixhub\Models\ConfigFile;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreConfigFileRequest;
+use Piplin\Models\ConfigFile;
 
 /**
  * Manage the config global file like some environment files.
@@ -39,14 +39,9 @@ class ConfigFileController extends Controller
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
-
-        // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
 
         $environments = null;
         if (isset($fields['environments'])) {
@@ -68,7 +63,7 @@ class ConfigFileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ConfigFile $config_file
+     * @param ConfigFile             $config_file
      * @param StoreConfigFileRequest $request
      *
      * @return Response

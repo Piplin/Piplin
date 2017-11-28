@@ -1,28 +1,27 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
-use Fixhub\Models\Traits\HasTargetable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Models\Traits\HasTargetable;
 
 /**
  * Server model.
  */
 class Server extends Model
 {
-    use SoftDeletes, BroadcastChanges, RevisionableTrait, HasTargetable;
+    use SoftDeletes, BroadcastChanges, HasTargetable;
 
     const SUCCESSFUL = 0;
     const UNTESTED   = 1;

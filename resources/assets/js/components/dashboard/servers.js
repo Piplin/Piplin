@@ -60,11 +60,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var server = Fixhub.Servers.get($('#model_id').val());
+        var server = Piplin.Servers.get($('#model_id').val());
 
         server.destroy({
             wait: true,
@@ -72,14 +72,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('servers.delete_success'));
+                Piplin.toast(trans('servers.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -91,16 +91,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var server_id = $('#server_id').val();
 
         if (server_id) {
-            var server = Fixhub.Servers.get(server_id);
+            var server = Piplin.Servers.get(server_id);
         } else {
-            var server = new Fixhub.Server();
+            var server = new Piplin.Server();
         }
 
         server.save({
@@ -117,16 +117,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('servers.edit_success');
                 if (!server_id) {
-                    Fixhub.Servers.add(response);
+                    Piplin.Servers.add(response);
                     msg = trans('servers.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -148,7 +148,7 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -156,12 +156,12 @@
     });
 
 
-    Fixhub.Server = Backbone.Model.extend({
+    Piplin.Server = Backbone.Model.extend({
         urlRoot: '/servers'
     });
 
     var Servers = Backbone.Collection.extend({
-        model: Fixhub.Server,
+        model: Piplin.Server,
         comparator: function(serverA, serverB) {
             if (serverA.get('name') > serverB.get('name')) {
                 return -1; // before
@@ -173,9 +173,9 @@
         }
     });
 
-    Fixhub.Servers = new Servers();
+    Piplin.Servers = new Servers();
 
-    Fixhub.ServersTab = Backbone.View.extend({
+    Piplin.ServersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -186,40 +186,40 @@
             $('#no_servers').show();
             $('#server_list').hide();
 
-            this.listenTo(Fixhub.Servers, 'add', this.addOne);
-            this.listenTo(Fixhub.Servers, 'reset', this.addAll);
-            this.listenTo(Fixhub.Servers, 'remove', this.addAll);
-            this.listenTo(Fixhub.Servers, 'all', this.render);
+            this.listenTo(Piplin.Servers, 'add', this.addOne);
+            this.listenTo(Piplin.Servers, 'reset', this.addAll);
+            this.listenTo(Piplin.Servers, 'remove', this.addAll);
+            this.listenTo(Piplin.Servers, 'all', this.render);
 
-            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var server = Fixhub.Servers.get(parseInt(data.model.id));
+            Piplin.listener.on('server:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var server = Piplin.Servers.get(parseInt(data.model.id));
 
                 if (server) {
                     // Fix me - targetable_type
-                    if(Fixhub.targetable_id == data.model.targetable_id) {
+                    if(Piplin.targetable_id == data.model.targetable_id) {
                         server.set(data.model);
                     } else {
-                        Fixhub.Servers.remove(server);
+                        Piplin.Servers.remove(server);
                     }
                 }
             });
 
-            Fixhub.listener.on('server:' + Fixhub.events.MODEL_CREATED, function (data) {
-                if (parseInt(data.model.targetable_id) === parseInt(Fixhub.targetable_id)) {
-                    Fixhub.Servers.add(data.model);
+            Piplin.listener.on('server:' + Piplin.events.MODEL_CREATED, function (data) {
+                if (parseInt(data.model.targetable_id) === parseInt(Piplin.targetable_id)) {
+                    Piplin.Servers.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('server:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var server = Fixhub.Servers.get(parseInt(data.model.id));
+            Piplin.listener.on('server:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var server = Piplin.Servers.get(parseInt(data.model.id));
 
                 if (server) {
-                    Fixhub.Servers.remove(server);
+                    Piplin.Servers.remove(server);
                 }
             });
         },
         render: function () {
-            if (Fixhub.Servers.length) {
+            if (Piplin.Servers.length) {
                 $('#no_servers').hide();
                 $('#server_list').show();
             } else {
@@ -229,13 +229,13 @@
         },
         addOne: function (server) {
 
-            var view = new Fixhub.ServerView({
+            var view = new Piplin.ServerView({
                 model: server
             });
 
             this.$list.append(view.render().el);
 
-            if (Fixhub.Servers.length < 2) {
+            if (Piplin.Servers.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -243,11 +243,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Servers.each(this.addOne, this);
+            Piplin.Servers.each(this.addOne, this);
         }
     });
 
-    Fixhub.ServerView = Backbone.View.extend({
+    Piplin.ServerView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-test': 'testConnection',
@@ -273,7 +273,7 @@
                 data.status     = trans('servers.successful');
             } else if (parseInt(this.model.get('status')) === TESTING) {
                 data.status_css = 'purple';
-                data.icon_css   = 'load fixhub-spin';
+                data.icon_css   = 'load piplin-spin';
                 data.status     = trans('servers.testing');
             } else if (parseInt(this.model.get('status')) === FAILED) {
                 data.status_css = 'danger';
@@ -288,7 +288,7 @@
             $('#server_id').val(this.model.id);
             $('#server_name').val(this.model.get('name'));
             $('#server_targetable_id')
-                .select2(Fixhub.select2_options)
+                .select2(Piplin.select2_options)
                 .val(this.model.get('targetable_id'))
                 .trigger('change');
             $('#server_enabled').prop('checked', (this.model.get('enabled') === true));

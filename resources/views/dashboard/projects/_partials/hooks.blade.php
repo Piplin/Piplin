@@ -6,7 +6,7 @@
         <h3 class="box-title">{{ trans('hooks.label') }}</h3>
         <div class="pull-right">
             @if($project->can('manage'))
-            <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="fixhub fixhub-plus"></span> {{ trans('hooks.create') }}</button>
+            <button type="button" class="btn btn-primary" title="{{ trans('hooks.create') }}" data-toggle="modal" data-target="#hook"><span class="piplin piplin-plus"></span> {{ trans('hooks.create') }}</button>
             @endif
         </div>
     </div>
@@ -37,15 +37,15 @@
 @push('templates')
     <script type="text/template" id="hook-template">
         <td><%- name %></td>
-        <td><i class="fixhub fixhub-<%- icon %>"></i> <%- label %></td>
+        <td><i class="piplin piplin-<%- icon %>"></i> <%- label %></td>
         <td><% if (enabled) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td class="text-center"><% if (on_deployment_success) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
-        <td class="text-center"><% if (on_deployment_failure) { %><i class="fixhub fixhub-checkbox"></i><% } else { %> <i class="fixhub fixhub-checkbox-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_deployment_success) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_deployment_failure) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
         <td>
             <div class="btn-group pull-right">
                 @if($project->can('manage'))
-                <button type="button" class="btn btn-default btn-edit" title="{{ trans('hooks.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#hook"><i class="fixhub fixhub-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('hooks.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+                <button type="button" class="btn btn-default btn-edit" title="{{ trans('hooks.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#hook"><i class="piplin piplin-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-delete" title="{{ trans('hooks.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
                 @endif
             </div>
         </td>

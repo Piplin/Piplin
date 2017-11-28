@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,8 +21,8 @@ return [
     'key'               => 'SSH Key',
     'repository'        => 'Repository',
     'repository_path'   => 'Repository URL',
-    'deploy_path'       => 'Deploy Path',
-    'deploy_path_help'  => 'When you deploy, Fixhub will create a <code>releases</code> directory within this path. A <code>current</code> symlink will also be created that links to each new release.</p><p>So, if your project path is <code>/data/www/app</code>, your web server\'s root probably should be set to <code>/data/www/app/current/public</code>.',
+    'deploy_path'       => 'Project Path',
+    'deploy_path_help'  => 'When you deploy, Piplin will create a <code>releases</code> directory within this path. A <code>current</code> symlink will also be created that links to each new release.</p><p>So, if your project path is <code>/data/www/app</code>, your web server\'s root probably should be set to <code>/data/www/app/current/public</code>.',
     'builds'            => 'Builds to Keep',
     'build_options'     => 'Build options',
     'clone'             => 'Clone',
@@ -49,25 +49,28 @@ return [
     'settings'          => 'Settings',
     'url'               => 'URL',
     'details'           => 'Project Details',
-    'deployments'       => 'Deployments',
+    'tasks'             => 'Tasks',
     'today'             => 'Today',
     'last_week'         => 'Last Week',
-    'latest_duration'   => 'Latest Duration',
+    'total_count'       => 'Total',
     'health'            => 'Health Check',
-    'deploy_status'     => 'Deploy Status',
+    'task_status'       => 'Task Status',
     'build_status'      => 'Build Status',
     'deploy_project'    => 'Deploy the project',
     'deploy'            => 'Deploy',
+    'deploy_plan'       => 'Deploy Plan',
+    'build_plan'        => 'Build Plan',
     'rollback'          => 'Rollback',
     'finished'          => 'Finished',
     'pending'           => 'Pending',
-    'deploying'         => 'Deploying',
+    'running'           => 'Running',
     'failed'            => 'Failed',
     'not_deployed'      => 'Unknown',
     'options'           => 'Options',
-    'change_branch'     => 'Allow other branches to be deployed?',
-    'insecure'          => 'Your Fixhub installation is not running over a secure connection, it is recommended ' .
-                           'that you let Fixhub generate an SSH key rather than supply one yourself so that the ' .
+    'change_branch'     => 'Allow other branches to be runned?',
+    'insecure'          => 'Your Piplin installation is not running over a secure connection, it is recommended ' .
+                           'that you let Piplin generate an SSH key rather than supply one yourself so that the ' .
                            'private key is not transmitted over an insecure connection.',
+    'history'           => 'Recent history',
 
 ];

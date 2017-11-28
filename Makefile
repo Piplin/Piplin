@@ -44,17 +44,17 @@ cache-config:
 ifeq "$(DB)" "sqlite"
 travis:
 	@sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
-	@sed -i 's/DB_DATABASE=fixhub//g' .env
+	@sed -i 's/DB_DATABASE=piplin//g' .env
 	@sed -i 's/DB_USERNAME=travis//g' .env
 	@touch $(TRAVIS_BUILD_DIR)/database/database.sqlite
 else ifeq "$(DB)" "pgsql"
 travis:
 	@sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=pgsql/g' .env
-	@sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=postgres/g' .env
-	@psql -c 'CREATE DATABASE fixhub;' -U postgres;
+	@sed -i 's/DB_USERNAME=piplin/DB_USERNAME=postgres/g' .env
+	@psql -c 'CREATE DATABASE piplin;' -U postgres;
 else
 travis:
-	@sed -i 's/DB_USERNAME=fixhub/DB_USERNAME=travis/g' .env
+	@sed -i 's/DB_USERNAME=piplin/DB_USERNAME=travis/g' .env
 	@sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=/g' .env
-	@mysql -e 'CREATE DATABASE fixhub;'
+	@mysql -e 'CREATE DATABASE piplin;'
 endif

@@ -17,7 +17,7 @@
             title = trans('links.edit');
             $('.btn-danger', modal).show();
             $('.link-environment').prop('checked', false);
-            Fixhub.EnvironmentLinks.each(function (environment){
+            Piplin.EnvironmentLinks.each(function (environment){
                 $('#link_opposite_environment_' + environment.id).prop('checked', true);
             });
         } else {
@@ -33,12 +33,12 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
 
-        var environment_link = new Fixhub.EnvironmentLink();
+        var environment_link = new Piplin.EnvironmentLink();
 
         var environment_ids = [];
 
@@ -62,13 +62,13 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.EnvironmentLinks.reset(response);
+                Piplin.EnvironmentLinks.reset(response);
 
-                //Fixhub.EnvironmentLinks.add(response);
+                //Piplin.EnvironmentLinks.add(response);
 
                 /*
                 var str = [];
@@ -78,13 +78,13 @@
 
                 $('.opposite-environments').fadeIn(interval).html(str.join(','));
                 */
-                //Fixhub.EnvironmentLinks.reset();
-                //Fixhub.EnvironmentLinks.add(response);
+                //Piplin.EnvironmentLinks.reset();
+                //Piplin.EnvironmentLinks.add(response);
 
-                Fixhub.toast(trans('environments.link_success'));
+                Piplin.toast(trans('environments.link_success'));
             },
             error: function(model, response, options) {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -92,17 +92,17 @@
 
     });
 
-    Fixhub.EnvironmentLink = Backbone.Model.extend({
+    Piplin.EnvironmentLink = Backbone.Model.extend({
         urlRoot: '/environment-links'
     });
 
     var EnvironmentLinks = Backbone.Collection.extend({
-        model: Fixhub.EnvironmentLink
+        model: Piplin.EnvironmentLink
     });
 
-    Fixhub.EnvironmentLinks = new EnvironmentLinks();
+    Piplin.EnvironmentLinks = new EnvironmentLinks();
 
-    Fixhub.EnvironmentLinksTab = Backbone.View.extend({
+    Piplin.EnvironmentLinksTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -113,13 +113,13 @@
             $('#no_links').show();
             $('#link_list').hide();
 
-            this.listenTo(Fixhub.EnvironmentLinks, 'add', this.addOne);
-            this.listenTo(Fixhub.EnvironmentLinks, 'reset', this.addAll);
-            this.listenTo(Fixhub.EnvironmentLinks, 'remove', this.addAll);
-            this.listenTo(Fixhub.EnvironmentLinks, 'all', this.render);
+            this.listenTo(Piplin.EnvironmentLinks, 'add', this.addOne);
+            this.listenTo(Piplin.EnvironmentLinks, 'reset', this.addAll);
+            this.listenTo(Piplin.EnvironmentLinks, 'remove', this.addAll);
+            this.listenTo(Piplin.EnvironmentLinks, 'all', this.render);
         },
         render: function () {
-            if (Fixhub.EnvironmentLinks.length) {
+            if (Piplin.EnvironmentLinks.length) {
                 $('#no_links').hide();
                 $('#link_list').show();
             } else {
@@ -129,7 +129,7 @@
         },
         addOne: function (link) {
 
-            var view = new Fixhub.EnvironmentLinkView({
+            var view = new Piplin.EnvironmentLinkView({
                 model: link
             });
 
@@ -137,11 +137,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.EnvironmentLinks.each(this.addOne, this);
+            Piplin.EnvironmentLinks.each(this.addOne, this);
         }
     });
 
-    Fixhub.EnvironmentLinkView = Backbone.View.extend({
+    Piplin.EnvironmentLinkView = Backbone.View.extend({
         tagName:  'tr',
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);

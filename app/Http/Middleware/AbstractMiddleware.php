@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Middleware;
+namespace Piplin\Http\Middleware;
 
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 abstract class AbstractMiddleware
 {
     /**
-     * @param Request $request
+     * @param  Request $request
      * @return mixed
      */
     protected function unauthorized(Request $request)
@@ -32,7 +32,7 @@ abstract class AbstractMiddleware
     }
 
     /**
-     * @param Request $request
+     * @param  Request $request
      * @return mixed
      */
     protected function login(Request $request)
@@ -40,11 +40,12 @@ abstract class AbstractMiddleware
         if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
         }
+
         return redirect()->guest(route('auth.login'));
     }
 
     /**
-     * @param Request $request
+     * @param  Request                           $request
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function redirect(Request $request)

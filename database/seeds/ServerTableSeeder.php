@@ -1,16 +1,16 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Server;
 use Illuminate\Database\Seeder;
+use Piplin\Models\Server;
 
 class ServerTableSeeder extends Seeder
 {
@@ -21,8 +21,8 @@ class ServerTableSeeder extends Seeder
         Server::create([
             'name'            => 'Web服务器',
             'ip_address'      => '127.0.0.1',
-            'user'            => 'fixhub',
-            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'user'            => 'piplin',
+            'targetable_type' => 'Piplin\\Models\\Environment',
             'targetable_id'   => 1,
             'enabled'         => true,
         ]);
@@ -30,8 +30,8 @@ class ServerTableSeeder extends Seeder
         Server::create([
             'name'            => 'API服务器',
             'ip_address'      => '192.168.75.20',
-            'user'            => 'fixhub',
-            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'user'            => 'piplin',
+            'targetable_type' => 'Piplin\\Models\\Environment',
             'targetable_id'   => 2,
             'enabled'         => true,
         ]);
@@ -39,8 +39,8 @@ class ServerTableSeeder extends Seeder
         Server::create([
             'name'            => '数据库服务器',
             'ip_address'      => '192.168.75.21',
-            'user'            => 'fixhub',
-            'targetable_type' => 'Fixhub\\Models\\Environment',
+            'user'            => 'piplin',
+            'targetable_type' => 'Piplin\\Models\\Environment',
             'targetable_id'   => 2,
             'enabled'         => false,
         ]);
@@ -48,8 +48,8 @@ class ServerTableSeeder extends Seeder
         Server::create([
             'name'            => '数据库服务器',
             'ip_address'      => 'localhost',
-            'user'            => 'fixhub',
-            'targetable_type' => 'Fixhub\\Models\\Cabinet',
+            'user'            => 'piplin',
+            'targetable_type' => 'Piplin\\Models\\Cabinet',
             'targetable_id'   => 1,
             'enabled'         => true,
         ]);

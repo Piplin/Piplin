@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Console\Command;
-use Fixhub\Bus\Events\RestartSocketServerEvent;
+use Illuminate\Contracts\Events\Dispatcher;
+use Piplin\Bus\Events\RestartSocketServerEvent;
 
 /**
  * A console command for clearing all data and setting up again.
@@ -70,8 +70,8 @@ class ResetApp extends Command
     }
 
     /**
-    * Resets the database.
-    */
+     * Resets the database.
+     */
     protected function resetDatabase()
     {
         $this->callSilent('migrate', ['--force' => true]);
@@ -126,7 +126,7 @@ class ResetApp extends Command
     {
         if (config('app.env') !== 'local') {
             $this->block([
-                'Fixhub is not in development mode!',
+                'Piplin is not in development mode!',
                 PHP_EOL,
                 'This command does not run in production as its purpose is to wipe your database',
             ]);
