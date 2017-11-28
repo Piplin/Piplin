@@ -45,7 +45,7 @@
                 <div>{{ $current_user->nickname ?: $current_user->name }}</div>
             </a>
             </div>
-            <a href="{{ route('auth.logout') }}" class="dropdown-toggle">
+            <a href="{{ route('auth.logout') }}" class="small">
                 <i class="piplin piplin-logout"></i> {{ trans('app.signout') }}
             </a>
         </div>
