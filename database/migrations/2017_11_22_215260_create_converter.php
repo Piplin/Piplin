@@ -83,7 +83,7 @@ class CreateConverter extends Migration
                     continue;
                 }
                 if (!$project->deployPlan) {
-                    $deployPlan = DeployPlan::create([
+                    $project->deployPlan = DeployPlan::create([
                         'name'       => $project->name,
                         'project_id' => $project->id,
                     ]);
