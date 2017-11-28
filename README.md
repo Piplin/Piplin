@@ -4,23 +4,22 @@
 [![Build Status](https://travis-ci.org/Piplin/Piplin.svg?branch=master)](https://travis-ci.org/Piplin/Piplin)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Piplin 是一款免费、开源的持续集成工具，适用于软件的自动化构建、测试和部署相关的各种应用场景。
+Piplin 是一款免费、开源的持续集成系统，适用于软件的自动化构建、测试和部署相关的各种应用场景。
 
 ![Screenshot](http://www.piplin.com/piplin.png)
 
 ## Piplin能做什么？
 
-* 支持PHP、Python、JAVA、Ruby等项目的发布
-* 通过SSH将程序部署到多台服务器上
-* 直接从Git仓库克隆项目代码并进行打包、安装
-* 可灵活配置自定义部署步骤
+* 支持PHP、Python、JAVA、Ruby等项目的构建、测试与发布
+* 可与Gitlab、Github、Gogs、Gitee(Oschina)等代码托管平台进行集成
+* 可灵活配置自定义构建和部署步骤
+* 支持自定义构建物规则，对构建物创建发布版本并部署
 * 支持项目的多环境部署(可自行建立开发、测试、预发布和生产等多个环境)
 * 支持联动部署，比如：开发环境部署成功后可自动触发测试环境启动部署
 * 服务管理支持机柜功能，机柜可与多个部署环境绑定
 * 支持项目克隆与模板功能
-* 支持项目成员，项目可添加个多个成员
+* 项目支持多成员
 * 通过Websocket实现项目部署状态的实时跟踪
-* 支持Gitlab、Github、Gogs、Gitee(Oschina)等代码托管平台进行集成
 * 支持钉钉机器人、Slack、邮件和自定义Webhook的服务集成
 
 ## 安装环境要求
@@ -46,7 +45,7 @@ Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 一. 克隆代码
 
 ```shell
-$ git clone https://github.com/piplin/piplin.git
+$ git clone https://github.com/Piplin/Piplin.git piplin
 ```
 
 二. 安装依赖包
@@ -69,13 +68,7 @@ $ npm install --production
 $ make file-permission
 ```
 
-五. 拷贝.env.example到.env
-
-```shell
-$ cp .env.example .env
-```
-
-六. 安装Piplin
+五. 安装Piplin
 
 ```shell
 $ php artisan app:install
@@ -83,21 +76,19 @@ $ php artisan app:install
 
 > Piplin安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
-七. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+六. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
 > 注意: `examples/` 提供的仅仅是范例，并不能保证直接拷贝就能使用，需要根据实际情况进行相关配置调整。
 
-八. 后台进程管理
+七. 后台进程管理
 
 配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)，根据实际情况进行相关配置调整。
 
 计划任务相关的设置请看 [examples/crontab](examples/crontab).
 
-九. 访问Piplin
+八. 访问Piplin
 
 恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
-
-我有Piplin，你有故事吗？请开始你的表演。
 
 
 ### 升级
