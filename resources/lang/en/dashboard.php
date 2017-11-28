@@ -25,7 +25,7 @@ return [
     'projects'          => 'Projects',
     'tasks'             => 'Tasks',
     'activities'        => 'Activities',
-    'notifications'     => 'Notice',
+    'notifications'     => 'Notifications',
     'no_projects'       => 'You have not yet setup any projects',
     'no_tasks'          => 'There have not been any tasks yet.',
     'status'            => 'Status',
