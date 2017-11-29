@@ -263,7 +263,9 @@
             $('#project_targetable_id').select2(Piplin.select2_options)
                                     .val(this.model.get('targetable_id'))
                                     .trigger('change');
-            $('#project_key_id').val(this.model.get('key_id'));
+            $('#project_key_id').select2(Piplin.select2_options)
+                                    .val(this.model.get('key_id'))
+                                    .trigger('change');
             $('#project_deploy_path').val(this.model.get('deploy_path'));
             $('#project_builds_to_keep').val(this.model.get('builds_to_keep'));
             $('#project_url').val(this.model.get('url'));

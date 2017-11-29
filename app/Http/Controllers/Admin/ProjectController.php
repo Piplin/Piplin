@@ -163,6 +163,7 @@ class ProjectController extends Controller
             'repository',
             'branch',
             'targetable_id',
+            'key_id',
             'deploy_path',
             'builds_to_keep',
             'url',
