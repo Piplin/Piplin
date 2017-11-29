@@ -43,6 +43,7 @@ class BuildController extends Controller
             'branches'        => $project->branches(),
             'environments'    => [],
             'optional'        => [],
+            'releases'        => [],
             'tasks'           => $this->getLatest($buildPlan),
             'tab'             => $tab,
             'servers'         => $buildPlan->servers,
