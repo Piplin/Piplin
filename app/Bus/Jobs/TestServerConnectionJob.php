@@ -72,7 +72,6 @@ class TestServerConnectionJob extends Job implements ShouldQueue
             $this->server->status = Server::SUCCESSFUL;
             $this->server->output = null;
             $this->server->save();
-
             return;
         }
 
