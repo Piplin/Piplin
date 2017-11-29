@@ -72,7 +72,7 @@ class EnvironmentController extends Controller
             ],
         ];
         if ($tab === 'deployments') {
-            $data['deployments'] = $environment->tasks()->paginate(15);
+            $data['tasks'] = $environment->tasks()->paginate(15);
         } elseif ($tab === 'links') {
             $data['links']            = $links;
             $data['environmentLinks'] = $environment->oppositePivot;
