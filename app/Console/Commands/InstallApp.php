@@ -524,13 +524,13 @@ class InstallApp extends Command
      */
     private function verifyDatabaseDetails(array $database)
     {
-        if ($database['type'] === 'sqlite') {
+        if ($database['connection'] === 'sqlite') {
             return touch(database_path('database.sqlite'));
         }
 
         try {
             $connection = new PDO(
-                $database['type'] . ':host=' . $database['host'] . ';dbname=' . $database['database'],
+                $database['connection'] . ':host=' . $database['host'] . ';dbname=' . $database['database'],
                 $database['username'],
                 $database['password'],
                 [
