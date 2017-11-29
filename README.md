@@ -23,6 +23,10 @@ Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪn/ 或 /ˈpaɪpˌlaɪn/)是
 * 通过Websocket实现项目部署状态的实时跟踪
 * 支持钉钉机器人、Slack、邮件和自定义Webhook的服务集成
 
+## Piplin原理示意图
+
+![Principle](http://www.piplin.com/img/principle.png)
+
 ## 安装环境要求
 
 Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为了能运行Piplin，您还需要安装一些基础软件。
@@ -52,6 +56,7 @@ $ git clone https://github.com/Piplin/Piplin.git piplin
 二. 安装依赖包
 
 ```shell
+$ cd piplin
 $ composer install -o --no-dev
 ```
 
