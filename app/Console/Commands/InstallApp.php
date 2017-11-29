@@ -293,7 +293,7 @@ class InstallApp extends Command
             // Should we just skip this step if only one driver is available?
             $type = $this->choice('Database Driver', $drivers, (int) array_search('mysql', $drivers, true));
 
-            $database['type'] = $type;
+            $database['connection'] = $type;
 
             Config::set('database.default', $type);
 
