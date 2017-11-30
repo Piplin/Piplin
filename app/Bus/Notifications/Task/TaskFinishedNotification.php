@@ -69,7 +69,7 @@ abstract class TaskFinishedNotification extends Notification
             trans('hooks.last_commit')     => $this->task->short_commit,
         ];
 
-        $action = route('tasks', ['id' => $this->task->id]);
+        $action = route('tasks.show', ['id' => $this->task->id]);
 
         $email = (new MailMessage())
             ->view(['notifications.email', 'notifications.email-plain'], [
@@ -121,7 +121,7 @@ abstract class TaskFinishedNotification extends Notification
                 $attachment
                     ->content(sprintf($message, sprintf(
                         '<%s|#%u>',
-                        route('tasks', ['id' => $this->task->id]),
+                        route('tasks.show', ['id' => $this->task->id]),
                         $this->task->id
                     )))
                     ->fallback(sprintf($message, '#' . $this->task->id))
@@ -148,7 +148,7 @@ abstract class TaskFinishedNotification extends Notification
             $this->task->short_commit,
             $this->task->commit_url
         ) : $this->task->short_commit;
-        $task_url = route('tasks', ['id' => $this->task->id]);
+        $task_url = route('tasks.show', ['id' => $this->task->id]);
 
         $content = trans('hooks.project') . ': ' . sprintf(
             '[%s](%s)',
@@ -202,7 +202,7 @@ abstract class TaskFinishedNotification extends Notification
                 'committed_by' => $this->task->committer,
                 'started_by'   => $this->task->author_name,
                 'status'       => ($event === 'task_succeeded') ? 'success' : 'failure',
-                'url'          => route('tasks', ['id' => $this->task->id]),
+                'url'          => route('tasks.show', ['id' => $this->task->id]),
             ]))
             ->header('X-Piplin-Project-Id', $notification->project_id)
             ->header('X-Piplin-Notification-Id', $notification->id)
