@@ -44,6 +44,7 @@ return [
     'release_path'         => 'The full release path',
     'branch'               => 'The branch being deployed',
     'project_path'         => 'The project path',
+    'environment'          => 'The environment name',
     'after'                => 'After',
     'configure'            => 'Configure',
     'clone'                => 'Clone New Release',

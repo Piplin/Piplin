@@ -43,6 +43,7 @@ return [
     'release_path'         => '发布路径',
     'branch'               => '部署分支',
     'project_path'         => '项目路径',
+    'environment'          => '部署环境名称',
     'after'                => '后置',
     'configure'            => '配置',
     'clone'                => '创建新版本',

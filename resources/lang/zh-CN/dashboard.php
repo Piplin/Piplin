@@ -12,11 +12,11 @@
 return [
 
     'title'             => '控制面板',
-    'stats'             => '上线统计',
-    'latest'            => '最近上线|最近上线',
-    'pending'           => '等待上线: :count 个|等待上线: :count 个',
-    'pending_empty'     => '没有等待上线的任务',
-    'running'           => '正在上线: :count 个|正在上线: :count 个',
+    'stats'             => '部署统计',
+    'latest'            => '最近部署|最近部署',
+    'pending'           => '等待部署: :count 个|等待部署: :count 个',
+    'pending_empty'     => '没有等待部署的任务',
+    'running'           => '正在部署: :count 个|正在部署: :count 个',
     'running_empty'     => '当前没有正在运行的任务',
     'approving'         => '正在审核: :count 个|正在审核: :count 个',
     'approving_empty'   => '没有正在审核的任务',
@@ -30,7 +30,7 @@ return [
     'no_tasks'          => '还没有执行过任务。',
     'status'            => '状态',
     'site'              => '查看站点',
-    'view'              => '查看上线详情',
+    'view'              => '查看部署详情',
     'started'           => '启动于',
 
 ];

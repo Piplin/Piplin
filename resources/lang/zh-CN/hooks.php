@@ -58,12 +58,12 @@ return [
     'commit'                           => '代码版本号',
     'committer'                        => '代码提交者',
     'deployment_reason'                => '部署原因 - :reason',
-    'deployment_success_slack_message' => ':white_check_mark: 上线任务 %s 部署成功! :smile:',
-    'deployment_failed_slack_message'  => ':x: 上线任务 %s 部署失败! :cry:',
+    'deployment_success_slack_message' => ':white_check_mark: 部署任务 %s 执行成功! :smile:',
+    'deployment_failed_slack_message'  => ':x: 部署任务 %s 执行失败! :cry:',
 
     // Dingtalk
-    'deployment_success_ding_message' => '上线任务 %s 部署成功!',
-    'deployment_failed_ding_message'  => '上线任务 %s 部署失败!',
+    'deployment_success_ding_message' => '部署任务 %s 执行成功!',
+    'deployment_failed_ding_message'  => '部署任务 %s 执行失败!',
     'at_mobiles'                      => '被@人的手机号',
     'is_at_all'                       => '@所有人',
 
