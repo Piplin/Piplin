@@ -27,7 +27,7 @@
         "cropper": "~2.3.0",
         "cross-env": "^5.0.5",
         "ionicons": "~2.0.1",
-        "jquery": "~3.1.1",
+        "jquery": "~2.2.4",
         "jquery-sortable": "~0.9.13",
         "laravel-mix": "^1.5",
         "livestamp": "git+https://github.com/mattbradley/livestampjs.git#develop",
