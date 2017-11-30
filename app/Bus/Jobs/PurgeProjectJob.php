@@ -58,6 +58,14 @@ class PurgeProjectJob extends Job implements ShouldQueue
         $this->project->hooks()->forceDelete();
         $this->project->members()->detach();
 
+        if ($this->project->deployPlan) {
+            $this->project->deployPlan->forceDelete();
+        }
+
+        if ($this->project->buildPlan) {
+            $this->project->buildPlan->forceDelete();
+        }
+
         foreach ($this->project->commands as $command) {
             $command->environments()->detach();
         }

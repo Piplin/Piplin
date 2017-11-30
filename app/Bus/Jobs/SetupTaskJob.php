@@ -13,7 +13,6 @@ namespace Piplin\Bus\Jobs;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Piplin\Bus\Jobs\DeployProjectJob;
 use Piplin\Models\Command as Stage;
 use Piplin\Models\Task;
 use Piplin\Models\TaskStep;
@@ -126,7 +125,7 @@ class SetupTaskJob extends Job
         }
 
         if (!$this->task->isDraft()) {
-            $this->dispatch(new DeployProjectJob($this->task));
+            $this->dispatch(new RunTaskJob($this->task));
         }
     }
 

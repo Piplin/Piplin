@@ -38,9 +38,9 @@ use Piplin\Models\User;
 use Piplin\Services\Scripts\Runner as Process;
 
 /**
- * Deploys an actual project.
+ * Run an actual task.
  */
-class DeployProjectJob extends Job implements ShouldQueue
+class RunTaskJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
@@ -83,8 +83,8 @@ class DeployProjectJob extends Job implements ShouldQueue
     /**
      * Overwrite the queue method to push to a different queue.
      *
-     * @param Queue            $queue
-     * @param DeployProjectJob $command
+     * @param Queue      $queue
+     * @param RunTaskJob $command
      */
     public function queue(Queue $queue, $command)
     {

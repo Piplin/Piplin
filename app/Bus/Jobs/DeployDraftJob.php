@@ -12,7 +12,6 @@
 namespace Piplin\Bus\Jobs;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Piplin\Bus\Jobs\DeployProjectJob;
 use Piplin\Models\Task;
 
 /**
@@ -55,6 +54,6 @@ class DeployDraftJob extends Job
         $this->deployment->status = Task::PENDING;
         $this->deployment->save();
 
-        $this->dispatch(new DeployProjectJob($this->deployment));
+        $this->dispatch(new RunTaskJob($this->deployment));
     }
 }
