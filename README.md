@@ -88,7 +88,35 @@ $ php artisan app:install
 
 七. 后台进程管理
 
-配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)，根据实际情况进行相关配置调整。
+配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)。
+
+假设supervisord主配置文件在 `/etc/supervisor/supervisord.conf` ，内容如下：
+
+```
+[unix_http_server]
+file=/var/run/supervisor.sock   ; (the path to the socket file)
+chmod=0700                       ; sockef file mode (default 0700)
+
+......
+
+[include]
+files = /etc/supervisor/conf.d/*.conf
+```
+
+1). 拷贝 examples/supervisor.conf
+
+```shell
+$ cp examples/supervisor.conf /etc//etc/supervisor/conf.d/piplin.conf
+$ vi /etc/supervisor/conf.d/piplin.conf
+```
+
+> 请根据实际情况修改相关参数设置，尤其关注路径相关的参数。
+
+2). 重启supervisord
+
+```shell
+/etc/init.d/supervisord restart 或 service supervisord restart
+```
 
 计划任务相关的设置请看 [examples/crontab](examples/crontab).
 
