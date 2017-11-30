@@ -106,11 +106,11 @@ files = /etc/supervisor/conf.d/*.conf
 1). 拷贝 examples/supervisor.conf
 
 ```shell
-$ cp examples/supervisor.conf /etc//etc/supervisor/conf.d/piplin.conf
+$ cp examples/supervisor.conf /etc/supervisor/conf.d/piplin.conf
 $ vi /etc/supervisor/conf.d/piplin.conf
 ```
 
-> 请根据实际情况修改相关参数设置，尤其关注路径相关的参数。
+> 请根据实际情况修改相关参数设置，尤其注意路径相关的参数。
 
 2). 重启supervisord
 
@@ -118,11 +118,11 @@ $ vi /etc/supervisor/conf.d/piplin.conf
 /etc/init.d/supervisord restart 或 service supervisord restart
 ```
 
-计划任务相关的设置请看 [examples/crontab](examples/crontab).
-
 八. 访问Piplin
 
 恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
+
+> 计划任务相关的设置请看 [examples/crontab](examples/crontab).
 
 
 ### 升级
