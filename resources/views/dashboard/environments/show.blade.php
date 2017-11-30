@@ -30,8 +30,6 @@
     @elseif($tab == 'links')
         @include('dashboard.environments._dialogs.link')
     @endif
-    @include('dashboard.projects._dialogs.public_key')
-    @include('dashboard.projects._dialogs.task')
     @include('dashboard.projects._dialogs.rollback')
 @stop
 
