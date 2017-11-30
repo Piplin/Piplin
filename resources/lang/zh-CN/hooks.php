@@ -70,7 +70,7 @@ return [
     // Email
     'project_name'                     => '项目名称',
     'deployed_branch'                  => '部署分支',
-    'deployment_details'               => '部署详情',
+    'task_details'                     => '部署详情',
     'project_details'                  => '项目详情',
     'started_at'                       => '开始时间',
     'finished_at'                      => '完成时间',

@@ -70,7 +70,7 @@ return [
     // Email
     'project_name'                     => 'Project name',
     'deployed_branch'                  => 'Deployed branch',
-    'deployment_details'               => 'View the deployment',
+    'task_details'                     => 'View the task',
     'project_details'                  => 'View the project',
     'started_at'                       => 'Started at',
     'finished_at'                      => 'Finished at',
@@ -78,7 +78,7 @@ return [
     'last_commit'                      => 'Last commit',
     'reason'                           => 'Task reason - :reason',
     'deployment_success_email_subject' => 'Task Finished',
-    'deployment_success_email_message' => 'The deployment was successful',
+    'deployment_success_email_message' => 'The task was successful',
     'deployment_failed_email_subject'  => 'Task Failed',
-    'deployment_failed_email_message'  => 'The deployment has failed',
+    'deployment_failed_email_message'  => 'The task has failed',
 ];
