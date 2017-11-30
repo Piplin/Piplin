@@ -34,7 +34,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::orderBy('name')
+        $projects = Project::orderBy('id', 'desc')
                     ->paginate(config('piplin.items_per_page', 10));
 
         $keys = Key::orderBy('name')
