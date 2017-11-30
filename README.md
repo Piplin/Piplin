@@ -86,11 +86,9 @@ $ php artisan app:install
 
 > 注意: `examples/` 提供的仅仅是范例，并不能保证直接拷贝就能使用，需要根据实际情况进行相关配置调整。
 
-七. 后台进程管理
+七. 配置supervisord
 
-配置`supervisor`进行后台进程维持，请查看 [examples/supervisor.conf](examples/supervisor.conf)。
-
-假设supervisord主配置文件在 `/etc/supervisor/supervisord.conf` ，内容如下：
+Piplin使用`supervisord`进行后台进程管理。该配置范例请查看[examples/supervisor.conf](examples/supervisor.conf)。举例：假设supervisord的主配置文件在 `/etc/supervisor/supervisord.conf` ，浏览其内容大致如下：
 
 ```
 [unix_http_server]
@@ -102,6 +100,8 @@ chmod=0700                       ; sockef file mode (default 0700)
 [include]
 files = /etc/supervisor/conf.d/*.conf
 ```
+
+配置supervisord步骤：
 
 1). 拷贝 examples/supervisor.conf
 
