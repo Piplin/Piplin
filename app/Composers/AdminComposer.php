@@ -63,16 +63,17 @@ class AdminComposer
             ],
             'resources' => [
                 'title' => trans('admin.resources'),
-                'url'   => route('admin.templates.index'),
-                'icon'  => 'template',
+                'url'   => route('admin.cabinets.index'),
+                'icon'  => 'cabinet',
                 'active' => false,
                 'children' => [
+                    /*
                     'templates' => [
                         'title'  => trans('templates.manage'),
                         'url'    => route('admin.templates.index'),
                         'icon'   => 'template',
                         'active' => false,
-                    ],
+                    ],*/
                     'cabinets' => [
                         'title'  => trans('cabinets.manage'),
                         'url'    => route('admin.cabinets.index'),

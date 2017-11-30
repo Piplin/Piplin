@@ -43,14 +43,11 @@ class ProjectController extends Controller
         $groups = ProjectGroup::orderBy('order')
                     ->get();
 
-        $templates = ProjectTemplate::orderBy('name')
-                    ->get();
-
         return view('admin.projects.index', [
             'is_secure'    => $request->secure(),
             'title'        => trans('projects.manage'),
             'keys'         => $keys,
-            'templates'    => $templates,
+            'templates'    => [],
             'groups'       => $groups,
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
