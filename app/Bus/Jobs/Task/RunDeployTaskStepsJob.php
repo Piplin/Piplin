@@ -173,7 +173,9 @@ class RunDeployTaskStepsJob extends BaseRunTaskStepsJob
      */
     private function buildScript(TaskStep $step, Server $server, ServerLog $log)
     {
-        $tokens = $this->getTokenList($step, $server);
+        $tokens = array_merge($this->getTokenList($step), [
+            'environment' => $log->environment->name,
+        ]);
 
         $prepend = '';
         // Generate the export

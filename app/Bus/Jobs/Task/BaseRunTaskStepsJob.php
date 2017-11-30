@@ -169,7 +169,7 @@ abstract class BaseRunTaskStepsJob
      * @param TaskStep $step
      * @param Server     $server
      */
-    protected function getTokenList(TaskStep $step, Server $server)
+    protected function getTokenList(TaskStep $step)
     {
         $project_path = $this->project->clean_deploy_path;
 

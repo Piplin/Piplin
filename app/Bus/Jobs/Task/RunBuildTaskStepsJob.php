@@ -186,7 +186,7 @@ class RunBuildTaskStepsJob extends BaseRunTaskStepsJob
      */
     private function buildScript(TaskStep $step, Server $server, ServerLog $log)
     {
-        $tokens = $this->getTokenList($step, $server);
+        $tokens = $this->getTokenList($step);
 
         $prepend = '';
         // Make build_path as your current path
