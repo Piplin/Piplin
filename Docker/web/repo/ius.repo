@@ -1,0 +1,26 @@
+[ius]
+name=IUS Community Packages for Enterprise Linux 6 - $basearch
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/ius/stable/CentOS/6/$basearch
+#mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos6&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-debuginfo]
+name=IUS Community Packages for Enterprise Linux 6 - $basearch - Debug
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/ius/stable/CentOS/6/$basearch/debuginfo
+#mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos6-debuginfo&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-source]
+name=IUS Community Packages for Enterprise Linux 6 - $basearch - Source
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/ius/stable/CentOS/6/SRPMS
+#mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos6-source&arch=source&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
