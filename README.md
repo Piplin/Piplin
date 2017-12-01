@@ -40,10 +40,9 @@ Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 - [队列系统](http://laravel.com/docs/5.5/queues), 推荐使用[Beanstalkd](http://kr.github.io/beanstalkd/)或Redis。
 - [Supservisord](http://www.supervisord.org/), Piplin使用Supervisord进行后台进程管理。
 - [Rsync](https://rsync.samba.org/) 如无特殊情况，一般系统都会自带rsync
+- 缓存服务: 推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.5/cache).
 
-### 可选项
-
-- 缓存服务推荐使用Memcached, 更多的缓存方案选择请看 [caching server](http://laravel.com/docs/5.5/cache).
+> Docker安装，请访问我们的[Piplin Docker](https://github.com/Piplin/Docker)项目。
 
 ## 安装手册
 
