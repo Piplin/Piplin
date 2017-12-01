@@ -43,7 +43,7 @@ class AdminController extends Controller
             ['name' => 'Env',            'value' => config('app.env')],
             ['name' => 'URL',            'value' => config('app.url')],
             ['name' => 'Socket URL',     'value' => config('piplin.socket_url')],
-            ['name' => 'Socket port',    'value' => env('SOCKET_PORT', 6001)],
+            ['name' => 'Socket port',    'value' => env('SOCKET_PORT', 7001)],
             ['name' => 'Mail driver',    'value' => env('MAIL_DRIVER', 'log')],
             ['name' => 'Debug',          'value' => config('app.debug') ? 'true' : 'false'],
             ['name' => 'Log',            'value' => config('app.log')],

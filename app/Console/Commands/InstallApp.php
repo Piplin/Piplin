@@ -369,7 +369,7 @@ class InstallApp extends Command
             $process->run();
 
             if (!$process->isSuccessful()) {
-                $socket .= ':6001';
+                $socket .= ':7001';
             }
         }
 
