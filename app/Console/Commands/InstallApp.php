@@ -79,10 +79,9 @@ class InstallApp extends Command
         $this->line('');
 
         $config = [
-            'redis' => $this->getRedisInformation(),
-            'db'    => $this->getDatabaseInformation(),
-            'app'   => $this->getInstallInformation(),
-            'mail'  => $this->getEmailInformation(),
+            'db'   => $this->getDatabaseInformation(),
+            'app'  => $this->getInstallInformation(),
+            'mail' => $this->getEmailInformation(),
         ];
 
         $admin = $this->getAdminInformation();
@@ -136,11 +135,6 @@ class InstallApp extends Command
 
         $path   = base_path('.env');
         $config = file_get_contents($path);
-
-        // Transfer null to 'null'
-        if (isset($input['redis']) && is_null($input['redis']['password'])) {
-            $input['redis']['password'] = 'null';
-        }
 
         // Move the socket value to the correct key
         if (isset($input['app']['socket'])) {
@@ -277,37 +271,6 @@ class InstallApp extends Command
             $this->call('config:cache');
             $this->call('route:cache');
         }
-    }
-
-    private function getRedisInformation()
-    {
-        $this->header('Redis details');
-
-        $connectionVerified = false;
-
-        while (!$connectionVerified) {
-            $redis = [];
-
-            $host = $this->ask('Redis Host', '127.0.0.1');
-            $port = $this->ask('Redis Port', 6379);
-            $pass = $this->ask('Redis Password', 'null');
-
-            if ($pass == 'null') {
-                $pass = null;
-            }
-
-            $redis['host']     = $host;
-            $redis['port']     = $port;
-            $redis['password'] = $pass;
-
-            Config::set('database.redis.default.host', $host);
-            Config::set('database.redis.default.port', $port);
-            Config::set('database.redis.default.password', $pass);
-
-            $connectionVerified = $this->verifyRedisDetails($redis);
-        }
-
-        return $redis;
     }
 
     /**
@@ -551,18 +514,6 @@ class InstallApp extends Command
         ];
     }
 
-
-    private function verifyRedisDetails(array $redis)
-    {
-        try {
-            Redis::connection()->ping();
-        } catch (\Exception $e) {
-            $this->error('Redis is not running');
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Verifies that the database connection details are correct.
      *
@@ -710,14 +661,12 @@ class InstallApp extends Command
         }
 
         // Check that redis is running
-        /*
         try {
             Redis::connection()->ping();
         } catch (\Exception $e) {
             $this->error('Redis is not running');
             $errors = true;
         }
-        */
 
         if (isset($_ENV['QUEUE_DRIVER']) && $_ENV['QUEUE_DRIVER'] === 'beanstalkd') {
             $connected = Queue::connection()->getPheanstalk()
