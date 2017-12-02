@@ -1,15 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-// Overload the clear-compiled command so that we don't
-// have issues when removing Service Providers
-if (isset($argv[1]) && $argv[1] == 'clear-compiled') {
-    foreach (glob(__DIR__ . '/bootstrap/cache/*.*') as $file) {
-        @unlink($file);
-    }
-
-    exit;
-}
+define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +15,9 @@ if (isset($argv[1]) && $argv[1] == 'clear-compiled') {
 |
 */
 
-require __DIR__ . '/bootstrap/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +42,7 @@ $status = $kernel->handle(
 | Shutdown The Application
 |--------------------------------------------------------------------------
 |
-| Once Artisan has finished running. We will fire off the shutdown events
+| Once Artisan has finished running, we will fire off the shutdown events
 | so that any final work may be done by the application before we shut
 | down the process. This is the last thing to happen to the request.
 |

@@ -38,7 +38,6 @@ dump-autoload:
 
 cache-config:
 	php artisan config:cache
-	php artisan optimize
 
 # Create the databases for Travis CI
 ifeq "$(DB)" "sqlite"
