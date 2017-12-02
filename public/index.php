@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+define('LARAVEL_START', microtime(true));
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -21,7 +23,7 @@
 |
 */
 
-require __DIR__ . '/../bootstrap/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------

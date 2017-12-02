@@ -268,7 +268,6 @@ class InstallApp extends Command
         $this->clearCaches();
 
         if ($this->getLaravel()->environment() !== 'local') {
-            $this->call('optimize', ['--force' => true]);
             $this->call('config:cache');
             $this->call('route:cache');
         }
