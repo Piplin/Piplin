@@ -1,5 +1,5 @@
 {
-    "name": "Piplin/Piplin",
+    "name": "piplin/piplin",
     "description": "Piplin is a self-hosted continuous integration and deployment system, intended to automatically build, test, and deploy your project over the web.",
     "minimum-stability": "stable",
     "type": "project",
@@ -8,10 +8,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "lianguan",
-            "email": "127258@qq.com",
-            "homepage": "http://www.piplin.com",
-            "role": "Developer"
+            "name": "Guan Shiliang",
+            "email": "guan.shiliang@gmail.com"
         }
     ],
     "support": {
