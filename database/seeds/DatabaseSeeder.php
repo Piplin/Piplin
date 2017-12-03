@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KeyTableSeeder::class);
         $this->call(ProjectTableSeeder::class);
         $this->call(CabinetTableSeeder::class);
-        $this->call(ServerTableSeeder::class);
         $this->call(TaskTableSeeder::class);
         $this->call(HookTableSeeder::class);
     }
