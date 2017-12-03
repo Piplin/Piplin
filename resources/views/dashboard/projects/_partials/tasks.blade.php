@@ -12,6 +12,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>{{ trans('tasks.started') }}</th>
                     <th>{{ trans('tasks.environments') }}</th>
                     <th>{{ trans('tasks.started_by') }}</th>
@@ -25,6 +26,7 @@
             <tbody>
                 @foreach ($tasks as $task)
                 <tr id="task_{{ $task->id }}">
+                    <td><a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->id }}</a></td>
                     <td>@if($task->is_build)<i class="piplin piplin-build"></i>@endif <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $task->finished_at }}" data-timeago="{{ $task->finished_at }}"></abbr></td>
                     <td class="small">{{ $task->environment_names }}</td>
                     <td>
