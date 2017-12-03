@@ -115,7 +115,7 @@ class SetupSkeletonJob extends Job
         foreach ($this->skeleton->deployPlan->variables as $variable) {
             $data = $variable->toArray();
 
-            $this->target->deployPlant->variables()->create($data);
+            $this->target->deployPlan->variables()->create($data);
         }
 
         foreach ($this->skeleton->deployPlan->sharedFiles as $file) {
