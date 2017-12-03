@@ -73,8 +73,8 @@ class IncomingWebhookController extends Controller
 
             if (is_array($payload) && ($project->allow_other_branch || $project->branch === $payload['branch'])) {
                 $this->abortQueued($project->id);
-                $payload['targetalbe_type'] = get_class($deployPlan);
-                $paylaod['targetable_id'] = $deployPlan->id;
+                $payload['targetable_type'] = get_class($deployPlan);
+                $payload['targetable_id'] = $deployPlan->id;
                 dispatch(new CreateTaskJob($project, $payload));
 
                 $success = true;
@@ -106,8 +106,8 @@ class IncomingWebhookController extends Controller
 
             if (is_array($payload) && ($project->allow_other_branch || $project->branch === $payload['branch'])) {
                 $this->abortQueued($project->id);
-                $payload['targetalbe_type'] = get_class($buildPlan);
-                $paylaod['targetable_id'] = $buildPlan->id;
+                $payload['targetable_type'] = get_class($buildPlan);
+                $payload['targetable_id'] = $buildPlan->id;
                 dispatch(new CreateTaskJob($project, $payload));
 
                 $success = true;
