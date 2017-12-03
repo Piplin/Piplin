@@ -46,20 +46,22 @@ Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 
 ## 安装手册
 
-一. 克隆代码
+### 全新安装
+
+#### 一. 克隆代码
 
 ```shell
 $ git clone https://github.com/Piplin/Piplin.git piplin
 ```
 
-二. 安装依赖包
+#### 二. 安装依赖包
 
 ```shell
 $ cd piplin
 $ composer install -o --no-dev
 ```
 
-三. 安装socket.io依赖环境
+#### 三. 安装socket.io依赖环境
 
 ```shell
 $ npm install --production
@@ -67,13 +69,13 @@ $ npm install --production
 
 > 安装过程如出现卡顿，请尝试更换npm镜像: `npm config set registry http://registry.npm.taobao.org/`
 
-四. 确保storage、bootstrap/cache和public/upload目录可写。
+#### 四. 确保storage、bootstrap/cache和public/upload目录可写。
 
 ```shell
 $ make file-permission
 ```
 
-五. 安装Piplin
+#### 五. 安装Piplin
 
 ```shell
 $ php artisan app:install
@@ -81,11 +83,11 @@ $ php artisan app:install
 
 > Piplin安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
-六. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+#### 六. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
 
 > 注意: `examples/` 提供的仅仅是范例，并不能保证直接拷贝就能使用，需要根据实际情况进行相关配置调整。
 
-七. 配置supervisord
+#### 七. 配置supervisord
 
 Piplin使用`supervisord`进行后台进程管理。该配置范例请查看[examples/supervisor.conf](examples/supervisor.conf)。 一般supervisord的主配置文件在 `/etc/supervisor/supervisord.conf` ，其大致内容：
 
@@ -100,7 +102,7 @@ chmod=0700                       ; sockef file mode (default 0700)
 files = /etc/supervisor/conf.d/*.conf
 ```
 
-#### 配置步骤如下：
+##### 配置步骤如下：
 
 1). 拷贝 examples/supervisor.conf
 
@@ -114,7 +116,24 @@ $ vi /etc/supervisor/conf.d/piplin.conf
 2). 重启supervisord
 
 ```shell
-/etc/init.d/supervisord restart 或 service supervisord restart
+$ /etc/init.d/supervisord restart 或 service supervisord restart
+```
+
+3). 检查supervisord服务是否正常
+
+```shell
+$ supervisorctl
+```
+
+如果返回如下信息，代表服务正常:
+
+```
+piplin:queue_0                   RUNNING   pid 26981, uptime 2 days, 15:30:59
+piplin:queue_1                   RUNNING   pid 26980, uptime 2 days, 15:30:59
+piplin:queue_2                   RUNNING   pid 26979, uptime 2 days, 15:30:59
+piplin-broadcast                 RUNNING   pid 26987, uptime 2 days, 15:30:59
+piplin-socketio                  RUNNING   pid 26978, uptime 2 days, 15:30:59
+supervisor>
 ```
 
 八. 访问Piplin
