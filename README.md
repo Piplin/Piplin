@@ -58,36 +58,24 @@ $ git clone https://github.com/Piplin/Piplin.git piplin
 
 ```shell
 $ cd piplin
-$ composer install -o --no-dev
-```
-
-#### 三. 安装socket.io依赖环境
-
-```shell
-$ npm install --production
+$ make
 ```
 
 > 安装过程如出现卡顿，请尝试更换npm镜像: `npm config set registry http://registry.npm.taobao.org/`
 
-#### 四. 确保storage、bootstrap/cache和public/upload目录可写。
+#### 三. 安装Piplin
 
 ```shell
-$ make file-permission
-```
-
-#### 五. 安装Piplin
-
-```shell
-$ php artisan app:install
+$ make install
 ```
 
 > Piplin安装器会进入一个交互式控制台，请根据提示进行相关参数设置。
 
-#### 六. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和 nginx的配置范例.
+#### 四. 请将Web服务器的根目录指向 `public/`, 请参考 [examples/](/examples) 下的相关配置文件，里面包含 Apache和Nginx的配置范例.
 
 > 注意: `examples/` 提供的仅仅是范例，并不能保证直接拷贝就能使用，需要根据实际情况进行相关配置调整。
 
-#### 七. 配置supervisord
+#### 五. 配置supervisord
 
 Piplin使用`supervisord`进行后台进程管理。该配置范例请查看[examples/supervisor.conf](examples/supervisor.conf)。 一般supervisord的主配置文件在 `/etc/supervisor/supervisord.conf` ，其大致内容：
 
@@ -136,7 +124,7 @@ piplin-socketio                  RUNNING   pid 26978, uptime 2 days, 15:30:59
 supervisor>
 ```
 
-八. 访问Piplin
+六. 访问Piplin
 
 恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
 
@@ -152,16 +140,10 @@ $ git fetch --all
 $ git checkout 0.4.5
  ```
 
-二. 更新依赖
+二. 升级
 
 ```shell
-$ composer install -o --no-dev
-```
-
-三. 执行Piplin升级
-
-```shell
-$ php artisan app:update
+$ make update
 ```
 
 ## 系统演示
