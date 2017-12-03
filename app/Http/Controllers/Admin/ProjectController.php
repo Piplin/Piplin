@@ -12,6 +12,7 @@
 namespace Piplin\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Piplin\Bus\Jobs\SetupSkeletonJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectRequest;
@@ -102,8 +103,10 @@ class ProjectController extends Controller
         if ($group_id && $group = ProjectGroup::find($group_id)) {
             $project = $group->projects()->create($fields);
         } else {
-            $project = Project::create($fields);
+            $project = Auth::user()->personalProjects()->create($fields);
         }
+
+        $project->members()->attach([Auth::user()->id]);
 
         dispatch(new SetupSkeletonJob($project, $skeleton));
 
@@ -155,7 +158,7 @@ class ProjectController extends Controller
      */
     public function update(Project $project, StoreProjectRequest $request)
     {
-        $project->update($request->only(
+        $fields = $request->only(
             'name',
             'repository',
             'branch',
@@ -166,7 +169,13 @@ class ProjectController extends Controller
             'url',
             'build_url',
             'allow_other_branch'
-        ));
+        );
+
+        if ($fields['targetable_id']) {
+            $fields['targetable_type'] = ProjectGroup::class;
+        }
+
+        $project->update($fields);
 
         return $project;
     }
