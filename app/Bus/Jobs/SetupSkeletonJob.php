@@ -59,7 +59,7 @@ class SetupSkeletonJob extends Job
         }
 
         if ($this->skeleton->buildPlan && $this->target->buildPlan) {
-           $this->setupBuildPlan();
+            $this->setupBuildPlan();
         }
 
         if ($this->skeleton->deployPlan && $this->target->deployPlan) {
