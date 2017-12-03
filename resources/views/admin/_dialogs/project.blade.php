@@ -35,19 +35,6 @@
                                         <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
                                     </div>
                                 </div>
-                                @if (count($templates) > 0)
-                                <div class="form-group" id="template-list">
-                                    <label class="col-sm-3 control-label" for="project_template_id">{{ trans('templates.type') }}</label>
-                                    <div class="col-sm-9">
-                                    <select id="project_template_id" name="template_id" class="select2 form-control">
-                                        <option value="">{{ trans('templates.custom') }}</option>
-                                        @foreach ($templates as $template)
-                                            <option value="{{ $template->id }}">{{ $template->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    </div>
-                                </div>
-                                @endif
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.key') }}</label>
                                     <div class="col-sm-9">
@@ -139,14 +126,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.clone_type') }}</label>
-                        <div class="col-sm-9">
-                        <select id="project_extract_type" name="type" class="select2 form-control">
-							<option value="project">{{ trans('projects.clone_duplicate') }}</option>
-							<!--<option value="template">{{ trans('projects.clone_convert') }}</option>-->
-                        </select>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">

@@ -17,7 +17,6 @@ return [
     'dashboard'         => 'Dashboard',
     'admin'             => 'Administration',
     'projects'          => 'Projects',
-    'templates'         => 'Templates',
     'groups'            => 'Groups',
     'keys'              => 'SSH Key',
     'users'             => 'Users',

@@ -13,13 +13,12 @@ namespace Piplin\Bus\Jobs;
 
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
-use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\SharedFile;
 use Piplin\Models\Variable;
 
 /**
- * A class to handle cloning between template and project.
+ * A class to handle cloning project.
  */
 class SetupSkeletonJob extends Job
 {
@@ -41,7 +40,7 @@ class SetupSkeletonJob extends Job
      *
      * @return SetupSkeletonJob
      */
-    public function __construct($target, $skeleton)
+    public function __construct($target, $skeleton = null)
     {
         $this->target   = $target;
         $this->skeleton = $skeleton;
