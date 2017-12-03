@@ -21,7 +21,7 @@ return [
     'none'           => '该项目尚未配置过服务器',
     'name'           => '名称',
     'connect_as'     => '运行用户',
-    'username_help'  => '远程服务器执行部署工作的用户',
+    'username_help'  => '远程服务器执行任务的用户',
     'host'           => '主机名',
     'host_help'      => '远程服务器的主机名或IP地址',
     'port'           => '端口',
