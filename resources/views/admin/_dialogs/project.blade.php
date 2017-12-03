@@ -144,7 +144,7 @@
                         <div class="col-sm-9">
                         <select id="project_extract_type" name="type" class="select2 form-control">
 							<option value="project">{{ trans('projects.clone_duplicate') }}</option>
-							<option value="template">{{ trans('projects.clone_convert') }}</option>
+							<!--<option value="template">{{ trans('projects.clone_convert') }}</option>-->
                         </select>
                     </div>
                 </div>

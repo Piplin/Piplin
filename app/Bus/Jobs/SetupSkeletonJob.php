@@ -54,42 +54,80 @@ class SetupSkeletonJob extends Job
      */
     public function handle()
     {
-        if (!$this->skeleton) {
+        if (!$this->skeleton || !$this->skeleton instanceof Project) {
             return;
         }
 
-        if (!$this->skeleton instanceof ProjectTemplate && !$this->skeleton instanceof Project) {
-            return;
+        if ($this->skeleton->buildPlan && $this->target->buildPlan) {
+           $this->setupBuildPlan();
         }
 
-        foreach ($this->skeleton->commands as $command) {
+        if ($this->skeleton->deployPlan && $this->target->deployPlan) {
+            $this->setupDeployPlan();
+        }
+    }
+
+    /**
+     * Steup build plan.
+     *
+     * @return void
+     */
+    private function setupBuildPlan()
+    {
+        foreach ($this->skeleton->buildPlan->commands as $command) {
             $data = $command->toArray();
 
-            $this->target->commands()->create($data);
+            $this->target->buildPlan->commands()->create($data);
         }
 
-        foreach ($this->skeleton->environments as $environment) {
+        foreach ($this->skeleton->buildPlan->servers as $server) {
+            $data = $server->toArray();
+
+            $this->target->buildPlan->servers()->create($data);
+        }
+
+        foreach ($this->skeleton->buildPlan->patterns as $pattern) {
+            $data = $pattern->toArray();
+
+            $this->target->buildPlan->patterns()->create($data);
+        }
+    }
+
+    /**
+     * Steup deploy plan.
+     *
+     * @return void
+     */
+    private function setupDeployPlan()
+    {
+        foreach ($this->skeleton->deployPlan->commands as $command) {
+            $data = $command->toArray();
+
+            $this->target->deployPlan->commands()->create($data);
+        }
+
+        foreach ($this->skeleton->deployPlan->environments as $environment) {
             $data = $environment->toArray();
 
-            $this->target->environments()->create($data);
+            $this->target->deployPlan->environments()->create($data);
         }
 
-        foreach ($this->skeleton->variables as $variable) {
+        foreach ($this->skeleton->deployPlan->variables as $variable) {
             $data = $variable->toArray();
 
-            $this->target->variables()->create($data);
+            $this->targe->deployPlant->variables()->create($data);
         }
 
-        foreach ($this->skeleton->sharedFiles as $file) {
+        foreach ($this->skeleton->deployPlan->sharedFiles as $file) {
             $data = $file->toArray();
 
-            $this->target->sharedFiles()->create($data);
+            $this->target->deployPlan->sharedFiles()->create($data);
         }
 
-        foreach ($this->skeleton->configFiles as $file) {
+        foreach ($this->skeleton->deployPlan->configFiles as $file) {
             $data = $file->toArray();
 
-            $this->target->configFiles()->create($data);
+            $this->target->deployPlan->configFiles()->create($data);
         }
     }
 }
