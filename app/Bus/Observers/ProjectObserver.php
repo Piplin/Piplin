@@ -51,14 +51,14 @@ class ProjectObserver
     public function saved(Project $project)
     {
         if (!$project->buildPlan) {
-            BuildPlan::create([
+            $project->buildPlan = BuildPlan::create([
                 'name'       => $project->name,
                 'project_id' => $project->id,
             ]);
         }
 
         if (!$project->deployPlan) {
-            DeployPlan::create([
+            $project->deployPlan = DeployPlan::create([
                 'name'       => $project->name,
                 'project_id' => $project->id,
             ]);
