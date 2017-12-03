@@ -137,6 +137,7 @@ class ProjectController extends Controller
             $fields['deploy_path']     = $skeleton->deploy_path;
             $fields['repository']      = $skeleton->repository;
             $target                    = Project::create($fields);
+            $target->members()->attach([Auth::user()->id]);
         } else {
             $target = ProjectTemplate::create($fields);
         }
