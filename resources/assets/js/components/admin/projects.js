@@ -23,7 +23,6 @@
         $('.callout-danger', modal).hide();
         $('.has-error', modal).removeClass('has-error');
         $('.label-danger', modal).remove();
-        $('#template-list', modal).hide();
 
         $('.nav-tabs a:first', modal).tab('show');
 
@@ -31,7 +30,6 @@
             title = trans('projects.edit');
             $('.btn-danger', modal).show();
         } else {
-            $('#template-list', modal).show();
             $('#project_id').val('');
             $('#project_name').val('');
             $('#project_repository').val('');
@@ -108,7 +106,6 @@
             builds_to_keep:     $('#project_builds_to_keep').val(),
             url:                $('#project_url').val(),
             build_url:          $('#project_build_url').val(),
-            template_id:        $('#project_template_id') ? $('#project_template_id').val() : null,
             allow_other_branch: $('#project_allow_other_branch').is(':checked')
         }, {
             wait: true,

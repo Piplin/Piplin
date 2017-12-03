@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreCommandRequest;
 use Piplin\Models\Command;
-use Piplin\Models\ProjectTemplate;
 use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
 
@@ -47,18 +46,7 @@ class CommandController extends Controller
             'result'   => Command::DO_RESULT,
         ];
 
-        if ($target instanceof ProjectTemplate) {
-            $breadcrumb = [
-                [
-                    'url' => route('admin.templates.index'),
-                    'label' => trans('templates.label')
-                ],
-                [
-                    'url' => route('admin.templates.show', ['templates' => $target->id]),
-                    'label' => $target->name
-                ],
-            ];
-        } elseif ($target instanceof BuildPlan) {
+        if ($target instanceof BuildPlan) {
             $breadcrumb = [
                 [
                     'url' => route('projects', ['id' => $target->project->id]),
@@ -254,8 +242,9 @@ class CommandController extends Controller
     /**
      * Get's the commands in a specific step.
      *
-     * @param  Project|ProjectTemplate $target
-     * @param  int                    $step
+     * @param  Project $target
+     * @param  int     $step
+     *
      * @return Collection
      */
     protected function getForTaskStep($target, $step)

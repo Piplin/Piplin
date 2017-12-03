@@ -17,7 +17,6 @@ return [
     'dashboard'         => '控制台',
     'admin'             => '系统设置',
     'projects'          => '项目',
-    'templates'         => '部署模板',
     'groups'            => '项目分组',
     'keys'              => '部署秘钥',
     'users'             => '用户管理',

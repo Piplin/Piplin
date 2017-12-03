@@ -25,7 +25,7 @@ const paths = {
     'jquery'           : `${node_path}/jquery`,
     'jquery_sortable'  : `${node_path}/jquery-sortable`,
     'livestamp'        : `${node_path}/livestamp`,
-    'localization'     : 'vendor/fixhub/js-localization',
+    'localization'     : 'vendor/andywer/js-localization',
     'moment'           : `${node_path}/moment`,
     'morris'           : `${node_path}/morris.js`,
     'raphael'          : `${node_path}/raphael`,
@@ -79,7 +79,6 @@ mix
         `${assets_path}/js/components/admin/groups.js`,
         `${assets_path}/js/components/admin/providers.js`,
         `${assets_path}/js/components/admin/projects.js`,
-        `${assets_path}/js/components/admin/templates.js`,
         `${assets_path}/js/components/admin/keys.js`,
         `${assets_path}/js/components/admin/cabinets.js`,
         `${assets_path}/js/components/admin/users.js`

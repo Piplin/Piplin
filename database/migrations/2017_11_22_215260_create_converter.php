@@ -14,7 +14,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Str;
 use Piplin\Models\Environment;
-use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\Variable;
 use Piplin\Models\Command;
@@ -71,9 +70,7 @@ class CreateConverter extends Migration
     private function convert($items)
     {
         foreach ($items as $item) {
-            if (Str::endsWith($item->targetable_type, 'Template')) {
-                $item->targetable_type = ProjectTemplate::class;
-            } elseif (Str::endsWith($item->targetable_type, 'ProjectGroup')) {
+            if (Str::endsWith($item->targetable_type, 'ProjectGroup')) {
                 $item->targetable_type = ProjectGroup::class;
             } elseif (Str::endsWith($item->targetable_type, 'User')) {
                 $item->targetable_type = User::class;

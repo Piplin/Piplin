@@ -12,7 +12,6 @@
 namespace Piplin\Composers;
 
 use Illuminate\Contracts\View\View;
-use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;
 use Piplin\Models\User;
@@ -31,7 +30,6 @@ class DashboardComposer
     public function compose(View $view)
     {
         $view->with('project_count', Project::count());
-        $view->with('template_count', ProjectTemplate::count());
         $view->with('group_count', ProjectGroup::count());
         $view->with('user_count', User::count());
     }

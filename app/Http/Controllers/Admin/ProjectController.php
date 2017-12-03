@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use Piplin\Bus\Jobs\SetupSkeletonJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectRequest;
-use Piplin\Models\ProjectTemplate;
 use Piplin\Models\Key;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;
@@ -48,7 +47,6 @@ class ProjectController extends Controller
             'is_secure'    => $request->secure(),
             'title'        => trans('projects.manage'),
             'keys'         => $keys,
-            'templates'    => [],
             'groups'       => $groups,
             'projects_raw' => $projects,
             'projects'     => $projects->toJson(), // Because ProjectPresenter toJson() is not working in the view
@@ -87,16 +85,8 @@ class ProjectController extends Controller
             'builds_to_keep',
             'url',
             'build_url',
-            'template_id',
             'allow_other_branch'
         );
-
-        $template_id = null;
-        if (array_key_exists('template_id', $fields)) {
-            $template_id = array_pull($fields, 'template_id');
-        }
-
-        $skeleton = ProjectTemplate::find($template_id);
 
         $group_id = array_pull($fields, 'targetable_id');
 
@@ -108,7 +98,7 @@ class ProjectController extends Controller
 
         $project->members()->attach([Auth::user()->id]);
 
-        dispatch(new SetupSkeletonJob($project, $skeleton));
+        dispatch(new SetupSkeletonJob($project));
 
         return $project;
     }
@@ -123,28 +113,23 @@ class ProjectController extends Controller
      */
     public function clone(Project $skeleton, Request $request)
     {
-        $fields = $request->only('name', 'type');
-        $type   = array_pull($fields, 'type');
+        $fields = $request->only('name');
 
         if (empty($fields['name'])) {
             $fields['name'] = $skeleton->name . '_Clone';
         }
 
-        if ($type === 'project') {
-            $fields['targetable_type'] = $skeleton->targetable_type;
-            $fields['targetable_id']   = $skeleton->targetable_id;
-            $fields['key_id']          = $skeleton->key_id;
-            $fields['deploy_path']     = $skeleton->deploy_path;
-            $fields['repository']      = $skeleton->repository;
-            $target                    = Project::create($fields);
-            $target->members()->attach([Auth::user()->id]);
-        } else {
-            $target = ProjectTemplate::create($fields);
-        }
+        $fields['targetable_type'] = $skeleton->targetable_type;
+        $fields['targetable_id']   = $skeleton->targetable_id;
+        $fields['key_id']          = $skeleton->key_id;
+        $fields['deploy_path']     = $skeleton->deploy_path;
+        $fields['repository']      = $skeleton->repository;
+        $target                    = Project::create($fields);
+        $target->members()->attach([Auth::user()->id]);
 
         dispatch(new SetupSkeletonJob($target, $skeleton));
 
-        return redirect()->route($type === 'template' ? 'admin.templates.show' : 'projects', [
+        return redirect()->route('projects', [
             'id' => $target->id,
         ]);
     }
