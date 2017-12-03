@@ -18,7 +18,7 @@ Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪn/ 或 /ˈpaɪpˌlaɪn/)是
 * 支持项目的多环境部署(可自行建立开发、测试、预发布和生产等多个环境)
 * 支持联动部署，比如：开发环境部署成功后可自动触发测试环境启动部署
 * 服务管理支持机柜功能，机柜可与多个部署环境绑定
-* 支持项目克隆与模板功能
+* 支持项目克隆功能
 * 项目支持多成员
 * 通过Websocket实现项目部署状态的实时跟踪
 * 支持钉钉机器人、Slack、邮件和自定义Webhook的服务集成
@@ -154,34 +154,6 @@ $ make update
 - **密码:** `piplin`
 
 > 注意：系统每5分钟会自动重置一次密码，该账号没有权限访问管理功能.
-
-## 使用到的技术
-
-- [x] Laravel
-- [x] Supervisord
-- [x] Beanstalkd
-- [x] Redis
-- [x] Memcached
-- [x] Bootstrap
-- [x] ionicons
-- [x] Node.js
-- [x] JWT-Auth
-- [x] Socket.io
-- [x] jQuery
-- [x] underscore
-- [x] ioredis
-
-## 开发使用到的技术
-
-- [x] Webpack
-- [x] Sass
-- [x] Codception
-- [x] PHP CodeSniffer
-- [x] PHP Docblock Checker
-- [x] PHP CS Fixer
-- [x] Travis-ci
-- [x] Style-CI
-- [x] Gitlab-Ci
 
 ## 开发相关
 
