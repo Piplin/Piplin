@@ -14,6 +14,7 @@ namespace Piplin\Http\Controllers\Dashboard;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
+use Piplin\Models\Command;
 use Piplin\Models\Task;
 use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
@@ -34,6 +35,11 @@ class BuildController extends Controller
     public function show(BuildPlan $buildPlan, $tab = '')
     {
         $project = $buildPlan->project;
+
+        $optional = $buildPlan->commands->filter(function (Command $command) {
+            return $command->optional;
+        });
+
         $data    = [
             'buildPlan'       => $buildPlan,
             'project'         => $project,
@@ -42,7 +48,7 @@ class BuildController extends Controller
             'tags'            => $project->tags()->reverse(),
             'branches'        => $project->branches(),
             'environments'    => [],
-            'optional'        => [],
+            'optional'        => $optional,
             'releases'        => [],
             'tasks'           => $this->getLatest($buildPlan),
             'tab'             => $tab,
