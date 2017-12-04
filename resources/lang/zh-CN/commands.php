@@ -35,7 +35,7 @@ return [
     'migrations'           => '数据迁移',
     'bash'                 => 'Bash脚本',
     'environments'         => '部署环境',
-    'patterns'             => '复制模式',
+    'patterns'             => '出品定义',
     'servers'              => '服务器',
     'default'              => '跟随服务器',
     'options'              => 'Bash脚本中可使用的变量 (点击查看)',

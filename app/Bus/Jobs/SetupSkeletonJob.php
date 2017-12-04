@@ -73,10 +73,12 @@ class SetupSkeletonJob extends Job
      */
     private function setupBuildPlan()
     {
+        $mappings = [];
+
         foreach ($this->skeleton->buildPlan->commands as $command) {
             $data = $command->toArray();
-
-            $this->target->buildPlan->commands()->create($data);
+            $new = $this->target->buildPlan->commands()->create($data);
+            $mappings[$command->id] = $new->id;
         }
 
         foreach ($this->skeleton->buildPlan->servers as $server) {
@@ -88,7 +90,12 @@ class SetupSkeletonJob extends Job
         foreach ($this->skeleton->buildPlan->patterns as $pattern) {
             $data = $pattern->toArray();
 
-            $this->target->buildPlan->patterns()->create($data);
+            $new = $this->target->buildPlan->patterns()->create($data);
+
+            foreach ($pattern->commands as $command) {
+                $new_command_id = $mappings[$command->id];
+                $new->commands()->attach([$new_command_id]);
+            }
         }
     }
 
