@@ -66,6 +66,9 @@ class BuildController extends Controller
             $data['title'] = trans('plans.agents');
         } elseif ($tab === 'patterns') {
             $data['title'] = trans('patterns.label');
+        } elseif ($tab === 'releases') {
+            $data['title'] = trans('releases.label');
+            $data['releases'] = $project->releases;
         } else {
             $data['title'] = trans('plans.builds');
         }

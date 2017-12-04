@@ -23,7 +23,7 @@ class Release extends Model
      *
      * @var array
      */
-    protected $visible = ['id', 'name'];
+    protected $visible = ['id', 'name', 'task_id'];
 
     /**
      * The attributes that are mass assignable.

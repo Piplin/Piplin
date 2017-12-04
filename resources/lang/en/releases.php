@@ -16,5 +16,7 @@ return [
     'name'             => 'Name',
     'name_placeholder' => 'Release-1',
     'warning'          => 'The release could not be saved, please check the form below.',
+    'delete_success'   => 'The release has been deleted.',
+    'none'             => 'The plan does not currently have any releases.',
 
 ];
