@@ -187,6 +187,16 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
+     * Has many relationship.
+     *
+     * @return Release
+     */
+    public function releases()
+    {
+        return $this->hasMany(Release::class);
+    }
+
+    /**
      * Determines whether the deployment is draft.
      *
      * @return bool
@@ -409,6 +419,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
 
         return trans($title, ['id' => $this->id]);
     }
+
     /**
      * Get the presenter class.
      *
