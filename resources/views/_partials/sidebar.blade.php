@@ -2,7 +2,7 @@
     <section class="sidebar">
         <div class="brand">
             <a href="{{ route('dashboard') }}">
-                <img src="/img/logo.png" />
+                <img src="/img/piplin-logo.svg" />
                 <h4>Piplin</h4>
             </a>
         </div>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <img src="/img/logo.png">
+            <img src="/img/piplin-logo.svg">
             <strong>{{ $app_name }}</strong>
             <span class="pl-sign-version">{{ APP_VERSION }}</span>
         </div>
