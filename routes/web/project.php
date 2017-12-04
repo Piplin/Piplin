@@ -62,6 +62,9 @@ Route::group([
             'as'   => 'releases.create',
             'uses' => 'ReleaseController@store',
         ]);
+        Route::delete('releases/{release}', [
+            'uses' => 'ReleaseController@destroy',
+        ]);
 
         Route::post('task/{task}/deploy-draft', [
             'as'   => 'tasks.deploy-draft',

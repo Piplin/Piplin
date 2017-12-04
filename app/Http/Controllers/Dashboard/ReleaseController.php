@@ -41,4 +41,20 @@ class ReleaseController extends Controller
             'success' => true,
         ];
     }
+
+    /**
+     * Remove the specified file from storage.
+     *
+     * @param Release $release
+     *
+     * @return Response
+     */
+    public function destroy(Release $release)
+    {
+        $release->forceDelete();
+
+        return [
+            'success' => true,
+        ];
+    }
 }

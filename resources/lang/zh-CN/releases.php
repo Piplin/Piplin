@@ -16,5 +16,7 @@ return [
     'name'             => '名称',
     'name_placeholder' => 'Release-1',
     'warning'          => '信息保存失败。',
+    'delete_success'   => '该构建版本已被成功删除.',
+    'none'             => '该构建计划还没有发布构建版本。',
 
 ];

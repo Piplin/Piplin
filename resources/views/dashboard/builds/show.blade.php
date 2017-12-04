@@ -9,6 +9,7 @@
                     <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('plans.commands') }}</a></li>
                     <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'agents']) }}"><span class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
                     <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'patterns']) }}"><span class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
+                    <li {!! $tab != 'releases' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'releases']) }}"><span class="piplin piplin-release"></span> {{ trans('releases.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -18,6 +19,8 @@
                             @include('dashboard.environments._partials.servers')
                         @elseif($tab == 'patterns')
                             @include('dashboard.builds._partials.patterns')
+                        @elseif($tab == 'releases')
+                            @include('dashboard.builds._partials.releases')
                         @else
                             @include('dashboard.projects._partials.tasks')
                         @endif
@@ -50,6 +53,9 @@
         @elseif($tab == 'patterns')
             new Piplin.PatternsTab();
             Piplin.Patterns.add({!! $patterns->toJson() !!});
+        @elseif($tab == 'releases')
+            new Piplin.ReleasesTab();
+            Piplin.Releases.add({!! $releases->toJson() !!});
         @endif
         Piplin.targetable_id = {{ $buildPlan->id }};
     </script>

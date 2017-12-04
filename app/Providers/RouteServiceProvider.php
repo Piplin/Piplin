@@ -24,6 +24,7 @@ use Piplin\Models\DeployPlan;
 use Piplin\Models\Project;
 use Piplin\Models\ProjectGroup;
 use Piplin\Models\Provider;
+use Piplin\Models\Release;
 use Piplin\Models\Server;
 use Piplin\Models\ServerLog;
 use Piplin\Models\SharedFile;
@@ -65,6 +66,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('deployment', DeployPlan::class);
         Route::model('task', Task::class);
         Route::model('hook', Hook::class);
+        Route::model('release', Release::class);
         Route::model('server', Server::class);
         Route::model('provider', Provider::class);
         Route::model('user', User::class);
