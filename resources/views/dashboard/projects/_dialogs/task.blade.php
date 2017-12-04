@@ -32,7 +32,7 @@
 						</div>
                     </div>
                     @endif
-                    @if ($project->allow_other_branch && (count($branches) || count($tags) || count($releases)))
+                    @if (count($branches) || count($tags) || count($releases))
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="task_source">{{ trans('tasks.source') }}</label>
 						<div class="col-sm-9">
@@ -44,7 +44,7 @@
 										</label>
 									</div>
 								</li>
-
+                                @if ($project->allow_other_branch)
 								@if (count($branches))
 								<li>
 									<div class="radio">
@@ -90,6 +90,7 @@
                                         </label>
                                     </div>
                                 </li>
+                                @endif
                                 @if(isset($releases) && count($releases))
                                 <li>
                                     <div class="radio">
