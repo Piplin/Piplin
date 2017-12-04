@@ -90,6 +90,7 @@ class TaskController extends Controller
         if ($task->is_build) {
             $max = Release::getMaxInternalId($project->id);
             $data['release_name'] = 'Release-' . ($max + 1);
+            $data['releases'] = $task->releases;
         }
 
         return view('dashboard.tasks.show', $data);

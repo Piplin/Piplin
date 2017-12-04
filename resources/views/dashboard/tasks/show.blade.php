@@ -24,7 +24,11 @@
         </table>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button>
+            @if(isset($releases) && count($releases))
+                <a href="{{ route('deployments', ['id' => $project->deployPlan->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-primary" title="{{ trans('tasks.deploy') }}"><i class="piplin piplin-deploy"></i>{{ trans('tasks.deploy') }}</a>
+            @else
+                <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button> 
+            @endif
             </div>
         </div>
         @endif

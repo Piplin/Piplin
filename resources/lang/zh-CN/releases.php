@@ -11,8 +11,8 @@
 
 return [
 
-    'label'            => '发布版本',
-    'create'           => '创建发布版本',
+    'label'            => '构建版本',
+    'create'           => '创建构建版本',
     'name'             => '名称',
     'name_placeholder' => 'Release-1',
     'warning'          => '信息保存失败。',
