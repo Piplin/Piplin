@@ -77,6 +77,11 @@ class DeploymentController extends Controller
             $data['title'] = trans('environments.label');
         } elseif ($tab === 'deploy') {
             $data['release_id'] = $request->get('release_id');
+
+            // Don't trigger dialog if page changed
+            if ($request->get('page')) {
+                $data['tab'] = null;
+            }
         }
 
         return view('dashboard.deployments.show', $data);
