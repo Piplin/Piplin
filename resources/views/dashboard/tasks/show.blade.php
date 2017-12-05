@@ -24,10 +24,19 @@
         </table>
         <div class="row">
             <div class="col-xs-12 text-center">
+            <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button> 
             @if(isset($releases) && count($releases))
-                <a href="{{ route('deployments', ['id' => $project->deployPlan->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-primary" title="{{ trans('tasks.deploy') }}"><i class="piplin piplin-deploy"></i>{{ trans('tasks.deploy') }}</a>
-            @else
-                <button id="release_create" data-toggle="modal" data-backdrop="static" data-target="#release" class="btn btn-default"><i class="piplin piplin-release"></i> <span>{{ trans('releases.create') }}</span></button> 
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-expanded="false"><i class="piplin piplin-deploy"></i> {{ trans('tasks.deploy') }}
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                @foreach($releases as $release)
+                <li><a  href="{{ route('deployments', ['id' => $project->deployPlan->id, 'tab' => 'deploy', 'release_id' => $release->id]) }}"><i class="piplin piplin-release"></i> {{ $release->name }}</a></li>
+                @endforeach
+              </ul>
+            </div>
             @endif
             </div>
         </div>

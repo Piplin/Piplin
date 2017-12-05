@@ -10,6 +10,10 @@
             modal.find('.modal-title span').text(title);
             modal.find('.modal-title i').removeClass().addClass('piplin piplin-build');
             modal.find('button.btn-save span').text(title);
+        } else {
+            if ($('#task_source_release').is(':checked')) {
+                $('#task_release').parent('div').show();
+            }
         }
     });
 

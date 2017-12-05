@@ -95,11 +95,11 @@
                                 <li>
                                     <div class="radio">
                                         <label for="task_source_release">
-                                            <input type="radio" class="task-source" name="source" id="task_source_release" value="release" /> {{ trans('tasks.release') }}
+                                            <input type="radio" class="task-source" name="source" id="task_source_release" value="release" checked /> {{ trans('tasks.release') }}
                                             <div class="task-source-container">
                                                 <select class="form-control task-source" name="source_release" id="task_release">
                                                     @foreach ($releases as $release)
-                                                        <option value="{{ $release->id }}">{{ $release->name }}</option>
+                                                        <option value="{{ $release->id }}" @if(isset($release_id) && $release_id == $release->id) selected @endif>{{ $release->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

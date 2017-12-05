@@ -35,7 +35,7 @@ class DeploymentController extends Controller
      *
      * @return View
      */
-    public function show(DeployPlan $deployPlan, $tab = '')
+    public function show(DeployPlan $deployPlan, $tab = '', Request $request)
     {
         $project = $deployPlan->project;
 
@@ -74,6 +74,8 @@ class DeploymentController extends Controller
             $data['title']       = trans('sharedFiles.tab_label');
         } elseif ($tab === 'environments') {
             $data['title'] = trans('environments.label');
+        } elseif ($tab === 'deploy') {
+            $data['release_id'] = $request->get('release_id');
         }
 
         return view('dashboard.deployments.show', $data);

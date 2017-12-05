@@ -15,11 +15,11 @@
         $('button.close', dialog).hide();
 
         var release = new Piplin.Release();
-        console.log('create release');
+        var taskId = $('input[name="task_id"]').val();
 
         release.save({
             project_id: $('input[name="project_id"]').val(),
-            task_id:    $('input[name="task_id"]').val(),
+            task_id:    taskId,
             name:       $('#release_name').val()
         }, {
             wait: true,
@@ -33,6 +33,7 @@
 
                 var msg = trans('releases.create_success');
                 Piplin.toast(msg);
+                window.location.href = '/task/' + taskId;
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
