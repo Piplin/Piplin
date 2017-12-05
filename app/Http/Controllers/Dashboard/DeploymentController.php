@@ -30,12 +30,13 @@ class DeploymentController extends Controller
     /**
      * The details of an individual project.
      *
+     * @param Request    $request
      * @param DeployPlan $deployPlan
-     * @param string  $tab
+     * @param string     $tab
      *
      * @return View
      */
-    public function show(DeployPlan $deployPlan, $tab = '', Request $request)
+    public function show(Request $request, DeployPlan $deployPlan, $tab = '')
     {
         $project = $deployPlan->project;
 
