@@ -23,6 +23,6 @@ return [
     'file'           => '路径',
     'warning'        => '保存失败，请检查相关表单信息.',
     'cache'          => '缓存目录',
-    'example'        => '目录路径, 例如： \'storage/\' 或 \'config/piplin.php\'. 目录必须以斜线\'/\'结尾。',
+    'example'        => '需要共享的相对路径, 例如： \'storage/\' 或 \'config/piplin.php\'. 目录必须以斜线\'/\'结尾。',
 
 ];
