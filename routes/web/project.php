@@ -174,6 +174,12 @@ Route::group([
                     'uses'       => 'WebhookController@refresh',
                 ]);
 
+                // Recover
+                Route::post('project/{project}/recover', [
+                    'as'   => 'project.recover',
+                    'uses' => 'ProjectController@recover',
+                ]);
+
                 // Member
                 Route::post('members/{project}', [
                     'uses' => 'MemberController@store',
