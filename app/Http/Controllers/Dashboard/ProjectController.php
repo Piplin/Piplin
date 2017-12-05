@@ -129,6 +129,22 @@ class ProjectController extends Controller
         ];
     }
 
+
+    /**
+     * Recover the status of specified project.
+     *
+     * @param Project $project
+     *
+     * @return Response
+     */
+    public function recover(Project $project)
+    {
+        $project->status = Project::NOT_RUNNED;
+        $project->save();
+
+        return $project;
+    }
+
     /**
      * Gets the latest deployments for a project.
      *

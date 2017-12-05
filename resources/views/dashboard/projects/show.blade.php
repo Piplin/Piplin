@@ -30,7 +30,7 @@
     @elseif($tab == 'members')
         @include('dashboard.projects._dialogs.member')
     @endif
-
+    @include('dashboard.projects._dialogs.recover')
     @include('dashboard.projects._dialogs.public_key')
     @include('dashboard.projects._dialogs.rollback')
     @include('dashboard.projects._dialogs.task_draft')
@@ -48,6 +48,7 @@
           </button>
           <ul class="dropdown-menu" role="menu">
             <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="piplin piplin-setting"></i> {{ trans('projects.settings') }}</a></li>
+            <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project-recover"><i class="piplin piplin-refresh"></i> {{ trans('projects.recover') }}</a></li>
             <li><a class="project-delete" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><span class="text-danger"><i class="piplin piplin-delete"></i> {{ trans('projects.delete') }}</span></a></li>
           </ul>
         </div>

@@ -157,6 +157,36 @@
         });
     });
 
+    $('#project-recover button.btn-recover').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        $.ajax({
+            url: '/project/' + $('input[name="project_id"]', dialog).val() + '/recover',
+            method: 'POST'
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+            Piplin.toast(trans('projects.recover_success'));
+
+            var status_data = Piplin.formatProjectStatus(data.status);
+            var status_bar = $('td.project-status span');
+
+            status_bar.attr('class', 'text-' + status_data.label_class)
+            $('i', status_bar).attr('class', 'piplin piplin-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
+
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+
+        });
+    });
+
     Piplin.Project = Backbone.Model.extend({
         urlRoot: '/projects'
     });

@@ -73,8 +73,8 @@
                         </tr>
                         <tr>
                             <td>{{ trans('projects.status') }}</td>
-                            <td class="text-right">
-                                <span class="text-{{$project->css_class}}"><i class="piplin piplin-{{ $project->icon }}"></i> {{ $project->readable_status }}</span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
+                            <td class="text-right project-status">
+                                <span class="text-{{$project->css_class}}"><i class="piplin piplin-{{ $project->icon }}"></i> <span>{{ $project->readable_status }}</span></span> / <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $project->last_run }}" data-timeago="{{ $project->last_run }}"></abbr>
                             </td>
                         </tr>
                     </tbody>
