@@ -23,6 +23,6 @@ return [
     'file'           => 'Path',
     'warning'        => 'The file could not be saved, please check the form below.',
     'cache'          => 'Cached data',
-    'example'        => 'Path for a directory, for example \'/app/storage/\' or a file \'/app/config/piplin.php\'. Directories must end with a trailing slash',
+    'example'        => 'Path for a directory, for example \'storage/\' or a file \'config/piplin.php\'. Directories must end with a trailing slash',
 
 ];
