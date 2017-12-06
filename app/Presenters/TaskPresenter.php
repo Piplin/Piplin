@@ -14,6 +14,7 @@ namespace Piplin\Presenters;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Piplin\Models\Command;
 use Piplin\Models\Task;
+use Piplin\Models\BuildPlan;
 use Piplin\Presenters\Traits\RuntimePresenter;
 
 /**
@@ -196,7 +197,13 @@ class TaskPresenter extends BasePresenter
     public function environment_names()
     {
         $environments = [];
-        foreach ($this->wrappedObject->environments as $environment) {
+        if ($this->wrappedObject->targetable && $this->wrappedObject->targetable instanceof BuildPlan) {
+            $runContainers = $this->wrappedObject->targetable->servers;
+        } else {
+            $runContainers = $this->wrappedObject->environments;
+        }
+
+        foreach ($runContainers as $environment) {
             $environments[] = $environment->name;
         }
 

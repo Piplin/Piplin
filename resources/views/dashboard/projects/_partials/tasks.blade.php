@@ -26,8 +26,8 @@
             <tbody>
                 @foreach ($tasks as $task)
                 <tr id="task_{{ $task->id }}">
-                    <td><a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->id }}</a></td>
-                    <td>@if($task->is_build)<i class="piplin piplin-build"></i>@endif <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $task->finished_at }}" data-timeago="{{ $task->finished_at }}"></abbr></td>
+                    <td><i class="piplin piplin-{{ $task->is_build ? 'build' : 'deploy' }}"></i> <a href="{{ route('tasks.show', ['id' => $task->id]) }}">@if($task->is_build){{ trans('tasks.build_title', ['id' => $task->id]) }}@else{{ trans('tasks.deploy_title', ['id' => $task->id]) }}@endif</a></td>
+                    <td><abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $task->finished_at }}" data-timeago="{{ $task->finished_at }}"></abbr></td>
                     <td class="small">{{ $task->environment_names }}</td>
                     <td>
                         {{ $task->is_webhook ? trans('tasks.webhook') : trans('tasks.manually') }}
