@@ -174,6 +174,12 @@ Route::group([
                     'uses'       => 'WebhookController@refresh',
                 ]);
 
+                // Artifact
+                Route::get('artifact/{project}/download/{artifact}', [
+                    'as'         => 'artifact.download',
+                    'uses'       => 'ArtifactController@download',
+                ]);
+
                 // Recover
                 Route::post('project/{project}/recover', [
                     'as'   => 'project.recover',

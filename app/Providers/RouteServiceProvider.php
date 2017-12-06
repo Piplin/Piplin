@@ -14,6 +14,7 @@ namespace Piplin\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Piplin\Models\Artifact;
 use Piplin\Models\Command;
 use Piplin\Models\ConfigFile;
 use Piplin\Models\Task;
@@ -60,6 +61,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('id', '[0-9]+');
         Route::pattern('step', '(clone|install|activate|purge)');
 
+        Route::model('artifact', Artifact::class);
         Route::model('group', ProjectGroup::class);
         Route::model('project', Project::class);
         Route::model('build', BuildPlan::class);

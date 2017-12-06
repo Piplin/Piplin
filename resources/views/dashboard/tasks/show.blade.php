@@ -17,7 +17,7 @@
             @foreach($task->artifacts as $artifact)
             <tr>
                 <td>{{ $artifact->id }}</td>
-                <td>{{ $artifact->file_name }}</td>
+                <td><a href="{{ route('artifact.download', ['project_id' => $task->project_id, 'id' => $artifact->id])}}" target="_blank">{{ $artifact->file_name }}</a></td>
                 <td>{{ bytes($artifact->file_size) }}</td>
             </tr>
             @endforeach

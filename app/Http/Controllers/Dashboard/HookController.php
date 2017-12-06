@@ -11,7 +11,6 @@
 
 namespace Piplin\Http\Controllers\Dashboard;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreHookRequest;
 use Piplin\Models\Hook;
