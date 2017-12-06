@@ -37,6 +37,13 @@ class Pattern extends Model
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
+     * Additional attributes to include in the JSON representation.
+     *
+     * @var array
+     */
+    protected $appends = ['command_names'];
+
+    /**
      * Belongs to relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -54,5 +61,24 @@ class Pattern extends Model
     public function commands()
     {
         return $this->belongsToMany(Command::class);
+    }
+
+    /**
+     * Gets the readable list of commands.
+     *
+     * @return string
+     */
+    public function getCommandNamesAttribute()
+    {
+        $commands = [];
+        foreach ($this->commands as $command) {
+            $commands[] = $command->name;
+        }
+
+        if (count($commands)) {
+            return implode(', ', $commands);
+        }
+
+        return trans('app.none');
     }
 }

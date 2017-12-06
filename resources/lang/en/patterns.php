@@ -20,6 +20,7 @@ return [
     'none'             => 'The plan does not currently have any artifact patterns setup',
     'name'             => 'Name',
     'copy_pattern'     => 'Copy pattern',
+    'commands'         => 'Commands',
     'warning'          => 'The pattern could not be saved, please check the form below.',
     'name_placeholder' => 'Export tar package',
     'example'          => 'Specify the name of the artifact(s) you want to keep. e.g. **/*.tar.gz',

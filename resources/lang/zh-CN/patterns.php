@@ -20,6 +20,7 @@ return [
     'none'             => '该构建计划还没有设置出品定义。',
     'name'             => '名称',
     'copy_pattern'     => '复制规则',
+    'commands'         => '被绑定的命令',
     'warning'          => '信息保存失败。',
     'name_placeholder' => '导出tar包',
     'example'          => '指定你想要导出文件的规则. 如： **/*.tar.gz',

@@ -19,7 +19,8 @@
                 <tr>
                     <th width="30%">{{ trans('patterns.name') }}</th>
                     <th width="40%">{{ trans('patterns.copy_pattern') }}</th>
-                    <th width="30%" class="text-right">{{ trans('app.actions') }}</th>
+                    <th width="20%">{{ trans('patterns.commands') }}</th>
+                    <th width="10%" class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
     <script type="text/template" id="pattern-template">
         <td><%- name %></td>
         <td><%- copy_pattern %></td>
+        <td><%- command_names %></td>
         <td>
             <div class="btn-group pull-right">
                 @if($project->can('manage'))
