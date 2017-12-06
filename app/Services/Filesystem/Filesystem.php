@@ -16,7 +16,7 @@ use Illuminate\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
- * An extension to the laravel filesystem class to add the tempnam function.
+ * Provides basic utility to manipulate the file system.
  */
 class Filesystem extends BaseFilesystem
 {
@@ -37,10 +37,11 @@ class Filesystem extends BaseFilesystem
             if ($tmpFile !== false) {
                 return $tmpFile;
             }
-            throw new IOException('A temporary file could not be created.'); // @codeCoverageIgnore
+            throw new IOException('A temporary file could not be created.');
         }
         throw new FileNotFoundException("Directory does not exist at path {$path}");
     }
+
     /**
      * Touches a file to create it or update the last modified time.
      *
@@ -54,10 +55,11 @@ class Filesystem extends BaseFilesystem
         if (touch($path)) {
             return true;
         }
-        throw new IOException('The file could not be touched.'); // @codeCoverageIgnore
+        throw new IOException(sprintf('Failed to touch "%s".', $file), 0, null, $file);
     }
+
     /**
-     * Generate the MD5 hash of a file.
+     * Generates the MD5 hash of a file.
      *
      * @param string $path       The path of the file
      * @param bool   $raw_output
