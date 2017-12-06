@@ -43,7 +43,7 @@ return [
         'tasks'         => ['create_success', 'completed', 'completed_with_errors', 'pending', 'running', 'cancelled', 'failed', 'draft', 'submit_success', 'build', 'build_title', 'deploy', 'deploy_title'],
         'variables'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'environments'  => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'link_auto', 'link_manual', 'link_success'],
-        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'running', 'failed', 'not_deployed', 'recover_success'],
+        'projects'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'finished', 'pending', 'running', 'failed', 'initial', 'recover_success'],
         'commands'      => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'groups'        => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'keys'          => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],

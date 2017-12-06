@@ -1,11 +1,11 @@
 (function ($) {
 
     //Fix me please
-    var FINISHED   = 0;
-    var PENDING    = 1;
-    var RUNNING    = 2;
-    var FAILED     = 3;
-    var NOT_RUNNED = 4;
+    var FINISHED = 0;
+    var PENDING  = 1;
+    var RUNNING  = 2;
+    var FAILED   = 3;
+    var INITIAL  = 4;
 
     $('#environment_list table').sortable({
         containerSelector: 'table',

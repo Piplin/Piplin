@@ -55,7 +55,7 @@ class ProjectPresenter extends CommandPresenter
             return trans('projects.pending');
         }
 
-        return trans('projects.not_deployed');
+        return trans('projects.initial');
     }
 
     /**

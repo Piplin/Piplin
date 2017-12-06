@@ -27,7 +27,7 @@ class CreateDeployPlansTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('project_id');
-            $table->tinyInteger('status')->default(Project::NOT_RUNNED);
+            $table->tinyInteger('status')->default(Project::INITIAL);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();

@@ -64,7 +64,7 @@ return [
     'pending'           => 'Pending',
     'running'           => 'Running',
     'failed'            => 'Failed',
-    'not_deployed'      => 'Unknown',
+    'initial'           => 'Initial',
     'options'           => 'Options',
     'change_branch'     => 'Allow other branches to be runned?',
     'insecure'          => 'Your Piplin installation is not running over a secure connection, it is recommended ' .

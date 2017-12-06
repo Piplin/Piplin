@@ -31,11 +31,11 @@ class Project extends Model implements HasPresenter
 {
     use SoftDeletes, BroadcastChanges, SetupRelations, HasTargetable;
 
-    const FINISHED     = 0;
-    const PENDING      = 1;
-    const RUNNING    = 2;
-    const FAILED       = 3;
-    const NOT_RUNNED = 4;
+    const FINISHED = 0;
+    const PENDING  = 1;
+    const RUNNING  = 2;
+    const FAILED   = 3;
+    const INITIAL  = 4;
 
     /**
      * The attributes excluded from the model's JSON form.

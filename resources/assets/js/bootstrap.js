@@ -7,11 +7,11 @@
 
     Piplin.statuses = {
         // Project and Environment
-        FINISHED:   0,
-        PENDING:    1,
-        RUNNING:    2,
-        FAILED:     3,
-        NOT_RUNNED: 4,
+        FINISHED: 0,
+        PENDING:  1,
+        RUNNING:  2,
+        FAILED:   3,
+        INITIAL:  4,
 
         // Task status
         TASK_DRAFT:    -1,
@@ -117,7 +117,7 @@
 
         data.icon_class = 'help';
         data.label_class = 'default';
-        data.label = trans('projects.not_deployed');
+        data.label = trans('projects.initial');
 
         if (task_status === Piplin.statuses.FINISHED) {
             data.icon_class = 'check';

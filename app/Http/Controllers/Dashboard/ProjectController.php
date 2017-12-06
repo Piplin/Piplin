@@ -139,7 +139,7 @@ class ProjectController extends Controller
      */
     public function recover(Project $project)
     {
-        $project->status = Project::NOT_RUNNED;
+        $project->status = Project::INITIAL;
         $project->save();
 
         return $project;

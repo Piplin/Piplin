@@ -31,7 +31,7 @@ class CreateEnvironmentsTable extends Migration
             $table->integer('targetable_id');
             $table->string('targetable_type');
             $table->boolean('default_on')->default(true);
-            $table->tinyInteger('status')->default(Project::NOT_RUNNED);
+            $table->tinyInteger('status')->default(Project::INITIAL);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();

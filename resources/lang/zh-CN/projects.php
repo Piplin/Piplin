@@ -63,7 +63,7 @@ return [
     'pending'           => '等待中',
     'running'           => '运行中',
     'failed'            => '失败',
-    'not_deployed'      => '未部署',
+    'initial'           => '初始',
     'options'           => '选项',
     'change_branch'     => '允许运行其他分支?',
     'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Piplin自动生成。',
