@@ -25,7 +25,13 @@ Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪn/ 或 /ˈpaɪpˌlaɪn/)是
 
 ## Piplin原理示意图
 
+### 总体
+
 ![Principle](http://www.piplin.com/img/principle.png?v2)
+
+### 步骤命令
+
+![Commands](http://piplin.com/screenshots/commands.png?v1)
 
 ## 安装环境要求
 
