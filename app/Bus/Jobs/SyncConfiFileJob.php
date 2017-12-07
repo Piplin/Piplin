@@ -19,7 +19,7 @@ use Piplin\Services\Scripts\Runner as Process;
 /**
  * Sync config file to specified environments.
  */
-class SyncConfigFileJob extends Job implements ShouldQueue
+class SyncConfiFileJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -28,7 +28,7 @@ class SyncConfigFileJob extends Job implements ShouldQueue
      */
     public $timeout = 100;
 
-        /**
+    /**
      * Execute the command.
      *
      * @return void
