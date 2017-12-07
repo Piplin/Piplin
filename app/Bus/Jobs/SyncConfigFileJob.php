@@ -19,7 +19,7 @@ use Piplin\Services\Scripts\Runner as Process;
 /**
  * Sync config file to specified environments.
  */
-class SyncConfiFileJob extends Job implements ShouldQueue
+class SyncConfigFileJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
