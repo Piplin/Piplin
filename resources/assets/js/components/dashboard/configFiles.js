@@ -57,6 +57,12 @@
         modal.find('.modal-title span').text(title);
     });
 
+    $('#sync-configfile').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        var title = trans('configFiles.create');
+    });
+
     $('body').delegate('.configfile-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
