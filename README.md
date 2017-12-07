@@ -7,7 +7,7 @@
 Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪn/ 或 /ˈpaɪpˌlaɪn/)是一款免费、开源的持续集成系统，适用于软件的自动化构建、测试和部署相关的各种应用场景。
 
 
-![Screenshot](https://piplin.com/img/screenshot.png?v1)
+![Screenshot](http://piplin.com/img/screenshot.png?v1)
 
 ## Piplin能做什么？
 
@@ -27,11 +27,11 @@ Piplin(灵感来自于"pipeline"，读作/ˈpɪpˌlɪn/ 或 /ˈpaɪpˌlaɪn/)是
 
 ### 总体
 
-![Principle](https://piplin.com/img/principle.png?v2)
+![Principle](http://piplin.com/img/principle.png?v2)
 
 ### 步骤命令
 
-![Commands](https://piplin.com/screenshots/commands.png?v1)
+![Commands](http://piplin.com/screenshots/commands.png?v1)
 
 ## 安装环境要求
 
@@ -154,7 +154,7 @@ $ make update
 
 ## 系统演示
 
-体验Piplin, 请访问 [Piplin](https://piplin.com):
+体验Piplin, 请访问 [Piplin](http://piplin.com):
 
 - **用户名:** piplin 或 `piplin@piplin.com`
 - **密码:** `piplin`
