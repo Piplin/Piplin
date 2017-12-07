@@ -1,4 +1,4 @@
-# Piplin
+# Piplin - [![Composer Cache](https://shield.with.social/cc/github/Piplin/Piplin/master.svg?style=flat-square)](https://packagist.org/packages/laravel/framework)
 
 [![StyleCI](https://styleci.io/repos/67609292/shield)](https://styleci.io/repos/67609292/)
 [![Build Status](https://travis-ci.org/Piplin/Piplin.svg?branch=master)](https://travis-ci.org/Piplin/Piplin)
@@ -188,4 +188,4 @@ npm run prod
 
 ## 软件授权协议
 
-Piplin is licensed under [The MIT License (MIT)](LICENSE). Piplin is based on Deployer. 
+Piplin is licensed under [The MIT License (MIT)](LICENSE). Piplin is based on [Deployer](https://github.com/REBELinBLUE/deployer).

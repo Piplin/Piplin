@@ -84,17 +84,17 @@
                 <h4 class="modal-title"><i class="piplin piplin-preview"></i> <span>{{ trans('configFiles.sync') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
-                <input type="hidden" id="sync-configfile_id" name="id" />
+            <input type="hidden" id="sync-configfile_id" name="id" />
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="task_reason">{{ trans('configFiles.post_commands') }}</label>
+                    <label class="col-sm-2 control-label" for="task_reason">{{ trans('configFiles.post_commands') }}</label>
                     <div class="col-sm-9">
-                        <textarea rows="3" id="sync-post_commands" class="form-control" name="post_commands" placeholder="{{ trans('configFiles.post_commands') }}"></textarea>
+                        <div id="command_script" class="form-control"></div>
                     </div>
                 </div>
                 @if(count($environments))
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="sync_environments">{{ trans('configFiles.environments') }}</label>
+                    <label class="col-sm-2 control-label" for="sync_environments">{{ trans('configFiles.environments') }}</label>
                     <div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($environments as $each)

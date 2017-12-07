@@ -3,7 +3,7 @@
     var editor;
     var previewfile;
 
-    $('#configfile, #view-configfile').on('hidden.bs.modal', function (event) {
+    $('#configfile, #view-configfile, #sync-configfile').on('hidden.bs.modal', function (event) {
         editor.destroy();
     });
 
@@ -188,7 +188,18 @@
         $('.sync-environment:checked').each(function() {
             environment_ids.push($(this).val());
         });
-        var post_commands = $('#sync-post_commands').val();
+        var post_commands = editor.getValue();
+
+        $.ajax({
+            type: 'POST',
+            url: '/config-files/' + config_file_id + '/sync',
+            data: {
+                post_commands:   post_commands,
+                environment_ids: environment_ids
+            }
+        }).done(function (data) {
+            console.log(data);
+        });
 
         console.log(post_commands);
 
@@ -293,8 +304,10 @@
             $('#preview-content').text(this.model.get('content'));
         },
         sync: function() {
-            console.log('yes');
-            console.log(this.model.id);
+            $('#sync-configfile_id').val(this.model.id);
+            editor = ace.edit('command_script');
+            editor.setValue('');
+            editor.gotoLine(1);
             $('.sync-environment').prop('checked', false).prop('disabled', true).parent().attr('class', 'text-gray');
             $(this.model.get('environments')).each(function (index, environment) {
                 $('#sync_environment_' + environment.id).prop('checked', true).prop('disabled', false).parent().removeClass('text-gray');
