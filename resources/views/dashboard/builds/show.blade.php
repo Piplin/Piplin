@@ -6,7 +6,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('plans.builds') }}</a></li>
-                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('plans.commands') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('commands.build_label') }}</a></li>
                     <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'agents']) }}"><span class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
                     <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'patterns']) }}"><span class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
                     <li {!! $tab != 'releases' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'releases']) }}"><span class="piplin piplin-release"></span> {{ trans('releases.label') }}</a></li>

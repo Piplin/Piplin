@@ -13,7 +13,7 @@
                 <th>{{ trans('projects.name') }}</th>
                 <th>{{ trans('projects.repository') }}</th>
                 <th>{{ trans('projects.branch') }}</th>
-                <th>{{ trans('projects.deployed') }}</th>
+                <th>{{ trans('projects.runned') }}</th>
                 <th class="text-right">{{ trans('app.actions') }}</th>
             </tr>
         </thead>

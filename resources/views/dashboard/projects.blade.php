@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th width="30%">{{ trans('projects.name') }}</th>
-                        <th width="25%">{{ trans('projects.deployed') }}</th>
+                        <th width="25%">{{ trans('projects.runned') }}</th>
                         <th width="25%">{{ trans('dashboard.status') }}</th>
                         <th class="text-right" width="20%">{{ trans('app.actions') }}</th>
                     </tr>

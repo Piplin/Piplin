@@ -56,7 +56,7 @@
                     </td>
                     <td>
                         <div class="btn-group pull-right">
-                            @if ($task->isSuccessful())
+                            @if ($task->isSuccessful() && !$task->is_build)
                                 <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $task->optional_commands_used }}" data-deployment-id="{{ $task->id }}" class="btn btn-default btn-rollback @if ($task->isCurrent()) hide @endif" title="{{ trans('tasks.rollback') }}"><i class="piplin piplin-rollback"></i></button>
                             @endif
                             @if ($task->isDraft())

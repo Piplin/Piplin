@@ -12,6 +12,8 @@
 return [
 
     'label'                => '任务步骤',
+    'build_label'          => '构建步骤',
+    'deploy_label'         => '部署步骤',
     'deploy_webhook'       => '第三方服务以POST方式调用该链接，Piplin会自动触发部署工作。',
     'build_webhook'        => '第三方服务以POST方式调用该链接，Piplin会自动触发构建工作。',
     'webhook_help'         => 'Webhook 帮助',

@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="file">{{ trans('sharedFiles.file') }} <i class="piplin piplin-help" data-toggle="tooltip" data-placement="right" title="{{ trans('sharedFiles.example') }}"></i></label>
+                        <label class="col-sm-2 control-label" for="file">{{ trans('sharedFiles.file') }} <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" title="{{ trans('sharedFiles.example') }}"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="file" name="file" placeholder="storage/" />
                         </div>

@@ -12,6 +12,8 @@
 return [
 
     'label'                => 'Commands',
+    'build_label'          => 'Build commands',
+    'deploy_label'         => 'Deploy commands',
     'deploy_webhook'       => 'Incoming Webhooks are a simple way to trigger deployments from external sources. ',
     'build_webhook'        => 'Incoming Webhooks are a simple way to trigger builds from external sources. ',
     'webhook_help'         => 'Incoming Webhook Help',

@@ -27,5 +27,6 @@ return [
     'agent'                => 'Build Agent',
     'agents'               => 'Build Agents',
     'builds'               => 'Builds',
+    'deployments'          => 'Deployments',
 
 ];
