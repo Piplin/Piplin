@@ -35,7 +35,7 @@
         <td><%- environment_names %></td>
         <td>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-info" title="{{ trans('configFiles.sync') }}" data-toggle="modal" data-backdrop="static" data-target="#sync-configfile" data-configfile-id="<%- id %>"><i class="piplin piplin-refresh"></i> Sync</button>
+                <button type="button" class="btn btn-info btn-sync" title="{{ trans('configFiles.sync') }}" data-toggle="modal" data-backdrop="static" data-target="#sync-configfile" data-configfile-id="<%- id %>"><i class="piplin piplin-refresh"></i> Sync</button>
                 <button type="button" class="btn btn-default btn-view" title="{{ trans('configFiles.view') }}" data-toggle="modal" data-backdrop="static" data-target="#view-configfile"><i class="piplin piplin-preview"></i></button>
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('configFiles.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#configfile"><i class="piplin piplin-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>

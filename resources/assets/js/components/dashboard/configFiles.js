@@ -57,12 +57,6 @@
         modal.find('.modal-title span').text(title);
     });
 
-    $('#sync-configfile').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var modal = $(this);
-        var title = trans('configFiles.create');
-    });
-
     $('body').delegate('.configfile-trash button.btn-delete','click', function (event) {
         var target = $(event.currentTarget);
         var icon = target.find('i');
@@ -172,6 +166,34 @@
         });
     });
 
+    $('#sync-configfile button.btn-save').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        var config_file_id = $('#sync-configfile_id').val();
+
+        if (config_file_id) {
+            var file = Piplin.ConfigFiles.get(config_file_id);
+        } else {
+            var file = new Piplin.ConfigFile();
+        }
+
+        var environment_ids = [];
+
+        $('.sync-environment:checked').each(function() {
+            environment_ids.push($(this).val());
+        });
+        var post_commands = $('#sync-post_commands').val();
+
+        console.log(post_commands);
+
+    });
+
     Piplin.ConfigFile = Backbone.Model.extend({
         urlRoot: '/config-files'
     });
@@ -250,7 +272,8 @@
         events: {
             'click .btn-edit': 'edit',
             'click .btn-delete': 'trash',
-            'click .btn-view': 'view'
+            'click .btn-view': 'view',
+            'click .btn-sync': 'sync'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -268,6 +291,14 @@
         view: function() {
             previewfile = this.model.get('path');
             $('#preview-content').text(this.model.get('content'));
+        },
+        sync: function() {
+            console.log('yes');
+            console.log(this.model.id);
+            $('.sync-environment').prop('checked', false).prop('disabled', true).parent().attr('class', 'text-gray');
+            $(this.model.get('environments')).each(function (index, environment) {
+                $('#sync_environment_' + environment.id).prop('checked', true).prop('disabled', false).parent().removeClass('text-gray');
+            });
         },
         edit: function() {
             $('#config_file_id').val(this.model.id);
