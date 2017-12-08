@@ -126,6 +126,9 @@ class SyncConfigFileJob extends Job implements ShouldQueue
 
         foreach ($servers as $server) {
             $this->sendFileFromString($server, $local_file);
+            if ($this->postCommands) {
+                $this->runSyncedCommand($server);
+            }
         }
     }
 
@@ -146,18 +149,37 @@ class SyncConfigFileJob extends Job implements ShouldQueue
             'ip_address'  => $server->ip_address,
         ]);
 
-        $append = 'cd ' . $latest_release_dir . PHP_EOL;
-
-        if ($this->postCommands) {
-            $append .= $this->postCommands . PHP_EOL;
-        }
-
-        $process->appendScript($append);
-
         $process->run();
 
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
+        }
+    }
+
+    /**
+     * Run the synced commands.
+     *
+     * @param Server $server
+     */
+    private function runSyncedCommand(Server $server)
+    {
+        if (!$this->postCommands) {
+            return;
+        }
+
+        $latest_release_dir = $this->project->clean_deploy_path . '/current';
+        $process = new Process('deploy.RunSyncedCommand', [
+            'current_path' => $latest_release_dir
+        ]);
+
+        $append = $this->postCommands . PHP_EOL;
+        $process->appendScript($append);
+
+
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput() . ' at ['. $server->ip_address .']');
         }
     }
 }

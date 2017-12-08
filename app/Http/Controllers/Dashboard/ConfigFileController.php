@@ -110,6 +110,7 @@ class ConfigFileController extends Controller
         $postCommands = $request->get('post_commands');
 
         if (!$configFile->isSyncing()) {
+            $configFile->output = null;
             $configFile->status = ConfigFile::SYNCING;
             $configFile->save();
             dispatch(new SyncConfigFileJob($configFile, $environmentIds, $postCommands));
