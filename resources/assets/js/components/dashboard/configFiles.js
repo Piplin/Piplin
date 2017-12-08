@@ -327,6 +327,7 @@
                 data.status_css = 'danger';
                 data.status     = trans('configFiles.failed');
             }
+            console.log(data);
 
             this.$el.html(this.template(data));
 

@@ -50,6 +50,7 @@ class ConfigFileController extends Controller
             $environments = $fields['environments'];
             unset($fields['environments']);
         }
+        $fields['output'] = null;
 
         $config_file = $target->configFiles()->create($fields);
 

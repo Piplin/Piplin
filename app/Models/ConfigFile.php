@@ -33,7 +33,7 @@ class ConfigFile extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'content'];
+    protected $fillable = ['name', 'path', 'content', 'output'];
 
     /**
      * The attributes excluded from the model's JSON form.
