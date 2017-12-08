@@ -175,8 +175,7 @@ class SyncConfigFileJob extends Job implements ShouldQueue
         $append = $this->postCommands . PHP_EOL;
         $process->appendScript($append);
 
-
-        $process->run();
+        $process->setServer($server, $this->private_key)->run();
 
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput() . ' at ['. $server->ip_address .']');
