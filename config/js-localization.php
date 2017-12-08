@@ -51,7 +51,7 @@ return [
         'users'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'releases'      => ['delete_success'],
         'sharedFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
-        'configFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
+        'configFiles'   => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'sync_success' , 'successful', 'syncing', 'failed', 'unsynced'],
         'hooks'         => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'custom', 'slack', 'dingtalk', 'mail', 'create_slack', 'create_dingtalk', 'create_mail', 'create_custom', 'edit_slack', 'edit_dingtalk', 'edit_mail', 'edit_custom'],
         'providers'     => ['create', 'create_success', 'edit', 'edit_success', 'delete_success'],
         'servers'       => ['create', 'create_success', 'edit', 'edit_success', 'delete_success', 'successful', 'testing', 'failed', 'untested'],

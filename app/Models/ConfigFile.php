@@ -23,6 +23,11 @@ class ConfigFile extends Model
 {
     use SoftDeletes, BroadcastChanges, HasTargetable;
 
+    const SUCCESSFUL = 0;
+    const UNSYNCED   = 1;
+    const FAILED     = 2;
+    const SYNCING    = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,6 +67,16 @@ class ConfigFile extends Model
     {
         return $this->belongsToMany(Environment::class)
                     ->orderBy('order', 'ASC');
+    }
+
+    /**
+     * Determines whether the config file is currently being syncing.
+     *
+     * @return bool
+     */
+    public function isSyncing()
+    {
+        return ($this->status === self::SYNCING);
     }
 
     /**

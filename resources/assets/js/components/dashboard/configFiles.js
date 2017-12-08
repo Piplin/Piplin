@@ -1,5 +1,10 @@
 (function ($) {
 
+    var SUCCESSFUL = 0;
+    var UNSYNCED   = 1;
+    var FAILED     = 2;
+    var SYNCING    = 3;
+
     var editor;
     var previewfile;
 
@@ -183,6 +188,10 @@
             var file = new Piplin.ConfigFile();
         }
 
+        file.set({
+            status: SYNCING
+        });
+
         var environment_ids = [];
 
         $('.sync-environment:checked').each(function() {
@@ -198,7 +207,14 @@
                 environment_ids: environment_ids
             }
         }).done(function (data) {
-            console.log(data);
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+
+            var msg = trans('configFiles.sync_success');
+            Piplin.toast(msg);
         });
 
         console.log(post_commands);
@@ -284,7 +300,8 @@
             'click .btn-edit': 'edit',
             'click .btn-delete': 'trash',
             'click .btn-view': 'view',
-            'click .btn-sync': 'sync'
+            'click .btn-sync': 'sync',
+            'click .btn-show': 'showLog',
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -295,6 +312,22 @@
         render: function () {
             var data = this.model.toJSON();
 
+            data.status_css = 'orange';
+            data.icon_css   = 'circle';
+            data.status     = trans('configFiles.unsynced');
+
+            if (parseInt(this.model.get('status')) === SUCCESSFUL) {
+                data.status_css = 'success';
+                data.status     = trans('configFiles.successful');
+            } else if (parseInt(this.model.get('status')) === SYNCING) {
+                data.status_css = 'purple';
+                data.icon_css   = 'load piplin-spin';
+                data.status     = trans('configFiles.syncing');
+            } else if (parseInt(this.model.get('status')) === FAILED) {
+                data.status_css = 'danger';
+                data.status     = trans('configFiles.failed');
+            }
+
             this.$el.html(this.template(data));
 
             return this;
@@ -302,6 +335,11 @@
         view: function() {
             previewfile = this.model.get('path');
             $('#preview-content').text(this.model.get('content'));
+        },
+        showLog: function() {
+            var data = this.model.toJSON();
+
+            $('#log pre').html(data.output);
         },
         sync: function() {
             $('#sync-configfile_id').val(this.model.id);

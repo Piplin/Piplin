@@ -86,12 +86,6 @@
             <form class="form-horizontal" role="form">
             <input type="hidden" id="sync-configfile_id" name="id" />
             <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="task_reason">{{ trans('configFiles.post_commands') }}</label>
-                    <div class="col-sm-9">
-                        <div id="command_script" class="form-control"></div>
-                    </div>
-                </div>
                 @if(count($environments))
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="sync_environments">{{ trans('configFiles.environments') }}</label>
@@ -110,6 +104,12 @@
                     </div>
                 </div>
                 @endif
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="task_reason">{{ trans('configFiles.post_commands') }}</label>
+                    <div class="col-sm-9">
+                        <div id="command_script" class="form-control"></div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="btn-group">

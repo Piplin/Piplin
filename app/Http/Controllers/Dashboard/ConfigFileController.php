@@ -97,17 +97,23 @@ class ConfigFileController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Sync config file to specified environments.
      *
-     * @param ConfigFile             $config_file
-     * @param StoreConfigFileRequest $request
+     * @param ConfigFile $configFile
+     * @param Request    $request
      *
      * @return Response
      */
-    public function sync(ConfigFile $config_file, Request $request)
+    public function sync(ConfigFile $configFile, Request $request)
     {
-        var_dump($request->get('post_commands'));
-        var_dump($request->get('environment_ids'));
+        $environmentIds = $request->get('environment_ids');
+        $postCommands = $request->get('post_commands');
+
+        if (!$configFile->isSyncing()) {
+            $configFile->status = ConfigFile::SYNCING;
+            $configFile->save();
+            dispatch(new SyncConfigFileJob($configFile, $environmentIds, $postCommands));
+        }
 
         return [
             'success' => true,
