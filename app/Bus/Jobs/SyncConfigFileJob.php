@@ -32,14 +32,29 @@ class SyncConfigFileJob extends Job implements ShouldQueue
      */
     public $timeout = 100;
 
+    /**
+     * @var ConfigFile
+     */
     private $configFile;
 
+    /**
+     * @var Project
+     */
     private $project;
 
+    /**
+     * @var string
+     */
     private $private_key;
 
+    /**
+     * @var array
+     */
     private $environmentIds;
 
+    /**
+     * @var string
+     */
     private $postCommands;
 
     /**
@@ -90,6 +105,11 @@ class SyncConfigFileJob extends Job implements ShouldQueue
         $this->configFile->save();
     }
 
+    /**
+     * Send a config file to the servers of specified environment.
+     *
+     * @param Server $server
+     */
     private function sendServerConfig(Environment $environment, $local_file)
     {
         $servers = [];
@@ -110,7 +130,7 @@ class SyncConfigFileJob extends Job implements ShouldQueue
     }
 
     /**
-     * Send a string to server. fix me.
+     * Send a string to server.
      *
      * @param Server $server
      */
@@ -139,9 +159,5 @@ class SyncConfigFileJob extends Job implements ShouldQueue
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
         }
-
-        error_log(var_export(file_get_contents($local_file), true), 3, '/tmp/gsl.log');
-        // Upload the file
-        //$this->sendFile($tmp_file, $remote_path, $log);
     }
 }
