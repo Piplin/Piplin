@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console;
+namespace Piplin\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -25,14 +25,14 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Fixhub\Console\Commands\CreateUser::class,
-        \Fixhub\Console\Commands\ClearOrphanAvatars::class,
-        \Fixhub\Console\Commands\ClearOrphanMirrors::class,
-        \Fixhub\Console\Commands\ClearStalledDeployment::class,
-        \Fixhub\Console\Commands\ClearOldKeys::class,
-        \Fixhub\Console\Commands\UpdateGitMirrors::class,
-        \Fixhub\Console\Commands\InstallApp::class,
-        \Fixhub\Console\Commands\UpdateApp::class,
+        \Piplin\Console\Commands\CreateUser::class,
+        \Piplin\Console\Commands\ClearOrphanAvatars::class,
+        \Piplin\Console\Commands\ClearOrphanMirrors::class,
+        \Piplin\Console\Commands\ClearStalledTask::class,
+        \Piplin\Console\Commands\ClearOldKeys::class,
+        \Piplin\Console\Commands\UpdateGitMirrors::class,
+        \Piplin\Console\Commands\InstallApp::class,
+        \Piplin\Console\Commands\UpdateApp::class,
     ];
 
     /**
@@ -44,21 +44,21 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('fixhub:update-mirrors')
+        $schedule->command('piplin:update-mirrors')
                  ->everyFiveMinutes()
                  ->withoutOverlapping();
 
-        $schedule->command('fixhub:purge-avatars')
+        $schedule->command('piplin:purge-avatars')
                  ->weekly()
                  ->sundays()
                  ->at('00:30')
                  ->withoutOverlapping();
 
-        $schedule->command('fixhub:purge-mirrors')
+        $schedule->command('piplin:purge-mirrors')
                  ->daily()
                  ->withoutOverlapping();
 
-        $schedule->command('fixhub:purge-temp')
+        $schedule->command('piplin:purge-temp')
                  ->hourly()
                  ->withoutOverlapping();
     }
@@ -74,7 +74,7 @@ class Kernel extends ConsoleKernel
 
         // Only register the reset command on the local environment
         if ($this->app->environment('local')) {
-            $this->commands[] = \Fixhub\Console\Commands\ResetApp::class;
+            $this->commands[] = \Piplin\Console\Commands\ResetApp::class;
         }
     }
 }

@@ -26,15 +26,15 @@
 
 @section('right-buttons')
 <div class="pull-right">
-    <button type="button" class="btn btn-primary" title="{{ trans('keys.create') }}" data-toggle="modal" data-target="#key"><span class="fixhub fixhub-plus"></span> {{ trans('keys.create') }}</button>
+    <button type="button" class="btn btn-primary" title="{{ trans('keys.create') }}" data-toggle="modal" data-target="#key"><span class="piplin piplin-plus"></span> {{ trans('keys.create') }}</button>
 </div>
 @stop
 
 @push('javascript')
 <script type="text/javascript">
     var keys = {!! $keys !!};
-    new Fixhub.KeysTab();
-    Fixhub.Keys.add(keys.data);
+    new Piplin.KeysTab();
+    Piplin.Keys.add(keys.data);
     @if(isset($action) && $action == 'create')
     $('button.btn.btn-primary').trigger('click');
     @endif
@@ -43,13 +43,13 @@
 
 @push('templates')
 <script type="text/template" id="key-template">
-    <td data-key-id="<%- id %>"><span class="drag-handle"><i class="fixhub fixhub-drag"></i></span><%- name %></td>
+    <td data-key-id="<%- id %>"><span class="drag-handle"><i class="piplin piplin-drag"></i></span><%- name %></td>
     <td><%- fingerprint %></td>
     <td>
         <div class="btn-group pull-right">
-            <button class="btn btn-default btn-show" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><i class="fixhub fixhub-preview"></i></button>
-            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#key"><i class="fixhub fixhub-edit"></i></button>
-            <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="fixhub fixhub-delete"></i></button>
+            <button class="btn btn-default btn-show" title="{{ trans('keys.view_ssh_key') }}" data-toggle="modal" data-target="#show_key"><i class="piplin piplin-preview"></i></button>
+            <button class="btn btn-default btn-edit" title="{{ trans('app.edit') }}" data-toggle="modal" data-target="#key"><i class="piplin piplin-edit"></i></button>
+            <button class="btn btn-danger btn-delete" title="{{ trans('app.delete') }}" data-toggle="modal" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
         </div>
     </td>
 </script>

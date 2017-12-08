@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models\Traits;
+namespace Piplin\Models\Traits;
 
-use Fixhub\Models\Command;
-use Fixhub\Models\Environment;
-use Fixhub\Models\Variable;
-use Fixhub\Models\SharedFile;
-use Fixhub\Models\ConfigFile;
+use Piplin\Models\Command;
+use Piplin\Models\ConfigFile;
+use Piplin\Models\Environment;
+use Piplin\Models\SharedFile;
+use Piplin\Models\Variable;
 
 /**
  * A trait to setup relation for project and template models.

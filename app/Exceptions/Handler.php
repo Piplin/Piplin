@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Exceptions;
+namespace Piplin\Exceptions;
 
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -85,6 +85,7 @@ class Handler extends ExceptionHandler
         if ($this->container->bound(Whoops::class) && $this->isSafeToWhoops($exception)) {
             return $this->renderExceptionWithWhoops($exception);
         }
+
         return parent::render($request, $exception);
     }
 
@@ -97,7 +98,7 @@ class Handler extends ExceptionHandler
     protected function renderExceptionWithWhoops(Exception $exception)
     {
         /** @var Whoops $whoops */
-        $whoops = $this->container->make(Whoops::class);
+        $whoops     = $this->container->make(Whoops::class);
         $statusCode = 500;
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
@@ -106,6 +107,7 @@ class Handler extends ExceptionHandler
         if (method_exists($exception, 'getHeaders')) {
             $headers = $exception->getHeaders();
         }
+
         return new Response(
             $whoops->handleException($exception),
             $statusCode,
@@ -130,8 +132,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Illuminate\Auth\AuthenticationException  $exception
+     * @param \Illuminate\Http\Request                 $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
      *
      * @return \Illuminate\Http\Response
      */
@@ -140,6 +142,7 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+
         return redirect()->guest(route('auth.login'));
     }
 
@@ -148,8 +151,8 @@ class Handler extends ExceptionHandler
      *
      * @todo Remove this
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @param \Illuminate\Http\Request                   $request
+     * @param \Illuminate\Validation\ValidationException $exception
      *
      * @return \Illuminate\Http\JsonResponse
      */

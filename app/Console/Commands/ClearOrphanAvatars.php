@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +24,7 @@ class ClearOrphanAvatars extends Command
      *
      * @var string
      */
-    protected $signature = 'fixhub:purge-avatars';
+    protected $signature = 'piplin:purge-avatars';
 
     /**
      * The console command description.

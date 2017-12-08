@@ -1,28 +1,27 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Fixhub\Models\Traits\BroadcastChanges;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Notification hook.
  */
 class Hook extends Model
 {
-    use SoftDeletes, BroadcastChanges, Notifiable, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, Notifiable;
 
     const EMAIL    = 'mail';
     const SLACK    = 'slack';
@@ -35,7 +34,7 @@ class Hook extends Model
      * @var array
      */
     protected $fillable = ['name', 'project_id', 'type', 'enabled', 'config',
-                           'on_deployment_success', 'on_deployment_failure'];
+                           'on_deployment_success', 'on_deployment_failure', ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -131,7 +130,7 @@ class Hook extends Model
     /**
      * Find all hooks which are enabled.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */

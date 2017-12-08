@@ -9,8 +9,8 @@
 
 @push('javascript')
     <script type="text/javascript">
-        new Fixhub.ServersTab();
-        Fixhub.Servers.add({!! $servers !!});
-        Fixhub.targetable_id = {{ $targetable->id }};
+        new Piplin.ServersTab();
+        Piplin.Servers.add({!! $servers !!});
+        Piplin.targetable_id = {{ $targetable->id }};
     </script>
 @endpush

@@ -58,6 +58,7 @@
             $('#command_default_on_row').addClass('hide');
 
             $('.command-environment').prop('checked', true);
+            $('.command-pattern').prop('checked', true);
         }
 
         modal.find('.modal-title span').text(title);
@@ -68,11 +69,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var command = Fixhub.Commands.get($('#model_id').val());
+        var command = Piplin.Commands.get($('#model_id').val());
 
         command.destroy({
             wait: true,
@@ -80,14 +81,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('commands.delete_success'));
+                Piplin.toast(trans('commands.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -107,22 +108,25 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find(':input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var command_id = $('#command_id').val();
-
         if (command_id) {
-            var command = Fixhub.Commands.get(command_id);
+            var command = Piplin.Commands.get(command_id);
         } else {
-            var command = new Fixhub.Command();
+            var command = new Piplin.Command();
         }
 
         var environment_ids = [];
-
         $('.command-environment:checked').each(function() {
             environment_ids.push($(this).val());
+        });
+
+        var pattern_ids = [];
+        $('.command-pattern:checked').each(function() {
+            pattern_ids.push($(this).val());
         });
 
         command.save({
@@ -133,6 +137,7 @@
             targetable_type: $('input[name="targetable_type"]').val(),
             targetable_id:   $('input[name="targetable_id"]').val(),
             environments:    environment_ids,
+            patterns:        pattern_ids,
             optional:        $('#command_optional').is(':checked'),
             default_on:      $('#command_default_on').is(':checked')
         }, {
@@ -141,20 +146,20 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
 
                 var msg = trans('commands.edit_success');
                 if (!command_id) {
-                    Fixhub.Commands.add(response);
+                    Piplin.Commands.add(response);
                     msg = trans('commands.create_success');
                 }
 
                 editor.setValue('');
                 editor.gotoLine(1);
 
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -176,18 +181,18 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find(':input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Command = Backbone.Model.extend({
+    Piplin.Command = Backbone.Model.extend({
         urlRoot: '/commands',
         defaults: function() {
             return {
-                order: Fixhub.Commands.nextOrder()
+                order: Piplin.Commands.nextOrder()
             };
         },
         isAfter: function() {
@@ -196,7 +201,7 @@
     });
 
     var Commands = Backbone.Collection.extend({
-        model: Fixhub.Command,
+        model: Piplin.Command,
         comparator: 'order',
         nextOrder: function() {
             if (!this.length) {
@@ -207,9 +212,9 @@
         }
     });
 
-    Fixhub.Commands = new Commands();
+    Piplin.Commands = new Commands();
 
-    Fixhub.CommandsTab = Backbone.View.extend({
+    Piplin.CommandsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -221,42 +226,42 @@
             $('.no-commands').show();
             $('.command-list').hide();
 
-            this.listenTo(Fixhub.Commands, 'add', this.addOne);
-            this.listenTo(Fixhub.Commands, 'reset', this.addAll);
-            this.listenTo(Fixhub.Commands, 'remove', this.addAll);
-            this.listenTo(Fixhub.Commands, 'all', this.render);
+            this.listenTo(Piplin.Commands, 'add', this.addOne);
+            this.listenTo(Piplin.Commands, 'reset', this.addAll);
+            this.listenTo(Piplin.Commands, 'remove', this.addAll);
+            this.listenTo(Piplin.Commands, 'all', this.render);
 
-            Fixhub.listener.on('command:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var command = Fixhub.Commands.get(parseInt(data.model.id));
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
 
                 if (command) {
                     command.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('command:' + Fixhub.events.MODEL_CREATED, function (data) {
+            Piplin.listener.on('command:' + Piplin.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                //if (data.model.targetable_type == Fixhub.targetable_type && parseInt(data.model.targetable_id) === parseInt(Fixhub.targetable_id)) {
+                //if (data.model.targetable_type == Piplin.targetable_type && parseInt(data.model.targetable_id) === parseInt(Piplin.targetable_id)) {
 
                     // Make sure the command is for this action (clone, install, activate, purge)
-                    if (parseInt(data.model.step) + 1 === parseInt(Fixhub.command_action) || parseInt(data.model.step) - 1 === parseInt(Fixhub.command_action)) {
-                        Fixhub.Commands.add(data.model);
+                    if (parseInt(data.model.step) + 1 === parseInt(Piplin.command_action) || parseInt(data.model.step) - 1 === parseInt(Piplin.command_action)) {
+                        Piplin.Commands.add(data.model);
                     }
                 }
             });
 
-            Fixhub.listener.on('command:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var command = Fixhub.Commands.get(parseInt(data.model.id));
+            Piplin.listener.on('command:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var command = Piplin.Commands.get(parseInt(data.model.id));
 
                 if (command) {
-                    Fixhub.Commands.remove(command);
+                    Piplin.Commands.remove(command);
                 }
             });
         },
         render: function () {
-            var before = Fixhub.Commands.find(function(model) {
+            var before = Piplin.Commands.find(function(model) {
                 return !model.isAfter();
             });
 
@@ -268,7 +273,7 @@
                 $('#commands-before .command-list').hide();
             }
 
-            var after = Fixhub.Commands.find(function(model) {
+            var after = Piplin.Commands.find(function(model) {
                 return model.isAfter();
             });
 
@@ -281,7 +286,7 @@
             }
         },
         addOne: function (command) {
-            var view = new Fixhub.CommandView({
+            var view = new Piplin.CommandView({
                 model: command
             });
 
@@ -304,11 +309,11 @@
         addAll: function () {
             this.$beforeList.html('');
             this.$afterList.html('');
-            Fixhub.Commands.each(this.addOne, this);
+            Piplin.Commands.each(this.addOne, this);
         }
     });
 
-    Fixhub.CommandView = Backbone.View.extend({
+    Piplin.CommandView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -344,6 +349,11 @@
             $('.command-environment').prop('checked', false);
             $(this.model.get('environments')).each(function (index, environment) {
                 $('#command_environment_' + environment.id).prop('checked', true);
+            });
+
+            $('.command-pattern').prop('checked', false);
+            $(this.model.get('patterns')).each(function (index, pattern) {
+                $('#command_pattern_' + pattern.id).prop('checked', true);
             });
         },
         trash: function() {

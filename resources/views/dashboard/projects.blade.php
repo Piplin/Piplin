@@ -1,9 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@if($current_user->isAdmin)
-      @include('dashboard._partials.shortcut')
-@endif
 
 @if (!count($projects))
     <div class="box">
@@ -25,7 +22,7 @@
                 <thead>
                     <tr>
                         <th width="30%">{{ trans('projects.name') }}</th>
-                        <th width="25%">{{ trans('projects.deployed') }}</th>
+                        <th width="25%">{{ trans('projects.runned') }}</th>
                         <th width="25%">{{ trans('dashboard.status') }}</th>
                         <th class="text-right" width="20%">{{ trans('app.actions') }}</th>
                     </tr>
@@ -41,10 +38,12 @@
                           {{ trans('app.never') }}
                           @endif
                         </td>
-                        <td class="status"><span class="text-{{$group_project->css_class}}"><i class="fixhub fixhub-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
+                        <td class="status"><span class="text-{{$group_project->css_class}}"><i class="piplin piplin-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
                         <td class="text-right">
-                            <a href="{{ route('projects', ['id' => $group_project->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-primary" title="{{ trans('projects.deploy') }}"><i class="fixhub fixhub-deploy"></i></a>
-                            <a href="{{ route('projects', ['id' => $group_project->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="fixhub fixhub-go"></i></a>
+                            @if($group_project->deployPlan)
+                            <a href="{{ route('deployments', ['id' => $group_project->deployPlan->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-primary" title="{{ trans('projects.deploy') }}"><i class="piplin piplin-deploy"></i></a>
+                            @endif
+                            <a href="{{ route('projects', ['id' => $group_project->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -54,5 +53,11 @@
     </div>
     @endforeach
 @endif
+@include('dashboard.projects._dialogs.create')
+@stop
 
+@section('right-buttons')
+<div class="pull-right">
+    <a href="#" data-toggle="modal" data-target="#project_create" class="btn btn-lg btn-primary"><i class="piplin piplin-plus"></i> {{ trans('projects.create') }}</a>
+</div>
 @stop

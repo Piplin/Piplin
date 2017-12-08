@@ -1,11 +1,11 @@
 (function ($) {
 
     //Fix me please
-    var FINISHED     = 0;
-    var PENDING      = 1;
-    var DEPLOYING    = 2;
-    var FAILED       = 3;
-    var NOT_DEPLOYED = 4;
+    var FINISHED = 0;
+    var PENDING  = 1;
+    var RUNNING  = 2;
+    var FAILED   = 3;
+    var INITIAL  = 4;
 
     $('#environment_list table').sortable({
         containerSelector: 'table',
@@ -61,11 +61,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var environment = Fixhub.Environments.get($('#model_id').val());
+        var environment = Piplin.Environments.get($('#model_id').val());
 
         environment.destroy({
             wait: true,
@@ -73,14 +73,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('environments.delete_success'));
+                Piplin.toast(trans('environments.delete_success'));
             },
             error: function() {
-               icon.removeClass().addClass('fixhub fixhub-delete');
+               icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -92,16 +92,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var environment_id = $('#environment_id').val();
 
         if (environment_id) {
-            var environment = Fixhub.Environments.get(environment_id);
+            var environment = Piplin.Environments.get(environment_id);
         } else {
-            var environment = new Fixhub.Environment();
+            var environment = new Piplin.Environment();
         }
 
         environment.save({
@@ -117,16 +117,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('environments.edit_success');
                 if (!environment_id) {
-                    Fixhub.Environments.add(response);
+                    Piplin.Environments.add(response);
                     msg = trans('environments.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -148,14 +148,14 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Environment = Backbone.Model.extend({
+    Piplin.Environment = Backbone.Model.extend({
         urlRoot: '/environments',
         initialize: function() {
 
@@ -163,12 +163,12 @@
     });
 
     var Environments = Backbone.Collection.extend({
-        model: Fixhub.Environment
+        model: Piplin.Environment
     });
 
-    Fixhub.Environments = new Environments();
+    Piplin.Environments = new Environments();
 
-    Fixhub.EnvironmentsTab = Backbone.View.extend({
+    Piplin.EnvironmentsTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -179,39 +179,39 @@
             $('#no_environments').show();
             $('#environment_list').hide();
 
-            this.listenTo(Fixhub.Environments, 'add', this.addOne);
-            this.listenTo(Fixhub.Environments, 'reset', this.addAll);
-            this.listenTo(Fixhub.Environments, 'remove', this.addAll);
-            this.listenTo(Fixhub.Environments, 'all', this.render);
+            this.listenTo(Piplin.Environments, 'add', this.addOne);
+            this.listenTo(Piplin.Environments, 'reset', this.addAll);
+            this.listenTo(Piplin.Environments, 'remove', this.addAll);
+            this.listenTo(Piplin.Environments, 'all', this.render);
 
-            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_CHANGED, function (data) {
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_CHANGED, function (data) {
                 $('#environment_' + data.model.id).html(data.model.name);
 
-                var environment = Fixhub.Environments.get(parseInt(data.model.id));
+                var environment = Piplin.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
                     environment.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_CREATED, function (data) {
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    Fixhub.Environments.add(data.model);
+                    Piplin.Environments.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('environment:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var environment = Fixhub.Environments.get(parseInt(data.model.id));
+            Piplin.listener.on('environment:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var environment = Piplin.Environments.get(parseInt(data.model.id));
 
                 if (environment) {
-                    Fixhub.Environments.remove(environment);
+                    Piplin.Environments.remove(environment);
                 }
             });
         },
         render: function () {
-            if (Fixhub.Environments.length) {
+            if (Piplin.Environments.length) {
                 $('#no_environments').hide();
                 $('#environment_list').show();
             } else {
@@ -221,7 +221,7 @@
         },
         addOne: function (environment) {
 
-            var view = new Fixhub.EnvironmentView({
+            var view = new Piplin.EnvironmentView({
                 model: environment
             });
 
@@ -229,7 +229,7 @@
 
             $('.server-names', this.$list).tooltip();
             
-            if (Fixhub.Environments.length < 2) {
+            if (Piplin.Environments.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -237,11 +237,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Environments.each(this.addOne, this);
+            Piplin.Environments.each(this.addOne, this);
         }
     });
 
-    Fixhub.EnvironmentView = Backbone.View.extend({
+    Piplin.EnvironmentView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -256,7 +256,7 @@
         render: function () {
             var data = this.model.toJSON();
 
-            var parse_data = Fixhub.formatProjectStatus(parseInt(this.model.get('status')));
+            var parse_data = Piplin.formatProjectStatus(parseInt(this.model.get('status')));
             data = $.extend(data, parse_data);
 
             data.last_run = data.last_run != null ? moment(data.last_run).fromNow() : trans('app.never');

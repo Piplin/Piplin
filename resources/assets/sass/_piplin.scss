@@ -1,0 +1,237 @@
+
+#toast-container > .toast {
+    background-image: none !important;
+}
+
+#toast-container > .toast:before {
+    position: fixed;
+    font-family: FontAwesome;
+    font-size: 24px;
+    line-height: 18px;
+    float: left;
+    color: #FFF;
+    padding-right: 0.5em;
+    margin: auto 0.5em auto -1.5em;
+}
+
+#toast-container > .toast-warning:before {
+    content: "\f071";
+}
+
+#toast-container > .toast-error:before {
+    content: "\f071";
+}
+
+#toast-container > .toast-success:before {
+    content: "\f00c";
+}
+
+#toast-container > .toast-warning {
+    background-color: #51a351 !important;
+}
+
+#key pre,
+#show_key pre,
+#help pre {
+    white-space: pre-wrap;
+}
+
+.login-box-body .form-control-feedback {
+    line-height: 34px !important;
+}
+
+#webhook {
+    width: 75%;
+    padding-left: 5px;
+}
+
+#forgotten-password {
+    margin-top: 10px;
+}
+
+body.dragging,
+body.dragging * {
+    cursor: move !important;
+}
+
+.drag-handle {
+    cursor: move;
+    padding-right: 5px;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+.command-list table tr.placeholder {
+    position: relative;
+    display: block;
+    background: red;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.command-list table tr {
+    cursor: pointer;
+}
+
+.command-list table tr.placeholder:before {
+    content:           "";
+    position:          absolute;
+    width:             0;
+    height:            0;
+    border:            5px solid transparent;
+    border-left-color: red;
+    margin-top:        -5px;
+    left:              -5px;
+    border-right:      none;
+}
+
+.server-names, .task-reason {
+    cursor: pointer;
+}
+
+#pending_menu, #running_menu {
+    display: block;
+}
+
+/* Make sure there is always a space between the icon and the label as HTMLMin removes it */
+span.label i.fa {
+    margin-right: 2px;
+}
+
+div.task-source-container {
+    display: none;
+    margin-top: 5px;
+}
+
+#command_script,
+.configfile-content {
+    height: 200px;
+}
+
+#preview-content {
+    height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+div#reason div.radio label {
+    min-width: 50%;
+}
+
+#running_menu li a p,
+#running_menu li a h4,
+#pending_menu li a p,
+#pending_menu li a h4 {
+    margin-left: 0;
+}
+
+.project-status .nav-tabs-custom > .nav-tabs > li {
+    margin-right: 0;
+}
+
+.alerts {
+    margin: 0 15px;
+    .alert {
+        margin-top: 15px;
+        margin-bottom: 0px;
+    }
+}
+
+#socket_offline {
+    margin-top: 30px;
+    display: none;
+}
+
+#update-available {
+    margin-top: 15px;
+}
+
+#show_help {
+    cursor: pointer;
+}
+
+.edit-profile .form-control {
+    height: auto;
+}
+
+.avatar-preview {
+    background-color: #f7f7f7;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+.preview-md,
+.current-avatar-preview {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+}
+
+dl.dl-horizontal#hook_fields dt {
+    width: 100px;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+dl.dl-horizontal#hook_fields dd {
+    margin-left: 110px;
+    margin-bottom: 2px;
+}
+
+dl.dl-horizontal.hook_ids dt {
+    width: 30px;
+    text-align: right;
+    margin-bottom: 2px;
+}
+
+dl.dl-horizontal.hook_ids dd {
+    margin-left: 40px;
+    margin-bottom: 2px;
+}
+
+#command div#tokens ul li {
+    margin: 2px auto;
+}
+
+input#verify-google-code {
+    width: 35%;
+}
+
+div#project div.modal-body {
+    padding: 0;
+}
+
+div#project div.nav-tabs-custom {
+    margin-bottom: 0;
+    box-shadow: none;
+}
+
+div#project div.nav-tabs-custom > .tab-content {
+    padding: 15px;
+}
+
+div#project div.callout-danger {
+    margin: 15px;
+}
+
+.sub-sidebar li.list-group-item {
+    padding-left: 10px;
+}
+
+.empty-state h4 {
+  font-size: 36px;
+  font-weight: 100;
+  padding: 40px;
+  text-align: center;
+}
+
+div.col-md-10 > .main-header {
+    margin-left: 8px;
+}

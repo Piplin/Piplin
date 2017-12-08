@@ -13,6 +13,6 @@
         </div>
     </div>
     <div class="overlay hide">
-        <i class="fixhub fixhub-refresh fixhub-spin"></i>
+        <i class="piplin piplin-refresh piplin-spin"></i>
     </div>
 </div>

@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http;
+namespace Piplin\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -43,9 +43,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Fixhub\Http\Middleware\EncryptCookies::class,
-            \Fixhub\Http\Middleware\VerifyCsrfToken::class,
-            \Fixhub\Http\Middleware\Localize::class,
+            \Piplin\Http\Middleware\EncryptCookies::class,
+            \Piplin\Http\Middleware\VerifyCsrfToken::class,
+            \Piplin\Http\Middleware\Localize::class,
         ],
         'api' => [
             'throttle:600,1',
@@ -60,13 +60,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'admin'       => \Fixhub\Http\Middleware\Admin::class,
-        'project.acl' => \Fixhub\Http\Middleware\ProjectAcl::class,
-        'auth'        => \Fixhub\Http\Middleware\Authenticate::class,
+        'admin'       => \Piplin\Http\Middleware\Admin::class,
+        'project.acl' => \Piplin\Http\Middleware\ProjectAcl::class,
+        'auth'        => \Piplin\Http\Middleware\Authenticate::class,
         'auth.basic'  => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'       => \Fixhub\Http\Middleware\RedirectIfAuthenticated::class,
-        'jwt'         => \Fixhub\Http\Middleware\RefreshJsonWebToken::class,
+        'guest'       => \Piplin\Http\Middleware\RedirectIfAuthenticated::class,
+        'jwt'         => \Piplin\Http\Middleware\RefreshJsonWebToken::class,
         'throttle'    => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'localize'    => \Fixhub\Http\Middleware\Localize::class,
+        'localize'    => \Piplin\Http\Middleware\Localize::class,
     ];
 }

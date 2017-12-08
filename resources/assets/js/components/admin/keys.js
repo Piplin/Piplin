@@ -51,11 +51,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var key = Fixhub.Keys.get($('#model_id').val());
+        var key = Piplin.Keys.get($('#model_id').val());
 
         key.destroy({
             wait: true,
@@ -63,14 +63,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('keys.delete_success'));
+                Piplin.toast(trans('keys.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -82,16 +82,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var key_id = $('#key_id').val();
 
         if (key_id) {
-            var key = Fixhub.Keys.get(key_id);
+            var key = Piplin.Keys.get(key_id);
         } else {
-            var key = new Fixhub.Key();
+            var key = new Piplin.Key();
         }
 
         key.save({
@@ -103,16 +103,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('keys.edit_success');
                 if (!key_id) {
-                    Fixhub.Keys.add(response);
+                    Piplin.Keys.add(response);
                     msg = trans('keys.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -134,7 +134,7 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -142,12 +142,12 @@
     });
 
 
-    Fixhub.Key = Backbone.Model.extend({
+    Piplin.Key = Backbone.Model.extend({
         urlRoot: '/admin/keys'
     });
 
     var Keys = Backbone.Collection.extend({
-        model: Fixhub.Key,
+        model: Piplin.Key,
         comparator: function(keyA, keyB) {
             if (keyA.get('name') > keyB.get('name')) {
                 return -1; // before
@@ -159,9 +159,9 @@
         }
     });
 
-    Fixhub.Keys = new Keys();
+    Piplin.Keys = new Keys();
 
-    Fixhub.KeysTab = Backbone.View.extend({
+    Piplin.KeysTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -172,33 +172,33 @@
             $('#no_keys').show();
             $('#key_list').hide();
 
-            this.listenTo(Fixhub.Keys, 'add', this.addOne);
-            this.listenTo(Fixhub.Keys, 'reset', this.addAll);
-            this.listenTo(Fixhub.Keys, 'remove', this.addAll);
-            this.listenTo(Fixhub.Keys, 'all', this.render);
+            this.listenTo(Piplin.Keys, 'add', this.addOne);
+            this.listenTo(Piplin.Keys, 'reset', this.addAll);
+            this.listenTo(Piplin.Keys, 'remove', this.addAll);
+            this.listenTo(Piplin.Keys, 'all', this.render);
 
-            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var key = Fixhub.Keys.get(parseInt(data.model.id));
+            Piplin.listener.on('key:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var key = Piplin.Keys.get(parseInt(data.model.id));
 
                 if (key) {
                     key.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('key:' + Fixhub.events.MODEL_CREATED, function (data) {
-                Fixhub.Keys.add(data.model);
+            Piplin.listener.on('key:' + Piplin.events.MODEL_CREATED, function (data) {
+                Piplin.Keys.add(data.model);
             });
 
-            Fixhub.listener.on('key:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var key = Fixhub.Keys.get(parseInt(data.model.id));
+            Piplin.listener.on('key:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var key = Piplin.Keys.get(parseInt(data.model.id));
 
                 if (key) {
-                    Fixhub.Keys.remove(key);
+                    Piplin.Keys.remove(key);
                 }
             });
         },
         render: function () {
-            if (Fixhub.Keys.length) {
+            if (Piplin.Keys.length) {
                 $('#no_keys').hide();
                 $('#key_list').show();
             } else {
@@ -208,13 +208,13 @@
         },
         addOne: function (key) {
 
-            var view = new Fixhub.KeyView({
+            var view = new Piplin.KeyView({
                 model: key
             });
 
             this.$list.append(view.render().el);
 
-            if (Fixhub.Keys.length < 2) {
+            if (Piplin.Keys.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {
                 $('.drag-handle', this.$list).show();
@@ -222,11 +222,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Keys.each(this.addOne, this);
+            Piplin.Keys.each(this.addOne, this);
         }
     });
 
-    Fixhub.KeyView = Backbone.View.extend({
+    Piplin.KeyView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-show': 'show',

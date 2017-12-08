@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,7 +21,7 @@ return [
     'none'           => '该项目尚未配置过服务器',
     'name'           => '名称',
     'connect_as'     => '运行用户',
-    'username_help'  => '远程服务器执行部署工作的用户',
+    'username_help'  => '远程服务器执行任务的用户',
     'host'           => '主机名',
     'host_help'      => '远程服务器的主机名或IP地址',
     'port'           => '端口',

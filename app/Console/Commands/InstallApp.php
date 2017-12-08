@@ -1,19 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Console\Commands;
+namespace Piplin\Console\Commands;
 
 use DateTimeZone;
-use Fixhub\Console\Commands\Traits\AskAndValidate;
-use Fixhub\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -21,6 +19,8 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use PDO;
+use Piplin\Console\Commands\Traits\AskAndValidate;
+use Piplin\Models\User;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Process\Process;
 
@@ -67,7 +67,7 @@ class InstallApp extends Command
 
         $this->line('');
         $this->info('***********************');
-        $this->info('  Welcome to Fixhub  ');
+        $this->info('  Welcome to Piplin  ');
         $this->info('***********************');
         $this->line('');
 
@@ -103,7 +103,7 @@ class InstallApp extends Command
         $this->optimize();
 
         $this->line('');
-        $this->info('Success! Fixhub is now installed');
+        $this->info('Success! Piplin is now installed');
         $this->line('');
         $this->header('Next steps');
         $this->line('');
@@ -223,7 +223,7 @@ class InstallApp extends Command
     }
 
     /**
-     * Calls the artisan migrate to set up the database
+     * Calls the artisan migrate to set up the database.
      *
      * @param bool $seed Whether or not to seed the database
      */
@@ -236,7 +236,7 @@ class InstallApp extends Command
     }
 
     /**
-     * Calls the artisan db:seed to seed the database
+     * Calls the artisan db:seed to seed the database.
      *
      * @param bool $seed Whether or not to seed the database
      */
@@ -268,7 +268,6 @@ class InstallApp extends Command
         $this->clearCaches();
 
         if ($this->getLaravel()->environment() !== 'local') {
-            $this->call('optimize', ['--force' => true]);
             $this->call('config:cache');
             $this->call('route:cache');
         }
@@ -291,16 +290,16 @@ class InstallApp extends Command
             $drivers = $this->getDatabaseDrivers();
 
             // Should we just skip this step if only one driver is available?
-            $type = $this->choice('Database Driver', $drivers, (int)array_search('mysql', $drivers, true));
+            $type = $this->choice('Database Driver', $drivers, (int) array_search('mysql', $drivers, true));
 
-            $database['type'] = $type;
+            $database['connection'] = $type;
 
             Config::set('database.default', $type);
 
             if ($type !== 'sqlite') {
                 $host = $this->ask('Database Host', '127.0.0.1');
-                $name = $this->ask('Database', 'fixhub');
-                $user = $this->ask('Username', 'fixhub');
+                $name = $this->ask('Database', 'piplin');
+                $user = $this->ask('Username', 'piplin');
                 $pass = $this->secret('Password');
 
                 $database['host']     = $host;
@@ -345,10 +344,10 @@ class InstallApp extends Command
         };
 
         $url = $this->askAndValidate(
-            'Application URL ("http://fixhub.app" for example)',
+            'Application URL ("http://piplin.app" for example)',
             [],
             $url_callback,
-            'http://fixhub.app'
+            'http://piplin.app'
         );
 
         $region = $this->choice('Timezone region', array_keys($regions), 4);
@@ -369,7 +368,7 @@ class InstallApp extends Command
             $process->run();
 
             if (!$process->isSuccessful()) {
-                $socket .= ':6001';
+                $socket .= ':7001';
             }
         }
 
@@ -452,7 +451,7 @@ class InstallApp extends Command
             $email['password'] = $pass;
         }
 
-        $from_name = $this->ask('From name', 'Fixhub');
+        $from_name = $this->ask('From name', 'Piplin');
 
         $from_address = $this->askAndValidate('From address', [], function ($answer) {
             $validator = Validator::make(['from_address' => $answer], [
@@ -464,7 +463,7 @@ class InstallApp extends Command
             };
 
             return $answer;
-        }, 'fixhub@fixhub.app');
+        }, 'piplin@piplin.app');
 
         $email['from_name']    = $from_name;
         $email['from_address'] = $from_address;
@@ -524,13 +523,13 @@ class InstallApp extends Command
      */
     private function verifyDatabaseDetails(array $database)
     {
-        if ($database['type'] === 'sqlite') {
+        if ($database['connection'] === 'sqlite') {
             return touch(database_path('database.sqlite'));
         }
 
         try {
             $connection = new PDO(
-                $database['type'] . ':host=' . $database['host'] . ';dbname=' . $database['database'],
+                $database['connection'] . ':host=' . $database['host'] . ';dbname=' . $database['database'],
                 $database['username'],
                 $database['password'],
                 [
@@ -545,7 +544,7 @@ class InstallApp extends Command
             return true;
         } catch (\Exception $error) {
             $this->block([
-                'Fixhub could not connect to the database with the details provided. Please try again.',
+                'Piplin could not connect to the database with the details provided. Please try again.',
                 PHP_EOL,
                 $error->getMessage(),
             ]);
@@ -555,7 +554,7 @@ class InstallApp extends Command
     }
 
     /**
-     * Ensures that Fixhub has not been installed yet.
+     * Ensures that Piplin has not been installed yet.
      *
      * @return bool
      */
@@ -563,9 +562,9 @@ class InstallApp extends Command
     {
         if (config('app.key') !== false && config('app.key') !== 'SomeRandomString') {
             $this->block([
-                'You have already installed Fixhub!',
+                'You have already installed Piplin!',
                 PHP_EOL,
-                'If you were trying to update Fixhub, please use "php artisan app:update" instead.',
+                'If you were trying to update Piplin, please use "php artisan app:update" instead.',
             ]);
 
             return false;
@@ -575,7 +574,7 @@ class InstallApp extends Command
     }
 
     /**
-     * Checks the system meets all the requirements needed to run Fixhub.
+     * Checks the system meets all the requirements needed to run Piplin.
      *
      * @return bool
      */
@@ -682,7 +681,7 @@ class InstallApp extends Command
 
         if ($errors) {
             $this->line('');
-            $this->block('Fixhub cannot be installed. Please review the errors above before continuing.');
+            $this->block('Piplin cannot be installed. Please review the errors above before continuing.');
             $this->line('');
 
             return false;

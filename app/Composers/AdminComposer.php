@@ -1,17 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\View as Vshare;
 
 /**
  * The composer for the admin.
@@ -32,69 +33,80 @@ class AdminComposer
      */
     public function __construct()
     {
-        $this->subMenus['user'] = [
-                'users'=> [
-                    'title' => trans('users.manage'),
-                    'url' => route('admin.users.index'),
-                    'icon' => 'user',
-                    'active' => false,
-                ],
-                'providers' => [
-                    'title' => trans('providers.manage'),
-                    'url' => route('admin.providers.index'),
-                    'icon' => 'provider',
-                    'active' => false,
-                ]
-            ];
-
-        $this->subMenus['project'] = [
+        $this->subMenus = [
+            'index' => [
+                'title'  => trans('admin.home'),
+                'url'    => route('admin'),
+                'icon'   => 'home',
+                'active' => false,
+                'children' => [],
+            ],
             'projects' => [
                 'title' => trans('projects.manage'),
-                'url' => route('admin.projects.index'),
-                'icon' => 'project',
+                'url'   => route('admin.projects.index'),
+                'icon'  => 'project',
                 'active' => false,
+                'children' => [
+                    'projects' => [
+                        'title'  => trans('projects.manage'),
+                        'url'    => route('admin.projects.index'),
+                        'icon'   => 'project',
+                        'active' => false,
+                    ],
+                    'groups' => [
+                        'title'  => trans('groups.manage'),
+                        'url'    => route('admin.groups.index'),
+                        'icon'   => 'group',
+                        'active' => false,
+                    ],
+                ],
             ],
-            'groups' => [
-                'title' => trans('groups.manage'),
-                'url' => route('admin.groups.index'),
-                'icon' => 'group',
+            'resources' => [
+                'title' => trans('admin.resources'),
+                'url'   => route('admin.cabinets.index'),
+                'icon'  => 'cabinet',
                 'active' => false,
+                'children' => [
+                    /*
+                    'templates' => [
+                        'title'  => trans('templates.manage'),
+                        'url'    => route('admin.templates.index'),
+                        'icon'   => 'template',
+                        'active' => false,
+                    ],*/
+                    'cabinets' => [
+                        'title'  => trans('cabinets.manage'),
+                        'url'    => route('admin.cabinets.index'),
+                        'icon'   => 'cabinet',
+                        'active' => false,
+                    ],
+                    'keys' => [
+                        'title'  => trans('keys.manage'),
+                        'url'    => route('admin.keys.index'),
+                        'icon'   => 'key',
+                        'active' => false,
+                    ],
+                ],
             ],
-        ];
-
-        $this->subMenus['deployment'] = [
-            'templates' => [
-                'title' => trans('templates.manage'),
-                'url' => route('admin.templates.index'),
-                'icon' => 'template',
+            'users' => [
+                'title' => trans('users.manage'),
+                'url'   => route('admin.users.index'),
+                'icon'  => 'users',
                 'active' => false,
-            ],
-            'cabinets' => [
-                'title' => trans('cabinets.manage'),
-                'url' => route('admin.cabinets.index'),
-                'icon' => 'cabinet',
-                'active' => false,
-            ],
-            'keys' => [
-                'title' => trans('keys.manage'),
-                'url' => route('admin.keys.index'),
-                'icon' => 'key',
-                'active' => false,
-            ],
-        ];
-
-        $this->subMenus['misc'] = [
-            'links' => [
-                'title' => trans('links.manage'),
-                'url' => route('admin.links.index'),
-                'icon' => 'link',
-                'active' => false,
-            ],
-            'tips' => [
-                'title' => trans('tips.manage'),
-                'url' => route('admin.tips.index'),
-                'icon' => 'link',
-                'active' => false,
+                'children' => [
+                    'users' => [
+                        'title'  => trans('users.manage'),
+                        'url'    => route('admin.users.index'),
+                        'icon'   => 'user',
+                        'active' => false,
+                    ],
+                    'providers' => [
+                        'title'  => trans('providers.manage'),
+                        'url'    => route('admin.providers.index'),
+                        'icon'   => 'provider',
+                        'active' => false,
+                    ],
+                ],
             ],
         ];
     }
@@ -107,61 +119,48 @@ class AdminComposer
      */
     public function compose(View $view)
     {
-        $subMenu = [];
-
         $name = $view->name();
 
+        if ($name === 'admin.index') {
+            $current_menu = 'index';
+        }
+
         //User collection
-        if ($name == 'admin.users.index') {
-            $subMenu = $this->getSubMenu('user', 'users');
-        } elseif ($name == 'admin.providers.index') {
-            $subMenu = $this->getSubMenu('user', 'providers');
+        if ($name === 'admin.users.index') {
+            $current_menu = 'users';
+        } elseif ($name === 'admin.providers.index') {
+            $current_menu = 'users';
         }
 
         // Project collection
-        if ($name == 'admin.projects.index') {
-            $subMenu = $this->getSubMenu('project', 'projects');
-        } elseif (in_array($name, ['admin.groups.index', 'admin.groups.show'])) {
-            $subMenu = $this->getSubMenu('project', 'groups');
+        if ($name === 'admin.projects.index') {
+            $current_menu = 'projects';
+        } elseif (in_array($name, ['admin.groups.index', 'admin.groups.show'], true)) {
+            $current_menu = 'projects';
         }
 
-        // Deployment collection
-        if (in_array($name, ['admin.templates.index', 'admin.templates.show'])) {
-            $subMenu = $this->getSubMenu('deployment', 'templates');
-        } elseif ($name == 'admin.keys.index') {
-            $subMenu = $this->getSubMenu('deployment', 'keys');
-        } elseif (in_array($name, ['admin.cabinets.index', 'admin.cabinets.show'])) {
-            $subMenu = $this->getSubMenu('deployment', 'cabinets');
+        // Task collection
+        if (in_array($name, ['admin.templates.index', 'admin.templates.show'], true)) {
+            $current_menu = 'resources';
+        } elseif ($name === 'admin.keys.index') {
+            $current_menu = 'resources';
+        } elseif (in_array($name, ['admin.cabinets.index', 'admin.cabinets.show'], true)) {
+            $current_menu = 'resources';
         }
 
-        // Misc collection
-        if ($name == 'admin.links.index') {
-            $subMenu = $this->getSubMenu('misc', 'links');
-        } elseif ($name == 'admin.tips.index') {
-            $subMenu = $this->getSubMenu('misc', 'tips');
-        }
-
-        $view->with('sub_menu', $subMenu);
+        Vshare::share([
+            'sub_menu' => $this->getSubMenu(),
+            'current_menu' => $current_menu,
+        ]);
     }
 
     /**
      * Returns a submenu by collection and key.
      *
-     * @param string $collection
-     * @param string $key
-     *
      * @return array
      */
-    private function getSubMenu($collection, $key = '')
+    private function getSubMenu()
     {
-        if (!isset($this->subMenus[$collection])) {
-            return;
-        }
-
-        if (!empty($key) && isset($this->subMenus[$collection][$key])) {
-            $this->subMenus[$collection][$key]['active'] = true;
-        }
-
-        return $this->subMenus[$collection];
+        return $this->subMenus;
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;

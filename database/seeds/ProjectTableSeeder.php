@@ -1,16 +1,16 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Project;
 use Illuminate\Database\Seeder;
+use Piplin\Models\Project;
 
 class ProjectTableSeeder extends Seeder
 {
@@ -19,16 +19,16 @@ class ProjectTableSeeder extends Seeder
         DB::table('projects')->delete();
 
         $project = Project::create([
-            'name'            => 'Fixhub',
+            'name'            => 'Piplin',
             'hash'            => str_random(60),
-            'repository'      => 'https://github.com/fixhub/fixhub.git',
-            'url'             => 'http://fixhub.org',
-            'targetable_type' => 'Fixhub\\Models\\ProjectGroup',
+            'repository'      => 'https://github.com/piplin/piplin.git',
+            'url'             => 'http://piplin.com',
+            'targetable_type' => 'Piplin\\Models\\ProjectGroup',
             'targetable_id'   => 1,
             'deploy_path'     => '/var/www/web',
             'key_id'          => 1,
             'last_run'        => null,
-            'build_url'       => 'https://img.shields.io/travis/Fixhub/Fixhub/master.svg?style=flat-square',
+            'build_url'       => 'https://img.shields.io/travis/Piplin/Piplin/master.svg?style=flat-square',
         ]);
 
         $project->members()->attach([1]);

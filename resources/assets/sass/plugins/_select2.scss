@@ -20,6 +20,7 @@
 }
 
 .select2-container--default.select2-container--open {
+  z-index: 1999;
   border-color: $light-blue;
 }
 

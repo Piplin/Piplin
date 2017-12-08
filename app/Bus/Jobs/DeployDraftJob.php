@@ -1,19 +1,18 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Fixhub\Bus\Jobs\DeployProjectJob;
-use Fixhub\Models\Deployment;
+use Piplin\Models\Task;
 
 /**
  * Deploys a draft.
@@ -23,20 +22,20 @@ class DeployDraftJob extends Job
     use DispatchesJobs;
 
     /**
-     * @var Deployment
+     * @var Task
      */
     private $deployment;
 
     /**
      * Create a new command instance.
      *
-     * @param Deployment $deployment
-     * @param array $environmentIds
-     * @param array $optional
+     * @param Task $deployment
+     * @param array      $environmentIds
+     * @param array      $optional
      *
      * @return void
      */
-    public function __construct(Deployment $deployment)
+    public function __construct(Task $deployment)
     {
         $this->deployment     = $deployment;
     }
@@ -52,9 +51,9 @@ class DeployDraftJob extends Job
             return;
         }
 
-        $this->deployment->status = Deployment::PENDING;
+        $this->deployment->status = Task::PENDING;
         $this->deployment->save();
 
-        $this->dispatch(new DeployProjectJob($this->deployment));
+        $this->dispatch(new RunTaskJob($this->deployment));
     }
 }

@@ -1,42 +1,41 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
-use Fixhub\Models\Traits\SetupRelations;
-use Fixhub\Models\Traits\HasTargetable;
-use Fixhub\Presenters\ProjectPresenter;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use McCool\LaravelAutoPresenter\HasPresenter;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Models\Traits\HasTargetable;
+use Piplin\Models\Traits\SetupRelations;
+use Piplin\Presenters\ProjectPresenter;
+use Piplin\Services\Scripts\Runner as Process;
 use UnexpectedValueException;
 use Version\Compare as VersionCompare;
-use McCool\LaravelAutoPresenter\HasPresenter;
-use Venturecraft\Revisionable\RevisionableTrait;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Project model.
  */
 class Project extends Model implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, SetupRelations, HasTargetable, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, SetupRelations, HasTargetable;
 
-    const FINISHED     = 0;
-    const PENDING      = 1;
-    const DEPLOYING    = 2;
-    const FAILED       = 3;
-    const NOT_DEPLOYED = 4;
+    const FINISHED = 0;
+    const PENDING  = 1;
+    const RUNNING  = 2;
+    const FAILED   = 3;
+    const INITIAL  = 4;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -85,7 +84,7 @@ class Project extends Model implements HasPresenter
      */
     protected $dates = [
         'last_run',
-        'last_mirrored'
+        'last_mirrored',
     ];
 
     /**
@@ -98,7 +97,7 @@ class Project extends Model implements HasPresenter
         'webhook_url',
         'repository_path',
         'repository_url',
-        'branch_url'
+        'branch_url',
     ];
 
     /**
@@ -110,31 +109,17 @@ class Project extends Model implements HasPresenter
         'id'                 => 'integer',
         'status'             => 'integer',
         'builds_to_keep'     => 'integer',
-        'allow_other_branch' => 'boolean'
+        'allow_other_branch' => 'boolean',
     ];
-
-    /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
-
-    /**
-     * Revision ignore attributes.
-     *
-     * @var array
-     */
-    protected $dontKeepRevisionOf = ['status', 'last_run', 'last_mirrored'];
 
     /**
      * Determines whether the project is currently being deployed.
      *
      * @return bool
      */
-    public function isDeploying()
+    public function isRunning()
     {
-        return ($this->status === self::DEPLOYING || $this->status === self::PENDING);
+        return ($this->status === self::RUNNING || $this->status === self::PENDING);
     }
 
     /**
@@ -162,7 +147,7 @@ class Project extends Model implements HasPresenter
             $info['port']      = $matches[3];
             $info['reference'] = $matches[4];
         } elseif (preg_match('#^https?#', $this->repository)) {
-            $data = parse_url($this->repository);
+            $data         = parse_url($this->repository);
             $data['path'] = isset($data['path']) ? $data['path'] : '';
 
             $info['user']      = isset($data['user']) ? $data['user'] : '';
@@ -178,7 +163,7 @@ class Project extends Model implements HasPresenter
      * Checks ability for specified project and user.
      *
      * @param string $name
-     * @param User $user
+     * @param User   $user
      *
      * @return bool
      */
@@ -189,14 +174,14 @@ class Project extends Model implements HasPresenter
         }
 
         $roleCheck = true;
-        if ($name == 'manage') {
+        if ($name === 'manage') {
             $roleCheck = $user->is_manager;
         }
 
         static $isMember = null;
         if (is_null($isMember)) {
-            $isMember = ($this->targetable instanceof User && $this->targetable->id == $user->id)
-                        || $this->members()->find($user->id) != null;
+            $isMember = ($this->targetable instanceof User && $this->targetable->id === $user->id)
+                        || $this->members()->find($user->id) !== null;
         }
 
         return $user->is_admin || ($roleCheck && $isMember);
@@ -216,7 +201,7 @@ class Project extends Model implements HasPresenter
      * Gets the repository path.
      *
      * @return string|false
-     * @see \Fixhub\Models\Project::accessDetails()
+     * @see \Piplin\Models\Project::accessDetails()
      */
     public function getRepositoryPathAttribute()
     {
@@ -234,7 +219,7 @@ class Project extends Model implements HasPresenter
      * Gets the HTTP URL to the repository.
      *
      * @return string|false
-     * @see \Fixhub\Models\Project::accessDetails()
+     * @see \Piplin\Models\Project::accessDetails()
      */
     public function getRepositoryUrlAttribute()
     {
@@ -242,6 +227,7 @@ class Project extends Model implements HasPresenter
 
         if (isset($info['domain']) && isset($info['reference'])) {
             $port = isset($info['port']) ? ':' . $info['port'] : '';
+
             return 'http://' . $info['domain'] . $port . '/' . $info['reference'];
         }
 
@@ -253,7 +239,7 @@ class Project extends Model implements HasPresenter
      *
      * @param  string       $alternative
      * @return string|false
-     * @see \Fixhub\Models\Project::accessDetails()
+     * @see \Piplin\Models\Project::accessDetails()
      */
     public function getBranchUrlAttribute($alternative = null)
     {
@@ -322,6 +308,42 @@ class Project extends Model implements HasPresenter
     }
 
     /**
+     * Define an accessor for the deploy webhook URL.
+     *
+     * @return string
+     */
+    public function getDeployWebhookAttribute()
+    {
+        return route('webhook.deploy', $this->hash);
+    }
+
+    /**
+     * Define an accessor for the build webhook URL.
+     *
+     * @return string
+     */
+    public function getBuildWebhookAttribute()
+    {
+        return route('webhook.build', $this->hash);
+    }
+
+    /**
+     * Get the build plan associated with the project.
+     */
+    public function buildPlan()
+    {
+        return $this->hasOne(BuildPlan::class);
+    }
+
+    /**
+     * Get the build plan associated with the project.
+     */
+    public function deployPlan()
+    {
+        return $this->hasOne(DeployPlan::class);
+    }
+
+    /**
      * Belongs to many relationship.
      *
      * @return Server
@@ -344,11 +366,11 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship.
      *
-     * @return Deployment
+     * @return Task
      */
-    public function deployments()
+    public function tasks()
     {
-        return $this->hasMany(Deployment::class)
+        return $this->hasMany(Task::class)
                     ->orderBy('started_at', 'DESC');
     }
 
@@ -366,8 +388,8 @@ class Project extends Model implements HasPresenter
     /**
      * Has many relationship for git references.
      *
-     * @see PFixhub\Models\Project::tags()
-     * @see PFixhub\Models\Project::branches()
+     * @see PPiplin\Models\Project::tags()
+     * @see PPiplin\Models\Project::branches()
      * @return Ref
      */
     public function refs()
@@ -411,6 +433,17 @@ class Project extends Model implements HasPresenter
                     ->where('name', '<>', $this->branch)
                     ->orderBy('name')
                     ->pluck('name');
+    }
+
+    /**
+     * Has many relationship.
+     *
+     * @return Release
+     */
+    public function releases()
+    {
+        return $this->hasMany(Release::class)
+                    ->orderBy('id', 'DESC');
     }
 
     /**

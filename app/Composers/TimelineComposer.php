@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
 use Cache;
-use Fixhub\Models\Deployment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Piplin\Models\Task;
 
 /**
  * View composer for timeline.
@@ -24,7 +24,7 @@ class TimelineComposer
     /**
      * Sets the timeline data into view variables.
      *
-     * @param  \Illuminate\Contracts\View\View $view
+     * @param \Illuminate\Contracts\View\View $view
      *
      * @return void
      */
@@ -33,13 +33,13 @@ class TimelineComposer
         $data = $this->buildTimelineData($view);
 
         $view->with('latest', $data[0]);
-        $view->with('deployments_raw', $data[1]);
+        $view->with('tasks_raw', $data[1]);
     }
 
     /**
      * Builds the data for the timline.
      *
-     * @param  \Illuminate\Contracts\View\View $view
+     * @param \Illuminate\Contracts\View\View $view
      *
      * @return array
      */
@@ -47,28 +47,28 @@ class TimelineComposer
     {
         $user = $view->current_user ?: Auth::user();
 
-        $deployments = Deployment::whereNotNull('started_at');
+        $tasks = Task::whereNotNull('started_at');
 
         if (!$view->in_admin) {
             $personalProjectIds = $user->personalProjects->pluck('id')->toArray();
-            $projectIds = array_merge($personalProjectIds, $user->authorizedProjects->pluck('id')->toArray());
-            $deployments = $deployments->whereIn('project_id', $projectIds);
+            $projectIds         = array_merge($personalProjectIds, $user->authorizedProjects->pluck('id')->toArray());
+            $tasks        = $tasks->whereIn('project_id', $projectIds);
         }
 
-        $deployments = $deployments->orderBy('started_at', 'DESC')
+        $tasks = $tasks->orderBy('started_at', 'DESC')
                         ->paginate(10);
 
         $deploys_by_date = [];
-        foreach ($deployments as $deployment) {
-            $date = $deployment->started_at->format('Y-m-d');
+        foreach ($tasks as $task) {
+            $date = $task->started_at->format('Y-m-d');
 
             if (!isset($deploys_by_date[$date])) {
                 $deploys_by_date[$date] = [];
             }
 
-            $deploys_by_date[$date][] = $deployment;
+            $deploys_by_date[$date][] = $task;
         }
 
-        return [$deploys_by_date, $deployments];
+        return [$deploys_by_date, $tasks];
     }
 }

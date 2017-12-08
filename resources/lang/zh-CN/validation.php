@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,7 +30,7 @@ return [
     'alpha_num'            => ':attribute 只允许包含字母和数字。',
     'array'                => ':attribute 必须是个数组。',
     'before'               => ':attribute 必须在 :date 之前。',
-    'between'    => [
+    'between'              => [
         'numeric' => ':attribute 必须在 :min 到 :max 之间。',
         'file'    => ':attribute 必须在 :min 到 :max KB 之间。',
         'string'  => ':attribute 必须在 :min 到 :max 字符之间。',
@@ -54,7 +54,7 @@ return [
     'json'                 => ':attribute 必须是规范的 JSON 字串。',
     'host'                 => ':attribute 必须是一个有效的主机。',
     'repository'           => ':attribute 必须是一个有效的Git仓库。',
-    'max'            => [
+    'max'                  => [
         'numeric' => ':attribute 不能大于 :max。',
         'file'    => ':attribute 不能大于 :max KB。',
         'string'  => ':attribute 不能大于 :max 个字符。',

@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Middleware;
+namespace Piplin\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +33,7 @@ class Admin
         if (!Auth::guard($guard)->check() || (Auth::guard($guard)->check() && !Auth::guard($guard)->user()->isAdmin)) {
             throw new HttpException(401);
         }
+
         return $next($request);
     }
 }

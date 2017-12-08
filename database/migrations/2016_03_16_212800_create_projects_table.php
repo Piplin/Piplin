@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Fixhub\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Piplin\Models\Project;
 
 class CreateProjectsTable extends Migration
 {
@@ -35,7 +35,7 @@ class CreateProjectsTable extends Migration
             $table->string('url')->nullable();
             $table->string('build_url')->nullable();
             $table->boolean('allow_other_branch')->default(true);
-            $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);
+            $table->tinyInteger('status')->default(Project::INITIAL);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->dateTime('last_mirrored')->nullable()->default(null);
             $table->timestamps();

@@ -1,23 +1,23 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Listeners;
+namespace Piplin\Bus\Listeners;
 
-use Fixhub\Bus\Events\DeployFinishedEvent;
-use Fixhub\Bus\Jobs\SetupDeploymentJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
-use Fixhub\Models\Deployment;
-use Fixhub\Models\EnvironmentLink;
+use Piplin\Bus\Events\TaskFinishedEvent;
+use Piplin\Bus\Jobs\SetupTaskJob;
+use Piplin\Models\Task;
+use Piplin\Models\EnvironmentLink;
 
 /**
  * When a deploy finished, trigger linked environment to deploy.
@@ -29,22 +29,22 @@ class DeployLinkedEnvironmentListner implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  DeployFinishedEvent $event
+     * @param  TaskFinishedEvent $event
      * @return void
      */
-    public function handle(DeployFinishedEvent $event)
+    public function handle(TaskFinishedEvent $event)
     {
-        $deployment = $event->deployment;
+        $task = $event->task;
 
-        if (!$deployment->isSuccessful()) {
+        if (!$task->isSuccessful()) {
             return;
         }
 
-        $project = $deployment->project;
+        $project = $task->project;
 
-        $oppositeEnvironments = $deployment->environments->pluck('oppositePivot')->flatten();
-        $ids = [];
-        $link_type = EnvironmentLink::MANUAL;
+        $oppositeEnvironments = $task->environments->pluck('oppositePivot')->flatten();
+        $ids                  = [];
+        $link_type            = EnvironmentLink::MANUAL;
         foreach ($oppositeEnvironments as $item) {
             $ids[] = $item->id;
 
@@ -66,14 +66,14 @@ class DeployLinkedEnvironmentListner implements ShouldQueue
             'optional'       => [],
         ];
 
-        $optional = array_pull($fields, 'optional');
+        $optional     = array_pull($fields, 'optional');
         $environments = array_pull($fields, 'environments');
 
-        $fields['status'] = $link_type == EnvironmentLink::AUTOMATIC ? Deployment::PENDING : Deployment::DRAFT;
+        $fields['status'] = $link_type === EnvironmentLink::AUTOMATIC ? Task::PENDING : Task::DRAFT;
 
-        $new = Deployment::create($fields);
+        $new = Task::create($fields);
 
-        $this->dispatch(new SetupDeploymentJob(
+        $this->dispatch(new SetupTaskJob(
             $new,
             $environments,
             $optional

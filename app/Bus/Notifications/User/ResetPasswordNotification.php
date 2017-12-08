@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Notifications\User;
+namespace Piplin\Bus\Notifications\User;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Fixhub\Models\User;
+use Illuminate\Notifications\Notification;
+use Piplin\Models\User;
 
 /**
  * Notification which is sent when passwords are reset.
@@ -34,7 +34,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Create a notification instance.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function __construct($token)
@@ -55,7 +55,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Build the mail representation of the notification.
      *
-     * @param  User $user
+     * @param  User                                           $user
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail(User $user)

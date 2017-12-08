@@ -1,11 +1,9 @@
 <div class="col-md-6" id="commands-{{ strtolower($step) }}">
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title"><i class="fixhub fixhub-{{ $step == 'before' ? 'left' : 'right' }}"></i> {{ trans('commands.'.$step) }}</h3>
+            <h3 class="box-title"><i class="piplin piplin-{{ $step == 'before' ? 'left' : 'right' }}"></i> {{ trans('commands.'.$step) }}</h3>
             <div class="box-tools pull-right">
-                @if($project->can('manage'))
-                <button type="button" class="btn btn-primary" title="{{ trans('commands.create') }}" data-step="{{ $action }}" data-toggle="modal" data-target="#command"><i class="fixhub fixhub-plus"></i> {{ trans('commands.create') }}</button>
-                @endif
+                <button type="button" class="btn btn-primary" title="{{ trans('commands.create') }}" data-step="{{ $action }}" data-toggle="modal" data-target="#command"><i class="piplin piplin-plus"></i> {{ trans('commands.create') }}</button>
             </div>
         </div>
 

@@ -27,11 +27,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var file = Fixhub.SharedFiles.get($('#model_id').val());
+        var file = Piplin.SharedFiles.get($('#model_id').val());
 
         file.destroy({
             wait: true,
@@ -39,14 +39,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('sharedFiles.delete_success'));
+                Piplin.toast(trans('sharedFiles.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -58,16 +58,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var file_id = $('#sharedfile_id').val();
 
         if (file_id) {
-            var file = Fixhub.SharedFiles.get(file_id);
+            var file = Piplin.SharedFiles.get(file_id);
         } else {
-            var file = new Fixhub.SharedFile();
+            var file = new Piplin.SharedFile();
         }
 
         file.save({
@@ -81,17 +81,17 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('sharedFiles.edit_success');
                 if (!file_id) {
-                    Fixhub.SharedFiles.add(response);
+                    Piplin.SharedFiles.add(response);
                     trans('sharedFiles.create_success');
                 }
 
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -113,24 +113,24 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.SharedFile = Backbone.Model.extend({
+    Piplin.SharedFile = Backbone.Model.extend({
         urlRoot: '/shared-files'
     });
 
     var SharedFiles = Backbone.Collection.extend({
-        model: Fixhub.SharedFile
+        model: Piplin.SharedFile
     });
 
-    Fixhub.SharedFiles = new SharedFiles();
+    Piplin.SharedFiles = new SharedFiles();
 
-    Fixhub.SharedFilesTab = Backbone.View.extend({
+    Piplin.SharedFilesTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -141,37 +141,37 @@
             $('#no_sharedfiles').show();
             $('#sharedfile_list').hide();
 
-            this.listenTo(Fixhub.SharedFiles, 'add', this.addOne);
-            this.listenTo(Fixhub.SharedFiles, 'reset', this.addAll);
-            this.listenTo(Fixhub.SharedFiles, 'remove', this.addAll);
-            this.listenTo(Fixhub.SharedFiles, 'all', this.render);
+            this.listenTo(Piplin.SharedFiles, 'add', this.addOne);
+            this.listenTo(Piplin.SharedFiles, 'reset', this.addAll);
+            this.listenTo(Piplin.SharedFiles, 'remove', this.addAll);
+            this.listenTo(Piplin.SharedFiles, 'all', this.render);
 
-            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var share = Piplin.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
                     share.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_CREATED, function (data) {
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_CREATED, function (data) {
                 var targetable_type = $('input[name="targetable_type"]').val();
                 var targetable_id = $('input[name="targetable_id"]').val();
                 if (targetable_type == data.model.targetable_type && parseInt(data.model.targetable_id) === parseInt(targetable_id)) {
-                    Fixhub.SharedFiles.add(data.model);
+                    Piplin.SharedFiles.add(data.model);
                 }
             });
 
-            Fixhub.listener.on('sharedfile:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var share = Fixhub.SharedFiles.get(parseInt(data.model.id));
+            Piplin.listener.on('sharedfile:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var share = Piplin.SharedFiles.get(parseInt(data.model.id));
 
                 if (share) {
-                    Fixhub.SharedFiles.remove(share);
+                    Piplin.SharedFiles.remove(share);
                 }
             });
         },
         render: function () {
-            if (Fixhub.SharedFiles.length) {
+            if (Piplin.SharedFiles.length) {
                 $('#no_sharedfiles').hide();
                 $('#sharedfile_list').show();
             } else {
@@ -181,7 +181,7 @@
         },
         addOne: function (file) {
 
-            var view = new Fixhub.SharedFileView({
+            var view = new Piplin.SharedFileView({
                 model: file
             });
 
@@ -189,11 +189,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.SharedFiles.each(this.addOne, this);
+            Piplin.SharedFiles.each(this.addOne, this);
         }
     });
 
-    Fixhub.SharedFileView = Backbone.View.extend({
+    Piplin.SharedFileView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',

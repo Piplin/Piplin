@@ -12,7 +12,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" maxlength="6" placeholder="{{ trans('auth.authentication_code') }}" name="2fa_code" required />
-                    <span class="fixhub fixhub-lock form-control-feedback"></span>
+                    <span class="piplin piplin-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-6">

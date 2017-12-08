@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 return [
 
     'label'                            => 'Hooks',
@@ -29,11 +38,11 @@ return [
     'bot'                              => 'Bot',
     'icon_info'                        => 'Either an emoji, for example :ghost: or the URL to an image',
     'channel'                          => 'Channel',
-    'deployments'                      => 'Deployments',
+    'deployments'                      => 'Tasks',
     'succeeded'                        => 'Succeeded',
     'failed'                           => 'Failed',
-    'on_deployment_success'            => 'Deployment Succeeded',
-    'on_deployment_failure'            => 'Deployment Failed',
+    'on_deployment_success'            => 'Task Succeeded',
+    'on_deployment_failure'            => 'Task Failed',
     'custom'                           => 'Custom',
     'slack'                            => 'Slack',
     'dingtalk'                         => 'Dingtalk',
@@ -48,28 +57,28 @@ return [
     'project'                          => 'Project',
     'commit'                           => 'Commit',
     'committer'                        => 'Committer',
-    'deployment_reason'                => 'Deployment reason - :reason',
-    'deployment_success_slack_message' => ':white_check_mark: Deployment %s successful! :smile:',
-    'deployment_failed_slack_message'  => ':x: Deployment %s failed! :cry:',
+    'deployment_reason'                => 'Task reason - :reason',
+    'deployment_success_slack_message' => ':white_check_mark: Task %s successful! :smile:',
+    'deployment_failed_slack_message'  => ':x: Task %s failed! :cry:',
 
     // Dingtalk
-    'deployment_success_ding_message' => 'Deployment %s successful!',
-    'deployment_failed_ding_message'  => ':Deployment %s failed!',
+    'deployment_success_ding_message' => 'Task %s successful!',
+    'deployment_failed_ding_message'  => ':Task %s failed!',
     'at_mobiles'                      => 'At mobiles',
     'is_at_all'                       => 'Is at all',
 
     // Email
     'project_name'                     => 'Project name',
     'deployed_branch'                  => 'Deployed branch',
-    'deployment_details'               => 'View the deployment',
+    'task_details'                     => 'View the task',
     'project_details'                  => 'View the project',
     'started_at'                       => 'Started at',
     'finished_at'                      => 'Finished at',
     'last_committer'                   => 'Last committer',
     'last_commit'                      => 'Last commit',
-    'reason'                           => 'Deployment reason - :reason',
-    'deployment_success_email_subject' => 'Deployment Finished',
-    'deployment_success_email_message' => 'The deployment was successful',
-    'deployment_failed_email_subject'  => 'Deployment Failed',
-    'deployment_failed_email_message'  => 'The deployment has failed',
+    'reason'                           => 'Task reason - :reason',
+    'deployment_success_email_subject' => 'Task Finished',
+    'deployment_success_email_message' => 'The task was successful',
+    'deployment_failed_email_subject'  => 'Task Failed',
+    'deployment_failed_email_message'  => 'The task has failed',
 ];

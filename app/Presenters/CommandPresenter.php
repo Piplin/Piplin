@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Presenters;
+namespace Piplin\Presenters;
 
 use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\BasePresenter;
-use Fixhub\Models\Command;
+use Piplin\Models\Command;
 
 /**
  * The view presenter for a command class.
@@ -106,6 +106,94 @@ class CommandPresenter extends BasePresenter
     public function after_purge()
     {
         return $this->commandNames(Command::AFTER_PURGE);
+    }
+
+    /**
+     * Gets the readable list of before prepare commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_prepare()
+    {
+        return $this->commandNames(Command::BEFORE_PREPARE);
+    }
+
+    /**
+     * Gets the readable list of after prepare commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_prepare()
+    {
+        return $this->commandNames(Command::AFTER_PREPARE);
+    }
+
+    /**
+     * Gets the readable list of before build commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_build()
+    {
+        return $this->commandNames(Command::BEFORE_BUILD);
+    }
+
+    /**
+     * Gets the readable list of after activate commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_build()
+    {
+        return $this->commandNames(Command::AFTER_BUILD);
+    }
+
+    /**
+     * Gets the readable list of before test commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_test()
+    {
+        return $this->commandNames(Command::BEFORE_TEST);
+    }
+
+    /**
+     * Gets the readable list of after test commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_test()
+    {
+        return $this->commandNames(Command::AFTER_TEST);
+    }
+
+    /**
+     * Gets the readable list of before result commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function before_result()
+    {
+        return $this->commandNames(Command::BEFORE_RESULT);
+    }
+
+    /**
+     * Gets the readable list of after result commands.
+     *
+     * @return string
+     * @see self::commandNames()
+     */
+    public function after_result()
+    {
+        return $this->commandNames(Command::AFTER_RESULT);
     }
 
     /**

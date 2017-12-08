@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Services\Update;
+namespace Piplin\Services\Update;
 
+use Httpful\Exception\ConnectionErrorException;
 use Httpful\Request;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
-use Httpful\Exception\ConnectionErrorException;
 
 /**
  * A class to get the latest release tag for Github.
@@ -25,7 +25,7 @@ class LatestRelease implements LatestReleaseInterface
     /**
      * @var string
      **/
-    private $github_url = 'https://api.github.com/repos/fixhub/fixhub/releases/latest';
+    private $github_url = 'https://api.github.com/repos/piplin/piplin/releases/latest';
 
     private $cache;
 
@@ -48,14 +48,14 @@ class LatestRelease implements LatestReleaseInterface
     {
         $cache_for = self::CACHE_TIME_IN_HOURS * 60;
 
-        $release = $this->cache->remember('fixhub_latest_version', $cache_for, function () {
+        $release = $this->cache->remember('piplin_latest_version', $cache_for, function () {
             try {
                 $request = Request::get($this->github_url)
                                   ->expectsJson()
                                   ->withAccept('application/vnd.github.v3+json');
 
-                if (config('fixhub.github_oauth_token')) {
-                    $request->withAuthorization('token ' . config('fixhub.github_oauth_token'));
+                if (config('piplin.github_oauth_token')) {
+                    $request->withAuthorization('token ' . config('piplin.github_oauth_token'));
                 }
 
                 $response = $request->send();

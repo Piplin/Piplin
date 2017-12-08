@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs\Repository;
+namespace Piplin\Bus\Jobs\Repository;
 
+use Closure;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Fixhub\Services\Scripts\Runner as Process;
-use Fixhub\Models\Project;
+use Piplin\Models\Project;
+use Piplin\Services\Scripts\Runner as Process;
 use RuntimeException;
-use Closure;
 
 /**
  * Clones the repository locally to get the latest log entry.
@@ -26,8 +26,8 @@ class GetCommitDetailsJob
     use Dispatchable, SerializesModels;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
@@ -54,8 +54,8 @@ class GetCommitDetailsJob
      */
     public function __construct(Project $project, $commit, Closure $callback = null)
     {
-        $this->project = $project;
-        $this->commit = $commit;
+        $this->project  = $project;
+        $this->commit   = $commit;
         $this->callback = $callback ?: function () {
         };
     }

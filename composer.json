@@ -1,23 +1,21 @@
 {
-    "name": "fixhub/fixhub",
-    "description": "A web deployment system based on the Laravel PHP Framework.",
+    "name": "piplin/piplin",
+    "description": "Piplin is a self-hosted continuous integration and deployment system, intended to automatically build, test, and deploy your project over the web.",
     "minimum-stability": "stable",
     "type": "project",
-    "keywords": ["fixhub", "deployment"],
-    "homepage": "http://fixhub.org/",
+    "keywords": ["piplin", "ci", "continuous integration"],
+    "homepage": "http://piplin.com/",
     "license": "MIT",
     "authors": [
         {
-            "name": "Phecho",
-            "email": "phecho@phecho.com",
-            "homepage": "http://www.phecho.com",
-            "role": "Developer"
+            "name": "Guan Shiliang",
+            "email": "guan.shiliang@gmail.com"
         }
     ],
     "support": {
-        "email": "fixhub@fixhub.org",
-        "issues": "https://github.com/fixhub/fixhub/issues",
-        "source": "https://github.com/fixhub/fixhub"
+        "email": "piplin@piplin.com",
+        "issues": "https://github.com/Piplin/Piplin/issues",
+        "source": "https://github.com/Piplin/Piplin"
     },
     "require": {
         "php": ">=7.0.0",
@@ -34,10 +32,9 @@
         "intervention/image": "^2.3",
         "tymon/jwt-auth": "~0.5",
         "pragmarx/google2fa": "^0.7.1",
-        "fixhub/js-localization": "0.0.1",
+        "andywer/js-localization": "dev-laravel-5",
         "fideloper/proxy": "~3.3",
         "socialiteproviders/gitlab": "^3.0",
-        "venturecraft/revisionable": "~1.28.0",
         "version/version": "^2.2"
     },
     "require-dev": {
@@ -63,12 +60,12 @@
             "app/Helpers/Helpers.php"
         ],
         "psr-4": {
-            "Fixhub\\": "app/"
+            "Piplin\\": "app/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Fixhub\\Test\\": "tests/"
+            "Piplin\\Test\\": "tests/"
         }
     },
     "scripts": {
@@ -80,12 +77,10 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize",
             "php artisan js-localization:refresh"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize",
             "php artisan js-localization:refresh"
         ]
     },

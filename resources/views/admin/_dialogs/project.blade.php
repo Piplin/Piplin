@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-project"></i> <span>{{ trans('projects.create') }}</span></h4>
+                <h4 class="modal-title"><i class="piplin piplin-project"></i> <span>{{ trans('projects.create') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form">
                 <input type="hidden" id="project_id" name="id" />
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon fixhub fixhub-warning"></i> {{ trans('projects.warning') }}
+                        <i class="icon piplin piplin-warning"></i> {{ trans('projects.warning') }}
                     </div>
 
                     <div class="nav-tabs-custom">
@@ -35,19 +35,6 @@
                                         <input type="text" class="form-control" name="name" id="project_name" placeholder="{{ trans('projects.name_placeholder') }}" />
                                     </div>
                                 </div>
-                                @if (count($templates) > 0)
-                                <div class="form-group" id="template-list">
-                                    <label class="col-sm-3 control-label" for="project_template_id">{{ trans('templates.type') }}</label>
-                                    <div class="col-sm-9">
-                                    <select id="project_template_id" name="template_id" class="select2 form-control">
-                                        <option value="">{{ trans('templates.custom') }}</option>
-                                        @foreach ($templates as $template)
-                                            <option value="{{ $template->id }}">{{ $template->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    </div>
-                                </div>
-                                @endif
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.key') }}</label>
                                     <div class="col-sm-9">
@@ -59,7 +46,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('projects.deploy_path_help') !!}"></i></label>
+                                    <label class="col-sm-3 control-label" for="project_deploy_path">{{ trans('projects.deploy_path') }} <i class="piplin piplin-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('projects.deploy_path_help') !!}"></i></label>
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="deploy_path" id="project_deploy_path" placeholder="/var/www/app" />
                                     </div>
@@ -80,7 +67,7 @@
 
                             <div class="tab-pane" id="project_repo">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }} <i class="fixhub fixhub-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('keys.git_keys') !!}"></i></label>
+                                    <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }} <i class="piplin piplin-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('keys.git_keys') !!}"></i></label>
                                     <div class="col-sm-9">
                                     <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />
                                     </div>
@@ -106,7 +93,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
+                        <button type="button" class="btn btn-primary btn-save"><i class="piplin piplin-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>
@@ -121,7 +108,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"><i class="fixhub fixhub-copy"></i> <span>{{ trans('projects.clone') }}</span></h4>
+                <h4 class="modal-title"><i class="piplin piplin-copy"></i> <span>{{ trans('projects.clone') }}</span></h4>
             </div>
             <form class="form-horizontal" role="form" method="post">
                 <input type="hidden" id="skeleton_id" name="id" />
@@ -129,7 +116,7 @@
                 <div class="modal-body">
 
                     <div class="callout callout-danger">
-                        <i class="icon fixhub fixhub-warning"></i> {{ trans('projects.warning') }}
+                        <i class="icon piplin piplin-warning"></i> {{ trans('projects.warning') }}
                     </div>
 
                     <div class="form-group">
@@ -139,18 +126,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="project_key_id">{{ trans('projects.clone_type') }}</label>
-                        <div class="col-sm-9">
-                        <select id="project_extract_type" name="type" class="select2 form-control">
-							<option value="project">{{ trans('projects.clone_duplicate') }}</option>
-							<option value="template">{{ trans('projects.clone_convert') }}</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary btn-save"><i class="fixhub fixhub-save"></i> {{ trans('app.save') }}</button>
+                        <button type="submit" class="btn btn-primary btn-save"><i class="piplin piplin-save"></i> {{ trans('app.save') }}</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.cancel') }}</button>
                     </div>
                 </div>

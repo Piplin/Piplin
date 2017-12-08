@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreKeyRequest;
-use Fixhub\Models\Key;
 use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreKeyRequest;
+use Piplin\Models\Key;
 
 /**
  * SSH key management controller.
@@ -43,12 +43,13 @@ class KeyController extends Controller
     public function index(Request $request)
     {
         $keys = Key::orderBy('name')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.keys.index', [
             'title'    => trans('keys.manage'),
-            'keys_raw' =>$keys,
+            'keys_raw' => $keys,
             'keys'     => $keys->toJson(), // Because PresentableInterface toJson() is not working in the view
+            'current_child' => 'keys',
         ]);
     }
 
@@ -70,7 +71,7 @@ class KeyController extends Controller
     /**
      * Store a newly created ssh key in storage.
      *
-     * @param int $key_id
+     * @param int             $key_id
      * @param StoreKeyRequest $request
      *
      * @return Response

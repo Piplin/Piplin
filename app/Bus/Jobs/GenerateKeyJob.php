@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Fixhub\Services\Scripts\Runner as Process;
+use Piplin\Services\Scripts\Runner as Process;
 use RuntimeException;
 
 /**

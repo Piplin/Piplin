@@ -17,7 +17,7 @@
                 }
             }).done(function (data) {
 
-                Fixhub.Projects.reset(data);
+                Piplin.Projects.reset(data);
 
                 $('#project_id').val(data.id);
                 $('#project_name').val(data.name);
@@ -37,16 +37,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var project_id = $('#project_id').val();
 
         if (project_id) {
-            var project = Fixhub.Projects.get(project_id);
+            var project = Piplin.Projects.get(project_id);
         } else {
-            var project = new Fixhub.Project();
+            var project = new Piplin.Project();
         }
 
         project.save({
@@ -61,17 +61,17 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.Projects.reset(response);
+                Piplin.Projects.reset(response);
                 var msg = trans('projects.edit_success');
                 if (!project_id) {
                      msg = trans('projects.create_success');
                 }
-                Fixhub.toast(msg, '', 'success');
-                window.location.href = '/projects/' + response.id;
+                Piplin.toast(msg, '', 'success');
+                window.location.href = '/project/' + response.id;
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -94,7 +94,7 @@
 
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -120,7 +120,7 @@
                     project_id: project_id
                 }
             }).done(function (data) {
-                Fixhub.Projects.reset(data);
+                Piplin.Projects.reset(data);
             });
         }
     });
@@ -130,11 +130,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var project = Fixhub.Projects.get($('#model_id').val());
+        var project = Piplin.Projects.get($('#model_id').val());
 
         project.destroy({
             wait: true,
@@ -142,95 +142,93 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('projects.delete_success'));
+                Piplin.toast(trans('projects.delete_success'));
                 window.location.href = '/';
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.Project = Backbone.Model.extend({
+    $('#project-recover button.btn-recover').on('click', function (event) {
+        var target = $(event.currentTarget);
+        var icon = target.find('i');
+        var dialog = target.parents('.modal');
+
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
+        dialog.find('input').attr('disabled', 'disabled');
+        $('button.close', dialog).hide();
+
+        $.ajax({
+            url: '/project/' + $('input[name="project_id"]', dialog).val() + '/recover',
+            method: 'POST'
+        }).done(function (data) {
+            dialog.modal('hide');
+            $('.callout-danger', dialog).hide();
+            Piplin.toast(trans('projects.recover_success'));
+
+            var status_data = Piplin.formatProjectStatus(data.status);
+            var status_bar = $('td.project-status span');
+
+            status_bar.attr('class', 'text-' + status_data.label_class)
+            $('i', status_bar).attr('class', 'piplin piplin-' + status_data.icon_class);
+            $('span', status_bar).text(status_data.label);
+
+            icon.removeClass().addClass('piplin piplin-save');
+            $('button.close', dialog).show();
+
+        });
+    });
+
+    Piplin.Project = Backbone.Model.extend({
         urlRoot: '/projects'
     });
 
     var Projects = Backbone.Collection.extend({
-        model: Fixhub.Project
+        model: Piplin.Project
     });
 
-    Fixhub.Projects = new Projects();
-
-    $('#deploy').on('show.bs.modal', function (event) {
-        var modal = $(this);
-        $('.callout-danger', modal).hide();
-    });
-
-    $('.deployment-source:radio').on('change', function (event) {
-        var target = $(event.currentTarget);
-
-        $('div.deployment-source-container').hide();
-        if (target.val() === 'branch') {
-            $('#deployment_branch').parent('div').show();
-        } else if (target.val() === 'tag') {
-            $('#deployment_tag').parent('div').show();
-        } else if (target.val() === 'commit') {
-            $('#deployment_commit').parent('div').show();
-        }
-    });
-
-    $('#deploy button.btn-save').on('click', function (event) {
-        var target = $(event.currentTarget);
-        var icon = target.find('i');
-        var dialog = target.parents('.modal');
-        var source = $('input[name=source]:checked').val();
-
-        $('.has-error', source).removeClass('has-error');
-
-        if (source === 'branch' || source === 'tag' || source === 'commit') {
-            if ($('#deployment_' + source).val() === '') {
-                $('#deployment_' + source).parentsUntil('div').addClass('has-error');
-
-                $('.callout-danger', dialog).show();
-                event.stopPropagation();
-                return;
-            }
-        }
-
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
-        $('button.close', dialog).hide();
-    });
+    Piplin.Projects = new Projects();
 
     $('#new_webhook').on('click', function(event) {
         var target = $(event.currentTarget);
         var project_id = target.data('project-id');
+        var type = target.data('type');
         var icon = $('i', target);
         var interval = 3000;
 
-        if ($('.fixhub-spin', target).length > 0) {
+        var url = '/webhook/' + project_id + '/refresh';
+
+        if (type == 'build') {
+            url += '/build';
+        }
+
+
+        if ($('.piplin-spin', target).length > 0) {
             return;
         }
 
         target.attr('disabled', 'disabled');
 
-        icon.addClass('fixhub-spin');
+        icon.addClass('piplin-spin');
         $('#webhook').fadeOut(interval);
 
         $.ajax({
             type: 'GET',
-            url: '/webhook/' + project_id + '/refresh'
+            url: url
         }).fail(function (response) {
 
         }).done(function (data) {
             $('#webhook').fadeIn(interval).val(data.url);
         }).always(function () {
-            icon.removeClass('fixhub-spin');
+            icon.removeClass('piplin-spin');
             target.removeAttr('disabled');
         });
     });

@@ -1,0 +1,86 @@
+/*
+ * Skin: White
+ * -----------
+ */
+.skin-default {
+  //Navbar & Logo
+  .main-header {
+    @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.05));
+    .navbar-toggle {
+      color: #333;
+    }
+    .navbar-brand {
+      color: #333;
+      border-right: 1px solid #eee;
+    }
+    > .navbar {
+      @include navbar-variant(#fafafa, #333, #999, #fff);
+      > .sidebar-toggle {
+        color: #333;
+        border-right: 1px solid #eee;
+      }
+      .navbar-nav {
+        > li > a {
+          border-right: 1px solid #eee;
+        }
+      }
+      .navbar-custom-menu .navbar-nav,
+      .navbar-right {
+        > li {
+          > a {
+            border-left: 1px solid #eee;
+            border-right-width: 0;
+          }
+        }
+      }
+    }
+
+    .navbar-brand {
+      background: url('/img/logo_black.png') no-repeat 10px 5px;
+      padding-left: 65px;
+      color: $black;
+    }
+
+    @media (min-width: $screen-xs-max) {
+        .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-left: 0;
+      }
+    }
+
+    li.user-header {
+      background-color: $white;
+    }
+  }
+
+  .main-sidebar {
+    position: fixed;
+  }
+
+  .nav-stacked {
+    > li.active > a,
+    > li.active > a:hover {
+      border-left: 0;
+      color: $green;
+    }
+  }
+  .nav-tabs-custom {
+    > .nav-tabs {
+      > li.active {
+        border-top-color: $orange;
+      }
+    }
+  }
+
+  .box.box-primary {
+    border-top-color: $blue;
+  }
+
+  //Content Header
+  .content-header {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  //Create the sidebar skin
+  @include skin-dark-sidebar(#fff);
+}

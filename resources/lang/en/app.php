@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,6 @@ return [
     'dashboard'         => 'Dashboard',
     'admin'             => 'Administration',
     'projects'          => 'Projects',
-    'templates'         => 'Templates',
     'groups'            => 'Groups',
     'keys'              => 'SSH Key',
     'users'             => 'Users',
@@ -46,7 +45,7 @@ return [
     'awesome'           => 'Awesome.',
     'whoops'            => 'Whoops.',
     'socket_error'      => 'Server error',
-    'socket_error_info' => 'A connection could not be established to the socket at <strong>' . config('fixhub.socket_url') . '</strong>. This is required ' .
+    'socket_error_info' => 'A connection could not be established to the socket at <strong>' . config('piplin.socket_url') . '</strong>. This is required ' .
                            'for reporting the status on running deployments. Please reload, if the issue continues please contact the system administrator',
     'not_down'          => 'You must switch to maintenance mode before running this command, this will ensure that no new deployments are started',
     'switch_down'       => 'Switch to maintenance mode now? The app will switch back to live mode once cleanup is finished',

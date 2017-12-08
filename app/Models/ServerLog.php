@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Presenters\RuntimeInterface;
-use Fixhub\Presenters\ServerLogPresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
+use Piplin\Presenters\RuntimeInterface;
+use Piplin\Presenters\ServerLogPresenter;
 
 /**
  * Server log model.
@@ -39,7 +39,7 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
      *
      * @var array
      */
-    protected $fillable = ['server_id', 'deploy_step_id', 'environment_id'];
+    protected $fillable = ['server_id', 'task_step_id', 'environment_id'];
 
     /**
      * The attributes that should be casted to native types.
@@ -49,7 +49,7 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
     protected $casts = [
         'id'             => 'integer',
         'server_id'      => 'integer',
-        'deploy_step_id' => 'integer',
+        'task_step_id'   => 'integer',
         'environment_id' => 'integer',
         'status'         => 'integer',
     ];
@@ -73,7 +73,6 @@ class ServerLog extends Model implements HasPresenter, RuntimeInterface
     {
         return $this->belongsTo(Environment::class);
     }
-
 
     /**
      * Calculates how long the commands were running on the server for.

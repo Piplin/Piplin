@@ -1,19 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreConfigFileRequest;
-use Fixhub\Models\ConfigFile;
+use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreConfigFileRequest;
+use Piplin\Models\ConfigFile;
+use Piplin\Bus\Jobs\SyncConfigFileJob;
 
 /**
  * Manage the config global file like some environment files.
@@ -39,14 +41,9 @@ class ConfigFileController extends Controller
         );
 
         $targetable_type = array_pull($fields, 'targetable_type');
-        $targetable_id = array_pull($fields, 'targetable_id');
+        $targetable_id   = array_pull($fields, 'targetable_id');
 
         $target = $targetable_type::findOrFail($targetable_id);
-
-        // In project
-        if ($targetable_type == 'Fixhub\\Models\Project') {
-            $this->authorize('manage', $target);
-        }
 
         $environments = null;
         if (isset($fields['environments'])) {
@@ -68,7 +65,7 @@ class ConfigFileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ConfigFile $config_file
+     * @param ConfigFile             $config_file
      * @param StoreConfigFileRequest $request
      *
      * @return Response
@@ -97,6 +94,31 @@ class ConfigFileController extends Controller
         $config_file->environments; // Triggers the loading
 
         return $config_file;
+    }
+
+    /**
+     * Sync config file to specified environments.
+     *
+     * @param ConfigFile $configFile
+     * @param Request    $request
+     *
+     * @return Response
+     */
+    public function sync(ConfigFile $configFile, Request $request)
+    {
+        $environmentIds = $request->get('environment_ids');
+        $postCommands = $request->get('post_commands');
+
+        if (!$configFile->isSyncing()) {
+            $configFile->output = null;
+            $configFile->status = ConfigFile::SYNCING;
+            $configFile->save();
+            dispatch(new SyncConfigFileJob($configFile, $environmentIds, $postCommands));
+        }
+
+        return [
+            'success' => true,
+        ];
     }
 
     /**

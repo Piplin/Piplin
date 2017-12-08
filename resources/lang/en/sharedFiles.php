@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,6 +23,6 @@ return [
     'file'           => 'Path',
     'warning'        => 'The file could not be saved, please check the form below.',
     'cache'          => 'Cached data',
-    'example'        => 'Path for a directory, for example \'/app/storage/\' or a file \'/app/config/fixhub.php\'. Directories must end with a trailing slash',
+    'example'        => 'Relative to the project\'s path, for example \'storage/\' or a file \'config/piplin.php\'. Directories must end with a trailing slash',
 
 ];

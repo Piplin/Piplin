@@ -1,22 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Fixhub\Http\Requests\StoreHookRequest;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreHookRequest;
+use Piplin\Models\Hook;
+use Piplin\Models\Project;
 use Symfony\Component\HttpFoundation\Response;
-use Fixhub\Models\Hook;
-use Fixhub\Models\Project;
 
 /**
  * Controller for managing notifications.
@@ -51,8 +50,8 @@ class HookController extends Controller
     /**
      * Update the specified notification in storage.
      *
-     * @param Project $project
-     * @param Hook $hook
+     * @param Project          $project
+     * @param Hook             $hook
      * @param StoreHookRequest $request
      *
      * @return \Illuminate\Database\Eloquent\Model
@@ -77,7 +76,7 @@ class HookController extends Controller
      * Remove the specified hook from storage.
      *
      * @param Project $project
-     * @param Hook $hook
+     * @param Hook    $hook
      *
      * @return Response
      */

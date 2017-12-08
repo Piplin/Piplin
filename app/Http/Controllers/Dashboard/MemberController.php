@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Dashboard;
+namespace Piplin\Http\Controllers\Dashboard;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreProjectUserRequest;
 use Illuminate\Http\Request;
-use Fixhub\Models\Variable;
-use Fixhub\Models\User;
-use Fixhub\Models\Project;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProjectUserRequest;
+use Piplin\Models\Project;
+use Piplin\Models\User;
+use Piplin\Models\Variable;
 
 /**
  * Project members management controller.
@@ -26,7 +26,7 @@ class MemberController extends Controller
     /**
      * Store a newly created notification in storage.
      *
-     * @param Project $project
+     * @param Project                 $project
      * @param StoreProjectUserRequest $request
      *
      * @return Response
@@ -46,7 +46,7 @@ class MemberController extends Controller
      * Remove the specified user from project.
      *
      * @param Project $project
-     * @param User $user
+     * @param User    $user
      *
      * @return Response
      */

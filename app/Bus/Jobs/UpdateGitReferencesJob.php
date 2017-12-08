@@ -1,22 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs;
+namespace Piplin\Bus\Jobs;
 
-use Fixhub\Models\Project;
-use Fixhub\Models\Ref;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Piplin\Models\Project;
+use Piplin\Models\Ref;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * Updates the list of tags and branches in a project.
@@ -26,19 +26,19 @@ class UpdateGitReferencesJob extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
-    * @var Project
-    */
+     * @var Project
+     */
     private $project;
 
     /**
      * Create a new job instance.
      *
-     * @param  Project $project
+     * @param Project $project
      *
      * @return void
      */

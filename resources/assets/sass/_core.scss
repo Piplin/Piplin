@@ -69,14 +69,17 @@ body {
  * ```.right-side has been deprecated as of v2.0.0 in favor of .content-wrapper  ```
  */
 .content-wrapper,
-.right-side,
-.main-footer {
+.right-side {
   //Using disposable variable to join statements with a comma
   $transition-rule: $transition-speed $transition-fn,
   margin $transition-speed $transition-fn;
   @include transition-transform($transition-rule);
   margin-left: $sidebar-width;
-  z-index: 820;
+  z-index: 1820;
+  top: 0;
+  position: relative;
+  min-height: calc(100vh - 0px);
+  background-color: $body-bg;
   //Top nav layout
   .layout-top-nav & {
     margin-left: 0;
@@ -98,18 +101,18 @@ body {
   }
 }
 
-.content-wrapper,
-.right-side {
-  min-height: calc(100vh - 101px);
-  background-color: $body-bg;
-  z-index: 800;
+.has-sub-sidebar {
+  .content-wrapper {
+    margin-left: 23%;
+  }
 }
 
 .main-footer {
-  background: #fff;
-  padding: 15px;
+  background: $body-bg;
+  padding: 15px 20px;
   color: #444;
   border-top: 1px solid $gray;
+  text-align: center;
 }
 
 /* Fixed layout */
@@ -198,12 +201,12 @@ a:focus {
     margin-top: 5px;
   }
 }
-.fixhub-spin {
-    -webkit-animation: fixhub-spin 2s infinite linear;
-    animation: fixhub-spin 2s infinite linear;
+.piplin-spin {
+    -webkit-animation: piplin-spin 2s infinite linear;
+    animation: piplin-spin 2s infinite linear;
 }
 
-@-webkit-keyframes fixhub-spin {
+@-webkit-keyframes piplin-spin {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -214,7 +217,7 @@ a:focus {
   }
 }
 
-@keyframes fixhub-spin {
+@keyframes piplin-spin {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);

@@ -1,17 +1,17 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Requests;
+namespace Piplin\Http\Requests;
 
-use Fixhub\Http\Requests\Request;
+use Piplin\Http\Requests\Request;
 
 /**
  * Request for validating servers.
@@ -30,7 +30,7 @@ class StoreServerRequest extends Request
             'user'            => 'required|max:255',
             'ip_address'      => 'required|host',
             'enabled'         => 'boolean',
-            'targetable_id'   => 'required|integer',
+            'targetable_id'   => 'required',
             'targetable_type' => 'required|string',
         ];
     }

@@ -1,66 +1,61 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
-use Cache;
-use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\Link;
-use Fixhub\Models\Project;
-use Fixhub\Models\Tip;
+use Auth;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
+use Piplin\Models\Task;
 
 /**
- * View composer for the side bar.
+ * View composer for the siderbar bar.
  */
 class SidebarComposer
 {
-    const CACHE_MINUTES = 10;
-
     /**
-     * Generates sidebar data for the view.
+     * Generates the pending and running projects for the view.
      *
      * @param  \Illuminate\Contracts\View\View $view
      * @return void
      */
     public function compose(View $view)
     {
-        $view->withLinks($this->getLinks());
-        $view->withTip($this->getRandomTip());
+        $running       = $this->getRunning();
+        $running_count = count($running);
+
+        $view->with('running', $running);
+        $view->with('todo_count', $running_count);
     }
 
     /**
-     * Gets a random tip.
+     * Gets running deployments.
      *
      * @return array
      */
-    protected function getRandomTip()
+    private function getRunning()
     {
-        $tips = Cache::remember('random_tip', self::CACHE_MINUTES, function () {
-            return Tip::where('status', true)->orderBy('id', 'desc')->take(20)->get();
-        });
-
-        return ($tips && $tips->count() > 0) ? $tips->random() : null;
+        return $this->getStatus([Task::PENDING, Task::RUNNING]);
     }
 
     /**
-     * Gets the links.
+     * Gets deployments with a supplied status.
      *
+     * @param  array|int $status
      * @return array
      */
-    protected function getLinks()
+    private function getStatus($status)
     {
-        return Cache::remember('links', self::CACHE_MINUTES, function () {
-            return Link::orderBy('order', 'asc')->take(10)->get();
-        });
+        return Task::whereNotNull('started_at')
+                           ->whereIn('status', is_array($status) ? $status : [$status])
+                           ->orderBy('started_at', 'DESC')
+                           ->get();
     }
 }

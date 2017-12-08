@@ -1,26 +1,26 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs\Repository;
+namespace Piplin\Bus\Jobs\Repository;
 
 use Carbon\Carbon;
-use Fixhub\Bus\Jobs\UpdateGitReferencesJob;
-use Fixhub\Bus\Jobs\Job;
-use Fixhub\Models\Project;
-use Fixhub\Services\Scripts\Parser as ScriptParser;
-use Fixhub\Services\Scripts\Runner as Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\Queue;
+use Illuminate\Queue\SerializesModels;
+use Piplin\Bus\Jobs\Job;
+use Piplin\Bus\Jobs\UpdateGitReferencesJob;
+use Piplin\Models\Project;
+use Piplin\Services\Scripts\Parser as ScriptParser;
+use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * Updates the git mirror for a project.
@@ -30,13 +30,13 @@ class UpdateGitMirrorJob extends Job
     use SerializesModels, DispatchesJobs;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
-    * @var Project
-    */
+     * @var Project
+     */
     private $project;
 
     /**

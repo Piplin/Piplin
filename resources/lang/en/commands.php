@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,10 @@
 return [
 
     'label'                => 'Commands',
+    'build_label'          => 'Build commands',
+    'deploy_label'         => 'Deploy commands',
     'deploy_webhook'       => 'Incoming Webhooks are a simple way to trigger deployments from external sources. ',
+    'build_webhook'        => 'Incoming Webhooks are a simple way to trigger builds from external sources. ',
     'webhook_help'         => 'Incoming Webhook Help',
     'webhook_example'      => 'By making an HTTP POST request to this URL you will trigger a new deployment of the latest commit.',
     'webhook_fields'       => 'Optional POST fields',
@@ -35,6 +38,7 @@ return [
     'migrations'           => 'Migrations',
     'bash'                 => 'Script',
     'environments'         => 'Environments',
+    'patterns'             => 'Copy patterns',
     'servers'              => 'Servers',
     'default'              => 'Server default',
     'options'              => 'You can use the following tokens in your script (click the view)',
@@ -42,6 +46,8 @@ return [
     'release_path'         => 'The full release path',
     'branch'               => 'The branch being deployed',
     'project_path'         => 'The project path',
+    'environment'          => 'The environment name',
+    'build_release'        => 'The build release name',
     'after'                => 'After',
     'configure'            => 'Configure',
     'clone'                => 'Clone New Release',
@@ -52,6 +58,14 @@ return [
     'activate_help'        => 'A <code>current</code> symlink will be created that links to the new release directory.',
     'purge'                => 'Purge Old Releases',
     'purge_help'           => 'Purge old releases.',
+    'prepare'              => 'Prepare',
+    'prepare_help'         => 'Prepare',
+    'build'                => 'Build',
+    'build_help'           => 'Build',
+    'test'                 => 'Test',
+    'test_help'            => 'Test',
+    'result'               => 'Result',
+    'result_help'          => 'Result',
     'warning'              => 'The command could not be saved, please check the form below.',
     'create'               => 'Add Command',
     'create_success'       => 'Command created.',
@@ -60,8 +74,8 @@ return [
     'delete_success'       => 'The command has been deleted.',
     'sha'                  => 'The commit SHA hash',
     'short_sha'            => 'The short commit SHA hash',
-    'deployer_name'        => 'The name of the user who triggered the deploy ',
-    'deployer_email'       => 'The email address of the user who triggered the deploy',
+    'author_name'          => 'The name of the user who triggered the task ',
+    'author_email'         => 'The email address of the user who triggered the task',
     'committer_name'       => 'The name of the person who made the last commit',
     'committer_email'      => 'The email address of the person who made the last commit',
     'none'                 => 'No commands have been configured',

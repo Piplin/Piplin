@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -47,14 +47,14 @@ return [
         'database' => [
             'driver'      => 'database',
             'table'       => 'jobs',
-            'queue'       => 'fixhub-default',
+            'queue'       => 'piplin-default',
             'retry_after' => 60,
         ],
 
         'beanstalkd' => [
             'driver'      => 'beanstalkd',
             'host'        => env('QUEUE_HOST', 'localhost'),
-            'queue'       => 'fixhub-default',
+            'queue'       => 'piplin-default',
             'retry_after' => 60,
         ],
 
@@ -70,7 +70,7 @@ return [
         'redis' => [
             'driver'      => 'redis',
             'connection'  => 'default',
-            'queue'       => 'fixhub-default',
+            'queue'       => 'piplin-default',
             'retry_after' => 60,
         ],
 

@@ -1,9 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+/*
+ * This file is part of Piplin.
+ *
+ * Copyright (C) 2016-2017 piplin.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Illuminate\Database\Migrations\Migration;
-use Fixhub\Models\Project;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Piplin\Models\Project;
 
 class CreateEnvironmentsTable extends Migration
 {
@@ -22,7 +31,7 @@ class CreateEnvironmentsTable extends Migration
             $table->integer('targetable_id');
             $table->string('targetable_type');
             $table->boolean('default_on')->default(true);
-            $table->tinyInteger('status')->default(Project::NOT_DEPLOYED);
+            $table->tinyInteger('status')->default(Project::INITIAL);
             $table->dateTime('last_run')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();

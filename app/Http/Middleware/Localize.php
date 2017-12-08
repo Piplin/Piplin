@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Middleware;
+namespace Piplin\Http\Middleware;
 
 use Auth;
 use Closure;
@@ -22,7 +22,7 @@ use Illuminate\Http\Request;
 class Localize
 {
     /**
-     * Array of languages Fixhub can use.
+     * Array of languages Piplin can use.
      *
      * @var array
      */

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ return [
     'status'              => '部署状态',
     'completed'           => '部署时间',
     'description'         => '描述',
-    'deployed'            => '最近上线',
+    'deployed'            => '最近部署',
     'desc_placeholder'    => '简要描述环境用途',
     'warning'             => '信息保存失败.',
     'none'                => '还没有设置部署环境',

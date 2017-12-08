@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Notifications\Hook;
+namespace Piplin\Bus\Notifications\Hook;
 
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use NotificationChannels\Webhook\WebhookMessage;
-use Fixhub\Models\Hook;
-use Fixhub\Bus\Notifications\Notification;
+use Piplin\Bus\Notifications\Notification;
+use Piplin\Models\Hook;
 
 /**
  * This is the system test notification class.
@@ -67,7 +67,7 @@ class TestNotification extends Notification
         return (new WebhookMessage())
             ->data([
                 'msgtype' => 'text',
-                'text' => [
+                'text'    => [
                     'content' => trans('hooks.test_message', ['app_url' => config('app.url')]),
                 ],
                 'at' => [
@@ -76,9 +76,9 @@ class TestNotification extends Notification
                 ],
             ])
             ->header('Content-Type', 'application/json;charset=utf-8')
-            ->header('X-Fixhub-Project-Id', $notification->project_id)
-            ->header('X-Fixhub-Notification-Id', $notification->id)
-            ->header('X-Fixhub-Event', 'notification_test');
+            ->header('X-Piplin-Project-Id', $notification->project_id)
+            ->header('X-Piplin-Notification-Id', $notification->id)
+            ->header('X-Piplin-Event', 'notification_test');
     }
     /**
      * Get the webhook version of the notification.
@@ -93,8 +93,8 @@ class TestNotification extends Notification
             ->data([
                 'message' => trans('hooks.test_message', ['app_url' => config('app.url')]),
             ])
-            ->header('X-Fixhub-Project-Id', $notification->project_id)
-            ->header('X-Fixhub-Notification-Id', $notification->id)
-            ->header('X-Fixhub-Event', 'notification_test');
+            ->header('X-Piplin-Project-Id', $notification->project_id)
+            ->header('X-Piplin-Notification-Id', $notification->id)
+            ->header('X-Piplin-Event', 'notification_test');
     }
 }

@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Providers;
+namespace Piplin\Providers;
 
-use Fixhub\Validators\ChannelValidator;
-use Fixhub\Validators\HostValidator;
-use Fixhub\Validators\RepositoryValidator;
-use Fixhub\Validators\SSHKeyValidator;
 use Illuminate\Support\ServiceProvider;
+use Piplin\Validators\ChannelValidator;
+use Piplin\Validators\HostValidator;
+use Piplin\Validators\RepositoryValidator;
+use Piplin\Validators\SSHKeyValidator;
 
 /**
  * Service provider to register the validation classes.

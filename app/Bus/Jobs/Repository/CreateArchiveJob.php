@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Bus\Jobs\Repository;
+namespace Piplin\Bus\Jobs\Repository;
 
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Fixhub\Services\Scripts\Runner as Process;
-use Fixhub\Models\Project;
+use Piplin\Models\Project;
+use Piplin\Services\Scripts\Runner as Process;
 use RuntimeException;
 
 /**
@@ -25,8 +25,8 @@ class CreateArchiveJob
     use Dispatchable, SerializesModels;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $timeout = 0;
 
     /**
@@ -54,8 +54,8 @@ class CreateArchiveJob
     public function __construct(Project $project, $commit, $path)
     {
         $this->project = $project;
-        $this->commit = $commit;
-        $this->path = $path;
+        $this->commit  = $commit;
+        $this->path    = $path;
     }
 
     /**

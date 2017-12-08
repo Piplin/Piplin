@@ -21,7 +21,7 @@
             $('#user_id').val('');
             $('#user_name').val('');
             //$('#user_level').val($("#user_level option:first").val());
-            $('#user_level').select2(Fixhub.select2_options);
+            $('#user_level').select2(Piplin.select2_options);
             $('#user_nickname').val('');
             $('#user_email').val('');
             $('#user_password').val('');
@@ -38,11 +38,11 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
-        var user = Fixhub.Users.get($('#model_id').val());
+        var user = Piplin.Users.get($('#model_id').val());
 
         user.destroy({
             wait: true,
@@ -50,14 +50,14 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
-                Fixhub.toast(trans('users.delete_success'));
+                Piplin.toast(trans('users.delete_success'));
             },
             error: function() {
-                icon.removeClass().addClass('fixhub fixhub-delete');
+                icon.removeClass().addClass('piplin piplin-delete');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
@@ -69,16 +69,16 @@
         var icon = target.find('i');
         var dialog = target.parents('.modal');
 
-        icon.removeClass().addClass('fixhub fixhub-load fixhub-spin');
+        icon.removeClass().addClass('piplin piplin-load piplin-spin');
         dialog.find('input').attr('disabled', 'disabled');
         $('button.close', dialog).hide();
 
         var user_id = $('#user_id').val();
 
         if (user_id) {
-            var user = Fixhub.Users.get(user_id);
+            var user = Piplin.Users.get(user_id);
         } else {
-            var user = new Fixhub.User();
+            var user = new Piplin.User();
         }
 
         user.save({
@@ -94,16 +94,16 @@
                 dialog.modal('hide');
                 $('.callout-danger', dialog).hide();
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
 
                 var msg = trans('users.edit_success');
                 if (!user_id) {
-                    Fixhub.Users.add(response);
+                    Piplin.Users.add(response);
                     msg = trans('users.create_success');
                 }
-                Fixhub.toast(msg);
+                Piplin.toast(msg);
             },
             error: function(model, response, options) {
                 $('.callout-danger', dialog).show();
@@ -125,14 +125,14 @@
                     }
                 });
 
-                icon.removeClass().addClass('fixhub fixhub-save');
+                icon.removeClass().addClass('piplin piplin-save');
                 $('button.close', dialog).show();
                 dialog.find('input').removeAttr('disabled');
             }
         });
     });
 
-    Fixhub.User = Backbone.Model.extend({
+    Piplin.User = Backbone.Model.extend({
         urlRoot: '/admin/users',
         initialize: function() {
 
@@ -140,12 +140,12 @@
     });
 
     var Users = Backbone.Collection.extend({
-        model: Fixhub.User
+        model: Piplin.User
     });
 
-    Fixhub.Users = new Users();
+    Piplin.Users = new Users();
 
-    Fixhub.UsersTab = Backbone.View.extend({
+    Piplin.UsersTab = Backbone.View.extend({
         el: '#app',
         events: {
 
@@ -153,33 +153,33 @@
         initialize: function() {
             this.$list = $('#user_list tbody');
 
-            this.listenTo(Fixhub.Users, 'add', this.addOne);
-            this.listenTo(Fixhub.Users, 'reset', this.addAll);
-            this.listenTo(Fixhub.Users, 'remove', this.addAll);
-            this.listenTo(Fixhub.Users, 'all', this.render);
+            this.listenTo(Piplin.Users, 'add', this.addOne);
+            this.listenTo(Piplin.Users, 'reset', this.addAll);
+            this.listenTo(Piplin.Users, 'remove', this.addAll);
+            this.listenTo(Piplin.Users, 'all', this.render);
 
-            Fixhub.listener.on('user:' + Fixhub.events.MODEL_CHANGED, function (data) {
-                var user = Fixhub.Users.get(parseInt(data.model.id));
+            Piplin.listener.on('user:' + Piplin.events.MODEL_CHANGED, function (data) {
+                var user = Piplin.Users.get(parseInt(data.model.id));
 
                 if (user) {
                     user.set(data.model);
                 }
             });
 
-            Fixhub.listener.on('user:' + Fixhub.events.MODEL_CREATED, function (data) {
-                Fixhub.Users.add(data.model);
+            Piplin.listener.on('user:' + Piplin.events.MODEL_CREATED, function (data) {
+                Piplin.Users.add(data.model);
             });
 
-            Fixhub.listener.on('user:' + Fixhub.events.MODEL_TRASHED, function (data) {
-                var user = Fixhub.Users.get(parseInt(data.model.id));
+            Piplin.listener.on('user:' + Piplin.events.MODEL_TRASHED, function (data) {
+                var user = Piplin.Users.get(parseInt(data.model.id));
 
                 if (user) {
-                    Fixhub.Users.remove(user);
+                    Piplin.Users.remove(user);
                 }
             });
         },
         addOne: function (user) {
-            var view = new Fixhub.UserView({
+            var view = new Piplin.UserView({
                 model: user
             });
 
@@ -187,11 +187,11 @@
         },
         addAll: function () {
             this.$list.html('');
-            Fixhub.Users.each(this.addOne, this);
+            Piplin.Users.each(this.addOne, this);
         }
     });
 
-    Fixhub.UserView = Backbone.View.extend({
+    Piplin.UserView = Backbone.View.extend({
         tagName:  'tr',
         events: {
             'click .btn-edit': 'edit',
@@ -216,7 +216,7 @@
             $('#user_id').val(this.model.id);
             $('#user_name').val(this.model.get('name'));
             //$('#user_level').val(this.model.get('level'));
-            $('#user_level').select2(Fixhub.select2_options)
+            $('#user_level').select2(Piplin.select2_options)
                                 .val(this.model.get('level'))
                                 .trigger('change');
             $('#user_nickname').val(this.model.get('nickname'));

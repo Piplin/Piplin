@@ -25,7 +25,7 @@ const paths = {
     'jquery'           : `${node_path}/jquery`,
     'jquery_sortable'  : `${node_path}/jquery-sortable`,
     'livestamp'        : `${node_path}/livestamp`,
-    'localization'     : 'vendor/fixhub/js-localization',
+    'localization'     : 'vendor/andywer/js-localization',
     'moment'           : `${node_path}/moment`,
     'morris'           : `${node_path}/morris.js`,
     'raphael'          : `${node_path}/raphael`,
@@ -79,26 +79,25 @@ mix
         `${assets_path}/js/components/admin/groups.js`,
         `${assets_path}/js/components/admin/providers.js`,
         `${assets_path}/js/components/admin/projects.js`,
-        `${assets_path}/js/components/admin/templates.js`,
-        `${assets_path}/js/components/admin/links.js`,
-        `${assets_path}/js/components/admin/tips.js`,
         `${assets_path}/js/components/admin/keys.js`,
         `${assets_path}/js/components/admin/cabinets.js`,
         `${assets_path}/js/components/admin/users.js`
     ].concat(skeletons), `${dist_path}/js/admin.js`)
     .scripts([
         `${assets_path}/js/components/dashboard/commands.js`,
-        `${assets_path}/js/components/dashboard/deployment.js`,
+        `${assets_path}/js/components/dashboard/tasks.js`,
         `${assets_path}/js/components/dashboard/hooks.js`,
         `${assets_path}/js/components/dashboard/members.js`,
         `${assets_path}/js/components/dashboard/projects.js`,
+        `${assets_path}/js/components/dashboard/patterns.js`,
         `${assets_path}/js/components/dashboard/profile.js`,
         `${assets_path}/js/components/dashboard/environmentLinks.js`,
+        `${assets_path}/js/components/dashboard/releases.js`,
         `${assets_path}/js/components/dashboard/cabinets.js`
     ].concat(skeletons), `${dist_path}/js/dashboard.js`)
     .scripts([
         `${assets_path}/js/bootstrap.js`,
-        `${assets_path}/js/fixhub.js`,
+        `${assets_path}/js/piplin.js`,
         `${assets_path}/js/utils/uploader.js`,
     ], `${dist_path}/js/app.js`)
     .styles([
@@ -116,5 +115,5 @@ if (mix.inProduction()) {
 
 if (!mix.inProduction()) {
     mix.sourceMaps()
-    mix.browserSync({proxy: 'fixhub.app'})
+    mix.browserSync({proxy: 'piplin.app'})
 }

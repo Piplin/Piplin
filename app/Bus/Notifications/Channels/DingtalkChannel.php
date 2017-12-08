@@ -1,21 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-
-namespace Fixhub\Bus\Notifications\Channels;
+namespace Piplin\Bus\Notifications\Channels;
 
 use GuzzleHttp\Client;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 use NotificationChannels\Webhook\Exceptions\CouldNotSendNotification;
-use Illuminate\Notifications\Notification;
 
 /**
  * Dingtalk notification driver class.
@@ -36,22 +35,22 @@ class DingtalkChannel
     /**
      * Send the given notification.
      *
-     * @param mixed $notifiable
+     * @param mixed                                  $notifiable
      * @param \Illuminate\Notifications\Notification $notification
      *
      * @throws \NotificationChannels\Webhook\Exceptions\CouldNotSendNotification
      */
     public function send($notifiable, Notification $notification)
     {
-        if (! $url = $notifiable->routeNotificationFor('Dingtalk')) {
+        if (!$url = $notifiable->routeNotificationFor('Dingtalk')) {
             return;
         }
 
         $webhookData = $notification->toDingtalk($notifiable)->toArray();
 
         $response = $this->client->post($url, [
-            'body' => json_encode(Arr::get($webhookData, 'data')),
-            'verify' => false,
+            'body'    => json_encode(Arr::get($webhookData, 'data')),
+            'verify'  => false,
             'headers' => Arr::get($webhookData, 'headers'),
         ]);
 

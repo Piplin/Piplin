@@ -1,26 +1,26 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Auth;
+namespace Piplin\Http\Controllers\Auth;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Models\Identity;
-use Fixhub\Models\Provider;
-use Fixhub\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Models\Identity;
+use Piplin\Models\Provider;
+use Piplin\Models\User;
 use PragmaRX\Google2FA\Contracts\Google2FA as Google2FA;
 
 /**
@@ -73,7 +73,7 @@ class AuthController extends Controller
         $credentials = $request->only(['login', 'password']);
 
         // Login with username or email.
-        $loginKey = Str::contains($credentials['login'], '@') ? 'email' : 'name';
+        $loginKey               = Str::contains($credentials['login'], '@') ? 'email' : 'name';
         $credentials[$loginKey] = array_pull($credentials, 'login');
 
         if (Auth::validate($credentials)) {
@@ -112,10 +112,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle an incomming callback
+     * Handle an incomming callback.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string $slug
+     * @param string                   $slug
      *
      * @return Response
      */
@@ -135,19 +135,19 @@ class AuthController extends Controller
             if (is_null($identity)) {
                 // User::create();
                 $user = User::create([
-                    'name' => $extern_user->nickname,
+                    'name'     => $extern_user->nickname,
                     'nickname' => $extern_user->name,
-                    'email' => $extern_user->email,
+                    'email'    => $extern_user->email,
                     'password' => time(),
                 ]);
 
                 $identity = Identity::create([
-                    'extern_uid' => $extern_user->id,
-                    'name' => $extern_user->name,
-                    'nickname' => $extern_user->nickname,
-                    'email' => $extern_user->email,
-                    'avatar' => $extern_user->avatar,
-                    'user_id' => $user->id,
+                    'extern_uid'  => $extern_user->id,
+                    'name'        => $extern_user->name,
+                    'nickname'    => $extern_user->nickname,
+                    'email'       => $extern_user->email,
+                    'avatar'      => $extern_user->avatar,
+                    'user_id'     => $user->id,
                     'provider_id' => $provider->id,
                 ]);
             } else {
@@ -156,6 +156,7 @@ class AuthController extends Controller
             if (!Auth::check()) {
                 Auth::login($user, true);
             }
+
             return Redirect::to('/')
                 ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('auth.logged_in')));
         }

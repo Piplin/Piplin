@@ -1,21 +1,20 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Composers;
+namespace Piplin\Composers;
 
-use Fixhub\Models\Project;
-use Fixhub\Models\ProjectGroup;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\User;
 use Illuminate\Contracts\View\View;
+use Piplin\Models\Project;
+use Piplin\Models\ProjectGroup;
+use Piplin\Models\User;
 
 /**
  * View composer for the dashboard index.
@@ -31,7 +30,6 @@ class DashboardComposer
     public function compose(View $view)
     {
         $view->with('project_count', Project::count());
-        $view->with('template_count', DeployTemplate::count());
         $view->with('group_count', ProjectGroup::count());
         $view->with('user_count', User::count());
     }

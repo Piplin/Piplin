@@ -1,34 +1,33 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Models;
+namespace Piplin\Models;
 
-use Fixhub\Models\Traits\BroadcastChanges;
-use Fixhub\Presenters\UserPresenter;
+use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use McCool\LaravelAutoPresenter\HasPresenter;
 use Illuminate\Support\Facades\Hash;
-use Creativeorange\Gravatar\Facades\Gravatar;
-use Fixhub\Bus\Notifications\User\ResetPasswordNotification;
-use Venturecraft\Revisionable\RevisionableTrait;
+use McCool\LaravelAutoPresenter\HasPresenter;
+use Piplin\Bus\Notifications\User\ResetPasswordNotification;
+use Piplin\Models\Traits\BroadcastChanges;
+use Piplin\Presenters\UserPresenter;
 
 /**
  * User model.
  */
 class User extends Authenticatable implements HasPresenter
 {
-    use SoftDeletes, BroadcastChanges, Notifiable, RevisionableTrait;
+    use SoftDeletes, BroadcastChanges, Notifiable;
 
     /**
      * The admin level of user.
@@ -78,23 +77,9 @@ class User extends Authenticatable implements HasPresenter
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id'    => 'integer',
+        'level' => 'integer',
     ];
-
-    /**
-     * Revision creations enabled.
-     *
-     * @var boolean
-     */
-    protected $revisionCreationsEnabled = true;
-
-    /**
-     * Revision ignore attributes.
-     *
-     * @var array
-     */
-    protected $dontKeepRevisionOf = ['password', 'remember_token', 'email_token'];
-
 
     /**
      * The searchable fields.
@@ -115,7 +100,6 @@ class User extends Authenticatable implements HasPresenter
 
         return $this->email_token;
     }
-
 
     /**
      * Belongs to many relationship.
@@ -142,13 +126,13 @@ class User extends Authenticatable implements HasPresenter
      * Checks ability for user.
      *
      * @param string $name
-     * @param mixed $arg
+     * @param mixed  $arg
      *
      * @return bool
      */
     public function can($name, $arg = null)
     {
-        if ($name == 'projects.create') {
+        if ($name === 'projects.create') {
             return $this->is_admin || $this->is_manager;
         }
 
@@ -162,7 +146,7 @@ class User extends Authenticatable implements HasPresenter
      */
     public function getIsUserAttribute()
     {
-        return $this->level == self::LEVEL_COLLABORATOR;
+        return $this->level === self::LEVEL_COLLABORATOR;
     }
 
     /**
@@ -172,7 +156,7 @@ class User extends Authenticatable implements HasPresenter
      */
     public function getIsAdminAttribute()
     {
-        return $this->level == self::LEVEL_ADMIN;
+        return $this->level === self::LEVEL_ADMIN;
     }
 
     /**
@@ -182,7 +166,7 @@ class User extends Authenticatable implements HasPresenter
      */
     public function getIsManagerAttribute()
     {
-        return $this->level == self::LEVEL_MANAGER;
+        return $this->level === self::LEVEL_MANAGER;
     }
 
     /**
@@ -199,7 +183,7 @@ class User extends Authenticatable implements HasPresenter
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -214,11 +198,11 @@ class User extends Authenticatable implements HasPresenter
      */
     public function getRoleNameAttribute()
     {
-        if ($this->level == User::LEVEL_ADMIN) {
+        if ($this->level === self::LEVEL_ADMIN) {
             return trans('users.level.admin');
-        } elseif ($this->level == User::LEVEL_MANAGER) {
+        } elseif ($this->level === self::LEVEL_MANAGER) {
             return trans('users.level.manager');
-        } elseif ($this->level == User::LEVEL_COLLABORATOR) {
+        } elseif ($this->level === self::LEVEL_COLLABORATOR) {
             return trans('users.level.collaborator');
         }
 
@@ -229,7 +213,7 @@ class User extends Authenticatable implements HasPresenter
      * Adds a search scope.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $search
+     * @param array                                 $search
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -241,6 +225,7 @@ class User extends Authenticatable implements HasPresenter
         if (!array_intersect(array_keys($search), $this->searchable)) {
             return $query;
         }
+
         return $query->where($search);
     }
 

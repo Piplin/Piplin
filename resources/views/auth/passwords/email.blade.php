@@ -29,7 +29,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" placeholder="{{ trans('auth.email') }}" name="email"  value="{{ old('email') }}" required />
-                    <span class="fixhub fixhub-email form-control-feedback"></span>
+                    <span class="piplin piplin-email form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-8">

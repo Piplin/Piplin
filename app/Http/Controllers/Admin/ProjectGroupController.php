@@ -1,23 +1,22 @@
 <?php
 
 /*
- * This file is part of Fixhub.
+ * This file is part of Piplin.
  *
- * Copyright (C) 2016 Fixhub.org
+ * Copyright (C) 2016-2017 piplin.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Fixhub\Http\Controllers\Admin;
+namespace Piplin\Http\Controllers\Admin;
 
-use Fixhub\Http\Controllers\Controller;
-use Fixhub\Http\Requests\StoreProjectGroupRequest;
-use Fixhub\Models\DeployTemplate;
-use Fixhub\Models\Key;
-use Fixhub\Models\Project;
-use Fixhub\Models\ProjectGroup;
 use Illuminate\Http\Request;
+use Piplin\Http\Controllers\Controller;
+use Piplin\Http\Requests\StoreProjectGroupRequest;
+use Piplin\Models\Key;
+use Piplin\Models\Project;
+use Piplin\Models\ProjectGroup;
 
 /**
  * Project group management controller.
@@ -32,11 +31,12 @@ class ProjectGroupController extends Controller
     public function index()
     {
         $groups = ProjectGroup::orderBy('order')
-                    ->paginate(config('fixhub.items_per_page', 10));
+                    ->paginate(config('piplin.items_per_page', 10));
 
         return view('admin.groups.index', [
-            'title'    => trans('groups.manage'),
-            'groups'   => $groups
+            'title'         => trans('groups.manage'),
+            'groups'        => $groups,
+            'current_child' => 'groups'
         ]);
     }
 
@@ -55,7 +55,7 @@ class ProjectGroupController extends Controller
     /**
      * Store a newly created group in storage.
      *
-     * @param  StoreProjectGroupRequest $request
+     * @param StoreProjectGroupRequest $request
      *
      * @return Response
      */
@@ -69,7 +69,7 @@ class ProjectGroupController extends Controller
     /**
      * Update the specified group in storage.
      *
-     * @param ProjectGroup $group
+     * @param ProjectGroup             $group
      * @param StoreProjectGroupRequest $request
      *
      * @return Response
