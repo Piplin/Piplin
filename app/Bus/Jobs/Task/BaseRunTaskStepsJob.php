@@ -26,6 +26,7 @@ use Piplin\Models\TaskStep;
 use Piplin\Models\Environment;
 use Piplin\Models\BuildPlan;
 use Piplin\Models\Project;
+use Piplin\Models\Release;
 use Piplin\Models\Server;
 use Piplin\Models\ServerLog;
 use Piplin\Models\User;
@@ -208,6 +209,13 @@ abstract class BaseRunTaskStepsJob
                 'author_email'  => $author_email,
                 'author_name'   => $author_name,
             ]);
+
+            if ($this->task->payload && $this->task->payload->source == 'release') {
+                $release = Release::findOrFail($this->task->payload->source_release);
+                $tokens = array_merge($tokens, [
+                    'build_release' => $release->name,
+                ]);
+            }
         }
 
         if (!$step->isCustom()) {

@@ -37,6 +37,7 @@ return [
     'migrations'           => '数据迁移',
     'bash'                 => 'Bash脚本',
     'environments'         => '部署环境',
+    'build_release'        => '构建版本',
     'patterns'             => '出品定义',
     'servers'              => '服务器',
     'default'              => '跟随服务器',

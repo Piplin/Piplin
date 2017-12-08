@@ -42,6 +42,7 @@
                                 <li><code>@{{ build_path }}</code> - {{ trans('commands.release_path') }}, {{ trans('commands.example') }} <span class="label label-default">/var/www/builds/{{ date('YmdHis') }}</span></li>
                                 @else
                                 <li><code>@{{ environment }}</code> - {{ trans('commands.environment') }}, {{ trans('commands.example') }} <span class="label label-default">Staging</span></li>
+                                <li><code>@{{ build_release }}</code> - {{ trans('commands.build_release') }}, {{ trans('commands.example') }} <span class="label label-default">Release-1</span></li>
                                 <li><code>@{{ release }}</code> - {{ trans('commands.release_id') }}, {{ trans('commands.example') }} <span class="label label-default">{{ date('YmdHis') }}</span></li>
                                 <li><code>@{{ release_path }}</code> - {{ trans('commands.release_path') }}, {{ trans('commands.example') }} <span class="label label-default">/var/www/releases/{{ date('YmdHis') }}</span></li>
                                 <li><code>@{{ author_email }}</code> - {{ trans('commands.author_email') }}, {{ trans('commands.example') }} <span class="label label-default">{{ $current_user->email }}</span></li>
