@@ -107,7 +107,6 @@ class SyncConfigFileJob extends Job implements ShouldQueue
         foreach ($servers as $server) {
             $this->sendFileFromString($server, $local_file);
         }
-        
     }
 
     /**
@@ -144,6 +143,5 @@ class SyncConfigFileJob extends Job implements ShouldQueue
         error_log(var_export(file_get_contents($local_file), true), 3, '/tmp/gsl.log');
         // Upload the file
         //$this->sendFile($tmp_file, $remote_path, $log);
-
     }
 }
