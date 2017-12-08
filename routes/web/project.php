@@ -249,6 +249,9 @@ Route::group([
                 Route::put('config-files/{config_file}', [
                     'uses' => 'ConfigFileController@update',
                 ]);
+                Route::post('config-files/{config_file}/sync', [
+                    'uses' => 'ConfigFileController@sync',
+                ]);
                 Route::delete('config-files/{config_file}', [
                     'uses' => 'ConfigFileController@destroy',
                 ]);

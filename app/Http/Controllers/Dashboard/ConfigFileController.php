@@ -11,9 +11,11 @@
 
 namespace Piplin\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreConfigFileRequest;
 use Piplin\Models\ConfigFile;
+use Piplin\Bus\Jobs\SyncConfigFileJob;
 
 /**
  * Manage the config global file like some environment files.
@@ -92,6 +94,30 @@ class ConfigFileController extends Controller
         $config_file->environments; // Triggers the loading
 
         return $config_file;
+    }
+
+    /**
+     * Sync config file to specified environments.
+     *
+     * @param ConfigFile $configFile
+     * @param Request    $request
+     *
+     * @return Response
+     */
+    public function sync(ConfigFile $configFile, Request $request)
+    {
+        $environmentIds = $request->get('environment_ids');
+        $postCommands = $request->get('post_commands');
+
+        if (!$configFile->isSyncing()) {
+            $configFile->status = ConfigFile::SYNCING;
+            $configFile->save();
+            dispatch(new SyncConfigFileJob($configFile, $environmentIds, $postCommands));
+        }
+
+        return [
+            'success' => true,
+        ];
     }
 
     /**

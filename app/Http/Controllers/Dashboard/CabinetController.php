@@ -11,7 +11,6 @@
 
 namespace Piplin\Http\Controllers\Dashboard;
 
-use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreEnvironmentCabinetRequest;
 use Piplin\Models\Cabinet;
