@@ -44,12 +44,16 @@
                     </td>
                     <!--<td class="committer">{{ $task->committer_name }}</td>-->
                     <td class="commit">
-                        @if ($task->commit_url)
-                        <a href="{{ $task->commit_url }}" target="_blank">{{ $task->short_commit_hash }}</a>
+                        @if($task->payload && $task->payload->source == 'release')
+                            {{ trans('tasks.release') }}
                         @else
-                        {{ $task->short_commit_hash }}
+                            @if ($task->commit_url)
+                            <a href="{{ $task->commit_url }}" target="_blank">{{ $task->short_commit_hash }}</a>
+                            @else
+                            {{ $task->short_commit_hash }}
+                            @endif
+                            ({{ $task->branch }})
                         @endif
-                        ({{ $task->branch }})
                     </td>
                     <td class="status">
                         <span class="text-{{$task->css_class}}"><i class="piplin piplin-{{ $task->icon }}"></i> <span>{{ $task->readable_status }}</span></span>

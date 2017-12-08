@@ -58,7 +58,7 @@ return [
     'different_branch'      => '其他分支',
     'tag'                   => '标签',
     'branch'                => '分支',
-    'release'               => '已发布的构建版本',
+    'release'               => '构建版本',
     'environments'          => '运行环境',
     'warning'               => '任务尚未启动，请确保完成填写所有必填项.',
     'describe_commit'       => '例如：0c6b0d8',
