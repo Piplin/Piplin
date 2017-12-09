@@ -58,5 +58,9 @@
             Piplin.Releases.add({!! $releases->toJson() !!});
         @endif
         Piplin.targetable_id = {{ $buildPlan->id }};
+
+        @if($tab == 'build')
+            $('button#plan_build').trigger('click');
+        @endif
     </script>
 @endpush

@@ -54,7 +54,7 @@ return [
     'total_count'       => '总共任务',
     'status'            => '项目状态',
     'build_status'      => '构建状态',
-    'deploy_project'    => '开始部署',
+    'build'             => '开始构建',
     'deploy'            => '开始部署',
     'deploy_plan'       => '部署计划',
     'build_plan'        => '构建计划',

@@ -11,6 +11,7 @@
 
 namespace Piplin\Http\Controllers\Dashboard;
 
+use Illuminate\Http\Request;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Models\Command;
 use Piplin\Models\Task;
@@ -30,7 +31,7 @@ class BuildController extends Controller
      *
      * @return View
      */
-    public function show(BuildPlan $buildPlan, $tab = '')
+    public function show(Request $request, BuildPlan $buildPlan, $tab = '')
     {
         $project = $buildPlan->project;
 
@@ -68,6 +69,10 @@ class BuildController extends Controller
             $data['title'] = trans('releases.label');
             $data['releases'] = $project->releases;
         } else {
+            // Don't trigger dialog if page changed
+            if ($request->get('page')) {
+                $data['tab'] = null;
+            }
             $data['title'] = trans('plans.builds');
         }
 
