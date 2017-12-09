@@ -71,6 +71,6 @@ return [
     'second'                => ':time 秒|:time 秒',
     'run_failure'           => '任务运行失败',
     'submit_success'        => '任务已提交。',
-    'create_success'        => '部署单已创建成功，点击查看详情。',
+    'create_success'        => '任务已创建成功，点击查看详情。',
 
 ];

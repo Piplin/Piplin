@@ -38,7 +38,11 @@
             $('i', status_bar).attr('class', 'piplin piplin-' + status_data.icon_class);
             $('span', status_bar).text(status_data.label);
         } else {
-            var toast_title = trans('tasks.deploy_title', {
+            var title = 'tasks.deploy_title';
+            if (data.model.targetable_type == 'Piplin\\Models\\BuildPlan') {
+                title = 'tasks.build_title'; 
+            } 
+            var toast_title = trans(title, {
                 'id': data.model.id
             });
 
