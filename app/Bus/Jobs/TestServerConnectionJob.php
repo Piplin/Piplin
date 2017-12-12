@@ -122,4 +122,16 @@ class TestServerConnectionJob extends Job implements ShouldQueue
 
         unlink($key);
     }
+
+    /**
+     * Handle a job failure.
+     *
+     * @return void
+     */
+    public function failed()
+    {
+        $this->server->status = Server::FAILED;
+        $this->server->output = trans('servers.job_failed');
+        $this->server->save();
+    }
 }

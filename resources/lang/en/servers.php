@@ -39,5 +39,6 @@ return [
     'enabled'        => 'Server enabled?',
     'disabled'       => 'Skip this server for furture deployments',
     'runs_code'      => 'Deploy Code',
+    'job_failed'     => 'The job has been attempted too many times or run too long.',
 
 ];

@@ -39,5 +39,6 @@ return [
     'runs_code'      => '部署代码?',
     'enabled'        => '是否启用？',
     'disabled'       => '执行部署时跳过该服务器',
+    'job_failed'     => '经过多次尝试，服务器仍然连通失败。',
 
 ];
