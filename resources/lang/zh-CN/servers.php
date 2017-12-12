@@ -30,6 +30,7 @@ return [
     'updated_at'     => '更新时间',
     'environment'    => '部署环境',
     'test'           => '测试该服务器是否连通',
+    'test_help'      => '请检查服务器信息，别忘了在服务器运行用户的<code>~/.ssh/authorized_keys</code>文件中添加项目的部署公钥。',
     'warning'        => '服务器信息未被保存成功，请确认相关信息是否有误。',
     'successful'     => '成功',
     'testing'        => '测试中',

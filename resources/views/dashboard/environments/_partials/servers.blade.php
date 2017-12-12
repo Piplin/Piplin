@@ -55,6 +55,7 @@
         <td><%- ip_address %></td>
         <td><%- port %></td>
         <td><span class="text-<%- status_css %>"><i class="piplin piplin-<%-icon_css %>"></i> <span><%- status %></span></span>
+            <% if (status === "{{trans('servers.failed')}}") { %><i class="piplin piplin-help server-names" data-html="true" data-toggle="tooltip" data-placement="right" title="{{ trans('servers.test_help') }}"></i><% } %>
         </td>
         <td>
             <div class="btn-group pull-right">

@@ -235,6 +235,8 @@
 
             this.$list.append(view.render().el);
 
+            $('.server-names', this.$list).tooltip();
+
             if (Piplin.Servers.length < 2) {
                 $('.drag-handle', this.$list).hide();
             } else {

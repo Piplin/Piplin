@@ -30,6 +30,7 @@ return [
     'updated_at'     => 'Updated at',
     'environment'    => 'Environment',
     'test'           => 'Test the server connection',
+    'test_help'      => 'Pealse check the server details and don\'t forget to add SSH key to the server\'s <code>~/.ssh/authorized_keys</code>.',
     'warning'        => 'The server could not be saved, please check the form below.',
     'successful'     => 'Successful',
     'testing'        => 'Connecting',
