@@ -45,8 +45,14 @@ class AutocompleteController extends Controller
      */
     public function cabinets(Request $request)
     {
-        $cabinets = Cabinet::where('name', 'like', $request->get('q') . '%')->get(['id', 'name'])->toArray();
+        $q = trim($request->get('q'));
 
-        return Response::json($cabinets);
+        if (empty($q)) {
+            $cabinets = Cabinet::orderBy('id', 'desc')->limit(10)->get(['id', 'name']);
+        } else {
+            $cabinets = Cabinet::where('name', 'like', $request->get('q') . '%')->get(['id', 'name']);
+        }
+
+        return Response::json($cabinets->toArray());
     }
 }
