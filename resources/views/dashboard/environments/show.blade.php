@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
+ @ {{ Request::get('action') }} @
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -49,6 +50,9 @@
 
         Piplin.project_id = {{ $project->id }};
         Piplin.targetable_id = {{ $targetable->id }};
+        @if(Request::get('action') == 'add-server')
+            $('button#add-server').trigger('click');
+        @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush

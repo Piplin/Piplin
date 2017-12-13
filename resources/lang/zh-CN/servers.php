@@ -12,7 +12,7 @@
 return [
 
     'label'          => '服务器',
-    'create'         => '新增',
+    'create'         => '添加服务器',
     'create_edit'    => '服务器添加成功。',
     'web'            => 'Web服务器',
     'edit'           => '编辑服务器信息',

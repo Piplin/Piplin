@@ -2,7 +2,7 @@
     <div class="box-header">
         <div class="pull-right">
             @if($in_admin or $project->can('manage'))
-            <button type="button" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="piplin piplin-plus"></span> {{ trans('servers.create') }}</button>
+            <button type="button" id="add-server" class="btn btn-primary" title="{{ trans('servers.create') }}" data-toggle="modal" data-backdrop="static" data-target="#server"><span class="piplin piplin-plus"></span> {{ trans('servers.create') }}</button>
             @endif
         </div>
         <h3 class="box-title">{{ trans('environments.servers') }}</h3>

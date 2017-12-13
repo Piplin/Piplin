@@ -46,6 +46,7 @@
         <td><% if (default_on) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
         <td>
             <div class="btn-group pull-right">
+                <a href="/deploy-plan/{{ $targetable_id }}/environments/<%- id %>?action=add-server" class="btn btn-info" title="{{ trans('servers.create') }}"><i class="piplin piplin-plus"></i></a>
                 <button type="button" class="btn btn-default btn-edit" title="{{ trans('environments.edit') }}" data-toggle="modal" data-backdrop="static" data-target="#environment"><i class="piplin piplin-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('environments.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
             </div>
