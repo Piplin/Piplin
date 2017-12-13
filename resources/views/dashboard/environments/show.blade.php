@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
- @ {{ Request::get('action') }} @
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
