@@ -29,6 +29,7 @@ return [
     'enabled'          => 'Enabled',
     'link'             => 'Link Cabinets',
     'search'           => 'Search a cabinet',
+    'help'             => 'Directly press the space key to list 10 recently added cabinets.',
     'manage'           => 'Manage cabinets',
 
 ];

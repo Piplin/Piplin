@@ -8,7 +8,9 @@
             <form class="form-horizontal" role="form">
                 <input type="hidden" name="environment_id" value="{{ $targetable->id }}" />
                 <div class="modal-body">
-
+                    <div class="alert alert-warning">
+                        {{ trans('cabinets.help') }}
+                    </div>
                     <div class="callout callout-danger">
                         <i class="piplin piplin-warning"></i> {{ trans('cabinets.warning') }}
                     </div>
