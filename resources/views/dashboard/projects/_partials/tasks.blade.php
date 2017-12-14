@@ -61,10 +61,10 @@
                     <td>
                         <div class="btn-group pull-right">
                             @if ($task->isSuccessful() && !$task->is_build)
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $task->optional_commands_used }}" data-deployment-id="{{ $task->id }}" class="btn btn-default btn-rollback @if ($task->isCurrent()) hide @endif" title="{{ trans('tasks.rollback') }}"><i class="piplin piplin-rollback"></i></button>
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#rollback" data-optional-commands="{{ $task->optional_commands_used }}" data-task-id="{{ $task->id }}" class="btn btn-default btn-rollback @if ($task->isCurrent()) hide @endif" title="{{ trans('tasks.rollback') }}"><i class="piplin piplin-rollback"></i></button>
                             @endif
                             @if ($task->isDraft())
-                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-deployment-id="{{ $task->id }}" class="btn btn-info btn-draft"><i class="piplin piplin-check"></i></button>
+                                <button type="button" data-toggle="modal" data-backdrop="static" data-target="#deploy_draft" data-task-id="{{ $task->id }}" class="btn btn-info btn-draft"><i class="piplin piplin-check"></i></button>
                             @endif
 
                             @if ($task->isPending() || $task->isRunning())

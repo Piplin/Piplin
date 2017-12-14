@@ -6,7 +6,7 @@
                 <h4 class="modal-title"><i class="piplin piplin-rollback"></i> {{ trans('tasks.rollback_title') }}</h4>
             </div>
             <form class="form-horizontal" role="form">
-                <input type="hidden" name="deployment_id" />
+                <input type="hidden" name="task_id" />
                 <div class="modal-body">
 
                     <div class="alert alert-warning">
@@ -16,21 +16,21 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="deployment_reason">{{ trans('tasks.reason') }}</label>
+                        <label class="col-sm-3 control-label" for="task_reason">{{ trans('tasks.reason') }}</label>
 						<div class="col-sm-9">
-							<textarea rows="10" id="deployment_reason" class="form-control" name="reason" placeholder="{{ trans('tasks.describe_reason') }}"></textarea>
+							<textarea rows="10" id="task_reason" class="form-control" name="reason" placeholder="{{ trans('tasks.describe_reason') }}"></textarea>
 						</div>
                     </div>
                     @if (count($optional))
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="deployment_commands">{{ trans('tasks.optional') }}</label>
+                        <label class="col-sm-3 control-label" for="task_commands">{{ trans('tasks.optional') }}</label>
                         <div class="col-sm-9">
                         <ul class="list-unstyled">
                             @foreach ($optional as $command)
                             <li>
                                 <div class="checkbox">
-                                    <label for="deployment_command_{{ $command->id }}">
-                                        <input type="checkbox" class="deployment-command" name="optional[]" id="deployment_command_{{ $command->id }}" value="{{ $command->id }}" @if ($command->default_on === true) checked @endif/> {{ $command->name }}
+                                    <label for="task_command_{{ $command->id }}">
+                                        <input type="checkbox" class="task-command" name="optional[]" id="task_command_{{ $command->id }}" value="{{ $command->id }}" @if ($command->default_on === true) checked @endif/> {{ $command->name }}
                                     </label>
                                 </div>
                             </li>
