@@ -182,6 +182,9 @@ class TaskController extends Controller
             'committer_email' => $previous->committer_email,
             'commit'          => $previous->commit,
             'project_id'      => $previous->project_id,
+            'targetable_type' => $previous->targetable_type,
+            'targetable_id'   => $previous->targetable_id,
+            'payload'         => $previous->payload,
             'branch'          => $previous->branch,
             'reason'          => trans('tasks.rollback_reason', [
                                     'reason'          => $request->get('reason'),
