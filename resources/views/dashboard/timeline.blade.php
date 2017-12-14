@@ -16,7 +16,7 @@
                 <span class="small">[{{ $task->environment_names }}]</span>
                 @if ($task->isDraft())
                 <span>
-                    <button type="button" data-toggle="modal" data-backdrop="static" data-target="#task_draft" data-deployment-id="{{ $task->id }}" class="btn btn-xs btn-info btn-draft"><i class="piplin piplin-check"></i></button>
+                    <button type="button" data-toggle="modal" data-backdrop="static" data-target="#task_draft" data-task-id="{{ $task->id }}" class="btn btn-xs btn-info btn-draft"><i class="piplin piplin-check"></i></button>
                 </span>
                 @endif
                 </h4>
