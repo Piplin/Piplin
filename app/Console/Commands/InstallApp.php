@@ -52,6 +52,15 @@ class InstallApp extends Command
      */
     public function handle()
     {
+        $this->line('');
+        $this->info(' ____    _           _   _         ');
+        $this->info('|  _ \  (_)  _ __   | | (_)  _ __  ');
+        $this->info("| |_) | | | | '_ \  | | | | | '_ \ ");
+        $this->info('|  __/  | | | |_) | | | | | | | | |');
+        $this->info('|_|     |_| | .__/  |_| |_| |_| |_|');
+        $this->info('            |_|                    ');
+        $this->line('');
+
         if (!$this->verifyNotInstalled()) {
             return -1;
         }
@@ -64,12 +73,6 @@ class InstallApp extends Command
             copy(base_path('.env.example'), $config);
             Config::set('app.key', 'SomeRandomString');
         }
-
-        $this->line('');
-        $this->info('***********************');
-        $this->info('  Welcome to Piplin  ');
-        $this->info('***********************');
-        $this->line('');
 
         if (!$this->checkRequirements()) {
             return -1;
