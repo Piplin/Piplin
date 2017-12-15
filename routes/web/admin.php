@@ -21,21 +21,6 @@ Route::group([
         ],
     ]);
 
-    Route::resource('templates', 'ProjectTemplateController', [
-        'only'  => ['index', 'store', 'update', 'destroy'],
-        'names' => [
-            'index'   => 'admin.templates.index',
-            'store'   => 'admin.templates.store',
-            'update'  => 'admin.templates.update',
-            'destroy' => 'admin.templates.destroy',
-        ],
-    ]);
-
-    Route::get('templates/{template}/{tab?}', [
-        'as'   => 'admin.templates.show',
-        'uses' => 'ProjectTemplateController@show',
-    ]);
-
     Route::resource('projects', 'ProjectController', [
         'only'  => ['create', 'index', 'store', 'update', 'destroy'],
         'names' => [
