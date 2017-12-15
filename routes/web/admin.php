@@ -73,7 +73,7 @@ Route::group([
     ]);
     Route::post('providers/reorder', [
         'as'    => 'admin.providers.reorder',
-        'uses'  => 'LinkController@reorder',
+        'uses'  => 'ProviderController@reorder',
     ]);
 
     Route::resource('groups', 'ProjectGroupController', [

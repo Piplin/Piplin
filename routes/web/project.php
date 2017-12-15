@@ -206,13 +206,6 @@ Route::group([
                     'uses' => 'HookController@destroy',
                 ]);
 
-                // Refresh
-                Route::get('repository/{id}/refresh', [
-                    'as'     => 'repository.refresh',
-                    'uses'   => 'RepositoryController@refresh',
-                    'middle' => 'api',
-                ]);
-
                 // Environment
                 Route::put('environments/{environment}', [
                     'uses' => 'EnvironmentController@update',
