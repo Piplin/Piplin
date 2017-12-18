@@ -36,10 +36,10 @@ class TaskObserver
     /**
      * Called when the model is saved.
      *
-     * @param Task $deployment
+     * @param Task $task
      */
-    public function saved(Task $deployment)
+    public function saved(Task $task)
     {
-        $this->dispatcher->dispatch(new ModelChangedEvent($deployment, 'deployment'));
+        $this->dispatcher->dispatch(new ModelChangedEvent($task, 'task'));
     }
 }

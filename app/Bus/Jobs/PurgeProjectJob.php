@@ -80,10 +80,10 @@ class PurgeProjectJob extends Job implements ShouldQueue
             }
         }
 
-        foreach ($this->project->tasks as $deployment) {
-            $deployment->steps()->forceDelete();
-            $deployment->environments()->detach();
-            $deployment->forceDelete();
+        foreach ($this->project->tasks as $task) {
+            $task->steps()->forceDelete();
+            $task->environments()->detach();
+            $task->forceDelete();
         }
 
         $this->project->configFiles()->forceDelete();

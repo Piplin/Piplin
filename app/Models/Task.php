@@ -197,7 +197,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is draft.
+     * Determines whether the task is draft.
      *
      * @return bool
      */
@@ -207,7 +207,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is running.
+     * Determines whether the task is running.
      *
      * @return bool
      */
@@ -217,7 +217,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is pending.
+     * Determines whether the task is pending.
      *
      * @return bool
      */
@@ -227,7 +227,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is successful.
+     * Determines whether the task is successful.
      *
      * @return bool
      */
@@ -237,7 +237,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment failed.
+     * Determines whether the task failed.
      *
      * @return bool
      */
@@ -247,7 +247,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is waiting to be aborted.
+     * Determines whether the task is waiting to be aborted.
      *
      * @return bool
      */
@@ -257,7 +257,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines whether the deployment is aborted.
+     * Determines whether the task is aborted.
      *
      * @return bool
      */
@@ -267,7 +267,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Determines if the deployment is the latest deployment.
+     * Determines if the task is the latest task.
      *
      * @return bool
      */
@@ -405,7 +405,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     }
 
     /**
-     * Gets the deployment title.
+     * Gets the task title.
      *
      * @return string
      */

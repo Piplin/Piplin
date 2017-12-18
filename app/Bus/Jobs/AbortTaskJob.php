@@ -22,18 +22,18 @@ class AbortTaskJob extends Job
     /**
      * @var Task
      */
-    private $deployment;
+    private $task;
 
     const CACHE_KEY_PREFIX = 'piplin:cancel-deploy:';
 
     /**
      * Create a new job instance.
      *
-     * @param Task $deployment
+     * @param Task $task
      */
-    public function __construct(Task $deployment)
+    public function __construct(Task $task)
     {
-        $this->deployment = $deployment;
+        $this->task = $task;
     }
 
     /**
@@ -41,6 +41,6 @@ class AbortTaskJob extends Job
      */
     public function handle()
     {
-        Cache::put(self::CACHE_KEY_PREFIX . $this->deployment->id, time(), 3600);
+        Cache::put(self::CACHE_KEY_PREFIX . $this->task->id, time(), 3600);
     }
 }

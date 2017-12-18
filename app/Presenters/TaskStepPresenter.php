@@ -20,7 +20,7 @@ use Piplin\Models\Command;
 class TaskStepPresenter extends BasePresenter
 {
     /**
-     * Gets the deployment stage label from the numeric representation.
+     * Gets the task stage label from the numeric representation.
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class TaskStepPresenter extends BasePresenter
     }
 
     /**
-     * Gets the deployment stage icon.
+     * Gets the task stage icon.
      *
      * @return string
      */

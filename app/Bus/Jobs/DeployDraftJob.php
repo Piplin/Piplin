@@ -24,20 +24,20 @@ class DeployDraftJob extends Job
     /**
      * @var Task
      */
-    private $deployment;
+    private $task;
 
     /**
      * Create a new command instance.
      *
-     * @param Task $deployment
+     * @param Task $task
      * @param array      $environmentIds
      * @param array      $optional
      *
      * @return void
      */
-    public function __construct(Task $deployment)
+    public function __construct(Task $task)
     {
-        $this->deployment     = $deployment;
+        $this->task = $task;
     }
 
     /**
@@ -47,13 +47,13 @@ class DeployDraftJob extends Job
      */
     public function handle()
     {
-        if (!$this->deployment->isDraft()) {
+        if (!$this->task->isDraft()) {
             return;
         }
 
-        $this->deployment->status = Task::PENDING;
-        $this->deployment->save();
+        $this->task->status = Task::PENDING;
+        $this->task->save();
 
-        $this->dispatch(new RunTaskJob($this->deployment));
+        $this->dispatch(new RunTaskJob($this->task));
     }
 }

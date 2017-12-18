@@ -159,7 +159,7 @@ class UpdateApp extends InstallApp
     }
 
     /**
-     * Checks if there are any running or pending deployments.
+     * Checks if there are any running or pending tasks.
      *
      * @return bool
      */
@@ -172,7 +172,7 @@ class UpdateApp extends InstallApp
             $this->block([
                 'Tasks in progress',
                 PHP_EOL,
-                'There are still running deployments, please wait for them to finish before updating.',
+                'There are still running tasks, please wait for them to finish before updating.',
             ]);
 
             return true;

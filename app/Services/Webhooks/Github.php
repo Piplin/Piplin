@@ -29,7 +29,7 @@ class Github extends Webhook
     /**
      * Parses the request for a push webhook body.
      *
-     * @return mixed Either an array of parameters for the deployment config, or false if it is invalid.
+     * @return mixed Either an array of parameters for the task config, or false if it is invalid.
      */
     public function handlePush()
     {

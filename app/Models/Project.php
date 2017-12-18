@@ -51,7 +51,7 @@ class Project extends Model implements HasPresenter
         'commands',
         'targetable',
         'key',
-        'deployments',
+        'tasks',
         'sharedFiles',
         'configFiles',
         'last_mirrored',

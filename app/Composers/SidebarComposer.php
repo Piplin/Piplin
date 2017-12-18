@@ -36,7 +36,7 @@ class SidebarComposer
     }
 
     /**
-     * Gets running deployments.
+     * Gets running tasks.
      *
      * @return array
      */
@@ -46,7 +46,7 @@ class SidebarComposer
     }
 
     /**
-     * Gets deployments with a supplied status.
+     * Gets tasks with a supplied status.
      *
      * @param  array|int $status
      * @return array

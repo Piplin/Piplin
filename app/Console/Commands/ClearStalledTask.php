@@ -18,7 +18,7 @@ use Piplin\Models\Project;
 use Piplin\Models\ServerLog;
 
 /**
- * Clears any stalled deployments so that new deployments can be queued.
+ * Clears any stalled tasks so that new tasks can be queued.
  */
 class ClearStalledTask extends Command
 {
@@ -34,7 +34,7 @@ class ClearStalledTask extends Command
      *
      * @var string
      */
-    protected $description = 'Cancels any stalled deployments so new deployments can be run';
+    protected $description = 'Cancels any stalled tasks so new tasks can be run';
 
     /**
      * Create a new command instance.
@@ -77,7 +77,7 @@ class ClearStalledTask extends Command
     }
 
     /**
-     * Cleans up any stalled deployments in the database.
+     * Cleans up any stalled tasks in the database.
      *
      * @tpdp Maybe readd pending to the queue if possible?
      * @return void
@@ -92,11 +92,11 @@ class ClearStalledTask extends Command
         ServerLog::where('status', '=', ServerLog::RUNNING)
                  ->update(['status' => ServerLog::FAILED]);
 
-        // Mark any running/pending deployments as failed
+        // Mark any running/pending tasks as failed
         Task::whereIn('status', [Task::RUNNING, Task::PENDING])
                   ->update(['status' => Task::FAILED]);
 
-        // Mark any aborting deployments as aborted
+        // Mark any aborting tasks as aborted
         Task::whereIn('status', [Task::ABORTING])
                   ->update(['status' => Task::ABORTED]);
 

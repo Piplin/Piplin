@@ -26,7 +26,7 @@ use Piplin\Services\Webhooks\Gogs;
 use Piplin\Services\Webhooks\Oschina;
 
 /**
- * The deployment incoming-webhook controller.
+ * The task incoming-webhook controller.
  */
 class IncomingWebhookController extends Controller
 {
@@ -121,12 +121,12 @@ class IncomingWebhookController extends Controller
 
     /**
      * Goes through the various webhook integrations as checks if the request is for them and parses it.
-     * Then adds the various additional details required to trigger a deployment.
+     * Then adds the various additional details required to trigger a task.
      *
      * @param Request $request
      * @param Project $project
      *
-     * @return mixed Either an array of parameters for the deployment config, or false if it is invalid.
+     * @return mixed Either an array of parameters for the task config, or false if it is invalid.
      */
     private function parseWebhookRequest(Request $request, Project $project)
     {
@@ -149,7 +149,7 @@ class IncomingWebhookController extends Controller
      * @param Request $request
      * @param Project $project
      *
-     * @return mixed Either an array of the complete deployment config, or false if it is invalid.
+     * @return mixed Either an array of the complete task config, or false if it is invalid.
      */
     private function appendProjectSettings($payload, Request $request, Project $project)
     {
@@ -194,13 +194,13 @@ class IncomingWebhookController extends Controller
 
         // Check if the request has an update_only query string and if so check the branch matches
         if ($request->has('update_only') && $request->get('update_only') !== false) {
-            $deployment = Task::where('project_id', $project->id)
+            $task = Task::where('project_id', $project->id)
                            ->where('status', Task::COMPLETED)
                            ->whereNotNull('started_at')
                            ->orderBy('started_at', 'DESC')
                            ->first();
 
-            if (!$deployment || $deployment->branch !== $payload['branch']) {
+            if (!$task || $task->branch !== $payload['branch']) {
                 return false;
             }
         }
@@ -209,7 +209,7 @@ class IncomingWebhookController extends Controller
     }
 
     /**
-     * Gets all pending and running deployments for a project and aborts them.
+     * Gets all pending and running tasks for a project and aborts them.
      *
      * @param int $project_id
      *
@@ -217,19 +217,19 @@ class IncomingWebhookController extends Controller
      */
     private function abortQueued($project_id)
     {
-        $deployments = Task::where('project_id', $project_id)
+        $tasks = Task::where('project_id', $project_id)
                                    ->whereIn('status', [Task::RUNNING, Task::PENDING])
                                    ->orderBy('started_at', 'DESC')
                                    ->get();
 
-        foreach ($deployments as $deployment) {
-            $deployment->status = Task::ABORTING;
-            $deployment->save();
+        foreach ($tasks as $task) {
+            $task->status = Task::ABORTING;
+            $task->save();
 
-            dispatch(new AbortTaskJob($deployment));
+            dispatch(new AbortTaskJob($task));
 
-            if ($deployment->is_webhook) {
-                $deployment->delete();
+            if ($task->is_webhook) {
+                $task->delete();
             }
         }
     }

@@ -172,7 +172,7 @@ class RunTaskJob extends Job implements ShouldQueue
 
         $this->updateEnvironmentsInfo();
 
-        // Notify user or others the deployment has been finished
+        // Notify user or others the task has been finished
         event(new TaskFinishedEvent($this->task));
 
         unlink($this->private_key);
@@ -243,7 +243,7 @@ class RunTaskJob extends Job implements ShouldQueue
     }
 
     /**
-     * Update the status and last run time of the deployment enviroments.
+     * Update the status and last run time of the task enviroments.
      */
     private function updateEnvironmentsInfo()
     {

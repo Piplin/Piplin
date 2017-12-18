@@ -97,7 +97,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Adds a deployment for the specified project to the queue.
+     * Adds a task for the specified project to the queue.
      *
      * @param StoreTaskRequest $request
      *
@@ -158,7 +158,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Loads a previous deployment and then creates a new deployment based on it.
+     * Loads a previous task and then creates a new task based on it.
      *
      * @param Request    $request
      * @param Task $previous
@@ -204,7 +204,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Execute the deployment from draft.
+     * Execute the task from draft.
      *
      * @param Task $task
      *
@@ -224,7 +224,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Abort a deployment.
+     * Abort a task.
      *
      * @param Task $task
      *

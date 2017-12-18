@@ -42,7 +42,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the translated deployment status string.
+     * Gets the translated task status string.
      *
      * @return string
      */
@@ -68,7 +68,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the formatted deployment reason.
+     * Gets the formatted task reason.
      *
      * @return string
      */
@@ -78,7 +78,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the IDs of the optional commands which were included in the deployments, for use in a data attribute.
+     * Gets the IDs of the optional commands which were included in the tasks, for use in a data attribute.
      *
      * @return string
      */
@@ -90,7 +90,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the CSS icon class for the deployment status.
+     * Gets the CSS icon class for the task status.
      *
      * @return string
      */
@@ -114,7 +114,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the CSS class for the deployment status.
+     * Gets the CSS class for the task status.
      *
      * @return string
      */
@@ -134,7 +134,7 @@ class TaskPresenter extends BasePresenter
     }
 
     /**
-     * Gets the CSS class for the deployment status for the timeline.
+     * Gets the CSS class for the task status for the timeline.
      *
      * @return string
      */

@@ -130,7 +130,7 @@ class SetupTaskJob extends Job
     }
 
     /**
-     * Set the deployment environment ids.
+     * Set the task environment ids.
      *
      * @return void
      */
@@ -185,7 +185,7 @@ class SetupTaskJob extends Job
     }
 
     /**
-     * Sets the deployment to pending.
+     * Sets the task to pending.
      *
      * @return void
      */
