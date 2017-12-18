@@ -347,10 +347,10 @@ class InstallApp extends Command
         };
 
         $url = $this->askAndValidate(
-            'Application URL ("http://piplin.app" for example)',
+            'Application URL ("http://piplin.yourdomain.com" for example)',
             [],
             $url_callback,
-            'http://piplin.app'
+            'http://piplin.yourdomain.com'
         );
 
         $region = $this->choice('Timezone region', array_keys($regions), 4);
@@ -466,7 +466,7 @@ class InstallApp extends Command
             };
 
             return $answer;
-        }, 'piplin@piplin.app');
+        }, 'piplin@piplin.com');
 
         $email['from_name']    = $from_name;
         $email['from_address'] = $from_address;
