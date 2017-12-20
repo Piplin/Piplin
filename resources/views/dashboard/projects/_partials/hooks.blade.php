@@ -22,8 +22,8 @@
                     <th>{{ trans('hooks.name') }}</th>
                     <th>{{ trans('hooks.type') }}</th>
                     <th>{{ trans('hooks.enabled') }}</th>
-                    <th class="text-center">{{ trans('hooks.on_deployment_success') }}</th>
-                    <th class="text-center">{{ trans('hooks.on_deployment_failure') }}</th>
+                    <th class="text-center">{{ trans('hooks.on_task_success') }}</th>
+                    <th class="text-center">{{ trans('hooks.on_task_failure') }}</th>
                     <th class="text-right">{{ trans('app.actions') }}</th>
                 </tr>
             </thead>
@@ -39,8 +39,8 @@
         <td><%- name %></td>
         <td><i class="piplin piplin-<%- icon %>"></i> <%- label %></td>
         <td><% if (enabled) { %>{{ trans('app.yes') }}<% } else { %>{{ trans('app.no') }}<% } %></td>
-        <td class="text-center"><% if (on_deployment_success) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
-        <td class="text-center"><% if (on_deployment_failure) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_task_success) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
+        <td class="text-center"><% if (on_task_failure) { %><i class="piplin piplin-checkbox"></i><% } else { %> <i class="piplin piplin-checkbox-blank"></i> <% } %></td>
         <td>
             <div class="btn-group pull-right">
                 @if($project->can('manage'))

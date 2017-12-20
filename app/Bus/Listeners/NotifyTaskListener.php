@@ -19,9 +19,9 @@ use Piplin\Bus\Notifications\Task\TaskFailedNotification;
 use Piplin\Bus\Notifications\Task\TaskSucceededNotification;
 
 /**
- * When a deploy finished, notify the followed user.
+ * When a task finished, notify the followed user.
  */
-class NotifyDeployListener implements ShouldQueue
+class NotifyTaskListener implements ShouldQueue
 {
     use InteractsWithQueue, DispatchesJobs;
 
@@ -41,10 +41,10 @@ class NotifyDeployListener implements ShouldQueue
         }
 
         $notification = TaskFailedNotification::class;
-        $event        = 'deployment_failure';
+        $event        = 'task_failure';
         if ($task->isSuccessful()) {
             $notification = TaskSucceededNotification::class;
-            $event        = 'deployment_success';
+            $event        = 'task_success';
         }
 
         foreach ($project->hooks->where('enabled', true)->where('on_' . $event, true) as $hook) {

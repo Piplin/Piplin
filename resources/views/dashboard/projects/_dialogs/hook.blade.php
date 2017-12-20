@@ -45,16 +45,16 @@
                         <label class="col-sm-3 control-label">{{ trans('hooks.triggers') }}</label>
                         <div class="col-sm-9">
                             <div class="checkbox">
-                                <label for="hook_on_deployment_success">
-                                    <input type="checkbox" value="1" name="on_deployment_success" id="hook_on_deployment_success" />
-                                    {{ trans('hooks.on_deployment_success') }}
+                                <label for="hook_on_task_success">
+                                    <input type="checkbox" value="1" name="on_task_success" id="hook_on_task_success" />
+                                    {{ trans('hooks.on_task_success') }}
                                 </label>
                             </div>
 
                             <div class="checkbox">
-                                <label for="hook_on_deployment_failure">
-                                    <input type="checkbox" value="1" name="on_deployment_failure" id="hook_on_deployment_failure" />
-                                    {{ trans('hooks.on_deployment_failure') }}
+                                <label for="hook_on_task_failure">
+                                    <input type="checkbox" value="1" name="on_task_failure" id="hook_on_task_failure" />
+                                    {{ trans('hooks.on_task_failure') }}
                                 </label>
                             </div>
                          </div>

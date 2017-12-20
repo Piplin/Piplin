@@ -19,17 +19,17 @@ class HookTableSeeder extends Seeder
         DB::table('hooks')->delete();
 
         Hook::create([
-            'name'                  => 'Piplin',
-            'type'                  => 'slack',
-            'enabled'               => true,
-            'config'                => [
+            'name'            => 'Piplin',
+            'type'            => 'slack',
+            'enabled'         => true,
+            'config'          => [
                 'channel' => '#piplin',
                 'webhook' => 'https://hooks.slack.com/services/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',
                 'icon'    => ':ghost:',
             ],
-            'on_deployment_success' => true,
-            'on_deployment_failure' => true,
-            'project_id'            => 1,
+            'on_task_success' => true,
+            'on_task_failure' => true,
+            'project_id'      => 1,
         ]);
     }
 }
