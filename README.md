@@ -143,7 +143,7 @@ supervisor>
 
 ```shell
 $ git fetch --all
-$ git checkout v1.0.0
+$ git checkout v1.0.1
  ```
 
 二. 升级
