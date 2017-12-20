@@ -36,8 +36,8 @@ class HookController extends Controller
             'project_id',
             'type',
             'enabled',
-            'on_deployment_success',
-            'on_deployment_failure'
+            'on_task_success',
+            'on_task_failure'
         );
 
         $input['config'] = $request->configOnly();
@@ -61,8 +61,8 @@ class HookController extends Controller
         $input = $request->only(
             'name',
             'enabled',
-            'on_deployment_success',
-            'on_deployment_failure'
+            'on_task_success',
+            'on_task_failure'
         );
 
         $input['config'] = $request->configOnly();

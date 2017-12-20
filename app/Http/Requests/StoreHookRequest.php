@@ -24,12 +24,12 @@ class StoreHookRequest extends Request
     public function rules()
     {
         $rules = array_merge([
-            'name'                       => 'required|max:255',
-            'project_id'                 => 'required|integer|exists:projects,id',
-            'type'                       => 'required|in:slack,dingtalk,mail,custom',
-            'enabled'                    => 'boolean',
-            'on_deployment_success'      => 'boolean',
-            'on_deployment_failure'      => 'boolean',
+            'name'            => 'required|max:255',
+            'project_id'      => 'required|integer|exists:projects,id',
+            'type'            => 'required|in:slack,dingtalk,mail,custom',
+            'enabled'         => 'boolean',
+            'on_task_success' => 'boolean',
+            'on_task_failure' => 'boolean',
         ], $this->configRules());
 
         if ($this->route('notification')) {

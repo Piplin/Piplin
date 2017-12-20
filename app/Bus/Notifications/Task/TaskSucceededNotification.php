@@ -31,8 +31,8 @@ class TaskSucceededNotification extends TaskFinishedNotification
     public function toMail(Hook $notification)
     {
         return $this->buildMailMessage(
-            'hooks.deployment_success_email_subject',
-            'hooks.deployment_success_email_message',
+            'hooks.task_success_email_subject',
+            'hooks.task_success_email_message',
             $notification
         )->success();
     }
@@ -47,7 +47,7 @@ class TaskSucceededNotification extends TaskFinishedNotification
     public function toSlack(Hook $notification)
     {
         return $this->buildSlackMessage(
-            'hooks.deployment_success_slack_message',
+            'hooks.task_success_slack_message',
             $notification
         )->success();
     }
@@ -61,7 +61,7 @@ class TaskSucceededNotification extends TaskFinishedNotification
      */
     public function toDingtalk(Hook $notification)
     {
-        return $this->buildDingtalkMessage('hooks.deployment_success_ding_message', $notification);
+        return $this->buildDingtalkMessage('hooks.task_success_ding_message', $notification);
     }
 
     /**
@@ -73,6 +73,6 @@ class TaskSucceededNotification extends TaskFinishedNotification
      */
     public function toWebhook(Hook $notification)
     {
-        return $this->buildWebhookMessage('deployment_succeeded', $notification);
+        return $this->buildWebhookMessage('task_succeeded', $notification);
     }
 }

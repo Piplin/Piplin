@@ -119,13 +119,13 @@
         }
 
         var data = {
-          config:                     null,
-          name:                       $('#hook_name').val(),
-          type:                       $('#hook_type').val(),
-          project_id:                 parseInt($('input[name="project_id"]').val()),
-          enabled:                    $('#hook_enabled').is(':checked'),
-          on_deployment_success:      $('#hook_on_deployment_success').is(':checked'),
-          on_deployment_failure:      $('#hook_on_deployment_failure').is(':checked')
+          config:          null,
+          name:            $('#hook_name').val(),
+          type:            $('#hook_type').val(),
+          project_id:      parseInt($('input[name="project_id"]').val()),
+          enabled:         $('#hook_enabled').is(':checked'),
+          on_task_success: $('#hook_on_task_success').is(':checked'),
+          on_task_failure: $('#hook_on_task_failure').is(':checked')
         };
 
         $('#hook #hook-config-' + data.type + ' :input[id^=hook_config]').each(function(key, field) {
@@ -294,8 +294,8 @@
             $('#hook_name').val(this.model.get('name'));
             $('#hook_type').val(type);
             $('#hook_enabled').prop('checked', (this.model.get('enabled') === true));
-            $('#hook_on_deployment_success').prop('checked', (this.model.get('on_deployment_success') === true));
-            $('#hook_on_deployment_failure').prop('checked', (this.model.get('on_deployment_failure') === true));
+            $('#hook_on_task_success').prop('checked', (this.model.get('on_task_success') === true));
+            $('#hook_on_task_failure').prop('checked', (this.model.get('on_task_failure') === true));
 
             setTitleWithIcon(this.model.get('type'), 'edit');
         },

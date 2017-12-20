@@ -34,7 +34,7 @@ class Hook extends Model
      * @var array
      */
     protected $fillable = ['name', 'project_id', 'type', 'enabled', 'config',
-                           'on_deployment_success', 'on_deployment_failure', ];
+                           'on_task_success', 'on_task_failure', ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -49,12 +49,12 @@ class Hook extends Model
      * @var array
      */
     protected $casts = [
-        'id'                         => 'integer',
-        'project_id'                 => 'integer',
-        'enabled'                    => 'boolean',
-        'config'                     => 'object',
-        'on_deployment_success'      => 'boolean',
-        'on_deployment_failure'      => 'boolean',
+        'id'              => 'integer',
+        'project_id'      => 'integer',
+        'enabled'         => 'boolean',
+        'config'          => 'object',
+        'on_task_success' => 'boolean',
+        'on_task_failure' => 'boolean',
     ];
 
     /**
