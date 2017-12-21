@@ -49,6 +49,7 @@
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "symfony/event-dispatcher": "3.4.*",
+        "symfony/config": "3.4.*",
         "block8/php-docblock-checker": "^1.0",
         "squizlabs/php_codesniffer": "~2.5",
         "phpmd/phpmd": "~2.4",
