@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "446b2c98922f4e91de09ab764cf58a24",
+    "content-hash": "abf257305787801a804c03116169fd41",
     "packages": [
         {
             "name": "andywer/js-localization",

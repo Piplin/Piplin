@@ -28,7 +28,7 @@
         "nategood/httpful": "~0.2",
         "mccool/laravel-auto-presenter": "^6.2",
         "laravel-notification-channels/webhook": "~1.1.0",
-        "doctrine/dbal": "^2.5",
+        "doctrine/dbal": "~2.5",
         "intervention/image": "^2.3",
         "tymon/jwt-auth": "~0.5",
         "pragmarx/google2fa": "^0.7.1",
