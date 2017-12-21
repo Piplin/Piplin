@@ -134,8 +134,11 @@ supervisor>
 
 恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
 
-> 计划任务相关的设置请看 [examples/crontab](examples/crontab).
+七. 设置计划任务
 
+计划任务相关的设置请看 [examples/crontab](examples/crontab). 
+
+> Piplin的数据备份、项目Git仓库自动镜像等工作依赖于计划任务去实现。
 
 ### 升级
 
