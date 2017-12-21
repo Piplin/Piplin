@@ -20,4 +20,6 @@ return [
     'gravatar'           => false,
     'toastr'             => true,
     'dashboard'          => env('DASHBOARD', 'deployments'),
+
+    'backup_type'        => env('BACKUP_TYPE', 'local'),
 ];

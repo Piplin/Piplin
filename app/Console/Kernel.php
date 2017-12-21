@@ -64,7 +64,7 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
 
         $schedule->command('piplin:backup-database')
-                 ->daily()
+                 ->everyMinute()
                  ->withoutOverlapping();
     }
 

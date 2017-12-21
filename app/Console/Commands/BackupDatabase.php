@@ -62,7 +62,7 @@ class BackupDatabase extends Command
         $date = Carbon::now()->format('Y-m-d_H-i-s');
         $this->call('db:backup', [
             '--database'        => config('database.default'),
-            '--destination'     => 'local',
+            '--destination'     => config('piplin.backup_type'),
             '--destinationPath' => $date,
             '--compression'     => 'gzip',
         ]);
