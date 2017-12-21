@@ -174,6 +174,7 @@ return [
         /*
          * Package Service Providers...
          */
+        BackupManager\Laravel\Laravel55ServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
