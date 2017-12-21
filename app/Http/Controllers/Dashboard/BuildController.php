@@ -26,6 +26,7 @@ class BuildController extends Controller
     /**
      * The details of an individual plan.
      *
+     * @param Request   $request
      * @param BuildPlan $buildPlan
      * @param string    $tab
      *
@@ -82,8 +83,8 @@ class BuildController extends Controller
     /**
      * Gets the latest deployments for a project.
      *
-     * @param  BuildPlan  $buildPlan
-     * @param  int        $paginate
+     * @param  BuildPlan $buildPlan
+     * @param  int       $paginate
      * @return array
      */
     private function getLatest(BuildPlan $buildPlan, $paginate = 15)

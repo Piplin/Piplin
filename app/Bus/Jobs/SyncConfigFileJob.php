@@ -108,7 +108,8 @@ class SyncConfigFileJob extends Job implements ShouldQueue
     /**
      * Send a config file to the servers of specified environment.
      *
-     * @param Server $server
+     * @param Environment $environment
+     * @param string      $local_file
      */
     private function sendServerConfig(Environment $environment, $local_file)
     {
@@ -136,6 +137,7 @@ class SyncConfigFileJob extends Job implements ShouldQueue
      * Send a string to server.
      *
      * @param Server $server
+     * @param string $local_file
      */
     private function sendFileFromString(Server $server, $local_file)
     {
