@@ -40,7 +40,7 @@
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('build'))
-        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#task" type="button" class="btn btn-lg btn-primary" title="{{ trans('plans.build') }}"><span class="piplin piplin-build"></span> {{ trans('plans.build') }}</button>
+        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#task" type="button" class="btn btn-lg btn-{{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'danger' : 'primary' }}" {{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'disabled' : null }} title="{{ trans('plans.build') }}"><span class="piplin piplin-build"></span> {{ trans('plans.build') }}</button>
         @endif
     </div>
 @stop
