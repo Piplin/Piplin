@@ -29,6 +29,7 @@
         <td>
             <div class="btn-group pull-right">
                 @if($project->can('manage'))
+                <a  href="{{ route('deployments', ['id' => $project->deployPlan->id, 'tab' => 'deploy']) }}?release_id=<%- id %>" class="btn btn-info"><i class="piplin piplin-deploy"></i></a>
                 <button type="button" class="btn btn-danger btn-delete" title="{{ trans('releases.delete') }}" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><i class="piplin piplin-delete"></i></button>
                 @endif
             </div>
