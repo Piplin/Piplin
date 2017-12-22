@@ -23,9 +23,9 @@
                 @foreach(['clone', 'install', 'activate', 'purge'] as $index => $stage)
                 <tr>
                     <td>{{ $index+1 }}</td>
-                    <td>{{ $deployPlan->{'before_'.$stage} }}</td>
+                    <td>{{ $deployPlan->{'before_'.$stage} }} <a href="{{ route($route, ['id' => $deployPlan->id, 'command' => $stage, 'pos' => 'before']) }}"><i class="piplin piplin-plus"></i></a></td>
                     <td><a href="{{ route($route, ['id' => $deployPlan->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
-                    <td>{{ $deployPlan->{'after_'.$stage} }}</td>
+                    <td>{{ $deployPlan->{'after_'.$stage} }} <a href="{{ route($route, ['id' => $deployPlan->id, 'command' => $stage, 'pos' => 'after']) }}"><i class="piplin piplin-plus"></i></a></td>
                 </tr>
                 @endforeach
             </tbody>

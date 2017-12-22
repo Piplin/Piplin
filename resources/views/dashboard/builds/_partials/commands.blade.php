@@ -22,9 +22,9 @@
                 @foreach(['prepare', 'build', 'test', 'result'] as $index => $stage)
                 <tr>
                     <td>{{ $index+1 }}</td>
-                    <td>{{ $buildPlan->{'before_'.$stage} }}</td>
+                    <td>{{ $buildPlan->{'before_'.$stage} }} <a href="{{ route('builds.step', ['id' => $buildPlan->id, 'command' => $stage, 'pos' => 'before']) }}"><i class="piplin piplin-plus"></i></a></td>
                     <td><a href="{{ route('builds.step', ['id' => $buildPlan->id, 'command' => $stage]) }}">{{ trans('commands.'.$stage) }}</a> <i class="piplin piplin-info" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{!! trans('commands.'.$stage.'_help') !!}"></i></td>
-                    <td>{{ $buildPlan->{'after_'.$stage} }}</td>
+                    <td>{{ $buildPlan->{'after_'.$stage} }} <a href="{{ route('builds.step', ['id' => $buildPlan->id, 'command' => $stage, 'pos' => 'after']) }}"><i class="piplin piplin-plus"></i></a> </td>
                 </tr>
                 @endforeach
             </tbody>

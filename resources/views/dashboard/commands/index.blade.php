@@ -10,11 +10,14 @@
 @stop
 
 @push('javascript')
+    <script src="{{ cdn('js/ace.js') }}"></script>
     <script type="text/javascript">
         new Piplin.CommandsTab();
         Piplin.Commands.add({!! $commands !!});
+        @if(Request::get('pos'))
+        $("button#stage-{{ Request::get('pos') }}").trigger('click');
+        @endif
     </script>
-    <script src="{{ cdn('js/ace.js') }}"></script>
 @endpush
 
 @push('templates')
