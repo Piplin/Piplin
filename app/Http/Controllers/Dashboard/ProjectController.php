@@ -58,7 +58,7 @@ class ProjectController extends Controller
             $data['title'] = trans('hooks.label');
         } elseif ($tab === 'members') {
             $data['members'] = $project->members->toJson();
-            $data['title']   = trans('hooks.label');
+            $data['title']   = trans('members.label');
         } elseif ($tab === 'environments') {
             $data['title'] = trans('environments.label');
         }

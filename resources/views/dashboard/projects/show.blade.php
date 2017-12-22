@@ -8,7 +8,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('projects.history') }}</a></li>
-                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="piplin piplin-hook"></span> {{ trans('projects.integrations') }}</a></li>
+                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="piplin piplin-hook"></span> {{ trans('hooks.label') }}</a></li>
                     <li {!! $tab != 'members' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'members']) }}"><span class="piplin piplin-users"></span> {{ trans('members.label') }}</a></li>
                 </ul>
                 <div class="tab-content">

@@ -31,7 +31,6 @@ return [
     'last_mirrored'     => '代码同步',
     'image'             => '构建状态',
     'ci_image'          => '请填写项目构建状态的图标URL',
-    'integrations'      => '服务集成',
     'runned'            => '最近运行',
     'apply'             => '申请部署',
     'apply_choose'      => '选择项目',

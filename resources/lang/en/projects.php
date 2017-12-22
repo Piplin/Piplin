@@ -32,7 +32,6 @@ return [
     'image'             => 'Build Image',
     'ci_image'          => 'If you use a CI server which generates an image to indicate the build status ' .
                            'can put the URL here to have it show on the project page',
-    'integrations'      => 'Integrations',
     'runned'            => 'Runned',
     'apply'             => 'Apply for a deployment',
     'apply_choose'      => 'Choose a project',
