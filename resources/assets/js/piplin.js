@@ -2,6 +2,8 @@
 
     Piplin.loadLivestamp();
 
+    Piplin.sidebarToggle();
+
     Piplin.listener.on('task:' + Piplin.events.MODEL_CHANGED, function (data) {
 
         // Update todo bar

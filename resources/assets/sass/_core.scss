@@ -161,6 +161,12 @@ body.hold-transition {
   @include container-fixed($grid-gutter-width);
 }
 
+.wrapper-collapsed {
+  .content-wrapper {
+    margin-left: 0;
+  }
+}
+
 /* H1 - H6 font */
 h1,
 h2,

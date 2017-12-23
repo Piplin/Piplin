@@ -103,6 +103,34 @@
         Piplin.connection_error = false;
     });
 
+    // Sidebar toggle
+    Piplin.sidebarToggle = function() {
+        var wrapper = $('.wrapper');
+
+        if (window.localStorage && window.localStorage['piplin.stickySidebar'] == 'true') {
+            wrapper.removeClass("wrapper-collapsed");
+            wrapper.find(".main-sidebar").show();
+        } else {
+            wrapper.addClass("wrapper-collapsed");
+            wrapper.find(".main-sidebar").hide();
+        }
+
+        $('.sidebar-toggle').on('click', function(e){
+            e.preventDefault();
+
+            if (wrapper.hasClass("wrapper-collapsed")) {
+                $('.main-sidebar').toggle();
+                 wrapper.find(".main-sidebar").show("slow");
+                wrapper.removeClass("wrapper-collapsed");
+                window.localStorage.setItem('piplin.stickySidebar', true);
+            } else {
+                wrapper.find(".main-sidebar").hide("slow");
+                wrapper.addClass("wrapper-collapsed");
+                window.localStorage.setItem('piplin.stickySidebar', false);
+            }
+        });
+    };
+
     // Load livestamp
     Piplin.loadLivestamp = function () {
         $('abbr.timeago').each(function () {
