@@ -119,7 +119,6 @@
             e.preventDefault();
 
             if (wrapper.hasClass("wrapper-collapsed")) {
-                $('.main-sidebar').toggle();
                  wrapper.find(".main-sidebar").show("slow");
                 wrapper.removeClass("wrapper-collapsed");
                 window.localStorage.setItem('piplin.stickySidebar', true);
