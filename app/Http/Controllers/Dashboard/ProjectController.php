@@ -77,6 +77,7 @@ class ProjectController extends Controller
     {
         $fields = $request->only(
             'name',
+            'description',
             'repository',
             'branch',
             'deploy_path',
@@ -104,6 +105,7 @@ class ProjectController extends Controller
     {
         $project->update($request->only(
             'name',
+            'description',
             'repository',
             'branch',
             'deploy_path',

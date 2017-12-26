@@ -56,7 +56,7 @@
     <div class="col-md-4">
         <div class="panel panel-flush">
             <div class="panel-heading">
-                <h4>{{ trans('projects.details') }}</h4>
+                <h4>{{ trans('projects.details') }} <a href="#" data-toggle="modal" data-target="#show_description"><i class="piplin piplin-info"></i></a></h4>
             </div>
             <div class="panel-body">
                 <table class="table table-relaxed">

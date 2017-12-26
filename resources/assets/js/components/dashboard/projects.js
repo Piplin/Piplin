@@ -21,6 +21,7 @@
 
                 $('#project_id').val(data.id);
                 $('#project_name').val(data.name);
+                $('#project_description').val(data.description);
                 $('#project_repository').val(data.repository);
                 $('#project_branch').val(data.branch);
                 $('#project_deploy_path').val(data.deploy_path);
@@ -51,6 +52,7 @@
 
         project.save({
             name:               $('#project_name').val(),
+            description:        $('#project_description').val(),
             repository:         $('#project_repository').val(),
             branch:             $('#project_branch').val(), 
             deploy_path:        $('#project_deploy_path').val(),

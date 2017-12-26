@@ -16,6 +16,7 @@ return [
     'none'              => '暂未设置项目',
     'name'              => '项目名称',
     'name_placeholder'  => '给项目起一个名字...',
+    'description'       => '项目描述',
     'group'             => '项目分组',
     'ungrouped'         => '不分组',
     'key'               => '部署秘钥',
