@@ -18,6 +18,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label" for="project_description">{{ trans('projects.description') }}</label>
+                        <div class="col-sm-9">
+                            <textarea rows="3" id="project_description" class="form-control" name="description" placeholder="{{ trans('projects.description') }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label" for="project_repository">{{ trans('projects.repository_path') }} <i class="piplin piplin-info" data-html="true" data-toggle="tooltip" data-placement="right" title="{!! trans('keys.git_keys') !!}"></i></label>
                         <div class="col-sm-9">
                         <input type="text" class="form-control" name="repository" id="project_repository" placeholder="git&#64;git.example.com:repositories/project.git" />

@@ -65,6 +65,7 @@ class Project extends Model implements HasPresenter
      */
     protected $fillable = [
         'name',
+        'description',
         'repository',
         'branch',
         'targetable_type',

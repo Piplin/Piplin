@@ -16,6 +16,7 @@ return [
     'none'              => 'There are currently no projects setup',
     'name'              => 'Name',
     'name_placeholder'  => 'My Project',
+    'description'       => 'Description',
     'group'             => 'Group',
     'ungrouped'         => 'Ungrouped',
     'key'               => 'SSH Key',
