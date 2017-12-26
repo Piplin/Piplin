@@ -30,10 +30,10 @@ class Parser
         $values = array_values($tokens);
 
         $tokens = array_map(function ($token) {
-            return '{{ ' . strtolower($token) . ' }}';
+            return '/{{\s*' . strtolower($token) . '\s*}}/';
         }, array_keys($tokens));
 
-        return str_replace($tokens, $values, $script);
+        return preg_replace($tokens, $values, $script);
     }
 
     /**
