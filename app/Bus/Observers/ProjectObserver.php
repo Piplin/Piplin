@@ -15,7 +15,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
 use Piplin\Bus\Jobs\GenerateKeyJob;
 use Piplin\Bus\Jobs\PurgeProjectJob;
-use Piplin\Bus\Jobs\Repository\UpdateGitMirrorJob;
+use Piplin\Bus\Jobs\TriggerGitUpdateJob;
 use Piplin\Models\Project;
 use Piplin\Models\BuildPlan;
 use Piplin\Models\DeployPlan;
@@ -75,7 +75,7 @@ class ProjectObserver
         $repoChanged = $project->isDirty('repository');
 
         if ($repoChanged) {
-            $this->dispatch(new UpdateGitMirrorJob($project));
+            $this->dispatch(new TriggerGitUpdateJob($project));
         }
     }
 
