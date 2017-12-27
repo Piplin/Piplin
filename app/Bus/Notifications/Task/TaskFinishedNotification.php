@@ -126,7 +126,7 @@ abstract class TaskFinishedNotification extends Notification
                     )))
                     ->fallback(sprintf($message, '#' . $this->task->id))
                     ->fields($fields)
-                    ->footer(trans('app.name'))
+                    ->footer(config('app.name'))
                     ->timestamp($this->task->finished_at);
             });
     }
