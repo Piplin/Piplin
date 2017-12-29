@@ -149,11 +149,11 @@ class Project extends Model implements HasPresenter
             $info['reference'] = $matches[4];
         } elseif (preg_match('#^https?#', $this->repository)) {
             $data         = parse_url($this->repository);
-            $data['path'] = isset($data['path']) ? $data['path'] : '';
+            $data['path'] = $data['path'] ?? '';
 
-            $info['user']      = isset($data['user']) ? $data['user'] : '';
+            $info['user']      = $data['user'] ?? '';
             $info['domain']    = $data['host'];
-            $info['port']      = isset($data['port']) ? $data['port'] : '';
+            $info['port']      = $data['port'] ?? '';
             $info['reference'] = substr(str_replace('.git', '', $data['path']), 1);
         }
 
@@ -227,7 +227,7 @@ class Project extends Model implements HasPresenter
         $info = $this->accessDetails();
 
         if (isset($info['domain']) && isset($info['reference'])) {
-            $port = isset($info['port']) ? ':' . $info['port'] : '';
+            $port = $info['port'] ?? '';
 
             return 'http://' . $info['domain'] . $port . '/' . $info['reference'];
         }
