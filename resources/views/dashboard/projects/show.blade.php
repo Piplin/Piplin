@@ -30,7 +30,6 @@
     @elseif($tab == 'members')
         @include('dashboard.projects._dialogs.member')
     @endif
-    @include('dashboard.projects._dialogs.show_description')
     @include('dashboard.projects._dialogs.recover')
     @include('dashboard.projects._dialogs.public_key')
     @include('dashboard.projects._dialogs.rollback')
