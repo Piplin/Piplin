@@ -33,7 +33,10 @@ class AutocompleteController extends Controller
     {
         $q = trim($request->get('q'));
 
-        $users = User::where('name', 'like', $q . '%')->orWhere('nickname', 'like', $q .'%')->get(['id', 'name', 'nickname'])->toArray();
+        $users = User::where('name', 'like', $q . '%')
+            ->orWhere('nickname', 'like', $q .'%')
+            ->get(['id', 'name', 'nickname'])
+            ->toArray();
 
         return Response::json($users);
     }
