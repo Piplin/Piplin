@@ -56,7 +56,10 @@ Piplin目前只支持类Unix操作系统(如: Linux, Freebsd, Mac OS等)，为�
 
 #### 一. 克隆代码
 
+假设我们把Piplin安装在 /var/www 目录下
+
 ```shell
+$ cd /var/www
 $ git clone https://github.com/Piplin/Piplin.git piplin
 ```
 
