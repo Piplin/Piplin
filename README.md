@@ -137,6 +137,8 @@ supervisor>
 
 恭喜！您已完成Piplin的安装。请通过浏览器访问安装过程中设置的应用网址。
 
+> 如果安装完成之后需要修改.env里的配置信息，要记得执行`php artisan config:cache`
+
 七. 设置计划任务
 
 计划任务相关的设置请看 [examples/crontab](examples/crontab). 
