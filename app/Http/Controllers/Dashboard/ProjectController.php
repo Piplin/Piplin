@@ -88,6 +88,8 @@ class ProjectController extends Controller
 
         $project = Auth::user()->personalProjects()->create($fields);
 
+        $project->members()->attach([Auth::user()->id]);
+
         dispatch(new SetupSkeletonJob($project, $skeleton));
 
         return $project;
