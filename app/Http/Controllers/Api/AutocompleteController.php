@@ -31,7 +31,9 @@ class AutocompleteController extends Controller
      */
     public function users(Request $request)
     {
-        $users = User::where('name', 'like', $request->get('q') . '%')->get(['id', 'name'])->toArray();
+        $q = trim($request->get('q'));
+
+        $users = User::where('name', 'like', $q . '%')->orWhere('nickname', 'like', $q .'%')->get(['id', 'name', 'nickname'])->toArray();
 
         return Response::json($users);
     }
@@ -50,7 +52,7 @@ class AutocompleteController extends Controller
         if (empty($q)) {
             $cabinets = Cabinet::orderBy('id', 'desc')->limit(10)->get(['id', 'name']);
         } else {
-            $cabinets = Cabinet::where('name', 'like', $request->get('q') . '%')->get(['id', 'name']);
+            $cabinets = Cabinet::where('name', 'like', '%' . $q . '%')->get(['id', 'name']);
         }
 
         return Response::json($cabinets->toArray());
