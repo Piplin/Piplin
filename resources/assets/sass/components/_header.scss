@@ -144,6 +144,9 @@
 
   > .content-title {
     display: inline-block;
+    .sidebar-toggle {
+      cursor: pointer;
+     }
   }
 
   .btn-lg {
