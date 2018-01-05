@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \Piplin\Console\Commands\BackupDatabase::class,
         \Piplin\Console\Commands\CreateUser::class,
+        \Piplin\Console\Commands\ClearOldArtifacts::class,
         \Piplin\Console\Commands\ClearOrphanAvatars::class,
         \Piplin\Console\Commands\ClearOrphanMirrors::class,
         \Piplin\Console\Commands\ClearStalledTask::class,
@@ -61,6 +62,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('piplin:purge-temp')
                  ->hourly()
+                 ->withoutOverlapping();
+
+        $schedule->command('piplin:purge-builds')
+                 ->daily()
                  ->withoutOverlapping();
 
         $schedule->command('piplin:backup-database')
