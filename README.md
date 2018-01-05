@@ -169,6 +169,10 @@ $ make update
 
 > 注意：系统每5分钟会自动重置一次密码，该账号没有权限访问管理功能.
 
+## 帮助文档
+
+更多文档请访问 [https://github.com/Piplin/Docs](https://github.com/Piplin/Docs) 或 [http://piplin.com/docs](http://piplin.com/docs)。
+
 ## 开发相关
 
 Piplin代码里已经自带编译后的前端静态资源，如果你不想修改前端样式，可直接忽略本环节。
