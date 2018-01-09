@@ -23,6 +23,7 @@ return [
     'commands'         => 'Commands',
     'warning'          => 'The pattern could not be saved, please check the form below.',
     'name_placeholder' => 'Export tar package',
+    'description'      => 'Create artifact patterns for artifacts you want to keep or share with other deployments (e.g Tar files, Jar files, reports etc).',
     'example'          => 'Specify the name of the artifact(s) you want to keep. e.g. **/*.tar.gz',
 
 ];

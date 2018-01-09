@@ -23,6 +23,7 @@ return [
     'commands'         => '被绑定的命令',
     'warning'          => '信息保存失败。',
     'name_placeholder' => '导出tar包',
+    'description'      => '出品定义是构建过程中产出介质的捕获规则，产出的介质可以供下载或部署使用 (如：Tar包 , Jar文件, 报告等)。',
     'example'          => '指定你想要导出文件的规则. 如： **/*.tar.gz',
 
 ];

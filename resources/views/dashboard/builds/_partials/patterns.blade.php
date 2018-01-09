@@ -8,6 +8,9 @@
         <h3 class="box-title">{{ trans('patterns.label') }}</h3>
     </div>
 
+    <div class="box-body">
+        <p>{!! trans('patterns.description') !!}</p>
+    </div>
 
     <div class="box-body" id="no_patterns">
         <p>{{ trans('patterns.none') }}</p>
