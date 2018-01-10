@@ -120,6 +120,8 @@ class RunTaskJob extends Job implements ShouldQueue
                 $releaseId = $this->task->payload->source_release;
                 $release = Release::findOrFail($releaseId);
                 $this->dispatch(new CreateArtifactArchiveJob($this->task, $release, $this->release_archive));
+                $this->task->commit = $release->task->commit;
+                $this->task->committer = $release->task->committer;
             } else {
                 $this->dispatch(new UpdateGitMirrorJob($this->project));
 
