@@ -42,7 +42,7 @@
         "fzaninotto/faker": "~1.5",
         "codeception/codeception": "*",
         "mockery/mockery": "0.9.*",
-        "symfony/yaml": "^3.2",
+        "symfony/yaml": "3.4.3",
         "block8/php-docblock-checker": "^1.0",
         "squizlabs/php_codesniffer": "~2.5",
         "phpmd/phpmd": "~2.4",
