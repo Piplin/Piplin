@@ -18,6 +18,22 @@ use Piplin\Models\ConfigFile;
  */
 class ConfigFileObserver
 {
+
+    /**
+     * Called when the model is updated.
+     *
+     * @param ConfigFile $configFile
+     */
+    public function updated(ConfigFile $configFile)
+    {
+        $isChanged = $configFile->isDirty('content') || $configFile->isDirty('path');
+
+        if ($isChanged) {
+            $configFile->status = ConfigFile::UNSYNCED;
+            $configFile->save();
+        }
+    }
+
     /**
      * Called when the model is deleting.
      *
