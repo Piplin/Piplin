@@ -6,7 +6,6 @@
                 <h4 class="modal-title"><i class="piplin piplin-help"></i> {{ trans('commands.webhook_help') }}</h4>
             </div>
             <div class="modal-body">
-
                 <p>{{ trans('commands.webhook_example') }}</p>
                 <h5><strong>{{ trans('commands.webhook_fields') }}</strong></h5>
                 <dl class="dl-horizontal" id="hook_fields">
@@ -51,7 +50,7 @@
                 @endif
 
                 <h5><strong>{{ trans('commands.webhook_curl') }}</strong></h5>
-                <pre>curl -X POST {{ $project->webhook_url }} -d 'reason={{ urlencode(trans('commands.reason_example')) }}&amp;branch=master&amp;update_only=true'</pre>
+                <pre>curl -X POST {{ $webhook_url }} -d 'reason={{ urlencode(trans('commands.reason_example')) }}&amp;branch=master&amp;update_only=true'</pre>
 
                 <hr />
 

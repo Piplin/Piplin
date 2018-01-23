@@ -34,5 +34,5 @@
 </div>
 
 @if(!$in_admin)
-@include('dashboard.projects._dialogs.webhook_help')
+@include('dashboard.projects._dialogs.webhook_help', ['webhook_url' => $project->deploy_webhook])
 @endif
