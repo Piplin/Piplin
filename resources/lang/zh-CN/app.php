@@ -18,7 +18,7 @@ return [
     'admin'             => '系统设置',
     'projects'          => '项目',
     'groups'            => '项目分组',
-    'keys'              => '部署秘钥',
+    'keys'              => '部署密钥',
     'users'             => '用户管理',
     'tips'              => '小贴士',
     'links'             => '友情链接',

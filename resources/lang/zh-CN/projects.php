@@ -19,7 +19,7 @@ return [
     'description'       => '项目描述',
     'group'             => '项目分组',
     'ungrouped'         => '不分组',
-    'key'               => '部署秘钥',
+    'key'               => '部署密钥',
     'repository'        => '代码仓库',
     'repository_path'   => '仓库路径',
     'deploy_path'       => '项目路径',
@@ -66,7 +66,7 @@ return [
     'initial'           => '初始',
     'options'           => '选项',
     'change_branch'     => '允许运行其他分支?',
-    'insecure'          => 'SSH秘钥不建议在非HTTPS协议中传输中，建议留空由Piplin自动生成。',
+    'insecure'          => 'SSH密钥不建议在非HTTPS协议中传输中，建议留空由Piplin自动生成。',
     'history'           => '历史记录',
 
 ];
