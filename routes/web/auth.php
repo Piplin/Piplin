@@ -25,7 +25,7 @@ Route::group([
         ]);
 
     Route::get('login/2fa', [
-            'as'   => 'twofactor',
+            'as'   => 'auth.twofactor',
             'uses' => 'AuthController@getTwoFactorAuthentication',
         ]);
 
