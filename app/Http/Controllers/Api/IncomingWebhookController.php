@@ -184,7 +184,7 @@ class IncomingWebhookController extends Controller
 
         $payload['environments'] = [];
         if ($request->has('environments')) {
-            $valid     = $project->environments->pluck('id');
+            $valid     = $project->deployPlan->environments->pluck('id');
             $requested = explode(',', $request->get('environments'));
 
             $payload['environments'] = collect($requested)->unique()
