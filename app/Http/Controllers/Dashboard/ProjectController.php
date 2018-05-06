@@ -36,7 +36,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $tab = '')
     {
-        $optional = $project->commands->filter(function (Command $command) {
+        $optional = $project->deployPlan->commands->filter(function (Command $command) {
             return $command->optional;
         });
 
