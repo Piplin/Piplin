@@ -120,7 +120,7 @@ class TaskController extends Controller
         ];
 
         /*
-        if ($project->environments->count() === 0) {
+        if ($project->deployPlan->environments->count() === 0) {
             return [
                 'success' => false,
             ];
