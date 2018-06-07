@@ -57,7 +57,7 @@
                         </div>
 						</div>
                     </div>
-                    @if (count($targetable->environments))
+                    @if (@count($targetable->environments))
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="command_environments">{{ trans('commands.environments') }}</label>
 						<div class="col-sm-9">
@@ -75,7 +75,7 @@
 						</div>
                     </div>
                     @endif
-                    @if (count($targetable->patterns))
+                    @if (@count($targetable->patterns))
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="command_patterns">{{ trans('commands.patterns') }}</label>
                         <div class="col-sm-9">
