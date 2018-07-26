@@ -30,7 +30,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     const DRAFT                 = -1;
     const COMPLETED             = 0;
     const PENDING               = 1;
-    const RUNNING             = 2;
+    const RUNNING               = 2;
     const FAILED                = 3;
     const COMPLETED_WITH_ERRORS = 4;
     const ABORTING              = 5;
@@ -73,7 +73,7 @@ class Task extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $appends = ['project_name', 'author_name', 'commit_url',
-                          'short_commit', 'branch_url', 'run_failure', ];
+                          'short_commit', 'branch_url', 'run_failure',];
 
     /**
      * The fields which should be tried as Carbon instances.
@@ -88,12 +88,12 @@ class Task extends Model implements HasPresenter, RuntimeInterface
      * @var array
      */
     protected $casts = [
-        'id'             => 'integer',
-        'project_id'     => 'integer',
-        'user_id'        => 'integer',
-        'status'         => 'integer',
-        'is_webhook'     => 'boolean',
-        'payload'        => 'object',
+        'id'         => 'integer',
+        'project_id' => 'integer',
+        'user_id'    => 'integer',
+        'status'     => 'integer',
+        'is_webhook' => 'boolean',
+        'payload'    => 'object',
     ];
 
     /**
@@ -275,9 +275,9 @@ class Task extends Model implements HasPresenter, RuntimeInterface
     {
         if (!isset(self::$currentTask[$this->project_id])) {
             self::$currentTask[$this->project_id] = self::where('project_id', $this->project_id)
-                                                              ->where('status', self::COMPLETED)
-                                                              ->orderBy('id', 'desc')
-                                                              ->first();
+                                                        ->where('status', self::COMPLETED)
+                                                        ->orderBy('id', 'desc')
+                                                        ->first();
         }
 
         if (isset(self::$currentTask[$this->project_id])) {
