@@ -129,7 +129,7 @@ class CabinetController extends Controller
      */
     public function destroy(Cabinet $cabinet)
     {
-        $cabinet->forceDelete();
+        $cabinet->delete();
 
         return [
             'success' => true,
