@@ -1,5 +1,6 @@
 # Configuration
 .env
+.idea
 
 # Dev files
 .php_cs.cache
