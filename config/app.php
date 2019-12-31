@@ -171,6 +171,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Sentry\Laravel\ServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

@@ -3,9 +3,18 @@
     "description": "Piplin is a self-hosted continuous integration and deployment system, intended to automatically build, test, and deploy your project over the web.",
     "minimum-stability": "stable",
     "type": "project",
-    "keywords": ["piplin", "ci", "continuous integration"],
+    "keywords": [
+        "piplin",
+        "ci",
+        "continuous integration"
+    ],
     "homepage": "http://piplin.com/",
     "license": "MIT",
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
     "authors": [
         {
             "name": "Guan Shiliang",
@@ -36,7 +45,8 @@
         "fideloper/proxy": "~3.3",
         "socialiteproviders/gitlab": "^3.0",
         "version/version": "^2.2",
-        "backup-manager/laravel": "^1.2"
+        "backup-manager/laravel": "^1.2",
+        "sentry/sentry-laravel": "1.5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.5",
