@@ -181,7 +181,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class,
         JsLocalization\JsLocalizationServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,

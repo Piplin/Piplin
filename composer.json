@@ -28,25 +28,25 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0",
+        "laravel/framework": "^6.0",
+        "laravel/tinker": "*",
         "predis/predis": "~1.0",
         "pda/pheanstalk": "~3.1",
         "creativeorange/gravatar": "~1.0",
         "guzzlehttp/guzzle": "^6.2",
         "nategood/httpful": "~0.2",
-        "mccool/laravel-auto-presenter": "^6.2",
-        "laravel-notification-channels/webhook": "~1.1.0",
+        "mccool/laravel-auto-presenter": "*",
+        "laravel-notification-channels/webhook": "*",
         "doctrine/dbal": "2.5.13",
         "intervention/image": "^2.3",
-        "tymon/jwt-auth": "~0.5",
+        "tymon/jwt-auth": "*",
         "pragmarx/google2fa": "^0.7.1",
-        "andywer/js-localization": "dev-laravel-5",
-        "fideloper/proxy": "~3.3",
+        "andywer/js-localization": "dev-laravel-6",
+        "fideloper/proxy": "~4.0",
         "socialiteproviders/gitlab": "^3.0",
         "version/version": "^2.2",
-        "backup-manager/laravel": "^1.2",
-        "sentry/sentry-laravel": "1.5.0"
+        "backup-manager/laravel": "*",
+        "sentry/sentry-laravel": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.5",
@@ -58,7 +58,6 @@
         "phpmd/phpmd": "~2.4",
         "filp/whoops": "^2.0",
         "codeclimate/php-test-reporter": "^0.3.0",
-        "themsaid/laravel-langman": "^1.1",
         "diablomedia/phpunit-pretty-printer": "dev-master",
         "friendsofphp/php-cs-fixer": "^2.0"
     },
@@ -67,7 +66,8 @@
             "database"
         ],
         "files": [
-            "app/Helpers/Helpers.php"
+            "app/Helpers/Helpers.php",
+            "app/Helpers/str.php"
         ],
         "psr-4": {
             "Piplin\\": "app/"
