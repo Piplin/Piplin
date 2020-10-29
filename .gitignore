@@ -8,7 +8,6 @@
 
 # Composer files
 composer.phar
-composer.lock
 
 # Dependencies
 node_modules
