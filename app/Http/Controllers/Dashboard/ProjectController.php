@@ -14,12 +14,14 @@ namespace Piplin\Http\Controllers\Dashboard;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Piplin\Bus\Jobs\SetupSkeletonJob;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Http\Requests\StoreProjectRequest;
 use Piplin\Models\Command;
 use Piplin\Models\Task;
 use Piplin\Models\Project;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * The controller of projects.
@@ -48,7 +50,7 @@ class ProjectController extends Controller
             'tasks'           => $this->getLatest($project),
             'tab'             => $tab,
             'breadcrumb'      => [
-                ['url' => route('projects', ['id' => $project->id]), 'label' => $project->name],
+                ['url' => route('projects', ['project' => $project->id]), 'label' => $project->name],
             ],
         ];
 
