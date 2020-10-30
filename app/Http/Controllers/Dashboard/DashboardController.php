@@ -13,6 +13,7 @@ namespace Piplin\Http\Controllers\Dashboard;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\View\View;
 use Piplin\Http\Controllers\Controller;
 
 /**

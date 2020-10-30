@@ -10,7 +10,7 @@
  */
 
 Route::group([
-    'middleware' => ['auth', 'jwt'],
+    'middleware' => ['auth'],
     'namespace'  => 'Profile',
 ], function () {
     Route::get('profile/{tab?}', [
