@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach ($group_projects['projects'] as $group_project)
                     <tr id="project_{{ $group_project->id }}">
-                        <td class="name"><a href="{{ route('projects', ['id' => $group_project->id]) }}" title="{{ trans('projects.details') }}">{{ $group_project->name }}</a></td>
+                        <td class="name"><a href="{{ route('projects', ['project' => $group_project->id]) }}" title="{{ trans('projects.details') }}">{{ $group_project->name }}</a></td>
                         <td class="time small">
                           @if($group_project->last_run)
                           <abbr class="timeago" data-toggle="tooltip" data-placement="right" title="{{ $group_project->last_run }}" data-timeago="{{ $group_project->last_run }}"></abbr>
@@ -41,12 +41,12 @@
                         <td class="status"><span class="text-{{$group_project->css_class}}"><i class="piplin piplin-{{ $group_project->icon }}"></i> <span>{{ $group_project->readable_status }}</span></span></td>
                         <td class="text-right">
                             @if($group_project->buildPlan)
-                            <a href="{{ route('builds', ['id' => $group_project->buildPlan->id, 'tab' => 'build']) }}" type="button" class="btn btn-success" title="{{ trans('projects.build') }}"><i class="piplin piplin-build"></i></a>
+                            <a href="{{ route('builds', ['build' => $group_project->buildPlan->id, 'tab' => 'build']) }}" type="button" class="btn btn-success" title="{{ trans('projects.build') }}"><i class="piplin piplin-build"></i></a>
                             @endif
                             @if($group_project->deployPlan)
-                            <a href="{{ route('deployments', ['id' => $group_project->deployPlan->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-info" title="{{ trans('projects.deploy') }}"><i class="piplin piplin-deploy"></i></a>
+                            <a href="{{ route('deployments', ['deployment' => $group_project->deployPlan->id, 'tab' => 'deploy']) }}" type="button" class="btn btn-info" title="{{ trans('projects.deploy') }}"><i class="piplin piplin-deploy"></i></a>
                             @endif
-                            <a href="{{ route('projects', ['id' => $group_project->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
+                            <a href="{{ route('projects', ['project' => $group_project->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
                         </td>
                     </tr>
                     @endforeach
