@@ -10,31 +10,31 @@
  */
 
 Route::group([
-        'middleware' => ['auth'],
-        'namespace'  => 'Dashboard',
-    ], function () {
-        Route::get('/', [
-            'as'   => 'dashboard',
-            'uses' => 'DashboardController@index',
-        ]);
+    'middleware' => ['auth', 'jwt'],
+    'namespace' => 'Dashboard',
+], function () {
+    Route::get('/', [
+        'as' => 'dashboard',
+        'uses' => 'DashboardController@index',
+    ]);
 
-        Route::get('timeline', [
-            'as'   => 'dashboard.timeline',
-            'uses' => 'DashboardController@timeline',
-        ]);
+    Route::get('timeline', [
+        'as' => 'dashboard.timeline',
+        'uses' => 'DashboardController@timeline',
+    ]);
 
-        Route::get('activities', [
-            'as'   => 'dashboard.activities',
-            'uses' => 'DashboardController@activities',
-        ]);
+    Route::get('activities', [
+        'as' => 'dashboard.activities',
+        'uses' => 'DashboardController@activities',
+    ]);
 
-        Route::get('projects', [
-            'as'   => 'dashboard.projects',
-            'uses' => 'DashboardController@projects',
-        ]);
+    Route::get('projects', [
+        'as' => 'dashboard.projects',
+        'uses' => 'DashboardController@projects',
+    ]);
 
-        Route::get('admin/templates/{template}/commands/{step}', [
-            'as'   => 'admin.templates.commands.step',
-            'uses' => 'CommandController@index',
-        ]);
-    });
+    Route::get('admin/templates/{template}/commands/{step}', [
+        'as' => 'admin.templates.commands.step',
+        'uses' => 'CommandController@index',
+    ]);
+});
