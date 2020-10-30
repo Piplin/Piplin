@@ -57,8 +57,9 @@ class DashboardController extends Controller
      */
     public function projects()
     {
-        return view('dashboard.projects')
-                    ->with('title', trans('users.dashboard.projects'));
+        return view('dashboard.projects', [
+            'title' => trans('users.dashboard.projects'),
+        ]);
     }
 
     /**
