@@ -17,7 +17,7 @@
             @foreach($task->artifacts as $artifact)
             <tr>
                 <td>{{ $artifact->id }}</td>
-                <td><a href="{{ route('artifact.download', ['project_id' => $task->project_id, 'id' => $artifact->id])}}" target="_blank">{{ $artifact->file_name }}</a></td>
+                <td><a href="{{ route('artifact.download', ['project_id' => $task->project_id, 'artifact' => $artifact->id])}}" target="_blank">{{ $artifact->file_name }}</a></td>
                 <td>{{ bytes($artifact->file_size) }}</td>
             </tr>
             @endforeach
@@ -33,7 +33,7 @@
               </button>
               <ul class="dropdown-menu" role="menu">
                 @foreach($releases as $release)
-                <li><a  href="{{ route('deployments', ['id' => $project->deployPlan->id, 'tab' => 'deploy', 'release_id' => $release->id]) }}"><i class="piplin piplin-release"></i> {{ $release->name }}</a></li>
+                <li><a  href="{{ route('deployments', ['deployment' => $project->deployPlan->id, 'tab' => 'deploy', 'release_id' => $release->id]) }}"><i class="piplin piplin-release"></i> {{ $release->name }}</a></li>
                 @endforeach
               </ul>
             </div>
