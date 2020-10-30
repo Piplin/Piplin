@@ -18,6 +18,42 @@ use Piplin\Models\Traits\HasTargetable;
 
 /**
  * Static file for project.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $path
+ * @property string $content
+ * @property int $targetable_id
+ * @property string $targetable_type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int $status
+ * @property string|null $last_run
+ * @property string|null $output
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Environment[] $environments
+ * @property-read int|null $environments_count
+ * @property-read string $environment_names
+ * @property-read Model|\Eloquent $targetable
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile newQuery()
+ * @method static \Illuminate\Database\Query\Builder|ConfigFile onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereLastRun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereOutput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConfigFile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|ConfigFile withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ConfigFile withoutTrashed()
+ * @mixin \Eloquent
  */
 class ConfigFile extends Model
 {

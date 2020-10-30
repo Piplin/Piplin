@@ -15,6 +15,25 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Model for environment links.
+ *
+ * @property int $id
+ * @property int $link_type
+ * @property int $environment_id
+ * @property int $opposite_environment_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Piplin\Models\Environment $environment
+ * @property-read \Piplin\Models\Environment $opposite
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereEnvironmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereLinkType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereOppositeEnvironmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EnvironmentLink whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class EnvironmentLink extends Model
 {

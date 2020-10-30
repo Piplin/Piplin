@@ -15,6 +15,24 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Git Ref model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property bool $is_tag
+ * @property int $project_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Piplin\Models\Project $project
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereIsTag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ref whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Ref extends Model
 {

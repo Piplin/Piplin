@@ -18,6 +18,41 @@ use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Notification hook.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $type
+ * @property bool $enabled
+ * @property object $config
+ * @property bool $on_task_success
+ * @property bool $on_task_failure
+ * @property int $project_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Piplin\Models\Project $project
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook enabled()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook forEvent($event)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Hook onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereConfig($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereOnTaskFailure($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereOnTaskSuccess($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hook whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Hook withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Hook withoutTrashed()
+ * @mixin \Eloquent
  */
 class Hook extends Model
 {

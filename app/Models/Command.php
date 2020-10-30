@@ -20,6 +20,45 @@ use Piplin\Presenters\CommandPresenter;
 
 /**
  * The command model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $user
+ * @property string $script
+ * @property int $targetable_id
+ * @property string $targetable_type
+ * @property int $step
+ * @property bool $optional
+ * @property int $order
+ * @property bool $default_on
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Environment[] $environments
+ * @property-read int|null $environments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Pattern[] $patterns
+ * @property-read int|null $patterns_count
+ * @property-read Model|\Eloquent $targetable
+ * @method static \Illuminate\Database\Eloquent\Builder|Command newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Command newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Command onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Command query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereDefaultOn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereOptional($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereScript($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereStep($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Command whereUser($value)
+ * @method static \Illuminate\Database\Query\Builder|Command withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Command withoutTrashed()
+ * @mixin \Eloquent
  */
 class Command extends Model implements HasPresenter
 {

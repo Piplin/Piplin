@@ -17,6 +17,34 @@ use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Cabinet model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int $order
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $private_key_content
+ * @property-read string $public_key_content
+ * @property-read int $server_count
+ * @property-read string $server_names
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Server[] $servers
+ * @property-read int|null $servers_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Cabinet onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cabinet whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Cabinet withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Cabinet withoutTrashed()
+ * @mixin \Eloquent
  */
 class Cabinet extends Model
 {

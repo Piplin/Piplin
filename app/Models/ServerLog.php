@@ -18,6 +18,33 @@ use Piplin\Presenters\ServerLogPresenter;
 
 /**
  * Server log model.
+ *
+ * @property int $id
+ * @property int $server_id
+ * @property int $task_step_id
+ * @property int $environment_id
+ * @property int $status
+ * @property string|null $output
+ * @property \Illuminate\Support\Carbon|null $started_at
+ * @property \Illuminate\Support\Carbon|null $finished_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Piplin\Models\Environment $environment
+ * @property-read \Piplin\Models\Server $server
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereEnvironmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereFinishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereOutput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereServerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereStartedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereTaskStepId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ServerLog whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class ServerLog extends Model implements HasPresenter, RuntimeInterface
 {

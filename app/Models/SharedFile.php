@@ -18,6 +18,31 @@ use Piplin\Models\Traits\HasTargetable;
 
 /**
  * Shared files or directories for a project.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $file
+ * @property int $targetable_id
+ * @property string $targetable_type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read Model|\Eloquent $targetable
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile newQuery()
+ * @method static \Illuminate\Database\Query\Builder|SharedFile onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SharedFile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|SharedFile withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|SharedFile withoutTrashed()
+ * @mixin \Eloquent
  */
 class SharedFile extends Model
 {

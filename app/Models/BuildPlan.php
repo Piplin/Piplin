@@ -20,6 +20,38 @@ use Piplin\Presenters\BuildPlanPresenter;
 
 /**
  * Plan model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $project_id
+ * @property int $status
+ * @property string|null $last_run
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Command[] $commands
+ * @property-read int|null $commands_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Pattern[] $patterns
+ * @property-read int|null $patterns_count
+ * @property-read \Piplin\Models\Project $project
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Server[] $servers
+ * @property-read int|null $servers_count
+ * @property-read Model|\Eloquent $targetable
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan newQuery()
+ * @method static \Illuminate\Database\Query\Builder|BuildPlan onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereLastRun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BuildPlan whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|BuildPlan withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|BuildPlan withoutTrashed()
+ * @mixin \Eloquent
  */
 class BuildPlan extends Model implements HasPresenter
 {

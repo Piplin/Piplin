@@ -17,6 +17,32 @@ use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Pattern model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $copy_pattern
+ * @property int $build_plan_id
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Piplin\Models\BuildPlan $buildPlan
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Command[] $commands
+ * @property-read int|null $commands_count
+ * @property-read string $command_names
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Pattern onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereBuildPlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereCopyPattern($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pattern whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Pattern withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Pattern withoutTrashed()
+ * @mixin \Eloquent
  */
 class Pattern extends Model
 {

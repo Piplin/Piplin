@@ -17,6 +17,26 @@ use Piplin\Presenters\TaskStepPresenter;
 
 /**
  * The task step model.
+ *
+ * @property int $id
+ * @property int $task_id
+ * @property int $stage
+ * @property int|null $command_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Piplin\Models\Command|null $command
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\ServerLog[] $logs
+ * @property-read int|null $logs_count
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereCommandId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereStage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereTaskId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStep whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class TaskStep extends Model implements HasPresenter
 {

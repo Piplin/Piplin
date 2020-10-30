@@ -22,6 +22,77 @@ use Piplin\Presenters\RuntimeInterface;
 
 /**
  * Task model.
+ *
+ * @property int $id
+ * @property string|null $committer
+ * @property string $committer_email
+ * @property string|null $commit
+ * @property int $project_id
+ * @property string $targetable_type
+ * @property int $targetable_id
+ * @property int|null $user_id
+ * @property int $status
+ * @property bool $is_webhook
+ * @property string $branch
+ * @property object|null $payload
+ * @property string|null $reason
+ * @property \Illuminate\Support\Carbon|null $started_at
+ * @property \Illuminate\Support\Carbon|null $finished_at
+ * @property string|null $source
+ * @property string|null $build_url
+ * @property string|null $output
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Artifact[] $artifacts
+ * @property-read int|null $artifacts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Environment[] $environments
+ * @property-read int|null $environments_count
+ * @property-read string $author_name
+ * @property-read string|false $branch_u_r_l
+ * @property-read \Piplin\Models\Command $commands
+ * @property-read string|false $commit_url
+ * @property-read bool $is_build
+ * @property-read string $project_name
+ * @property-read string $release_id
+ * @property-read bool $run_failure
+ * @property-read string $short_commit
+ * @property-read string $title
+ * @property-read \Piplin\Models\Project $project
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Release[] $releases
+ * @property-read int|null $releases_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\TaskStep[] $steps
+ * @property-read int|null $steps_count
+ * @property-read Model|\Eloquent $targetable
+ * @property-read \Piplin\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Task onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereBranch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereBuildUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereCommit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereCommitter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereCommitterEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereFinishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereIsWebhook($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereOutput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task wherePayload($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereStartedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
+ * @mixin \Eloquent
  */
 class Task extends Model implements HasPresenter, RuntimeInterface
 {

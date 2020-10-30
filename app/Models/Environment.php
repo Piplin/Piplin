@@ -18,6 +18,57 @@ use Piplin\Models\Traits\HasTargetable;
 
 /**
  * Model for environment.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int $order
+ * @property int $targetable_id
+ * @property string $targetable_type
+ * @property bool $default_on
+ * @property int $status
+ * @property string|null $last_run
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Cabinet[] $cabinets
+ * @property-read int|null $cabinets_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Command[] $commands
+ * @property-read int|null $commands_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\ConfigFile[] $configFiles
+ * @property-read int|null $config_files_count
+ * @property-read int $cabinet_count
+ * @property-read string $cabinet_names
+ * @property-read int $link_count
+ * @property-read string $link_names
+ * @property-read int $server_count
+ * @property-read string $server_names
+ * @property-read \Illuminate\Database\Eloquent\Collection|Environment[] $oppositeEnvironments
+ * @property-read int|null $opposite_environments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Server[] $servers
+ * @property-read int|null $servers_count
+ * @property-read Model|\Eloquent $targetable
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Task[] $tasks
+ * @property-read int|null $tasks_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Environment onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereDefaultOn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereLastRun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Environment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Environment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Environment withoutTrashed()
+ * @mixin \Eloquent
  */
 class Environment extends Model
 {

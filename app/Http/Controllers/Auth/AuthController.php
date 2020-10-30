@@ -13,10 +13,12 @@ namespace Piplin\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Models\Identity;
 use Piplin\Models\Provider;
@@ -54,7 +56,7 @@ class AuthController extends Controller
     /**
      * Show the application login form.
      *
-     * @return Response
+     * @return View
      */
     public function getLogin()
     {
@@ -65,8 +67,6 @@ class AuthController extends Controller
      * Handle a login request to the application.
      *
      * @param \Illuminate\Http\Request $request
-     *
-     * @return Response
      */
     public function postLogin(Request $request)
     {
@@ -90,8 +90,7 @@ class AuthController extends Controller
 
             Auth::attempt($credentials, $request->has('remember'));
 
-            return Redirect::intended('/')
-                ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('auth.logged_in')));
+            return Redirect::intended('/');
         }
 
         $this->incrementLoginAttempts($request);
@@ -126,7 +125,7 @@ class AuthController extends Controller
 
             try {
                 $extern_user = \Socialite::with($slug)->user();
-            } catch (InvalidStateException $e) {
+            } catch (\Throwable $e) {
                 return Redirect::to('/auth/login');
             }
 
@@ -157,15 +156,14 @@ class AuthController extends Controller
                 Auth::login($user, true);
             }
 
-            return Redirect::to('/')
-                ->withSuccess(sprintf('%s %s', trans('app.awesome'), trans('auth.logged_in')));
+            return Redirect::to('/');
         }
     }
 
     /**
      * Shows the 2FA form.
      *
-     * @return Response
+     * @return View
      */
     public function getTwoFactorAuthentication()
     {
@@ -187,17 +185,15 @@ class AuthController extends Controller
         if ($user_id) {
             Auth::loginUsingId($user_id, $remember);
 
-            if ($this->google2fa->verifyKey(Auth::user()->google2fa_secret, $request->get('2fa_code'))) {
-                return $this->handleUserWasAuthenticated($request, true);
-            }
+//            if ($this->google2fa->verifyKey(Auth::user()->google2fa_secret, $request->get('2fa_code'))) {
+//                return $this->handleUserWasAuthenticated($request, true);
+//            }
 
             Auth::logout();
 
-            return redirect()->route('auth.login')
-                             ->withError(trans('auth.invalid_code'));
+            return redirect()->route('auth.login');
         }
 
-        return redirect()->route('auth.login')
-                         ->withError(trans('auth.invalid_code'));
+        return redirect()->route('auth.login');
     }
 }

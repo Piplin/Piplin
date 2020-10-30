@@ -18,6 +18,33 @@ use Piplin\Services\Scripts\Runner as Process;
 
 /**
  * SSH keys model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $order
+ * @property string $private_key
+ * @property string $public_key
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $fingerprint
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Project[] $projects
+ * @property-read int|null $projects_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Key newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Key newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Key onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Key query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key wherePrivateKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key wherePublicKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Key whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Key withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Key withoutTrashed()
+ * @mixin \Eloquent
  */
 class Key extends Model
 {

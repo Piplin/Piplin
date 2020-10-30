@@ -26,6 +26,92 @@ use Version\Compare as VersionCompare;
 
 /**
  * Project model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $repository
+ * @property string $hash
+ * @property string $branch
+ * @property string $targetable_type
+ * @property int $targetable_id
+ * @property string $deploy_path
+ * @property int|null $key_id
+ * @property int $builds_to_keep
+ * @property string|null $url
+ * @property string|null $build_url
+ * @property bool $allow_other_branch
+ * @property int $status
+ * @property string|null $private_key
+ * @property string|null $public_key
+ * @property \Illuminate\Support\Carbon|null $last_run
+ * @property \Illuminate\Support\Carbon|null $last_mirrored
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Piplin\Models\BuildPlan|null $buildPlan
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Command[] $commands
+ * @property-read int|null $commands_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\ConfigFile[] $configFiles
+ * @property-read int|null $config_files_count
+ * @property-read \Piplin\Models\DeployPlan|null $deployPlan
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Environment[] $environments
+ * @property-read int|null $environments_count
+ * @property-read string|false $branch_url
+ * @property-read string $build_webhook
+ * @property-read string $clean_deploy_path
+ * @property-read string $deploy_webhook
+ * @property-read string $group_name
+ * @property-read string $private_key_content
+ * @property-read string $public_key_content
+ * @property-read string|false $repository_path
+ * @property-read string|false $repository_url
+ * @property-read string $webhook_url
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Hook[] $hooks
+ * @property-read int|null $hooks_count
+ * @property-read \Piplin\Models\Key|null $key
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\User[] $members
+ * @property-read int|null $members_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Ref[] $refs
+ * @property-read int|null $refs_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Release[] $releases
+ * @property-read int|null $releases_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\SharedFile[] $sharedFiles
+ * @property-read int|null $shared_files_count
+ * @property-read Model|\Eloquent $targetable
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Task[] $tasks
+ * @property-read int|null $tasks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Variable[] $variables
+ * @property-read int|null $variables_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Project newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Project onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereAllowOtherBranch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereBranch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereBuildUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereBuildsToKeep($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereDeployPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereHash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereKeyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereLastMirrored($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereLastRun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project wherePrivateKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project wherePublicKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereRepository($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereTargetableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereTargetableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|Project withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Project withoutTrashed()
+ * @mixin \Eloquent
  */
 class Project extends Model implements HasPresenter
 {

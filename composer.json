@@ -59,7 +59,8 @@
         "filp/whoops": "^2.0",
         "codeclimate/php-test-reporter": "^0.3.0",
         "diablomedia/phpunit-pretty-printer": "dev-master",
-        "friendsofphp/php-cs-fixer": "^2.0"
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "barryvdh/laravel-ide-helper": "^2.8"
     },
     "autoload": {
         "classmap": [

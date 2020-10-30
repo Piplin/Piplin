@@ -17,6 +17,34 @@ use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Artifact model.
+ *
+ * @property int $id
+ * @property string $file_name
+ * @property int $file_size
+ * @property string $mime
+ * @property int $task_id
+ * @property int $server_log_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Piplin\Models\ServerLog $log
+ * @property-read \Piplin\Models\Task $task
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Artifact onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereFileName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereFileSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereMime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereServerLogId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereTaskId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Artifact whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Artifact withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Artifact withoutTrashed()
+ * @mixin \Eloquent
  */
 class Artifact extends Model
 {

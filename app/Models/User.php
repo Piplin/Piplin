@@ -24,6 +24,58 @@ use Piplin\Presenters\UserPresenter;
 
 /**
  * User model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string|null $nickname
+ * @property string|null $remember_token
+ * @property int $level
+ * @property string|null $email_token
+ * @property string|null $avatar
+ * @property string|null $language
+ * @property string|null $skin
+ * @property string|null $dashboard
+ * @property string|null $google2fa_secret
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Project[] $authorizedProjects
+ * @property-read int|null $authorized_projects_count
+ * @property-read bool $has_two_factor_authentication
+ * @property-read bool $is_admin
+ * @property-read bool $is_manager
+ * @property-read bool $is_user
+ * @property-read string $role_name
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Project[] $personalProjects
+ * @property-read int|null $personal_projects_count
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method static Builder|User query()
+ * @method static Builder|User search($search = [])
+ * @method static Builder|User whereAvatar($value)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereDashboard($value)
+ * @method static Builder|User whereDeletedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereEmailToken($value)
+ * @method static Builder|User whereGoogle2faSecret($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereLanguage($value)
+ * @method static Builder|User whereLevel($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User whereNickname($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereSkin($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ * @mixin \Eloquent
  */
 class User extends Authenticatable implements HasPresenter
 {

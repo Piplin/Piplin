@@ -17,6 +17,29 @@ use Piplin\Models\Traits\BroadcastChanges;
 
 /**
  * Project Group model.
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $order
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read int $project_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Piplin\Models\Project[] $projects
+ * @property-read int|null $projects_count
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup newQuery()
+ * @method static \Illuminate\Database\Query\Builder|ProjectGroup onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectGroup whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|ProjectGroup withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ProjectGroup withoutTrashed()
+ * @mixin \Eloquent
  */
 class ProjectGroup extends Model
 {
