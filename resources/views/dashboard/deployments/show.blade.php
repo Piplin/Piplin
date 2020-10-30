@@ -5,11 +5,22 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('deployments',['id'=>$targetable_id]) }}"><span class="piplin piplin-clock"></span> {{ trans('plans.deployments') }}</a></li>
-                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a href="{{ route('deployments',['id'=>$targetable_id, 'tab'=>'environments']) }}"><span class="piplin piplin-environment"></span> {{ trans('environments.label') }}</a></li>
-                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('deployments',['id'=>$targetable_id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('commands.deploy_label') }}</a></li>
-                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a href="{{ route('deployments',['id'=>$targetable_id, 'tab'=>'config-files']) }}"><span class="piplin piplin-config-file"></span> {{ trans('configFiles.label') }}</a></li>
-                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a href="{{ route('deployments',['id'=>$targetable_id, 'tab'=>'shared-files']) }}"><span class="piplin piplin-shared-file"></span> {{ trans('sharedFiles.tab_label') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a
+                                href="{{ route('deployments',['deployment'=>$targetable_id]) }}"><span
+                                    class="piplin piplin-clock"></span> {{ trans('plans.deployments') }}</a></li>
+                    <li {!! $tab != 'environments' ?: 'class="active"' !!}><a
+                                href="{{ route('deployments',['deployment'=>$targetable_id, 'tab'=>'environments']) }}"><span
+                                    class="piplin piplin-environment"></span> {{ trans('environments.label') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a
+                                href="{{ route('deployments',['deployment'=>$targetable_id, 'tab'=>'commands']) }}"><span
+                                    class="piplin piplin-command"></span> {{ trans('commands.deploy_label') }}</a></li>
+                    <li {!! $tab != 'config-files' ?: 'class="active"' !!}><a
+                                href="{{ route('deployments',['deployment'=>$targetable_id, 'tab'=>'config-files']) }}"><span
+                                    class="piplin piplin-config-file"></span> {{ trans('configFiles.label') }}</a></li>
+                    <li {!! $tab != 'shared-files' ?: 'class="active"' !!}><a
+                                href="{{ route('deployments',['deployment'=>$targetable_id, 'tab'=>'shared-files']) }}"><span
+                                    class="piplin piplin-shared-file"></span> {{ trans('sharedFiles.tab_label') }}</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -51,7 +62,10 @@
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('deploy'))
-        <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#task" type="button" class="btn btn-lg btn-{{ ($project->isRunning() OR !count($deployPlan->environments)) ? 'danger' : 'primary' }}" title="{{ trans('projects.deploy') }}" {{ ($project->isRunning() OR !count($deployPlan->environments)) ? 'disabled' : '' }}><span class="piplin piplin-deploy"></span> {{ trans('projects.deploy') }}</button>
+            <button id="deploy_project" data-toggle="modal" data-backdrop="static" data-target="#task" type="button"
+                    class="btn btn-lg btn-{{ ($project->isRunning() OR !count($deployPlan->environments)) ? 'danger' : 'primary' }}"
+                    title="{{ trans('projects.deploy') }}" {{ ($project->isRunning() OR !count($deployPlan->environments)) ? 'disabled' : '' }}>
+                <span class="piplin piplin-deploy"></span> {{ trans('projects.deploy') }}</button>
         @endif
     </div>
 @stop
@@ -77,10 +91,10 @@
 
         @endif
 
-        Piplin.project_id = {{ $project->id }};
+            Piplin.project_id = {{ $project->id }};
 
         @if($tab == 'deploy')
-            $('button#deploy_project').trigger('click');
+        $('button#deploy_project').trigger('click');
         @endif
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>

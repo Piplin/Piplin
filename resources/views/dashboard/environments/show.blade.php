@@ -5,9 +5,9 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id]) }}"><span class="piplin piplin-server"></span> {{ trans('environments.servers') }}</a></li>
-                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="piplin piplin-clock"></span> {{ trans('tasks.label') }}</a></li>
-                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['id' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="piplin piplin-link"></span> {{ trans('environments.links') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('environments.show',['deployment' => $deployPlan->id, 'environment_id'=>$targetable->id]) }}"><span class="piplin piplin-server"></span> {{ trans('environments.servers') }}</a></li>
+                    <li {!! $tab != 'deployments' ?: 'class="active"' !!}><a href="{{ route('environments.show',['deployment' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'deployments']) }}"><span class="piplin piplin-clock"></span> {{ trans('tasks.label') }}</a></li>
+                    <li {!! $tab != 'links' ?: 'class="active"' !!}><a href="{{ route('environments.show',['deployment' => $deployPlan->id, 'environment_id'=>$targetable->id, 'tab'=>'links']) }}"><span class="piplin piplin-link"></span> {{ trans('environments.links') }}</a></li>
                 </ul>
                 <div class="tab-content">
                 <div class="tab-pane active">

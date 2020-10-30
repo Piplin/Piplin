@@ -12,6 +12,7 @@
 namespace Piplin\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Piplin\Http\Controllers\Controller;
 use Piplin\Models\Command;
 use Piplin\Models\Task;

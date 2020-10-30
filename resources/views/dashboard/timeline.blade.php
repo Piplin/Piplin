@@ -28,7 +28,7 @@
                 <div class="timeline-footer small">
                     <span>
                         @if($task->project)
-                        <a class="btn-default btn-xs" href="{{ route('projects', ['id' => $task->project_id]) }}"><i class="piplin piplin-project"></i> {{ $task->project->group_name ? $task->project->group_name.'/': null }}{{ $task->project->name }}</a>
+                        <a class="btn-default btn-xs" href="{{ route('projects', ['project' => $task->project_id]) }}"><i class="piplin piplin-project"></i> {{ $task->project->group_name ? $task->project->group_name.'/': null }}{{ $task->project->name }}</a>
                         @endif
                     </span>
                     <span class="pull-right text-muted hidden-xs">

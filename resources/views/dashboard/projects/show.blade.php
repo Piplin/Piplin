@@ -7,9 +7,15 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('projects.history') }}</a></li>
-                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'hooks']) }}"><span class="piplin piplin-hook"></span> {{ trans('hooks.label') }}</a></li>
-                    <li {!! $tab != 'members' ?: 'class="active"' !!}><a href="{{ route('projects',['project_id'=>$project->id, 'tab'=>'members']) }}"><span class="piplin piplin-users"></span> {{ trans('members.label') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a
+                                href="{{ route('projects',['project'=>$project->id]) }}"><span
+                                    class="piplin piplin-clock"></span> {{ trans('projects.history') }}</a></li>
+                    <li {!! $tab != 'hooks' ?: 'class="active"' !!}><a
+                                href="{{ route('projects',['project'=>$project->id, 'tab'=>'hooks']) }}"><span
+                                    class="piplin piplin-hook"></span> {{ trans('hooks.label') }}</a></li>
+                    <li {!! $tab != 'members' ?: 'class="active"' !!}><a
+                                href="{{ route('projects',['project'=>$project->id, 'tab'=>'members']) }}"><span
+                                    class="piplin piplin-users"></span> {{ trans('members.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -41,23 +47,32 @@
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('manage'))
-        <div class="btn-group">
-          <button type="button" class="btn btn-lg btn-default" data-toggle="dropdown" aria-expanded="false"><i class="piplin piplin-more"></i>
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project_create"><i class="piplin piplin-setting"></i> {{ trans('projects.settings') }}</a></li>
-            <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-target="#project-recover"><i class="piplin piplin-refresh"></i> {{ trans('projects.recover') }}</a></li>
-            <li><a class="project-delete" data-project-id="{{ $project->id }}" href="#" data-toggle="modal" data-backdrop="static" data-target="#model-trash"><span class="text-danger"><i class="piplin piplin-delete"></i> {{ trans('projects.delete') }}</span></a></li>
-          </ul>
-        </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-lg btn-default" data-toggle="dropdown" aria-expanded="false"><i
+                            class="piplin piplin-more"></i>
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal"
+                           data-target="#project_create"><i
+                                    class="piplin piplin-setting"></i> {{ trans('projects.settings') }}</a></li>
+                    <li><a class="btn-edit" data-project-id="{{ $project->id }}" href="#" data-toggle="modal"
+                           data-target="#project-recover"><i
+                                    class="piplin piplin-refresh"></i> {{ trans('projects.recover') }}</a></li>
+                    <li><a class="project-delete" data-project-id="{{ $project->id }}" href="#" data-toggle="modal"
+                           data-backdrop="static" data-target="#model-trash"><span class="text-danger"><i
+                                        class="piplin piplin-delete"></i> {{ trans('projects.delete') }}</span></a></li>
+                </ul>
+            </div>
         @endif
         @if($project->buildPlan)
-        <a href="{{ route('builds', ['id' => $project->buildPlan->id]) }}" class="btn btn-lg btn-success"><i class="piplin piplin-build"></i> {{ trans('projects.build_plan') }}</a>
+            <a href="{{ route('builds', ['build' => $project->buildPlan->id]) }}" class="btn btn-lg btn-success"><i
+                        class="piplin piplin-build"></i> {{ trans('projects.build_plan') }}</a>
         @endif
         @if($project->deployPlan)
-        <a href="{{ route('deployments', ['id' => $project->deployPlan->id]) }}" class="btn btn-lg btn-info"><i class="piplin piplin-deploy"></i> {{ trans('projects.deploy_plan') }}</a>
+            <a href="{{ route('deployments', ['deployment' => $project->deployPlan->id]) }}" class="btn btn-lg btn-info"><i
+                        class="piplin piplin-deploy"></i> {{ trans('projects.deploy_plan') }}</a>
         @endif
     </div>
 @stop
@@ -76,7 +91,7 @@
 
         @endif
 
-        Piplin.project_id = {{ $project->id }};
+            Piplin.project_id = {{ $project->id }};
 
     </script>
     <script src="{{ cdn('js/ace.js') }}"></script>

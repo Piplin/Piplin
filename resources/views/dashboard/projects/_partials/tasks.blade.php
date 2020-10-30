@@ -68,9 +68,9 @@
                             @endif
 
                             @if ($task->isPending() || $task->isRunning())
-                                <a href="{{ route('tasks.abort', ['id' => $task->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('tasks.cancel') }}"><i class="piplin piplin-cancel"></i></a>
+                                <a href="{{ route('tasks.abort', ['task' => $task->id]) }}" class="btn btn-default btn-cancel" title="{{ trans('tasks.cancel') }}"><i class="piplin piplin-cancel"></i></a>
                             @endif
-                            <a href="{{ route('tasks.show', ['id' => $task->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
+                            <a href="{{ route('tasks.show', ['task' => $task->id]) }}" type="button" class="btn btn-default" title="{{ trans('app.details') }}"><i class="piplin piplin-go"></i></a>
                         </div>
                     </td>
                 </tr>

@@ -5,11 +5,21 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li {!! $tab != '' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id]) }}"><span class="piplin piplin-clock"></span> {{ trans('plans.builds') }}</a></li>
-                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'commands']) }}"><span class="piplin piplin-command"></span> {{ trans('commands.build_label') }}</a></li>
-                    <li {!! $tab != 'agents' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'agents']) }}"><span class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
-                    <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'patterns']) }}"><span class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
-                    <li {!! $tab != 'releases' ?: 'class="active"' !!}><a href="{{ route('builds',['id'=>$buildPlan->id, 'tab'=>'releases']) }}"><span class="piplin piplin-release"></span> {{ trans('releases.label') }}</a></li>
+                    <li {!! $tab != '' ?: 'class="active"' !!}><a
+                                href="{{ route('builds',['build'=>$buildPlan->id]) }}"><span
+                                    class="piplin piplin-clock"></span> {{ trans('plans.builds') }}</a></li>
+                    <li {!! $tab != 'commands' ?: 'class="active"' !!}><a
+                                href="{{ route('builds',['build'=>$buildPlan->id, 'tab'=>'commands']) }}"><span
+                                    class="piplin piplin-command"></span> {{ trans('commands.build_label') }}</a></li>
+                    <li {!! $tab != 'agents' ?: 'class="active"' !!}><a
+                                href="{{ route('builds',['build'=>$buildPlan->id, 'tab'=>'agents']) }}"><span
+                                    class="piplin piplin-server"></span> {{ trans('plans.agents') }}</a></li>
+                    <li {!! $tab != 'patterns' ?: 'class="active"' !!}><a
+                                href="{{ route('builds',['build'=>$buildPlan->id, 'tab'=>'patterns']) }}"><span
+                                    class="piplin piplin-pattern"></span> {{ trans('patterns.label') }}</a></li>
+                    <li {!! $tab != 'releases' ?: 'class="active"' !!}><a
+                                href="{{ route('builds',['build'=>$buildPlan->id, 'tab'=>'releases']) }}"><span
+                                    class="piplin piplin-release"></span> {{ trans('releases.label') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -40,7 +50,10 @@
 @section('right-buttons')
     <div class="pull-right">
         @if($project->can('build'))
-        <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#task" type="button" class="btn btn-lg btn-{{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'danger' : 'primary' }}" {{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'disabled' : null }} title="{{ trans('plans.build') }}"><span class="piplin piplin-build"></span> {{ trans('plans.build') }}</button>
+            <button id="plan_build" data-toggle="modal" data-backdrop="static" data-target="#task" type="button"
+                    class="btn btn-lg btn-{{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'danger' : 'primary' }}"
+                    {{ ($project->isRunning() OR !count($buildPlan->servers)) ? 'disabled' : null }} title="{{ trans('plans.build') }}">
+                <span class="piplin piplin-build"></span> {{ trans('plans.build') }}</button>
         @endif
     </div>
 @stop
@@ -48,19 +61,19 @@
 @push('javascript')
     <script type="text/javascript">
         @if($tab == 'agents')
-            new Piplin.ServersTab();
-            Piplin.Servers.add({!! $servers->toJson() !!});
+        new Piplin.ServersTab();
+        Piplin.Servers.add({!! $servers->toJson() !!});
         @elseif($tab == 'patterns')
-            new Piplin.PatternsTab();
-            Piplin.Patterns.add({!! $patterns->toJson() !!});
+        new Piplin.PatternsTab();
+        Piplin.Patterns.add({!! $patterns->toJson() !!});
         @elseif($tab == 'releases')
-            new Piplin.ReleasesTab();
-            Piplin.Releases.add({!! $releases->toJson() !!});
+        new Piplin.ReleasesTab();
+        Piplin.Releases.add({!! $releases->toJson() !!});
         @endif
-        Piplin.targetable_id = {{ $buildPlan->id }};
+            Piplin.targetable_id = {{ $buildPlan->id }};
 
         @if($tab == 'build')
-            $('button#plan_build').trigger('click');
+        $('button#plan_build').trigger('click');
         @endif
     </script>
 @endpush
